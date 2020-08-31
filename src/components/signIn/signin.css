@@ -1,0 +1,43 @@
+/* .form_style{
+    margin-left: 45%;
+} */
+
+/* .heading{
+    margin-left: 3%;
+} */
+
+.input_fields{
+    padding-top: 1%;
+    margin-top: 1%;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 10px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    width: 15%;
+    margin-top:1% ;
+  }
+
+  .btn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-left: 5px;
+  }
+
+  .btn:hover {
+    background-color: RoyalBlue;
+  }
+
+  .btnStyle{
+      margin-left: 2%;
+  }

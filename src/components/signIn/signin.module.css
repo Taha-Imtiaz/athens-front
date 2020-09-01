@@ -2,13 +2,18 @@
     margin-left: 45%;
 } */
 
-/* .heading{
-    margin-left: 3%;
-} */
+.jumbotron{
+  margin: auto;
+}
+
+.heading{
+    margin-top: 5%;
+}
 
 .input_fields{
     padding-top: 1%;
     margin-top: 1%;
+    width: 50%;
 }
 
 .button {
@@ -17,11 +22,11 @@
     color: white;
     padding: 8px;
     text-align: center;
-    font-size: 10px;
+    font-size: 20px;
     margin: 4px 2px;
     border-radius: 12px;
-    width: 15%;
-    margin-top:1% ;
+    width: 20%;
+    margin-top:3% ;
   }
 
   .btn {
@@ -37,7 +42,21 @@
   .btn:hover {
     background-color: RoyalBlue;
   }
+  .button:hover {
+    background-color: RoyalBlue;
+  }
 
   .btnStyle{
       margin-left: 2%;
   }
+
+.head{
+  margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+@media only screen and (max-width: 600px) {
+  .input_fields{
+    width: 80%;
+}
+}

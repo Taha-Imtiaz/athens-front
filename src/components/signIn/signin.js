@@ -1,13 +1,15 @@
 import React from 'react'
-import './signin.css'
+import styles from './signin.module.css'
 import heading from '../Headings/headings';
 import headings from '../Headings/headings';
 import HeadingComponent from '../Headings/headings';
+import { Redirect } from 'react-router-dom';
 
 class SignInForm extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { username: '', password:''}
+        let loggedIn = false
+        this.state = { username: '', password:'', loggedIn}
     }
 
       mySubmitHandler = (event) => {
@@ -20,6 +22,13 @@ class SignInForm extends React.Component{
         }
         console.log("Username: "+this.state.username)
         console.log("Password: "+this.state.password)
+
+        if(this.state.username === "S" && this.state.password == "abc"){
+          localStorage.setItem("token","abc")
+          this.setState({
+            loggedIn: true
+          })
+        }
       }
 
       usernameChangeHandler = (event) => {
@@ -38,20 +47,23 @@ class SignInForm extends React.Component{
 
 
     render(){ 
+      if (this.state.loggedIn){
+        return <Redirect to ='/admin'/>
+      }
         return(
-            <div>
+            <div className={styles.jumbotron}>
             <form onSubmit={this.mySubmitHandler}>
-            <HeadingComponent name = "Sign In"/>
-            <input className="input_fields" type="text" placeholder="Email Address" onChange={this.usernameChangeHandler}/>
+            <h1 className={styles.head}>Sign In</h1>
+            <input className={styles.input_fields} type="text" placeholder="Email Address" onChange={this.usernameChangeHandler}/>
             <br/>
-            <input className="input_fields" type="password" id ="pwd" placeholder="Password" onChange={this.passwordChangeHandler}/>
+            <input className={styles.input_fields} type="password" id ="pwd" placeholder="Password" onChange={this.passwordChangeHandler}/>
             <br/>
-            <button type ='submit' className="button">Sign In</button>
-            <h3 className="heading">Or Login With</h3>
+            <button type ='submit' className={styles.button}>Sign In</button>
+            <h3 className={styles.heading}>Or Login With</h3>
             <div className = "btnStyle">
-            <button className="btn"><i className="fa fa-google"></i></button>
-            <button className="btn"><i className="fa fa-twitter"></i></button>
-            <button className="btn"><i className="fa fa-facebook"></i></button>
+            <button className={styles.btn}><i className="fa fa-google"></i></button>
+            <button className={styles.btn}><i className="fa fa-twitter"></i></button>
+            <button className={styles.btn}><i className="fa fa-facebook"></i></button>
             </div>
             </form>
             </div>

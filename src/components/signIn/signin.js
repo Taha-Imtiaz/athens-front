@@ -1,9 +1,11 @@
 import React from 'react'
-import styles from './signin.module.css'
+import style from './signin.module.css'
 import heading from '../Headings/headings';
 import headings from '../Headings/headings';
 import HeadingComponent from '../Headings/headings';
 import { Redirect } from 'react-router-dom';
+import SideBar from '../Sidebar/SideBar';
+
 
 class SignInForm extends React.Component{
     constructor(props) {
@@ -51,19 +53,19 @@ class SignInForm extends React.Component{
         return <Redirect to ='/admin'/>
       }
         return(
-            <div className={styles.jumbotron}>
+          <div className={style.jumbotron}>
             <form onSubmit={this.mySubmitHandler}>
-            <h1 className={styles.head}>Sign In</h1>
-            <input className={styles.input_fields} type="text" placeholder="Email Address" onChange={this.usernameChangeHandler}/>
+            <h1 className={style.head}>Sign In</h1>
+            <input className={style.input_fields} type="text" placeholder="Email Address" onChange={this.usernameChangeHandler}/>
             <br/>
-            <input className={styles.input_fields} type="password" id ="pwd" placeholder="Password" onChange={this.passwordChangeHandler}/>
+            <input className={style.input_fields} type="password" id ="pwd" placeholder="Password" onChange={this.passwordChangeHandler}/>
             <br/>
-            <button type ='submit' className={styles.button}>Sign In</button>
-            <h3 className={styles.heading}>Or Login With</h3>
+            <button type ='submit' className={style.button}>Sign In</button>
+            <h3 className={style.heading}>Or Login With</h3>
             <div className = "btnStyle">
-            <button className={styles.btn}><i className="fa fa-google"></i></button>
-            <button className={styles.btn}><i className="fa fa-twitter"></i></button>
-            <button className={styles.btn}><i className="fa fa-facebook"></i></button>
+            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-google"></i></button>
+            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-twitter"></i></button>
+            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-facebook"></i></button>
             </div>
             </form>
             </div>

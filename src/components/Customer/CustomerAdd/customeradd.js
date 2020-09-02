@@ -1,8 +1,10 @@
 import React from 'react'
 import Navbar from '../../Navbar/Navbar'
 import style from './customeradd.module.css'
+import SideBar from '../../Sidebar/SideBar'
 const customerAdd = ()=>{
-    return<div className={style.jumbotron}>
+    return <div>
+    <div className={style.jumbotron}>
     
         <h3 className={style.head}>Create New Customer</h3> 
     <div className={style.container}>
@@ -31,9 +33,10 @@ const customerAdd = ()=>{
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" className="btn" class="btn btn-primary">Submit</button>
 
     </form>
+    </div>
     </div>
     </div>
 }

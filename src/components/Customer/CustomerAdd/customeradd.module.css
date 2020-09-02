@@ -4,6 +4,10 @@
     margin-top: 5%;
 }
 
+.btn-primary{
+    margin-bottom: 2%;
+}
+
 .btn:hover {
     background-color: RoyalBlue;
   }
@@ -12,7 +16,8 @@
     margin: auto;
     margin-top: 2%;
     margin-bottom: 2%;
-    background-color: #eee;
+    background-color: #e9f2eb;
+    width: 70%;
 }
 
 .head{

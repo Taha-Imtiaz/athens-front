@@ -1,0 +1,28 @@
+.head{
+    margin-right: 20%;
+}
+
+.jumbotron{
+    width: 60% !important;
+    margin-left: 20%;
+    margin-right: 20%;
+    background-color: #e9f2eb;
+    margin-top: 2%;
+}
+
+.sub{
+    margin-right:70%;
+}
+
+.comp{
+    margin-right: 60%;
+    margin-top: 1%;
+}
+
+.para{
+    margin-right: 50%;
+}
+
+.job{
+    margin-top: 1%;
+}

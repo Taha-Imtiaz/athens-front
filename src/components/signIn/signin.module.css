@@ -4,6 +4,8 @@
 
 .jumbotron{
   margin: auto;
+  background-color:#e9f2eb;
+  width: 70%;
 }
 
 .heading{
@@ -37,6 +39,7 @@
     font-size: 16px;
     border-radius: 25px;
     margin-left: 5px;
+    /* padding-bottom: 2%; */
   }
 
   .btn:hover {
@@ -48,15 +51,22 @@
 
   .btnStyle{
       margin-left: 2%;
+      
   }
+
 
 .head{
   margin-top: 2%;
     margin-bottom: 2%;
+    font-size:2rem;
+    padding-top: 2%;
 }
 
 @media only screen and (max-width: 600px) {
   .input_fields{
     width: 80%;
+}
+.button{
+width: auto;
 }
 }

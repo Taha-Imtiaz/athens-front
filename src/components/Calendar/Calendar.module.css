@@ -1,0 +1,28 @@
+.toprow{
+    margin-top: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.cal{
+    margin-left: 20%;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.cardCustom{
+    width: 18rem;
+    float: right;
+}
+
+.cardCustom2{
+    width: 18rem;
+    float: right;
+    margin-top: 1%;
+}
+
+.Calendar {
+    display: inline-block;
+    font-size: 2rem;
+  }
+

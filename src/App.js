@@ -14,7 +14,12 @@ import CustomerClaims from './components/Claims/CustomersClaim/CustomerClaims';
 import CustomerDeposit from './components/Claims/CustomerBlanketDeposit/CustomerDeposit';
 import CustomerDeposit2 from './components/Claims/CustomerBlanketDeposit2/CustomerDeposit2';
 import NewClaim from './components/Claims/NewClaim/NewClaim';
-import JobsList from './components/Jobs/JobsList';
+import JobsList from './components/Jobs/JobsList/JobsList';
+import JobDetails from './components/Jobs/JobDetails/JobDetails';
+import CreateJobs from './components/Jobs/CreateJob/CreateJobs';
+import JobEditDetails from './components/Jobs/JobDetailsEdit/JobEditDetails';
+import Calendar from './components/Calendar/Calendar';
+import CalendarApp from './components/Calendar/Calendar';
 
 function App() {
   return (
@@ -31,7 +36,12 @@ function App() {
       <Route path="/claim/customerdeposit" component={CustomerDeposit}/>
       <Route path="/claim/customerdeposit2" component={CustomerDeposit2}/>
       <Route path="/claim/newclaim" component={NewClaim}/>
-      <Route path="/job" component={JobsList}/>
+      <Route exact path="/job" component={JobsList}/>
+      <Route path="/job/details" component={JobDetails}/>
+      <Route path="/job/create" component={CreateJobs}/>
+      <Route path="/job/edit" component={JobEditDetails}/>
+      <Route path="/calendar" component={CalendarApp}/>
+      
       
       
       </Switch>

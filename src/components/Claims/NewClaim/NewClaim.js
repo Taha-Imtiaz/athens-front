@@ -64,12 +64,13 @@ class NewClaim extends Component {
     <DatePicker className={style.to}
         selected={this.state.startDate}
         onChange={this.handleChange}
-        placeholderText="To"
+        placeholderText="Date"
       />
     </div>
         </div>
     </div>
 
+            
 
     <div className="row">
         <div className="col-4">
@@ -88,6 +89,8 @@ class NewClaim extends Component {
         
     </div>
 
+    
+    
     </form>
     </div>
     <button type="submit" className="btn" class="btn btn-primary">Submit</button>

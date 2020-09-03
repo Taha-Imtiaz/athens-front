@@ -1,0 +1,46 @@
+.toprow{
+    margin-top: 2%;
+}
+
+.cardCustom{
+    width: 18rem
+}
+
+/* .containerCustom{
+    margin-top: 2%;
+} */
+
+.head{
+    float: left;
+}
+
+.para{
+    float: left;
+}
+
+.badges{
+    margin-left: 2%;
+    margin-top: 3%;
+}
+
+/* .btncustom{
+    margin-top: 2%;
+} */
+
+.btnCustom{
+    margin-left: 3%;
+}
+
+.row2{
+    margin-top: 2%;
+}
+
+.jumbo{
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: left;
+}
+
+/* .jobHead{
+    float: left;
+} */

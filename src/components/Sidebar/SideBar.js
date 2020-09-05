@@ -1,10 +1,12 @@
 import React from 'react'
 import style from './SideBar.module.css'
 
-const SideBar = ()=>{
-    return <div class={style.sidebar}>
-    <a class="active" href="#claim">Claim</a>
-    <a href="#blanket_deposit">Blanket Deposit</a>
+const SideBar = (props) => {
+  return <div class={style.sidebar}>
+    <a class="active" href="#claim">{props.name1}</a>
+    <a href="#blanket_deposit">{props.name2}</a>
+    <a href="#blanket_deposit">{props.name3}</a>
+
   </div>
 }
 

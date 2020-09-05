@@ -5,9 +5,8 @@
 }
 
 .cal{
-    margin-left: 20%;
+    margin-left: 5%;
     display: inline-block;
-    font-size: 1rem;
 }
 
 .cardCustom{
@@ -21,8 +20,8 @@
     margin-top: 1%;
 }
 
-.Calendar {
+/* .Calendar {
     display: inline-block;
     font-size: 2rem;
-  }
+  } */
 

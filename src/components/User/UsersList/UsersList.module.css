@@ -1,0 +1,30 @@
+.fluid-container{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.btnCustom{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.but{
+    align-items: center;
+}
+
+.btn:hover {
+    background-color: RoyalBlue;
+  }
+
+.jumbotron{
+    margin: auto !important;
+    padding: 5%;
+}
+
+.head{
+    margin-top: 3%;
+}
+
+.btndel{
+    margin-right: 60%;
+}

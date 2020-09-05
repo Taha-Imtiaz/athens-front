@@ -1,0 +1,29 @@
+.head{
+    margin-right: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.list{
+    width: 78%;
+    margin-left: 17%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+
+.para{
+    text-align: left;
+}
+
+.name{
+    margin-right: 70%;
+}
+
+.lightc{
+    color: silver;
+    font-size: 15px;
+}
+
+.btn{
+    margin-top: 2%;
+}

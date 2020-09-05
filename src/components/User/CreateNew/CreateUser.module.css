@@ -1,0 +1,33 @@
+.container{
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.btn-primary{
+    margin-bottom: 2%;
+}
+
+.btn:hover {
+    background-color: RoyalBlue;
+  }
+
+.btncustom{
+    margin-bottom: 100%;
+}
+
+.jumbotron{
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: #e9f2eb;
+    width: 60%;
+}
+
+.head{
+    margin: auto;
+}
+
+.drop{
+    size: 100%;
+}

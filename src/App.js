@@ -20,6 +20,11 @@ import CreateJobs from './components/Jobs/CreateJob/CreateJobs';
 import JobEditDetails from './components/Jobs/JobDetailsEdit/JobEditDetails';
 import Calendar from './components/Calendar/Calendar';
 import CalendarApp from './components/Calendar/Calendar';
+import UnavailableSchedule from './components/Schdules/Unavailable/Unavailable';
+import DailySchedule from './components/Schdules/Daily/Daily';
+import MoversSchedule from './components/Schdules/Movers/Movers';
+import CreateUser from './components/User/CreateNew/CreateUser';
+import UsersList from './components/User/UsersList/UsersList';
 
 function App() {
   return (
@@ -41,6 +46,12 @@ function App() {
       <Route path="/job/create" component={CreateJobs}/>
       <Route path="/job/edit" component={JobEditDetails}/>
       <Route path="/calendar" component={CalendarApp}/>
+      <Route exact path="/schedule" component={UnavailableSchedule}/>
+      <Route path="/schedule/daily" component={DailySchedule}/>
+      <Route path="/schedule/movers" component={MoversSchedule}/>
+      <Route exact path="/user" component={UsersList}/>
+      <Route path="/user/create" component={CreateUser}/>
+      
       
       
       

@@ -25,6 +25,8 @@ import DailySchedule from './components/Schdules/Daily/Daily';
 import MoversSchedule from './components/Schdules/Movers/Movers';
 import CreateUser from './components/User/CreateNew/CreateUser';
 import UsersList from './components/User/UsersList/UsersList';
+import AccountDisplay from './components/Account/AccountDisplay/AccountDisplay';
+import AccountUpdate from './components/Account/AccountUpdate/AccountUpdate';
 
 function App() {
   return (
@@ -51,10 +53,9 @@ function App() {
       <Route path="/schedule/movers" component={MoversSchedule}/>
       <Route exact path="/user" component={UsersList}/>
       <Route path="/user/create" component={CreateUser}/>
-      
-      
-      
-      
+      <Route exact path="/account" component={AccountDisplay}/>
+      <Route path="/account/update" component={AccountUpdate}/>
+
       </Switch>
   </div>
   );

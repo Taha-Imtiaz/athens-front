@@ -1,5 +1,14 @@
+.toprow{
+    margin-top: 2%;
+}
+
 .head{
     margin-right: 20%;
+    margin-top: 2%;
+}
+
+.btn{
+    margin-top: 2%;
 }
 
 .jumbotron{
@@ -8,21 +17,26 @@
     margin-right: 20%;
     background-color: #e9f2eb;
     margin-top: 2%;
+    text-align: left;
 }
 
 .sub{
-    margin-right:70%;
+    margin-left: 1%;
 }
 
 .comp{
-    margin-right: 60%;
-    margin-top: 1%;
+   margin-left: 1%;
 }
 
 .para{
-    margin-right: 50%;
+    margin-left: 1%;
 }
 
 .job{
     margin-top: 1%;
+    margin-left: 5%;
+}
+
+.p2{
+    margin-left: 30%;
 }

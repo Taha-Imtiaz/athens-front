@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './JobDetails.module.css'
-
+import Button from '../../Button/Button'
 
 const JobDetails = () => {
     return <div>
@@ -18,7 +18,9 @@ const JobDetails = () => {
             <div className="col-6">
                 <div className={`container ${style.containerCustom}`}>
                     <h3 className={style.head}>Job Title</h3>
-                    <button type="button" class="btn btn-primary">Status</button>
+                    <div className = {style.btn}>
+                    <Button name = "Status"/>
+                    </div>
                     <br />
                     <br />
                     <p className={style.para}>July 07 - July 10  |  10am - 2pm</p>
@@ -34,10 +36,13 @@ const JobDetails = () => {
                 </div>
             </div>
             <div className="col-3">
-                <div className={style.btncustom}>
+        
+                    {/* <Button name = "Edit" icon = "fa fa-edit"/> */}
+                    {/* <Button name = "Delete" icon = "fa fa-trash"/> */}
+                   
                     <button className={`btn btn-primary ${style.btnCustom}`}><i className="fa fa-edit"> Edit</i></button>
                     <button className={`btn btn-primary ${style.btnCustom}`}><i className="fa fa-edit"> Delete</i></button>
-                </div>
+            
             </div>
         </div>
 
@@ -50,7 +55,9 @@ const JobDetails = () => {
                     <h5>Assignees</h5>
                     <p>Assignee 1</p>
                     <p>Assignee 2</p>
-                    <button className={`btn btn-primary ${style.btnCustom}`}>Activities</button>
+                    <div className = {style.btncustom}>
+                    <Button name = "Activities"/>
+                    </div>
                 </div>
             </div>
             <div className="col-10">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import style from './NewClaim.module.css'
 import DatePicker from "react-datepicker";
  
+import Button from '../../Button/Button'
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -11,12 +12,17 @@ class NewClaim extends Component {
         startDate: ""
       };
      
-      handleChange = date => {
+      handleChangeFrom = date => {
         this.setState({
-          startDate: date
+          fromDate: date
         });
       };
 
+      handleChangeTo = date => {
+        this.setState({
+          toDate: date
+        });
+      };
 
     render() {
         return (
@@ -53,8 +59,8 @@ class NewClaim extends Component {
         <div className = "col-3">
     <div class="form-group">
     <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange}
+        selected={this.state.fromDate}
+        onChange={this.handleChangeFrom}
         placeholderText="From"
       />
     </div>
@@ -62,9 +68,9 @@ class NewClaim extends Component {
     <div className = "col-3">
     <div class="form-group">
     <DatePicker className={style.to}
-        selected={this.state.startDate}
-        onChange={this.handleChange}
-        placeholderText="Date"
+        selected={this.state.toDate}
+        onChange={this.handleChangeTo}
+        placeholderText="To"
       />
     </div>
         </div>
@@ -93,7 +99,9 @@ class NewClaim extends Component {
     
     </form>
     </div>
-    <button type="submit" className="btn" class="btn btn-primary">Submit</button>
+    <div className = {style.btn}>
+        <Button name = "Submit"/>
+    </div>
 
 </div>
         );

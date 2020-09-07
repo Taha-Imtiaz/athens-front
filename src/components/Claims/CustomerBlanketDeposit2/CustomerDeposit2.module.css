@@ -1,18 +1,31 @@
 .input_field{
     width: 60%;
     padding-right: 5%;
+    margin-top: 1%;
 }
 
 .head{
     margin-top: 3%;
+    margin-right: 63%;
 }
 
 .myrow{
-    margin-left: 35%;
-    margin-top: 5%;
+   
+    margin-top: 2%;
+    margin-left: 10%;
 }
 
 .btn{
-    background-color: royalBlue
-    ;
+   float: left;
+   margin-left: 11%;
+   margin-top: 1%;
+}
+
+.btn-primary{
+    background-color: #00ADEE !important;
+}
+
+
+.in{
+    margin-top: 0.2%;
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './Unavailable.module.css'
 import SideBar from '../../Sidebar/SideBar'
+import Button from '../../Button/Button'
 
 const UnavailableSchedule = () => {
     return <div>
@@ -13,8 +14,9 @@ const UnavailableSchedule = () => {
                 <h3 className={style.head}>Unavailable</h3>
 
                 <div className={`list-group ${style.list}`}>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
+                    <div>
+            <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
+                <div className={`d-flex w-100 justify-content-between`}>
                     <label class="checkbox-inline"><input type="checkbox" value="" /></label>
                     <h5 className={`mb-1 ${style.name}`}>Thoma</h5>
                     <small>4/7/2020 - 15/7/2020</small>
@@ -23,7 +25,9 @@ const UnavailableSchedule = () => {
                     <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            </div>
+            <div>
+            <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
                 <div class="d-flex w-100 justify-content-between">
                     <label class="checkbox-inline"><input type="checkbox" value="" /></label>
                     <h5 className={`mb-1 ${style.name}`}>Jc</h5>
@@ -33,7 +37,9 @@ const UnavailableSchedule = () => {
                     <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            </div>
+            <div className = {style.box}>
+            <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
                 <div class="d-flex w-100 justify-content-between">
                     <label class="checkbox-inline"><input type="checkbox" value="" /></label>
                     <h5 className={`mb-1 ${style.name}`}>Josh</h5>
@@ -43,7 +49,8 @@ const UnavailableSchedule = () => {
                     <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            </div>
+            <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
                 <div class="d-flex w-100 justify-content-between">
                     <label class="checkbox-inline"><input type="checkbox" value="" /></label>
                     <h5 className={`mb-1 ${style.name}`}>Monte</h5>
@@ -57,7 +64,7 @@ const UnavailableSchedule = () => {
 
             </div>
             <div className={`col-2 ${style.btn}`}>
-                <button type="submit" className="btn" class="btn btn-primary">Approve</button>
+             <Button name="Approve"/>
             </div>
         </div>
 

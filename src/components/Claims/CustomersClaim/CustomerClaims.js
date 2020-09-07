@@ -1,17 +1,20 @@
 import React from 'react'
 import style from './CustomerClaims.module.css'
 import SideBar from '../../Sidebar/SideBar'
+import Button from '../../Button/Button'
 
-const CustomerClaims = ()=>{
+const CustomerClaims = () => {
     return <div>
-        <SideBar/>
+        {/* <SideBar name1="Claims" name2="Blanket Deposit" /> */}
         <div className="row">
             <div className="col-6">
-        <h3 className={style.head}>Claims</h3>
-        </div>
-        <div className="col-6">
-        <button type="submit" className="btn" class="btn btn-primary">Add Claim</button>
-        </div>
+                <h3 className={style.head}>Claims</h3>
+            </div>
+            <div className="col-6">
+                <div className={style.btn}>
+                    <Button name="Add Claim" />
+                </div>
+            </div>
         </div>
 
         <div className={style.jumbotron}>
@@ -20,7 +23,7 @@ const CustomerClaims = ()=>{
                     <h6 className={style.comp}>Complaint Name</h6>
                 </div>
                 <div className="col-2">
-                    <h6 className = {style.job}>Job ID ##</h6>
+                    <h6 className={style.job}>Job ID ##</h6>
                 </div>
             </div>
             <div className="row">
@@ -31,19 +34,19 @@ const CustomerClaims = ()=>{
             <h6 className={style.sub}>Lorem #1</h6>
             <div className="row">
                 <div className="col-10">
-                    <p className = {style.para}>ajshj asdknsalkjd asldjkasljdl </p>
+                    <p className={style.para}>ajshj asdknsalkjd asldjkasljdl </p>
                 </div>
                 <div className="col-2">
-                    <p>$75</p>
+                    <p className={style.p2}>$75</p>
                 </div>
             </div>
             <h6 className={style.sub}>Lorem #2</h6>
             <div className="row">
                 <div className="col-10">
-                    <p className = {style.para}>ajshj asdknsalkjd asldjkasljdl </p>
+                    <p className={style.para}>ajshj asdknsalkjd asldjkasljdl </p>
                 </div>
                 <div className="col-2">
-                    <p>$100</p>
+                    <p className={style.p2}>$100</p>
                 </div>
             </div>
 

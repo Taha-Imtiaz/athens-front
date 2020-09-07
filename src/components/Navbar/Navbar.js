@@ -1,34 +1,59 @@
 import React from 'react'
-import './navbar.css'
-const Navbar = ()=> {
+import style from './navbar.module.css'
+// import logo from '/images/movers-logo.jpg'
+import { Link, withRouter } from "react-router-dom";
+
+const Navbar = (props) => {
+
+    const getNavLinkClass = path => {
+        console.log(props.location.pathname)
+        return props.location.pathname === path
+            ? "nav-item active"
+            : "nav-item";
+    };
+
     return (
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-            <a class="navbar-brand" href="#">Logo</a>
+        <nav className={`navbar navbar-expand-md navbar-light ${style.elevation}`}>
+            <a class="navbar-brand" href="#">
+                <img src='/images/movers-logo.jpg' width="60px"></img> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
+                <ul className={`navbar-nav mr-auto`}>
+
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/login') }}">Login</a>
+                    <li className={getNavLinkClass("/customer")}>
+                        <Link className={`nav-link`} to="/customer">
+                            Customer
+                        </Link>
+
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/register') }}">Register</a>
+                    <li className={getNavLinkClass("/job")}>
+                        <Link className="nav-link" to="/job">
+                            Jobs
+                        </Link>
+                    </li>
+                    <li className={getNavLinkClass("/schedule")}>
+                        <Link className="nav-link" to="/schedule">
+                            Schedule
+                        </Link>
+                    </li>
+                    <li className={getNavLinkClass("/users")}>
+                        <Link className="nav-link" to="/users">
+                            Users
+                        </Link>
+                    </li>
+                    <li className={getNavLinkClass("/account")}>
+                        <Link className="nav-link" to="/account">
+                            Account
+                        </Link>
                     </li>
                 </ul>
             </div>
         </nav>
-     
-        )}
-export default Navbar
+
+    )
+}
+export default withRouter(Navbar)

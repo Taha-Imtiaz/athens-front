@@ -23,9 +23,10 @@
     margin-top: 3%;
 }
 
-/* .btncustom{
+.btncustom{
     margin-top: 2%;
-} */
+    margin-left: 25%;
+}
 
 .btnCustom{
     margin-left: 3%;
@@ -41,6 +42,6 @@
     text-align: left;
 }
 
-/* .jobHead{
-    float: left;
-} */
+.btn{
+    margin-left: 20%;
+}

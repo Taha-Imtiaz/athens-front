@@ -1,0 +1,15 @@
+.head{
+    float: left;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+.form{
+    width: 30%;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.btncustom{
+    float: left;
+}

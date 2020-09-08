@@ -14,11 +14,15 @@ const customerList = () => {
         <SearchBar />
       </div>
       <div className="col-3">
-        <Button name="Create New" />
+        <div className={style.create}>
+          <Button name="Create New" />
+        </div>
+        <div className={style.del}>
+          <Button name="Delete" icon="fa fa-trash" />
+        </div>
       </div>
     </div>
     <div className={style.btndel}>
-      <Button name="Delete" icon="fa fa-trash" />
 
     </div>
     <div className={style.jumbotron}>
@@ -28,8 +32,30 @@ const customerList = () => {
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
                 <div className={`col-6 text-left`}>
-                <label class="checkbox-inline"><input type="checkbox" value="" /></label>
-                  <label>Muhammad Shaheer </label>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
+                  </span>
+                </div>
+                <div className={`col-3`} >
+                  <Button name="Delete" icon="fa fa-map-marker" />
+                </div>
+                <div className={`col-3 justify-content-end ${style.fr}`}>
+                  <p><Button name="Edit" icon="fa fa-edit" /></p>
+                </div>
+
+              </div>
+            </li>
+          </div>
+
+          <div className={style.li}>
+            <li class=" checkbox list-group-item">
+              <div className="row justify-content-around">
+                <div className={`col-6 text-left`}>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad</label>
+                  </span>
                 </div>
                 <div className={`col-3`} >
                   <Button name="Delete" icon="fa fa-map-marker" />
@@ -45,25 +71,10 @@ const customerList = () => {
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
                 <div className={`col-6 text-left`}>
-                <label class="checkbox-inline"><input type="checkbox" value="" /></label>
-                  <label>Muhammad Shaheer </label>
-                </div>
-                <div className={`col-3`} >
-                  <Button name="Delete" icon="fa fa-map-marker" />
-                </div>
-                <div className={`col-3 justify-content-end ${style.fr}`}>
-                  <p><Button name="Edit" icon="fa fa-edit" /></p>
-                </div>
-
-              </div>
-            </li>
-          </div>
-          <div className={style.li}>
-            <li class=" checkbox list-group-item">
-              <div className="row justify-content-around">
-                <div className={`col-6 text-left`}>
-                <label class="checkbox-inline"><input type="checkbox" value="" /></label>
-                  <label>Muhammad Shaheer Abbas</label>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer</label>
+                  </span>
                 </div>
                 <div className={`col-3`} >
                   <Button name="Delete" icon="fa fa-map-marker" />

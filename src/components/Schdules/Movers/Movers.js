@@ -3,106 +3,95 @@ import style from './Movers.module.css'
 import SideBar from '../../Sidebar/SideBar'
 
 const MoversSchedule = () => {
-    return <div className={`row ${style.toprow}`}>
-        <div className="col-1">
-            <SideBar name1="Unavailable" name2="Daily Schedule" name3="Movers" />
-        </div>
-        <div className="col-8">
-            <h3 className={style.head}>Daily Schedule</h3>
-            <div className={style.lists}>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Monday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Tuesday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Wednesday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Thursday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Friday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Saturday</a>
-                    </li>
-                    <li class={`nav-item ${style.items}`}>
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Sunday</a>
-                    </li>
-                </ul>
-            </div>
 
+    const routes = [{
+        title: "Unavailable",
+        path: "/schedule",
+        icon: <img src='/images/pin.png' width="20px"></img>
+    },
+    {
+        title: "Daily Schedule",
+        path: "daily",
+        icon: <img src='/images/Icon material-schedule.png' width="20px"></img>
+
+    }, {
+        title: "Movers",
+        path: "/schedule/Movers",
+        icon: <img src='/images/truck.png' width="20px"></img>
+
+    }
+    ]
+
+    return <div className={`row ${style.toprow}`}>
+        <div className="col-2">
+            <SideBar routes={routes} />
+        </div>
+        <div className="col-6">
+            <h3 className={style.head}>Movers</h3>
 
             <div className={`list-group ${style.list}`}>
+                <div className = {style.mar}>
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 ${style.name}`}>Job Name</h5>
-                        <small><button><i class="fa fa-group"></i></button></small>
+                        <h5 className={`mb-1 ${style.name}`}>Thoma</h5>
+                        <small>Crew Leader</small>
                     </div>
                     <div className={style.para}>
-                        <h5><span class="badge badge-primary">Packing</span></h5>
+                        <p class="mb-1">Everyday</p>
                     </div>
-                </a>
+                </a>  
+                </div>   
+                <div className = {style.mar}>
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 ${style.name}`}>Job Name</h5>
-                        <small><button><i class="fa fa-group"></i></button></small>
+                        <h5 className={`mb-1 ${style.name}`}>Jc</h5>
+                        <small>Crew Leader if needed</small>
                     </div>
                     <div className={style.para}>
-                        <h5><span className={`badge badge-primary ${style.badge}`}>Packing</span>
-                            <span className={`badge badge-primary ${style.badge}`}>Loading/Unloading</span></h5>
+                        <p class="mb-1">Sat - Sunday -- Off Day</p>
                     </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                </a>    
+                </div>
+                <div className = {style.mar}>
+                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 ${style.name}`}>Job Name</h5>
-                        <small><button><i class="fa fa-group"></i></button></small>
+                        <h5 className={`mb-1 ${style.name}`}>Josh</h5>
+                        <small>Mover Helper</small>
                     </div>
                     <div className={style.para}>
-                        <h5><span className={`badge badge-primary ${style.badge}`}>Packing</span>
-                            <span className={`badge badge-primary ${style.badge}`}>Loading/Unloading</span></h5>
+                        <p class="mb-1">Everyday</p>
                     </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                </a>  
+                </div>
+                   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 ${style.name}`}>Job Name</h5>
-                        <small><button><i class="fa fa-group"></i></button></small>
+                        <h5 className={`mb-1 ${style.name}`}>Monte</h5>
+                        <small>New Employee</small>
                     </div>
                     <div className={style.para}>
-                        <h5><span className={`badge badge-primary ${style.badge}`}>Packing</span>
-                            <span className={`badge badge-primary ${style.badge}`}>Loading/Unloading</span></h5>
+                        <p class="mb-1">Everyday</p>
                     </div>
                 </a>
             </div>
 
         </div>
-        <div className={`col-3 ${style.mov}`}>
-            <h3 className = {style.movehead}>Movers</h3>
-            <h6 className = {style.movname}>Mover Name</h6>
-            <span className='badge badge-primary'>Mon</span>
-            <span className='badge badge-primary'>Tue</span>
-            <span className='badge badge-primary'>Wed</span>
-            <span className='badge badge-light'>Thur</span>
-            <span className='badge badge-light'>Fri</span>
-            
-            <h6 className = {style.movname}>Mover Name</h6>
-            <span className='badge badge-primary'>Mon</span>
-            <span className='badge badge-primary'>Tue</span>
-            <span className='badge badge-light'>Wed</span>
-            <span className='badge badge-light'>Thur</span>
-            <span className='badge badge-light'>Fri</span>
-            
-            <h6 className = {style.movname}>Mover Name</h6>
-            <span className='badge badge-primary'>Mon</span>
-            <span className='badge badge-light'>Tue</span>
-            <span className='badge badge-light'>Wed</span>
-            <span className='badge badge-primary'>Thur</span>
-            <span className='badge badge-primary'>Fri</span>
+        <div className={`col-3 ${style.btn}`}>
+            <div class="dropdown">
+                <button class={`btn btn-primary dropdown-toggle ${style.drop}`} type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Crew Leader
+        </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Crew Leader</a>
+                    <a class="dropdown-item" href="#">Crew Leader in training</a>
+                    <a class="dropdown-item" href="#">Mover</a>
+                    <a class="dropdown-item" href="#">New Employee</a>
+                    <a class="dropdown-item" href="#">On Vacation</a>
+                    <a class="dropdown-item" href="#">Reserve</a>
+                </div>
+            </div>
         </div>
     </div>
+
 }
 
 export default MoversSchedule

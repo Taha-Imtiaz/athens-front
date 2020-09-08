@@ -9,14 +9,15 @@
     margin-left: 17%;
     margin-right: 5%;
     margin-bottom: 5%;
+    text-align: left;
 }
 
 .para{
     text-align: left;
 }
 
-.name{
-    margin-right: 70%;
+.input{
+    padding-left: 10px;
 }
 
 .lightc{

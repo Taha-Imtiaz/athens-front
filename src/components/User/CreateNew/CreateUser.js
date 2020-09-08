@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import style from './CreateUser.module.css'
+import Button from '../../Button/Button'
+
 
 class CreateUser extends Component {
     render() {
@@ -53,9 +55,9 @@ class CreateUser extends Component {
                             <div class="form-group">
                                 <input type="email" class="form-control" id="address" placeholder="Address" aria-describedby="emailHelp" />
                             </div>
-
-                            <button type="submit" className={`btn btn-primary`}>Submit</button>
-
+                            <div className = {style.mb}>
+                            <Button name = "Delete"/>
+                            </div>
                         </form>
 
 

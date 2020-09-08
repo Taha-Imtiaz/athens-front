@@ -12,11 +12,11 @@ const CustomerDeposit2 = () => {
                 <input className={style.input_fields} type="text" id="blanket" placeholder="Blanket Size" />
             </div>
             <div className="col-1">
-                <div class="dropdown">
-                    <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div className={`dropdown ${style.drop}`}>
+                    <button className={`btn btn-primary dropdown-toggle ${style.drop}`} type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Rent
   </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>

@@ -96,11 +96,11 @@ class NewClaim extends Component {
     </div>
 
     
-    
-    </form>
-    </div>
     <div className = {style.btn}>
         <Button name = "Submit"/>
+    </div>
+    
+    </form>
     </div>
 
 </div>

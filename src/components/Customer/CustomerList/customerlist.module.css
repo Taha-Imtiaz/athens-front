@@ -55,3 +55,17 @@
     float: right;
     display: flex;
 }
+
+.input{
+    margin-left: 5px;
+}
+
+.create{
+    float: left;
+}
+
+.del{
+    float: right;
+    margin-right: 30%;
+}
+

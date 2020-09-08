@@ -2,15 +2,25 @@ import React from 'react'
 import Navbar from '../../Navbar/Navbar'
 import style from './customerdetail.module.css'
 import Button from '../../Button/Button'
+import SideBar from '../../Sidebar/SideBar'
+
 
 const customerDetail = () => {
+
+  const routes = [{
+    title: "Claims",
+    path: "/"
+  },
+  {
+    title: "Blanket Deposit",
+    path: "daily"
+  }
+  ]
+
   return <div>
     <div className="row">
       <div className="col-2">
-        <div class={style.sidebar}>
-          <a class="active" href="#claim">Claim</a>
-          <a href="#blanket_deposit">Blanket Deposit</a>
-        </div>
+      <SideBar routes={routes} />
       </div>
       <div className="col-6">
         <div className={style.head}>
@@ -90,15 +100,15 @@ const customerDetail = () => {
       </div>
       <div className="row">
         <div class="col-4">
-          <p className = {style.p}>7-July 10  |  10am - 2pm</p>
-          <p className = {style.p}>Packing/loading/Unloading</p>
+          <p className={style.p}>7-July 10  |  10am - 2pm</p>
+          <p className={style.p}>Packing/loading/Unloading</p>
         </div>
       </div>
       <div>
         <h4 className={style.notesh}>Notes</h4>
         <p className={style.notesd}>ajsbfjbdnsandkvnlksdnf.nasknvnsvm,.sdmv</p>
       </div>
-     <Button name = "Add Note"/>
+      <Button name="Add Note" />
 
     </div>
     <br />

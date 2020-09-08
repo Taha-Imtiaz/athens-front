@@ -85,7 +85,7 @@ class CreateJobs extends Component {
                         <div className="col-8">
                             <div class="form-group">
                                 <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class={`btn btn-primary dropdown-toggle ${style.color}`} type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Select Assignee
   </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -98,7 +98,7 @@ class CreateJobs extends Component {
 
                         </div>
                         <div className="col-4">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" className={`btn btn-primary ${style.color}`}>Submit</button>
 
                         </div>
                     </div>

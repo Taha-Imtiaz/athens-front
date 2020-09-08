@@ -1,17 +1,39 @@
 .jumbotron{
-    width: 100%;
-    background-color: #e9f2eb;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* background-color: #e9f2eb; */
     margin-top: 2%;
 }
 
 .btndel{
-    margin-left: 10%;
+    margin-right: 100%;
 }
 
 .head{
     margin-top: 2%;
+    text-align: left;
+    margin-left: 10%;
 }
 
 .btn2{
-    margin-left: 10%;
+    /* margin-left: 5%; */
+    float: right;
+    margin-right: 10%;
+    margin-top: 2%;
+    
+}
+
+.color{
+    background-color: #00ADEE !important;
+}
+
+.li{
+    margin-bottom: 1%;
+    border: 1px solid lightgrey;
+    box-shadow: 0px 2px lightgrey;
+}
+
+.assignee{
+    margin-left: 5px;
 }

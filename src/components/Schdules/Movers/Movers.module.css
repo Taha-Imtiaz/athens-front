@@ -1,37 +1,41 @@
-.items{
-    margin-left: 2%;
-}
-
-.lists{
-    margin-left: 15%;
-    margin-top: 5%;
+.head{
+    margin-right: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
 }
 
 .list{
-    width: 80%;
-    margin-left: 18%;
-    margin-right: 3%;
+    width: 78%;
+    margin-left: 17%;
+    margin-right: 5%;
     margin-bottom: 5%;
 }
 
 .para{
     text-align: left;
-    /* margin-left: 1%; */
 }
 
-.badge{
+.name{
+    margin-right: 70%;
+}
+
+.lightc{
+    color: silver;
+    font-size: 15px;
+}
+
+.btn{
+    margin-top: 2%;
     margin-left: 1%;
-
 }
 
-.movehead{
-    margin-top: 5%;
+.mar{
+    margin-bottom: 1%;
 }
 
-.movname{
-    margin-top: 10%;
+.drop{
+    background-color:#00ADEE !important;
 }
 
-.mov{
-    border-left: 1px solid rgb(223, 214, 214);
-}
+
+

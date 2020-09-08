@@ -20,10 +20,8 @@ const Navbar = (props) => {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul className={`navbar-nav mr-auto`}>
 
-                </ul>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ml-auto">
                     <li className={getNavLinkClass("/customer")}>
                         <Link className={`nav-link`} to="/customer">
                             Customer
@@ -41,7 +39,7 @@ const Navbar = (props) => {
                         </Link>
                     </li>
                     <li className={getNavLinkClass("/users")}>
-                        <Link className="nav-link" to="/users">
+                        <Link className="nav-link" to="/user">
                             Users
                         </Link>
                     </li>

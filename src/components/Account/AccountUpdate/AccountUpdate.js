@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from './AccountUpdate.module.css'
-
+import Button from '../../Button/Button'
 
 class AccountUpdate extends Component {
     render() {
@@ -18,7 +18,7 @@ class AccountUpdate extends Component {
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" placeholder="Enter Password" />
                     </div>
-                    <button type="submit" className={`btn btn-primary ${style.btncustom}`}>Update</button>
+                    <Button name = "Update"/>
                 </form>
                 </div>
             </div>

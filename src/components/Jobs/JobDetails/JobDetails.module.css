@@ -21,6 +21,7 @@
 .badges{
     margin-left: 2%;
     margin-top: 3%;
+    background-color: #00ADEE !important;
 }
 
 .btncustom{
@@ -29,6 +30,7 @@
 }
 
 .btnCustom{
+    background-color: #00ADEE !important;
     margin-left: 3%;
 }
 

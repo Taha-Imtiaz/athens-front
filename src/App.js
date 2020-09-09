@@ -27,6 +27,8 @@ import CreateUser from './components/User/CreateNew/CreateUser';
 import UsersList from './components/User/UsersList/UsersList';
 import AccountDisplay from './components/Account/AccountDisplay/AccountDisplay';
 import AccountUpdate from './components/Account/AccountUpdate/AccountUpdate';
+import MoversJobDetails from './components/Movers/JobDetails/JobDetails';
+import Payment from './components/Movers/Payment/Payment';
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
       <Route path="/user/create" component={CreateUser}/>
       <Route exact path="/account" component={AccountDisplay}/>
       <Route path="/account/update" component={AccountUpdate}/>
+      <Route exact path="/movers" component={MoversJobDetails}/>
+      <Route path="/movers/payment" component={Payment}/>
 
       </Switch>
   </div>

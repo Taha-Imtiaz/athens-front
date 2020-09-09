@@ -5,9 +5,15 @@ import Button from '../../Button/Button'
 
 const UsersList = () => {
     return <div>
-        <h3 className={style.head}>Users List</h3>
-        <div className={style.btndel}>
-            <Button name="Delete" icon="fa fa-trash" />
+        <div className="row">
+            <div className="col-6">
+                <h3 className={style.head}>Users List</h3>
+            </div>
+            <div className="col-6">
+                <div className={style.btndel}>
+                    <Button name="Delete" icon="fa fa-trash" />
+                </div>
+            </div>
         </div>
         <div className={style.jumbotron}>
             <div>

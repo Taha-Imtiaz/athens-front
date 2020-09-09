@@ -33,20 +33,24 @@ class SignInForm extends React.Component {
     }
   }
 
-  usernameChangeHandler = (event) => {
-    let uname = event.target.value
-    if (uname == "") {
-      alert('Fill this Field')
-    }
-    this.setState({ username: uname })
+  // usernameChangeHandler = (event) => {
+  //   let uname = event.target.value
+  //   if (uname == "") {
+  //     alert('Fill this Field')
+  //   }
+  //   this.setState({ username: uname })
+  // }
+
+  // passwordChangeHandler = (event) => {
+  //   let pwd = event.target.value
+
+  //   this.setState({ password: pwd })
+  // }
+
+  handleFormInput = (event) => {
+    var { name, value } = event.target
+    this.setState({ [name]: value })
   }
-
-  passwordChangeHandler = (event) => {
-    let pwd = event.target.value
-
-    this.setState({ password: pwd })
-  }
-
 
   render() {
     if (this.state.loggedIn) {
@@ -56,16 +60,21 @@ class SignInForm extends React.Component {
       <div className={style.jumbotron}>
         <form onSubmit={this.mySubmitHandler}>
           <h1 className={style.head}>Sign In</h1>
-          <input className={style.input_fields} type="text" placeholder="Email Address" onChange={this.usernameChangeHandler} />
-          <br />
-          <input className={style.input_fields} type="password" id="pwd" placeholder="Password" onChange={this.passwordChangeHandler} />
-          <br />
+          <div className={style.userInput}>
+            <label className = {style.labell}>Username</label><br />
+            <input className={style.input_fields} type="text" name="username" onChange={this.handleFormInput} />
+          </div>
+
+          <div className={style.pwd}>
+            <label className = {style.labell}>Password</label><br />
+            <input className={style.input_fields} type="password" name="password" id="pwd" onChange={this.handleFormInput} />
+          </div>
+
           <button type='submit' className={style.button}>Sign In</button>
           <h3 className={style.heading}>Or Login With</h3>
           <div className="btnStyle">
-            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-google"></i></button>
-            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-twitter"></i></button>
-            <button className={`btn btn-primary ${style.btn}`}><i className="fa fa-facebook"></i></button>
+            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>
+            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-facebook"></i></button>
           </div>
         </form>
       </div>

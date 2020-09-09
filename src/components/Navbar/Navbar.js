@@ -14,8 +14,9 @@ const Navbar = (props) => {
 
     return (
         <nav className={`navbar navbar-expand-md navbar-light ${style.elevation}`}>
-            <a class="navbar-brand" href="#">
-                <img src='/images/movers-logo.jpg' width="60px"></img> </a>
+            <Link className={`navbar-brand ${style.logo}`} to="/customer">
+            <img src='/images/movers-logo.jpg' width="60px"></img>
+                        </Link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,7 +39,7 @@ const Navbar = (props) => {
                             Schedule
                         </Link>
                     </li>
-                    <li className={getNavLinkClass("/users")}>
+                    <li className={getNavLinkClass("/user")}>
                         <Link className="nav-link" to="/user">
                             Users
                         </Link>

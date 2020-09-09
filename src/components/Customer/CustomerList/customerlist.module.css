@@ -54,6 +54,7 @@
 .fr{
     float: right;
     display: flex;
+    transform: translateY(0.5rem);
 }
 
 .input{
@@ -67,5 +68,11 @@
 .del{
     float: right;
     margin-right: 30%;
+}
+
+.flex{
+    display: flex;
+    justify-content: start;
+    align-items: center; 
 }
 

@@ -13,7 +13,7 @@ const SideBar = (props) => {
           <div className = "col-2">
           {x.icon}
           </div>
-          <div className = "col-1">
+          <div className = {`col-10`}>
           {x.title}
           </div>
           </div>

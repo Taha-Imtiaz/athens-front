@@ -3,6 +3,7 @@ import Navbar from '../../Navbar/Navbar'
 import style from './customerlist.module.css'
 import SearchBar from '../../SearchBar/SearchBar'
 import Button from '../../Button/Button'
+import { Link } from 'react-router-dom'
 
 const customerList = () => {
   return <div>
@@ -15,7 +16,7 @@ const customerList = () => {
       </div>
       <div className="col-3">
         <div className={style.create}>
-          <Button name="Create New" />
+         <Link style = {{textDecoration:"none"}} to='/customer/add'> <Button name="Create New" /></Link>
         </div>
         <div className={style.del}>
           <Button name="Delete" icon="fa fa-trash" />
@@ -28,16 +29,16 @@ const customerList = () => {
     <div className={style.jumbotron}>
       <div>
         <ul class="list-group">
-          <div className={style.li}>
+          <div className={`${style.li}`}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left`}>
+                <div className={`col-6 text-left ${style.flex}`}>
                   <span>
                     <input type="checkbox" id="defaultCheck1" value="" />
                     <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
                   </span>
                 </div>
-                <div className={`col-3`} >
+                <div className={`col-3 ${style.flex}`} >
                   <Button name="Delete" icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-3 justify-content-end ${style.fr}`}>
@@ -51,13 +52,13 @@ const customerList = () => {
           <div className={style.li}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left`}>
+                <div className={`col-6 text-left ${style.flex} `}>
                   <span>
                     <input type="checkbox" id="defaultCheck1" value="" />
                     <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad</label>
                   </span>
                 </div>
-                <div className={`col-3`} >
+                <div className={`col-3 ${style.flex}`} >
                   <Button name="Delete" icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-3 justify-content-end ${style.fr}`}>
@@ -70,13 +71,13 @@ const customerList = () => {
           <div className={style.li}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left`}>
+                <div className={`col-6 text-left ${style.flex}`}>
                   <span>
                     <input type="checkbox" id="defaultCheck1" value="" />
                     <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer</label>
                   </span>
                 </div>
-                <div className={`col-3`} >
+                <div className={`col-3 ${style.flex}`} >
                   <Button name="Delete" icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-3 justify-content-end ${style.fr}`}>

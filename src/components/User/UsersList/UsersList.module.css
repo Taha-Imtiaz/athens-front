@@ -26,13 +26,15 @@
 
 .head{
     margin-top: 2%;
-    /* float: left; */
-    margin-right: 82%;
+    float: left;
+    margin-left: 10%;
     margin-bottom: 2%;
 }
 
 .btndel{
-    margin-left: 5%;
+    float: right;
+    margin-right: 10%;
+    margin-top: 3%;
 }
 
 .fr{

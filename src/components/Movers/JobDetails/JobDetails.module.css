@@ -1,0 +1,53 @@
+.main{
+    text-align: left;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.topbtn{
+  display:flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.title{
+    float: left;
+}
+
+.toprow{
+    margin-top: 10px;
+}
+
+.badges{
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #00ADEE
+}
+
+.head{
+    margin-top: 30px;
+}
+
+.badges2{
+    padding: 15px 10px;
+    margin-left: 5px;
+    background-color: #00ADEE;
+}
+
+.btnrow{
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.onlinebtn{
+    transform: translateX(-22rem);
+}
+
+.cardwidth{
+    width: 90%;
+}
+
+.carddetail{
+    width: 40%;
+}

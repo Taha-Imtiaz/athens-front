@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 /* .heading{
   margin-left: 40%;
 } */
 
 .form_style{
   /* margin-left: 45%; */
+  font-family: 'Roboto', sans-serif;
   text-align: center;
 }

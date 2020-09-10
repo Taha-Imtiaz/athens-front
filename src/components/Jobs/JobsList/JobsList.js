@@ -6,8 +6,11 @@ import Button from '../../Button/Button'
 
 import "react-datepicker/dist/react-datepicker.css";
 
+const width = window.innerWidth
 
 class JobsList extends Component {
+
+
   state = {
     startDateTo1: "",
     startDateTo2: "",
@@ -42,7 +45,7 @@ class JobsList extends Component {
 
   render() {
     return (
-      <div>
+      <div className = {style.toprow}>
         <div className="row">
           <div className="col-6">
             <h3 className={style.head}>Jobs List Page</h3>
@@ -58,11 +61,7 @@ class JobsList extends Component {
                   </div>
                 </div>
 
-                <div className="col-6">
-                  <div className={style.btnedit}>
-                    <Button name="Edit" icon="fa fa-edit" />
-                  </div>
-                </div>
+
               </div>
             </div>
 
@@ -76,33 +75,33 @@ class JobsList extends Component {
             <div className={style.li}>
               <li class=" checkbox list-group-item ">
                 <div className="row justify-content-around">
-                  <div className="col-2 text-left">
+                  <div className="col-4 col-md-2 text-left">
                     <label>Job</label>
                   </div>
-                  <div className="col-3">
-                    <button className={`btn btn-primary ${style.color}`}><i className="fa fa-calendar"> <DatePicker className={style.to}
-                      selected={this.state.startDateTo1}
-                      onChange={this.handleChangeTo1}
-                      placeholderText="To"
-                    /> </i></button>
+                  <div className="col-4 col-md-2">
+                    <i className="fa fa-calendar"> 0/12/2020</i>
                   </div>
-                  <div className="col-3">
+                  <div className="col-4 col-md-3">
                     <span>
                       <i className="fa fa-user"></i>
                       <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">Assignee</label>
                     </span>
                   </div>
-                  <div className="col-3">
+                  <div className="col-4 col-md-2">
                     <label>Grand Piano</label>
                   </div>
-                  <div className="col-1">
+                  <div className="col-4 col-md-1">
                     <label>Status</label>
                   </div>
+                  <div className="col-4 col-md-1">
+                    <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                  </div>
+
 
                 </div>
               </li>
             </div>
-            <div className={style.li}>
+            {/* <div className={style.li}>
               <li class=" checkbox list-group-item ">
                 <div className="row justify-content-around">
                   <div className="col-2 text-left">
@@ -161,9 +160,9 @@ class JobsList extends Component {
 
                 </div>
               </li>
-            </div>
+            </div> */}
 
-            <div className={style.li}>
+            {/* <div className={style.li}>
               <li class=" checkbox list-group-item ">
                 <div className="row justify-content-around">
                   <div className="col-2 text-left">
@@ -191,7 +190,7 @@ class JobsList extends Component {
 
                 </div>
               </li>
-            </div>
+            </div> */}
 
           </ul>
 

@@ -1,6 +1,7 @@
 .toprow{
     margin-top: 1%;
     margin-bottom: 1%;
+    margin-left: 2px;
 }
 
 .fluid-container{
@@ -23,13 +24,12 @@
 
 .jumbotron{
     margin: auto !important;
-    padding: 5%;
-    margin-top: 2%;
+    padding: 2%;
 }
 
-.head{
-    margin-top: 3%;
-}
+/* .head{
+    margin: 15px;
+} */
 
 .btndel{
     float: left;
@@ -62,12 +62,13 @@
 }
 
 .create{
-    float: left;
+margin-right: 5px;
 }
 
 .del{
     float: right;
     margin-right: 30%;
+    display: flex;
 }
 
 .flex{
@@ -76,3 +77,51 @@
     align-items: center; 
 }
 
+.buttons{
+    margin-right: 2%;
+    margin-top: 2%;
+}
+
+.search{
+    width: 10%;
+}
+
+@media only screen and (max-width:1250px){
+    html{
+        font-size: 80%;
+    }
+}
+
+@media only screen and (max-width:500px){
+    html{
+        font-size: 75%;
+    }
+
+    .del{
+        float: right;
+        margin-right: 12%;
+    }
+
+    .head{
+        font-size: 18px;
+        margin-left: 5px;
+    }
+
+    .toprow{
+        margin-top: 3%;     
+    }
+
+    .buttons{
+        margin-right: 5%;
+        margin-top: 5%;
+    }
+    
+    .jumbotron{
+        margin: auto !important;
+        padding: 5%;
+    }
+
+    .li{
+        margin-bottom: 2%;
+    }
+}

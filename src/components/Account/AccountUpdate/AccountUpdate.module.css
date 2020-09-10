@@ -10,6 +10,19 @@
     margin-top: 5%;
 }
 
-.btncustom{
+.btn{
     float: left;
+    margin-top: 1%;
+}
+
+@media only screen and (max-width: 500px) {
+    .form{
+        width: 70%;
+        margin-left: 10%;
+        margin-top: 5%;
+    }   
+
+    .btn{
+        margin-top: 2%;
+    }
 }

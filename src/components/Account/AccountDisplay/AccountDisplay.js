@@ -18,7 +18,7 @@ const AccountDisplay = () => {
                 <li class="list-group-item"><span>Password: </span>*******</li>
             </ul>
             <div class="card-body">
-
+                
                 <Button name="Edit" />
             </div>
         </div>

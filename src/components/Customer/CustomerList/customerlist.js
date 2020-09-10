@@ -6,87 +6,96 @@ import Button from '../../Button/Button'
 import { Link } from 'react-router-dom'
 
 const customerList = () => {
+  const width = window.innerWidth
+  console.log(width)
   return <div>
-    <div className={`row ${style.toprow}`}>
-      <div className="col-3">
-        <h3 className={style.head}>Customer List</h3>
+    <div className={`row justify-content-center ${style.toprow}`}>
+
+      <div className="col-5 col-md-4">
+        <b><h3 className={style.head}>Customer List</h3></b>
+
       </div>
-      <div className="col-6">
+
+      <div className={`col-7 col-md-8 ${style.search}`}>
         <SearchBar />
       </div>
-      <div className="col-3">
-        <div className={style.create}>
-         <Link style = {{textDecoration:"none"}} to='/customer/add'> <Button name="Create New" /></Link>
-        </div>
-        <div className={style.del}>
-          <Button name="Delete" icon="fa fa-trash" />
-        </div>
-      </div>
-    </div>
-    <div className={style.btndel}>
+
 
     </div>
+
+    <div className={`d-flex justify-content-end ${style.buttons}`}>
+
+      <div className={` ${style.create}`}>
+        <Link style={{ textDecoration: "none" }} to='/customer/add'> <Button name="Create New" /></Link>
+      </div>
+      <Button name="Delete" />
+    </div>
+
+
     <div className={style.jumbotron}>
       <div>
         <ul class="list-group">
           <div className={`${style.li}`}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left ${style.flex}`}>
+                <div className={`col-8 text-left ${style.flex}`}>
                   <span>
                     <input type="checkbox" id="defaultCheck1" value="" />
                     <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
                   </span>
                 </div>
-                <div className={`col-3 ${style.flex}`} >
-                  <Button name="Delete" icon="fa fa-map-marker" />
+                <div className={`col-2 ${style.flex}`} >
+                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
                 </div>
-                <div className={`col-3 justify-content-end ${style.fr}`}>
-                  <p><Button name="Edit" icon="fa fa-edit" /></p>
+                <div className={`col-2 justify-content-end ${style.fr}`}>
+                  <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
                 </div>
 
               </div>
             </li>
           </div>
 
-          <div className={style.li}>
+          <div className={`${style.li}`}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left ${style.flex} `}>
+                <div className={`col-8 text-left ${style.flex}`}>
                   <span>
-                    <input type="checkbox" id="defaultCheck1" value="" />
-                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad</label>
+                    <input type="checkbox" id="defaultCheck2" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck2">Muhammad Shaheer Abbas</label>
                   </span>
                 </div>
-                <div className={`col-3 ${style.flex}`} >
-                  <Button name="Delete" icon="fa fa-map-marker" />
+                <div className={`col-2 ${style.flex}`} >
+                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
                 </div>
-                <div className={`col-3 justify-content-end ${style.fr}`}>
-                  <p><Button name="Edit" icon="fa fa-edit" /></p>
+                <div className={`col-2 justify-content-end ${style.fr}`}>
+                  <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
                 </div>
 
               </div>
             </li>
           </div>
-          <div className={style.li}>
+
+          <div className={`${style.li}`}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
-                <div className={`col-6 text-left ${style.flex}`}>
+                <div className={`col-8 text-left ${style.flex}`}>
                   <span>
-                    <input type="checkbox" id="defaultCheck1" value="" />
-                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer</label>
+                    <input type="checkbox" id="defaultCheck3" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck3">Muhammad Shaheer Abbas</label>
                   </span>
                 </div>
-                <div className={`col-3 ${style.flex}`} >
-                  <Button name="Delete" icon="fa fa-map-marker" />
+                <div className={`col-2 ${style.flex}`} >
+                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
                 </div>
-                <div className={`col-3 justify-content-end ${style.fr}`}>
-                  <p><Button name="Edit" icon="fa fa-edit" /></p>
+                <div className={`col-2 justify-content-end ${style.fr}`}>
+                  <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
                 </div>
 
               </div>
             </li>
           </div>
+
+         
         </ul>
       </div>
     </div>

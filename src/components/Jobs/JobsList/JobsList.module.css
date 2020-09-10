@@ -1,3 +1,7 @@
+.toprow{
+    margin-top: 1%;
+}
+
 .jumbotron{
     width: 90%;
     margin-left: 5%;
@@ -8,6 +12,7 @@
 
 .btndel{
     margin-right: 100%;
+    margin-top: 5%;
 }
 
 .head{
@@ -36,4 +41,15 @@
 
 .assignee{
     margin-left: 5px;
+}
+
+
+@media only screen and (max-width:500px){
+    html{
+        font-size: 75%;
+    }
+
+    .toprow{
+        margin-top: 3%;
+    }
 }

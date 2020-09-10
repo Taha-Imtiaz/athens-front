@@ -4,3 +4,14 @@
     margin-left: 5%;
     text-align: left;
 }
+
+
+@media only screen and (max-width: 500px) {
+    .acc{
+        margin-top: 5%;
+        float: left;
+        margin-left: 5%;
+        text-align: left;
+    }
+    
+}

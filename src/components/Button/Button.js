@@ -3,7 +3,7 @@ import style from './Button.module.css'
 
 const Button = (props) => {
     return <div>
-        <button className={`btn btn-primary ${style.btnCustom}`}>{props.name}&nbsp;<i className={props.icon}></i></button>
+        <button className={`btn btn-primary mx-auto ${style.btnCustom}`}>{props.name}&nbsp;<i className={props.icon}></i></button>
     </div>
 }
 

@@ -7,7 +7,7 @@ const SearchBar = () => {
         console.log(e.target.value);
       }
 
-    return <div>
+    return <div className = {style.width}>
         <div class="input-group">
             <input className="form-control py-2 rounded-pill mr-1 pr-5" type="search" value="search" onChange={handleChange} />
             <span className="input-group-append">

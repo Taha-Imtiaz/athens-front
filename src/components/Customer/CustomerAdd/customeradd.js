@@ -4,41 +4,41 @@ import style from './customeradd.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
 
-const customerAdd = ()=>{
+const customerAdd = () => {
     return <div>
-    <div className={style.jumbotron}>
-    
-        <h3 className={style.head}>Create New Customer</h3> 
-    <div className={style.container}>
-        <form>
-        <div class="form-group">
-    <label for="exampleInputEmail1">Customer Name</label>
-    <input type="input" class="form-control" id="name" aria-describedby="emailHelp"/>
-    </div>
-    <div class="form-group">
-    <label for="exampleInputEmail1">Phone Number</label>
-    <input type="input" class="form-control" id="phone_number" aria-describedby="emailHelp"/>
-    </div>
-     <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    </div>
-    </form>
-    <h3>Sub Contact</h3>
-    <form>
-    <div class="form-group">
-    <label for="exampleInputEmail1">Phone Number</label>
-    <input type="input" class="form-control" id="phone_number" aria-describedby="emailHelp"/>
-    </div>
-     <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <Button name = "Submit"/>
-    </form>
-    </div>
-    </div>
+        <h3 className={style.head}>Create New Customer</h3>
+        <div className={`${style.jumbotron}`}>
+
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Customer Name</label>
+                    <input type="input" class="form-control" id="name" aria-describedby="emailHelp" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phone Number</label>
+                    <input type="input" class="form-control" id="phone_number" aria-describedby="emailHelp" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                </div>
+            </form>
+            <h3>Sub Contact</h3>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phone Number</label>
+                    <input type="input" class="form-control" id="phone_number" aria-describedby="emailHelp" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+            </form>
+            <div className={`d-flex justify-content-start`}>
+                <Button name="Submit" />
+            </div>
+        </div>
     </div>
 }
 export default customerAdd

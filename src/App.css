@@ -10,3 +10,7 @@
   /* text-align: center; */
 }
 
+.btn:hover {
+  background-color: #00ADEE !important;
+  text-decoration: none;
+  }

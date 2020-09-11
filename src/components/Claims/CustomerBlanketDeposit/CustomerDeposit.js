@@ -4,13 +4,25 @@ import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
 
 const CustomerDeposit = () => {
+
+  const routes = [{
+    title: "Claims",
+    path: "/claim/customer"
+  },
+  {
+    title: "Blanket Deposit",
+    path: "/claim/customerdeposit"
+  }
+  ]
+
+
   return <div>
-    {/* <SideBar name1="Claims" name2="Blanket Deposit" /> */}
     <div className="row">
-      <div className="col-4">
+      <div className="col-2">
+        <SideBar routes={routes} />
       </div>
-      <div className="col-4">
-        <h3 className = {style.head}>Blanket Deposit</h3>
+      <div className="col-6">
+        <h3 className={style.head}>Blanket Deposit</h3>
       </div>
       <div className="col-4">
         <div className={style.btn}>

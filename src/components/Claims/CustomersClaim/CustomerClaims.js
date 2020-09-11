@@ -2,17 +2,30 @@ import React from 'react'
 import style from './CustomerClaims.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
+import { Link } from 'react-router-dom'
 
 const CustomerClaims = () => {
+    const routes = [{
+        title: "Claims",
+        path: "/"
+    },
+    {
+        title: "Blanket Deposit",
+        path: "daily"
+    }
+    ]
+
     return <div>
-        {/* <SideBar name1="Claims" name2="Blanket Deposit" /> */}
         <div className="row">
-            <div className="col-6">
+            <div className="col-2">
+                <SideBar routes={routes} />
+            </div>
+            <div className="col-4">
                 <h3 className={style.head}>Claims</h3>
             </div>
             <div className="col-6">
                 <div className={style.btn}>
-                    <Button name="Add Claim" />
+                    <Link style={{ textDecoration: "none" }} to='/claim/newclaim'> <Button name="New Claim" /> </Link>
                 </div>
             </div>
         </div>

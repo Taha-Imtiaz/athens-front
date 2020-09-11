@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 const SideBar = (props) => {
   console.log(props)
+  const width = window.innerWidth
   return <div class={style.sidebar}>
 
     {
@@ -14,7 +15,8 @@ const SideBar = (props) => {
           {x.icon}
           </div>
           <div className = {`col-10`}>
-          {x.title}
+           {width < 576 ? "" : x.title}
+          
           </div>
           </div>
     </Link>

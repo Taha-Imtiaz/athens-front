@@ -22,10 +22,12 @@
     margin-bottom: 2%;
     background-color: #e9f2eb;
     width: 60%;
+    padding: 10px;
 }
 
 .head{
-    margin: auto;
+    margin-left: 20%;
+    margin-top: 3%;
 }
 
 .drop{

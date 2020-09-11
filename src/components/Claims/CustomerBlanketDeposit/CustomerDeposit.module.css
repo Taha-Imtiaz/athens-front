@@ -1,7 +1,7 @@
 .jumbotron{
     background-color: #fff;
-    width: 60%;
-    margin-left: 20%;
+    width: 75%;
+    margin-left: 18%;
     margin-right: 20%;
     margin-top: 1%;
     text-align: center;
@@ -9,8 +9,8 @@
 
 .myrow{
     margin-top: 5%;
-    width: 80%;
-    margin-left: 10%;
+    width: 100%;
+    margin-left: 19%;
     margin-right: 10%;
 }
 
@@ -20,4 +20,27 @@
 
 .head{
     margin-top: 2%;
+    /* margin-right: 10%; */
+    margin-left: 20%;
+}
+
+@media only screen and (max-width: 576px) {
+    .myrow{
+        margin-top: 5%;
+        width: 90%;
+        margin-left: 12%;
+        margin-right: 10%;
+    }
+
+    .btn{
+        margin-top: 10%;
+        margin-right: 10%;
+    }
+    
+    .head{
+        margin-top: 6%;
+        /* margin-right: 10%; */
+        margin-left: 20%;
+    }
+
 }

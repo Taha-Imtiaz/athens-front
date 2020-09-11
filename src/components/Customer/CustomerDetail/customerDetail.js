@@ -3,6 +3,7 @@ import Navbar from '../../Navbar/Navbar'
 import style from './customerdetail.module.css'
 import Button from '../../Button/Button'
 import SideBar from '../../Sidebar/SideBar'
+import { Link } from 'react-router-dom'
 
 
 const customerDetail = () => {
@@ -24,7 +25,7 @@ const customerDetail = () => {
       </div>
       <div className="col-6">
         <div className={style.head}>
-          <h2>Muhammad Shaheer Abbas</h2>
+          <h5>Muhammad Shaheer Abbas</h5>
           <label className={style.l1}>03312858185</label>
           <label className={style.l2}>shaheerabbas20@gmail.com</label>
         </div>
@@ -83,7 +84,7 @@ const customerDetail = () => {
     </div>
 
     <div className={style.btn}>
-      <Button name="Create Job" />
+     <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Create Job" /> </Link>
     </div>
 
     <div class={style.jumbotron}>

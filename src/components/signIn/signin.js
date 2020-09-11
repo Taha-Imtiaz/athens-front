@@ -72,7 +72,7 @@ class SignInForm extends React.Component {
 
           <button type='submit' className={style.button}>Sign In</button>
           <h3 className={style.heading}>Or Login With</h3>
-          <div className="btnStyle">
+          <div className={style.btnStyle}>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-facebook"></i></button>
           </div>

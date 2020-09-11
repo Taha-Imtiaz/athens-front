@@ -27,7 +27,7 @@ const DailySchedule = () => {
             <SideBar routes={routes} />
         </div>
         <div className={`col-7 justify-content-center ${style.fr}`}>
-            <h3 className={style.head}>Daily Schedule</h3>
+            <h5 className={style.head}>Daily Schedule</h5>
             <div className={style.lists}>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class={`nav-item ${style.items}`}>
@@ -99,7 +99,7 @@ const DailySchedule = () => {
 
         </div>
         <div className={`col-3 ${style.mov}`}>
-            <h3 className={style.movehead}>Movers</h3>
+            <h5 className={style.movehead}>Movers</h5>
             <h6 className={style.movname}>Mover Name</h6>
             <span className={`badge badge-primary ${style.color}`}>Mon</span>
             <span className={`badge badge-primary ${style.color}`}>Tue</span>

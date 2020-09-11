@@ -20,13 +20,22 @@ const UnavailableSchedule = () => {
         icon: <img src='/images/truck.png' width="20px"></img>
     }
     ]
-    return <div className={`row`}>
-        <div className="col-2">
+    return <div className={``}>
+        
+        <div className = "row">
+        <div className="col-2 col-md-2">
             <SideBar routes={routes} />
+            {/* <SideBar routes={width < 576 ? "" : {routes}} icon={routes.icon} /> */}
         </div>
-        <div className="col-8">
-            <h3 className={style.head}>Unavailable</h3>
-
+        <div className="col-10 col-md-10">
+        <div className = "row">
+            <div className = {`col-6 ${style.head}`}>
+               <h5>Unavailable</h5>
+            </div>
+            <div className = {`col-3 ${style.btn}`}>
+            <Button name="Approve" />
+            </div>
+        </div>
             <div className={`list-group ${style.list}`}>
                 <div className={style.sty}>
                     <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
@@ -88,9 +97,7 @@ const UnavailableSchedule = () => {
             </div>
 
         </div>
-        <div className={`col-2 ${style.btn}`}>
-            <Button name="Approve" />
-        </div>
+    </div>
     </div>
 }
 

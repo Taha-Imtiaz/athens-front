@@ -30,7 +30,7 @@ class CreateJobs extends Component {
         return (<div>
             <h3 className={style.head}>Create New Job</h3>
 
-            <div className={`jumbotron ${style.tron}`}>
+            <div className={`${style.tron}`}>
 
 
                 <form>
@@ -42,11 +42,13 @@ class CreateJobs extends Component {
                     </div>
 
                     <div class="form-group">
-                        <Multiselect
+                        <Multiselect className = {style.multi}
+
                             options={this.state.options} // Options to display in the dropdown
                             onSelect={this.onSelect} // Function will trigger on select event
                             onRemove={this.onRemove} // Function will trigger on remove event
                             displayValue="name" // Property name to display in the dropdown options
+                            class="form-control"
                         />
                     </div>
 
@@ -55,6 +57,7 @@ class CreateJobs extends Component {
                             selected={this.state.startDate}
                             onChange={this.handleChange}
                             placeholderText="Date"
+                            class="form-control"
                         />
                     </div>
 

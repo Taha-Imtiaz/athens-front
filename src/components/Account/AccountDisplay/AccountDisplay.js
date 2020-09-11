@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './AccountDisplay.module.css'
-import { Switch } from 'react-router-dom'
+import { Switch, Link } from 'react-router-dom'
 import AccountUpdate from '../AccountUpdate/AccountUpdate'
 import Button from '../../Button/Button'
 
@@ -19,7 +19,7 @@ const AccountDisplay = () => {
             </ul>
             <div class="card-body">
                 
-                <Button name="Edit" />
+            <Link style={{ textDecoration: "none" }} to='account/update'> <Button name="Edit" /> </Link>
             </div>
         </div>
     </div>

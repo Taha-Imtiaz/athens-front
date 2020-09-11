@@ -20,10 +20,10 @@ class JobEditDetails extends Component {
     render() {
         return (
             <div>
-                <h3>Job Details Edit</h3>
+                <h3 className = {style.head}>Job Details Edit</h3>
                 <div className="row">
                     <div className="col-8">
-                        <div className={`jumbotron ${style.tron}`}>
+                        <div className={`${style.tron}`}>
 
                             <form>
                                 <div className="form-group">
@@ -82,7 +82,7 @@ class JobEditDetails extends Component {
                     </div>
                     <div className="col-4">
                         <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button className={`btn btn-primary dropdown-toggle ${style.colors}`} type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Change Status
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -93,36 +93,36 @@ class JobEditDetails extends Component {
                         </div>
                     </div>
                 </div>
-                <div className={`jumbotron ${style.tron2}`}>
+                <div className={`${style.tron2}`}>
                     <h3 className={style.jobtag}>Job Description</h3>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
+                    <p className = {style.para}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
                 </div>
 
                 <h3 className = {style.assigneehead}>Assignees</h3>
                 <div className="row">
-                    <div className="col-6">
-                        <span class="badge badge-primary">Primary</span>
-                        <span className={`badge badge-primary ${style.badge}`}>Primary</span>
+                    <div className={`col-6 ${style.badge}`}>
+                        <span className={`badge badge-primary ${style.color}`}>Primary</span>
+                        <span className={`badge badge-primary ${style.color}`}>Primary</span>
 
                     </div>
-                    <div className = "col-6">
-                    <button className={`btn btn-primary`}><i className="fa fa-plus"></i></button>
+                    <div className = "col-1">
+                    <button className={`btn btn-primary ${style.color}`}><i className="fa fa-plus"></i></button>
                     </div>
                 </div>
         
 
-                <div className={`jumbotron ${style.tron2}`}>
+                <div className={`${style.tron2}`}>
                     <h3 className={style.jobtag}>Notes</h3>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
+                    <p className = {style.para}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
                     <div className="btnalign">
-                        <button type="submit" className="btn btn-primary">Delete</button>
+                        <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Delete</button>
                         <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button>
                     </div>
                 </div>
                 <div className={style.btnalign}>
-                    <button type="submit" className="btn btn-primary">Update</button>
+                    <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Update</button>
                     <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Reset</button>
                 </div>
             </div>

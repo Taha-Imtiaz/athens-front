@@ -3,9 +3,10 @@ import style from './JobDetails.module.css'
 import Button from '../../Button/Button'
 
 const JobDetails = () => {
+    const width = window.innerWidth
     return <div>
         <div className={`row ${style.toprow}`}>
-            <div className="col-3">
+            <div className="col-3 col-md-3">
                 <div className={`card ${style.cardCustom}`} >
                     <div class="card-body">
                         <h5 class="card-title">Customer</h5>
@@ -15,11 +16,11 @@ const JobDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-6">
+            <div className="col-6 col-md-5">
                 <div className={`container ${style.containerCustom}`}>
                     <h3 className={style.head}>Job Title</h3>
-                    <div className = {style.btn}>
-                    <Button name = "Status"/>
+                    <div className={style.btn}>
+                        <Button name="Status" />
                     </div>
                     <br />
                     <br />
@@ -35,14 +36,12 @@ const JobDetails = () => {
 
                 </div>
             </div>
-            <div className="col-3">
-        
-                    {/* <Button name = "Edit" icon = "fa fa-edit"/> */}
-                    {/* <Button name = "Delete" icon = "fa fa-trash"/> */}
-                   
-                    <button className={`btn btn-primary ${style.btnCustom}`}><i className="fa fa-edit"> Edit</i></button>
-                    <button className={`btn btn-primary ${style.btnCustom}`}><i className="fa fa-edit"> Delete</i></button>
-            
+            <div className={`col-3 d-flex justify-content-end col-md-3`}>
+                <div className={style.btns}>
+                    <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                </div>
+
+                <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" />
             </div>
         </div>
 
@@ -52,22 +51,22 @@ const JobDetails = () => {
         <div className={`row ${style.row2}`}>
             <div className="col-2">
                 <div className={`container ${style.cont}`}>
-                    <h5>Assignees</h5>
-                    <p>Assignee 1</p>
-                    <p>Assignee 2</p>
-                    <div className = {style.btncustom}>
-                    <Button name = "Activities"/>
+                    <h5 className={style.assigneehead}>Assignees</h5>
+                    <p className={style.assigneehead}>Assignee 1</p>
+                    <p className={style.assigneehead}>Assignee 2</p>
+                    <div className={style.btncustom}>
+                        <Button name="Activities" />
                     </div>
                 </div>
             </div>
             <div className="col-10">
-                <div className={`jumbotron ${style.jumbo}`}>
-                    <h6 className={style.jobHead}>Job Description</h6>
-                    <p>
+                <div className={`${style.jumbo}`}>
+                    <h3 className={style.jobHead}>Job Description</h3>
+                    <p className={style.para}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet odio et nulla bibendum mollis vitae nec lorem. Maecenas condimentum dapibus dolor, ac venenatis mauris fermentum vel. Donec sit amet orci non leo finibus vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum posuere mattis eros, quis mattis tortor porta ac. In ipsum libero, euismod ac est cursus, molestie fermentum magna. In semper velit.
                     </p>
-                    <h6>Notes</h6>
-                    <p>
+                    <h3 className={style.jobHead}>Notes</h3>
+                    <p className={style.para}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet odio et nulla bibendum mollis vitae nec lorem. Maecenas condimentum dapibus dolor
                     </p>
                     <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button>

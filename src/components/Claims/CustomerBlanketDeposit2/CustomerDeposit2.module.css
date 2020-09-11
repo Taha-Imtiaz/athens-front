@@ -6,7 +6,7 @@
 
 .head{
     margin-top: 3%;
-    margin-right: 63%;
+    margin-left: 10%;
 }
 
 .myrow{
@@ -31,4 +31,18 @@
 
 .in{
     margin-top: 0.2%;
+}
+
+@media only screen and (max-width: 576px) {
+    .btn{
+        float: left;
+        margin-left: 13%;
+        margin-top: 1%;
+     }
+
+     .head{
+        margin-top: 3%;
+        margin-left: 12%;
+    }
+
 }

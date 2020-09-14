@@ -45,7 +45,7 @@ const customerList = () => {
                   </span>
                 </div>
                 <div className={`col-2 ${style.flex}`} >
-                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
+                  <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-2 justify-content-end ${style.fr}`}>
                   <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
@@ -65,7 +65,7 @@ const customerList = () => {
                   </span>
                 </div>
                 <div className={`col-2 ${style.flex}`} >
-                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
+                  <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-2 justify-content-end ${style.fr}`}>
                   <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
@@ -85,7 +85,7 @@ const customerList = () => {
                   </span>
                 </div>
                 <div className={`col-2 ${style.flex}`} >
-                  <Button name={width < 576 ? "" : "Delete"} icon="fa fa-map-marker" />
+                  <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
                 </div>
                 <div className={`col-2 justify-content-end ${style.fr}`}>
                   <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>

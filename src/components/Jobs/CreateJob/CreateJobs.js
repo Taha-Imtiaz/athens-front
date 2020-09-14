@@ -42,8 +42,9 @@ class CreateJobs extends Component {
                     </div>
 
                     <div class="form-group">
-                        <Multiselect className = {style.multi}
+                        <Multiselect className={style.multi}
 
+                            singleSelect={true}
                             options={this.state.options} // Options to display in the dropdown
                             onSelect={this.onSelect} // Function will trigger on select event
                             onRemove={this.onRemove} // Function will trigger on remove event

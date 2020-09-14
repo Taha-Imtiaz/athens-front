@@ -6,25 +6,65 @@ import HeadingComponent from '../Headings/headings';
 import { Redirect } from 'react-router-dom';
 import SideBar from '../Sidebar/SideBar';
 import { Link } from 'react-router-dom'
+// import axios from 'axios'
+
+import API from '../../utils/api'
+
+const initialState = {
+  username: '',
+  password: '',
+  emailError: '',
+  passwordError: '',
+}
 
 
 class SignInForm extends React.Component {
   constructor(props) {
     super(props);
-    let loggedIn = false
-    this.state = { username: '', password: '', loggedIn }
+    // let loggedIn = false
+    this.state = initialState
+    // loggedIn }
+  }
+
+  validate = () => {
+    // var {username,password,emailError,passwordError} = this.state
+    let emailError = ''
+    let passwordError = ''
+
+    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!this.state.username.match(mailformat)) {
+      emailError = "Invalid Email"
+    }
+
+    if (!this.state.password) {
+      passwordError = "Password should not be empty"
+    }
+
+    if (emailError || passwordError) {
+      this.setState({ emailError, passwordError })
+      return false
+    }
+
+    return true
   }
 
   mySubmitHandler = (event) => {
-    // event.preventDefault();
-    // if (this.state.username == "") {
-    //   alert('fill this Field')
-    // }
-    // if (this.state.password == "") {
-    //   alert('fill this Field')
-    // }
-    // console.log("Username: " + this.state.username)
-    // console.log("Password: " + this.state.password)
+    event.preventDefault();
+
+    const isValid = this.validate()
+    if (isValid) {
+      console.log(this.state)
+      this.setState(initialState)
+
+      API.post(`posts`, this.state)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error =>{
+          console.log(error)
+        })
+    }
 
     // if (this.state.username === "S" && this.state.password == "abc") {
     //   localStorage.setItem("token", "abc")
@@ -58,28 +98,46 @@ class SignInForm extends React.Component {
   }
 
   render() {
-    if (this.state.loggedIn) {
-      return <Redirect to='/admin' />
-    }
+    // if (this.state.loggedIn) {
+    //   return <Redirect to='/admin' />
+    // }
     return (
       <div className={`text-center ${style.jumbotron}`}>
-        {/* <form onSubmit={this.mySubmitHandler}> */}
-        <form>
+        <form onSubmit={this.mySubmitHandler}>
+
           <h1 className={style.head}>Sign In</h1>
           <div className={style.userInput}>
-            <label className={style.labell}>Username</label><br />
-            <input className={style.input_fields} type="text" name="username" onChange={this.handleFormInput} />
+            <label className={style.labell}>Email</label><br />
+            <input className={style.input_fields} type="text" name="username" value={this.state.username} onChange={this.handleFormInput} />
           </div>
+
+          {/* <div style={{ color: "red", fontSize: "12px" }}>{this.state.emailError}</div> */}
+          {this.state.emailError ? (
+            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+              {this.state.emailError}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>) : null}
 
           <div className={style.pwd}>
             <label className={style.labell}>Password</label><br />
-            <input className={style.input_fields} type="password" name="password" id="pwd" onChange={this.handleFormInput} />
+            <input className={style.input_fields} type="password" name="password" value={this.state.password} id="pwd" onChange={this.handleFormInput} />
           </div>
 
-          {/* <button onClick={() => this.formSubmit()} type='button' className={style.button}>Sign In</button> */}
-          <Link style={{ textDecoration: "none" }} to='/customer/add'> 
-          <button onClick={() => this.formSubmit()} type='button' className={style.button}>Sign In</button>
-          </Link>
+          {/* <div style={{ color: "red", fontSize: "12px" }}>{this.state.passwordError}</div> */}
+          {this.state.passwordError ? (
+            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+              {this.state.passwordError}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>) : null}
+
+          <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button>
+          {/* <Link style={{ textDecoration: "none" }} to='/customer/add'>
+            <button onClick={() => this.formSubmit()} type='button' className={style.button}>Sign In</button>
+          </Link> */}
           <h3 className={style.heading}>Or Login With</h3>
           <div className={style.btnStyle}>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>

@@ -49,6 +49,12 @@
     text-decoration: none;
     }
 
+
+    .msg{
+      width: 50%;
+      margin-left: 25%;
+      margin-top: 2%;
+    }
   .bttn {
     background-color: DodgerBlue;
     border: none;

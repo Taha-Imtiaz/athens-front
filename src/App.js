@@ -29,6 +29,7 @@ import AccountDisplay from './components/Account/AccountDisplay/AccountDisplay';
 import AccountUpdate from './components/Account/AccountUpdate/AccountUpdate';
 import MoversJobDetails from './components/Movers/JobDetails/JobDetails';
 import Payment from './components/Movers/Payment/Payment';
+import CustomerAdd from './components/Customer/CustomerAdd/customeradd';
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
       <Route exact path="/" component={SignInForm}/>
       <Route exact path="/customer" component={customerList}/>
       <Route path="/customer/detail" component={customerDetail}/>
-      <Route path="/customer/add" component={customerAdd}/>
+      <Route path="/customer/add" component={CustomerAdd}/>
       <Route path="/admin" component={AdminPage}/>
       <Route path="/signout" component={SignOut}/>
       <Route path="/claim/customer" component={CustomerClaims}/>

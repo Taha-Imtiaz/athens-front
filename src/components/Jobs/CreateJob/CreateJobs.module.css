@@ -12,6 +12,10 @@
     margin-left: 20%;
 }
 
+.btnsubmit{
+    float: left;
+}
+
 .textarea{
     display: block;
     width: 100%;

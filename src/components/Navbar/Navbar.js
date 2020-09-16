@@ -14,7 +14,7 @@ const Navbar = (props) => {
 
     return (
         <nav className={`navbar navbar-expand-md navbar-light ${style.elevation}`}>
-            <Link className={`navbar-brand ${style.logo}`} to="/customer">
+            <Link className={`navbar-brand ${style.logo}`} to="/">
             <img src='/images/movers-logo.jpg' width="60px"></img>
                         </Link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">

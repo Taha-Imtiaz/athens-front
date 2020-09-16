@@ -14,3 +14,7 @@
   background-color: #00ADEE !important;
   text-decoration: none;
   }
+
+  .DayPicker-Day {
+    border: 1px solid;
+}

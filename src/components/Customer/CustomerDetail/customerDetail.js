@@ -10,11 +10,11 @@ const customerDetail = () => {
 
   const routes = [{
     title: "Claims",
-    path: "/"
+    path: "/claim/customer"
   },
   {
     title: "Blanket Deposit",
-    path: "daily"
+    path: "/claim/customerdeposit"
   }
   ]
 

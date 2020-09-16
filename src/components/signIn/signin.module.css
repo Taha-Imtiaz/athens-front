@@ -112,10 +112,10 @@
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 576px) {
   .input_fields{
     padding-top: 1%;
-    width: 90%;
+    width: 100%;
     margin-top: 1%;
     border-radius: 5px;
     outline: none;
@@ -124,8 +124,8 @@
 
 
 .button{
-width: 90%;
-font-size: 15px;
+width: 100%;
+font-size: 14px;
 margin-top: 20px;
 }
 
@@ -150,11 +150,25 @@ margin-top: 20px;
   background-color: white;
   border: 1 px ;
   color:dodgerblue;
-  padding: 8px 10px;
+  padding: 5px 6px;
   font-size: 16px;
   /* border-radius: 25px; */
   margin-left: 20px;
   /* padding-bottom: 2%; */
 }
+
+.jumbotron{
+  justify-content: center;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  grid-template-areas: "Username"
+                        "password";
+
+  margin: auto;
+  /* background-color:#e9f2eb; */
+  width: 70vw;
+}
+
 
 }

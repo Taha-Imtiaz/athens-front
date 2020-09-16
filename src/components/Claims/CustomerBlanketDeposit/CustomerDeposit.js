@@ -2,6 +2,7 @@ import React from 'react'
 import style from './CustomerDeposit.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
+import { Link } from 'react-router-dom'
 
 const CustomerDeposit = () => {
 
@@ -26,7 +27,7 @@ const CustomerDeposit = () => {
       </div>
       <div className="col-4">
         <div className={style.btn}>
-          <Button name="Deposit" />
+        <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button name="Deposit" /> </Link>
         </div>
       </div>
     </div>

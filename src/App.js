@@ -12,7 +12,6 @@ import SignOut from './components/signOut/signout';
 import Navbar from './components/Navbar/Navbar';
 import CustomerClaims from './components/Claims/CustomersClaim/CustomerClaims';
 import CustomerDeposit from './components/Claims/CustomerBlanketDeposit/CustomerDeposit';
-import CustomerDeposit2 from './components/Claims/CustomerBlanketDeposit2/CustomerDeposit2';
 import NewClaim from './components/Claims/NewClaim/NewClaim';
 import JobsList from './components/Jobs/JobsList/JobsList';
 import JobDetails from './components/Jobs/JobDetails/JobDetails';
@@ -30,6 +29,11 @@ import AccountUpdate from './components/Account/AccountUpdate/AccountUpdate';
 import MoversJobDetails from './components/Movers/JobDetails/JobDetails';
 import Payment from './components/Movers/Payment/Payment';
 import CustomerAdd from './components/Customer/CustomerAdd/customeradd';
+import MoversCalendar from './components/Movers/Calendar/Calendar';
+import Availability from './components/Movers/Availability/Availability';
+import MoversJobsList from './components/Movers/JobList/JobList';
+import Example from './components/Movers/HolidayCalendar/HolidayCalendar';
+import SubmitDeposit from './components/Claims/SubmitDeposit/SubmitDeposit';
 
 function App() {
   return (
@@ -43,8 +47,8 @@ function App() {
       <Route path="/admin" component={AdminPage}/>
       <Route path="/signout" component={SignOut}/>
       <Route path="/claim/customer" component={CustomerClaims}/>
-      <Route path="/claim/customerdeposit" component={CustomerDeposit}/>
-      <Route path="/claim/customerdeposit2" component={CustomerDeposit2}/>
+      <Route exact path="/claim/customerdeposit" component={CustomerDeposit}/>
+      <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit}/>
       <Route path="/claim/newclaim" component={NewClaim}/>
       <Route exact path="/job" component={JobsList}/>
       <Route path="/job/details" component={JobDetails}/>
@@ -58,8 +62,13 @@ function App() {
       <Route path="/user/create" component={CreateUser}/>
       <Route exact path="/account" component={AccountDisplay}/>
       <Route path="/account/update" component={AccountUpdate}/>
-      <Route exact path="/movers" component={MoversJobDetails}/>
+      <Route exact path="/movers" component={MoversJobsList}/>
       <Route path="/movers/payment" component={Payment}/>
+      <Route path="/movers/calendar" component={MoversCalendar}/>
+      <Route path="/movers/availability" component={Availability}/>
+      <Route path="/movers/jobdetails" component={MoversJobDetails}/>
+      <Route path="/movers/holidaycalendar" component={Example}/>
+      
 
       </Switch>
   </div>

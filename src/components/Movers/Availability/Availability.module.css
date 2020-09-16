@@ -1,0 +1,45 @@
+.main{
+    margin-top: 2%;
+    margin-left: 40%;
+}
+
+.border{
+    border: 1px solid;
+    width: 40%;
+    margin-bottom: 1%;
+}
+
+.check{
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.label{
+    margin-left: 50%;
+    padding: 10px;
+}
+
+.btn{
+    float: left;
+    margin-left: 16%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.list{
+    margin-top: 2%;
+}
+
+@media only screen and (max-width:1250px){
+
+    .border{
+        border: 1px solid;
+        width: 70%;
+        margin-bottom: 1%;
+    }
+
+    .main{
+        margin-top: 2%;
+        margin-left: 20%;
+    }
+}

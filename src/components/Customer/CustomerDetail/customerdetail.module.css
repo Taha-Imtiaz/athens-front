@@ -30,6 +30,18 @@
     padding: 1px 16px;
     height: 1000px;
   }
+
+  .assigned{
+    margin-top: 5%;
+  }
+
+  .status{
+    margin-top: 5%;
+  }
+
+  .p{
+    margin-left: 5%;
+  }
   
   @media screen and (max-width: 700px) {
     .sidebar {

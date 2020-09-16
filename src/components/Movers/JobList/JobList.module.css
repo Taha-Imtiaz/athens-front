@@ -11,8 +11,16 @@
 }
 
 .btndel{
-    margin-right: 11%;
+    margin-right: 10%;
     margin-top: 3%;
+}
+
+.edit{
+    margin-right: 5%;
+}
+
+.checkbox{
+    margin-left: 10px;
 }
 
 .create{

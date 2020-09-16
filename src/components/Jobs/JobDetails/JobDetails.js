@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './JobDetails.module.css'
 import Button from '../../Button/Button'
+import { Link } from 'react-router-dom'
 
 const JobDetails = () => {
     const width = window.innerWidth
@@ -38,7 +39,9 @@ const JobDetails = () => {
             </div>
             <div className={`col-3 d-flex justify-content-end col-md-3`}>
                 <div className={style.btns}>
-                    <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                    <Link style={{ textDecoration: "none"}} to='/job/edit'>
+                        <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                    </Link>
                 </div>
 
                 <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" />

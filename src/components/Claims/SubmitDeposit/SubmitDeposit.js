@@ -1,10 +1,10 @@
 import React from 'react'
 import CustomerDeposit from '../CustomerBlanketDeposit/CustomerDeposit'
-import style from './CustomerDeposit2.module.css'
+import style from './SubmitDeposit.module.css'
 import Button from '../../Button/Button'
 
 
-const CustomerDeposit2 = () => {
+const SubmitDeposit = () => {
     return <div>
         <h3 className={style.head}>Blanket Deposit</h3>
         <div className={`row ${style.myrow}`}>
@@ -31,4 +31,4 @@ const CustomerDeposit2 = () => {
     </div>
 }
 
-export default CustomerDeposit2
+export default SubmitDeposit

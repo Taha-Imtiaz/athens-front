@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './JobDetails.module.css'
 import Button from '../../Button/Button'
+import { Link } from 'react-router-dom'
 
 
 const MoversJobDetails = () => {
@@ -11,7 +12,7 @@ const MoversJobDetails = () => {
                 <h3>Job Title</h3>
             </div>
             <div className={`col-6 ${style.topbtn}`}>
-                <Button name="Completed" />
+                <span className={`badge badge-primary ${style.badges2}`}>Completed</span>
             </div>
         </div>
         <p>July 07 - July 10  |  10am - 2pm</p>
@@ -48,19 +49,19 @@ const MoversJobDetails = () => {
         </div>
 
         <h3 className={style.head}>Notes</h3>
-                <div className = {`card ${style.cardwidth}`}>
+        <div className={`card ${style.cardwidth}`}>
             <div class="card-body">
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
         </div>
-        
-        
+
+
         <div className={`row ${style.btnrow}`}>
-            <div className="col-6">
+            <div className="col-6 d-flex">
                 <Button name="Paid in Cash" />
             </div>
-            <div className={`col-6 ${style.onlinebtn}`}>
-                <Button name="Pay Online" />
+            <div className={`col-6 d-flex ${style.onlinebtn}`}>
+                <Link style={{ textDecoration: "none" }} to='/movers/payment'> <Button name="Pay Online" /></Link>
             </div>
 
         </div>

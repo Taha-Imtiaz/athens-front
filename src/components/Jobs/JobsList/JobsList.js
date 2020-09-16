@@ -5,6 +5,7 @@ import Button from '../../Button/Button'
 
 
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from 'react-router-dom';
 
 const width = window.innerWidth
 
@@ -45,34 +46,40 @@ class JobsList extends Component {
 
   render() {
     return (
-      <div className = {style.toprow}>
+      <div className={style.toprow}>
         <div className="row">
           <div className="col-6">
             <h3 className={style.head}>Jobs List Page</h3>
           </div>
 
+          {/* <div className={`col-4`}>
+            <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Calendar" /> </Link>
+          </div> */}
+
           <div className="col-6">
-            <div className={style.btn2}>
-              <div className="row">
-                <div className="col-6">
 
-                  <div className={style.btndel}>
-                    <Button name="Delete" icon="fa fa-trash" />
-                  </div>
-                </div>
+            <div className={`d-flex justify-content-end ${style.buttons}`}>
 
-
+              <div className={` ${style.create}`}>
+                <Link style={{ textDecoration: "none" }} to='/calendar'> <Button name="Calendar" /></Link>
+              </div>
+              <div className={style.btndel}>
+                <Button name="Delete" />
               </div>
             </div>
 
+
           </div>
         </div>
+
+
 
 
         <div className={`${style.jumbotron}`}>
 
           <ul class="list-group">
             <div className={style.li}>
+            <Link style={{ textDecoration: "none", color:"black" }} to='/job/details'>
               <li class=" checkbox list-group-item ">
                 <div className="row justify-content-around">
                   <div className="col-4 col-md-2 text-left">
@@ -100,6 +107,7 @@ class JobsList extends Component {
 
                 </div>
               </li>
+              </Link>
             </div>
             {/* <div className={style.li}>
               <li class=" checkbox list-group-item ">

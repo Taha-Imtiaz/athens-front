@@ -19,9 +19,8 @@ const customerList = () => {
       <div className={`col-5 col-md-6 ${style.search}`}>
         <SearchBar />
       </div>
-      <div className={`col-2 col-md-2 d-flex ${style.search}`}>
-        <Button icon="fa fa-filter" />
-
+      <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
+        <i className = "fa fa-filter"></i>
       </div>
 
 
@@ -40,71 +39,82 @@ const customerList = () => {
       <div>
         <ul class="list-group">
           <div className={`${style.li}`}>
-            <Link style={{ textDecoration: "none", color: "black" }} to='/customer/detail'>
-              <li class=" checkbox list-group-item">
-                <div className="row justify-content-around">
-                  <div className={`col-8 text-left ${style.flex}`}>
-                    <span>
-                      <input type="checkbox" id="defaultCheck1" value="" />
-                      <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
-                    </span>
-                  </div>
-                  <div className={`col-2 ${style.flex}`} >
-                    <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
-                  </div>
-                  <div className={`col-2 justify-content-end ${style.fr}`}>
-                    <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
+            <li class=" checkbox list-group-item">
+              <div className="row justify-content-around">
+                <div className={`col-8 col-md-4 text-left ${style.flex}`}>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
+                  </span>
+                </div>
+                <div className={`col-4 col-md-4 d-flex justify-content-start ${style.flex} ${style.fr}`} >
+                  <p><i className="fa fa-map-marker"></i>&nbsp; Location, Address</p>
+                </div>
+                <div className={`col-12 col-md-4 d-flex justify-content-end ${style.fr}`}>
+                  <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                  <div className={style.button}>
+                    <Link style={{ textDecoration: "none" }} to='/customer/detail'>
+                      <Button name={width < 576 ? "" : "Details"} icon="fa fa-info-circle" />
+                    </Link>
                   </div>
 
                 </div>
-              </li>
-            </Link>
+              </div>
+            </li>
           </div>
+
+         
+          <div className={`${style.li}`}>
+            <li class=" checkbox list-group-item">
+              <div className="row justify-content-around">
+                <div className={`col-8 col-md-4 text-left ${style.flex}`}>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
+                  </span>
+                </div>
+                <div className={`col-4 col-md-4 d-flex justify-content-start ${style.flex} ${style.fr}`} >
+                  <p><i className="fa fa-map-marker"></i>&nbsp; Location, Address</p>
+                </div>
+                <div className={`col-12 col-md-4 d-flex justify-content-end ${style.fr}`}>
+                  <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                  <div className={style.button}>
+                    <Link style={{ textDecoration: "none" }} to='/customer/detail'>
+                      <Button name={width < 576 ? "" : "Details"} icon="fa fa-info-circle" />
+                    </Link>
+                  </div>
+
+                </div>
+              </div>
+            </li>
+          </div>
+
+
 
           <div className={`${style.li}`}>
-            <Link style={{ textDecoration: "none", color: "black" }} to='/customer/detail'>
-              <li class=" checkbox list-group-item">
-                <div className="row justify-content-around">
-                  <div className={`col-8 text-left ${style.flex}`}>
-                    <span>
-                      <input type="checkbox" id="defaultCheck2" value="" />
-                      <label className={`checkbox-inline ${style.input}`} for="defaultCheck2">Muhammad Shaheer Abbas</label>
-                    </span>
-                  </div>
-                  <div className={`col-2 ${style.flex}`} >
-                    <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
-                  </div>
-                  <div className={`col-2 justify-content-end ${style.fr}`}>
-                    <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
+            <li class=" checkbox list-group-item">
+              <div className="row justify-content-around">
+                <div className={`col-8 col-md-4 text-left ${style.flex}`}>
+                  <span>
+                    <input type="checkbox" id="defaultCheck1" value="" />
+                    <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Muhammad Shaheer Abbas</label>
+                  </span>
+                </div>
+                <div className={`col-4 col-md-4 d-flex justify-content-start ${style.flex} ${style.fr}`} >
+                  <p><i className="fa fa-map-marker"></i>&nbsp; Location, Address</p>
+                </div>
+                <div className={`col-12 col-md-4 d-flex justify-content-end ${style.fr}`}>
+                  <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                  <div className={style.button}>
+                    <Link style={{ textDecoration: "none" }} to='/customer/detail'>
+                      <Button name={width < 576 ? "" : "Details"} icon="fa fa-info-circle" />
+                    </Link>
                   </div>
 
                 </div>
-              </li>
-            </Link>
+              </div>
+            </li>
           </div>
-
-          <div className={`${style.li}`}>
-            <Link style={{ textDecoration: "none", color: "black" }} to='/customer/detail'>
-              <li class=" checkbox list-group-item">
-                <div className="row justify-content-around">
-                  <div className={`col-8 text-left ${style.flex}`}>
-                    <span>
-                      <input type="checkbox" id="defaultCheck3" value="" />
-                      <label className={`checkbox-inline ${style.input}`} for="defaultCheck3">Muhammad Shaheer Abbas</label>
-                    </span>
-                  </div>
-                  <div className={`col-2 ${style.flex}`} >
-                    <Button name={width < 576 ? "" : "Location"} icon="fa fa-map-marker" />
-                  </div>
-                  <div className={`col-2 justify-content-end ${style.fr}`}>
-                    <p><Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" /></p>
-                  </div>
-
-                </div>
-              </li>
-            </Link>
-          </div>
-
 
         </ul>
       </div>

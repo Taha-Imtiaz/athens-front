@@ -1,13 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-/* .heading{
-  margin-left: 40%;
-} */
-
 .form_style{
-  /* margin-left: 45%; */
   font-family: 'Roboto', sans-serif;
-  /* text-align: center; */
 }
 
 .btn:hover {
@@ -17,4 +11,8 @@
 
   .DayPicker-Day {
     border: 1px solid;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+color: #00ADEE;
 }

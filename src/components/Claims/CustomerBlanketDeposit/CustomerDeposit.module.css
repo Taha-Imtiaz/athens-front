@@ -28,9 +28,40 @@
     .myrow{
         margin-top: 5%;
         width: 90%;
-        margin-left: 12%;
+        margin-left: 18%;
         margin-right: 10%;
     }
+
+    .btn{
+        margin-top: 10%;
+        margin-right: 10%;
+    }
+    
+    .head{
+        margin-top: 6%;
+        /* margin-right: 10%; */
+        margin-left: 20%;
+    }
+
+}
+
+@media only screen and (max-width: 450px) {
+    .myrow{
+        margin-top: 5%;
+        width: 80%;
+        margin-left: 23%;
+        margin-right: 10%;
+    }
+
+    .jumbotron{
+        background-color: #fff;
+        width: 70%;
+        margin-left: 23%;
+        margin-right: 20%;
+        margin-top: 1%;
+        text-align: center;
+    }
+    
 
     .btn{
         margin-top: 10%;

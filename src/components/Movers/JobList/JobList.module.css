@@ -57,12 +57,12 @@
 }
 
 
-@media only screen and (max-width:500px){
+@media only screen and (max-width:576px){
     html{
         font-size: 75%;
     }
 
     .toprow{
-        margin-top: 3%;
+        margin-top: 5%;
     }
 }

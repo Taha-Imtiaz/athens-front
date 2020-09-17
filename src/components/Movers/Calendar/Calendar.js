@@ -190,10 +190,10 @@ class MoversCalendar extends Component {
                 <div className={`d-flex justify-content-start`}>
 
                     <div className={` ${style.btn}`}>
-                        <Link style={{ textDecoration: "none" }} to='/movers/availability'> <Button name="Set Availability" /></Link>
+                        <Link style={{ textDecoration: "none" }} to='/mover/availability'> <Button name="Set Availability" /></Link>
                     </div>
                     <div className={style.btn2}>
-                        <Link style={{ textDecoration: "none" }} to='/movers/holidaycalendar'> <Button name="Request Holidays" /></Link>
+                        <Link style={{ textDecoration: "none" }} to='/mover/holidaycalendar'> <Button name="Request Holidays" /></Link>
                     </div>
                 </div>
 

@@ -16,10 +16,14 @@
     padding: 16px;
     text-decoration: none;
   }
+
+  .sidebar a:active{
+    background-color:#00ADEE;
+  }
    
   .sidebar a:hover {
     color:  white;
-    background-color: royalblue;
+    background-color: #00ADEE;
   }
 
   .font{

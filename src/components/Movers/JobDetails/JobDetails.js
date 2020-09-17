@@ -61,7 +61,7 @@ const MoversJobDetails = () => {
                 <Button name="Paid in Cash" />
             </div>
             <div className={`col-6 d-flex ${style.onlinebtn}`}>
-                <Link style={{ textDecoration: "none" }} to='/movers/payment'> <Button name="Pay Online" /></Link>
+                <Link style={{ textDecoration: "none" }} to='/mover/payment'> <Button name="Pay Online" /></Link>
             </div>
 
         </div>

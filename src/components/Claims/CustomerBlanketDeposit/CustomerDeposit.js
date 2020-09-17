@@ -8,11 +8,13 @@ const CustomerDeposit = () => {
 
   const routes = [{
     title: "Claims",
-    path: "/claim/customer"
+    path: "/claim/customer",
+    icon: <i className = "fa fa-exchange"></i>
   },
   {
     title: "Blanket Deposit",
-    path: "/claim/customerdeposit"
+    path: "/claim/customerdeposit",
+    icon: <i className = "fa fa-bed"></i>
   }
   ]
 

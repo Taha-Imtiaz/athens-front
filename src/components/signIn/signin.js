@@ -50,6 +50,7 @@ class SignInForm extends React.Component {
   }
 
   mySubmitHandler = (event) => {
+    // props.history.push('/customers')
     event.preventDefault();
 
     const isValid = this.validate()
@@ -115,9 +116,9 @@ class SignInForm extends React.Component {
           {this.state.emailError ? (
             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
               {this.state.emailError}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+             
+               
+    
             </div>) : null}
 
           <div className={style.pwd}>
@@ -129,15 +130,15 @@ class SignInForm extends React.Component {
           {this.state.passwordError ? (
             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
               {this.state.passwordError}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+             
+                
+    
             </div>) : null}
 
-          <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button>
-          {/* <Link style={{ textDecoration: "none" }} to='/customer/add'>
+          {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
+          <Link style={{ textDecoration: "none" }} to='/customer'>
             <button onClick={() => this.formSubmit()} type='button' className={style.button}>Sign In</button>
-          </Link> */}
+          </Link>
           <h3 className={style.heading}>Or Login With</h3>
           <div className={style.btnStyle}>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>

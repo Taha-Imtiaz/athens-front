@@ -44,29 +44,29 @@
 
 @media only screen and (max-width: 576px) {
     .jumbotron{
-        width: 80% !important;
-        margin-left: 10%;
+        width: 70% !important;
+        margin-left: 20%;
         margin-right: 10%;
         background-color: #e9f2eb;
-        margin-top: 2%;
+        margin-top: 5%;
         text-align: left;
     }
 
     .head{
         margin-left: 20%;
-        margin-top: 2%;
+        margin-top: 5%;
     }
     
     .btn{
         margin-left: 20%;
-        margin-top: 2%;
+        margin-top: 5%;
     }
 }
 
 @media only screen and (max-width: 400px) {
     .jumbotron{
-        width: 90% !important;
-        margin-left: 5%;
+        width: 70% !important;
+        margin-left: 22%;
         margin-right: 10%;
         background-color: #e9f2eb;
         margin-top: 2%;

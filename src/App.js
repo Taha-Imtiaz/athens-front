@@ -62,12 +62,12 @@ function App() {
       <Route path="/user/create" component={CreateUser}/>
       <Route exact path="/account" component={AccountDisplay}/>
       <Route path="/account/update" component={AccountUpdate}/>
-      <Route exact path="/movers" component={MoversJobsList}/>
-      <Route path="/movers/payment" component={Payment}/>
-      <Route path="/movers/calendar" component={MoversCalendar}/>
-      <Route path="/movers/availability" component={Availability}/>
-      <Route path="/movers/jobdetails" component={MoversJobDetails}/>
-      <Route path="/movers/holidaycalendar" component={Example}/>
+      <Route exact path="/mover" component={MoversJobsList}/>
+      <Route path="/mover/payment" component={Payment}/>
+      <Route path="/mover/calendar" component={MoversCalendar}/>
+      <Route path="/mover/availability" component={Availability}/>
+      <Route path="/mover/jobdetails" component={MoversJobDetails}/>
+      <Route path="/mover/holidaycalendar" component={Example}/>
       
 
       </Switch>

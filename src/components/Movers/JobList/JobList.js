@@ -66,7 +66,7 @@ class MoversJobsList extends Component {
                                                 <div className={style.edit}>
                                                     <Button name="Edit" />
                                                 </div>
-                                                <Link style={{ textDecoration: "none" }} to='/movers/jobdetails'> <Button name="Details" /></Link>
+                                                <Link style={{ textDecoration: "none" }} to='/mover/jobdetails'> <Button name="Details" /></Link>
                                             </div>
 
                                         </div>

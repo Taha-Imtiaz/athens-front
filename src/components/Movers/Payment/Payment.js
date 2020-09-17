@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import style from './Payment.module.css'
 import Button from '../../Button/Button';
+import { Link } from 'react-router-dom';
 
 class Payment extends Component {
     render() {
@@ -38,7 +39,7 @@ class Payment extends Component {
                         <input type="text" class="form-control" id="name" placeholder="Name On Card" />
                     </div>
 
-                    <Button name="Submit" />
+                    <Link style={{ textDecoration: "none" }} to='/mover'> <Button name="Submit" /></Link>
                 </form>
             </div>
         );

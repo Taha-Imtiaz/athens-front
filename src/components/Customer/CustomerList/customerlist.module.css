@@ -27,10 +27,12 @@
     padding: 2%;
 }
 
-/* .head{
-    margin: 15px;
-} */
-
+.badges2{
+    padding: 8px 15px;
+    margin-left: 5px;
+    font-size: 14px;
+    background-color: #00ADEE;
+}
 .btndel{
     float: left;
     margin-left: 10%;
@@ -54,11 +56,15 @@
 .fr{
     float: right;
     display: flex;
-    transform: translateY(0.5rem);
+    transform: translateY(0.1rem);
 }
 
 .input{
     margin-left: 5px;
+}
+
+.button{
+    margin-left: 5%;
 }
 
 .create{
@@ -86,13 +92,18 @@ margin-right: 5px;
     width: 10%;
 }
 
+.filter{
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 @media only screen and (max-width:1250px){
     html{
         font-size: 80%;
     }
 }
 
-@media only screen and (max-width:500px){
+@media only screen and (max-width:576px){
     html{
         font-size: 75%;
     }
@@ -123,5 +134,8 @@ margin-right: 5px;
 
     .li{
         margin-bottom: 2%;
+    }
+    .button {
+        margin-left: 5%;
     }
 }

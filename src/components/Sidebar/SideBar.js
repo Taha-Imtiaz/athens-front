@@ -10,16 +10,15 @@ const SideBar = (props) => {
     {
       props.routes.map(x => {
         return <Link to={x.path}>
-          <div className = "row">
-          <div className = "col-2">
-          {x.icon}
+          <div className="row">
+            <div className="col-2">
+              {x.icon}
+            </div>
+            <div className={`col-10`}>
+              {width < 576 ? "" : x.title}
+            </div>
           </div>
-          <div className = {`col-10`}>
-           {width < 576 ? "" : x.title}
-          
-          </div>
-          </div>
-    </Link>
+        </Link>
 
       })
     }

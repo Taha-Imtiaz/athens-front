@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import style from './JobList.module.css'
 import DatePicker from "react-datepicker";
 import Button from '../../Button/Button'
-
-
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
 
@@ -24,17 +22,16 @@ class MoversJobsList extends Component {
 
                         <div className={`d-flex justify-content-end ${style.buttons}`}>
 
+                            <div className={` ${style.create}`}>
+                                <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Create New" /></Link>
+                            </div>
                             <div className={style.btndel}>
                                 <Button name="Delete" />
                             </div>
                         </div>
 
-
                     </div>
                 </div>
-
-
-
 
                 <div className={`${style.jumbotron}`}>
 

@@ -52,21 +52,31 @@ const Navbar = (props) => {
                                     Account
                         </Link>
                             </li>
-                        </React.Fragment> 
+                            <li className={getNavLinkClass("/claim/customer")}>
+                                <Link className="nav-link" to="/claim/customer">
+                                    Claims
+                        </Link>
+                            </li>
+                            <li className={getNavLinkClass("/claim/customerdeposit")}>
+                                <Link className="nav-link" to="/claim/customerdeposit">
+                                    Blankets
+                        </Link>
+                            </li>
+                        </React.Fragment>
                         :
                         <React.Fragment>
-                        <li className={getNavLinkClass("/mover")}>
-                        <Link className="nav-link" to="/mover">
-                            Jobs
+                            <li className={getNavLinkClass("/mover")}>
+                                <Link className="nav-link" to="/mover">
+                                    Jobs
                         </Link>
-                    </li>
-                        <li className={getNavLinkClass("/mover/calendar")}>
-                            <Link className="nav-link" to="/mover/calendar">
-                                Calendar
+                            </li>
+                            <li className={getNavLinkClass("/mover/calendar")}>
+                                <Link className="nav-link" to="/mover/calendar">
+                                    Calendar
                              </Link>
-                        </li>
-                        
-                    </React.Fragment>
+                            </li>
+
+                        </React.Fragment>
                     }
                 </ul>
             </div>

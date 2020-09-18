@@ -116,8 +116,6 @@ class SignInForm extends React.Component {
           {this.state.emailError ? (
             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
               {this.state.emailError}
-             
-               
     
             </div>) : null}
 

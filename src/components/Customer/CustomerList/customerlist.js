@@ -38,7 +38,7 @@ const customerList = () => {
     <div className={style.jumbotron}>
       <div>
         <ul class="list-group">
-          <div className={`${style.li}`}>
+        <div className={`${style.li}`}>
             <li class=" checkbox list-group-item">
               <div className="row justify-content-around">
                 <div className={`col-8 col-md-4 text-left ${style.flex}`}>

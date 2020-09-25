@@ -79,11 +79,11 @@ class CreateJobs extends Component {
             assigneeError = "Assignee should not be empty"
         }
 
-        if (!this.state.locationFrom) {
+        if (!this.state.locationfrom) {
             locationfromError = "Location should not be empty"
         }
 
-        if (!this.state.locationTo) {
+        if (!this.state.locationto) {
             locationtoError = "Location should not be empty"
         }
 

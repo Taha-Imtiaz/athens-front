@@ -37,7 +37,7 @@ const JobDetails = () => {
 
                 </div>
             </div>
-            <div className={`col-3 d-flex justify-content-end col-md-3`}>
+            <div className={`col-3 d-flex justify-content-end  col-md-3`}>
                 <div className={style.btns}>
                     <Link style={{ textDecoration: "none"}} to='/job/edit'>
                         <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
@@ -54,9 +54,9 @@ const JobDetails = () => {
         <div className={`row ${style.row2}`}>
             <div className="col-2">
                 <div className={`container ${style.cont}`}>
-                    <h5 className={style.assigneehead}>Assignees</h5>
-                    <p className={style.assigneehead}>Assignee 1</p>
-                    <p className={style.assigneehead}>Assignee 2</p>
+                    <h5 className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignees</h5>
+                    <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 1</p>
+                    <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p>
                     <div className={style.btncustom}>
                         <Button name="Activities" />
                     </div>

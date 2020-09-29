@@ -1,6 +1,6 @@
-.container{
-    width: 50%;
-    margin: auto;
+ .container{
+    width: 50vw;
+     /* margin: 20rem; */
     margin-top: 5%;
 }
 
@@ -17,17 +17,20 @@
 }
 
 .jumbotron{
-    margin: auto;
+    margin: 20rem;
     margin-top: 2%;
-    margin-bottom: 2%;
+    /* margin-bottom: 2%; */
     background-color: #e9f2eb;
-    width: 60%;
+    width: 55vw;
     padding: 10px;
 }
 
 .head{
-    margin-left: 20%;
-    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-left:70vh; */
+    margin-top: 3%; 
 }
 
 .drop{
@@ -53,4 +56,40 @@
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
+  } 
+  @media only screen and (max-width:1200px) {
+    .jumbotron {
+        margin: 18rem;
+        margin-top: 2%;
+        margin-bottom: 2%;
+     
+    }
+}
+  @media only screen and (max-width:800px) {
+      .jumbotron {
+          margin: 15rem;
+          margin-top: 2%;
+          margin-bottom: 2%;
+          /* width: 60vw; */
+      }
   }
+  @media only screen and (max-width:650px) {
+    .jumbotron {
+        margin: 12rem;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        /* width: 60vw; */
+    }
+}
+  @media only screen and (max-width:500px) {
+    .jumbotron {
+        margin-left: 3rem;
+        margin-right: 3rem;
+        margin-top: 5%;
+        margin-bottom: 2%;
+        width: 80vw;
+    }
+    .container {
+        width: 75vw;
+    }
+}

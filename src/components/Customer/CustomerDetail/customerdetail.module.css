@@ -79,8 +79,9 @@
       background-color: #e9f2eb;
   }
 .job{
-    margin-right: 50%;
-    margin-top: 2%;
+  /* background-color: blueviolet; */
+    /* margin-right: 50%; */
+    /* margin-top: 2%; */
 }
 
 .jumbotron{
@@ -97,11 +98,11 @@
 }
 
 .assigned{
-    float: right;
+    /* float: right; */
 }
 .status{
-  float: right;
-  margin-right: 10%;
+  /* float: right; */
+  /* margin-right: 10%; */
 }
 
 .notesd{

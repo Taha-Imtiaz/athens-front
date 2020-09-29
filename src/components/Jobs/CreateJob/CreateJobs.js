@@ -108,15 +108,18 @@ class CreateJobs extends Component {
         const isValid = this.validate()
         if (isValid) {
             console.log(this.state)
-            this.setState(initialState)
+            this.setState({
+                ...this.state
+            })
+            console.log(this.state)
 
-            API.post(`posts`, this.state)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            // API.post(`posts`, this.state)
+            //     .then(response => {
+            //         console.log(response);
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     })
         }
 
     }

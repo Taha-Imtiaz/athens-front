@@ -122,13 +122,29 @@ class NewClaim extends Component {
   }
 
 
-  handleChangeFrom = date => {
+  handleChangeFrom = (date,e) => {
+    // const valueOfInput = date.format()
+    console.log(date)
+    // console.log(e.target)
+    
+    if (date == null) {
+      this.setState({ ["Error"]: "Should not be empty" })
+    } else {
+      this.setState({ ["Error"]: "" })
+    }
     this.setState({
       fromDate: date
     });
   };
 
   handleChangeTo = date => {
+    // const valueOfInput = date.format()
+    console.log(date)
+    if (date == "") {
+      this.setState({ ["Error"]: "Should not be empty" })
+    } else {
+      this.setState({ ["Error"]: "" })
+    }
     this.setState({
       toDate: date
     });
@@ -227,6 +243,7 @@ class NewClaim extends Component {
 
                   <DatePicker className={style.to}
                     selected={this.state.toDate}
+                    // onFocus = {this.handleChangeTo}
                     onChange={this.handleChangeTo}
                     placeholderText="To"
                     class="form-control"

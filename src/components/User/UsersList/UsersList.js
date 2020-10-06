@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './UsersList.module.css'
 import Button from '../../Button/Button'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getAllUsers } from '../../../Redux/user/userActions'
 
 
-const UsersList = () => {
+
+const UsersList = (props) => {
+   
+        
     const width = window.innerWidth
     return <div>
         <div className="row">

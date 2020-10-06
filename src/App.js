@@ -4,7 +4,7 @@ import './App.css';
 import Sign_In_Form from './components/signIn/signin';
 import SignInForm from './components/signIn/signin';
 import {Route, Switch} from "react-router-dom"
-import customerList from './components/Customer/CustomerList/customerlist';
+import customerList from './components/Customer/CustomerList/customerList';
 import customerDetail from './components/Customer/CustomerDetail/customerDetail';
 import customerAdd from './components/Customer/CustomerAdd/customeradd';
 import AdminPage from './components/Admin/Admin';
@@ -42,7 +42,7 @@ function App() {
       <Switch>
       <Route exact path="/" component={SignInForm}/>
       <Route exact path="/customer" component={customerList}/>
-      <Route path="/customer/detail" component={customerDetail}/>
+      <Route path="/customer/detail/:customerId" component={customerDetail}/>
       <Route path="/customer/add" component={CustomerAdd}/>
       <Route path="/admin" component={AdminPage}/>
       <Route path="/signout" component={SignOut}/>

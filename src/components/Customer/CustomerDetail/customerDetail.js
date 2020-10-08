@@ -1,25 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import style from "./customerdetail.module.css";
-import Button from "../../Button/Button";
+// import Button from "../../Button/Button";
 import SideBar from "../../Sidebar/SideBar";
-import { Link,  Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCustomer } from "../../../Redux/Customer/customerActions";
+import { getCustomer, updateJob } from "../../../Redux/Customer/customerActions";
+import { Modal } from "react-bootstrap";
+import { Button } from 'react-bootstrap';
+
 
 const CustomerDetail = (props) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  var [note, setNote] = useState("");
+
   var { customer, getCustomer } = props;
-  if(customer) {
-  console.log(customer[0])
+  var formatStartDate, formatEndDate;
+  if (customer) {
+    console.log(customer);
+    formatStartDate = new Date(customer.job.startDate);
+    console.log(formatStartDate);
+    formatEndDate = new Date(customer.job.endDate);
+    console.log(formatEndDate);
+    console.log(formatStartDate.toDateString());
+    console.log(formatEndDate.toDateString());
   }
-  var {match:{params:{customerId}}} = props
-  
-  
+  var {
+    match: {
+      params: { customerId },
+    },
+  } = props;
+
   useEffect(() => {
-  
-    getCustomer(customerId)
-   }, [])
-  ;
+    getCustomer(customerId);
+  }, []);
 
   const routes = [
     {
@@ -33,10 +50,50 @@ const CustomerDetail = (props) => {
       icon: <i className="fa fa-bed"></i>,
     },
   ];
- 
+  var handleAddNote = (e) => {
+    var { name, value } = e.target;
+    // console.log("han");
+    console.log(value);
+    setNote(value);
+   
+  };
+  var AddNote = () => {
+    console.log(note)
+    var jobId = customer.job._id
+    var jobObj = {
+    //   title:"Deputy Officer",
+    // description:"ABC 123",
+    // services:["ABC","ABC1"],
+    // date:"12/12/12",
+    // time:"24:45 AM",
+    // from:"ABC Road",
+    // to:"ABCD Road",
+    // status:"updated",
+    //  note:[{
+    //     text:"Hi 1 2 3"
+
+    // },{
+    //     text:"Hi 1 2 3 4"
+
+    // },{
+    //     text:"Hi 1 2 3 4 5"
+
+    // }]
+    // {...jobObj}
+  // ...customer.job.note.push()
+  }
+
+updateJob(jobObj, jobId)
+  // customer.job.note.push({text:note})
+
+    
+
+    console.log(customer.job.note)
+    handleClose()
+  }
   return (
-  <div>
-      {customer  ? (
+    <div>
+      {customer && (
         <div>
           <div className="row">
             <div className="col-2">
@@ -44,18 +101,18 @@ const CustomerDetail = (props) => {
             </div>
             <div className="col-6">
               <div className={style.head}>
-                <h5>{customer[0].name}</h5>
-                <label className={style.l1}>{customer[0].phone}</label>
-                <label className={style.l2}>{customer[0].email}</label>
+                <h5>{customer.name}</h5>
+                <label className={style.l1}>{customer.phone}</label>
+                <label className={style.l2}>{customer.email}</label>
               </div>
             </div>
             <div className="col-4">
               <div className={`row ${style.toprow}`}>
                 <div className="col-2">
-                  <Button icon="fa fa-edit" />
+                  <Button icon="fa fa-edit">Edit</Button>
                 </div>
                 <div className="col-2">
-                  <Button icon="fa fa-trash" />
+                  <Button icon="fa fa-trash">Delete</Button>
                 </div>
               </div>
             </div>
@@ -88,92 +145,98 @@ const CustomerDetail = (props) => {
                   data-parent="#accordionExample"
                 >
                   <div class="card-body">
-                    <label className={style.l1}>{customer[0].subcontacts.phone}</label>
-                    <label className={style.l2}>{customer[0].subcontacts.email}</label>
+                    <label className={style.l1}>
+                      {customer.subcontacts.phone}
+                    </label>
+                    <label className={style.l2}>
+                      {customer.subcontacts.email}
+                    </label>
                   </div>
                 </div>
               </div>
 
-              {/* <div class="card">
-                <div class="card-header" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button
-                      class="btn btn-link collapsed"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseTwo"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                    >
-                      Contact #2
-                    </button>
-                  </h5>
-                </div>
-                <div
-                  id="collapseTwo"
-                  class="collapse"
-                  aria-labelledby="headingTwo"
-                  data-parent="#accordionExample"
-                >
-                  <div class="card-body">
-                    <label className={style.l1}>03312858185</label>
-                    <label className={style.l2}>shaheerabbas20@gmail.com</label>
-                  </div>
-                </div>
-              </div> */}
-             </div>
-           </div>
+            </div>
+          </div>
 
-           <div className={style.btn}>
-             <Link style={{ textDecoration: "none" }} to="/job/create">
-               {" "}
-               <Button name="Create Job" />{" "}
-             </Link>
-           </div>
+          <div className={style.btn}>
+            <Link style={{ textDecoration: "none" }} to="/job/create">
+              {" "}
+              <Button variant="primary" style = {{margin: "0 15rem"}}>
+                  Create Job
+                </Button>
 
-           <div class={style.jumbotron}>
-             <div class="row">
-               <div class="col-4">
-                 <h3 className={style.job}>Jobs:</h3>
-               </div>
-               <div class="col-4">
-                 <label className={style.assigned}>Assigned</label>
-               </div>
-               <div class="col-4">
-                 <label className={style.status}>Status</label>
-               </div>
-             </div>
-             <div className="row">
-               <div class="col-4">
-                 <p className={style.p}>7-July 10 | {customer[0].job.startTime} - {customer[0].job.endTime}</p>
-                 <p className={style.p}>{customer[0].job.description}</p>
-               </div>
-               <div className="col-4">
-               <p className ={ style.p}>{customer[0].job.assignee}</p>
-               </div>
-               <div className="col-4">
-            <p className ={ style.p}>{customer[0].job.status}</p>
-               </div>
-             </div>
-             <div>
-               <h4 className={style.notesh}>Notes</h4>
-               <p className={style.notesd}>
-                {customer[0].job.note.map((note) => note.text)}
-               </p>
-             </div>
-            
-             <Button name="Add Note" />
-           </div>
-           <br />
-         </div>
-       ) : (
-         <Redirect to="/customer"/>
-       )}
-     </div>
+            </Link>
+          </div>
+
+          <div class={style.jumbotron}>
+            <div class="row">
+              <div class="col-4">
+                <h3 className={style.job}>Jobs:</h3>
+              </div>
+              <div class="col-4">
+                <label className={style.assigned}>Assigned</label>
+              </div>
+              <div class="col-4">
+                <label className={style.status}>Status</label>
+              </div>
+            </div>
+            <div className="row">
+              <div class="col-4">
+                <p className={style.p}>
+                  {formatStartDate.toDateString()} -{" "}
+                  {formatEndDate.toDateString()}| {customer.job.startTime} -{" "}
+                  {customer.job.endTime}
+                </p>
+                <p className={style.p}>{customer.job.description}</p>
+              </div>
+              <div className="col-4">
+                <p className={style.p}>{customer.job.assignee}</p>
+              </div>
+              <div className="col-4">
+                <p className={style.p}>{customer.job.status}</p>
+              </div>
+            </div>
+            <div>
+              <h4 className={style.notesh}>Notes</h4>
+              <p className={style.notesd}>
+                {customer.job.note.map((note) => note.text)}
+              </p>
+            </div>
+
+
+              <Button variant="primary" onClick={handleShow}>
+                  Add Note
+                </Button>
+
+                <Modal show={show} onHide={handleClose} animation={false} centered>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Add Note</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <textarea name="" id="" cols="65" rows="5" name = "note" value = {note} onChange= {handleAddNote}></textarea>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={AddNote}>
+                     Add Note
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+
+          </div>
+          <br />
+        </div>
+      )}
+      {/* //  : (
+      //    <Redirect to="/customer"/>
+      //  )} */}
+    </div>
   );
- };
+};
 var mapStateToProps = (state) => ({
-  customer: state.customers.data? state.customers.data.customer:null
+  customer: state.customers.data ? state.customers.data.customer : null,
 });
 
 var actions = {

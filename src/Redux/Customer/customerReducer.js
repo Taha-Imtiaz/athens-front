@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, GET_CUSTOMER } from "./customerConstants"
+import { GET_CUSTOMERS, GET_CUSTOMER, UPDATE_JOB } from "./customerConstants"
 
 
 var initialState = {
@@ -12,9 +12,13 @@ var customerReducer = (state = initialState, action) => {
             
     case GET_CUSTOMER:
         return {...payload.customer}
+
+        case UPDATE_JOB:
+            return {...payload.updatedJob}
         default:
             return state
     }
-    
+   
+        
 }
 export default customerReducer

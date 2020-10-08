@@ -84,6 +84,15 @@
     /* margin-top: 2%; */
 }
 
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-dialog {
+  background-color: blueviolet;
+  transform: translate(-50%);
+}
 .jumbotron{
     width: 60%;
     margin-left: 20%;
@@ -125,6 +134,11 @@
   margin-left: 2%;
 }
 
+  textarea {
+    width: 100%;
+  }
+
+
 @media screen and (max-width: 500px) {
   .head{
     /* margin-right: 30%; */
@@ -161,8 +175,5 @@
   text-align: left;
   background-color:#e9f2eb;
 }
-
-
-
 
 }

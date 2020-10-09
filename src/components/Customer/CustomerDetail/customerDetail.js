@@ -20,13 +20,8 @@ const CustomerDetail = (props) => {
   var { customer, getCustomer } = props;
   var formatStartDate, formatEndDate;
   if (customer) {
-    console.log(customer);
     formatStartDate = new Date(customer.job.startDate);
-    console.log(formatStartDate);
     formatEndDate = new Date(customer.job.endDate);
-    console.log(formatEndDate);
-    console.log(formatStartDate.toDateString());
-    console.log(formatEndDate.toDateString());
   }
   var {
     match: {
@@ -52,13 +47,10 @@ const CustomerDetail = (props) => {
   ];
   var handleAddNote = (e) => {
     var { name, value } = e.target;
-    // console.log("han");
-    console.log(value);
     setNote(value);
    
   };
   var AddNote = () => {
-    console.log(note)
     var jobId = customer.job._id
     var jobObj = {
     //   title:"Deputy Officer",
@@ -84,11 +76,6 @@ const CustomerDetail = (props) => {
   }
 
 updateJob(jobObj, jobId)
-  // customer.job.note.push({text:note})
-
-    
-
-    console.log(customer.job.note)
     handleClose()
   }
   return (

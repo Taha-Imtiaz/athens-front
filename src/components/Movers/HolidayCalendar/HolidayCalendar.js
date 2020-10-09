@@ -4,7 +4,6 @@ import 'react-day-picker/lib/style.css';
 import style from './HolidayCalendar.module.css'
 
 function handleDayClick(e) {
-    console.log(e)
 }
 
 function renderDay(day) {

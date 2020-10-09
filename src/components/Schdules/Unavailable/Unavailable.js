@@ -7,17 +7,17 @@ const UnavailableSchedule = () => {
     const routes = [{
         title: "Unavailable",
         path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px"></img>
+        icon: <img src='/images/pin.png' width="20px" alt = "icon"></img>
     },
     {
         title: "Daily Schedule",
         path: "/schedule/daily",
-        icon: <img src='/images/Icon material-schedule.png' width="20px"></img>
+        icon: <img src='/images/Icon material-schedule.png' width="20px" alt = "icon"></img>
 
     }, {
         title: "Movers",
         path: "/schedule/movers",
-        icon: <img src='/images/truck.png' width="20px"></img>
+        icon: <img src='/images/truck.png' width="20px" alt = "icon"> </img>
     }
     ]
     return <div className={``}>

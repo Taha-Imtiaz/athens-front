@@ -36,21 +36,14 @@ class CreateUser extends Component {
 
 
     onTypeSelect = (selectedList, selectedItem) => {
-
-        console.log(selectedList, selectedItem)
         this.setState({ "type": selectedItem })
-
     }
 
     onAttributeSelect = (selectedList, selectedItem) => {
-
-        console.log(selectedList, selectedItem)
         this.setState({ "attribute": selectedItem })
-
     }
 
     onRemove(selectedList, removedItem) {
-        console.log(selectedList, removedItem)
     }
 
     validate = () => {
@@ -112,12 +105,10 @@ class CreateUser extends Component {
         event.preventDefault();
         const isValid = this.validate()
         if (isValid) {
-            console.log(this.state)
             this.setState(initialState)
 
             API.post(`posts`, this.state)
                 .then(response => {
-                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error)

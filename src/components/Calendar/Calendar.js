@@ -12,7 +12,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 const localizer = momentLocalizer(moment)
 const now = new Date()
-console.log(now)
 
 class CalendarApp extends Component {
 

@@ -103,44 +103,26 @@ class CreateJobs extends Component {
     };
 
     mySubmitHandler = (event) => {
-        console.log(this.state)
         event.preventDefault();
         const isValid = this.validate()
         if (isValid) {
-            console.log(this.state)
             this.setState({
                 ...this.state
             })
-            console.log(this.state)
-
-            // API.post(`posts`, this.state)
-            //     .then(response => {
-            //         console.log(response);
-            //     })
-            //     .catch(error => {
-            //         console.log(error)
-            //     })
         }
 
     }
 
 
     onSelect = (selectedList, selectedItem) => {
-
-        console.log(selectedList, selectedItem)
         this.setState({ "multi": selectedItem })
-
     }
 
     onAssigneeSelect = (selectedList, selectedItem) => {
-
-        console.log(selectedList, selectedItem)
         this.setState({ "assignee": selectedItem })
-
     }
 
     onRemove(selectedList, removedItem) {
-        console.log(selectedList, removedItem)
     }
 
     render() {

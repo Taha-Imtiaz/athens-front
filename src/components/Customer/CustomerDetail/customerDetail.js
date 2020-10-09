@@ -19,9 +19,9 @@ const CustomerDetail = (props) => {
 
   var { customer, getCustomer } = props;
   var formatStartDate, formatEndDate;
-  if (customer) {
-    formatStartDate = new Date(customer.job.startDate);
-    formatEndDate = new Date(customer.job.endDate);
+  if (customer?.jobs.length !== 0) {
+    formatStartDate = new Date(customer?.jobs[0].startDate);
+    formatEndDate = new Date(customer?.jobs[0].endDate);
   }
   var {
     match: {
@@ -84,13 +84,19 @@ updateJob(jobObj, jobId)
         <div>
           <div className="row">
             <div className="col-2">
-              <SideBar routes={routes} />
+              <SideBar routes={routes} key = {customerId} />
             </div>
             <div className="col-6">
               <div className={style.head}>
                 <h5>{customer.name}</h5>
+                <div>
+                 <b> <label className={style.l1}>Phone</label></b>
                 <label className={style.l1}>{customer.phone}</label>
+                </div>
+             <div>
+              <b> <label className={style.l1}>Email</label></b> 
                 <label className={style.l2}>{customer.email}</label>
+                </div>
               </div>
             </div>
             <div className="col-4">
@@ -154,8 +160,8 @@ updateJob(jobObj, jobId)
 
             </Link>
           </div>
-
-          <div class={style.jumbotron}>
+        {customer.job && 
+          <div class={style.jumbotron} style = {{padding:"1rem 0"}}>
             <div class="row">
               <div class="col-4">
                 <h3 className={style.job}>Jobs:</h3>
@@ -167,34 +173,42 @@ updateJob(jobObj, jobId)
                 <label className={style.status}>Status</label>
               </div>
             </div>
-            <div className="row">
-              <div class="col-4">
-                <p className={style.p}>
-                  {formatStartDate.toDateString()} -{" "}
-                  {formatEndDate.toDateString()}| {customer.job.startTime} -{" "}
-                  {customer.job.endTime}
-                </p>
-                <p className={style.p}>{customer.job.description}</p>
-              </div>
-              <div className="col-4">
-                <p className={style.p}>{customer.job.assignee}</p>
-              </div>
-              <div className="col-4">
-                <p className={style.p}>{customer.job.status}</p>
-              </div>
-            </div>
-            <div>
+             {customer.jobs.map((job) => {
+                  return  <div className="row" key = {customerId} style = {{marginBottom: "1rem"}} >
+           
+                  <div class="col-4">
+    
+                
+                    <p style = {{padding: "5%"}}>
+                      {formatStartDate.toDateString()} -{" "}
+                      {formatEndDate.toDateString()}| {job.startTime} -{" "}
+                      {job.endTime}
+                    </p>
+                    <p style = {{padding: "5%"}}>{job.description}</p>
+                  </div>
+                  <div className="col-4">
+                    <p style = {{padding: "5%"}}>{job.assignee}</p>
+                  </div>
+                  <div className="col-4">
+                    <p style = {{padding: "5%"}}>{job.status}</p>
+                  </div>
+
+                  <div>
               <h4 className={style.notesh}>Notes</h4>
-              <p className={style.notesd}>
-                {customer.job.note.map((note) => note.text)}
+              <p className={style.notesd} >
+              
+                {job.note.map((note) =>   <div className={`row`} style = {{margin: "3%"}} >
+                 
+                  {note.text}</div>)}
               </p>
-            </div>
-
-
-              <Button variant="primary" onClick={handleShow}>
+                  {/* Add modal */}
+              <Button onClick={handleShow} bsClass = "style-button" style= {{margin:"0 2rem"}}>
+             
                   Add Note
+             
+           
                 </Button>
-
+               
                 <Modal show={show} onHide={handleClose} animation={false} centered>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Note</Modal.Title>
@@ -212,7 +226,21 @@ updateJob(jobObj, jobId)
                   </Modal.Footer>
                 </Modal>
 
+                </div>
+            </div>
+
+          
+              
+              
+         
+                })}
+           
+           
+
+
+           
           </div>
+          }
           <br />
         </div>
       )}

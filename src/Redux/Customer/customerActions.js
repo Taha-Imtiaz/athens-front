@@ -1,5 +1,5 @@
 import Axios from "axios"
-import { GET_CUSTOMERS, GET_CUSTOMER } from "./customerConstants"
+import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER } from "./customerConstants"
 import { UPDATE_JOB } from "../Job/jobConstants"
 // import { GET_Customers } from "./userConstants"
 
@@ -36,4 +36,16 @@ export var updateJob = (jobObj, jobId) => {
             }
         })
     }
+    }
+
+    export var addCustomer = (customerObj) => {
+        return async (dispatch) => {
+            var addedCustomer = await Axios.post("https://athens-backend.herokuapp.com/api/user/customer-Registration", customerObj)
+            dispatch({
+                type: ADD_CUSTOMER,
+                payload:{
+                    addedCustomer:addedCustomer
+                }
+            })
+        }
     }

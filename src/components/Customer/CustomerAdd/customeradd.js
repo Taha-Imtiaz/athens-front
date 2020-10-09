@@ -6,6 +6,8 @@ import Button from '../../Button/Button'
 import API from '../../../utils/api'
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addCustomer } from '../../../Redux/Customer/customerActions';
 
 
 const initialState = {
@@ -90,16 +92,25 @@ class CustomerAdd extends Component {
 
         const isValid = this.validate()
         if (isValid) {
-            this.setState(initialState)
+            // this.setState(initialState)
 
-            API.post(`posts`, this.state)
-                .then(response => {
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            // API.post(`posts`, this.state)
+            //     .then(response => {
+                // })
+            //     .catch(error => {
+            //         console.log(error)
+            //     })
         }
-
+        var {name,email,phoneNumber, altemail,altnumber} = this.state
+        var addCustomerObj = {
+            name,
+            phoneNumber,
+            email, 
+            altnumber,
+            altemail
+        }
+        console.log(addCustomerObj)
+        addCustomer(addCustomerObj)
     }
 
     render() {
@@ -191,5 +202,9 @@ class CustomerAdd extends Component {
         );
     }
 }
+var actions = {
+    addCustomer
+}
 
-export default CustomerAdd;
+
+export default connect(null,actions)(CustomerAdd);

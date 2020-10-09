@@ -6,27 +6,34 @@ import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllCustomers } from "../../../Redux/Customer/customerActions";
-
+import { useState } from "react";
+import Pagination from "../../Pagination/Pagination";
+import _ from 'lodash'
 
 const CustomerList = (props) => {
+  var { getAllCustomers } = props;
+  var order = 1
+  var fetchCustomerOnPageChange = null
+
   useEffect(() => {
-    var { getAllCustomers } = props;
    
     var fetchCustomersObj = {
-      query: {
-        name: "",
-        email: "",
-      },
+      query: "",
       sort: {
-        name: null,
+        name: 1,
         createdAt: null,
       },
+      page:1
     };
     console.log(fetchCustomersObj);
     getAllCustomers(fetchCustomersObj);
   },[])
   const width = window.innerWidth;
-  console.log(width);
+  var [currentPage,setCurrentPage] = useState(1)
+  var [pageSize,setPageSize] = useState(10)
+  var [filter, setFilter] = useState("")
+var [dropDownOpen, setDropDownOpen] = useState(false)
+  // console.log(width);
   
   var {customers} = props;
   
@@ -35,11 +42,59 @@ const CustomerList = (props) => {
   var customerId = docs.map((doc) => doc._id)
   console.log(customerId)
   }
- 
+ console.log(customers?.data.User.total)
+
+ var handlePageChange = (page) => {
+   console.log(page)
+
+  
+    fetchCustomerOnPageChange = {
+   query: {
+    name: "",
+    email: "",
+  },
+  sort: {
+    name: 1,
+    createdAt: null,
+  },
+  page
+}
+
+
+getAllCustomers(fetchCustomerOnPageChange)
+setCurrentPage(page)
+ }
+
+var sortOrder = () => {
+ if(order === 1) {
+   order = -1
+  var fetchCustomersObj = {
+    query: "",
+    sort: {
+      name: -1,
+      createdAt: null,
+    },
+    page:1
+  };
+ }
+ else if(order === -1) {
+  order = 1
+  var fetchCustomersObj = {
+
+    query: "",
+    sort: {
+      name: 1,
+      createdAt: null,
+    },
+    page:1
+  };
+ }
+getAllCustomers(fetchCustomersObj)
+ }
+
   return (
     <div>
-    {customers ?
-      ( <div>
+    <div>
      
       <div className={`row justify-content-center ${style.toprow}`}>
         <div className="col-5 col-md-3">
@@ -52,7 +107,18 @@ const CustomerList = (props) => {
           <SearchBar />
         </div>
         <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
-          <i className="fa fa-filter"></i>
+          <i className=" dropdown-toggle fa fa-filter" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+
+          <div class="dropdown">
+  {/* <button class="btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button> */}
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" onClick = {sortOrder}>Name</a>
+    {/* <a class="dropdown-item" onClick = {handleDropDown}>Date</a> */}
+ 
+  </div>
+</div>
         </div>
       </div>
 
@@ -70,7 +136,7 @@ const CustomerList = (props) => {
         <div>
           <ul class="list-group">
             <div className={`${style.li}`}>
-              {docs.map((doc) => {
+              {docs?.map((doc) => {
              return     <li class=" checkbox list-group-item">
                   <div className="row justify-content-around">
                     <div className={`col-8 col-md-4 text-left ${style.flex}`}>
@@ -117,10 +183,16 @@ const CustomerList = (props) => {
             </div>
 
           </ul>
+         <Pagination itemCount = {customers?.data.User.total}
+    currentPage={currentPage}
+    pageSize = {pageSize}
+    onPageChange = {handlePageChange} />
+    </div>
+   
+   </div>
         </div>
       </div>
-    </div>) : null}
-    </div>
+     
   )
 }
 

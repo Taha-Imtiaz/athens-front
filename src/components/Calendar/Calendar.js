@@ -12,19 +12,19 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 const localizer = momentLocalizer(moment)
 const now = new Date()
-
-
+console.log(now)
 
 class CalendarApp extends Component {
+
     state = {
         date: new Date(),
         myEventsList: [
             {
                 id: 0,
-                title: 'All Day Event very long title',
-                allDay: true,
-                start: new Date(2015, 3, 0),
-                end: new Date(2015, 3, 1),
+                title: 'All',
+                // allDay: true,
+                start: new Date("Mon Oct 05 2020 23:43:34"),
+                end: new Date("Mon Oct 05 2020 23:43:34"),
             },
             {
                 id: 1,
@@ -63,9 +63,10 @@ class CalendarApp extends Component {
             {
                 id: 6,
                 title: 'Meeting',
-                start: new Date(2015, 3, 12, 10, 30, 0, 0),
-                end: new Date(2015, 3, 12, 12, 30, 0, 0),
+                start: now,
+                end: now,
                 desc: 'Pre-meeting meeting, to prepare for the meeting',
+                time: '2323'
             },
             {
                 id: 7,
@@ -118,10 +119,10 @@ class CalendarApp extends Component {
                 end: new Date(2015, 3, 22, 2, 0, 0),
             },
             {
-                id: 14,
+                _id: 14,
                 title: 'Today',
                 start: new Date(new Date().setHours(new Date().getHours() - 3)),
-                end: new Date(new Date().setHours(new Date().getHours() + 3)),
+                end: new Date(new Date().setHours(new Date().getHours() - 3))
             },
             {
                 id: 15,
@@ -145,7 +146,7 @@ class CalendarApp extends Component {
                 id: 18,
                 title: 'Itaewon Halloween Meeting',
                 start: now,
-                end: now,
+                // end: now,
             },
             {
                 id: 19,
@@ -176,11 +177,13 @@ class CalendarApp extends Component {
                 title: 'Go to the gym',
                 start: new Date(2015, 3, 14, 18, 30, 0),
                 end: new Date(2015, 3, 14, 20, 0, 0),
-            },
+            }
         ]
     }
 
+    onSelect = x => console.log(x)
     onChange = date => this.setState({ date })
+    handleSelect = x => console.log(x)
 
     render() {
         return (
@@ -189,18 +192,24 @@ class CalendarApp extends Component {
                     <div className="col-8">
                         <div className={style.cal}>
                             <Calendar
+                                // selectable
                                 localizer={localizer}
                                 events={this.state.myEventsList}
                                 startAccessor="start"
                                 endAccessor="end"
                                 style={{ height: 500, width: 900 }}
-
+                                onSelectEvent={this.onSelect}
+                                // onSelectSlot={this.handleSelect}
+                                views={{
+                                    month: true
+                                }}
+                                popup = {true}
                             />
                         </div>
                     </div>
 
                     <div className="col-4">
-                        <h5 className = {style.head}>Jobs</h5>
+                        <h5 className={style.head}>Jobs</h5>
                         <div className={`card ${style.cardCustom}`} >
                             <div class="card-body">
                                 <h5 class="card-title">Job Name</h5>

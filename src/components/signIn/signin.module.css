@@ -1,16 +1,16 @@
-
 .jumbotron{
-  justify-content: center;
+ 
+/*  justify-content: center;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: 1fr;
   grid-template-areas: "Username"
-                        "password";
+                        "password";*/
 
-  margin: auto;
+  margin:  0 20vw;
   /* background-color:#e9f2eb; */
-  width: 50vw;
-}
+  width: 70vw;
+} 
 
 .heading{
     margin-top: 5%;
@@ -157,18 +157,14 @@ margin-top: 20px;
   /* padding-bottom: 2%; */
 }
 
-.jumbotron{
+ .jumbotron{
   justify-content: center;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: 1fr;
-  grid-template-areas: "Username"
-                        "password";
+  
 
-  margin: auto;
+  margin: 0 15vw;
   /* background-color:#e9f2eb; */
   width: 70vw;
-}
+} 
 
 
 }

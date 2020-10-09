@@ -1,0 +1,5 @@
+-calender is not responsive
+- responsiveness issue in http://localhost:3000/user/create
+-responsiveness issue in http://localhost:3000/job/details
+
+fix responsiveness issue in http://localhost:3000/user/create

@@ -24,49 +24,79 @@ const CustomerDeposit = () => {
       <div className="col-2">
         <SideBar routes={routes} />
       </div>
+      <div className="col-10">
+      <div className="row">
+    
       <div className="col-6">
         <h3 className={style.head}>Blanket Deposit</h3>
       </div>
-      <div className="col-4">
+      <div className="col-6">
         <div className={style.btn}>
         <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button name="Deposit" /> </Link>
         </div>
       </div>
-    </div>
+      </div>
 
-    <div className={`row ${style.myrow}`}>
-      <div className="col-4">
+    <div className={`row ${style.myrow} `}>
+      <div className={`col-4 ${style.flex}`}>
         <h6>Blanket</h6>
       </div>
-      <div className="col-4">
+      <div className={`col-4 ${style.flex}`}>
         <h6>Quantity</h6>
       </div>
-      <div className="col-4">
+      <div className={`col-4 ${style.flex}`}>
         <h6>Deposit</h6>
       </div>
     </div>
 
     <div className={style.jumbotron}>
       <ul class="list-group">
-        <li class=" checkbox list-group-item d-flex justify-content-between align-items-center">
+        
+        <li class=" checkbox list-group-item">
+          <div className="row">
+          <div className="col-4">
           <label>Size(m)</label>
+          </div>
+          <div className="col-4">
           <label>2</label>
-          <label>$$$</label>
+          </div>
+          <div className="col-4">
+            <label>$$$</label>
+          </div>
+       </div> 
         </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+       
+        <li class="list-group-item">
+        <div className="row">
+          <div className="col-4">
           <label>Size(s)</label>
+          </div>
+          <div className="col-4">
           <label>3</label>
-          <label>$$$</label>
+          </div>
+          <div className="col-4">
+            <label>$$$</label>
+          </div>
+       </div> 
         </li>
 
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <li class="list-group-item">
+        <div className="row">
+          <div className="col-4">
           <label>Size(L)</label>
+          </div>
+          <div className="col-4">
           <label>4</label>
-          <label>$$$</label>
+          </div>
+          <div className="col-4">
+            <label>$$$</label>
+          </div>
+       </div> 
         </li>
       </ul>
     </div>
-
+    </div>
+  </div>
   </div>
 }
 

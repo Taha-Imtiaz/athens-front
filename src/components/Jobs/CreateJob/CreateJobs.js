@@ -79,11 +79,11 @@ class CreateJobs extends Component {
             assigneeError = "Assignee should not be empty"
         }
 
-        if (!this.state.locationFrom) {
+        if (!this.state.locationfrom) {
             locationfromError = "Location should not be empty"
         }
 
-        if (!this.state.locationTo) {
+        if (!this.state.locationto) {
             locationtoError = "Location should not be empty"
         }
 
@@ -108,15 +108,18 @@ class CreateJobs extends Component {
         const isValid = this.validate()
         if (isValid) {
             console.log(this.state)
-            this.setState(initialState)
+            this.setState({
+                ...this.state
+            })
+            console.log(this.state)
 
-            API.post(`posts`, this.state)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            // API.post(`posts`, this.state)
+            //     .then(response => {
+            //         console.log(response);
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     })
         }
 
     }

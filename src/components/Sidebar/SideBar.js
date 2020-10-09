@@ -14,7 +14,7 @@ const SideBar = (props) => {
             <div className="col-2">
               {x.icon}
             </div>
-            <div className={`col-10`}>
+            <div className="col-10">
               {width < 576 ? "" : x.title}
             </div>
           </div>

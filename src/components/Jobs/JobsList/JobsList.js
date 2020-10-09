@@ -60,7 +60,7 @@ class JobsList extends Component {
 
             <div className={`d-flex justify-content-end ${style.buttons}`}>
 
-              <div className={` ${style.create}`}>
+              <div className={` ${style.create}`} style = {{paddingRight:"0.5rem"}}> 
                 <Link style={{ textDecoration: "none" }} to='/calendar'> <Button name="Calendar" /></Link>
               </div>
               <div className={style.btndel}>

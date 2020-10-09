@@ -1,35 +1,41 @@
 .jumbotron{
     background-color: #fff;
-    width: 75%;
-    margin-left: 18%;
-    margin-right: 20%;
+   
     margin-top: 1%;
     text-align: center;
 }
-
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .myrow{
     margin-top: 5%;
     width: 100%;
-    margin-left: 19%;
+    /* padding-left: 5rem; */
+    /* background-color: aqua; */
     margin-right: 10%;
 }
 
 .btn{
-    margin-top: 2%;
+    float: right;
+    margin: 1rem 2rem
 }
 
 .head{
     margin-top: 2%;
+    /* background-color: aqua; */
     /* margin-right: 10%; */
     margin-left: 20%;
+    padding-left: 1rem;
 }
 
 @media only screen and (max-width: 576px) {
     .myrow{
         margin-top: 5%;
         width: 90%;
-        margin-left: 18%;
-        margin-right: 10%;
+        margin-left: 5%;
+        /* margin-right: 10%;  */
     }
 
     .btn{
@@ -42,24 +48,28 @@
         /* margin-right: 10%; */
         margin-left: 20%;
     }
-
+.jumbotron {
+    margin-left: 2rem;
+}
 }
 
 @media only screen and (max-width: 450px) {
     .myrow{
         margin-top: 5%;
         width: 80%;
-        margin-left: 23%;
-        margin-right: 10%;
+    
+        /* margin-left: 23%; */
+        /* margin-right: 10%; */
     }
 
     .jumbotron{
         background-color: #fff;
-        width: 70%;
+        /* width: 70%;
         margin-left: 23%;
-        margin-right: 20%;
+        margin-right: 20%; */
         margin-top: 1%;
         text-align: center;
+        margin-left: 2rem;
     }
     
 

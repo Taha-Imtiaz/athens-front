@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import style from './UsersList.module.css'
 import Button from '../../Button/Button'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { getAllUsers } from '../../../Redux/user/userActions'
+// import { connect } from 'react-redux'
+// import { getAllUsers } from '../../../Redux/user/userActions'
 
 
 

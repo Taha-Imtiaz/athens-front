@@ -10,7 +10,6 @@ class SubmitDeposit extends Component {
   handleSubmit = (e) => {
       var {blanket} = this.state
     e.preventDefault()
-    console.log(blanket)
     this.setState({
          blanket: ""
     })

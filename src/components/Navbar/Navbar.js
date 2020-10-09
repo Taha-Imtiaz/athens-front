@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 const Navbar = (props) => {
 
     const getNavLinkClass = path => {
-        console.log(props.location.pathname)
         return props.location.pathname === path
             ? "nav-item active"
             : "nav-item";
@@ -16,14 +15,14 @@ const Navbar = (props) => {
     return (
         <nav className={`navbar navbar-expand-md navbar-light ${style.elevation} sticky-top`}>
             <Link className={`navbar-brand ${style.logo}`} to="/">
-                <img src='/images/movers-logo.jpg' width="60px"></img>
+                <img src='/images/movers-logo.jpg' width="60px" alt = "Logo"></img>
             </Link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div className="collapse navbar-collapse" id="navbarNav">
 
-                <ul class="navbar-nav ml-auto">
+                <ul className="navbar-nav ml-auto">
                     {!props.location.pathname.startsWith("/mover") ?
                         <React.Fragment>
                             <li className={getNavLinkClass("/customer")}>

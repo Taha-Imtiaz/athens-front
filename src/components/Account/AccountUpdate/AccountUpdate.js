@@ -66,12 +66,10 @@ class AccountUpdate extends Component {
 
         const isValid = this.validate()
         if (isValid) {
-            console.log(this.state)
             this.setState(initialState)
 
             API.post(`posts`, this.state)
                 .then(response => {
-                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error)

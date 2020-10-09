@@ -6,7 +6,6 @@ import { UPDATE_JOB } from "../Job/jobConstants"
 export var getAllCustomers =  (customersObj) => {
 return async (dispatch) => {
     var getCustomersList = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-customer",customersObj)
-    console.log(getCustomersList)
     //update app's state
     dispatch({
         type: GET_CUSTOMERS, 
@@ -19,9 +18,6 @@ return async (dispatch) => {
 export var getCustomer = (customerId) => {
     return async (dispatch) => {
         var customer = await Axios.get(`https://athens-backend.herokuapp.com/api/user/get-customer/${customerId}`)
-      console.log(customer)
-      console.log(customerId)
-        console.log("get-customer-called")
         dispatch({
             type: GET_CUSTOMER,
             payload:{

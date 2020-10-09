@@ -3,7 +3,6 @@ import style from './SideBar.module.css'
 import { Link } from 'react-router-dom'
 
 const SideBar = (props) => {
-  console.log(props)
   const width = window.innerWidth
   return <div class={style.sidebar}>
 

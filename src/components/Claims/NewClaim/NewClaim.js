@@ -107,12 +107,10 @@ class NewClaim extends Component {
     event.preventDefault();
     const isValid = this.validate()
     if (isValid) {
-      console.log(this.state)
       this.setState(initialState)
 
       API.post(`posts`, this.state)
         .then(response => {
-          console.log(response);
         })
         .catch(error => {
           console.log(error)
@@ -123,10 +121,6 @@ class NewClaim extends Component {
 
 
   handleChangeFrom = (date,e) => {
-    // const valueOfInput = date.format()
-    console.log(date)
-    // console.log(e.target)
-    
     if (date == null) {
       this.setState({ ["Error"]: "Should not be empty" })
     } else {
@@ -139,7 +133,6 @@ class NewClaim extends Component {
 
   handleChangeTo = date => {
     // const valueOfInput = date.format()
-    console.log(date)
     if (date == "") {
       this.setState({ ["Error"]: "Should not be empty" })
     } else {

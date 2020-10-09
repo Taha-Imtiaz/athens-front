@@ -1,6 +1,6 @@
-import Navbar from '../../Navbar/Navbar'
+// import Navbar from '../../Navbar/Navbar'
 import style from './customeradd.module.css'
-import SideBar from '../../Sidebar/SideBar'
+// import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
 
 import API from '../../../utils/api'
@@ -87,16 +87,13 @@ class CustomerAdd extends Component {
     mySubmitHandler = (event) => {
 
         event.preventDefault();
-        console.log(this.state)
 
         const isValid = this.validate()
         if (isValid) {
-            console.log(this.state)
             this.setState(initialState)
 
             API.post(`posts`, this.state)
                 .then(response => {
-                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error)

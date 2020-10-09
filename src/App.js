@@ -4,7 +4,7 @@ import './App.css';
 import Sign_In_Form from './components/signIn/signin';
 import SignInForm from './components/signIn/signin';
 import {Route, Switch} from "react-router-dom"
-import customerList from './components/Customer/CustomerList/customerList';
+import customerList from './components/Customer/CustomerList/customerlist';
 import customerDetail from './components/Customer/CustomerDetail/customerDetail';
 import customerAdd from './components/Customer/CustomerAdd/customeradd';
 import AdminPage from './components/Admin/Admin';

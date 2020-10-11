@@ -2,9 +2,6 @@
 import style from './customeradd.module.css'
 // import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
-
-import API from '../../../utils/api'
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCustomer } from '../../../Redux/Customer/customerActions';
@@ -87,32 +84,27 @@ class CustomerAdd extends Component {
 
 
     mySubmitHandler = (event) => {
-
+        var {addCustomer,history} = this.props
         event.preventDefault();
 
         const isValid = this.validate()
         if (isValid) {
-            // this.setState(initialState)
-
-            // API.post(`posts`, this.state)
-            //     .then(response => {
-                // })
-            //     .catch(error => {
-            //         console.log(error)
-            //     })
-        }
+            
         var {name,email,phoneNumber, altemail,altnumber} = this.state
         var addCustomerObj = {
             name,
             phoneNumber,
             email, 
-            altnumber,
+            subcontacts: {
+             altnumber,
             altemail
+            }
+           
         }
         console.log(addCustomerObj)
-        addCustomer(addCustomerObj)
+        addCustomer(addCustomerObj, () => history.goBack())
     }
-
+    }
     render() {
         return (
             <div>

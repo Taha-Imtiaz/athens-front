@@ -16,8 +16,7 @@ var customerReducer = (state = initialState, action) => {
         case UPDATE_JOB:
             return {...payload.updatedJob}
 
-            case ADD_CUSTOMER: 
-            return {...state, getCustomers: payload.addedCustomer}
+           
         default:
             return state
     }

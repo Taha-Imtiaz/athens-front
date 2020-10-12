@@ -18,24 +18,36 @@ class JobEditDetails extends Component {
     };
 
     handleChange = date => {
+        console.log(date)
         this.setState({
             startDate: date
         });
     };
 componentDidMount = () => {
-    var {getJob} = this.props 
+    // var {getJob} = this.props 
     var {match:{params:{jobId}}} = this.props
+    // console.log(jobId)
     var {title,job} = this.state
     console.log(jobId)
     getJob(jobId).then((res) => {
+        console.log(res)
+    })
+    getJob(jobId).then((res) => {
+        console.log(res.data.job[0])
         this.setState({
-      title: jobs[0]?.data?.job[0]?.title,
-      job: res.data.job[0]
+      job: res.data.job[0],
+       title: res.data.job[0].title,
+       startDate: new Date(),
+       startTime: res.data.job[0].startTime,
+       locationFrom :res.data.job[0].from,
+       locationTo:res.data.job[0].to,
+       description:res.data.job[0].description
+
 })
     })
   
    
-console.log(title)
+// console.log(title)
 }
 handleFormInput = (e) => {
     var {name, value} = e.target
@@ -44,16 +56,15 @@ handleFormInput = (e) => {
     })
 }
     render() {
-        var {getJob, jobs} = this.props 
+       var {job} = this.state
          var {match:{params:{jobId}}} = this.props
-        //  console.log(jobs[0]?.data?.job[0])
+         console.log(job)
 
        
-         var {title} =  this.state
+         var {title,startDate, startTime,locationFrom,locationTo, description} =  this.state
         return (
             <div>
-                {jobs[0]?.data?.job[0] &&
-                <div>
+           
                 <h3 className = {style.head}>Job Details Edit</h3>
                 <div className="row">
                     <div className="col-8">
@@ -68,7 +79,8 @@ handleFormInput = (e) => {
                                     <div className="col-6">
                                         <div class="form-group">
                                             <DatePicker className={style.to}
-                                                selected={this.state.startDate}
+                                    
+                                                selected={startDate}
                                                 onChange={this.handleChange}
                                                 placeholderText="Date"
                                             />
@@ -77,7 +89,7 @@ handleFormInput = (e) => {
                                     </div>
                                     <div className="col-6">
                                         <div className="form-group">
-                                            <input type="input" class="form-control" id="time" placeholder="Time" aria-describedby="emailHelp" />
+                                            <input type="input" class="form-control" id="time" placeholder="Time" aria-describedby="emailHelp" name = "startTime" value = {startTime} onChange = {this.handleFormInput} />
                                         </div>
 
                                     </div>
@@ -93,11 +105,11 @@ handleFormInput = (e) => {
                                     </div>
                                     <div className="col-4">
                                         <div class="form-group">
-                                            <input type="input" class="form-control" id="from" placeholder="Start" aria-describedby="emailHelp" />
+                                            <input type="input" class="form-control" id="from" placeholder="Start" aria-describedby="emailHelp" name = "locationFrom" value = {locationFrom} onChange = {this.handleFormInput} />
                                         </div>
                                     </div>
                                     <div className="col-4">
-                                        <input type="input" class="form-control" id="to" placeholder="End" aria-describedby="emailHelp" />
+                                        <input type="input" class="form-control" id="to" placeholder="End" aria-describedby="emailHelp" name = "locationTo" value = {locationTo} onChange = {this.handleFormInput} />
                                     </div>
 
                                 </div>
@@ -130,8 +142,11 @@ handleFormInput = (e) => {
                 </div>
                 <div className={`${style.tron2}`}>
                     <h3 className={style.jobtag}>Job Description</h3>
-
-                    <p className = {style.para}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
+                <form>
+                    <div className="form-group">
+                  <input type="text" class="form-control" name="description" value = {description} id="" onChange = {this.handleFormInput}/>
+               </div>
+                </form>
                 </div>
 
                 <h3 className = {style.assigneehead}>Assignees</h3>
@@ -149,8 +164,9 @@ handleFormInput = (e) => {
 
                 <div className={`${style.tron2}`}>
                     <h3 className={style.jobtag}>Notes</h3>
-
-                    <p className = {style.para}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis diam, vitae volutpat nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
+                    
+                    {job?.note.map((note) => <p className = {style.para}>{note.text} </p>)}
+                    
                     <div className="btnalign">
                         <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Delete</button>
                         <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button>
@@ -161,8 +177,7 @@ handleFormInput = (e) => {
                     <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Reset</button>
                 </div>
                 </div>
-                }
-            </div>
+         
 
         );
     }
@@ -170,8 +185,8 @@ handleFormInput = (e) => {
 // var mapStateToProps = (state) => ({
 //     jobs: state.jobs
 // })
-var actions = {
-    getJob
-}
+// var actions = {
+//     getJob
+// }
 
-export default connect(null,actions)(JobEditDetails);
+export default JobEditDetails;

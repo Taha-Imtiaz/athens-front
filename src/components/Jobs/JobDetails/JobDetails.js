@@ -117,8 +117,8 @@ const JobDetails = (props) => {
 // var mapStateToProps = (state) => ({
 //     jobs: state.jobs
 // })
-var actions = {
-    getJob
-}
+// var actions = {
+//     getJob
+// }
 
-export default connect(null,actions)(JobDetails)
+export default JobDetails

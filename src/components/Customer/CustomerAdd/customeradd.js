@@ -9,10 +9,10 @@ import { addCustomer } from '../../../Redux/Customer/customerActions';
 
 const initialState = {
     name: "",
-    phoneNumber: "",
+    phone: "",
     email: "",
-    altnumber: "",
-    altemail: "",
+   phoneContacts: "",
+    emailContacts: "",
     nameError: "",
     emailError: "",
     phoneNumberError: "",
@@ -47,15 +47,15 @@ class CustomerAdd extends Component {
             nameError = "Name should not be empty"
         }
 
-        if (!this.state.phoneNumber) {
+        if (!this.state.phone) {
             phoneNumberError = "Phone Number should not be empty"
         }
 
-        if (!this.state.altemail.match(mailformat)) {
+        if (!this.state.emailContacts.match(mailformat)) {
             altemailError = "Invalid Email"
         }
 
-        if (!this.state.altnumber) {
+        if (!this.state.phoneContacts) {
             altnumberError = "Phone Number should not be empty"
         }
 
@@ -90,14 +90,14 @@ class CustomerAdd extends Component {
         const isValid = this.validate()
         if (isValid) {
             
-        var {name,email,phoneNumber, altemail,altnumber} = this.state
+        var {name,email,phone, emailContacts,phoneContacts} = this.state
         var addCustomerObj = {
             name,
-            phoneNumber,
+            phone,
             email, 
             subcontacts: {
-             altnumber,
-            altemail
+             phoneContacts,
+            emailContacts
             }
            
         }
@@ -128,7 +128,7 @@ class CustomerAdd extends Component {
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Phone Number</label>
-                            <input type="input" class="form-control" id="phone_number" name="phoneNumber" value={this.state.phoneNumber} onChange={this.handleFormInput} />
+                            <input type="input" class="form-control" id="phone_number" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.phoneNumberError ? (
@@ -157,7 +157,7 @@ class CustomerAdd extends Component {
                     <form>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Phone Number</label>
-                            <input type="input" class="form-control" id="phone_number" name="altnumber" value={this.state.altnumber} onChange={this.handleFormInput} />
+                            <input type="input" class="form-control" id="phone_number" name="phoneContacts" value={this.state.phoneContacts} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.altnumberError ? (
@@ -171,7 +171,7 @@ class CustomerAdd extends Component {
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" name="altemail" value={this.state.altemail} onChange={this.handleFormInput} />
+                            <input type="email" class="form-control" name="emailContacts" value={this.state.emailContacts} onChange={this.handleFormInput} />
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
 

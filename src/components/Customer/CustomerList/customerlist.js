@@ -23,7 +23,7 @@ const CustomerList = (props) => {
     var fetchCustomersObj = {
       query: "",
       sort: {
-        name: 1,
+       plainname: 1,
         createdAt: null,
       },
       page: 1,
@@ -32,10 +32,12 @@ const CustomerList = (props) => {
   }, [getAllCustomers]);
 
   var handlePageChange = (page) => {
+
+  
     var fetchCustomersOnPageChange = {
       query: "",
       sort: {
-        name: 1,
+       plainname: order,
         createdAt: null,
       },
       page: page,
@@ -71,7 +73,7 @@ console.log(totalCount)
    var sortCustomersObj = {
     query: "",
     sort: {
-      name: -1,
+     plainname: -1,
       createdAt: null,
     },
     page: 1,
@@ -197,7 +199,7 @@ console.log(totalCount)
             </div>
           </div>
                   
-              <Pagination
+              <Pagination 
                 itemCount={totalCount}
                 pageSize={pageSize}
                 currentPage={currentPage}

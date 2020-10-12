@@ -1,34 +1,63 @@
 import React from 'react'
 import style from './JobDetails.module.css'
 import Button from '../../Button/Button'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getJob } from '../../../Redux/Job/jobActions'
+import { useEffect } from 'react'
+import { useState } from 'react'
 
-const JobDetails = () => {
+const JobDetails = (props) => {
     const width = window.innerWidth
-    return <div>
+    var jobprops = props.location.jobProps
+    // var job = null
+    var [job, setJob] = useState(null)
+    
+    // var {getJob, jobs} = props 
+  var {match:{params:{jobId}}} = props
+    console.log(props)
+    
+    useEffect(() => {
+     
+        console.log(jobId)
+        
+        getJob(jobId).then((res) => {
+            setJob(res.data.job[0])
+           
+            console.log(job)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+
+    return   <div>
+  
+   <div>
+  
+        
         <div className={`row ${style.toprow}`}>
             <div className="col-3 col-md-3">
                 <div className={`card ${style.cardCustom}`} >
                     <div class="card-body">
                         <h5 class="card-title">Customer</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">John Doe</h6>
-                        <p class="card-text">+1 1234567890</p>
-                        <p class="card-text">name@gmail.com</p>
+                        <h6 class="card-subtitle mb-2 text-muted">{job?.customer.name}</h6>
+                        <p class="card-text">{job?.customer?.phone}</p>
+                        <p class="card-text">{job?.customer?.email}</p>
                     </div>
                 </div>
             </div>
             <div className="col-6 col-md-5">
                 <div className={`container ${style.containerCustom}`}>
-                    <h3 className={style.head}>Job Title</h3>
+                    <h3 className={style.head}>{job?.title}</h3>
                     <div className={style.btn}>
                         <Button name="Status" />
                     </div>
                     <br />
                     <br />
-                    <p className={style.para}>July 07 - July 10  |  10am - 2pm</p>
+                    <p className={style.para}>{`${job?.startDate?.split(" ")[1]} ${job?.startDate?.split(" ")[2]} ${job?.startDate?.split(" ")[3]}`} |{`${job?.endDate.split(" ")[1]} ${job?.endDate.split(" ")[2]} ${job?.endDate.split(" ")[3]}`}</p>
                     <br />
                     <br />
-                    <p className={style.para}>Start Location - End Location</p>
+                    <p className={style.para}>{job?.from} - {job?.to}</p>
                     <br />
 
                     <span className={`badge badge-primary ${style.badges}`}>Primary</span>
@@ -39,7 +68,7 @@ const JobDetails = () => {
             </div>
             <div className={`col-3 d-flex justify-content-end  col-md-3`}>
                 <div className={style.btns}>
-                    <Link style={{ textDecoration: "none"}} to='/job/edit'>
+                    <Link style={{ textDecoration: "none"}} to={`/job/edit/${jobId}`}>
                         <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
                     </Link>
                 </div>
@@ -55,8 +84,11 @@ const JobDetails = () => {
             <div className="col-2">
                 <div className={`container ${style.cont}`}>
                     <h5 className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignees</h5>
-                    <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 1</p>
-                    <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p>
+                    {job?.assignee.map((assignee) => 
+                      <p className={style.assigneehead}>{assignee.name}</p>
+                    )}
+                  
+                    {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
                     <div className={style.btncustom}>
                         <Button name="Activities" />
                     </div>
@@ -66,19 +98,27 @@ const JobDetails = () => {
                 <div className={`${style.jumbo}`}>
                     <h3 className={style.jobHead}>Job Description</h3>
                     <p className={style.para}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet odio et nulla bibendum mollis vitae nec lorem. Maecenas condimentum dapibus dolor, ac venenatis mauris fermentum vel. Donec sit amet orci non leo finibus vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum posuere mattis eros, quis mattis tortor porta ac. In ipsum libero, euismod ac est cursus, molestie fermentum magna. In semper velit.
+                     {job?.description}
                     </p>
                     <h3 className={style.jobHead}>Notes</h3>
                     <p className={style.para}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet odio et nulla bibendum mollis vitae nec lorem. Maecenas condimentum dapibus dolor
+                    {job?.note.map((note) => <p>{note.text}</p> )}
                     </p>
-                    <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button>
+                    {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
                 </div>
 
             </div>
         </div>
     </div>
+    
+  
+    </div>
+}
+// var mapStateToProps = (state) => ({
+//     jobs: state.jobs
+// })
+var actions = {
+    getJob
 }
 
-
-export default JobDetails
+export default connect(null,actions)(JobDetails)

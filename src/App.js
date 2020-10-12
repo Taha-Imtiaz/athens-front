@@ -50,10 +50,10 @@ function App() {
       <Route exact path="/claim/customerdeposit" component={CustomerDeposit}/>
       <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit}/>
       <Route path="/claim/newclaim" component={NewClaim}/>
-      <Route exact path="/job" component={JobsList}/>
-      <Route path="/job/details" component={JobDetails}/>
+      <Route exact path="/job" component={JobsList} exact/>
+      <Route path="/job/details/:jobId" component={JobDetails}/>
       <Route path="/job/create" component={CreateJobs}/>
-      <Route path="/job/edit" component={JobEditDetails}/>
+      <Route path="/job/edit/:jobId" component={JobEditDetails}/>
       <Route path="/calendar" component={CalendarApp}/>
       <Route exact path="/schedule" component={UnavailableSchedule}/>
       <Route path="/schedule/daily" component={DailySchedule}/>

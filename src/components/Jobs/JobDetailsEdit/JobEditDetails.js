@@ -3,12 +3,18 @@ import style from './JobEditDetails.module.css'
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Multiselect } from 'multiselect-react-dropdown';
+import { connect } from 'react-redux';
+import { getJob } from '../../../Redux/Job/jobActions';
 
 
 class JobEditDetails extends Component {
+
     state = {
         options: [{ name: 'Srigar', id: 1 }, { name: 'Sam', id: 2 }],
-        startDate: ""
+        startDate: "",
+        title:  '', 
+        job: null
+
     };
 
     handleChange = date => {
@@ -16,10 +22,38 @@ class JobEditDetails extends Component {
             startDate: date
         });
     };
-
+componentDidMount = () => {
+    var {getJob} = this.props 
+    var {match:{params:{jobId}}} = this.props
+    var {title,job} = this.state
+    console.log(jobId)
+    getJob(jobId).then((res) => {
+        this.setState({
+      title: jobs[0]?.data?.job[0]?.title,
+      job: res.data.job[0]
+})
+    })
+  
+   
+console.log(title)
+}
+handleFormInput = (e) => {
+    var {name, value} = e.target
+    this.setState({
+        [name]: value
+    })
+}
     render() {
+        var {getJob, jobs} = this.props 
+         var {match:{params:{jobId}}} = this.props
+        //  console.log(jobs[0]?.data?.job[0])
+
+       
+         var {title} =  this.state
         return (
             <div>
+                {jobs[0]?.data?.job[0] &&
+                <div>
                 <h3 className = {style.head}>Job Details Edit</h3>
                 <div className="row">
                     <div className="col-8">
@@ -27,7 +61,8 @@ class JobEditDetails extends Component {
 
                             <form>
                                 <div className="form-group">
-                                    <input type="input" class="form-control" id="jobTitle" placeholder="Job Title" aria-describedby="emailHelp" />
+                                  
+                                    <input type="input" class="form-control" id="jobTitle" placeholder="Job Title" aria-describedby="emailHelp" name = "title" value = {title} onChange = {this.handleFormInput} />
                                 </div>
                                 <div className="row">
                                     <div className="col-6">
@@ -125,10 +160,18 @@ class JobEditDetails extends Component {
                     <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Update</button>
                     <button type="submit" className={`btn btn-primary ${style.btnCustom}`}>Reset</button>
                 </div>
+                </div>
+                }
             </div>
 
         );
     }
 }
+// var mapStateToProps = (state) => ({
+//     jobs: state.jobs
+// })
+var actions = {
+    getJob
+}
 
-export default JobEditDetails;
+export default connect(null,actions)(JobEditDetails);

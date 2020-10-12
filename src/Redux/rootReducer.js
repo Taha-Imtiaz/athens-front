@@ -4,6 +4,6 @@ import jobReducer from './Job/jobReducer'
 
 var rootReducer = combineReducers({
 customers: customerReducer,
-job: jobReducer
+jobs: jobReducer
 })
 export default rootReducer

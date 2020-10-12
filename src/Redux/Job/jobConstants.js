@@ -1,1 +1,2 @@
-export const UPDATE_JOB = "UPDATE_JOB"
+export const GET_JOBS = "GET_JOBS"
+export const GET_JOB = "GET_JOB"

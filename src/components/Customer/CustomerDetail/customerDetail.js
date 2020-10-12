@@ -5,7 +5,7 @@ import style from "./customerdetail.module.css";
 import SideBar from "../../Sidebar/SideBar";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCustomer, updateJob } from "../../../Redux/Customer/customerActions";
+import { getCustomer } from "../../../Redux/Customer/customerActions";
 import { Modal } from "react-bootstrap";
 import { Button } from 'react-bootstrap';
 
@@ -21,6 +21,7 @@ const CustomerDetail = (props) => {
   var formatStartDate, formatEndDate;
   if (customer?.jobs.length !== 0) {
     formatStartDate = new Date(customer?.jobs[0].startDate);
+    console.log(formatStartDate)
     formatEndDate = new Date(customer?.jobs[0].endDate);
   }
   var {
@@ -75,9 +76,10 @@ const CustomerDetail = (props) => {
   // ...customer.job.note.push()
   }
 
-updateJob(jobObj, jobId)
-    handleClose()
+// updateJob(jobObj, jobId)
+//     handleClose()
   }
+  console.log(customer)
   return (
     <div>
       {customer && (

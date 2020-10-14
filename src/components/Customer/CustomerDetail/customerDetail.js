@@ -49,6 +49,7 @@ const CustomerDetail = (props) => {
   var handleAddNote = (e) => {
     var { name, value } = e.target;
     setNote(value);
+    console.log(value)
    
   };
   var AddNote = () => {
@@ -154,7 +155,11 @@ const CustomerDetail = (props) => {
           </div>
 
           <div className={style.btn}>
-            <Link style={{ textDecoration: "none" }} to="/job/create">
+            <Link style={{ textDecoration: "none" }} to={{
+              
+              pathname:"/job/create",
+              customerId: customerId
+              }}>
               {" "}
               <Button variant="primary" style = {{margin: "0 15rem"}}>
                   Create Job
@@ -162,7 +167,7 @@ const CustomerDetail = (props) => {
 
             </Link>
           </div>
-        {customer.job && 
+        {customer.jobs && 
           <div class={style.jumbotron} style = {{padding:"1rem 0"}}>
             <div class="row">
               <div class="col-4">
@@ -189,7 +194,8 @@ const CustomerDetail = (props) => {
                     <p style = {{padding: "5%"}}>{job.description}</p>
                   </div>
                   <div className="col-4">
-                    <p style = {{padding: "5%"}}>{job.assignee}</p>
+                    {job.assignee.map((assignee) => <p>{assignee}</p> )}
+                   
                   </div>
                   <div className="col-4">
                     <p style = {{padding: "5%"}}>{job.status}</p>

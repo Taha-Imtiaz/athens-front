@@ -142,7 +142,7 @@ getAllJobs(fetchJobsOnPageChange)
                       <label>{job.title}</label>
                     </div>
                     <div className="col-4 col-md-2">
-                      <i className="fa fa-calendar"> {`${job.startDate.split(" ")[1]} ${job.startDate.split(" ")[2]} ${job.startDate.split(" ")[3]}`}</i>
+                      <i className="fa fa-calendar"> {`${job.startDate.split("G")[0]}`}</i>
                     </div>
                     <div className="col-4 col-md-3">
                       <span>
@@ -151,7 +151,7 @@ getAllJobs(fetchJobsOnPageChange)
                       </span>
                     </div>
                     <div className="col-4 col-md-2">
-                      <label>{job.services}</label>
+                      <label>{job.services.map((service) => `${service.name} `)}</label>
                     </div>
                     <div className="col-4 col-md-1">
                       <label>{job.status}</label>

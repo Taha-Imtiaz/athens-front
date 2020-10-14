@@ -54,7 +54,7 @@ const JobDetails = (props) => {
                     </div>
                     <br />
                     <br />
-                    <p className={style.para}>{`${job?.startDate?.split(" ")[1]} ${job?.startDate?.split(" ")[2]} ${job?.startDate?.split(" ")[3]}`} |{`${job?.endDate.split(" ")[1]} ${job?.endDate.split(" ")[2]} ${job?.endDate.split(" ")[3]}`}</p>
+                    <p className={style.para}>{`${job?.startDate?.split("G")[0]}`} |{`${job?.endDate.split("G")[0]}`}</p>
                     <br />
                     <br />
                     <p className={style.para}>{job?.from} - {job?.to}</p>
@@ -89,7 +89,7 @@ const JobDetails = (props) => {
                     )}
                   
                     {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
-                    <div className={style.btncustom}>
+                    <div>
                         <Button name="Activities" />
                     </div>
                 </div>
@@ -100,10 +100,17 @@ const JobDetails = (props) => {
                     <p className={style.para}>
                      {job?.description}
                     </p>
+                    
+                    {job?.note.length !== 0 &&
+                    <div>
+
                     <h3 className={style.jobHead}>Notes</h3>
                     <p className={style.para}>
                     {job?.note.map((note) => <p>{note.text}</p> )}
                     </p>
+                     </div>
+                     }
+                   
                     {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
                 </div>
 

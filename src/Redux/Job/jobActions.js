@@ -1,36 +1,56 @@
-import Axios from "axios"
-import { GET_JOBS, GET_JOB } from "./jobConstants"
+import Axios from "axios";
+import { GET_JOBS, GET_JOB } from "./jobConstants";
 
+// var baseUrl = 'http://10.0.4.213:3000/'
+var baseUrl = "https://athens-backend.herokuapp.com/";
 export var getAllJobs = (jobObj) => {
-return async (dispatch) => {
+  return async (dispatch) => {
     try {
-       var getJobs = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-jobs", jobObj)
+      var getJobs = await Axios.post(baseUrl + "api/user/get-all-jobs", jobObj);
 
-       //update app's state
-       dispatch({
+      //update app's state
+      dispatch({
         type: GET_JOBS,
         payload: {
-            getJobs:getJobs
-        }
-       }) 
+          getJobs: getJobs,
+        },
+      });
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-}
-}
+  };
+};
 
 export var getJob = async (jobId) => {
-    // return async (dispatch) => {
-        try {
-          var getJob = await Axios.get(`https://athens-backend.herokuapp.com/api/user/get-job/${jobId}`)
-          console.log(getJob)
-          return getJob
-        //    dispatch({
-        //        type: GET_JOB,
-              
-        //    })
-        } catch (error) {
-            console.log(error)
-        }
-    
-}
+  // return async (dispatch) => {
+  try {
+    var getJob = await Axios.get(baseUrl + `api/user/get-job/${jobId}`);
+    console.log(getJob);
+    return getJob;
+    //    dispatch({
+    //        type: GET_JOB,
+
+    //    })
+  } catch (error) {
+    console.log(error);
+  }
+};
+export var getAllMovers = async () => {
+  try {
+    var getMovers = await Axios.get(baseUrl + "api/user/get-all-movers");
+    return getMovers;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export var createJob = async (newJobObj) => {
+  try {
+    var newJob = await Axios.post(
+      "http://10.0.4.213:3000/api/user/create-job",
+      newJobObj
+    );
+    return newJob;
+  } catch (error) {
+    console.log(error);
+  }
+};

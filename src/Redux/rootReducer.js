@@ -5,8 +5,8 @@ import claimReducer from './Claims/claimsReducers'
 
 
 var rootReducer = combineReducers({
-    customers: customerReducer,
-    job: jobReducer,
-    claims: claimReducer
+customers: customerReducer,
+jobs: jobReducer,
+claims: claimReducer
 })
 export default rootReducer

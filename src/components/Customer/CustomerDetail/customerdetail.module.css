@@ -116,12 +116,16 @@
 
 .notesd{
  
-    margin-left: 1%;
+    margin-left: 15%;
 }
 .notesh{
-    margin-left: 2%;
+    margin-left: 15%;
 }
-
+.style-button {
+  width: 10vw !important;
+  padding: 1rem !important;
+  margin: 0 2rem;
+}
 .btn2{
     margin-left: 60%;
 }

@@ -5,9 +5,10 @@ import DatePicker from "react-datepicker";
 import Button from '../../Button/Button'
 import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
-
+import { connect } from "react-redux";
+import { addClaim } from '../../../Redux/Claims/claimsActions'
 const initialState = {
-  name: "",
+  customerId: "",
   jobId: "",
   item: "",
   price: "",
@@ -16,7 +17,7 @@ const initialState = {
   toDate: "",
   locationfrom: "",
   locationto: "",
-  nameError: "",
+  customerIdError: "",
   jobIdError: "",
   itemError: "",
   priceError: "",
@@ -44,7 +45,7 @@ class NewClaim extends Component {
 
 
   validate = () => {
-    let nameError = ""
+    let customerIdError = ""
     let jobIdError = ""
     let itemError = ""
     let priceError = ""
@@ -55,8 +56,8 @@ class NewClaim extends Component {
     let locationtoError = ""
 
 
-    if (!this.state.name) {
-      nameError = "Name should not be empty"
+    if (!this.state.customerId) {
+      customerIdError = "Customer Id should not be empty"
     }
 
     if (!this.state.jobId) {
@@ -93,8 +94,8 @@ class NewClaim extends Component {
 
 
 
-    if (nameError || jobIdError || itemError || priceError || descriptionError || fromDateError || toDateError || locationfromError || locationtoError) {
-      this.setState({ nameError, jobIdError, itemError, priceError, descriptionError, fromDateError, toDateError, locationfromError, locationtoError })
+    if (customerIdError || jobIdError || itemError || priceError || descriptionError || fromDateError || toDateError || locationfromError || locationtoError) {
+      this.setState({ customerIdError, jobIdError, itemError, priceError, descriptionError, fromDateError, toDateError, locationfromError, locationtoError })
       return false
     }
 
@@ -107,20 +108,30 @@ class NewClaim extends Component {
     event.preventDefault();
     const isValid = this.validate()
     if (isValid) {
-      this.setState(initialState)
-
-      API.post(`posts`, this.state)
-        .then(response => {
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      console.log(this.state)
+      let { customerId, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
+      let data = {
+        jobId,
+        customerId,
+        items: [{
+          item,
+          price,
+          description
+        }],
+        startDate: fromDate,
+        endDate: toDate,
+        from: locationfrom,
+        to: locationto
+      }
+      console.log(data)
+      addClaim(data);
+      // this.setState(initialState)
     }
 
   }
 
 
-  handleChangeFrom = (date,e) => {
+  handleChangeFrom = (date, e) => {
     if (date == null) {
       this.setState({ ["Error"]: "Should not be empty" })
     } else {
@@ -150,61 +161,61 @@ class NewClaim extends Component {
 
         <div className={`jumbotron ${style.form}`}>
           <form>
-            <div class="form-group">
-              <input type="input" class="form-control" id="name" placeholder="Claimant Name" name="name" value={this.state.name} onChange={this.handleFormInput} />
+            <div className="form-group">
+              <input type="input" className="form-control" id="customerId" placeholder="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
             </div>
 
-            {this.state.nameError ? (
+            {this.state.customerIdError ? (
               <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                {this.state.nameError}
-              
+                {this.state.customerIdError}
+
               </div>) : null}
 
-            <div class="form-group">
-              <input type="input" class="form-control" id="jobid" placeholder="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
+            <div className="form-group">
+              <input type="input" className="form-control" id="jobid" placeholder="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
             </div>
 
             {this.state.jobIdError ? (
               <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                 {this.state.jobIdError}
-              
+
               </div>) : null}
 
             <div className="row">
               <div className="col-8">
-                <div class="form-group">
-                  <input type="input" class="form-control" id="item" placeholder="Item" name="item" value={this.state.item} onChange={this.handleFormInput} />
+                <div className="form-group">
+                  <input type="input" className="form-control" id="item" placeholder="Item" name="item" value={this.state.item} onChange={this.handleFormInput} />
                 </div>
 
                 {this.state.itemError ? (
                   <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                     {this.state.itemError}
-                  
+
                   </div>) : null}
 
               </div>
               <div className="col-4">
-                <div class="form-group">
-                  <input type="input" class="form-control" id="price" placeholder="$$$" name="price" value={this.state.price} onChange={this.handleFormInput} />
+                <div className="form-group">
+                  <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.price} onChange={this.handleFormInput} />
                 </div>
 
                 {this.state.priceError ? (
                   <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                     {this.state.priceError}
-                  
+
                   </div>) : null}
 
               </div>
 
             </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="description" placeholder="Item Description" name="description" value={this.state.description} onChange={this.handleFormInput} />
+            <div className="form-group">
+              <input type="text" className="form-control" id="description" placeholder="Item Description" name="description" value={this.state.description} onChange={this.handleFormInput} />
             </div>
 
             {this.state.descriptionError ? (
               <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                 {this.state.descriptionError}
-                {/* <button type="button" class="close" onClick = {} aria-label="Close">
+                {/* <button type="button" className="close" onClick = {} aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button> */}
               </div>) : null}
@@ -216,36 +227,36 @@ class NewClaim extends Component {
                 <p>Select Date</p>
               </div>
               <div className="col-5">
-                <div class="form-group">
+                <div className="form-group">
                   <DatePicker className={style.from}
                     selected={this.state.fromDate}
                     onChange={this.handleChangeFrom}
                     placeholderText="From"
-                    class="form-control"
+                    className="form-control"
                   />
                 </div>
 
                 {this.state.fromDateError ? (
                   <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                     {this.state.fromDateError}
-                  
+
                   </div>) : null}
               </div>
               <div className="col-5">
-                <div class="form-group">
+                <div className="form-group">
 
                   <DatePicker className={style.to}
                     selected={this.state.toDate}
                     // onFocus = {this.handleChangeTo}
                     onChange={this.handleChangeTo}
                     placeholderText="To"
-                    class="form-control"
+                    className="form-control"
                   />
                 </div>
                 {this.state.toDateError ? (
                   <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                     {this.state.toDateError}
-                  
+
                   </div>) : null}
               </div>
             </div>
@@ -254,30 +265,30 @@ class NewClaim extends Component {
 
             <div className="row">
               <div className="col-2 col-md-2">
-                <div class="form-group">
+                <div className="form-group">
                   <label className={style.l1}>Location:</label>
                 </div>
               </div>
               <div className="col-5 col-md-5">
-                <div class="form-group">
-                  <input type="input" class="form-control" id="from" placeholder="From" name="locationfrom" value={this.state.locationfrom} onChange={this.handleFormInput} />
+                <div className="form-group">
+                  <input type="input" className="form-control" id="from" placeholder="From" name="locationfrom" value={this.state.locationfrom} onChange={this.handleFormInput} />
                 </div>
 
                 {this.state.locationfromError ? (
                   <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                     {this.state.locationfromError}
-                  
+
                   </div>) : null}
 
               </div>
               <div className="col-5 col-md-5">
-                <input type="input" class="form-control" id="to" placeholder="To" name="locationto" value={this.state.locationto} onChange={this.handleFormInput} />
+                <input type="input" className="form-control" id="to" placeholder="To" name="locationto" value={this.state.locationto} onChange={this.handleFormInput} />
               </div>
 
               {this.state.locationtoError ? (
                 <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                   {this.state.locationtoError}
-                
+
                 </div>) : null}
 
 
@@ -295,5 +306,7 @@ class NewClaim extends Component {
     );
   }
 }
-
-export default NewClaim
+var actions = {
+  addClaim
+};
+export default connect(null, actions)(NewClaim);

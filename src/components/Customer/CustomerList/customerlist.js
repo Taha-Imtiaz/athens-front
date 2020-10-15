@@ -196,10 +196,7 @@ const CustomerList = (props) => {
                           <div
                             className={`col-12 col-md-4 d-flex justify-content-end ${style.fr}`}
                           >
-                            <Button
-                              name={width < 576 ? "" : "Edit"}
-                              icon="fa fa-edit"
-                            />
+                           
                             <div className={style.button}>
                               <Link
                                 style={{ textDecoration: "none" }}

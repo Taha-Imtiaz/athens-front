@@ -32,6 +32,7 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     getCustomer(customerId);
+    console.log(customerId)
   }, []);
 
   const routes = [
@@ -181,7 +182,7 @@ const CustomerDetail = (props) => {
               </div>
             </div>
              {customer.jobs.map((job) => {
-                  return  <div className="row" key = {customerId} style = {{marginBottom: "1rem"}} >
+                  return  <div className="row" key = {customerId} style = {{margin: "2rem", borderBottom: "1px solid #a8a8a8"}} >
            
                   <div class="col-4">
     
@@ -210,13 +211,13 @@ const CustomerDetail = (props) => {
                   {note.text}</div>)}
               </p>
                   {/* Add modal */}
-              <Button onClick={handleShow} bsClass = "style-button" style= {{margin:"0 2rem"}}>
+              <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
              
                   Add Note
              
            
                 </Button>
-               
+             
                 <Modal show={show} onHide={handleClose} animation={false} centered>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Note</Modal.Title>

@@ -22,7 +22,7 @@ const JobDetails = (props) => {
         console.log(jobId)
         
         getJob(jobId).then((res) => {
-            setJob(res.data.job[0])
+            setJob(res.data.job)
            
             console.log(job)
         }).catch((error) => {

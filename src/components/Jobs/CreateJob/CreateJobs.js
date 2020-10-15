@@ -28,7 +28,7 @@ const initialState = {
   locationfromError: "",
   locationtoError: "",
   assigneeList: [],
-  status: "start",
+  status: "pending",
   note: [],
   assigneesId: [],
 };

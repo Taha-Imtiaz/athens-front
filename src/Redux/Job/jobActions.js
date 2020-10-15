@@ -35,9 +35,9 @@ export var getJob = async (jobId) => {
     console.log(error);
   }
 };
-export var getAllMovers = async () => {
+export var getAllMovers = async (moverObj) => {
   try {
-    var getMovers = await Axios.get(baseUrl + "api/user/get-all-movers");
+    var getMovers = await Axios.post(baseUrl + "api/user/get-all-movers", moverObj);
     return getMovers;
   } catch (error) {
     console.log(error);
@@ -54,3 +54,11 @@ export var createJob = async (newJobObj) => {
     console.log(error);
   }
 };
+export var updateJob = async (jobId, jobObj) => {
+  try {
+    var updatedJob  =  await Axios.post(`${baseUrl}api/user/update-job/${jobId}`, jobObj)
+    return updatedJob
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Multiselect } from "multiselect-react-dropdown";
 import { connect } from "react-redux";
-import { getJob, getAllMovers } from "../../../Redux/Job/jobActions";
+import { getJob, getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -20,9 +20,11 @@ class JobEditDetails extends Component {
     { id: 5, name: "Baby" },
     { id: 6, name: "Hot Tub" },
   ];
+
   state = {
     services: [],
     assignee: [],
+    assigneeList: [],
     startDate: "",
     endDate: "",
     startTime: "",
@@ -30,18 +32,23 @@ class JobEditDetails extends Component {
     title: "",
     job: null,
     Note: "",
+    customerId: "",
+    statusOptions: ["Booked", "Completed", "Pending"],
+    status: ''
   };
 
   handleStartDate = (date) => {
     console.log(date);
     this.setState({
       startDate: date,
+      startDateInString: date.toString(),
     });
   };
   handleEndDate = (date) => {
     console.log(date);
     this.setState({
       endDate: date,
+      endDateInString: date.toString(),
     });
   };
   componentDidMount = () => {
@@ -61,9 +68,15 @@ class JobEditDetails extends Component {
         services: res.data.job.services,
         assignee: res.data.job.assignee,
       });
-      getAllMovers().then((moverRes) => {
+      var moversObj = {
+        name: "",
+        address: "",
+        attributes: "",
+      };
+      getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
         var mover = moverRes?.data.movers.docs.map((mover) => mover);
+        console.log(mover);
         this.setState({
           assigneeList: mover,
         });
@@ -82,17 +95,21 @@ class JobEditDetails extends Component {
         endDateInString: res.data.job.endDate,
         startTime: res.data.job.startTime,
         endTime: res.data.job.endTime,
-        locationFrom: res.data.job.from,
-        locationTo: res.data.job.to,
+        from: res.data.job.from,
+        to: res.data.job.to,
         description: res.data.job.description,
         options: services,
         assignee: res.data.job.assignee,
+        // assigneeList:assigneeList,
         assigneesId: ids,
         note: res.data.job.note,
+        userId: "5f732f880cf3f60894f771b9",
+        status: res.data.job.status,
         show: false,
+        customerId: res.data.job.customer._id,
       });
     });
-    // console.log(title)
+    console.log(this.state);
   };
 
   handleShow = () => {
@@ -161,29 +178,50 @@ class JobEditDetails extends Component {
       endDate,
       startTime,
       endTime,
-      locationFrom,
-      locationTo,
+      from,
+      to,
       services,
       options,
       description,
+      assigneesId,
       assignee,
+      status,
+      startDateInString,
+      endDateInString,
+      userId,
+      customerId,
+      note
     } = this.state;
 
- var {startDate, endDate, ...otherProps} = this.state;
-    var updatedObj = {
-    
 
-      startDate: Date.parse(startDate),
-      endDate: Date.parse(endDate),
-      ...otherProps,
-    }
-    console.log(updatedObj)
-    this.setState({
-      updatedObj
-    })
-    
-    
-    console.log(this.state);
+    var {
+      match: {
+        params: { jobId },
+      }, history
+    } = this.props;
+
+    //  var {startDate, endDate,  title, description, services,startTime, endTime, from , to, status, assigneesId, customerId,userId } = this.state;
+    var updatedObj = {
+      startDate: startDateInString,
+      endDate: endDateInString,
+      title,
+      description,
+      services,
+      startTime,
+      endTime,
+      from,
+      to,
+      assigneesId,
+      status,
+      userId,
+      customerId,
+      note
+    };
+    updateJob(jobId,updatedObj).then((res) => {
+      history.push("/job")
+    }).catch((error) => {
+      console.log(error)
+    });
   };
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
@@ -234,6 +272,12 @@ class JobEditDetails extends Component {
     // newState.assigneesId.push(assigneeItem)
     // this.setState({ assignee: removedItem })
   };
+
+  statusChanged = (status) => {
+this.setState({
+  status
+})
+  };
   render() {
     var { job } = this.state;
     var {
@@ -249,9 +293,9 @@ class JobEditDetails extends Component {
       endDate,
       startTime,
       endTime,
-      locationFrom,
+      from,
       assignee,
-      locationTo,
+      to,
       description,
       assigneesId,
       Note,
@@ -265,6 +309,19 @@ class JobEditDetails extends Component {
           <div className="col-8">
             <div className={`${style.tron}`}>
               <form>
+                <div className={`form-group ${style.input}`}>
+                  <label htmlFor="">Customer Id</label>
+                  <input
+                    type="input"
+                    class="form-control"
+                    id="jobTitle"
+                    name="customerId"
+                    value={this.state.customerId}
+                    onChange={this.handleFormInput}
+                    disabled
+                  />
+                </div>
+
                 <div className="form-group">
                   <input
                     type="input"
@@ -344,8 +401,8 @@ class JobEditDetails extends Component {
                         id="from"
                         placeholder="Start"
                         aria-describedby="emailHelp"
-                        name="locationFrom"
-                        value={locationFrom}
+                        name="from"
+                        value={from}
                         onChange={this.handleFormInput}
                       />
                     </div>
@@ -357,8 +414,8 @@ class JobEditDetails extends Component {
                       id="to"
                       placeholder="End"
                       aria-describedby="emailHelp"
-                      name="locationTo"
-                      value={locationTo}
+                      name="to"
+                      value={to}
                       onChange={this.handleFormInput}
                     />
                   </div>
@@ -389,15 +446,22 @@ class JobEditDetails extends Component {
                 Change Status
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" type="button">
-                  Action
-                </button>
-                <button class="dropdown-item" type="button">
+                {this.state.statusOptions.map((option) => (
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    onClick={() =>this.statusChanged(option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+
+                {/* <button class="dropdown-item" type="button">
                   Another action
                 </button>
                 <button class="dropdown-item" type="button">
                   Something else here
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

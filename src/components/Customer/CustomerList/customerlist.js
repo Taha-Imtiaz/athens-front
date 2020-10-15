@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerList.module.css";
+import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ import _ from "lodash";
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
-  var [order,setOrder ]= useState(1)
+  var [order, setOrder] = useState(1)
   var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +23,7 @@ const CustomerList = (props) => {
     var fetchCustomersObj = {
       query: "",
       sort: {
-       plainname: 1,
+        plainname: 1,
         createdAt: null,
       },
       page: 1,
@@ -33,11 +33,11 @@ const CustomerList = (props) => {
 
   var handlePageChange = (page) => {
 
-  
+
     var fetchCustomersOnPageChange = {
       query: "",
       sort: {
-       plainname: order,
+        plainname: order,
         createdAt: null,
       },
       page: page,
@@ -51,8 +51,8 @@ const CustomerList = (props) => {
   var { customers } = props;
   console.log(customers)
 
-var totalCount = customers?.data.User.total
-console.log(totalCount)
+  var totalCount = customers ?.data.User.total;
+  console.log(totalCount)
 
   if (customers) {
     var {
@@ -63,40 +63,63 @@ console.log(totalCount)
     var customerId = docs.map((doc) => doc._id);
   }
 
- var handleSort = () => {
-   console.log("hsc", order)
-  
-   if(order == 1){
-     console.log('1')
-    // order = -1
-    setOrder(-1)
-   var sortCustomersObj = {
-    query: "",
-    sort: {
-     plainname: -1,
-      createdAt: null,
-    },
-    page: 1,
-  };
-}
-  else   {
-    console.log('-1')
+  var handleSort = () => {
+    console.log("hsc", order)
 
-    setOrder(1)
-    console.log(order)
+    if (order == 1) {
+      console.log('1')
+      // order = -1
+      setOrder(-1)
+      var sortCustomersObj = {
+        query: "",
+        sort: {
+          plainname: -1,
+          createdAt: null,
+        },
+        page: 1,
+      };
+    }
+    else if (order == -1) {
+      console.log('-1')
+
+      setOrder(1)
+      console.log(order)
+      var sortCustomersObj = {
+        query: "",
+        sort: {
+          plainname: 1,
+          createdAt: null,
+        },
+        page: 1,
+      };
+    } else {
+      setOrder(1)
+      console.log(order)
+      var sortCustomersObj = {
+        query: "",
+        sort: {
+          plainname: 1,
+          createdAt: null,
+        },
+        page: 1,
+      };
+    }
+    console.log(sortCustomersObj)
+    getAllCustomers(sortCustomersObj)
+    // console.log(sortCustomersObj)
+  }
+  var handleDateFilter = () => {
+    setOrder(null);
     var sortCustomersObj = {
       query: "",
       sort: {
-        name: 1,
-        createdAt: null,
+        plainname: null,
+        createdAt: -1,
       },
       page: 1,
     };
+    getAllCustomers(sortCustomersObj)
   }
-  console.log(sortCustomersObj)
-  getAllCustomers(sortCustomersObj)
-  // console.log(sortCustomersObj)
- }
 
   return (
     <div>
@@ -110,7 +133,7 @@ console.log(totalCount)
             </div>
 
             <div className={`col-5 col-md-6 ${style.search}`}>
-              <SearchBar />
+              <SearchBar type = "customer" title = "Type name or email"/>
             </div>
             <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
               <i
@@ -123,11 +146,11 @@ console.log(totalCount)
                 aria-expanded="false"
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item"  onClick= {handleSort}>
-                  Name
+                <a className="dropdown-item" onClick={handleSort}>
+                  Sort By Name
                 </a>
-                <a className="dropdown-item">
-                  Date
+                <a className="dropdown-item" onClick={handleDateFilter}>
+                  Recently Added
                 </a>
               </div>
             </div>
@@ -198,13 +221,13 @@ console.log(totalCount)
 
             </div>
           </div>
-                  
-              <Pagination 
-                itemCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
+
+          <Pagination
+            itemCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
       ) : null}
     </div>

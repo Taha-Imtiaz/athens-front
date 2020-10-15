@@ -50,12 +50,13 @@ class CreateJobs extends Component {
 
   state = initialState;
   componentDidMount = () => {
+    console.log('Create', this.props)
     getAllMovers()
       .then((res) => {
-        var moverId = res.data.mover.map((mover) => mover._id);
-        console.log(this.state);
+        var moverId = res.data.movers.map((mover) => mover._id);
+        console.log(this.props.location);
         this.setState({
-          assigneeList: res.data.mover,
+          assigneeList: res.data.movers,
           customerId: this.props.location.customerId,
         });
       })

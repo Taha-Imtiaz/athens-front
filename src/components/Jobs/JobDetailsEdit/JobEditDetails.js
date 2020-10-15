@@ -75,7 +75,7 @@ class JobEditDetails extends Component {
       };
       getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
-        var mover = moverRes?.data.movers.docs.map((mover) => mover);
+        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
         console.log(mover);
         this.setState({
           assigneeList: mover,

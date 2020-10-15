@@ -17,7 +17,9 @@ const UsersList = (props) => {
   var usersObj = {
     name: "",
     address: "",
-    attributes: "",
+    attributes: {
+      name: ""
+    }
   };
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const UsersList = (props) => {
                       </b>
                     </div>
                     <div className="col-5 col-md-4">
-                      <label>{usersDoc.attributes}</label>
+                      <label>{usersDoc.attributes.map((attribute) => attribute.name)}</label>
                     </div>
                     <div className="col-2">
                          <label htmlFor="">{usersDoc.address}</label>

@@ -3,7 +3,7 @@ import style from "./CreateUser.module.css";
 import Button from "../../Button/Button";
 import { Multiselect } from "multiselect-react-dropdown";
 import API from "../../../utils/api";
-import { createUser } from "../../../Redux/User/userActions";
+import { createUser } from "../../../Redux/user/userActions";
 
 const initialState = {
   name: "",

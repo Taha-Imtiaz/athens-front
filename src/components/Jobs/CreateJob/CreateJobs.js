@@ -31,6 +31,9 @@ const initialState = {
   status: "pending",
   note: [],
   assigneesId: [],
+  add: 1,
+  locations: [ {from: '', to: ''}],
+  fromTo: []
 };
 
 class CreateJobs extends Component {
@@ -46,6 +49,32 @@ class CreateJobs extends Component {
     { id: 4, name: "Grand Piano" },
     { id: 5, name: "Baby" },
     { id: 6, name: "Hot Tub" },
+  ];
+  timeOptions = [
+    { name: "01:00 am", id: 1 },
+    { name: "02:00 am", id: 2 },
+    { name: "03:00 am", id: 3 },
+    { name: "04:00 am", id: 4 },
+    { name: "05:00 am", id: 5 },
+    { name: "06:00 am", id: 6 },
+    { name: "07:00 am", id: 7 },
+    { name: "08:00 am", id: 8 },
+    { name: "09:00 am", id: 9 },
+    { name: "10:00 am", id: 10 },
+    { name: "11:00 am", id: 11 },
+    { name: "12:00 am", id: 12 },
+    { name: "01:00 pm", id: 13 },
+    { name: "02:00 pm", id: 14 },
+    { name: "03:00 pm", id: 15 },
+    { name: "04:00 pm", id: 16 },
+    { name: "05:00 pm", id: 17 },
+    { name: "06:00 pm", id: 18 },
+    { name: "07:00 pm", id: 19 },
+    { name: "08:00 pm", id: 20 },
+    { name: "09:00 pm", id: 21 },
+    { name: "10:00 pm", id: 22 },
+    { name: "11:00 pm", id: 23 },
+    { name: "12:00 pm", id: 24 },
   ];
 
   state = initialState;
@@ -65,9 +94,79 @@ class CreateJobs extends Component {
       });
   };
 
+  addLocation = () => { 
+    console.log(this.state.add)
+this.setState({locations: [...this.state.locations, {from: null, to: null}]});
+  }
+
+  hanldeLocationInput = (i, e) => { 
+    console.log(this.state.locations, i)
+    let updateLocation = this.state.locations.slice();
+    updateLocation[i].from = e.target.value
+    this.setState({locations: updateLocation});
+  }
+
+  hanldeLocationInputTo = (i, e) => { 
+    console.log(this.state.locations, i)
+    let updateLocation = this.state.locations.slice();
+    updateLocation[i].to = e.target.value
+    this.setState({locations: updateLocation});
+  }
+
+
+  showLocation = (i) => {
+    return <><div className="col-4">
+                <div class="form-group">
+                  
+                </div>
+              </div>
+              <div className="col-4">
+                <div class="form-group">
+                  <input
+                    type="input"
+                    class="form-control"
+                    id="from"
+                    placeholder="From"
+                    name="from"
+                    value={this.state.locations[i].from}
+                    onChange={(e) => this.hanldeLocationInput(i,e)}
+                  />
+                </div>
+                {this.state.locationfromError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.locationfromError}
+                  </div>
+                ) : null}
+              </div>
+              <div className="col-4">
+                <input
+                  type="input"
+                  class="form-control"
+                  id="to"
+                  placeholder="To"
+                  name="to"
+                  value={this.state.locations[i].to}
+                  onChange={(e) => this.hanldeLocationInputTo(i,e)}
+                />
+                {this.state.locationtoError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.locationtoError}
+                  </div>
+                ) : null}
+              </div></>
+  }
+
+
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
+    console.log(this.state.from)
     if (value == "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
@@ -121,11 +220,11 @@ class CreateJobs extends Component {
       assigneeError = "Assignee should not be empty";
     }
 
-    if (!this.state.from) {
+    if (!this.state.locations[0].from) {
       locationfromError = "Location should not be empty";
     }
 
-    if (!this.state.to) {
+    if (!this.state.locations[0].to) {
       locationtoError = "Location should not be empty";
     }
 
@@ -185,8 +284,7 @@ class CreateJobs extends Component {
         endDate,
         startTime,
         endTime,
-        from,
-        to,
+        locations,
         status,
         note,
         assigneesId,
@@ -201,8 +299,7 @@ class CreateJobs extends Component {
         endDate: endDate.toString(),
         startTime,
         endTime,
-        from,
-        to,
+        locations,
         status,
         note,
         assigneesId,
@@ -267,7 +364,27 @@ class CreateJobs extends Component {
     // newState.assigneesId.push(assigneeItem)
     // this.setState({ assignee: removedItem })
   };
+
+  onStartTimeSelect = (selectedList, selectedTimeItem) => {
+   console.log(selectedTimeItem);
+    let selectedTime = selectedTimeItem.name;
+    console.log(selectedTime);
+    let newState = { ...this.state };
+    newState.startTime = selectedTime;
+    this.setState({ startTime: newState.startTime });
+  };
+
+  onEndTimeSelect = (selectedList, selectedTimeItem) => {
+   console.log(selectedTimeItem);
+    let selectedTime = selectedTimeItem.name;
+    console.log(selectedTime);
+    let newState = { ...this.state };
+    newState.endTime = selectedTime;
+    this.setState({ endTime: newState.endTime });
+  };
   render() {
+
+console.log(this.state.locations[0].from.length)
     return (
       <div>
         <h3 className={style.head}>Create New Job</h3>
@@ -392,17 +509,18 @@ class CreateJobs extends Component {
 
             <div className="row">
               <div class="form-group col-3" style={{ marginTop: "1rem" }}>
-                <input
-                  type="input"
-                  class="form-control"
-                  id="time"
-                  placeholder="Start Time"
-                  name="startTime"
-                  value={this.state.startTime}
-                  onChange={this.handleFormInput}
+               <Multiselect
+                className={style.multi}
+                options={this.timeOptions} // Options to display in the dropdown
+                onSelect={this.onStartTimeSelect} // Function will trigger on select event
+                displayValue="name" // Property name to display in the dropdown options
+                class="form-control"
+                value={this.state.startTime}
+                id="starttime"
+
+                placeholder={this.state.startTime.length > 0 ? null : 'select time'}
                 />
               </div>
-
               {this.state.timeError ? (
                 <div
                   className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
@@ -412,15 +530,17 @@ class CreateJobs extends Component {
                 </div>
               ) : null}
               <div class="form-group col-3" style={{ marginTop: "1rem" }}>
-                <input
-                  type="input"
-                  class="form-control"
-                  id="time"
-                  placeholder="End Time"
-                  name="endTime"
-                  value={this.state.endTime}
-                  onChange={this.handleFormInput}
-                />
+                 <Multiselect
+                className={style.multi}
+                options={this.timeOptions} 
+                 onSelect={this.onEndTimeSelect} 
+                displayValue="name" 
+                class="form-control"
+                value={this.state.endTime}
+                id="time"
+              
+                placeholder={this.state.endTime.length > 0 ? null : 'select time'}
+              />
               </div>
 
               {this.state.timeError ? (
@@ -432,6 +552,12 @@ class CreateJobs extends Component {
                 </div>
               ) : null}
             </div>
+
+ 
+
+
+
+
             <div class="form-group">
               <Multiselect
                 className={style.multi}
@@ -454,52 +580,23 @@ class CreateJobs extends Component {
             ) : null}
 
             <div className="row">
-              <div className="col-4">
+              <div className="col-12">
                 <div class="form-group">
                   <label className={style.l1}>Location:</label>
                 </div>
               </div>
-              <div className="col-4">
-                <div class="form-group">
-                  <input
-                    type="input"
-                    class="form-control"
-                    id="from"
-                    placeholder="From"
-                    name="from"
-                    value={this.state.from}
-                    onChange={this.handleFormInput}
-                  />
-                </div>
-                {this.state.locationfromError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationfromError}
-                  </div>
-                ) : null}
-              </div>
-              <div className="col-4">
-                <input
-                  type="input"
-                  class="form-control"
-                  id="to"
-                  placeholder="To"
-                  name="to"
-                  value={this.state.to}
-                  onChange={this.handleFormInput}
-                />
-                {this.state.locationtoError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationtoError}
-                  </div>
-                ) : null}
-              </div>
+              
+             
+              {this.state.locations.map( (ll, i) => {
+              return this.showLocation(i)} ) }
             </div>
+
+            <div class="form-group">
+              <div style={{float: 'right'}}>
+                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.state.locations[0].from.length>0 && this.state.locations[0].to.length>0 && this.addLocation} />
+              </div>
+            </div><br />
+
 
             <div class="form-group">
               <div className={style.btnsubmit}>

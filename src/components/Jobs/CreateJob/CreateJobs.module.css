@@ -1,3 +1,7 @@
+#starttime div span .icon_cancel{
+    display: none;
+}
+
 .tron{
     margin-top: 2%;
     width: 60%;

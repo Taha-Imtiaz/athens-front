@@ -57,9 +57,10 @@ const JobDetails = (props) => {
                     <p className={style.para}>{`${job?.startDate?.split("G")[0]}`} |{`${job?.endDate.split("G")[0]}`}</p>
                     <br />
                     <br />
-                    <p className={style.para}>{job?.from} - {job?.to}</p>
-                    <br />
-
+                    {job?.locations && job?.locations.map( list => {
+                    return <><p className={style.para}>From : {list.from} To : {list.to}</p>
+                    <br /></>
+                    })}
                     <span className={`badge badge-primary ${style.badges}`}>Primary</span>
                     <span className={`badge badge-primary ${style.badges}`}>Secondary</span>
                     <span className={`badge badge-primary ${style.badges}`}>Success</span>

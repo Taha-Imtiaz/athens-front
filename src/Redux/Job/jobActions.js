@@ -64,3 +64,13 @@ export var updateJob = async (jobId, jobObj) => {
     console.log(error);
   }
 };
+
+
+export var searchJobs = async (query) => {
+  try {
+    var jobs = await Axios.get(baseUrl + "api/user/jobs/" + query);
+    return jobs;
+  } catch (error) {
+    console.log(error);
+  }
+};

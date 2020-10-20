@@ -14,6 +14,7 @@ const CustomerClaims = (props) => {
     }, [])
     var { claims } = props;
     var data = [];
+    console.log(claims)
     if (claims.claims) {
         data = claims.claims.data.claims
     }
@@ -46,7 +47,8 @@ const CustomerClaims = (props) => {
         </div>
         {
             data && data.map(x => {
-                return (<div className={style.jumbotron} key={x._id}>
+                return (
+                <div className={style.jumbotron} key={x._id}>
                     <div className="row">
                         <div className="col-8">
                             <h6 className={style.comp}>{x.customer.name}</h6>
@@ -55,17 +57,17 @@ const CustomerClaims = (props) => {
                             <h6 className={style.job}>Job ID: {x.job._id}</h6>
                         </div>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-10">
                             <p className={style.comp}>from {x.from} - to {x.to}</p>
                         </div>
-                    </div>
+                    </div> */}
                     {
-                        x.items.map((y, j) => {
+                        x.claims.map((y, j) => {
                             return (
                                 <div key={j}>
                                     <hr></hr>
-                                    <h6 className={style.sub}>{y.name}</h6>
+                                    <h6 className={style.sub}>{y.claimType}</h6>
                                     <div className="row">
                                         <div className="col-10">
                                             <p className={style.para}>{y.description}</p>
@@ -79,8 +81,8 @@ const CustomerClaims = (props) => {
                         })
                     }
                     {
-                        x.items.length > 0 ? <div className="row d-flex flex-row-reverse">
-                            <p> Total: {x.items.reduce(function (a, b) {
+                        x.claims.length > 0 ? <div className="row d-flex flex-row-reverse">
+                            <p> Total: {x.claims.reduce(function (a, b) {
                                 return a + b['price'];
                             }, 0)
                             }</p>

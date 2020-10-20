@@ -3,8 +3,8 @@ import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER } from "./customerConstants"
 // import { UPDATE_JOB } from "../Job/jobConstants"
 // import { GET_Customers } from "./userConstants"
 
-// var baseUrl = 'https://athens-backend.herokuapp.com/api/'
-var baseUrl = 'http://localhost:3000/api/'
+var baseUrl = 'https://athens-backend.herokuapp.com/api/'
+// var baseUrl = 'http://localhost:3000/api/'
 
 export var getAllCustomers = (customersObj) => {
     return async (dispatch) => {

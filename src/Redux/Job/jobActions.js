@@ -45,8 +45,7 @@ export var getAllMovers = async () => {
 };
 export var createJob = async (newJobObj) => {
   try {
-    var newJob = await Axios.post(
-      "http://10.0.4.213:3000/api/user/create-job",
+    var newJob = await Axios.post(baseUrl + "api/user/create-job",
       newJobObj
     );
     return newJob;

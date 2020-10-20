@@ -73,6 +73,18 @@ job?.services.map(service => <span className={`badge badge-primary m-2 ${style.b
                             <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
                         </Link>
                     </div>
+                    <br />
+                    <br />
+                    <p className={style.para}>{`${job?.startDate?.split("G")[0]}`} |{`${job?.endDate.split("G")[0]}`}</p>
+                    <br />
+                    <br />
+                    {job?.locations && job?.locations.map( list => {
+                    return <><p className={style.para}>From : {list.from} To : {list.to}</p>
+                    <br /></>
+                    })}
+                    <span className={`badge badge-primary ${style.badges}`}>Primary</span>
+                    <span className={`badge badge-primary ${style.badges}`}>Secondary</span>
+                    <span className={`badge badge-primary ${style.badges}`}>Success</span>
 
                     <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" />
                 </div>

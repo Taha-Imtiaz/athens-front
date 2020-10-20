@@ -75,7 +75,7 @@ class JobEditDetails extends Component {
       };
       getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
-        var mover = moverRes?.data.movers.docs.map((mover) => mover);
+        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
         console.log(mover);
         this.setState({
           assigneeList: mover,
@@ -95,8 +95,7 @@ class JobEditDetails extends Component {
         endDateInString: res.data.job.endDate,
         startTime: res.data.job.startTime,
         endTime: res.data.job.endTime,
-        from: res.data.job.from,
-        to: res.data.job.to,
+        locations: res.data.job.locations,
         description: res.data.job.description,
         options: services,
         assignee: res.data.job.assignee,
@@ -178,8 +177,7 @@ class JobEditDetails extends Component {
       endDate,
       startTime,
       endTime,
-      from,
-      to,
+      locations,
       services,
       options,
       description,
@@ -209,14 +207,14 @@ class JobEditDetails extends Component {
       services,
       startTime,
       endTime,
-      from,
-      to,
+      locations,
       assigneesId,
       status,
       userId,
       customerId,
       note
     };
+    console.log(updatedObj)
     updateJob(jobId,updatedObj).then((res) => {
       history.push("/job")
     }).catch((error) => {
@@ -278,6 +276,74 @@ this.setState({
   status
 })
   };
+
+  hanldeLocationInput = (i, e) => { 
+    console.log(this.state.locations, i)
+    let updateLocation = this.state.locations.slice();
+    updateLocation[i].from = e.target.value
+    this.setState({locations: updateLocation});
+  }
+
+  hanldeLocationInputTo = (i, e) => { 
+    console.log(this.state.locations, i)
+    let updateLocation = this.state.locations.slice();
+    updateLocation[i].to = e.target.value
+    this.setState({locations: updateLocation});
+  }
+
+
+  addLocation = () => { 
+    console.log(this.state.add)
+this.setState({locations: [...this.state.locations, {from: null, to: null}]});
+  }
+
+
+ showLocation = (i) => {
+    return <>
+             
+              <div className="col-4">
+                <div class="form-group">
+                  <input
+                    type="input"
+                    class="form-control"
+                    id="from"
+                    placeholder="From"
+                    name="from"
+                    value={this.state.locations[i].from}
+                    onChange={(e) => this.hanldeLocationInput(i,e)}
+                  />
+                </div>
+                {this.state.locationfromError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.locationfromError}
+                  </div>
+                ) : null}
+              </div>
+              <div className="col-4">
+                <input
+                  type="input"
+                  class="form-control"
+                  id="to"
+                  placeholder="To"
+                  name="to"
+                  value={this.state.locations[i].to}
+                  onChange={(e) => this.hanldeLocationInputTo(i,e)}
+                />
+                {this.state.locationtoError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.locationtoError}
+                  </div>
+                ) : null}
+              </div></>
+  }
+
+
   render() {
     var { job } = this.state;
     var {
@@ -388,12 +454,15 @@ this.setState({
                 </div>
 
                 <div className="row">
-                  <div className="col-4">
+                  <div className="col-12">
                     <div class="form-group">
                       <label>Location:</label>
                     </div>
                   </div>
-                  <div className="col-4">
+
+                  {this.state.locations && this.state.locations.map( (list, i) => { 
+              
+                  return <><div className="col-4">
                     <div class="form-group">
                       <input
                         type="input"
@@ -402,8 +471,8 @@ this.setState({
                         placeholder="Start"
                         aria-describedby="emailHelp"
                         name="from"
-                        value={from}
-                        onChange={this.handleFormInput}
+                        value={list.from}
+                        onChange={(e) => this.hanldeLocationInput(i,e)}
                       />
                     </div>
                   </div>
@@ -415,11 +484,19 @@ this.setState({
                       placeholder="End"
                       aria-describedby="emailHelp"
                       name="to"
-                      value={to}
-                      onChange={this.handleFormInput}
+                      value={list.to}
+                      onChange={(e) => this.hanldeLocationInputTo(i,e)}
                     />
                   </div>
+                  <div className="col-4">
+                  </div></>
+                })}
                 </div>
+                <div class="form-group">
+              <div style={{float: 'right'}}>
+                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
+              </div>
+            </div><br /><br />
 
                 <div class="form-group">
                   <Multiselect

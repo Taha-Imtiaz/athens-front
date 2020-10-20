@@ -19,9 +19,25 @@ return async (diaspatch) => {
 }
 export var createUser =  async (newUserObj) => {
 try {
-    var getUser = await Axios.post("https://athens-backend.herokuapp.com/api/user/create-user", newUserObj)
-    return getUser
+    var createdUser = await Axios.post("https://athens-backend.herokuapp.com/api/user/create-user", newUserObj)
+    return createdUser
 } catch (error) {
     console.log(error)
 }
+}
+export var getUserData = async (userId) => {
+    try {
+        var getUser = await Axios.get(`https://athens-backend.herokuapp.com/api/user/get-user/${userId}`)
+        return getUser
+    } catch (error) {
+        console.log(error)
+    }
+} 
+export var updateUser = async (userId) => {
+    try {
+        var updatedUser = await Axios.post(`https://athens-backend.herokuapp.com/api/user/update-user/${userId}`)
+        return updatedUser
+    } catch (error) {
+        console.log(error)
+    }
 }

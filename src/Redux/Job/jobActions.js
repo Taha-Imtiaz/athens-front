@@ -75,8 +75,16 @@ export var getJobsByDate = async () => {
     var jobs = await Axios.post(baseUrl + "api/user/get-job-date",
     data
     );
+  return jobs;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export var searchJobs = async (query) => {
+  try {
+    var jobs = await Axios.get(baseUrl + "api/user/jobs/" + query);
     return jobs;
   } catch (error) {
     console.log(error);
   }
-};
+}

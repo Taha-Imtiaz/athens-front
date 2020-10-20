@@ -10,6 +10,11 @@ import { addClaim } from '../../../Redux/Claims/claimsActions'
 const initialState = {
   customerId: "",
   jobId: "",
+  claims: [{
+    claimType: null,
+    price: null,
+    description: null
+  }],
   item: "",
   price: "",
   description: "",
@@ -56,9 +61,9 @@ class NewClaim extends Component {
     let locationtoError = ""
 
 
-    if (!this.state.customerId) {
-      customerIdError = "Customer Id should not be empty"
-    }
+    // if (!this.state.customerId) {
+    //   customerIdError = "Customer Id should not be empty"
+    // }
 
     if (!this.state.jobId) {
       jobIdError = "Error! should not be empty"
@@ -106,30 +111,44 @@ class NewClaim extends Component {
   mySubmitHandler = (event) => {
 
     event.preventDefault();
-    const isValid = this.validate()
-    if (isValid) {
-      console.log(this.state)
-      let { customerId, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
-      let data = {
-        jobId,
-        customerId,
-        items: [{
-          item,
-          price,
-          description
-        }],
-        startDate: fromDate,
-        endDate: toDate,
-        from: locationfrom,
-        to: locationto
-      }
-      console.log(data)
-      addClaim(data);
-      // this.setState(initialState)
+    // const isValid = this.validate()
+    // if (isValid) {
+    console.log(this.state)
+    let { customerId, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
+    let data = {
+      jobId,
+      claims
     }
+    var { history } = this.props;
+    console.log(data)
+    addClaim(data).then((res) => {
+      history.push("/claim/customer");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    // this.setState(initialState)
+    // }
 
   }
 
+  addClaim = () => {
+    console.log(this.state.add)
+    this.setState({
+      claims: [...this.state.claims, {
+        claimType: null,
+        price: null,
+        description: null
+      }]
+    });
+  }
+
+  hanldeClaimsInput = (e, i) => {
+    console.log(this.state.claims, i, e.target.name)
+    let updatedClaims = this.state.claims.slice();
+    updatedClaims[i][e.target.name] = e.target.value
+    this.setState({ claims: updatedClaims });
+  }
 
   handleChangeFrom = (date, e) => {
     if (date == null) {
@@ -161,15 +180,6 @@ class NewClaim extends Component {
 
         <div className={`jumbotron ${style.form}`}>
           <form>
-            <div className="form-group">
-              <input type="input" className="form-control" id="customerId" placeholder="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
-            </div>
-
-            {this.state.customerIdError ? (
-              <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                {this.state.customerIdError}
-
-              </div>) : null}
 
             <div className="form-group">
               <input type="input" className="form-control" id="jobid" placeholder="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
@@ -181,46 +191,69 @@ class NewClaim extends Component {
 
               </div>) : null}
 
-            <div className="row">
-              <div className="col-8">
-                <div className="form-group">
-                  <input type="input" className="form-control" id="item" placeholder="Item" name="item" value={this.state.item} onChange={this.handleFormInput} />
-                </div>
-
-                {this.state.itemError ? (
-                  <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                    {this.state.itemError}
-
-                  </div>) : null}
-
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.price} onChange={this.handleFormInput} />
-                </div>
-
-                {this.state.priceError ? (
-                  <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                    {this.state.priceError}
-
-                  </div>) : null}
-
-              </div>
-
+            {/* <div className="form-group">
+              <input type="input" className="form-control" id="customerId" placeholder="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
             </div>
+
+            {this.state.customerIdError ? (
+              <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+                {this.state.customerIdError}
+
+              </div>) : null} */}
+
+
+            {this.state.claims.map((x, i) => {
+              return (
+                <div>
+                  < div className="row">
+                    <div className="col-8">
+                      <div className="form-group">
+                        {/* <input type="input" className="form-control" id="claimType" placeholder="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
+                        <select onChange={(e) => this.hanldeClaimsInput(e, i)} class="form-control" id="exampleFormControlSelect1" name="claimType">
+                          <option>Damage To House</option>
+                          <option>Damage To Item</option>
+                        </select>
+                      </div>
+
+                      {this.state.itemError ? (
+                        <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+                          {this.state.itemError}
+
+                        </div>) : null}
+
+                    </div>
+                    <div className="col-4">
+                      <div className="form-group">
+                        <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} />
+                      </div>
+
+                      {this.state.priceError ? (
+                        <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+                          {this.state.priceError}
+
+                        </div>) : null}
+
+                    </div>
+
+                  </div>
+                  <div className="form-group">
+                    <textarea type="text" className="form-control" id="description" placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
+                  </div>
+                </div>
+              )
+            })
+            }
             <div className="form-group">
-              <input type="text" className="form-control" id="description" placeholder="Item Description" name="description" value={this.state.description} onChange={this.handleFormInput} />
+              <div style={{ float: 'right' }}>
+                <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.state.claims[0].claimType && this.state.claims[0].description && this.state.claims[0].price && this.addClaim} />
+              </div>
             </div>
-
             {this.state.descriptionError ? (
               <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                 {this.state.descriptionError}
-                {/* <button type="button" className="close" onClick = {} aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button> */}
               </div>) : null}
 
-
+            {/* 
             <div className={`row`}>
 
               <div className="col-2">
@@ -292,7 +325,7 @@ class NewClaim extends Component {
                 </div>) : null}
 
 
-            </div>
+            </div> */}
 
 
             <div className={style.btn}>
@@ -302,7 +335,7 @@ class NewClaim extends Component {
           </form>
         </div>
 
-      </div>
+      </div >
     );
   }
 }

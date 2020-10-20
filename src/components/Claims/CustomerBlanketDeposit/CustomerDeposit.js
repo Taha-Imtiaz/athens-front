@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './CustomerDeposit.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
 import { Link } from 'react-router-dom'
-
+import { getDeposits } from '../../../Redux/Claims/claimsActions'
 const CustomerDeposit = () => {
 
   const routes = [{
@@ -17,7 +17,15 @@ const CustomerDeposit = () => {
     icon: <i className = "fa fa-bed"></i>
   }
   ]
+ const [blanket, setBlanket] = useState()
+  useEffect(() => {
 
+    getDeposits().then(res =>  {
+      console.log(res)
+      setBlanket(res.data.jobs)
+      // this.setState(res.data.jobs)
+  })
+  }, []);
 
   return <div>
     <div className="row">

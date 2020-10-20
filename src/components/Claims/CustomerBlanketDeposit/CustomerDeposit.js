@@ -50,9 +50,9 @@ const CustomerDeposit = () => {
     </div>
 
     <div className={style.jumbotron}>
-      <ul class="list-group">
+      <ul className="list-group">
         
-        <li class=" checkbox list-group-item">
+        <li className=" checkbox list-group-item">
           <div className="row">
           <div className="col-4">
           <label>Size(m)</label>
@@ -66,7 +66,7 @@ const CustomerDeposit = () => {
        </div> 
         </li>
        
-        <li class="list-group-item">
+        <li className="list-group-item">
         <div className="row">
           <div className="col-4">
           <label>Size(s)</label>
@@ -80,7 +80,7 @@ const CustomerDeposit = () => {
        </div> 
         </li>
 
-        <li class="list-group-item">
+        <li className="list-group-item">
         <div className="row">
           <div className="col-4">
           <label>Size(L)</label>

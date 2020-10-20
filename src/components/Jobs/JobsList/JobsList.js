@@ -191,12 +191,12 @@ class JobsList extends Component {
         {jobs[0] ?.data &&
           <div className={`${style.jumbotron}`}>
 
-            <ul class="list-group">
+            <ul className="list-group">
               <div className={style.li}>
-                {jobs[0] ?.data.jobs.docs.map((job) => {
+                {jobs[0] ?.data.jobs.docs.map((job, i) => {
                   return (
 
-                    <li class=" checkbox list-group-item ">
+                    <li key = {i} className=" checkbox list-group-item ">
                       <div className="row justify-content-around">
                         <div className="col-4 col-md-2 text-left">
                           <label>{job.title}</label>

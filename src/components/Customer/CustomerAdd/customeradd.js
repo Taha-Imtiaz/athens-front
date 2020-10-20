@@ -112,9 +112,9 @@ class CustomerAdd extends Component {
                 <div className={`${style.jumbotron}`}>
 
                     <form onSubmit={this.mySubmitHandler}>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Customer Name</label>
-                            <input type="input" class="form-control" id="name" name="name" value={this.state.name} onChange={this.handleFormInput} />
+                            <input type="input" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.nameError ? (
@@ -126,9 +126,9 @@ class CustomerAdd extends Component {
                             </div>) : null}
 
 
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Phone Number</label>
-                            <input type="input" class="form-control" id="phone_number" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
+                            <input type="input" className="form-control" id="phone_number" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.phoneNumberError ? (
@@ -140,9 +140,9 @@ class CustomerAdd extends Component {
                             </div>) : null}
 
 
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" name="email" value={this.state.email} onChange={this.handleFormInput} />
+                            <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.emailError ? (
@@ -155,9 +155,9 @@ class CustomerAdd extends Component {
                     </form>
                     <h3>Sub Contact</h3>
                     <form>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Phone Number</label>
-                            <input type="input" class="form-control" id="phone_number" name="phoneContacts" value={this.state.phoneContacts} onChange={this.handleFormInput} />
+                            <input type="input" className="form-control" id="phone_number" name="phoneContacts" value={this.state.phoneContacts} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.altnumberError ? (
@@ -169,10 +169,10 @@ class CustomerAdd extends Component {
                             </div>) : null}
 
 
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" name="emailContacts" value={this.state.emailContacts} onChange={this.handleFormInput} />
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <input type="email" className="form-control" name="emailContacts" value={this.state.emailContacts} onChange={this.handleFormInput} />
+                            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
 
                         {this.state.altemailError ? (

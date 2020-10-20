@@ -116,15 +116,15 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
 
   showLocation = (i) => {
     return <><div className="col-4">
-                <div class="form-group">
+                <div className="form-group">
                   
                 </div>
               </div>
               <div className="col-4">
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="input"
-                    class="form-control"
+                    className="form-control"
                     id="from"
                     placeholder="From"
                     name="from"
@@ -144,7 +144,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
               <div className="col-4">
                 <input
                   type="input"
-                  class="form-control"
+                  className="form-control"
                   id="to"
                   placeholder="To"
                   name="to"
@@ -395,7 +395,7 @@ console.log(this.state.locations[0].from.length)
               <label htmlFor="">Customer Id</label>
               <input
                 type="input"
-                class="form-control"
+                className="form-control"
                 id="jobTitle"
                 name="customerId"
                 value={this.state.customerId}
@@ -407,7 +407,7 @@ console.log(this.state.locations[0].from.length)
             <div className={`form-group ${style.input}`}>
               <input
                 type="input"
-                class="form-control"
+                className="form-control"
                 id="jobTitle"
                 placeholder="Job Title"
                 name="title"
@@ -425,7 +425,7 @@ console.log(this.state.locations[0].from.length)
               </div>
             ) : null}
 
-            <div class="form-group">
+            <div className="form-group">
               <textarea
                 className={style.textarea}
                 id="ta"
@@ -445,7 +445,7 @@ console.log(this.state.locations[0].from.length)
               </div>
             ) : null}
 
-            <div class="form-group">
+            <div className="form-group">
               <Multiselect
                 className={style.multi}
                 // selectedValues = {this.servicesOptions}
@@ -453,7 +453,7 @@ console.log(this.state.locations[0].from.length)
                 onSelect={this.onSelect} // Function will trigger on select event
                 onRemove={this.onRemove} // Function will trigger on remove event
                 displayValue="name" // Property name to display in the dropdown options
-                class="form-control"
+                className="form-control"
                 placeholder="Services"
               />
             </div>
@@ -468,13 +468,13 @@ console.log(this.state.locations[0].from.length)
             ) : null}
 
             <div className="row">
-              <div class="form-group col-3">
+              <div className="form-group col-3">
                 <DatePicker
                   className={style.to}
                   selected={this.state.startDate}
                   onChange={this.handleStartDate}
                   placeholderText="Start Date"
-                  class="form-control"
+                  className="form-control"
                 />
               </div>
 
@@ -487,13 +487,13 @@ console.log(this.state.locations[0].from.length)
                 </div>
               ) : null}
 
-              <div class="form-group col-3">
+              <div className="form-group col-3">
                 <DatePicker
                   className={style.to}
                   selected={this.state.endDate}
                   onChange={this.handleEndDate}
                   placeholderText="End Date"
-                  class="form-control"
+                  className="form-control"
                 />
               </div>
 
@@ -508,13 +508,13 @@ console.log(this.state.locations[0].from.length)
             </div>
 
             <div className="row">
-              <div class="form-group col-3" style={{ marginTop: "1rem" }}>
+              <div className="form-group col-3" style={{ marginTop: "1rem" }}>
                <Multiselect
                 className={style.multi}
                 options={this.timeOptions} // Options to display in the dropdown
                 onSelect={this.onStartTimeSelect} // Function will trigger on select event
                 displayValue="name" // Property name to display in the dropdown options
-                class="form-control"
+                className="form-control"
                 value={this.state.startTime}
                 id="starttime"
 
@@ -529,13 +529,13 @@ console.log(this.state.locations[0].from.length)
                   {this.state.timeError}
                 </div>
               ) : null}
-              <div class="form-group col-3" style={{ marginTop: "1rem" }}>
+              <div className="form-group col-3" style={{ marginTop: "1rem" }}>
                  <Multiselect
                 className={style.multi}
                 options={this.timeOptions} 
                  onSelect={this.onEndTimeSelect} 
                 displayValue="name" 
-                class="form-control"
+                className="form-control"
                 value={this.state.endTime}
                 id="time"
               
@@ -558,14 +558,14 @@ console.log(this.state.locations[0].from.length)
 
 
 
-            <div class="form-group">
+            <div className="form-group">
               <Multiselect
                 className={style.multi}
                 options={this.state.assigneeList} // Options to display in the dropdown
                 onSelect={this.onAssigneeSelect} // Function will trigger on select event
                 onRemove={this.onAssigneeRemove} // Function will trigger on remove event
                 displayValue="name" // Property name to display in the dropdown options
-                class="form-control"
+                className="form-control"
                 placeholder="Select Assignee"
               />
             </div>
@@ -581,7 +581,7 @@ console.log(this.state.locations[0].from.length)
 
             <div className="row">
               <div className="col-12">
-                <div class="form-group">
+                <div className="form-group">
                   <label className={style.l1}>Location:</label>
                 </div>
               </div>
@@ -591,14 +591,14 @@ console.log(this.state.locations[0].from.length)
               return this.showLocation(i)} ) }
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
               <div style={{float: 'right'}}>
                 <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.state.locations[0].from.length>0 && this.state.locations[0].to.length>0 && this.addLocation} />
               </div>
             </div><br />
 
 
-            <div class="form-group">
+            <div className="form-group">
               <div className={style.btnsubmit}>
                 <Button name="Submit" onClick={this.mySubmitHandler} />
               </div>

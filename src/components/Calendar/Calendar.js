@@ -210,19 +210,19 @@ class CalendarApp extends Component {
                     <div className="col-4">
                         <h5 className={style.head}>Jobs</h5>
                         <div className={`card ${style.cardCustom}`} >
-                            <div class="card-body">
-                                <h5 class="card-title">Job Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Status</h6>
-                                <p class="card-text">lorem sadl asdasd</p>
-                                <p class="card-text">name@gmail.com</p>
+                            <div className="card-body">
+                                <h5 className="card-title">Job Name</h5>
+                                <h6 className="card-subtitle mb-2 text-muted">Status</h6>
+                                <p className="card-text">lorem sadl asdasd</p>
+                                <p className="card-text">name@gmail.com</p>
                             </div>
                         </div>
                         <div className={`card ${style.cardCustom2}`} >
                             <div class="card-body">
-                                <h5 class="card-title">Job Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Status</h6>
-                                <p class="card-text">lorem sadl asdasd</p>
-                                <p class="card-text">name@gmail.com</p>
+                                <h5 className="card-title">Job Name</h5>
+                                <h6 className="card-subtitle mb-2 text-muted">Status</h6>
+                                <p className="card-text">lorem sadl asdasd</p>
+                                <p className="card-text">name@gmail.com</p>
                             </div>
                         </div>
 

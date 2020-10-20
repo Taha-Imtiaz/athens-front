@@ -54,13 +54,13 @@ this.setState({
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuButton"
                 >
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Action
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Another action
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Something else here
                   </a>
                 </div>

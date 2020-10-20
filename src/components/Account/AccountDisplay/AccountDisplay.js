@@ -24,15 +24,15 @@ console.log(res)
     return <div className={style.acc}>
     {user &&
         <div className="card" style={{ width: "25rem" }}>
-            <div class="card-body">
-                <h5 class="card-title">Account Holder</h5>
-                <p class="card-text">{user.name}</p>
+            <div className="card-body">
+                <h5 className="card-title">Account Holder</h5>
+                <p className="card-text">{user.name}</p>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><span>Email: </span>{user.email}</li>
-                {/* <li class="list-group-item"><span>Password: </span>*******</li> */}
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item"><span>Email: </span>{user.email}</li>
+                {/* <li className="list-group-item"><span>Password: </span>*******</li> */}
             </ul>
-            <div class="card-body">
+            <div className="card-body">
                 
             <Link style={{ textDecoration: "none" }} to={{
                pathname:  '/account/update',

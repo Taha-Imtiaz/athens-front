@@ -118,12 +118,12 @@ const CustomerDetail = (props) => {
           <h3 className={style.sub}>Sub Contact</h3>
 
           <div className={style.container}>
-            <div class="accordion" id="accordionExample">
-              <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
+            <div className="accordion" id="accordionExample">
+              <div className="card">
+                <div className="card-header" id="headingOne">
+                  <h5 className="mb-0">
                     <button
-                      class="btn btn-link"
+                      className="btn btn-link"
                       type="button"
                       data-toggle="collapse"
                       data-target="#collapseOne"
@@ -137,11 +137,11 @@ const CustomerDetail = (props) => {
 
                 <div
                   id="collapseOne"
-                  class="collapse show"
+                  className="collapse show"
                   aria-labelledby="headingOne"
                   data-parent="#accordionExample"
                 >
-                  <div class="card-body">
+                  <div className="card-body">
                     <label className={style.l1}>
                       {customer.subcontacts.phone}
                     </label>
@@ -169,22 +169,22 @@ const CustomerDetail = (props) => {
             </Link>
           </div>
         {customer.jobs && 
-          <div class={style.jumbotron} style = {{padding:"1rem 0"}}>
-            <div class="row">
-              <div class="col-4">
+          <div className={style.jumbotron} style = {{padding:"1rem 0"}}>
+            <div className="row">
+              <div className="col-4">
                 <h3 className={style.job}>Jobs:</h3>
               </div>
-              <div class="col-4">
+              <div className="col-4">
                 <label className={style.assigned}>Assigned</label>
               </div>
-              <div class="col-4">
+              <div className="col-4">
                 <label className={style.status}>Status</label>
               </div>
             </div>
              {customer.jobs.map((job) => {
                   return  <div className="row" key = {customerId} style = {{margin: "2rem", borderBottom: "1px solid #a8a8a8"}} >
            
-                  <div class="col-4">
+                  <div className="col-4">
     
                 
                     <p style = {{padding: "5%"}}>

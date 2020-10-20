@@ -25,7 +25,7 @@ export var getAllCustomers = (customersObj) => {
 export var getCustomer = (customerId) => {
     return async (dispatch) => {
         try {
-            var customer = await Axios.get(`https://athens-backend.herokuapp.com/api/user/get-customer/${customerId}`)
+            var customer = await Axios.get(baseUrl + `user/get-customer/${customerId}`)
             dispatch({
                 type: GET_CUSTOMER,
                 payload: {
@@ -40,7 +40,7 @@ export var getCustomer = (customerId) => {
 // export var updateJob = (jobObj, jobId) => {
 //     return async (disptch) => {
 //        try {
-//         var updatedJob = await Axios.post(`https://athens-backend.herokuapp.com/api/user/get-customer/${jobId}`, jobObj)
+//         var updatedJob = await Axios.post(baseUrl + `user/get-customer/${jobId}`, jobObj)
 //         disptch({
 //             type: UPDATE_JOB, 
 //             payload: {
@@ -56,9 +56,7 @@ export var getCustomer = (customerId) => {
 export var addCustomer = (customerObj, goBack) => {
     return async (dispatch) => {
         try {
-            var addedCustomer = await Axios.post("https://athens-backend.herokuapp.com/api/user/customer-Registration", customerObj)
-            console.log(addedCustomer)
-
+            var addedCustomer = await Axios.post(baseUrl + "user/customer-Registration", customerObj)
             goBack()
         } catch (error) {
             console.log(error)

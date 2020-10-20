@@ -21,7 +21,6 @@ const CustomerDetail = (props) => {
   var formatStartDate, formatEndDate;
   if (customer?.jobs.length !== 0) {
     formatStartDate = new Date(customer?.jobs[0].startDate);
-    console.log(formatStartDate)
     formatEndDate = new Date(customer?.jobs[0].endDate);
   }
   var {
@@ -32,7 +31,6 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     getCustomer(customerId);
-    console.log(customerId)
   }, []);
 
   const routes = [
@@ -50,8 +48,6 @@ const CustomerDetail = (props) => {
   var handleAddNote = (e) => {
     var { name, value } = e.target;
     setNote(value);
-    console.log(value)
-   
   };
   var AddNote = () => {
     var jobId = customer.job._id
@@ -81,7 +77,6 @@ const CustomerDetail = (props) => {
 // updateJob(jobObj, jobId)
 //     handleClose()
   }
-  console.log(customer)
   return (
     <div>
       {customer && (

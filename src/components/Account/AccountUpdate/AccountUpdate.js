@@ -26,7 +26,6 @@ class AccountUpdate extends Component {
 
     componentDidMount = () => {
       var userId  = this.props.location.userId
-      console.log(userId)
       getUserData(userId).then((res) => {
           var {user} = res.data
           var {name, email, password, address, phone} = user
@@ -37,8 +36,6 @@ class AccountUpdate extends Component {
              address, 
              phone
          })
-          console.log(user)
-
       }).catch((error) => {
           console.log(error)
       })

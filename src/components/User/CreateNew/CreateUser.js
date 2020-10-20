@@ -125,7 +125,6 @@ class CreateUser extends Component {
         role: type.name.toLowerCase(),
         attributes,
       };
-      console.log(createdUserObj);
       createUser(createdUserObj)
         .then((res) => {
           history.push("/user");
@@ -145,10 +144,10 @@ class CreateUser extends Component {
         <div className={style.jumbotron}>
           <div className={style.container}>
             <form>
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="input"
-                  class="form-control"
+                  className="form-control"
                   id="name"
                   placeholder="Full Name"
                   name="name"
@@ -166,10 +165,10 @@ class CreateUser extends Component {
                 </div>
               ) : null}
 
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   id="email"
                   placeholder="Email Address"
                   name="email"
@@ -187,10 +186,10 @@ class CreateUser extends Component {
                 </div>
               ) : null}
 
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="input"
-                  class="form-control"
+                  className="form-control"
                   id="phnumber"
                   placeholder="Phone Number"
                   name="phone"
@@ -208,10 +207,10 @@ class CreateUser extends Component {
                 </div>
               ) : null}
 
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   id="address"
                   placeholder="Address"
                   name="address"
@@ -229,9 +228,9 @@ class CreateUser extends Component {
                 </div>
               ) : null}
 
-              <div class="form-row text-align-around">
-                <div class="col">
-                  <div class="form-group">
+              <div className="form-row text-align-around">
+                <div className="col">
+                  <div className="form-group">
                     <Multiselect
                       className={style.multi}
                       singleSelect={true}
@@ -239,7 +238,7 @@ class CreateUser extends Component {
                       onSelect={this.onTypeSelect} // Function will trigger on select event
                       onRemove={this.onRemove} // Function will trigger on remove event
                       displayValue="name" // Property name to display in the dropdown options
-                      class="form-control"
+                      className="form-control"
                       placeholder="Select Type"
                     />
                   </div>
@@ -254,7 +253,7 @@ class CreateUser extends Component {
                   </div>
                 ) : null}
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <Multiselect
                   className={style.multi}
                   singleSelect={true}
@@ -262,7 +261,7 @@ class CreateUser extends Component {
                   onSelect={this.onAttributeSelect} // Function will trigger on select event
                   onRemove={this.onRemove} // Function will trigger on remove event
                   displayValue="name" // Property name to display in the dropdown options
-                  class="form-control"
+                  className="form-control"
                   placeholder="Select Attribute"
                 />
               </div>

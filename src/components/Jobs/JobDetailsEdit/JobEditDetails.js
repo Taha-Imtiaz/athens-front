@@ -38,14 +38,12 @@ class JobEditDetails extends Component {
   };
 
   handleStartDate = (date) => {
-    console.log(date);
     this.setState({
       startDate: date,
       startDateInString: date.toString(),
     });
   };
   handleEndDate = (date) => {
-    console.log(date);
     this.setState({
       endDate: date,
       endDateInString: date.toString(),
@@ -58,12 +56,9 @@ class JobEditDetails extends Component {
         params: { jobId },
       },
     } = this.props;
-    // console.log(jobId)
     var { title, job } = this.state;
-    console.log(jobId);
 
     getJob(jobId).then((res) => {
-      console.log(res.data.job);
       this.setState({
         services: res.data.job.services,
         assignee: res.data.job.assignee,
@@ -74,9 +69,7 @@ class JobEditDetails extends Component {
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
-        console.log(moverRes);
         var mover = moverRes?.data.movers.docs?.map((mover) => mover);
-        console.log(mover);
         this.setState({
           assigneeList: mover,
         });
@@ -84,7 +77,6 @@ class JobEditDetails extends Component {
       var services = res.data.job.services.map((service, index) => {
         return { id: index + 1, name: service };
       });
-      console.log(res.data.job.startDate, Date.parse(res.data.job.startDate));
       let ids = res.data.job.assignee.map((x) => x._id);
       this.setState({
         job: res.data.job,
@@ -108,7 +100,6 @@ class JobEditDetails extends Component {
         customerId: res.data.job.customer._id,
       });
     });
-    console.log(this.state);
   };
 
   handleShow = () => {
@@ -129,12 +120,9 @@ class JobEditDetails extends Component {
     var { Note, note, job } = this.state;
     if (note) {
       // var noteAdded = {text: Note}
-      // console.log(note)
       // this.handleClose()
-      console.log(Note);
       let notes = [...this.state.note];
       notes.push({ uid: uuidv4(), text: Note });
-      console.log(notes);
       this.setState({
         show: false,
         note: notes,
@@ -151,7 +139,6 @@ class JobEditDetails extends Component {
   };
 
   handleDelete = (deleteNote) => {
-    console.log(deleteNote);
     var { note } = this.state;
     var noteToDelete = note.findIndex((n) => n.uid === deleteNote.uid);
     if (noteToDelete !== -1) {
@@ -164,7 +151,6 @@ class JobEditDetails extends Component {
 
   handleAddNote = (e) => {
     var { name, value } = e.target;
-    console.log(value);
     this.setState({
       Note: value,
     });
@@ -214,7 +200,6 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
-    console.log(updatedObj)
     updateJob(jobId,updatedObj).then((res) => {
       history.push("/job")
     }).catch((error) => {
@@ -223,9 +208,7 @@ class JobEditDetails extends Component {
   };
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
-    console.log(serviceItem);
     let newState = { ...this.state };
-    console.log(newState);
     newState.services.push(serviceItem);
     this.setState({ services: newState.services });
   };
@@ -233,22 +216,16 @@ class JobEditDetails extends Component {
   onRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem;
-    console.log(removeItem);
-
     var updatedState = newState.services.findIndex(
       (service) => service === removeItem
     );
     newState.services.splice(updatedState, 1);
-    console.log(newState);
     this.setState({ newState });
   };
 
   onAssigneeSelect = (selectedList, selectedItem) => {
-    console.log(selectedItem);
     let assigneeItem = selectedItem;
-
     let newState = { ...this.state };
-    console.log(newState);
     newState.assigneesId.push(assigneeItem._id);
     this.setState({ newState });
   };
@@ -256,17 +233,11 @@ class JobEditDetails extends Component {
   onAssigneeRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem._id;
-    console.log(removeItem);
-    // console.log(newState.assigneesId)
     var index = newState.assigneesId.findIndex(
       (assigneeId) => assigneeId === removeItem
     );
-    console.log(index);
     newState.assigneesId.splice(index, 1);
-
     this.setState({ newState });
-    console.log(newState);
-
     // newState.assigneesId.push(assigneeItem)
     // this.setState({ assignee: removedItem })
   };
@@ -278,14 +249,12 @@ this.setState({
   };
 
   hanldeLocationInput = (i, e) => { 
-    console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].from = e.target.value
     this.setState({locations: updateLocation});
   }
 
   hanldeLocationInputTo = (i, e) => { 
-    console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].to = e.target.value
     this.setState({locations: updateLocation});
@@ -293,7 +262,6 @@ this.setState({
 
 
   addLocation = () => { 
-    console.log(this.state.add)
 this.setState({locations: [...this.state.locations, {from: null, to: null}]});
   }
 
@@ -302,10 +270,10 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
     return <>
              
               <div className="col-4">
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="input"
-                    class="form-control"
+                    className="form-control"
                     id="from"
                     placeholder="From"
                     name="from"
@@ -325,7 +293,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
               <div className="col-4">
                 <input
                   type="input"
-                  class="form-control"
+                  className="form-control"
                   id="to"
                   placeholder="To"
                   name="to"
@@ -351,7 +319,6 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
         params: { jobId },
       },
     } = this.props;
-    console.log(job);
 
     var {
       title,
@@ -379,7 +346,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   <label htmlFor="">Customer Id</label>
                   <input
                     type="input"
-                    class="form-control"
+                    className="form-control"
                     id="jobTitle"
                     name="customerId"
                     value={this.state.customerId}
@@ -391,7 +358,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                 <div className="form-group">
                   <input
                     type="input"
-                    class="form-control"
+                    className="form-control"
                     id="jobTitle"
                     placeholder="Job Title"
                     aria-describedby="emailHelp"
@@ -402,7 +369,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                 </div>
                 <div className="row">
                   <div className="col-6">
-                    <div class="form-group">
+                    <div className="form-group">
                       <DatePicker
                         className={style.to}
                         selected={startDate}
@@ -427,7 +394,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                     <div className="form-group">
                       <input
                         type="input"
-                        class="form-control"
+                        className="form-control"
                         id="time"
                         placeholder="Start Time"
                         aria-describedby="emailHelp"
@@ -441,7 +408,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                     <div className="form-group">
                       <input
                         type="input"
-                        class="form-control"
+                        className="form-control"
                         id="time"
                         placeholder="Time"
                         aria-describedby="emailHelp"
@@ -463,10 +430,10 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   {this.state.locations && this.state.locations.map( (list, i) => { 
               
                   return <><div className="col-4">
-                    <div class="form-group">
+                    <div className="form-group">
                       <input
                         type="input"
-                        class="form-control"
+                        className="form-control"
                         id="from"
                         placeholder="Start"
                         aria-describedby="emailHelp"
@@ -479,7 +446,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   <div className="col-4">
                     <input
                       type="input"
-                      class="form-control"
+                      className="form-control"
                       id="to"
                       placeholder="End"
                       aria-describedby="emailHelp"
@@ -492,13 +459,13 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   </div></>
                 })}
                 </div>
-                <div class="form-group">
+                <div className="form-group">
               <div style={{float: 'right'}}>
                 <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
               </div>
             </div><br /><br />
 
-                <div class="form-group">
+                <div className="form-group">
                   <Multiselect
                     selectedValues={this.state.services}
                     options={this.servicesOptions} // Options to display in the dropdown
@@ -511,7 +478,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
             </div>
           </div>
           <div className="col-4">
-            <div class="dropdown">
+            <div className="dropdown">
               <button
                 className={`btn btn-primary dropdown-toggle ${style.colors}`}
                 type="button"
@@ -522,10 +489,10 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
               >
                 Change Status
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
                 {this.state.statusOptions.map((option) => (
                   <button
-                    class="dropdown-item"
+                    className="dropdown-item"
                     type="button"
                     onClick={() =>this.statusChanged(option)}
                   >
@@ -533,10 +500,10 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   </button>
                 ))}
 
-                {/* <button class="dropdown-item" type="button">
+                {/* <button className="dropdown-item" type="button">
                   Another action
                 </button>
-                <button class="dropdown-item" type="button">
+                <button className="dropdown-item" type="button">
                   Something else here
                 </button> */}
               </div>
@@ -549,7 +516,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
             <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 name="description"
                 value={description}
                 id=""

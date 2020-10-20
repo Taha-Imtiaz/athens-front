@@ -4,7 +4,7 @@ import { GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants"
 var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 export var getAllClaims = () => {
     return async (dispatch) => {
-        var claims = await Axios.get("https://athens-backend.herokuapp.com/api/user/get-all-claims")
+        var claims = await Axios.get(baseUrl + "user/get-all-claims")
         //update app's state
         dispatch({
             type: GET_CLAIMS,
@@ -16,7 +16,7 @@ export var getAllClaims = () => {
 }
 export var getClaimsByID = (customerId) => {
     return async (dispatch) => {
-        var claims = await Axios.get(`https://athens-backend.herokuapp.com/api/user/get-customer/${customerId}`)
+        var claims = await Axios.get(baseUrl + `user/get-customer/${customerId}`)
         dispatch({
             type: GET_CLAIMS_BY_ID,
             payload: {
@@ -28,7 +28,7 @@ export var getClaimsByID = (customerId) => {
 export var addClaim = async (data) => {
     // return async (dispatch) => {
     try {
-        var claim = await Axios.post(`https://athens-backend.herokuapp.com/api/user/add-claim`, data)
+        var claim = await Axios.post(baseUrl + `user/add-claim`, data)
         return claim
     } catch (error) {
         console.log(error);
@@ -46,7 +46,7 @@ export var addClaim = async (data) => {
 export var getDeposits = async (data) => {
     // return async (dispatch) => {
     try {
-        var deposits = await Axios.get(`${baseUrl}user/get-all-blanket-deposit`)
+        var deposits = await Axios.get(baseUrl + `user/get-all-blanket-deposit`)
         return deposits
     } catch (error) {
         console.log(error);

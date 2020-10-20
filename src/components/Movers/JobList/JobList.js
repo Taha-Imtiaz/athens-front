@@ -35,14 +35,14 @@ class MoversJobsList extends Component {
 
                 <div className={`${style.jumbotron}`}>
 
-                    <ul class="list-group">
+                    <ul className="list-group">
                         <div className={style.li}>
-                            <li class=" checkbox list-group-item ">
+                            <li className=" checkbox list-group-item ">
                                 <div className="row justify-content-around">
                                     <div className={`col-4 col-md-3`}>
                                         <div className={style.checkbox}>
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                                            <label class="form-check-label" for="exampleCheck1">Job</label>
+                                            <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                            <label className="form-check-label" htmlFor="exampleCheck1">Job</label>
                                         </div>
                                     </div>
                                     <div className="col-4 col-md-2">
@@ -51,14 +51,14 @@ class MoversJobsList extends Component {
                                     <div className="col-4 col-md-2 d-flex justify-content-center">
                                         <span>
                                             <i className="fa fa-user"></i>
-                                            <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">Assignee</label>
+                                            <label className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">Assignee</label>
                                         </span>
                                     </div>
                                     <div className="col-4 col-md-2 d-flex justify-content-center ">
-                                        <label class="form-check-label" for="exampleCheck1">Status</label>
+                                        <label className="form-check-label" htmlFor="exampleCheck1">Status</label>
                                     </div>
                                     <div className="col-4 col-md-3">
-                                        <div class="form-check">
+                                        <div className="form-check">
                                             <div className={`d-flex justify-content-end`}>
                                                 <div className={style.edit}>
                                                     <Button name="Edit" />

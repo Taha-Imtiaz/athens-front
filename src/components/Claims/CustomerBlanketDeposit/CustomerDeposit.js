@@ -21,9 +21,7 @@ const CustomerDeposit = () => {
   useEffect(() => {
 
     getDeposits().then(res =>  {
-      console.log(res)
       setBlanket(res.data.jobs)
-      // this.setState(res.data.jobs)
   })
   }, []);
 

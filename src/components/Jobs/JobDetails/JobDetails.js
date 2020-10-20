@@ -15,16 +15,11 @@ const JobDetails = (props) => {
 
     // var {getJob, jobs} = props 
     var { match: { params: { jobId } } } = props
-    console.log(props)
 
     useEffect(() => {
 
-        console.log(jobId)
-
         getJob(jobId).then((res) => {
             setJob(res.data.job)
-
-            console.log(job)
         }).catch((error) => {
             console.log(error)
         })
@@ -36,11 +31,11 @@ const JobDetails = (props) => {
            <> <div className={`row ${style.toprow}`}>
                 <div className="col-3 col-md-3">
                     <div className={`card ${style.cardCustom}`} >
-                        <div class="card-body">
-                            <h5 class="card-title">Customer</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{job.customer.name}</h6>
-                            <p class="card-text">{job.customer.phone}</p>
-                            <p class="card-text">{job.customer.email}</p>
+                        <div className="card-body">
+                            <h5 className="card-title">Customer</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">{job.customer.name}</h6>
+                            <p className="card-text">{job.customer.phone}</p>
+                            <p className="card-text">{job.customer.email}</p>
                         </div>
                     </div>
                 </div>

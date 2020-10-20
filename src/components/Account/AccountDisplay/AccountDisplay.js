@@ -15,7 +15,6 @@ useEffect(() => {
 
 getUserData(getUserId).then((res) => {
 setUser(res.data.user)
-console.log(res)
 }).catch((error) => {
     console.log(error)
 })

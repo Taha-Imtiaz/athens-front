@@ -16,27 +16,27 @@ class Payment extends Component {
                     <span className={style.logo}><i className="fa fa-cc-mastercard" style={{ fontSize: "36px" }}></i></span>
                 </div>
                 <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="type" placeholder="Type" />
+                    <div className="form-group">
+                        <input type="text" className="form-control" id="type" placeholder="Type" />
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="cardno" placeholder="Card Number" />
+                    <div className="form-group">
+                        <input type="text" className="form-control" id="cardno" placeholder="Card Number" />
                     </div>
                     <div className="row">
                         <div className="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="month" placeholder="Month" />
+                            <div className="form-group">
+                                <input type="text" className="form-control" id="month" placeholder="Month" />
                             </div>
                         </div>
 
                         <div className="col-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="year" placeholder="Year" />
+                            <div className="form-group">
+                                <input type="text" className="form-control" id="year" placeholder="Year" />
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="name" placeholder="Name On Card" />
+                    <div className="form-group">
+                        <input type="text" className="form-control" id="name" placeholder="Name On Card" />
                     </div>
 
                     <Link style={{ textDecoration: "none" }} to='/mover'> <Button name="Submit" /></Link>

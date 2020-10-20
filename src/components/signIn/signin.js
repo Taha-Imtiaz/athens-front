@@ -55,12 +55,10 @@ class SignInForm extends React.Component {
 
     const isValid = this.validate()
     if (isValid) {
-      console.log(this.state)
       this.setState(initialState)
 
       API.post(`posts`, this.state)
         .then(response => {
-          console.log(response);
         })
         .catch(error =>{
           console.log(error)
@@ -76,7 +74,6 @@ class SignInForm extends React.Component {
   }
   formSubmit = () => {
     // history.push('/customers')
-    console.log('Hello')
   }
 
   // usernameChangeHandler = (event) => {

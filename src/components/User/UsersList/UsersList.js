@@ -17,9 +17,9 @@ const UsersList = (props) => {
   var [currentPage, setCurrentPage] = useState(1);
   var usersObj = {
     query: "",
-    filter:{
-      type:""
-  }
+    filter: {
+      type: ""
+    }
   };
 
   useEffect(() => {
@@ -32,9 +32,8 @@ const UsersList = (props) => {
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-    var totalCount = users[0]?.data.user.total
-  var usersDocs = users[0]?.data.user.docs 
-  console.log(usersDocs)
+  var totalCount = users[0] ?.data.user.total
+  var usersDocs = users[0] ?.data.user.docs 
 
   var handleFilter = (name) => {
     var sortUserObj = {
@@ -49,17 +48,17 @@ const UsersList = (props) => {
 
 
   return (
-    <div style={{marginTop: '10px'}}>
-        {usersDocs &&
+    <div style={{ marginTop: '10px' }}>
+      {usersDocs &&
         <div>
-      <div className="row">
-        <div className="col-3">
-          <h3 className={style.head}>Users List</h3>
-        </div>
-        <div className={`col-4 ${style.search}`}>
-        <SearchBar type = "user" title = "Type name or email"/>
-        </div>
-           
+          <div className="row">
+            <div className="col-3">
+              <h3 className={style.head}>Users List</h3>
+            </div>
+            <div className={`col-4 ${style.search}`}>
+              <SearchBar type="user" title="Type name or email" />
+            </div>
+
             <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
               <i
                 className="fa fa-filter dropdown-toggle"
@@ -79,56 +78,56 @@ const UsersList = (props) => {
                 </a>
               </div>
             </div>
-        <div className="col-3">
-          <div className={style.btndel}>
-            <Link style={{ textDecoration: "none" }} to="/user/create">
-              {" "}
-              <Button name="Create New" />{" "}
-            </Link>
+            <div className="col-3">
+              <div className={style.btndel}>
+                <Link style={{ textDecoration: "none" }} to="/user/create">
+                  {" "}
+                  <Button name="Create New" />{" "}
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className={style.jumbotron}>
-        <ul class="list-group">
-          <div className={style.li}>
-              {usersDocs?.map((usersDoc) => {
-                  return  <li class=" checkbox list-group-item">
-                  <div className="row justify-content-around">
-                    <div className="col-3 col-md-4 text-left">
-                      <b>
-                        <span>
-                          {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
-                          <label
-                            className={`checkbox-inline ${style.input}`}
-                            for="defaultCheck1"
-                          >
-                           {usersDoc.name}
-                          </label>
-                        </span>
-                      </b>
-                    </div>
-                    <div className="col-5 col-md-4">
-                      <label>{usersDoc.attributes.map((attribute) => attribute.name)}</label>
-                    </div>
-                    <div className="col-2">
-                         <label htmlFor="">{usersDoc.address}</label>
-                    </div>
-                    
-                  </div>
-                </li>
-              })}
-           
-          </div>
-        </ul>
-      </div>
+          <div className={style.jumbotron}>
+            <ul className="list-group">
+              <div className={style.li}>
+                {usersDocs ?.map((usersDoc, i) => {
+                  return <li key={i} className=" checkbox list-group-item">
+                    <div className="row justify-content-around">
+                      <div className="col-3 col-md-4 text-left">
+                        <b>
+                          <span>
+                            {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
+                            <label
+                              className={`checkbox-inline ${style.input}`}
+                              htmlFor="defaultCheck1"
+                            >
+                              {usersDoc.name}
+                            </label>
+                          </span>
+                        </b>
+                      </div>
+                      <div className="col-5 col-md-4">
+                        <label>{usersDoc.attributes.map((attribute) => attribute.name)}</label>
+                      </div>
+                      <div className="col-2">
+                        <label htmlFor="">{usersDoc.address}</label>
+                      </div>
 
-      <Pagination
-        itemCount={totalCount}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      /> 
-      </div>
+                    </div>
+                  </li>
+                })}
+
+              </div>
+            </ul>
+          </div>
+
+          <Pagination
+            itemCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
       }
     </div>
   );

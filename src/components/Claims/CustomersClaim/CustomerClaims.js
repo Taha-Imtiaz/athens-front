@@ -14,7 +14,6 @@ const CustomerClaims = (props) => {
     }, [])
     var { claims } = props;
     var data = [];
-    console.log(claims)
     if (claims.claims) {
         data = claims.claims.data.claims
     }

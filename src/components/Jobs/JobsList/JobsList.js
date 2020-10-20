@@ -38,7 +38,6 @@ class JobsList extends Component {
       },
       page: 1
     }
-    console.log("cdm")
     getAllJobs(jobObj)
   };
 
@@ -118,7 +117,7 @@ class JobsList extends Component {
     getAllJobs(fetchJobsOnPageChange)
   }
   render() {
-  
+
     var { jobs } = this.props
 
     var { pageSize, currentPage } = this.state
@@ -127,7 +126,6 @@ class JobsList extends Component {
   //   var formatStartDate, formatEndDate;
   // if (jobs[0]?.data.jobs?.docs.length !== 0) {
   //   formatStartDate = new Date(jobs[0]?.data?.jobs.docs?.map((doc) => doc.startDate));
-  //   console.log(formatStartDate)
   //   formatEndDate = new Date(jobs[0]?.data?.jobs.docs.endDate);
   // }
     return (
@@ -141,7 +139,7 @@ class JobsList extends Component {
           </div>
 
           <div className={`col-5 col-md-6 ${style.search}`}>
-            <SearchBar type = "job" title = "Type title or services"/>
+            <SearchBar type="job" title="Type title or services" />
           </div>
           <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
             <i
@@ -196,7 +194,7 @@ class JobsList extends Component {
                 {jobs[0] ?.data.jobs.docs.map((job, i) => {
                   return (
 
-                    <li key = {i} className=" checkbox list-group-item ">
+                    <li key={i} className=" checkbox list-group-item ">
                       <div className="row justify-content-around">
                         <div className="col-4 col-md-2 text-left">
                           <label>{job.title}</label>
@@ -207,8 +205,8 @@ class JobsList extends Component {
                         <div className="col-4 col-md-3">
                           <span>
                             <i className="fa fa-user"></i>
-                            {job.assignee.map(x => <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">{x.name}</label>)}
-                          
+                            {job.assignee.map((x, i) => <label key={i} className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">{x.name}</label>)}
+
                           </span>
                         </div>
                         <div className="col-4 col-md-2">
@@ -238,7 +236,7 @@ class JobsList extends Component {
 
               </div>
               {/* <div className={style.li}>
-              <li class=" checkbox list-group-item ">
+              <li className=" checkbox list-group-item ">
                 <div className="row justify-content-around">
                   <div className="col-2 text-left">
                     <label>Job</label>
@@ -269,7 +267,7 @@ class JobsList extends Component {
             </div>
 
             <div className={style.li}>
-              <li class=" checkbox list-group-item ">
+              <li className=" checkbox list-group-item ">
                 <div className="row justify-content-around">
                   <div className="col-2 text-left">
                     <label>Job</label>

@@ -25,7 +25,7 @@ function renderDay(day) {
     <div style={cellStyle}>
       <div style={dateStyle}>{date}</div>
           <div style={birthdayStyle}>
-            <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
+            <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
           </div>
     </div>
   );

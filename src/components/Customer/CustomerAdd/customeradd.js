@@ -101,7 +101,6 @@ class CustomerAdd extends Component {
             }
            
         }
-        console.log(addCustomerObj)
         addCustomer(addCustomerObj, () => history.goBack())
     }
     }
@@ -113,7 +112,7 @@ class CustomerAdd extends Component {
 
                     <form onSubmit={this.mySubmitHandler}>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Customer Name</label>
+                            <label htmlFor="exampleInputEmail1">Customer Name</label>
                             <input type="input" className="form-control" id="name" name="name" value={this.state.name} onChange={this.handleFormInput} />
                         </div>
 
@@ -127,7 +126,7 @@ class CustomerAdd extends Component {
 
 
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Phone Number</label>
+                            <label htmlFor="exampleInputEmail1">Phone Number</label>
                             <input type="input" className="form-control" id="phone_number" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
                         </div>
 
@@ -141,7 +140,7 @@ class CustomerAdd extends Component {
 
 
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
+                            <label htmlFor="exampleInputEmail1">Email address</label>
                             <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleFormInput} />
                         </div>
 
@@ -156,7 +155,7 @@ class CustomerAdd extends Component {
                     <h3>Sub Contact</h3>
                     <form>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Phone Number</label>
+                            <label htmlFor="exampleInputEmail1">Phone Number</label>
                             <input type="input" className="form-control" id="phone_number" name="phoneContacts" value={this.state.phoneContacts} onChange={this.handleFormInput} />
                         </div>
 
@@ -170,7 +169,7 @@ class CustomerAdd extends Component {
 
 
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
+                            <label htmlFor="exampleInputEmail1">Email address</label>
                             <input type="email" className="form-control" name="emailContacts" value={this.state.emailContacts} onChange={this.handleFormInput} />
                             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>

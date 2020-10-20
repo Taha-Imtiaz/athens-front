@@ -15,7 +15,6 @@ const CustomerList = (props) => {
   var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  console.log('Helo')
   var { getAllCustomers } = props;
 
   useEffect(() => {
@@ -49,10 +48,8 @@ const CustomerList = (props) => {
   const width = window.innerWidth;
 
   var { customers } = props;
-  console.log(customers)
 
   var totalCount = customers ?.data.User.total;
-  console.log(totalCount)
 
   if (customers) {
     var {
@@ -64,11 +61,8 @@ const CustomerList = (props) => {
   }
 
   var handleSort = () => {
-    console.log("hsc", order)
 
     if (order == 1) {
-      console.log('1')
-      // order = -1
       setOrder(-1)
       var sortCustomersObj = {  
         query: "",
@@ -80,10 +74,7 @@ const CustomerList = (props) => {
       };
     }
     else if (order == -1) {
-      console.log('-1')
-
       setOrder(1)
-      console.log(order)
       var sortCustomersObj = {
         query: "",
         sort: {
@@ -94,7 +85,6 @@ const CustomerList = (props) => {
       };
     } else {
       setOrder(1)
-      console.log(order)
       var sortCustomersObj = {
         query: "",
         sort: {
@@ -104,9 +94,7 @@ const CustomerList = (props) => {
         page: 1,
       };
     }
-    console.log(sortCustomersObj)
     getAllCustomers(sortCustomersObj)
-    // console.log(sortCustomersObj)
   }
   var handleDateFilter = () => {
     setOrder(null);

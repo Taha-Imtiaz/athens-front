@@ -42,56 +42,56 @@ const UnavailableSchedule = () => {
                         <div className={`d-flex w-100 justify-content-between`}>
                             <span>
                                 <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Thoma</label>
+                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Thoma</label>
                             </span>
 
                             <small>4/7/2020 - 15/7/2020</small>
                         </div>
                         <div className={style.para}>
-                            <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
+                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                         </div>
                     </a>
                 </div>
                 <div>
                     <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                        <div class="d-flex w-100 justify-content-between">
+                        <div className="d-flex w-100 justify-content-between">
                             <span>
                                 <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Thoma</label>
+                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Thoma</label>
                             </span>
 
                             <small>4/7/2020 - 15/7/2020</small>
                         </div>
                         <div className={style.para}>
-                            <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
+                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                         </div>
                     </a>
                 </div>
                 <div className={style.box}>
                     <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                        <div class="d-flex w-100 justify-content-between">
+                        <div className="d-flex w-100 justify-content-between">
                             <span>
                                 <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Josh</label>
+                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Josh</label>
                             </span>
 
                             <small>4/7/2020 - 15/7/2020</small>
                         </div>
                         <div className={style.para}>
-                            <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
+                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                         </div>
                     </a>
                 </div>
                 <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                    <div class="d-flex w-100 justify-content-between">
+                    <div className="d-flex w-100 justify-content-between">
                         <span>
                             <input type="checkbox" id="defaultCheck1" value="" />
-                            <label className={`checkbox-inline ${style.input}`} for="defaultCheck1">Monte</label>
+                            <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Monte</label>
                         </span>
                         <small>4/7/2020 - 15/7/2020</small>
                     </div>
                     <div className={style.para}>
-                        <p class="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
+                        <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
                     </div>
                 </a>
             </div>

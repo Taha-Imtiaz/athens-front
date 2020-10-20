@@ -11,43 +11,43 @@ class Availability extends Component {
                 <div className={style.list}>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                        <h5 className={style.label}><label class="form-check-label" for="defaultCheck1">
+                        <h5 className={style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Monday
                     </label></h5>
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                        <h5 className={style.label}><label class="form-check-label" for="defaultCheck1">
+                        <h5 className={style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Tuesday
                     </label></h5>
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                        <h5 className={style.label}><label class="form-check-label" for="defaultCheck1">
+                        <h5 className={style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Wednesday
                     </label></h5>
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                        <h5 className={style.label}><label class="form-check-label" for="defaultCheck1">
+                        <h5 className={style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Thursday
                     </label></h5>
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                       <h5 className = {style.label}><label class="form-check-label" for="defaultCheck1">
+                       <h5 className = {style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Friday
                     </label></h5> 
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                       <h5 className = {style.label}><label class="form-check-label" for="defaultCheck1">
+                       <h5 className = {style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Saturday
                     </label></h5> 
                     </div>
                     <div className={`form-check d-flex justify-content-start ${style.border}`}>
                         <input className={`form-check-input ${style.check}`} type="checkbox" value="" id="defaultCheck1" />
-                       <h5 className = {style.label}><label class="form-check-label" for="defaultCheck1">
+                       <h5 className = {style.label}><label className="form-check-label" htmlFor="defaultCheck1">
                             Sunday
                     </label></h5> 
                     </div>

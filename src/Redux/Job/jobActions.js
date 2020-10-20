@@ -2,11 +2,11 @@ import Axios from "axios";
 import { GET_JOBS, GET_JOB } from "./jobConstants";
 
 // var baseUrl = 'http://10.0.4.213:3000/'
-var baseUrl = "https://athens-backend.herokuapp.com/";
+var baseUrl = "https://athens-backend.herokuapp.com/api/";
 export var getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      var getJobs = await Axios.post(baseUrl + "api/user/get-all-jobs", jobObj);
+      var getJobs = await Axios.post(baseUrl + "user/get-all-jobs", jobObj);
 
       //update app's state
       dispatch({
@@ -24,8 +24,7 @@ export var getAllJobs = (jobObj) => {
 export var getJob = async (jobId) => {
   // return async (dispatch) => {
   try {
-    var getJob = await Axios.get(baseUrl + `api/user/get-job/${jobId}`);
-    console.log(getJob);
+    var getJob = await Axios.get(baseUrl + `user/get-job/${jobId}`);
     return getJob;
     //    dispatch({
     //        type: GET_JOB,
@@ -37,7 +36,7 @@ export var getJob = async (jobId) => {
 };
 export var getAllMovers = async () => {
   try {
-    var getMovers = await Axios.get(baseUrl + "api/user/get-all-movers");
+    var getMovers = await Axios.get(baseUrl + "user/get-all-movers");
     return getMovers;
   } catch (error) {
     console.log(error);
@@ -45,7 +44,7 @@ export var getAllMovers = async () => {
 };
 export var createJob = async (newJobObj) => {
   try {
-    var newJob = await Axios.post(baseUrl + "api/user/create-job",
+    var newJob = await Axios.post(baseUrl + "user/create-job",
       newJobObj
     );
     return newJob;
@@ -56,7 +55,7 @@ export var createJob = async (newJobObj) => {
 export var updateJob = async (jobId, jobObj) => {
   try {
     var updatedJob = await Axios.post(
-      `${baseUrl}api/user/update-job/${jobId}`,
+      `${baseUrl}user/update-job/${jobId}`,
       jobObj
     );
     return updatedJob;
@@ -68,11 +67,10 @@ export var updateJob = async (jobId, jobObj) => {
 export var getJobsByDate = async () => {
   try {
     const date = new Date()
-    console.log(date)
     let data = {
       date: date.toString()
     }
-    var jobs = await Axios.post(baseUrl + "api/user/get-job-date",
+    var jobs = await Axios.post(baseUrl + "user/get-job-date",
     data
     );
   return jobs;
@@ -82,7 +80,7 @@ export var getJobsByDate = async () => {
 }
 export var searchJobs = async (query) => {
   try {
-    var jobs = await Axios.get(baseUrl + "api/user/jobs/" + query);
+    var jobs = await Axios.get(baseUrl + "user/jobs/" + query);
     return jobs;
   } catch (error) {
     console.log(error);

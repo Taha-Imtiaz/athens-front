@@ -113,14 +113,12 @@ class NewClaim extends Component {
     event.preventDefault();
     // const isValid = this.validate()
     // if (isValid) {
-    console.log(this.state)
     let { customerId, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
     let data = {
       jobId,
       claims
     }
     var { history } = this.props;
-    console.log(data)
     addClaim(data).then((res) => {
       history.push("/claim/customer");
     })
@@ -133,7 +131,6 @@ class NewClaim extends Component {
   }
 
   addClaim = () => {
-    console.log(this.state.add)
     this.setState({
       claims: [...this.state.claims, {
         claimType: null,
@@ -144,7 +141,6 @@ class NewClaim extends Component {
   }
 
   hanldeClaimsInput = (e, i) => {
-    console.log(this.state.claims, i, e.target.name)
     let updatedClaims = this.state.claims.slice();
     updatedClaims[i][e.target.name] = e.target.value
     this.setState({ claims: updatedClaims });

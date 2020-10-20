@@ -37,9 +37,9 @@ const initialState = {
 };
 
 class CreateJobs extends Component {
-  // assigneeOptions = [{ name: 'Person1', id: 1 }, { name: 'Person2', id: 2 }]
+  // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
   options = [
-    { name: "Srigar", id: 1 },
+    { name: "Srigar", id: 1},
     { name: "Sam", id: 2 },
   ];
   servicesOptions = [
@@ -48,33 +48,33 @@ class CreateJobs extends Component {
     { id: 3, name: "Unloading" },
     { id: 4, name: "Grand Piano" },
     { id: 5, name: "Baby" },
-    { id: 6, name: "Hot Tub" },
+    { id: 6,  name: "Hot Tub" },
   ];
   timeOptions = [
-    { name: "01:00 am", id: 1 },
-    { name: "02:00 am", id: 2 },
-    { name: "03:00 am", id: 3 },
-    { name: "04:00 am", id: 4 },
-    { name: "05:00 am", id: 5 },
-    { name: "06:00 am", id: 6 },
-    { name: "07:00 am", id: 7 },
-    { name: "08:00 am", id: 8 },
-    { name: "09:00 am", id: 9 },
-    { name: "10:00 am", id: 10 },
-    { name: "11:00 am", id: 11 },
-    { name: "12:00 am", id: 12 },
-    { name: "01:00 pm", id: 13 },
-    { name: "02:00 pm", id: 14 },
-    { name: "03:00 pm", id: 15 },
-    { name: "04:00 pm", id: 16 },
-    { name: "05:00 pm", id: 17 },
-    { name: "06:00 pm", id: 18 },
-    { name: "07:00 pm", id: 19 },
-    { name: "08:00 pm", id: 20 },
-    { name: "09:00 pm", id: 21 },
-    { name: "10:00 pm", id: 22 },
-    { name: "11:00 pm", id: 23 },
-    { name: "12:00 pm", id: 24 },
+    { name: "01:00 am", id: 1, value: "01:00:00" },
+    { name: "02:00 am", id: 2, value: "02:00:00"  },
+    { name: "03:00 am", id: 3, value: "03:00:00" },
+    { name: "04:00 am", id: 4 , value: "04:00:00"},
+    { name: "05:00 am", id: 5 , value: "05:00:00"},
+    { name: "06:00 am", id: 6 , value: "06:00:00"},
+    { name: "07:00 am", id: 7 , value: "07:00:00"},
+    { name: "08:00 am", id: 8 , value: "08:00:00"},
+    { name: "09:00 am", id: 9 , value: "09:00:00"},
+    { name: "10:00 am", id: 10, value: "10:00:00" },
+    { name: "11:00 am", id: 11, value: "11:00:00" },
+    { name: "12:00 pm", id: 12, value: "12:00:00" },
+    { name: "01:00 pm", id: 13, value: "13:00:00" },
+    { name: "02:00 pm", id: 14, value: "14:00:00" },
+    { name: "03:00 pm", id: 15, value: "15:00:00" },
+    { name: "04:00 pm", id: 16, value: "16:00:00" },
+    { name: "05:00 pm", id: 17, value: "17:00:00" },
+    { name: "06:00 pm", id: 18, value: "18:00:00" },
+    { name: "07:00 pm", id: 19, value: "19:00:00" },
+    { name: "08:00 pm", id: 20, value: "20:00:00" },
+    { name: "09:00 pm", id: 21, value: "21:00:00" },
+    { name: "10:00 pm", id: 22, value: "22:00:00" },
+    { name: "11:00 pm", id: 23, value: "23:00:00" },
+    { name: "12:00 am", id: 24, value: "00:00:00" },
   ];
 
   state = initialState;
@@ -83,7 +83,7 @@ class CreateJobs extends Component {
     getAllMovers()
       .then((res) => {
         var moverId = res.data.movers.map((mover) => mover._id);
-        console.log(this.props.location);
+       console.log(this.props.location);
         this.setState({
           assigneeList: res.data.movers,
           customerId: this.props.location.customerId,
@@ -95,8 +95,13 @@ class CreateJobs extends Component {
   };
 
   addLocation = () => { 
-    console.log(this.state.add)
+    console.log(this.state)
 this.setState({locations: [...this.state.locations, {from: null, to: null}]});
+console.log(this.state)
+  }
+  componentWillUnmount() {
+  console.log('Unmount called')
+  // this.state = initialState;
   }
 
   hanldeLocationInput = (i, e) => { 
@@ -303,7 +308,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
         status,
         note,
         assigneesId,
-        customerId,
+       customerId,
       };
       console.log(createJobObj);
       var { history } = this.props;
@@ -350,9 +355,9 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
   onAssigneeRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem._id;
-    console.log(removeItem);
+   console.log(removeItem);
     // console.log(newState.assigneesId)
-    var updatedState = newState.assigneesId.findIndex(
+   var updatedState = newState.assigneesId.findIndex(
       (assigneeId) => assigneeId === removeItem
     );
     console.log(updatedState);
@@ -361,13 +366,13 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
     this.setState({ newState });
     console.log(newState);
 
-    // newState.assigneesId.push(assigneeItem)
+    // newState.assigneesId.pus, value: "00:00:00"h(assigneeItem)
     // this.setState({ assignee: removedItem })
   };
 
   onStartTimeSelect = (selectedList, selectedTimeItem) => {
    console.log(selectedTimeItem);
-    let selectedTime = selectedTimeItem.name;
+    let selectedTime = selectedTimeItem.value;
     console.log(selectedTime);
     let newState = { ...this.state };
     newState.startTime = selectedTime;
@@ -376,7 +381,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
 
   onEndTimeSelect = (selectedList, selectedTimeItem) => {
    console.log(selectedTimeItem);
-    let selectedTime = selectedTimeItem.name;
+    let selectedTime = selectedTimeItem.value;
     console.log(selectedTime);
     let newState = { ...this.state };
     newState.endTime = selectedTime;
@@ -399,7 +404,7 @@ console.log(this.state.locations[0].from.length)
                 id="jobTitle"
                 name="customerId"
                 value={this.state.customerId}
-                onChange={this.handleFormInput}
+              onChange={this.handleFormInput}
                 disabled
               />
             </div>
@@ -448,7 +453,7 @@ console.log(this.state.locations[0].from.length)
             <div className="form-group">
               <Multiselect
                 className={style.multi}
-                // selectedValues = {this.servicesOptions}
+               // selectedValues = {this.servicesOptions}
                 options={this.servicesOptions} // Options to display in the dropdown
                 onSelect={this.onSelect} // Function will trigger on select event
                 onRemove={this.onRemove} // Function will trigger on remove event

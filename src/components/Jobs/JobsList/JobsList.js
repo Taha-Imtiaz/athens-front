@@ -117,8 +117,8 @@ class JobsList extends Component {
 
     getAllJobs(fetchJobsOnPageChange)
   }
-
   render() {
+  
     var { jobs } = this.props
 
     var { pageSize, currentPage } = this.state
@@ -208,11 +208,11 @@ class JobsList extends Component {
                           <span>
                             <i className="fa fa-user"></i>
                             {job.assignee.map(x => <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">{x.name}</label>)}
-                            {/* <label>{job.assignee.map((service) => `${service.name} `)}</label> */}
+                          
                           </span>
                         </div>
                         <div className="col-4 col-md-2">
-                          <label>{job.services.map((service) => `${service.name} `)}</label>
+                          <label>{job.services.map((service) => `${service.name}`)}</label>
                         </div>
                         <div className="col-4 col-md-1">
                           <label>{job.status}</label>

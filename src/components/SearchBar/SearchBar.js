@@ -3,11 +3,11 @@ import style from './SearchBar.module.css'
 import { connect } from "react-redux";
 import { getAllCustomers } from "../../Redux/Customer/customerActions"
 import { getAllJobs } from "../../Redux/Job/jobActions"
+import { getUsers } from "../../Redux/user/userActions";
 
 
 const SearchBar = (props) => {
-    var { getAllCustomers } = props;
-    var { getAllJobs } = props;
+    var { getAllCustomers, getAllJobs, getUsers } = props;
 
     var title = props.title;
     const [searchValue, setSearchValue] = useState('');
@@ -34,7 +34,27 @@ const SearchBar = (props) => {
                 };
                 getAllCustomers(fetchCustomersObj);
             }
-        } else {
+        }
+        else if (props.type == 'user') {
+            if (searchValue) {
+                var usersObj = {
+                    query: searchValue,
+                    filter:{
+                      type:""
+                  }
+                }
+                getUsers(usersObj);
+            } else {
+                var usersObj = {
+                    query: "",
+                    filter:{
+                        type:""
+                    }
+                };
+                getUsers(usersObj);
+            }
+        }
+        else {
             if (searchValue) {
                 var fetchJobsOnPageChange = {
                     query: searchValue,
@@ -87,11 +107,14 @@ const SearchBar = (props) => {
 
 var mapStateToProps = (state) => ({
     customers: state.customers.getCustomers,
-    jobs: state.jobs.getJobs
+    jobs: state.jobs.getJobs,
+    users: state.users.getUsers
+
 });
 
 var actions = {
     getAllCustomers,
-    getAllJobs
+    getAllJobs,
+    getUsers
 };
 export default connect(mapStateToProps, actions)(SearchBar);

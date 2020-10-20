@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUsers } from "../../../Redux/user/userActions";
 import Pagination from "../../Pagination/Pagination";
+import SearchBar from "../../SearchBar/SearchBar";
 
 
 // import { connect } from 'react-redux'
@@ -15,11 +16,10 @@ const UsersList = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var usersObj = {
-    name: "",
-    address: "",
-    attributes: {
-      name: ""
-    }
+    query: "",
+    filter:{
+      type:""
+  }
   };
 
   useEffect(() => {
@@ -35,15 +35,51 @@ const UsersList = (props) => {
     var totalCount = users[0]?.data.user.total
   var usersDocs = users[0]?.data.user.docs 
   console.log(usersDocs)
+
+  var handleFilter = (name) => {
+    var sortUserObj = {
+      query: "",
+      filter: {
+        type: name
+      }
+    };
+    getUsers(sortUserObj)
+  }
+
+
+
   return (
-    <div>
+    <div style={{marginTop: '10px'}}>
         {usersDocs &&
         <div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-3">
           <h3 className={style.head}>Users List</h3>
         </div>
-        <div className="col-6">
+        <div className={`col-4 ${style.search}`}>
+        <SearchBar type = "user" title = "Type name or email"/>
+        </div>
+           
+            <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
+              <i
+                className="fa fa-filter dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a className="dropdown-item" onClick={() => handleFilter('movers')}>
+                  Movers
+                </a>
+                <a className="dropdown-item" onClick={() => handleFilter('managers')}>
+                  Managers
+                </a>
+              </div>
+            </div>
+        <div className="col-3">
           <div className={style.btndel}>
             <Link style={{ textDecoration: "none" }} to="/user/create">
               {" "}

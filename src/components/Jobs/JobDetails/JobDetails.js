@@ -32,61 +32,60 @@ const JobDetails = (props) => {
 
     return <div>
 
-        <div>
-
-
-            <div className={`row ${style.toprow}`}>
+        <div>{job ? 
+           <> <div className={`row ${style.toprow}`}>
                 <div className="col-3 col-md-3">
                     <div className={`card ${style.cardCustom}`} >
                         <div class="card-body">
                             <h5 class="card-title">Customer</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{job ?.customer.name}</h6>
-                            <p class="card-text">{job ?.customer ?.phone}</p>
-                            <p class="card-text">{job ?.customer ?.email}</p>
+                            <h6 class="card-subtitle mb-2 text-muted">{job.customer.name}</h6>
+                            <p class="card-text">{job.customer.phone}</p>
+                            <p class="card-text">{job.customer.email}</p>
                         </div>
                     </div>
                 </div>
                 <div className="col-6 col-md-5">
                     <div className={`container ${style.containerCustom}`}>
-                        <h3 className={style.head}>{job ?.title}</h3>
-                        <div className={style.btn}>
-                            <Button name="Status" />
-                        </div>
+                        <h3 className={style.head}>{job.title}</h3>
+                        
                         <br />
                         <br />
-                        <p className={style.para}>{`${job ?.startDate ?.split("G")[0]}`} |{`${job ?.endDate.split("G")[0]}`}</p>
+                        <br />
+                        <p className={style.para}>{`${job.startDate.split("G")[0]}`} |{`${job.endDate.split("G")[0]}`}</p>
                         <br />
                         <br />
-                        <p className={style.para}>{job ?.from} - {job ?.to}</p>
+                        
+                        {job.locations && job.locations.map( list => {
+                    return <><p className={style.para}>From : {list.from} To : {list.to}</p>
+                    <br /></>
+                    })}
                         <br />
                         {
-job?.services.map(service => <span className={`badge badge-primary m-2 ${style.badges}`}>{service.name}</span>)
+job.services.map(service => <span className={`badge badge-primary m-2 ${style.badges}`}>{service.name}</span>)
                         
                         }
 
 
                     </div>
                 </div>
+                
                 <div className={`col-3 d-flex justify-content-end  col-md-3`}>
                     <div className={style.btns}>
+                    
                         <Link style={{ textDecoration: "none" }} to={`/job/edit/${jobId}`}>
                             <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
                         </Link>
                     </div>
-                    <br />
-                    <br />
-                    <p className={style.para}>{`${job?.startDate?.split("G")[0]}`} |{`${job?.endDate.split("G")[0]}`}</p>
-                    <br />
-                    <br />
-                    {job?.locations && job?.locations.map( list => {
-                    return <><p className={style.para}>From : {list.from} To : {list.to}</p>
-                    <br /></>
-                    })}
-                    <span className={`badge badge-primary ${style.badges}`}>Primary</span>
-                    <span className={`badge badge-primary ${style.badges}`}>Secondary</span>
-                    <span className={`badge badge-primary ${style.badges}`}>Success</span>
-
+                    <div className={style.btns}>
+                            <Button name="Status" />
+                           
+                        </div>
+                    
+                    
+                    
+                        <div className={style.btns}>
                     <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" />
+                    </div>
                 </div>
             </div>
 
@@ -97,7 +96,7 @@ job?.services.map(service => <span className={`badge badge-primary m-2 ${style.b
                 <div className="col-2">
                     <div className={`container ${style.cont}`}>
                         <h5 className={style.assigneehead} style={{ flexWrap: "nowrap" }}>Assignees</h5>
-                        {job ?.assignee.map((assignee) =>
+                        {job.assignee.map((assignee) =>
                             <p className={style.assigneehead}>{assignee.name}</p>
                         )}
 
@@ -111,15 +110,15 @@ job?.services.map(service => <span className={`badge badge-primary m-2 ${style.b
                     <div className={`${style.jumbo}`}>
                         <h3 className={style.jobHead}>Job Description</h3>
                         <p className={style.para}>
-                            {job ?.description}
+                            {job.description}
                         </p>
 
-                        {job ?.note.length !== 0 &&
+                        {job.note.length !== 0 &&
                             <div>
 
                                 <h3 className={style.jobHead}>Notes</h3>
                                 <p className={style.para}>
-                                    {job ?.note.map((note) => <p>{note.text}</p>)}
+                                    {job.note.map((note) => <p>{note.text}</p>)}
                                 </p>
                             </div>
                      }
@@ -128,9 +127,11 @@ job?.services.map(service => <span className={`badge badge-primary m-2 ${style.b
                     </div>
 
                 </div>
-            </div>
-        </div>
+            </div></> : null
+        
+}
 
+</div>
 
     </div>
 }

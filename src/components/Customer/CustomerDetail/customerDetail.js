@@ -193,6 +193,7 @@ const CustomerDetail = (props) => {
                       {job.endTime}
                     </p>
                     <p style = {{padding: "5%"}}>{job.description}</p>
+                    {job.locations.map( list =>  <p style = {{padding: "5%"}}>From : {list.from} To : {list.to}</p>)}
                   </div>
                   <div className="col-4">
                     {job.assignee.map((assignee) => <p>{assignee}</p> )}

@@ -64,3 +64,19 @@ export var updateJob = async (jobId, jobObj) => {
     console.log(error);
   }
 };
+
+export var getJobsByDate = async () => {
+  try {
+    const date = new Date()
+    console.log(date)
+    let data = {
+      date: date.toString()
+    }
+    var jobs = await Axios.post(baseUrl + "api/user/get-job-date",
+    data
+    );
+    return jobs;
+  } catch (error) {
+    console.log(error);
+  }
+};

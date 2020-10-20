@@ -70,7 +70,7 @@ const CustomerList = (props) => {
       console.log('1')
       // order = -1
       setOrder(-1)
-      var sortCustomersObj = {
+      var sortCustomersObj = {  
         query: "",
         sort: {
           plainname: -1,

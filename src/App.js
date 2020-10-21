@@ -66,7 +66,7 @@ function App() {
       <Route path="/mover/payment" component={Payment}/>
       <Route path="/mover/calendar" component={MoversCalendar}/>
       <Route path="/mover/availability" component={Availability}/>
-      <Route path="/mover/jobdetails" component={MoversJobDetails}/>
+      <Route path="/mover/jobdetails/:jobId" component={MoversJobDetails}/>
       <Route path="/mover/holidaycalendar" component={Example}/>
       
 

@@ -3,12 +3,15 @@ import customerReducer from './Customer/customerReducer'
 import jobReducer from './Job/jobReducer'
 import claimReducer from './Claims/claimsReducers'
 import userReducer from './user/userReducer'
+import moverReducer from './Mover/moverReducer'
+
 
 
 var rootReducer = combineReducers({
     customers: customerReducer,
     jobs: jobReducer,
     claims: claimReducer,
-    users: userReducer
+    users: userReducer,
+    moverJobs: moverReducer
 })
 export default rootReducer

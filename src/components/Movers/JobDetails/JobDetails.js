@@ -1,22 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import style from './JobDetails.module.css'
 import Button from '../../Button/Button'
 import { Link } from 'react-router-dom'
 
+import { getJob } from '../../../Redux/Job/jobActions'
 
-const MoversJobDetails = () => {
+const MoversJobDetails = (props) => {
+    
+    var [job, setJob] = useState(null)
+    var { match: { params: { jobId } } } = props
+    useEffect(() => {
+
+        getJob(jobId).then((res) => {
+            setJob(res.data.job)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+console.log(job)
     return <div className={style.main}>
-
-        <div className={`row ${style.toprow}`}>
+{job && 
+     <><div className={`row ${style.toprow}`}>
             <div className={`col-6 ${style.title}`}>
-                <h3>Job Title</h3>
+                <h3>{job.title}</h3>
             </div>
             <div className={`col-6 ${style.topbtn}`}>
-                <span className={`badge badge-primary ${style.badges2}`}>Completed</span>
+                <span className={`badge badge-primary ${style.badges2}`}>{job.status}</span>
             </div>
         </div>
-        <p>July 07 - July 10  |  10am - 2pm</p>
-        <p>Start Location - End Location</p>
+        <p>{job.startDate} - {job.endDate} |  {job.startTime} - {job.endTime}</p>
+        {job.locations.map( list =>  <p>{list.from} to {list.to}</p>)}
         <span className={`badge badge-primary ${style.badges}`}>Primary</span>
         <span className={`badge badge-primary ${style.badges}`}>Secondary</span>
         <span className={`badge badge-primary ${style.badges}`}>Success</span>
@@ -24,7 +37,7 @@ const MoversJobDetails = () => {
         <h3 className={style.head}>Job Description</h3>
         <div className={`card ${style.cardwidth}`}>
             <div className="card-body">
-                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dictum augue, sit amet dignissim orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dictum augue, sit amet dignissim orci. Aenean a lorem eleifend massa porta varius at at nibhLorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dictum augue, sit amet dignissim orci. Aenean a lorem eleifend massa porta varius at at nibhAenean a lorem eleifend massa porta varius at at nibh</p>
+                <p className="card-text">{job.description}</p>
             </div>
         </div>
 
@@ -64,7 +77,7 @@ const MoversJobDetails = () => {
                 <Link style={{ textDecoration: "none" }} to='/mover/payment'> <Button name="Pay Online" /></Link>
             </div>
 
-        </div>
+        </div></>}
     </div>
 }
 

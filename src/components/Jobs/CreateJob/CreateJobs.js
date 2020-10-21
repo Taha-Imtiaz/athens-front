@@ -34,6 +34,7 @@ const initialState = {
   add: 1,
   locations: [ {from: '', to: ''}],
   fromTo: []
+  
 };
 
 class CreateJobs extends Component {
@@ -50,6 +51,10 @@ class CreateJobs extends Component {
     { id: 5, name: "Baby" },
     { id: 6,  name: "Hot Tub" },
   ];
+  multiselectRef1 = React.createRef();
+  multiselectRef2= React.createRef();
+  multiselectRef3 = React.createRef();
+  multiselectRef4 = React.createRef();
   timeOptions = [
     { name: "01:00 am", id: 1, value: "01:00:00" },
     { name: "02:00 am", id: 2, value: "02:00:00"  },
@@ -273,54 +278,7 @@ console.log(this.state)
       endDate: date
     });
   };
-  mySubmitHandler = (event) => {
-    event.preventDefault();
-    const isValid = this.validate();
-    if (isValid) {
-      console.log(this.state);
-      this.setState({
-        ...this.state,
-      });
-      var {
-        title,
-        description,
-        services,
-        startDate,
-        endDate,
-        startTime,
-        endTime,
-        locations,
-        status,
-        note,
-        assigneesId,
-        customerId,
-      } = this.state;
-
-      var createJobObj = {
-        title,
-        description,
-        services,
-        startDate: startDate.toString(),
-        endDate: endDate.toString(),
-        startTime,
-        endTime,
-        locations,
-        status,
-        note,
-        assigneesId,
-       customerId,
-      };
-      console.log(createJobObj);
-      var { history } = this.props;
-      createJob(createJobObj)
-        .then((res) => {
-          history.push("/job");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+ 
 
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
@@ -386,6 +344,79 @@ console.log(this.state)
     let newState = { ...this.state };
     newState.endTime = selectedTime;
     this.setState({ endTime: newState.endTime });
+  };
+  resetValues = () => {
+    // By calling the belowe method will reset the selected values programatically
+    this.multiselectRef.current.resetSelectedValues();
+  }
+  mySubmitHandler = (event) => {
+    event.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      console.log(this.state);
+      this.setState({
+        ...this.state,
+      });
+      var {
+        title,
+        description,
+        services,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        locations,
+        status,
+        note,
+        assigneesId,
+        customerId,
+      } = this.state;
+
+      var createJobObj = {
+        title,
+        description,
+        services,
+        startDate: startDate.toString(),
+        endDate: endDate.toString(),
+        startTime,
+        endTime,
+        locations,
+        status,
+        note,
+        assigneesId,
+       customerId,
+      };
+      console.log(createJobObj);
+      var { history } = this.props;
+      createJob(createJobObj)
+        .then((res) => {
+          history.push("/job");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    this.multiselectRef1.current.resetSelectedValues();
+    this.multiselectRef2.current.resetSelectedValues();
+    this.multiselectRef3.current.resetSelectedValues();
+    this.multiselectRef4.current.resetSelectedValues();
+    this.setState({ 
+      title: "",
+        description: "",
+        services:[ ], 
+        startDate: "",
+        endDate: "",
+        
+        locations: [ {from: '', to: ''}],
+        status: "",
+        note: "",
+        assigneesId: [],
+        customerId: "",
+        timeOptions: [],
+        servicesOptions: [],
+     } )
+    
+     }
+ 
   };
   render() {
 
@@ -460,6 +491,7 @@ console.log(this.state.locations[0].from.length)
                 displayValue="name" // Property name to display in the dropdown options
                 className="form-control"
                 placeholder="Services"
+                ref={this.multiselectRef1}
               />
             </div>
 
@@ -522,7 +554,7 @@ console.log(this.state.locations[0].from.length)
                 className="form-control"
                 value={this.state.startTime}
                 id="starttime"
-
+                ref={this.multiselectRef2}
                 placeholder={this.state.startTime.length > 0 ? null : 'select time'}
                 />
               </div>
@@ -543,7 +575,7 @@ console.log(this.state.locations[0].from.length)
                 className="form-control"
                 value={this.state.endTime}
                 id="time"
-              
+                ref={this.multiselectRef3}
                 placeholder={this.state.endTime.length > 0 ? null : 'select time'}
               />
               </div>
@@ -572,6 +604,7 @@ console.log(this.state.locations[0].from.length)
                 displayValue="name" // Property name to display in the dropdown options
                 className="form-control"
                 placeholder="Select Assignee"
+                ref={this.multiselectRef4}
               />
             </div>
 

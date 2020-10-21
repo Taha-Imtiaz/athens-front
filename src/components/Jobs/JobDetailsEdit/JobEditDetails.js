@@ -69,7 +69,7 @@ class JobEditDetails extends Component {
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
-        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
+        var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
         });
@@ -200,7 +200,7 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
-    updateJob(jobId,updatedObj).then((res) => {
+    updateJob(jobId, updatedObj).then((res) => {
       history.push("/job")
     }).catch((error) => {
       console.log(error)
@@ -243,72 +243,72 @@ class JobEditDetails extends Component {
   };
 
   statusChanged = (status) => {
-this.setState({
-  status
-})
+    this.setState({
+      status
+    })
   };
 
-  hanldeLocationInput = (i, e) => { 
+  hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
     updateLocation[i].from = e.target.value
-    this.setState({locations: updateLocation});
+    this.setState({ locations: updateLocation });
   }
 
-  hanldeLocationInputTo = (i, e) => { 
+  hanldeLocationInputTo = (i, e) => {
     let updateLocation = this.state.locations.slice();
     updateLocation[i].to = e.target.value
-    this.setState({locations: updateLocation});
+    this.setState({ locations: updateLocation });
   }
 
 
-  addLocation = () => { 
-this.setState({locations: [...this.state.locations, {from: null, to: null}]});
+  addLocation = () => {
+    this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
   }
 
 
- showLocation = (i) => {
+  showLocation = (i) => {
     return <>
-             
-              <div className="col-4">
-                <div className="form-group">
-                  <input
-                    type="input"
-                    className="form-control"
-                    id="from"
-                    placeholder="From"
-                    name="from"
-                    value={this.state.locations[i].from}
-                    onChange={(e) => this.hanldeLocationInput(i,e)}
-                  />
-                </div>
-                {this.state.locationfromError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationfromError}
-                  </div>
-                ) : null}
-              </div>
-              <div className="col-4">
-                <input
-                  type="input"
-                  className="form-control"
-                  id="to"
-                  placeholder="To"
-                  name="to"
-                  value={this.state.locations[i].to}
-                  onChange={(e) => this.hanldeLocationInputTo(i,e)}
-                />
-                {this.state.locationtoError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationtoError}
-                  </div>
-                ) : null}
-              </div></>
+
+      <div className="col-4">
+        <div className="form-group">
+          <input
+            type="input"
+            className="form-control"
+            id="from"
+            placeholder="From"
+            name="from"
+            value={this.state.locations[i].from}
+            onChange={(e) => this.hanldeLocationInput(i, e)}
+          />
+        </div>
+        {this.state.locationfromError ? (
+          <div
+            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+            role="alert"
+          >
+            {this.state.locationfromError}
+          </div>
+        ) : null}
+      </div>
+      <div className="col-4">
+        <input
+          type="input"
+          className="form-control"
+          id="to"
+          placeholder="To"
+          name="to"
+          value={this.state.locations[i].to}
+          onChange={(e) => this.hanldeLocationInputTo(i, e)}
+        />
+        {this.state.locationtoError ? (
+          <div
+            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+            role="alert"
+          >
+            {this.state.locationtoError}
+          </div>
+        ) : null}
+      </div></>
   }
 
 
@@ -379,7 +379,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                     </div>
                   </div>
                   <div className="col-6">
-                    <div class="form-group">
+                    <div className="form-group">
                       <DatePicker
                         className={style.to}
                         selected={endDate}
@@ -422,48 +422,48 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
 
                 <div className="row">
                   <div className="col-12">
-                    <div class="form-group">
+                    <div className="form-group">
                       <label>Location:</label>
                     </div>
                   </div>
 
-                  {this.state.locations && this.state.locations.map( (list, i) => { 
-              
-                  return <><div className="col-4">
-                    <div className="form-group">
-                      <input
-                        type="input"
-                        className="form-control"
-                        id="from"
-                        placeholder="Start"
-                        aria-describedby="emailHelp"
-                        name="from"
-                        value={list.from}
-                        onChange={(e) => this.hanldeLocationInput(i,e)}
-                      />
+                  {this.state.locations && this.state.locations.map((list, i) => {
+
+                    return <><div className="col-4">
+                      <div className="form-group">
+                        <input
+                          type="input"
+                          className="form-control"
+                          id="from"
+                          placeholder="Start"
+                          aria-describedby="emailHelp"
+                          name="from"
+                          value={list.from}
+                          onChange={(e) => this.hanldeLocationInput(i, e)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-4">
-                    <input
-                      type="input"
-                      className="form-control"
-                      id="to"
-                      placeholder="End"
-                      aria-describedby="emailHelp"
-                      name="to"
-                      value={list.to}
-                      onChange={(e) => this.hanldeLocationInputTo(i,e)}
-                    />
-                  </div>
-                  <div className="col-4">
-                  </div></>
-                })}
+                      <div className="col-4">
+                        <input
+                          type="input"
+                          className="form-control"
+                          id="to"
+                          placeholder="End"
+                          aria-describedby="emailHelp"
+                          name="to"
+                          value={list.to}
+                          onChange={(e) => this.hanldeLocationInputTo(i, e)}
+                        />
+                      </div>
+                      <div className="col-4">
+                      </div></>
+                  })}
                 </div>
                 <div className="form-group">
-              <div style={{float: 'right'}}>
-                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
-              </div>
-            </div><br /><br />
+                  <div style={{ float: 'right' }}>
+                    <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
+                  </div>
+                </div><br /><br />
 
                 <div className="form-group">
                   <Multiselect
@@ -494,7 +494,7 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() =>this.statusChanged(option)}
+                    onClick={() => this.statusChanged(option)}
                   >
                     {option}
                   </button>
@@ -540,9 +540,9 @@ this.setState({locations: [...this.state.locations, {from: null, to: null}]});
           </div>
         </div>
         <div className={`${style.tron2}`}>
-          {note?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
+          {note ?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
 
-          {note?.map((note) => (
+          {note ?.map((note) => (
             <div style={{ display: "flex" }}>
               <p className={style.para}>{note.text} </p>
               <FontAwesomeIcon

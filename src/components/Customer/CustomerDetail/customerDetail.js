@@ -99,14 +99,14 @@ const CustomerDetail = (props) => {
               </div>
             </div>
             <div className="col-4">
-              <div className={`row ${style.toprow}`}>
+              {/* <div className={`row ${style.toprow}`}>
                 <div className="col-2">
                   <Button icon="fa fa-edit">Edit</Button>
                 </div>
                 <div className="col-2">
                   <Button icon="fa fa-trash">Delete</Button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -207,12 +207,12 @@ const CustomerDetail = (props) => {
                   {note.text}</div>)}
               </p>
                   {/* Add modal */}
-              <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
+              {/* <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
              
                   Add Note
              
            
-                </Button>
+                </Button> */}
              
                 <Modal show={show} onHide={handleClose} animation={false} centered>
                   <Modal.Header closeButton>

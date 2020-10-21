@@ -2,76 +2,83 @@ import React, { Component } from "react";
 import CustomerDeposit from "../CustomerBlanketDeposit/CustomerDeposit";
 import style from "./SubmitDeposit.module.css";
 import Button from "../../Button/Button";
-
+import { addDeposit } from '../../../Redux/Claims/claimsActions'
 class SubmitDeposit extends Component {
-    state = {
-        blanket:''
-    }
+  state = {
+    quantity: '',
+    cost: '',
+    customer: ''
+  }
+
   handleSubmit = (e) => {
-      var {blanket} = this.state
+    var { quantity, customer, cost } = this.state
     e.preventDefault()
-    this.setState({
-         blanket: ""
+    let obj = {
+      quantity,
+      customer,
+      cost
+    }
+    addDeposit(obj).then(res => {
+
     })
   };
-  handleFormInput = (e) => {
-var {name, value} = e.target;
-this.setState({
-    [name]: value
-})
 
+  handleFormInput = (e) => {
+    var { name, value } = e.target;
+    this.setState({
+      [name]: value
+    })
+    if (name == 'quantity') {
+      this.setState({
+        cost: value * 15
+      })
+    }
   }
+
   render() {
-      var {blanket} = this.state
+    var { quantity, customer, cost } = this.state
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <h3 className={style.head}>Blanket Deposit</h3>
           <div className={`row ${style.myrow}`}>
-            <div className={`col-5 col-md-2 ${style.in}`}>
+            <div className={`col-5 col-md-3 ${style.in}`}>
               <input
                 className={style.input_fields}
                 type="text"
-                name="blanket"
-                value = {blanket}
-                placeholder="Blanket Size"
-                onChange = {this.handleFormInput}
+                name="customer"
+                value={customer}
+                placeholder="Customer Id"
+                onChange={this.handleFormInput}
               />
             </div>
-            <div className="col-2 col-md-2">
-              <div className={`dropdown`}>
-                <button
-                  className={`btn btn-primary dropdown-toggle ${style.drop}`}
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Rent
-                </button>
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </div>
-              </div>
+            <div className={`col-5 col-md-3 ${style.in}`}>
+              <input
+                className={style.input_fields}
+                type="number"
+                name="quantity"
+                value={quantity}
+                placeholder="Blanket Quantity"
+                onChange={this.handleFormInput}
+              />
+            </div>
+            <div className={`col-5 col-md-3 ${style.in}`}>
+              <input
+                className={style.input_fields}
+                type="number"
+                name="cost"
+                value={cost}
+                disabled
+                placeholder="Cost in $"
+                onChange={this.handleFormInput}
+              />
             </div>
           </div>
           <div className={style.btn}>
             <Button name="Submit" />
           </div>
         </form>
-      </div>
+      </div >
     );
   }
 }

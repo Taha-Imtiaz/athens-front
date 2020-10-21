@@ -11,9 +11,9 @@ const initialState = {
   customerId: "",
   jobId: "",
   claims: [{
-    claimType: null,
-    price: null,
-    description: null
+    claimType: '',
+    price: '',
+    description: ''
   }],
   item: "",
   price: "",
@@ -120,24 +120,26 @@ class NewClaim extends Component {
     }
     var { history } = this.props;
     addClaim(data).then((res) => {
-      history.push("/claim/customer");
+      history.push("/claim/customer/open");
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
     // this.setState(initialState)
     // }
 
   }
 
   addClaim = () => {
-    this.setState({
-      claims: [...this.state.claims, {
-        claimType: null,
-        price: null,
-        description: null
-      }]
-    });
+    if (this.state.claims[0].claimType && this.state.claims[0].description && this.state.claims[0].price) {
+      this.setState({
+        claims: [...this.state.claims, {
+          claimType: null,
+          price: null,
+          description: null
+        }]
+      });
+    }
   }
 
   hanldeClaimsInput = (e, i) => {
@@ -176,7 +178,6 @@ class NewClaim extends Component {
 
         <div className={`jumbotron ${style.form}`}>
           <form>
-
             <div className="form-group">
               <input type="input" className="form-control" id="jobid" placeholder="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
             </div>
@@ -200,12 +201,12 @@ class NewClaim extends Component {
 
             {this.state.claims.map((x, i) => {
               return (
-                <div>
+                <div key={i}>
                   < div className="row">
                     <div className="col-8">
                       <div className="form-group">
                         {/* <input type="input" className="form-control" id="claimType" placeholder="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
-                        <select onChange={(e) => this.hanldeClaimsInput(e, i)} class="form-control" id="exampleFormControlSelect1" name="claimType">
+                        <select onChange={(e) => this.hanldeClaimsInput(e, i)} className="form-control" id="exampleFormControlSelect1" name="claimType">
                           <option>Damage To House</option>
                           <option>Damage To Item</option>
                         </select>
@@ -241,7 +242,8 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.state.claims[0].claimType && this.state.claims[0].description && this.state.claims[0].price && this.addClaim} />
+                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
+                <Button onClick={this.addClaim} name="Add Another"></Button>
               </div>
             </div>
             {this.state.descriptionError ? (

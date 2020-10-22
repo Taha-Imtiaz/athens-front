@@ -36,11 +36,11 @@ const Navbar = (props) => {
                                     Jobs
                         </Link>
                             </li>
-                            {/* <li className={getNavLinkClass("/schedule")}>
+                            <li className={getNavLinkClass("/schedule")}>
                                 <Link className="nav-link" to="/schedule">
                                     Schedule
                         </Link>
-                            </li> */}
+                            </li>
                             <li className={getNavLinkClass("/user")}>
                                 <Link className="nav-link" to="/user">
                                     Users

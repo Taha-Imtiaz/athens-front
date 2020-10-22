@@ -27,8 +27,8 @@ const JobDetails = (props) => {
 
     return <div>
 
-        <div>{job ? 
-           <> <div className={`row ${style.toprow}`}>
+        <div>{job ?
+            <> <div className={`row ${style.toprow}`}>
                 <div className="col-3 col-md-3">
                     <div className={`card ${style.cardCustom}`} >
                         <div className="card-body">
@@ -42,44 +42,43 @@ const JobDetails = (props) => {
                 <div className="col-6 col-md-5">
                     <div className={`container ${style.containerCustom}`}>
                         <h3 className={style.head}>{job.title}</h3>
-                        
+
                         <br />
                         <br />
                         <br />
                         <p className={style.para}>{`${job.startDate.split("G")[0]}`} |{`${job.endDate.split("G")[0]}`}</p>
                         <br />
                         <br />
-                        
-                        {job.locations && job.locations.map( list => {
-                    return <><p className={style.para}>From : {list.from} To : {list.to}</p>
-                    <br /></>
-                    })}
+
+                        {job.locations && job.locations.map(list => {
+                            return <><p className={style.para}>Pickup : {list.from} Drop Off : {list.to}</p>
+                                <br /></>
+                        })}
                         <br />
                         {
-job.services.map(service => <span className={`badge badge-primary m-2 ${style.badges}`}>{service.name}</span>)
-                        
+                            job.services.map(service => <span className={`badge badge-primary m-2 ${style.badges}`}>{service.name}</span>)
+
                         }
 
 
                     </div>
                 </div>
-                
+
                 <div className={`col-3 d-flex justify-content-end  col-md-3`}>
                     <div className={style.btns}>
-                    
+
                         <Link style={{ textDecoration: "none" }} to={`/job/edit/${jobId}`}>
                             <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
                         </Link>
                     </div>
                     <div className={style.btns}>
-                            <Button name="Status" />
-                           
-                        </div>
-                    
-                    
-                    
-                        <div className={style.btns}>
-                    <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" />
+                        {/* <Button name="Status" /> */}
+                    </div>
+
+
+
+                    <div className={style.btns}>
+                        {/* <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" /> */}
                     </div>
                 </div>
             </div>
@@ -87,46 +86,46 @@ job.services.map(service => <span className={`badge badge-primary m-2 ${style.ba
 
 
 
-            <div className={`row ${style.row2}`}>
-                <div className="col-2">
-                    <div className={`container ${style.cont}`}>
-                        <h5 className={style.assigneehead} style={{ flexWrap: "nowrap" }}>Assignees</h5>
-                        {job.assignee.map((assignee) =>
-                            <p className={style.assigneehead}>{assignee.name}</p>
-                        )}
+                <div className={`row ${style.row2}`}>
+                    <div className="col-2">
+                        <div className={`container ${style.cont}`}>
+                            <h5 className={style.assigneehead} style={{ flexWrap: "nowrap" }}>Assignees</h5>
+                            {job.assignee.map((assignee) =>
+                                <p className={style.assigneehead}>{assignee.name}</p>
+                            )}
 
-                        {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
-                        <div>
-                            <Button name="Activities" />
+                            {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
+                            <div>
+                                <Button name="Activities" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="col-10">
-                    <div className={`${style.jumbo}`}>
-                        <h3 className={style.jobHead}>Job Description</h3>
-                        <p className={style.para}>
-                            {job.description}
-                        </p>
+                    <div className="col-10">
+                        <div className={`${style.jumbo}`}>
+                            <h3 className={style.jobHead}>Job Description</h3>
+                            <p className={style.para}>
+                                {job.description}
+                            </p>
 
-                        {job.note.length !== 0 &&
-                            <div>
+                            {job.note.length !== 0 &&
+                                <div>
 
-                                <h3 className={style.jobHead}>Notes</h3>
-                                <p className={style.para}>
-                                    {job.note.map((note) => <p>{note.text}</p>)}
-                                </p>
-                            </div>
-                     }
+                                    <h3 className={style.jobHead}>Notes</h3>
+                                    <p className={style.para}>
+                                        {job.note.map((note) => <p>{note.text}</p>)}
+                                    </p>
+                                </div>
+                            }
 
-                        {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
+                            {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
+                        </div>
+
                     </div>
+                </div></> : null
 
-                </div>
-            </div></> : null
-        
-}
+        }
 
-</div>
+        </div>
 
     </div>
 }

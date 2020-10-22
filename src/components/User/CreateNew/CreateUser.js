@@ -4,6 +4,8 @@ import Button from "../../Button/Button";
 import { Multiselect } from "multiselect-react-dropdown";
 import API from "../../../utils/api";
 import { createUser } from "../../../Redux/user/userActions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   name: "",
@@ -21,6 +23,7 @@ const initialState = {
 };
 
 class CreateUser extends Component {
+  notify = () => toast("User created successfully!");
   typeOptions = [
     { name: "Manager", id: 1 },
     { name: "Mover", id: 2 },
@@ -127,6 +130,7 @@ class CreateUser extends Component {
       };
       createUser(createdUserObj)
         .then((res) => {
+          this.notify()
           history.push("/user");
         })
         .catch((error) => {
@@ -138,6 +142,7 @@ class CreateUser extends Component {
   render() {
     return (
       <div>
+        <ToastContainer position="bottom-right" />
         <div>
           <h3 className={style.head}>Create New User</h3>
         </div>

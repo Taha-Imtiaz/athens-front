@@ -6,6 +6,8 @@ import DatePicker from "react-datepicker";
 import Button from "../../Button/Button";
 import API from "../../../utils/api";
 import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   title: "",
@@ -32,15 +34,16 @@ const initialState = {
   note: [],
   assigneesId: [],
   add: 1,
-  locations: [ {from: '', to: ''}],
+  locations: [{ from: '', to: '' }],
   fromTo: []
-  
+
 };
 
 class CreateJobs extends Component {
   // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
+  notify = () => toast("Job Ceated Successfully!");
   options = [
-    { name: "Srigar", id: 1},
+    { name: "Srigar", id: 1 },
     { name: "Sam", id: 2 },
   ];
   servicesOptions = [
@@ -49,22 +52,22 @@ class CreateJobs extends Component {
     { id: 3, name: "Unloading" },
     { id: 4, name: "Grand Piano" },
     { id: 5, name: "Baby" },
-    { id: 6,  name: "Hot Tub" },
+    { id: 6, name: "Hot Tub" },
   ];
   multiselectRef1 = React.createRef();
-  multiselectRef2= React.createRef();
+  multiselectRef2 = React.createRef();
   multiselectRef3 = React.createRef();
   multiselectRef4 = React.createRef();
   timeOptions = [
     { name: "01:00 am", id: 1, value: "01:00:00" },
-    { name: "02:00 am", id: 2, value: "02:00:00"  },
+    { name: "02:00 am", id: 2, value: "02:00:00" },
     { name: "03:00 am", id: 3, value: "03:00:00" },
-    { name: "04:00 am", id: 4 , value: "04:00:00"},
-    { name: "05:00 am", id: 5 , value: "05:00:00"},
-    { name: "06:00 am", id: 6 , value: "06:00:00"},
-    { name: "07:00 am", id: 7 , value: "07:00:00"},
-    { name: "08:00 am", id: 8 , value: "08:00:00"},
-    { name: "09:00 am", id: 9 , value: "09:00:00"},
+    { name: "04:00 am", id: 4, value: "04:00:00" },
+    { name: "05:00 am", id: 5, value: "05:00:00" },
+    { name: "06:00 am", id: 6, value: "06:00:00" },
+    { name: "07:00 am", id: 7, value: "07:00:00" },
+    { name: "08:00 am", id: 8, value: "08:00:00" },
+    { name: "09:00 am", id: 9, value: "09:00:00" },
     { name: "10:00 am", id: 10, value: "10:00:00" },
     { name: "11:00 am", id: 11, value: "11:00:00" },
     { name: "12:00 pm", id: 12, value: "12:00:00" },
@@ -88,7 +91,7 @@ class CreateJobs extends Component {
     getAllMovers()
       .then((res) => {
         var moverId = res.data.movers.map((mover) => mover._id);
-       console.log(this.props.location);
+        console.log(this.props.location);
         this.setState({
           assigneeList: res.data.movers,
           customerId: this.props.location.customerId,
@@ -99,77 +102,80 @@ class CreateJobs extends Component {
       });
   };
 
-  addLocation = () => { 
-    console.log(this.state)
-this.setState({locations: [...this.state.locations, {from: null, to: null}]});
-console.log(this.state)
+  addLocation = () => {
+    // this.notify()
+      if(this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
+        console.log(this.state)
+        this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
+        console.log(this.state)
+      }
   }
   componentWillUnmount() {
-  console.log('Unmount called')
-  // this.state = initialState;
+    console.log('Unmount called')
+    // this.state = initialState;
   }
 
-  hanldeLocationInput = (i, e) => { 
+  hanldeLocationInput = (i, e) => {
     console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].from = e.target.value
-    this.setState({locations: updateLocation});
+    this.setState({ locations: updateLocation });
   }
 
-  hanldeLocationInputTo = (i, e) => { 
+  hanldeLocationInputTo = (i, e) => {
     console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].to = e.target.value
-    this.setState({locations: updateLocation});
+    this.setState({ locations: updateLocation });
   }
 
 
   showLocation = (i) => {
     return <><div className="col-4">
-                <div className="form-group">
-                  
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="form-group">
-                  <input
-                    type="input"
-                    className="form-control"
-                    id="from"
-                    placeholder="From"
-                    name="from"
-                    value={this.state.locations[i].from}
-                    onChange={(e) => this.hanldeLocationInput(i,e)}
-                  />
-                </div>
-                {this.state.locationfromError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationfromError}
-                  </div>
-                ) : null}
-              </div>
-              <div className="col-4">
-                <input
-                  type="input"
-                  className="form-control"
-                  id="to"
-                  placeholder="To"
-                  name="to"
-                  value={this.state.locations[i].to}
-                  onChange={(e) => this.hanldeLocationInputTo(i,e)}
-                />
-                {this.state.locationtoError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.locationtoError}
-                  </div>
-                ) : null}
-              </div></>
+      <div className="form-group">
+
+      </div>
+    </div>
+      <div className="col-4">
+        <div className="form-group">
+          <input
+            type="input"
+            className="form-control"
+            id="from"
+            placeholder="Pickup"
+            name="from"
+            value={this.state.locations[i].from}
+            onChange={(e) => this.hanldeLocationInput(i, e)}
+          />
+        </div>
+        {this.state.locationfromError ? (
+          <div
+            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+            role="alert"
+          >
+            {this.state.locationfromError}
+          </div>
+        ) : null}
+      </div>
+      <div className="col-4">
+        <input
+          type="input"
+          className="form-control"
+          id="to"
+          placeholder="Drop Off"
+          name="to"
+          value={this.state.locations[i].to}
+          onChange={(e) => this.hanldeLocationInputTo(i, e)}
+        />
+        {this.state.locationtoError ? (
+          <div
+            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+            role="alert"
+          >
+            {this.state.locationtoError}
+          </div>
+        ) : null}
+      </div></>
   }
 
 
@@ -278,7 +284,7 @@ console.log(this.state)
       endDate: date
     });
   };
- 
+
 
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
@@ -313,9 +319,9 @@ console.log(this.state)
   onAssigneeRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem._id;
-   console.log(removeItem);
+    console.log(removeItem);
     // console.log(newState.assigneesId)
-   var updatedState = newState.assigneesId.findIndex(
+    var updatedState = newState.assigneesId.findIndex(
       (assigneeId) => assigneeId === removeItem
     );
     console.log(updatedState);
@@ -329,7 +335,7 @@ console.log(this.state)
   };
 
   onStartTimeSelect = (selectedList, selectedTimeItem) => {
-   console.log(selectedTimeItem);
+    console.log(selectedTimeItem);
     let selectedTime = selectedTimeItem.value;
     console.log(selectedTime);
     let newState = { ...this.state };
@@ -338,7 +344,7 @@ console.log(this.state)
   };
 
   onEndTimeSelect = (selectedList, selectedTimeItem) => {
-   console.log(selectedTimeItem);
+    console.log(selectedTimeItem);
     let selectedTime = selectedTimeItem.value;
     console.log(selectedTime);
     let newState = { ...this.state };
@@ -384,45 +390,47 @@ console.log(this.state)
         status,
         note,
         assigneesId,
-       customerId,
+        customerId,
       };
       console.log(createJobObj);
       var { history } = this.props;
       createJob(createJobObj)
         .then((res) => {
+          this.notify();
           history.push("/job");
         })
         .catch((error) => {
           console.log(error);
         });
-    this.multiselectRef1.current.resetSelectedValues();
-    this.multiselectRef2.current.resetSelectedValues();
-    this.multiselectRef3.current.resetSelectedValues();
-    this.multiselectRef4.current.resetSelectedValues();
-    this.setState({ 
-      title: "",
+      this.multiselectRef1.current.resetSelectedValues();
+      this.multiselectRef2.current.resetSelectedValues();
+      this.multiselectRef3.current.resetSelectedValues();
+      this.multiselectRef4.current.resetSelectedValues();
+      this.setState({
+        title: "",
         description: "",
-        services:[ ], 
+        services: [],
         startDate: "",
         endDate: "",
-        
-        locations: [ {from: '', to: ''}],
+
+        locations: [{ from: '', to: '' }],
         status: "",
         note: "",
         assigneesId: [],
         customerId: "",
         timeOptions: [],
         servicesOptions: [],
-     } )
-    
-     }
- 
+      })
+
+    }
+
   };
   render() {
 
-console.log(this.state.locations[0].from.length)
+    console.log(this.state.locations[0].from.length)
     return (
       <div>
+        <ToastContainer position="bottom-right" />
         <h3 className={style.head}>Create New Job</h3>
 
         <div className={`${style.tron}`}>
@@ -435,7 +443,7 @@ console.log(this.state.locations[0].from.length)
                 id="jobTitle"
                 name="customerId"
                 value={this.state.customerId}
-              onChange={this.handleFormInput}
+                onChange={this.handleFormInput}
                 disabled
               />
             </div>
@@ -484,7 +492,7 @@ console.log(this.state.locations[0].from.length)
             <div className="form-group">
               <Multiselect
                 className={style.multi}
-               // selectedValues = {this.servicesOptions}
+                // selectedValues = {this.servicesOptions}
                 options={this.servicesOptions} // Options to display in the dropdown
                 onSelect={this.onSelect} // Function will trigger on select event
                 onRemove={this.onRemove} // Function will trigger on remove event
@@ -546,16 +554,16 @@ console.log(this.state.locations[0].from.length)
 
             <div className="row">
               <div className="form-group col-3" style={{ marginTop: "1rem" }}>
-               <Multiselect
-                className={style.multi}
-                options={this.timeOptions} // Options to display in the dropdown
-                onSelect={this.onStartTimeSelect} // Function will trigger on select event
-                displayValue="name" // Property name to display in the dropdown options
-                className="form-control"
-                value={this.state.startTime}
-                id="starttime"
-                ref={this.multiselectRef2}
-                placeholder={this.state.startTime.length > 0 ? null : 'select time'}
+                <Multiselect
+                  className={style.multi}
+                  options={this.timeOptions} // Options to display in the dropdown
+                  onSelect={this.onStartTimeSelect} // Function will trigger on select event
+                  displayValue="name" // Property name to display in the dropdown options
+                  className="form-control"
+                  value={this.state.startTime}
+                  id="starttime"
+                  ref={this.multiselectRef2}
+                  placeholder={this.state.startTime.length > 0 ? null : 'select time'}
                 />
               </div>
               {this.state.timeError ? (
@@ -567,17 +575,17 @@ console.log(this.state.locations[0].from.length)
                 </div>
               ) : null}
               <div className="form-group col-3" style={{ marginTop: "1rem" }}>
-                 <Multiselect
-                className={style.multi}
-                options={this.timeOptions} 
-                 onSelect={this.onEndTimeSelect} 
-                displayValue="name" 
-                className="form-control"
-                value={this.state.endTime}
-                id="time"
-                ref={this.multiselectRef3}
-                placeholder={this.state.endTime.length > 0 ? null : 'select time'}
-              />
+                <Multiselect
+                  className={style.multi}
+                  options={this.timeOptions}
+                  onSelect={this.onEndTimeSelect}
+                  displayValue="name"
+                  className="form-control"
+                  value={this.state.endTime}
+                  id="time"
+                  ref={this.multiselectRef3}
+                  placeholder={this.state.endTime.length > 0 ? null : 'select time'}
+                />
               </div>
 
               {this.state.timeError ? (
@@ -590,7 +598,7 @@ console.log(this.state.locations[0].from.length)
               ) : null}
             </div>
 
- 
+
 
 
 
@@ -623,15 +631,16 @@ console.log(this.state.locations[0].from.length)
                   <label className={style.l1}>Location:</label>
                 </div>
               </div>
-              
-             
-              {this.state.locations.map( (ll, i) => {
-              return this.showLocation(i)} ) }
+
+
+              {this.state.locations.map((ll, i) => {
+                return this.showLocation(i)
+              })}
             </div>
 
             <div className="form-group">
-              <div style={{float: 'right'}}>
-                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.state.locations[0].from.length>0 && this.state.locations[0].to.length>0 && this.addLocation} />
+              <div style={{ float: 'right' }}>
+                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
               </div>
             </div><br />
 

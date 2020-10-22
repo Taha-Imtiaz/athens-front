@@ -10,8 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { v4 as uuidv4 } from "uuid";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class JobEditDetails extends Component {
+  notify = () => toast("Job updated successfully !");
   servicesOptions = [
     { id: 1, name: "Pakaging" },
     { id: 2, name: "Loading" },
@@ -201,6 +204,7 @@ class JobEditDetails extends Component {
       note
     };
     updateJob(jobId, updatedObj).then((res) => {
+      this.notify();
       history.push("/job")
     }).catch((error) => {
       console.log(error)
@@ -275,7 +279,7 @@ class JobEditDetails extends Component {
             type="input"
             className="form-control"
             id="from"
-            placeholder="From"
+            placeholder="Pickup"
             name="from"
             value={this.state.locations[i].from}
             onChange={(e) => this.hanldeLocationInput(i, e)}
@@ -295,7 +299,7 @@ class JobEditDetails extends Component {
           type="input"
           className="form-control"
           id="to"
-          placeholder="To"
+          placeholder="Drop Off"
           name="to"
           value={this.state.locations[i].to}
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
@@ -337,6 +341,7 @@ class JobEditDetails extends Component {
     } = this.state;
     return (
       <div>
+          <ToastContainer position="bottom-right"/>
         <h3 className={style.head}>Job Details Edit</h3>
         <div className="row">
           <div className="col-8">
@@ -435,7 +440,7 @@ class JobEditDetails extends Component {
                           type="input"
                           className="form-control"
                           id="from"
-                          placeholder="Start"
+                          placeholder="Pickup"
                           aria-describedby="emailHelp"
                           name="from"
                           value={list.from}
@@ -448,7 +453,7 @@ class JobEditDetails extends Component {
                           type="input"
                           className="form-control"
                           id="to"
-                          placeholder="End"
+                          placeholder="Drop Off"
                           aria-describedby="emailHelp"
                           name="to"
                           value={list.to}

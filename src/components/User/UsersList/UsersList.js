@@ -45,17 +45,15 @@ const UsersList = (props) => {
     getUsers(sortUserObj)
   }
 
-
-
   return (
     <div style={{ marginTop: '10px' }}>
       {usersDocs &&
         <div>
           <div className="row">
-            <div className="col-3">
+            <div className="col-3 col-md-3">
               <h3 className={style.head}>Users List</h3>
             </div>
-            <div className={`col-4 ${style.search}`}>
+            <div className={`col-4 col-md-6 ${style.search}`}>
               <SearchBar type="user" title="Type name or email" />
             </div>
 

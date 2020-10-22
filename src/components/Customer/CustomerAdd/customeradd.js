@@ -5,13 +5,14 @@ import Button from '../../Button/Button'
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCustomer } from '../../../Redux/Customer/customerActions';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
     name: "",
     phone: "",
     email: "",
-   phoneContacts: "",
+    phoneContacts: "",
     emailContacts: "",
     nameError: "",
     emailError: "",
@@ -21,7 +22,7 @@ const initialState = {
 }
 
 class CustomerAdd extends Component {
-
+    notify = () => toast("Customer created successfully!");
     constructor(props) {
         super(props);
         this.state = initialState
@@ -59,7 +60,7 @@ class CustomerAdd extends Component {
             altnumberError = "Phone Number should not be empty"
         }
 
-        
+
 
 
         if (emailError || nameError || phoneNumberError || altnumberError || altemailError) {
@@ -75,38 +76,42 @@ class CustomerAdd extends Component {
     handleFormInput = (event) => {
         var { name, value } = event.target
         this.setState({ [name]: value })
-        if(value == "") {
-            this.setState({[name + "Error"] : "Field Should not be empty"})
+        if (value == "") {
+            this.setState({ [name + "Error"]: "Field Should not be empty" })
         } else {
-            this.setState({[name + "Error"] : ""})
+            this.setState({ [name + "Error"]: "" })
         }
     }
 
 
     mySubmitHandler = (event) => {
-        var {addCustomer,history} = this.props
+        var { addCustomer, history } = this.props
         event.preventDefault();
 
         const isValid = this.validate()
         if (isValid) {
-            
-        var {name,email,phone, emailContacts,phoneContacts} = this.state
-        var addCustomerObj = {
-            name,
-            phone,
-            email, 
-            subcontacts: {
-             phoneContacts,
-            emailContacts
+
+            var { name, email, phone, emailContacts, phoneContacts } = this.state
+            var addCustomerObj = {
+                name,
+                phone,
+                email,
+                subcontacts: {
+                    phoneContacts,
+                    emailContacts
+                }
+
             }
-           
+            addCustomer(addCustomerObj, () => {
+                this.notify()
+                history.goBack()
+            })
         }
-        addCustomer(addCustomerObj, () => history.goBack())
-    }
     }
     render() {
         return (
             <div>
+                <ToastContainer position="bottom-right" />
                 <h3 className={style.head}>Create New Customer</h3>
                 <div className={`${style.jumbotron}`}>
 
@@ -119,9 +124,9 @@ class CustomerAdd extends Component {
                         {this.state.nameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.nameError}
-                                
-                                
-                                
+
+
+
                             </div>) : null}
 
 
@@ -133,9 +138,9 @@ class CustomerAdd extends Component {
                         {this.state.phoneNumberError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.phoneNumberError}
-                                
-                                
-                                
+
+
+
                             </div>) : null}
 
 
@@ -147,9 +152,9 @@ class CustomerAdd extends Component {
                         {this.state.emailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.emailError}
-                                
-                                
-                                
+
+
+
                             </div>) : null}
                     </form>
                     <h3>Sub Contact</h3>
@@ -162,9 +167,9 @@ class CustomerAdd extends Component {
                         {this.state.altnumberError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.altnumberError}
-                                
-                                
-                                
+
+
+
                             </div>) : null}
 
 
@@ -177,9 +182,9 @@ class CustomerAdd extends Component {
                         {this.state.altemailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.altemailError}
-                                
-                                
-                                
+
+
+
                             </div>) : null}
 
 
@@ -198,4 +203,4 @@ var actions = {
 }
 
 
-export default connect(null,actions)(CustomerAdd);
+export default connect(null, actions)(CustomerAdd);

@@ -19,9 +19,9 @@ const CustomerDetail = (props) => {
 
   var { customer, getCustomer } = props;
   var formatStartDate, formatEndDate;
-  if (customer?.jobs.length !== 0) {
-    formatStartDate = new Date(customer?.jobs[0].startDate);
-    formatEndDate = new Date(customer?.jobs[0].endDate);
+  if (customer ?.jobs.length !== 0) {
+    formatStartDate = new Date(customer ?.jobs[0].startDate);
+    formatEndDate = new Date(customer ?.jobs[0].endDate);
   }
   var {
     match: {
@@ -52,30 +52,30 @@ const CustomerDetail = (props) => {
   var AddNote = () => {
     var jobId = customer.job._id
     var jobObj = {
-    //   title:"Deputy Officer",
-    // description:"ABC 123",
-    // services:["ABC","ABC1"],
-    // date:"12/12/12",
-    // time:"24:45 AM",
-    // from:"ABC Road",
-    // to:"ABCD Road",
-    // status:"updated",
-    //  note:[{
-    //     text:"Hi 1 2 3"
+      //   title:"Deputy Officer",
+      // description:"ABC 123",
+      // services:["ABC","ABC1"],
+      // date:"12/12/12",
+      // time:"24:45 AM",
+      // from:"ABC Road",
+      // to:"ABCD Road",
+      // status:"updated",
+      //  note:[{
+      //     text:"Hi 1 2 3"
 
-    // },{
-    //     text:"Hi 1 2 3 4"
+      // },{
+      //     text:"Hi 1 2 3 4"
 
-    // },{
-    //     text:"Hi 1 2 3 4 5"
+      // },{
+      //     text:"Hi 1 2 3 4 5"
 
-    // }]
-    // {...jobObj}
-  // ...customer.job.note.push()
-  }
+      // }]
+      // {...jobObj}
+      // ...customer.job.note.push()
+    }
 
-// updateJob(jobObj, jobId)
-//     handleClose()
+    // updateJob(jobObj, jobId)
+    //     handleClose()
   }
   return (
     <div>
@@ -83,18 +83,18 @@ const CustomerDetail = (props) => {
         <div>
           <div className="row">
             <div className="col-2">
-              <SideBar routes={routes} key = {customerId} />
+              <SideBar routes={routes} key={customerId} />
             </div>
             <div className="col-6">
               <div className={style.head}>
                 <h5>{customer.name}</h5>
                 <div>
-                 <b> <label className={style.l1}>Phone</label></b>
-                <label className={style.l1}>{customer.phone}</label>
+                  <b> <label className={style.l1}>Phone</label></b>
+                  <label className={style.l1}>{customer.phone}</label>
                 </div>
-             <div>
-              <b> <label className={style.l1}>Email</label></b> 
-                <label className={style.l2}>{customer.email}</label>
+                <div>
+                  <b> <label className={style.l1}>Email</label></b>
+                  <label className={style.l2}>{customer.email}</label>
                 </div>
               </div>
             </div>
@@ -152,99 +152,99 @@ const CustomerDetail = (props) => {
 
           <div className={style.btn}>
             <Link style={{ textDecoration: "none" }} to={{
-              
-              pathname:"/job/create",
+
+              pathname: "/job/create",
               customerId: customerId
-              }}>
+            }}>
               {" "}
-              <Button variant="primary" style = {{margin: "0 15rem"}}>
-                  Create Job
+              <Button variant="primary" style={{ margin: "0 15rem" }}>
+                Create Job
                 </Button>
 
             </Link>
           </div>
-        {customer.jobs && 
-          <div className={style.jumbotron} style = {{padding:"1rem 0"}}>
-            <div className="row">
-              <div className="col-4">
-                <h3 className={style.job}>Jobs:</h3>
+          {customer.jobs &&
+            <div className={style.jumbotron} style={{ padding: "1rem 0" }}>
+              <div className="row">
+                <div className="col-4">
+                  <h3 className={style.job}>Jobs:</h3>
+                </div>
+                <div className="col-4">
+                  <label className={style.assigned}>Assigned</label>
+                </div>
+                <div className="col-4">
+                  <label className={style.status}>Status</label>
+                </div>
               </div>
-              <div className="col-4">
-                <label className={style.assigned}>Assigned</label>
-              </div>
-              <div className="col-4">
-                <label className={style.status}>Status</label>
-              </div>
-            </div>
-             {customer.jobs.map((job) => {
-                  return  <div className="row" key = {customerId} style = {{margin: "2rem", borderBottom: "1px solid #a8a8a8"}} >
-           
+              {customer.jobs.map((job) => {
+                return <div className="row" key={customerId} style={{ margin: "2rem", borderBottom: "1px solid #a8a8a8" }} >
+
                   <div className="col-4">
-    
-                
-                    <p style = {{padding: "5%"}}>
+
+
+                    <p style={{ padding: "5%" }}>
                       {formatStartDate.toDateString()} -{" "}
                       {formatEndDate.toDateString()}| {job.startTime} -{" "}
                       {job.endTime}
                     </p>
-                    <p style = {{padding: "5%"}}>{job.description}</p>
-                    {job.locations.map( list =>  <p style = {{padding: "5%"}}>From : {list.from} To : {list.to}</p>)}
+                    <p style={{ padding: "5%" }}>{job.description}</p>
+                    {job.locations.map(list => <p style={{ padding: "5%" }}>Pickup : {list.from} Drop Off : {list.to}</p>)}
                   </div>
                   <div className="col-4">
-                    {job.assignee.map((assignee) => <p>{assignee}</p> )}
-                   
+                    {job.assignee.map((assignee) => <p>{assignee}</p>)}
+
                   </div>
                   <div className="col-4">
-                    <p style = {{padding: "5%"}}>{job.status}</p>
+                    <p style={{ padding: "5%" }}>{job.status}</p>
                   </div>
 
                   <div>
-              <h4 className={style.notesh}>Notes</h4>
-              <p className={style.notesd} >
-              
-                {job.note.map((note) =>   <div className={`row`} style = {{margin: "3%"}} >
-                 
-                  {note.text}</div>)}
-              </p>
-                  {/* Add modal */}
-              {/* <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
+                    <h4 className={style.notesh}>Notes</h4>
+                    <p className={style.notesd} >
+
+                      {job.note.map((note) => <div className={`row`} style={{ margin: "3%" }} >
+
+                        {note.text}</div>)}
+                    </p>
+                    {/* Add modal */}
+                    {/* <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
              
                   Add Note
              
            
                 </Button> */}
-             
-                <Modal show={show} onHide={handleClose} animation={false} centered>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Add Note</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <textarea name="" id="" cols="65" rows="5" name = "note" value = {note} onChange= {handleAddNote}></textarea>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant="primary" onClick={AddNote}>
-                     Add Note
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
 
+                    <Modal show={show} onHide={handleClose} animation={false} centered>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Add Note</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <textarea name="" id="" cols="65" rows="5" name="note" value={note} onChange={handleAddNote}></textarea>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                    </Button>
+                        <Button variant="primary" onClick={AddNote}>
+                          Add Note
+                    </Button>
+                      </Modal.Footer>
+                    </Modal>
+
+                  </div>
                 </div>
+
+
+
+
+
+              })}
+
+
+
+
+
             </div>
-
-          
-              
-              
-         
-                })}
-           
-           
-
-
-           
-          </div>
           }
           <br />
         </div>

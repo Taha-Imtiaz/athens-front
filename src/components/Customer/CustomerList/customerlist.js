@@ -151,7 +151,7 @@ const CustomerList = (props) => {
                 <Button name="Create New" />
               </Link>
             </div>
-            <Button name="Delete" />
+            {/* <Button name="Delete" /> */}
           </div>
 
           <div className={style.jumbotron}>

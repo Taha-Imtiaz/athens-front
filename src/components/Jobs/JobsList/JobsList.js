@@ -87,13 +87,15 @@ class JobsList extends Component {
   };
 
   handleSort = () => {
+    console.log('Caleed')
+    var { getAllJobs } = this.props
     var fetchJobsOnPageChange = {
       query: "",
       filters: {
         startDate: "",
         endDate: "",
         movedDate: "",
-        tag: "ABC",
+        tag: "",
         startYearMonth: ""
       },
       page: 1
@@ -102,6 +104,8 @@ class JobsList extends Component {
     getAllJobs(fetchJobsOnPageChange)
   }
   handleDateFilter = () => {
+    var { getAllJobs } = this.props
+
     var fetchJobsOnPageChange = {
       query: "",
       filters: {
@@ -178,7 +182,7 @@ class JobsList extends Component {
                 <Link style={{ textDecoration: "none" }} to='/calendar'> <Button name="Calendar" /></Link>
               </div>
               <div className={style.btndel}>
-                <Button name="Delete" />
+                {/* <Button name="Delete" /> */}
               </div>
             </div>
           </div>

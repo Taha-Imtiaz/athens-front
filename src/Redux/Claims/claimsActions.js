@@ -1,11 +1,12 @@
-import Axios from "axios"
+// import Axios from "axios"
 import { GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants"
+import Axios from '../../utils/api'
 
 var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 
 export var getAllClaims = (status) => {
     return async (dispatch) => {
-        var claims = await Axios.get(baseUrl + "user/get-all-claims/" + status)
+        var claims = await Axios.get("user/get-all-claims/" + status)
         //update app's state
         dispatch({
             type: GET_CLAIMS,
@@ -18,7 +19,7 @@ export var getAllClaims = (status) => {
 
 export var getClaimsByID = (customerId) => {
     return async (dispatch) => {
-        var claims = await Axios.get(baseUrl + `user/get-customer/${customerId}`)
+        var claims = await Axios.get(`user/get-customer/${customerId}`)
         dispatch({
             type: GET_CLAIMS_BY_ID,
             payload: {
@@ -31,7 +32,7 @@ export var getClaimsByID = (customerId) => {
 export var addClaim = async (data) => {
     // return async (dispatch) => {
     try {
-        var claim = await Axios.post(baseUrl + `user/add-claim`, data)
+        var claim = await Axios.post(`user/add-claim`, data)
         return claim
     } catch (error) {
         console.log(error);
@@ -49,7 +50,7 @@ export var addClaim = async (data) => {
 export var getDeposits = async (data) => {
     // return async (dispatch) => {
     try {
-        var deposits = await Axios.get(baseUrl + `user/get-all-blanket-deposit`)
+        var deposits = await Axios.get(`user/get-all-blanket-deposit`)
         return deposits
     } catch (error) {
         console.log(error);
@@ -66,7 +67,7 @@ export var getDeposits = async (data) => {
 
 export var updateClaim = async (data) => {
     try {
-        var claim = await Axios.post(baseUrl + `user/update-claim/${data._id}`, data)
+        var claim = await Axios.post(`user/update-claim/${data._id}`, data)
         return claim
     } catch (error) {
         console.log(error);
@@ -76,7 +77,7 @@ export var updateClaim = async (data) => {
 
 export var addDeposit = async (data) => {
     try {
-        var blanket = await Axios.post(baseUrl + `user/add-blanket-deposit`, data)
+        var blanket = await Axios.post(`user/add-blanket-deposit`, data)
         return blanket
     } catch (error) {
         console.log(error);

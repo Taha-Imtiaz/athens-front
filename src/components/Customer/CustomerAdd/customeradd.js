@@ -87,6 +87,8 @@ class CustomerAdd extends Component {
     mySubmitHandler = (event) => {
         var { addCustomer, history } = this.props
         event.preventDefault();
+        this.notify()
+        history.goBack()
 
         const isValid = this.validate()
         if (isValid) {
@@ -102,10 +104,10 @@ class CustomerAdd extends Component {
                 }
 
             }
-            addCustomer(addCustomerObj, () => {
-                this.notify()
+            // addCustomer(addCustomerObj, () => {
+                // this.notify()
                 history.goBack()
-            })
+            // })
         }
     }
     render() {

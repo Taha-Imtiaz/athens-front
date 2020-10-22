@@ -1,15 +1,15 @@
-import Axios from "axios"
+// import Axios from "axios"
 import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER } from "./customerConstants"
 // import { UPDATE_JOB } from "../Job/jobConstants"
 // import { GET_Customers } from "./userConstants"
-
-var baseUrl = 'https://athens-backend.herokuapp.com/api/'
+import Axios from '../../utils/api'
+// var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 // var baseUrl = 'http://localhost:3000/api/'
 
 export var getAllCustomers = (customersObj) => {
     return async (dispatch) => {
         try {
-            var getCustomersList = await Axios.post(baseUrl + "user/get-all-customer", customersObj)
+            var getCustomersList = await Axios.post("user/get-all-customer", customersObj)
             //update app's state
             dispatch({
                 type: GET_CUSTOMERS,
@@ -25,7 +25,7 @@ export var getAllCustomers = (customersObj) => {
 export var getCustomer = (customerId) => {
     return async (dispatch) => {
         try {
-            var customer = await Axios.get(baseUrl + `user/get-customer/${customerId}`)
+            var customer = await Axios.get(`user/get-customer/${customerId}`)
             dispatch({
                 type: GET_CUSTOMER,
                 payload: {
@@ -56,7 +56,7 @@ export var getCustomer = (customerId) => {
 export var addCustomer = (customerObj, goBack) => {
     return async (dispatch) => {
         try {
-            var addedCustomer = await Axios.post(baseUrl + "user/customer-Registration", customerObj)
+            var addedCustomer = await Axios.post("user/customer-Registration", customerObj)
             goBack()
         } catch (error) {
             console.log(error)

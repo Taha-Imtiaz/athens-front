@@ -1,0 +1,1 @@
+export const GET_ALLDATA = "GET_ALLDATA"

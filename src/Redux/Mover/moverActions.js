@@ -32,6 +32,40 @@ export var updateJob = async (jobId, status) => {
       console.log(error);
     }
   };
+
+  
+export var getJob = async (jobId) => {
+  try {
+    const date = new Date()
+    let data = {
+      date: date.toString()
+    }
+    var jobs = await Axios.post(`${baseUrl}user/get-all-jobs-by-mover-on-date/${jobId}`,
+    data
+    );
+  return jobs;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export var holidayCalender = async (obj) => {
+ 
+    var days = await Axios.post(`${baseUrl}user/request-holidays/${obj._id}`,
+    obj
+    );
+  return days;
+  
+}
+
+export var setAvailability = async (obj, _id) => {
+ 
+  var days = await Axios.post(`${baseUrl}user/set-availability/${_id}`,
+  obj
+  );
+return days;
+
+}
 // export var updateJob = (jobObj, jobId) => {
 //     return async (disptch) => {
 //        try {

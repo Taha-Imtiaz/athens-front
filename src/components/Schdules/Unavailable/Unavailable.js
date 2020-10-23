@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Unavailable.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import Button from '../../Button/Button'
-
-const UnavailableSchedule = () => {
+import { getAllData } from "../../../Redux/Unavailable/unavailableAction";
+const UnavailableSchedule = (props) => {
+    const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(true)
     const routes = [{
         title: "Unavailable",
         path: "/schedule",
@@ -17,9 +19,18 @@ const UnavailableSchedule = () => {
     }, {
         title: "Movers",
         path: "/schedule/movers",
-        icon: <img src='/images/truck.png' width="20px" alt = "icon"> </img>
+        icon: <img src='/images/truck.png' width="20px" alt = "icon"></img>
     }
     ]
+
+    useEffect(() => {
+        // const { getAllData } = props;
+        getAllData().then( res => {
+            setData(res.data)
+            setIsLoading(false)
+            console.log(res.data)
+        })
+      }, []);
     return <div className={``}>
         
         <div className = "row">
@@ -36,65 +47,24 @@ const UnavailableSchedule = () => {
             <Button name="Approve" />
             </div>
         </div>
-            <div className={`list-group ${style.list}`}>
+        {isLoading ?  null : data.applicants.map( list => {
+                  return  <><div className={`list-group ${style.list}`}>
                 <div className={style.sty}>
                     <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
                         <div className={`d-flex w-100 justify-content-between`}>
                             <span>
                                 <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Thoma</label>
+                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">{list.applicant.name}</label>
                             </span>
 
-                            <small>4/7/2020 - 15/7/2020</small>
+                            <small>{list.dates[0]} - {list.dates[1]}</small>
                         </div>
                         <div className={style.para}>
-                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
+                            <p className="mb-1">Reason: <small>{list.reason}</small></p>
                         </div>
                     </a>
-                </div>
-                <div>
-                    <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                        <div className="d-flex w-100 justify-content-between">
-                            <span>
-                                <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Thoma</label>
-                            </span>
-
-                            <small>4/7/2020 - 15/7/2020</small>
-                        </div>
-                        <div className={style.para}>
-                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
-                        </div>
-                    </a>
-                </div>
-                <div className={style.box}>
-                    <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                        <div className="d-flex w-100 justify-content-between">
-                            <span>
-                                <input type="checkbox" id="defaultCheck1" value="" />
-                                <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Josh</label>
-                            </span>
-
-                            <small>4/7/2020 - 15/7/2020</small>
-                        </div>
-                        <div className={style.para}>
-                            <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
-                        </div>
-                    </a>
-                </div>
-                <a href="#" className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}>
-                    <div className="d-flex w-100 justify-content-between">
-                        <span>
-                            <input type="checkbox" id="defaultCheck1" value="" />
-                            <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">Monte</label>
-                        </span>
-                        <small>4/7/2020 - 15/7/2020</small>
-                    </div>
-                    <div className={style.para}>
-                        <p className="mb-1">Reason: <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</small></p>
-                    </div>
-                </a>
-            </div>
+                </div></div>
+               </>})}
 
         </div>
     </div>

@@ -5,6 +5,7 @@ import claimReducer from './Claims/claimsReducers'
 import userReducer from './user/userReducer'
 import moverReducer from './Mover/moverReducer'
 import commonReducer from './Common/commanReducers'
+import unavailableReducer from './Unavailable/unavailableReducer';
 
 
 
@@ -14,6 +15,7 @@ var rootReducer = combineReducers({
     claims: claimReducer,
     users: userReducer,
     moverJobs: moverReducer,
-    common: commonReducer
+    common: commonReducer,
+    unavailable: unavailableReducer
 })
 export default rootReducer

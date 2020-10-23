@@ -47,17 +47,17 @@ const CustomerDeposit = () => {
           <div className={`col-4 ${style.flex}`}>
             <h6>Customer</h6>
           </div>
-          <div className={`col-4 ${style.flex}`}>
+          <div className={`col-3 ${style.flex}`}>
             <h6>Quantity</h6>
           </div>
-          <div className={`col-4 ${style.flex}`}>
+          <div className={`col-3 ${style.flex}`}>
             <h6>Deposit</h6>
           </div>
         </div>
 
         <div className={style.jumbotron}>
           <ul className="list-group">
-            {blankets ? blankets.map((x, i) => (
+            {blankets.length ? blankets.map((x, i) => (
               <li key={i} className=" checkbox list-group-item">
                 <div className="row">
                   <div className="col-4">

@@ -3,6 +3,7 @@ import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER } from "./customerConstants"
 // import { UPDATE_JOB } from "../Job/jobConstants"
 // import { GET_Customers } from "./userConstants"
 import Axios from '../../utils/api'
+import { showMessage } from '../../Redux/Common/commonActions'
 // var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 // var baseUrl = 'http://localhost:3000/api/'
 
@@ -53,11 +54,13 @@ export var getCustomer = (customerId) => {
 //     }
 //     }
 
-export var addCustomer = (customerObj, goBack) => {
+export var addCustomer = (customerObj) => {
     return async (dispatch) => {
         try {
             var addedCustomer = await Axios.post("user/customer-Registration", customerObj)
-            goBack()
+            console.log(addedCustomer.data.message)
+            dispatch(showMessage(addedCustomer.data.message))
+            console.log(addedCustomer)
         } catch (error) {
             console.log(error)
         }

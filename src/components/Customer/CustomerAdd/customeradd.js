@@ -8,24 +8,25 @@ import { addCustomer } from '../../../Redux/Customer/customerActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const initialState = {
-    name: "",
-    phone: "",
-    email: "",
-    phoneContacts: "",
-    emailContacts: "",
-    nameError: "",
-    emailError: "",
-    phoneNumberError: "",
-    altnumberError: "",
-    altemailError: "",
-}
+
 
 class CustomerAdd extends Component {
     notify = () => toast("Customer created successfully!");
     constructor(props) {
         super(props);
-        this.state = initialState
+        const initialState = {
+            name: "",
+            phone: "",
+            email: "",
+            phoneContacts: "",
+            emailContacts: "",
+            nameError: "",
+            emailError: "",
+            phoneNumberError: "",
+            altnumberError: "",
+            altemailError: "",
+        }
+        this.state = { ...initialState }
     }
 
 
@@ -87,9 +88,6 @@ class CustomerAdd extends Component {
     mySubmitHandler = (event) => {
         var { addCustomer, history } = this.props
         event.preventDefault();
-        this.notify()
-        history.goBack()
-
         const isValid = this.validate()
         if (isValid) {
 
@@ -104,10 +102,9 @@ class CustomerAdd extends Component {
                 }
 
             }
-            // addCustomer(addCustomerObj, () => {
-                // this.notify()
-                history.goBack()
-            // })
+            addCustomer(addCustomerObj, () => {
+                history.goBack();
+            })
         }
     }
     render() {

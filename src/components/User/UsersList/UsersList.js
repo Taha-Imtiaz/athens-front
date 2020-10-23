@@ -32,8 +32,8 @@ const UsersList = (props) => {
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-  var totalCount = users[0] ?.data.user.total
-  var usersDocs = users[0] ?.data.user.docs 
+  var totalCount = users[0] ?.data.users.total
+  var usersDocs = users[0] ?.data.users.docs 
 
   var handleFilter = (name) => {
     var sortUserObj = {

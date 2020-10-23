@@ -77,3 +77,8 @@
         margin-left: 3%;
     }
 }
+
+.modal-content {
+    background-color: transparent !important;
+    border: none;
+  }

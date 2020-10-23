@@ -1,9 +1,8 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Sign_In_Form from './components/signIn/signin';
 import SignInForm from './components/signIn/signin';
-import {Route, Switch} from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 import customerList from './components/Customer/CustomerList/customerlist';
 import customerDetail from './components/Customer/CustomerDetail/customerDetail';
 import customerAdd from './components/Customer/CustomerAdd/customeradd';
@@ -34,45 +33,64 @@ import Availability from './components/Movers/Availability/Availability';
 import MoversJobsList from './components/Movers/JobList/JobList';
 import Example from './components/Movers/HolidayCalendar/HolidayCalendar';
 import SubmitDeposit from './components/Claims/SubmitDeposit/SubmitDeposit';
+import { connect } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+function App(props) {
+  const [show, setShow] = [false]
+  const notify = () => toast("User created successfully!");
+
+  const { loading, showMessage } = props
+  console.log(loading, showMessage)
+
+  if (showMessage) {
+    console.log(showMessage)
+    notify(showMessage)
+  }
+
   return (
-    <div className="form_style">
-      <Navbar/>
-      <Switch>
-      <Route exact path="/" component={SignInForm}/>
-      <Route exact path="/customer" component={customerList}/>
-      <Route path="/customer/detail/:customerId" component={customerDetail}/>
-      <Route path="/customer/add" component={CustomerAdd}/>
-      <Route path="/admin" component={AdminPage}/>
-      <Route path="/signout" component={SignOut}/>
-      <Route path="/claim/customer" component={CustomerClaims}/>
-      <Route exact path="/claim/customerdeposit" component={CustomerDeposit}/>
-      <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit}/>
-      <Route path="/claim/newclaim" component={NewClaim}/>
-      <Route exact path="/job" component={JobsList} exact/>
-      <Route path="/job/details/:jobId" component={JobDetails}/>
-      <Route path="/job/create" component={CreateJobs}/>
-      <Route path="/job/edit/:jobId" component={JobEditDetails}/>
-      <Route path="/calendar" component={CalendarApp}/>
-      <Route exact path="/schedule" component={UnavailableSchedule}/>
-      <Route path="/schedule/daily" component={DailySchedule}/>
-      <Route path="/schedule/movers" component={MoversSchedule}/>
-      <Route exact path="/user" component={UsersList}/>
-      <Route path="/user/create" component={CreateUser}/>
-      <Route exact path="/account" component={AccountDisplay}/>
-      <Route path="/account/update" component={AccountUpdate}/>
-      <Route exact path="/mover" component={MoversJobsList}/>
-      <Route path="/mover/payment" component={Payment}/>
-      <Route path="/mover/calendar" component={MoversCalendar}/>
-      <Route path="/mover/availability" component={Availability}/>
-      <Route path="/mover/jobdetails/:jobId" component={MoversJobDetails}/>
-      <Route path="/mover/holidaycalendar" component={Example}/>
-      
 
+    <div className="form_style">
+      <Navbar />
+      <ToastContainer position="bottom-right" />
+      <Switch>
+        <Route exact path="/" component={SignInForm} />
+        <Route exact path="/customer" component={customerList} />
+        <Route path="/customer/detail/:customerId" component={customerDetail} />
+        <Route path="/customer/add" component={CustomerAdd} />
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/signout" component={SignOut} />
+        <Route path="/claim/customer" component={CustomerClaims} />
+        <Route exact path="/claim/customerdeposit" component={CustomerDeposit} />
+        <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit} />
+        <Route path="/claim/newclaim" component={NewClaim} exact />
+        <Route exact path="/job" component={JobsList} exact />
+        <Route path="/job/details/:jobId" component={JobDetails} />
+        <Route path="/job/create" component={CreateJobs} />
+        <Route path="/job/edit/:jobId" component={JobEditDetails} />
+        <Route path="/calendar" component={CalendarApp} />
+        <Route exact path="/schedule" component={UnavailableSchedule} />
+        <Route path="/schedule/daily" component={DailySchedule} />
+        <Route path="/schedule/movers" component={MoversSchedule} />
+        <Route exact path="/user" component={UsersList} />
+        <Route path="/user/create" component={CreateUser} />
+        <Route exact path="/account" component={AccountDisplay} />
+        <Route path="/account/update" component={AccountUpdate} />
+        <Route exact path="/mover" component={MoversJobsList} />
+        <Route path="/mover/payment" component={Payment} />
+        <Route path="/mover/calendar" component={MoversCalendar} />
+        <Route path="/mover/availability" component={Availability} />
+        <Route path="/mover/jobdetails/:jobId" component={MoversJobDetails} />
+        <Route path="/mover/holidaycalendar" component={Example} />
       </Switch>
-  </div>
+    </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  loading: state.common.loading,
+  showMessage: state.common.displayMessage.message
+})
+
+export default connect(mapStateToProps)(App);

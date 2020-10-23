@@ -129,13 +129,13 @@ class CreateUser extends Component {
         attributes,
       };
       createUser(createdUserObj)
-        .then((res) => {
-          this.notify()
-          history.push("/user");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // .then((res) => {
+        //   this.notify()
+        //   history.push("/user");
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     }
   };
 

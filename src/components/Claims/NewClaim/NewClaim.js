@@ -7,36 +7,37 @@ import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
 import { connect } from "react-redux";
 import { addClaim } from '../../../Redux/Claims/claimsActions'
-const initialState = {
-  customerId: "",
-  jobId: "",
-  claims: [{
-    claimType: '',
-    price: '',
-    description: ''
-  }],
-  item: "",
-  price: "",
-  description: "",
-  fromDate: "",
-  toDate: "",
-  locationfrom: "",
-  locationto: "",
-  customerIdError: "",
-  jobIdError: "",
-  itemError: "",
-  priceError: "",
-  descriptionError: "",
-  fromDateError: "",
-  toDateError: "",
-  locationfromError: "",
-  locationtoError: ""
-}
+
+
 
 class NewClaim extends Component {
+  initialState = {
+    customerId: "",
+    jobId: "",
+    claims: [{
+      claimType: '',
+      price: '',
+      description: ''
+    }],
+    item: "",
+    price: "",
+    description: "",
+    fromDate: "",
+    toDate: "",
+    locationfrom: "",
+    locationto: "",
+    customerIdError: "",
+    jobIdError: "",
+    itemError: "",
+    priceError: "",
+    descriptionError: "",
+    fromDateError: "",
+    toDateError: "",
+    locationfromError: "",
+    locationtoError: ""
+  }
 
-  state = initialState
-
+  state = { ...this.initialState }
 
   handleFormInput = (event) => {
     var { name, value } = event.target
@@ -120,7 +121,7 @@ class NewClaim extends Component {
     }
     var { history } = this.props;
     addClaim(data).then((res) => {
-      history.push("/claim/customer/open");
+      history.push("/claim/customer");
     })
       .catch((error) => {
         console.log(error);
@@ -170,7 +171,11 @@ class NewClaim extends Component {
       toDate: date
     });
   };
-
+  // componentWillUnmount() {
+  //   this.state = this.initialState
+  //   // this.componentCleanup();
+  //   // window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
+  // }
   render() {
     return (
       <div>

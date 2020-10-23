@@ -103,6 +103,7 @@ class JobsList extends Component {
 
     getAllJobs(fetchJobsOnPageChange)
   }
+
   handleDateFilter = () => {
     var { getAllJobs } = this.props
 
@@ -117,7 +118,6 @@ class JobsList extends Component {
       },
       page: 1
     }
-
     getAllJobs(fetchJobsOnPageChange)
   }
   render() {
@@ -190,12 +190,12 @@ class JobsList extends Component {
 
 
 
-        {jobs[0] ?.data &&
+        {jobs.length > 0 ?
           <div className={`${style.jumbotron}`}>
 
             <ul className="list-group">
               <div className={style.li}>
-                {jobs[0] ?.data.jobs.docs.map((job, i) => {
+                {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
 
                     <li key={i} className=" checkbox list-group-item ">
@@ -225,111 +225,17 @@ class JobsList extends Component {
                         }}>
 
                           <div className="col-4 col-md-1">
-                            <Button name={width < 576 ? "" : "Edit"} icon="fa fa-edit" />
+                            <Button name={width < 576 ? "" : "Details"} icon="fa fa-edit" />
                           </div>
                         </Link>
 
                       </div>
                     </li>
 
-
-
                   )
                 })}
 
-
               </div>
-              {/* <div className={style.li}>
-              <li className=" checkbox list-group-item ">
-                <div className="row justify-content-around">
-                  <div className="col-2 text-left">
-                    <label>Job</label>
-                  </div>
-                  <div className="col-3">
-                    <button className={`btn btn-primary ${style.color}`}><i className="fa fa-calendar"> <DatePicker className={style.to}
-                      selected={this.state.startDateTo1}
-                      onChange={this.handleChangeTo2}
-                      placeholderText="To"
-                    /> </i></button>
-                  </div>
-                  <div className="col-3">
-                    <span>
-                      <i className="fa fa-user"></i>
-                      <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">Assignee</label>
-                    </span>
-                  </div>
-                  <div className="col-3">
-                    <label>Grand Piano</label>
-                  </div>
-                  <div className="col-1">
-                    <label>Status</label>
-                  </div>
-
-                </div>
-
-              </li>
-            </div>
-
-            <div className={style.li}>
-              <li className=" checkbox list-group-item ">
-                <div className="row justify-content-around">
-                  <div className="col-2 text-left">
-                    <label>Job</label>
-                  </div>
-                  <div className="col-3">
-                    <button className={`btn btn-primary ${style.color}`}><i className="fa fa-calendar"> <DatePicker className={style.to}
-                      selected={this.state.startDateTo1}
-                      onChange={this.handleChangeTo3}
-                      placeholderText="To"
-                    /> </i></button>
-                  </div>
-                  <div className="col-3">
-                    <span>
-                      <i className="fa fa-user"></i>
-                      <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">Assignee</label>
-                    </span>
-                  </div>
-                  <div className="col-3">
-                    <label>Grand Piano</label>
-                  </div>
-                  <div className="col-1">
-                    <label>Status</label>
-                  </div>
-
-                </div>
-              </li>
-            </div> */}
-
-              {/* <div className={style.li}>
-              <li class=" checkbox list-group-item ">
-                <div className="row justify-content-around">
-                  <div className="col-2 text-left">
-                    <label>Job</label>
-                  </div>
-                  <div className="col-3">
-                    <button className={`btn btn-primary ${style.color}`}><i className="fa fa-calendar"> <DatePicker className={style.to}
-                      selected={this.state.startDateTo1}
-                      onChange={this.handleChangeTo4}
-                      placeholderText="To"
-                    /> </i></button>
-                  </div>
-                  <div className="col-3">
-                    <span>
-                      <i className="fa fa-user"></i>
-                      <label className={`checkbox-inline ${style.assignee}`} for="defaultCheck1">Assignee</label>
-                    </span>
-                  </div>
-                  <div className="col-3">
-                    <label>Grand Piano</label>
-                  </div>
-                  <div className="col-1">
-                    <label>Status</label>
-                  </div>
-
-                </div>
-              </li>
-            </div> */}
-
             </ul>
             <Pagination
               itemCount={totalCount}
@@ -338,8 +244,7 @@ class JobsList extends Component {
               onPageChange={this.handlePageChange}
             />
           </div>
-        
-        }
+          : null}
       </div>
     )
   }

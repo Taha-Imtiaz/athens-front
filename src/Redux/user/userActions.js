@@ -1,6 +1,7 @@
 // import Axios from "axios"
 import { GET_USERS } from "./userConstants"
 import Axios from '../../utils/api'
+import { showMessage } from '../../Redux/Common/commonActions'
 
 var baseUrl = "https://athens-backend.herokuapp.com/api/";
 
@@ -21,12 +22,16 @@ export var getUsers = (UsersObj) => {
     }
 }
 
-export var createUser = async (newUserObj) => {
-    try {
-        var createdUser = await Axios.post("user/create-user", newUserObj)
-        return createdUser
-    } catch (error) {
-        console.log(error)
+export var createUser = (newUserObj) => {
+    return async (dispatch) => {
+        try {
+            var createdUser = await Axios.post("user/create-user", newUserObj)
+            console.log(createdUser.data.message)
+            dispatch(showMessage(createdUser.data.message))
+            return createdUser
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -41,6 +46,7 @@ export var getUserData = async (userId) => {
 export var updateUser = async (userId) => {
     try {
         var updatedUser = await Axios.post(`user/update-user/${userId}`)
+        // dispatch(showMessage(updatedUser.data.message))
         return updatedUser
     } catch (error) {
         console.log(error)

@@ -31,6 +31,10 @@ const UnavailableSchedule = (props) => {
             console.log(res.data)
         })
       }, []);
+
+      const handleChange = (i) => {
+          console.log(i)
+      }
     return <div className={``}>
         
         <div className = "row">
@@ -57,10 +61,13 @@ const UnavailableSchedule = (props) => {
                                 <label className={`checkbox-inline ${style.input}`} htmlFor="defaultCheck1">{list.applicant.name}</label>
                             </span>
 
-                            <small>{list.dates[0]} - {list.dates[1]}</small>
+                           
                         </div>
                         <div className={style.para}>
-                            <p className="mb-1">Reason: <small>{list.reason}</small></p>
+                            <p className="mb-1">{list.dates[0]} - {list.dates[1]}</p>
+                        </div>
+                        <div className={style.para}>
+                            <p className="mb-1">Reason: {list.reason}</p>
                         </div>
                     </a>
                 </div></div>

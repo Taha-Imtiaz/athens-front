@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import style from './Movers.module.css'
 import SideBar from '../../Sidebar/SideBar'
+import { getAllMover } from '../../../Redux/Schedule/scheduleAction'
 
-const MoversSchedule = () => {
+const MoversSchedule = (props) => {
+   const [allMovers, setAllMovers] = useState()
+    useEffect(() => {
 
+        getAllMover().then((res) => {
+            setAllMovers(res.data.movers)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+    console.log(allMovers)
     const routes = [{
         title: "Unavailable",
         path: "/schedule",
@@ -54,53 +64,23 @@ const MoversSchedule = () => {
             </div>
 
             <div className={`list-group ${style.list}`}>
-                <div className={style.mar}>
+            {allMovers && allMovers.map( list => {
+              return <><div className={style.mar}>
                     <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
                         <div className="d-flex w-100 justify-content-between">
-                            <h5 className={`mb-1 ${style.name}`}>Thoma</h5>
-                            <small>Crew Leader</small>
+                            <h5 className={`mb-1 ${style.name}`}>{list.name}</h5>
+                            <small>{list.attributes[0].name}</small>
                         </div>
                         <div className={style.para}>
-                            <p className="mb-1">Everyday</p>
+                        {list.weeklySchedule.map( status => {
+                        return <span className="mb-1">{status.status ? status.day.split("",3).join("") : null}&nbsp;</span>})}
                         </div>
                     </a>
-                </div>
-                <div className={style.mar}>
-                    <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className={`mb-1 ${style.name}`}>Jc</h5>
-                            <small>Crew Leader if needed</small>
-                        </div>
-                        <div className={style.para}>
-                            <p className="mb-1">Sat - Sunday -- Off Day</p>
-                        </div>
-                    </a>
-                </div>
-                <div className={style.mar}>
-                    <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className={`mb-1 ${style.name}`}>Josh</h5>
-                            <small>Mover Helper</small>
-                        </div>
-                        <div className={style.para}>
-                            <p className="mb-1">Everyday</p>
-                        </div>
-                    </a>
-                </div>
-                <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                    <div className="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 ${style.name}`}>Monte</h5>
-                        <small>New Employee</small>
-                    </div>
-                    <div className={style.para}>
-                        <p className="mb-1">Everyday</p>
-                    </div>
-                </a>
-            </div>
-
+                </div></>})}
+               
         </div>
 
-    </div>
+    </div></div>
 
 }
 

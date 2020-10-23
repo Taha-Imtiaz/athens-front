@@ -61,7 +61,7 @@ const CustomerDeposit = () => {
               <li key={i} className=" checkbox list-group-item">
                 <div className="row">
                   <div className="col-4">
-                    <label>{x.customer.name}</label>
+                    <label>{x.customer.firstName} {x.customer.lastName}</label>
                   </div>
                   <div className="col-4">
                     <label>{x.quantity}</label>

@@ -22,17 +22,17 @@ export var getUsers = (UsersObj) => {
     }
 }
 
-export var createUser = (newUserObj) => {
-    return async (dispatch) => {
+export var createUser = async (newUserObj) => {
+    // return async (dispatch) => {
         try {
             var createdUser = await Axios.post("user/create-user", newUserObj)
             console.log(createdUser.data.message)
-            dispatch(showMessage(createdUser.data.message))
+            // dispatch(showMessage(createdUser.data.message))
             return createdUser
         } catch (error) {
             console.log(error)
         }
-    }
+    // }
 }
 
 export var getUserData = async (userId) => {

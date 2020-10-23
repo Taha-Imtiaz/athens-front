@@ -3,6 +3,9 @@ import CustomerDeposit from "../CustomerBlanketDeposit/CustomerDeposit";
 import style from "./SubmitDeposit.module.css";
 import Button from "../../Button/Button";
 import { addDeposit } from '../../../Redux/Claims/claimsActions'
+import { showMessage } from '../../../Redux/Common/commonActions'
+import { connect } from "react-redux";
+
 class SubmitDeposit extends Component {
   state = {
     quantity: '',
@@ -18,8 +21,9 @@ class SubmitDeposit extends Component {
       customer,
       cost
     }
+    var { showMessage } = this.props;
     addDeposit(obj).then(res => {
-
+      showMessage(res.data.message)
     })
   };
 
@@ -83,4 +87,8 @@ class SubmitDeposit extends Component {
   }
 }
 
-export default SubmitDeposit;
+var actions = {
+  showMessage
+};
+
+export default connect(null, actions)(SubmitDeposit);

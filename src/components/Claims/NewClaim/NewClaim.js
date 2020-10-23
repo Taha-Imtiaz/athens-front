@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
 import { connect } from "react-redux";
 import { addClaim } from '../../../Redux/Claims/claimsActions'
+import { showMessage } from '../../../Redux/Common/commonActions'
 
 
 
@@ -119,8 +120,9 @@ class NewClaim extends Component {
       jobId,
       claims
     }
-    var { history } = this.props;
+    var { history, showMessage } = this.props;
     addClaim(data).then((res) => {
+      showMessage(res.data.message)
       history.push("/claim/customer");
     })
       .catch((error) => {
@@ -131,7 +133,7 @@ class NewClaim extends Component {
 
   }
 
-  addClaim = () => {
+  addAnotherClaim = () => {
     if (this.state.claims[0].claimType && this.state.claims[0].description && this.state.claims[0].price) {
       this.setState({
         claims: [...this.state.claims, {
@@ -247,8 +249,8 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
-                <Button onClick={this.addClaim} name="Add Another"></Button>
+                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addAnotherClaim} /> */}
+                <Button onClick={this.addAnotherClaim} name="Add Another"></Button>
               </div>
             </div>
             {this.state.descriptionError ? (
@@ -343,6 +345,7 @@ class NewClaim extends Component {
   }
 }
 var actions = {
-  addClaim
+  addClaim,
+  showMessage
 };
 export default connect(null, actions)(NewClaim);

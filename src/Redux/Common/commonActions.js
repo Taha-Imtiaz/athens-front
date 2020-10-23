@@ -14,6 +14,14 @@ export var hideLoader = () => (dispatch) => {
 
 export var showMessage = (message) => (dispatch) => {
     console.log(message)
+    setTimeout(() => {
+        dispatch({
+            type: SHOW_MESSAGE,
+            payload: {
+                message: ''
+            }
+        }, 5000)
+    })
     dispatch({
         type: SHOW_MESSAGE,
         payload: {

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import _ from 'lodash';
 import { clone, cloneDeep } from "lodash"
+import { showMessage } from '../../../Redux/Common/commonActions'
 
 const CustomerClaims = (props) => {
     const [show, setShow] = useState(false)
@@ -75,10 +76,12 @@ const CustomerClaims = (props) => {
     }
 
     const handleCloseJob = (i) => {
+        var { showMessage } = props;
         data[i].status = 'closed';
         updateClaim(data[i]).then(res => {
             console.log(res)
             if (res.data.status == 200) {
+                showMessage(res.data.message)
             }
         }).catch(err => console.log(err))
     }
@@ -129,7 +132,7 @@ const CustomerClaims = (props) => {
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <h6 className={style.comp}>{x.customer.name}</h6>
+                                <h6 className={style.comp}>{x.customer.firstName} {x.customer.lastName}</h6>
                             </div>
 
                         </div>
@@ -227,7 +230,8 @@ var mapStateToProps = (state) => ({
 });
 
 var actions = {
-    getAllClaims
+    getAllClaims,
+    showMessage
 };
 
 export default connect(mapStateToProps, actions)(CustomerClaims);

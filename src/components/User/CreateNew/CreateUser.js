@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import style from "./CreateUser.module.css";
 import Button from "../../Button/Button";
 import { Multiselect } from "multiselect-react-dropdown";
-import API from "../../../utils/api";
 import { createUser } from "../../../Redux/user/userActions";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from "react-redux";
+import { showMessage } from '../../../Redux/Common/commonActions'
 
 const initialState = {
   name: "",
@@ -23,7 +23,6 @@ const initialState = {
 };
 
 class CreateUser extends Component {
-  notify = () => toast("User created successfully!");
   typeOptions = [
     { name: "Manager", id: 1 },
     { name: "Mover", id: 2 },
@@ -31,7 +30,7 @@ class CreateUser extends Component {
   attributeOptions = [
     { name: "Attribute 1" },
     { name: "Attribute 2" },
-    { name: "Attribute 3"},
+    { name: "Attribute 3" },
   ];
 
   constructor(props) {
@@ -117,7 +116,8 @@ class CreateUser extends Component {
   mySubmitHandler = (event) => {
     event.preventDefault();
     const isValid = this.validate();
-    var { history } = this.props;
+    var { showMessage, history } = this.props;
+
     if (isValid) {
       var { name, phone, email, address, type, attributes } = this.state;
       var createdUserObj = {
@@ -129,20 +129,20 @@ class CreateUser extends Component {
         attributes,
       };
       createUser(createdUserObj)
-        // .then((res) => {
-        //   this.notify()
-        //   history.push("/user");
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
+        .then((res) => {
+          showMessage(res.data.message)
+          history.push("/user");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
   render() {
     return (
       <div>
-        <ToastContainer position="bottom-right" />
+        {/* <ToastContainer position="bottom-right" /> */}
         <div>
           <h3 className={style.head}>Create New User</h3>
         </div>
@@ -291,4 +291,8 @@ class CreateUser extends Component {
   }
 }
 
-export default CreateUser;
+var actions = {
+  showMessage
+}
+
+export default connect(null, actions)(CreateUser);

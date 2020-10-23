@@ -1,7 +1,7 @@
 // import Axios from "axios";
 import { GET_JOBS, GET_JOB } from "./jobConstants";
 import Axios from '../../utils/api'
-import { showLoader, hideLoader } from '../../Redux/Common/commonActions'
+import { showLoader, hideLoader, showMessage } from '../../Redux/Common/commonActions'
 // var baseUrl = 'http://10.0.4.213:3000/'
 var baseUrl = "https://athens-backend.herokuapp.com/api/";
 export var getAllJobs = (jobObj) => {
@@ -10,7 +10,7 @@ export var getAllJobs = (jobObj) => {
     try {
       var getJobs = await Axios.post("user/get-all-jobs", jobObj);
       //update app's state
-      dispatch(showLoader());
+      // dispatch(showLoader());
       dispatch({
         type: GET_JOBS,
         payload: {
@@ -45,14 +45,16 @@ export var getAllMovers = async () => {
     console.log(error);
   }
 };
-export var createJob = async (newJobObj) => {
-  try {
-    var newJob = await Axios.post("user/create-job",
-      newJobObj
-    );
-    return newJob;
-  } catch (error) {
-    console.log(error);
+export var createJob = (newJobObj) => {
+  return async (dispatch) => {
+    try {
+      var newJob = await Axios.post("user/create-job",
+        newJobObj
+      );
+      dispatch(showMessage(newJob.data.message))
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 export var updateJob = async (jobId, jobObj) => {

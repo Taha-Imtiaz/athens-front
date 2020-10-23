@@ -87,7 +87,7 @@ const CustomerDetail = (props) => {
             </div>
             <div className="col-6">
               <div className={style.head}>
-                <h5>{customer.name}</h5>
+                <h5>{customer.firstName} {customer.lastName}</h5>
                 <div>
                   <b> <label className={style.l1}>Phone</label></b>
                   <label className={style.l1}>{customer.phone}</label>
@@ -114,39 +114,40 @@ const CustomerDetail = (props) => {
 
           <div className={style.container}>
             <div className="accordion" id="accordionExample">
-              <div className="card">
-                <div className="card-header" id="headingOne">
-                  <h5 className="mb-0">
-                    <button
-                      className="btn btn-link"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseOne"
-                      aria-expanded="true"
-                      aria-controls="collapseOne"
-                    >
-                      Contact #1
-                    </button>
-                  </h5>
-                </div>
+              {customer.subContacts.map((x, i) => (
+                <div key = {i} className="card">
+                  <div className="card-header" id="headingOne">
+                    <h5 className="mb-0">
+                      <button
+                        className="btn btn-link"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        {`Contact # ${i + 1}`}
+                      </button>
+                    </h5>
+                  </div>
 
-                <div
-                  id="collapseOne"
-                  className="collapse show"
-                  aria-labelledby="headingOne"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    <label className={style.l1}>
-                      {customer.subcontacts.phone}
-                    </label>
-                    <label className={style.l2}>
-                      {customer.subcontacts.email}
-                    </label>
+                  <div
+                    id="collapseOne"
+                    className="collapse show"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordionExample"
+                  >
+                    <div className="card-body">
+                      <label className={style.l1}>
+                        {x.phone}
+                      </label>
+                      <label className={style.l2}>
+                        {x.email}
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-
+              ))}
             </div>
           </div>
 

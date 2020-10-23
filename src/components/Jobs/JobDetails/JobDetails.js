@@ -33,7 +33,7 @@ const JobDetails = (props) => {
                     <div className={`card ${style.cardCustom}`} >
                         <div className="card-body">
                             <h5 className="card-title">Customer</h5>
-                            <h6 className="card-subtitle mb-2 text-muted">{job.customer.name}</h6>
+                            <h6 className="card-subtitle mb-2 text-muted">{job.customer.firstName} {job.customer.lastName}</h6>
                             <p className="card-text">{job.customer.phone}</p>
                             <p className="card-text">{job.customer.email}</p>
                         </div>

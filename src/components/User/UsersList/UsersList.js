@@ -68,22 +68,31 @@ const UsersList = (props) => {
                 aria-expanded="false"
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item" onClick={() => handleFilter('movers')}>
+                <a className="dropdown-item" onClick={() => handleFilter('mover')}>
                   Movers
                 </a>
-                <a className="dropdown-item" onClick={() => handleFilter('managers')}>
+                <a className="dropdown-item" onClick={() => handleFilter('manager')}>
                   Managers
                 </a>
               </div>
             </div>
-            <div className="col-3">
+            {/* <div className="col-md-6">
               <div className={style.btndel}>
                 <Link style={{ textDecoration: "none" }} to="/user/create">
                   {" "}
                   <Button name="Create New" />{" "}
                 </Link>
               </div>
+            </div> */}
+          </div>
+          <div className={`d-flex justify-content-end ${style.buttons}`}>
+            <div className={` ${style.create}`}>
+              <Link style={{ textDecoration: "none" }} to="/user/create">
+                {" "}
+                <Button name="Create New" />{" "}
+              </Link>
             </div>
+            {/* <Button name="Delete" /> */}
           </div>
           <div className={style.jumbotron}>
             <ul className="list-group">

@@ -8,6 +8,8 @@ import API from "../../../utils/api";
 import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { connect } from 'react-redux';
+
 
 const initialState = {
   title: "",
@@ -41,7 +43,6 @@ const initialState = {
 
 class CreateJobs extends Component {
   // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
-  notify = () => toast("Job Ceated Successfully!");
   options = [
     { name: "Srigar", id: 1 },
     { name: "Sam", id: 2 },
@@ -103,7 +104,6 @@ class CreateJobs extends Component {
   };
 
   addLocation = () => {
-    // this.notify()
       if(this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
         console.log(this.state)
         this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
@@ -356,6 +356,7 @@ class CreateJobs extends Component {
     this.multiselectRef.current.resetSelectedValues();
   }
   mySubmitHandler = (event) => {
+    var { createJob, history } = this.props
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
@@ -393,15 +394,14 @@ class CreateJobs extends Component {
         customerId,
       };
       console.log(createJobObj);
-      var { history } = this.props;
+      // var { history } = this.props;
       createJob(createJobObj)
-        .then((res) => {
-          this.notify();
-          history.push("/job");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // .then((res) => {
+        //   history.push("/job");
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
       this.multiselectRef1.current.resetSelectedValues();
       this.multiselectRef2.current.resetSelectedValues();
       this.multiselectRef3.current.resetSelectedValues();
@@ -657,4 +657,9 @@ class CreateJobs extends Component {
   }
 }
 
-export default CreateJobs;
+var actions = {
+  createJob
+}
+
+export default connect(null, actions)(CreateJobs);
+// export default CreateJobs;

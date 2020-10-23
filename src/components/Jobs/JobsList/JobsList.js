@@ -13,7 +13,6 @@ const width = window.innerWidth
 
 class JobsList extends Component {
 
-
   state = {
     startDateTo1: "",
     startDateTo2: "",
@@ -22,7 +21,6 @@ class JobsList extends Component {
     pageSize: 10,
     currentPage: 1
   };
-
   // var [pageSize, setPageSize] = useState(10);
   // var [currentPage, setCurrentPage] = useState(1)
   componentDidMount = () => {
@@ -36,11 +34,13 @@ class JobsList extends Component {
         tag: "ABC",
         startYearMonth: ""
       },
+      sort: {
+        createdAt: -1
+      },
       page: 1
     }
     getAllJobs(jobObj)
   };
-
 
   handleChangeTo1 = date => {
     this.setState({
@@ -48,6 +48,7 @@ class JobsList extends Component {
 
     });
   };
+  
   handlePageChange = (page) => {
     var { getAllJobs } = this.props
     var fetchJobsOnPageChange = {

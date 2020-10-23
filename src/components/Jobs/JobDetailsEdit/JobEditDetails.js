@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { Multiselect } from "multiselect-react-dropdown";
 import { connect } from "react-redux";
 import { getJob, getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
+import { showMessage } from '../../../Redux/Common/commonActions'
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +15,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class JobEditDetails extends Component {
-  notify = () => toast("Job updated successfully !");
   servicesOptions = [
     { id: 1, name: "Pakaging" },
     { id: 2, name: "Loading" },
@@ -186,7 +186,7 @@ class JobEditDetails extends Component {
         params: { jobId },
       }, history
     } = this.props;
-
+    var { showMessage } = this.props;
     //  var {startDate, endDate,  title, description, services,startTime, endTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var updatedObj = {
       startDate: startDateInString,
@@ -204,7 +204,7 @@ class JobEditDetails extends Component {
       note
     };
     updateJob(jobId, updatedObj).then((res) => {
-      this.notify();
+      showMessage(res.data.message)
       history.push("/job")
     }).catch((error) => {
       console.log(error)
@@ -341,7 +341,7 @@ class JobEditDetails extends Component {
     } = this.state;
     return (
       <div>
-          <ToastContainer position="bottom-right"/>
+        {/* <ToastContainer position="bottom-right"/> */}
         <h3 className={style.head}>Job Details Edit</h3>
         <div className="row">
           <div className="col-8">
@@ -495,8 +495,8 @@ class JobEditDetails extends Component {
                 Change Status
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                {this.state.statusOptions.map((option) => (
-                  <button
+                {this.state.statusOptions.map((option, i) => (
+                  <button key={i}
                     className="dropdown-item"
                     type="button"
                     onClick={() => this.statusChanged(option)}
@@ -617,5 +617,9 @@ class JobEditDetails extends Component {
 // var actions = {
 //     getJob
 // }
+var actions = {
+  showMessage
+}
 
-export default JobEditDetails;
+
+export default connect(null, actions)(JobEditDetails);

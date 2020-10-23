@@ -65,6 +65,9 @@ const SearchBar = (props) => {
                         tag: "",
                         startYearMonth: ""
                     },
+                    sort: {
+                        createdAt: -1
+                      },
                     page: 1
                 }
             } else {
@@ -77,6 +80,9 @@ const SearchBar = (props) => {
                         tag: "",
                         startYearMonth: ""
                     },
+                    sort: {
+                        createdAt: -1
+                      },
                     page: 1
                 }
             }

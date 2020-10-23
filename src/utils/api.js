@@ -2,7 +2,8 @@ import axios from 'axios';
 // import { showLoader } from '../Redux/Common/commonActions'
 
 const Axios = axios.create({
-  baseURL: `https://athens-backend.herokuapp.com/api/`
+  // baseURL: `https://athens-backend.herokuapp.com/api/`
+  baseURL: `http://10.0.4.213:3000/api/`
 });
 
 // Axios.interceptors.request.use(req => {

@@ -39,7 +39,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App(props) {
   const [show, setShow] = [false]
-  const notify = () => toast("User created successfully!");
+  const notify = (message) => toast(message);
 
   const { loading, showMessage } = props
   console.log(loading, showMessage)

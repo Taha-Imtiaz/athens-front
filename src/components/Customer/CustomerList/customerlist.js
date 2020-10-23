@@ -173,7 +173,7 @@ const CustomerList = (props) => {
                             >
                               {doc.name}
                             </label> */}
-                              {doc.name}
+                              {doc.firstName} {doc.lastName}
                             </span>
                           </div>
                           <div

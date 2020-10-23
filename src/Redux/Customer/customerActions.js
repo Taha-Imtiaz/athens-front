@@ -58,9 +58,7 @@ export var addCustomer = (customerObj) => {
     return async (dispatch) => {
         try {
             var addedCustomer = await Axios.post("user/customer-Registration", customerObj)
-            console.log(addedCustomer.data.message)
             dispatch(showMessage(addedCustomer.data.message))
-            console.log(addedCustomer)
         } catch (error) {
             console.log(error)
         }

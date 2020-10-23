@@ -6,6 +6,7 @@ import userReducer from './user/userReducer'
 import moverReducer from './Mover/moverReducer'
 import commonReducer from './Common/commanReducers'
 import unavailableReducer from './Unavailable/unavailableReducer';
+import scheduleReducer from './Schedule/scheduleReducer';
 
 
 
@@ -16,6 +17,7 @@ var rootReducer = combineReducers({
     users: userReducer,
     moverJobs: moverReducer,
     common: commonReducer,
-    unavailable: unavailableReducer
+    unavailable: unavailableReducer,
+    schedule: scheduleReducer
 })
 export default rootReducer

@@ -14,17 +14,24 @@ class MoversJobsList extends Component {
         isLoading: true,
         data: [],
         status: "completed"
-
     }
 
     componentDidMount = () => {
         var { getMover } = this.props
-        getMover('5f907f70bc2d090017901d68')
+        getMover();
+        // if (user) {
+        //     getMover(user._id)
+        // }
         // this.setState({
         //     isLoading: false,
         //     data: this.props.moverJobs.data
         // })
     }
+
+    // componentDidUpdate(props) {
+    //     var { getMover } = props
+    //     console.log(props.user)
+    // }
 
     handleJobUpdate = (id) => {
         console.log(id)
@@ -33,7 +40,10 @@ class MoversJobsList extends Component {
 
     render() {
         console.log(this.state.data)
-        const { moverJobs } = this.props;
+        const { moverJobs, user } = this.props;
+        if (user) {
+            getMover(user._id)
+        }
 
         console.log(moverJobs)
         return (
@@ -47,12 +57,12 @@ class MoversJobsList extends Component {
 
                         <div className={`d-flex justify-content-end ${style.buttons}`}>
 
-                            <div className={` ${style.create}`}>
+                            {/* <div className={` ${style.create}`}>
                                 <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Create New" /></Link>
                             </div>
                             <div className={style.btndel}>
                                 <Button name="Delete" />
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
@@ -70,7 +80,7 @@ class MoversJobsList extends Component {
                                             </div>
                                         </div>
                                         <div className="col-4 col-md-2">
-                                            <i className="fa fa-calendar ">{list.startDate.split("G")[0]}</i>
+                                            <i className="fa fa-calendar ">{list.dates.map(x => x)}</i>
                                         </div>
                                         {list.assignee.map(ass => {
                                             return <><div className="col-4 col-md-2 d-flex justify-content-center">
@@ -87,7 +97,7 @@ class MoversJobsList extends Component {
                                             <div className="form-check">
                                                 <div className={`d-flex justify-content-end`}>
 
-                                                    <Link style={{ textDecoration: "none" }} to={'/job/details/' + list._id}> <Button name="Details" /></Link>
+                                                    <Link style={{ textDecoration: "none" }} to={'/mover/jobdetails/' + list._id}> <Button name="Details" /></Link>
                                                 </div>
 
                                             </div>
@@ -112,6 +122,7 @@ class MoversJobsList extends Component {
 
 var mapStateToProps = (state) => ({
     moverJobs: state.moverJobs,
+    user: state.users.user
 });
 
 var actions = {

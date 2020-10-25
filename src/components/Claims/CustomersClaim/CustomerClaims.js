@@ -59,14 +59,10 @@ const CustomerClaims = (props) => {
             value: update
         }
         let newData = cloneDeep(data);
-        console.log(newData)
         newData[updateIndex].updates.push(ob);
-        console.log(newData[updateIndex])
         var { showMessage, history } = props;
         updateClaim(newData[updateIndex]).then(res => {
-            console.log(res)
             if (res.data.status == 200) {
-                console.log('Inside', data[updateIndex].updates, newData[updateIndex].updates)
                 data[updateIndex].updates = res.data.claim.updates;
                 setShow(false);
                 setUpdate('');
@@ -74,19 +70,16 @@ const CustomerClaims = (props) => {
                 showMessage(res.data.message)
                 // data[updateIndex] = res.data.claim;
             }
-            console.log(data)
         }).catch(err => console.log(err))
     }
     const handleAddUpdate = (e) => {
         setUpdate(e.target.value)
-        console.log(e.target.value)
     }
 
     const handleCloseJob = (i) => {
         var { showMessage } = props;
         data[i].status = 'closed';
         updateClaim(data[i]).then(res => {
-            console.log(res)
             if (res.data.status == 200) {
                 showMessage(res.data.message)
             }
@@ -94,7 +87,6 @@ const CustomerClaims = (props) => {
     }
 
     const getClaimsByStatus = (e) => {
-        console.log(e.target.value)
         var { getAllClaims } = props;
         getAllClaims(e.target.value);
     }

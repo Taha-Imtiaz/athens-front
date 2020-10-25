@@ -26,20 +26,17 @@ const CustomerDeposit = (props) => {
 
   useEffect(() => {
     getDeposits().then(res => {
-      console.log(res.data.blanketDeposit)
       setBlankets(res.data.blanketDeposit)
     })
   }, []);
 
   const decrement = (x, i) => {
-    console.log('decrement', i)
     let newData = cloneDeep(blankets);
     newData[i].quantity = --x.quantity;
     setBlankets(newData)
   }
 
   const increment = (x, i) => {
-    console.log('decrement', i)
     let newData = cloneDeep(blankets);
     newData[i].quantity = ++x.quantity;
     setBlankets(newData)

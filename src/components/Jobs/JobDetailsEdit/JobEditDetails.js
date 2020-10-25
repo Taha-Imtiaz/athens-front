@@ -42,13 +42,6 @@ class JobEditDetails extends Component {
     status: ''
   };
 
-  // handleStartDate = (date) => {
-  //   this.setState({
-  //     startDate: date,
-  //     startDateInString: date.toString(),
-  //   });
-  // };
-
   handleStartDate = (date, i) => {
     console.log(typeof date, i);
 
@@ -115,7 +108,7 @@ class JobEditDetails extends Component {
         userId: "5f732f880cf3f60894f771b9",
         status: res.data.job.status,
         show: false,
-        customerId: res.data.job.customer._id,
+        customerId: res.data.job.customer.email,
       });
     });
   };
@@ -215,6 +208,8 @@ class JobEditDetails extends Component {
       // console.log(typeof x ==)
     })
     //  var {startDate, endDate,  title, description, services,startTime, endTime, from , to, status, assigneesId, customerId,userId } = this.state;
+    var { loggedinUser } = this.props;
+    console.log(loggedinUser)
     var updatedObj = {
       startDate: startDateInString,
       dates: stringDates,
@@ -227,7 +222,7 @@ class JobEditDetails extends Component {
       locations,
       assigneesId,
       status,
-      userId,
+      userId: loggedinUser._id,
       customerId,
       note
     };
@@ -384,7 +379,7 @@ class JobEditDetails extends Component {
             <div className={`${style.tron}`}>
               <form>
                 <div className={`form-group ${style.input}`}>
-                  <label htmlFor="">Customer Id</label>
+                  <label htmlFor="">Customer Email</label>
                   <input
                     type="input"
                     className="form-control"
@@ -392,7 +387,7 @@ class JobEditDetails extends Component {
                     name="customerId"
                     value={this.state.customerId}
                     onChange={this.handleFormInput}
-                    disabled
+                  // disabled
                   />
                 </div>
 
@@ -666,5 +661,8 @@ var actions = {
   showMessage
 }
 
+var mapStateToProps = (state) => ({
+  loggedinUser: state.users.user,
+});
 
-export default connect(null, actions)(JobEditDetails);
+export default connect(mapStateToProps, actions)(JobEditDetails);

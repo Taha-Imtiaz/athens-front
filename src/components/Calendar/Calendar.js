@@ -26,7 +26,6 @@ class CalendarApp extends Component {
     componentDidMount = () => {
         // const { getJobsByDate } = this.props;
         getJobsByDate().then(res => {
-            console.log(res.data.jobs)
             let jobs = []
             res.data.jobs.map(x => {
                 x.dates.map(y => {
@@ -39,7 +38,6 @@ class CalendarApp extends Component {
                     jobs.push(obj);
                 })
             })
-            console.log(jobs)
             this.setState({
                 myEventsList: jobs
             })

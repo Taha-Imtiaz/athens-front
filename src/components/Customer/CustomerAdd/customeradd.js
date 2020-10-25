@@ -108,7 +108,6 @@ class CustomerAdd extends Component {
                 email,
                 subContacts
             }
-            console.log(addCustomerObj)
             addCustomer(addCustomerObj, () => {
                 history.goBack();
             })

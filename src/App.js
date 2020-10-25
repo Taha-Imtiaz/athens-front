@@ -42,10 +42,8 @@ function App(props) {
   const [show, setShow] = [false]
   const notify = (message) => toast(message);
   const { loading, showMessage } = props
-  console.log(loading, showMessage)
 
   if (showMessage) {
-    console.log(showMessage)
     notify(showMessage)
   }
 

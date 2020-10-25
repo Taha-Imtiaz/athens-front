@@ -57,7 +57,6 @@ const CustomerList = (props) => {
         User: { docs },
       },
     } = customers;
-    console.log(customers)
     var customerId = docs.map((doc) => doc._id);
   }
 

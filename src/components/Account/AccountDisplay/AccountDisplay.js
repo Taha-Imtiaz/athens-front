@@ -15,7 +15,6 @@ const AccountDisplay = (props) => {
 
     // useEffect(() => {
     //     setUser(loggedInUser)
-    //     console.log(user)
     // }, [user])
 
     return <div className={style.acc}>

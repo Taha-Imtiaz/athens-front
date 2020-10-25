@@ -86,11 +86,9 @@ class CreateJobs extends Component {
 
   state = this.initialState;
   componentDidMount = () => {
-    console.log('Create', this.props)
     getAllMovers()
       .then((res) => {
         var moverId = res.data.movers.map((mover) => mover._id);
-        console.log(this.props.location);
         this.setState({
           assigneeList: res.data.movers,
           customerId: this.props.location.customerId,
@@ -103,33 +101,25 @@ class CreateJobs extends Component {
 
   addLocation = () => {
     if (this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
-      console.log(this.state)
       this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
-      console.log(this.state)
     }
   }
 
   addDate = () => {
     if (this.state.dates[0]) {
-      console.log(this.state)
       this.setState({ dates: [...this.state.dates, ''] });
-      console.log(this.state)
     }
   }
   componentWillUnmount() {
-    console.log('Unmount called')
-    // this.state = initialState;
   }
 
   hanldeLocationInput = (i, e) => {
-    console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].from = e.target.value
     this.setState({ locations: updateLocation });
   }
 
   hanldeLocationInputTo = (i, e) => {
-    console.log(this.state.locations, i)
     let updateLocation = this.state.locations.slice();
     updateLocation[i].to = e.target.value
     this.setState({ locations: updateLocation });
@@ -188,7 +178,6 @@ class CreateJobs extends Component {
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    console.log(this.state.from)
     if (value == "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
@@ -273,8 +262,6 @@ class CreateJobs extends Component {
   };
 
   handleStartDate = (date, i) => {
-    console.log(typeof date, date.toString(), i);
-
     let newState = cloneDeep(this.state)
     newState.dates[i] = date;
     this.setState({
@@ -285,9 +272,7 @@ class CreateJobs extends Component {
 
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
-    console.log(serviceItem);
     let newState = { ...this.state };
-    console.log(newState);
     newState.services.push(serviceItem);
     this.setState({ services: newState.services });
   };
@@ -295,7 +280,6 @@ class CreateJobs extends Component {
   onRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem;
-    console.log(removeItem);
     var updatedState = newState.services.findIndex(
       (service) => service === removeItem
     );
@@ -305,9 +289,7 @@ class CreateJobs extends Component {
   };
 
   onAssigneeSelect = (selectedList, selectedItem) => {
-    console.log(selectedItem);
     let assigneeItem = selectedItem._id;
-    console.log(assigneeItem);
     let newState = { ...this.state };
     newState.assigneesId.push(assigneeItem);
     this.setState({ assigneesId: newState.assigneesId });
@@ -316,7 +298,6 @@ class CreateJobs extends Component {
   onAssigneeRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem._id;
-    console.log(removeItem);
     // console.log(newState.assigneesId)
     var updatedState = newState.assigneesId.findIndex(
       (assigneeId) => assigneeId === removeItem

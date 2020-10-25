@@ -28,7 +28,7 @@ console.log(job)
                 <span className={`badge badge-primary ${style.badges2}`}>{job.status}</span>
             </div>
         </div>
-        <p>{job.startDate}  |  {job.startTime} - {job.endTime}</p>
+        <p>{job.startTime} - {job.endTime}</p>
         {job.locations.map( list =>  <p>{list.from} to {list.to}</p>)}
         <span className={`badge badge-primary ${style.badges}`}>Primary</span>
         <span className={`badge badge-primary ${style.badges}`}>Secondary</span>

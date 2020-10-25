@@ -42,11 +42,13 @@ const JobDetails = (props) => {
                 <div className="col-6 col-md-5">
                     <div className={`container ${style.containerCustom}`}>
                         <h3 className={style.head}>{job.title}</h3>
-
+                        <br></br>
+                        <p>Job Id: {job._id}</p>
                         <br />
                         <br />
-                        <br />
-                        <p className={style.para}>{`${job.startDate.split("G")[0]}`} |{`${job.endDate.split("G")[0]}`}</p>
+                        <p className={style.para}>{
+                            job.dates.map(x => x)
+                        }</p>
                         <br />
                         <br />
 
@@ -59,7 +61,6 @@ const JobDetails = (props) => {
                             job.services.map(service => <span className={`badge badge-primary m-2 ${style.badges}`}>{service.name}</span>)
 
                         }
-
 
                     </div>
                 </div>
@@ -75,16 +76,11 @@ const JobDetails = (props) => {
                         {/* <Button name="Status" /> */}
                     </div>
 
-
-
                     <div className={style.btns}>
                         {/* <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" /> */}
                     </div>
                 </div>
             </div>
-
-
-
 
                 <div className={`row ${style.row2}`}>
                     <div className="col-2">
@@ -111,12 +107,12 @@ const JobDetails = (props) => {
                                 <div>
 
                                     <h3 className={style.jobHead}>Notes</h3>
-                                    <p className={style.para}>
-                                        {job.note.map((note) => <p>{note.text}</p>)}
+                                    {job.note.map(x => <p className={style.para}>
+                                        {x.text}
                                     </p>
+                                    )}
                                 </div>
                             }
-
                             {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
                         </div>
 

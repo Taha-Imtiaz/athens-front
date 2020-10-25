@@ -32,8 +32,8 @@ const UsersList = (props) => {
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-  var totalCount = users[0] ?.data.users.total
-  var usersDocs = users[0] ?.data.users.docs 
+  var totalCount = users?.users?.total
+  var usersDocs = users?.users?.docs 
 
   var handleFilter = (name) => {
     var sortUserObj = {
@@ -97,7 +97,7 @@ const UsersList = (props) => {
           <div className={style.jumbotron}>
             <ul className="list-group">
               <div className={style.li}>
-                {usersDocs ?.map((usersDoc, i) => {
+                {usersDocs && usersDocs.length > 0 ? usersDocs.map((usersDoc, i) => {
                   return <li key={i} className=" checkbox list-group-item">
                     <div className="row justify-content-around">
                       <div className="col-3 col-md-4 text-left">
@@ -122,7 +122,9 @@ const UsersList = (props) => {
 
                     </div>
                   </li>
-                })}
+                }) : <div className="text-center">
+                    <img src='/images/no-data-found.png' />
+                  </div>}
 
               </div>
             </ul>

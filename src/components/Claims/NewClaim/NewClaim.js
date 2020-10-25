@@ -249,8 +249,8 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addAnotherClaim} /> */}
-                <Button onClick={this.addAnotherClaim} name="Add Another"></Button>
+                <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
+                {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
             {this.state.descriptionError ? (

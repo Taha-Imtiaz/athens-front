@@ -7,33 +7,39 @@ import { Redirect } from 'react-router-dom';
 import SideBar from '../Sidebar/SideBar';
 import { Link } from 'react-router-dom'
 // import axios from 'axios'
-
+import { login } from '../../Redux/user/userActions'
 import API from '../../utils/api'
+import { connect } from "react-redux";
 
-const initialState = {
-  username: '',
-  password: '',
-  emailError: '',
-  passwordError: '',
-}
 
 
 class SignInForm extends React.Component {
+  initialState = {
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: '',
+  }
   constructor(props) {
     super(props);
     // let loggedIn = false
-    this.state = initialState
+    this.state = this.initialState
+    let token = localStorage.getItem('athens-token')
+    if(token) {
+      console.log(this.props.user)
+      props.history.push('/customer')
+    }
     // loggedIn }
   }
 
   validate = () => {
-    // var {username,password,emailError,passwordError} = this.state
+    // var {email,password,emailError,passwordError} = this.state
     let emailError = ''
     let passwordError = ''
 
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (!this.state.username.match(mailformat)) {
+    if (!this.state.email.match(mailformat)) {
       emailError = "Invalid Email"
     }
 
@@ -49,39 +55,32 @@ class SignInForm extends React.Component {
     return true
   }
 
-  mySubmitHandler = (event) => {
-    // props.history.push('/customers')
-    event.preventDefault();
+  formSubmit = (e) => {
+    // history.push('/customers')
+    e.preventDefault();
 
     const isValid = this.validate()
+    var { login } = this.props;
     if (isValid) {
-      this.setState(initialState)
-
-      API.post(`posts`, this.state)
-        .then(response => {
-        })
-        .catch(error =>{
-          console.log(error)
-        })
+      console.log(this.state)
+      let obj = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      login(obj, () => {
+        console.log('hell')
+        this.props.history.push('/customer')
+      })
+      
     }
-
-    // if (this.state.username === "S" && this.state.password == "abc") {
-    //   localStorage.setItem("token", "abc")
-    //   this.setState({
-    //     loggedIn: true
-    //   })
-    // }
-  }
-  formSubmit = () => {
-    // history.push('/customers')
   }
 
-  // usernameChangeHandler = (event) => {
+  // emailChangeHandler = (event) => {
   //   let uname = event.target.value
   //   if (uname == "") {
   //     alert('Fill this Field')
   //   }
-  //   this.setState({ username: uname })
+  //   this.setState({ email: uname })
   // }
 
   // passwordChangeHandler = (event) => {
@@ -106,14 +105,14 @@ class SignInForm extends React.Component {
           <h1 className={style.head}>Sign In</h1>
           <div className={style.userInput}>
             <label className={style.labell}>Email</label><br />
-            <input className={style.input_fields} type="text" name="username" value={this.state.username} onChange={this.handleFormInput} />
+            <input className={style.input_fields} type="text" name="email" value={this.state.email} onChange={this.handleFormInput} />
           </div>
 
           {/* <div style={{ color: "red", fontSize: "12px" }}>{this.state.emailError}</div> */}
           {this.state.emailError ? (
             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
               {this.state.emailError}
-    
+
             </div>) : null}
 
           <div className={style.pwd}>
@@ -125,24 +124,32 @@ class SignInForm extends React.Component {
           {this.state.passwordError ? (
             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
               {this.state.passwordError}
-             
-                
-    
+
+
+
             </div>) : null}
 
           {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-          <Link style={{ textDecoration: "none" }} to='/customer'>
-            <button onClick={() => this.formSubmit()} type='button' className={style.button}>Sign In</button>
-          </Link>
-          <h3 className={style.heading}>Or Login With</h3>
+          {/* <Link style={{ textDecoration: "none" }} to='/customer'> */}
+          <button onClick={this.formSubmit} type='button' className={style.button}>Sign In</button>
+          {/* </Link> */}
+          {/* <h3 className={style.heading}>Or Login With</h3>
           <div className={style.btnStyle}>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>
             <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-facebook"></i></button>
-          </div>
+          </div> */}
         </form>
       </div>
     )
   }
 }
 
-export default SignInForm
+var actions = {
+  login
+};
+
+var mapStateToProps = (state) => ({
+  user: state.users.user
+});
+
+export default connect(mapStateToProps, actions)(SignInForm);

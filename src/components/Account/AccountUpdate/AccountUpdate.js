@@ -3,6 +3,7 @@ import style from './AccountUpdate.module.css'
 import Button from '../../Button/Button'
 import API from '../../../utils/api'
 import { getUserData, updateUser } from '../../../Redux/user/userActions';
+import { connect } from 'react-redux';
 
 
 const initialState = {
@@ -25,22 +26,28 @@ class AccountUpdate extends Component {
 
 
     componentDidMount = () => {
-      var userId  = this.props.location.userId
-      getUserData(userId).then((res) => {
-          var {user} = res.data
-          var {name, email, password, address, phone} = user
-         this.setState({
-             name, 
-             email, 
-             password, 
-             address, 
-             phone
-         })
-      }).catch((error) => {
-          console.log(error)
-      })
+        var userId = this.props.location.userId
+        var { history } = this.props;
+        if (!userId) {
+            history.push("/account");
+        } else {
+            getUserData(userId).then((res) => {
+                var { user } = res.data
+                var { name, email, password, address, phone } = user
+                this.setState({
+                    name,
+                    email,
+                    password,
+                    address,
+                    phone
+                })
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
     };
-    
+
 
     validate = () => {
         // var {username,password,emailError,passwordError} = this.state
@@ -73,7 +80,7 @@ class AccountUpdate extends Component {
         }
 
 
-        if (nameError || emailError || passwordError || phoneError || addressError ) {
+        if (nameError || emailError || passwordError || phoneError || addressError) {
             this.setState({ nameError, emailError, passwordError, phoneError, addressError })
             return false
         }
@@ -85,10 +92,10 @@ class AccountUpdate extends Component {
     handleFormInput = (event) => {
         var { name, value } = event.target
         this.setState({ [name]: value })
-        if(value == "") {
-            this.setState({[name + "Error"] : "Should not be empty"})
+        if (value == "") {
+            this.setState({ [name + "Error"]: "Should not be empty" })
         } else {
-            this.setState({[name + "Error"] : ""})
+            this.setState({ [name + "Error"]: "" })
         }
     }
 
@@ -99,19 +106,20 @@ class AccountUpdate extends Component {
 
         const isValid = this.validate()
         if (isValid) {
-             var {name, email, password, address, phone} = this.state
-             var updatedUserObj = {
-                name, 
-                email, 
+            var { name, email, password, address, phone } = this.state
+            var updatedUserObj = {
+                name,
+                email,
                 password,
-                 address,
-                  phone
-             }
-             updateUser.then((res) => {
-
-             }).catch((error) => {
-                 console.log(error)
-             })
+                address,
+                phone
+            }
+            const { updateUser, history } = this.props;
+            updateUser(updatedUserObj, this.props.location.userId).then((res) => {
+                history.push("/account");
+            }).catch((error) => {
+                console.log(error)
+            })
         }
 
     }
@@ -130,9 +138,9 @@ class AccountUpdate extends Component {
                         {this.state.nameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.nameError}
-                               
-                               
-                               
+
+
+
                             </div>) : null}
 
                         <div className="form-group">
@@ -142,11 +150,37 @@ class AccountUpdate extends Component {
                         {this.state.emailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.emailError}
-                               
-                               
-                               
+
+
+
                             </div>) : null}
 
+
+
+
+                        <div className="form-group">
+                            <input type="input" className="form-control" id="name" placeholder="Enter Phone" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
+                        </div>
+
+                        {this.state.phoneError ? (
+                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+                                {this.state.phoneError}
+
+
+
+                            </div>) : null}
+
+                        <div className="form-group">
+                            <input type="input" className="form-control" id="name" placeholder="Enter Address" name="address" value={this.state.address} onChange={this.handleFormInput} />
+                        </div>
+
+                        {this.state.addressError ? (
+                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
+                                {this.state.addressError}
+
+
+
+                            </div>) : null}
 
                         <div className="form-group">
                             <input type="password" className="form-control" id="password" placeholder="Enter Password" name="password" value={this.state.password} onChange={this.handleFormInput} />
@@ -155,35 +189,10 @@ class AccountUpdate extends Component {
                         {this.state.passwordError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.passwordError}
-                               
-                               
-                               
+
+
+
                             </div>) : null}
-
-                            <div className="form-group">
-                            <input type="input" className="form-control" id="name" placeholder="Enter Phone" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
-                        </div>
-
-                        {this.state.phoneError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.phoneError}
-                               
-                               
-                               
-                            </div>) : null}
-
-                            <div className="form-group">
-                            <input type="input" className="form-control" id="name" placeholder="Enter Address" name="address" value={this.state.address} onChange={this.handleFormInput} />
-                        </div>
-
-                        {this.state.addressError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.addressError}
-                               
-                               
-                               
-                            </div>) : null}
-
                     </form>
                     <div className={style.btn}>
                         <Button name="Update" onClick={this.mySubmitHandler} />
@@ -194,4 +203,9 @@ class AccountUpdate extends Component {
     }
 }
 
-export default AccountUpdate;
+
+var actions = {
+    updateUser
+}
+
+export default connect(null, actions)(AccountUpdate);

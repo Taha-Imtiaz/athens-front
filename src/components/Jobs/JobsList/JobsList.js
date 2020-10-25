@@ -48,7 +48,7 @@ class JobsList extends Component {
 
     });
   };
-  
+
   handlePageChange = (page) => {
     var { getAllJobs } = this.props
     var fetchJobsOnPageChange = {
@@ -124,7 +124,7 @@ class JobsList extends Component {
   render() {
 
     var { jobs } = this.props
-
+    console.log(jobs)
     var { pageSize, currentPage } = this.state
 
     var totalCount = jobs[0] ?.data ?.jobs.total
@@ -191,7 +191,7 @@ class JobsList extends Component {
 
 
 
-        {jobs.length > 0 ?
+        {jobs[0] && jobs[0].data.jobs.docs.length > 0 ?
           <div className={`${style.jumbotron}`}>
 
             <ul className="list-group">
@@ -205,7 +205,9 @@ class JobsList extends Component {
                           <label>{job.title}</label>
                         </div>
                         <div className="col-4 col-md-2">
-                          <i className="fa fa-calendar"> {`${job.startDate.split("G")[0]}`}</i>
+                          <i className="fa fa-calendar"> {
+                            job.dates.map(x => x)
+                          }</i>
                         </div>
                         <div className="col-4 col-md-3">
                           <span>
@@ -245,7 +247,9 @@ class JobsList extends Component {
               onPageChange={this.handlePageChange}
             />
           </div>
-          : null}
+          : <div className="text-center">
+            <img src='/images/no-data-found.png' />
+          </div>}
       </div>
     )
   }

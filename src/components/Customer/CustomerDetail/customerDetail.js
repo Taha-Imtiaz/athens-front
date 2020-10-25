@@ -18,10 +18,10 @@ const CustomerDetail = (props) => {
   var [note, setNote] = useState("");
 
   var { customer, getCustomer } = props;
-  var formatStartDate, formatEndDate;
+  // var formatStartDate, formatEndDate;
   if (customer ?.jobs.length !== 0) {
-    formatStartDate = new Date(customer ?.jobs[0].startDate);
-    formatEndDate = new Date(customer ?.jobs[0].endDate);
+    // formatStartDate = new Date(customer ?.jobs[0].startDate);
+    // formatEndDate = new Date(customer ?.jobs[0].endDate);
   }
   var {
     match: {
@@ -109,13 +109,25 @@ const CustomerDetail = (props) => {
               </div> */}
             </div>
           </div>
+          <div className={style.btn}>
+            <Link style={{ textDecoration: "none" }} to={{
 
+              pathname: "/job/create",
+              customerId: customer.email
+            }}>
+              {" "}
+              <Button variant="primary" style={{ margin: "0 15rem" }}>
+                Create Job
+                </Button>
+
+            </Link>
+          </div>
           <h3 className={style.sub}>Sub Contact</h3>
 
           <div className={style.container}>
             <div className="accordion" id="accordionExample">
               {customer.subContacts.map((x, i) => (
-                <div key = {i} className="card">
+                <div key={i} className="card">
                   <div className="card-header" id="headingOne">
                     <h5 className="mb-0">
                       <button
@@ -151,20 +163,8 @@ const CustomerDetail = (props) => {
             </div>
           </div>
 
-          <div className={style.btn}>
-            <Link style={{ textDecoration: "none" }} to={{
-
-              pathname: "/job/create",
-              customerId: customerId
-            }}>
-              {" "}
-              <Button variant="primary" style={{ margin: "0 15rem" }}>
-                Create Job
-                </Button>
-
-            </Link>
-          </div>
-          {customer.jobs &&
+         
+          {customer.jobs && customer.jobs.length > 0 ?
             <div className={style.jumbotron} style={{ padding: "1rem 0" }}>
               <div className="row">
                 <div className="col-4">
@@ -177,22 +177,25 @@ const CustomerDetail = (props) => {
                   <label className={style.status}>Status</label>
                 </div>
               </div>
-              {customer.jobs.map((job) => {
-                return <div className="row" key={customerId} style={{ margin: "2rem", borderBottom: "1px solid #a8a8a8" }} >
+              {customer.jobs.map((job, i) => {
+                return <div className="row" key={i} style={{ margin: "2rem", borderBottom: "1px solid #a8a8a8" }} >
 
                   <div className="col-4">
 
 
                     <p style={{ padding: "5%" }}>
-                      {formatStartDate.toDateString()} -{" "}
-                      {formatEndDate.toDateString()}| {job.startTime} -{" "}
+                      {
+                        job.dates.map(x => x)
+                      }
+                      <br></br>
+                      {job.startTime} -{" "}
                       {job.endTime}
                     </p>
                     <p style={{ padding: "5%" }}>{job.description}</p>
-                    {job.locations.map(list => <p style={{ padding: "5%" }}>Pickup : {list.from} Drop Off : {list.to}</p>)}
+                    {job.locations.map((list, i) => <p key={i} style={{ padding: "5%" }}>Pickup : {list.from} Drop Off : {list.to}</p>)}
                   </div>
                   <div className="col-4">
-                    {job.assignee.map((assignee) => <p>{assignee}</p>)}
+                    {job.assignee.map((assignee, i) => <p key={i}>{assignee}</p>)}
 
                   </div>
                   <div className="col-4">
@@ -203,7 +206,7 @@ const CustomerDetail = (props) => {
                     <h4 className={style.notesh}>Notes</h4>
                     <p className={style.notesd} >
 
-                      {job.note.map((note) => <div className={`row`} style={{ margin: "3%" }} >
+                      {job.note.map((note, i) => <div key={i} className={`row`} style={{ margin: "3%" }} >
 
                         {note.text}</div>)}
                     </p>
@@ -246,7 +249,7 @@ const CustomerDetail = (props) => {
 
 
             </div>
-          }
+          : null}
           <br />
         </div>
       )}

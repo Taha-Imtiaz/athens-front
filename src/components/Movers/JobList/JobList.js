@@ -14,30 +14,28 @@ class MoversJobsList extends Component {
         isLoading: true,
         data: [],
         status: "completed"
-      
+
     }
-   
-   componentDidMount = () => {
+
+    componentDidMount = () => {
         var { getMover } = this.props
         getMover('5f907f70bc2d090017901d68')
         // this.setState({
         //     isLoading: false,
         //     data: this.props.moverJobs.data
         // })
-    } 
+    }
 
     handleJobUpdate = (id) => {
-      console.log(id)
-    
-       
-        updateJob(id,{status : this.state.status})
-      };
-    
+        console.log(id)
+        updateJob(id, { status: this.state.status })
+    };
+
     render() {
         console.log(this.state.data)
         const { moverJobs } = this.props;
-        
-         console.log(moverJobs)
+
+        console.log(moverJobs)
         return (
             <div className={style.toprow}>
                 <div className="row">
@@ -59,7 +57,7 @@ class MoversJobsList extends Component {
 
                     </div>
                 </div>
-                {moverJobs?.data?.jobs ? moverJobs.data.jobs.map(list => {
+                {moverJobs ?.data ?.jobs ? moverJobs.data.jobs.map(list => {
                     return <><div className={`${style.jumbotron}`}>
 
                         <ul className="list-group">
@@ -74,21 +72,22 @@ class MoversJobsList extends Component {
                                         <div className="col-4 col-md-2">
                                             <i className="fa fa-calendar ">{list.startDate.split("G")[0]}</i>
                                         </div>
-                                        {list.assignee.map( ass => {
-                                       return <><div className="col-4 col-md-2 d-flex justify-content-center">
-                                            <span>
-                                                <i className="fa fa-user"></i>
-                                                <label className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">{ass.name}</label>
-                                            </span>
-                                        </div></>})}
+                                        {list.assignee.map(ass => {
+                                            return <><div className="col-4 col-md-2 d-flex justify-content-center">
+                                                <span>
+                                                    <i className="fa fa-user"></i>
+                                                    <label className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">{ass.name}</label>
+                                                </span>
+                                            </div></>
+                                        })}
                                         <div className="col-4 col-md-2 d-flex justify-content-center ">
-                                            {list.status==='completed' ? <label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label> : <><label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label>&nbsp;&nbsp;&nbsp;<Button onClick={() => this.handleJobUpdate(list._id)} name="Completed" /></>}
+                                            {list.status === 'completed' ? <label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label> : <><label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label>&nbsp;&nbsp;&nbsp;<Button onClick={() => this.handleJobUpdate(list._id)} name="Completed" /></>}
                                         </div>
                                         <div className="col-4 col-md-3">
                                             <div className="form-check">
                                                 <div className={`d-flex justify-content-end`}>
-                                                    
-                                                    <Link style={{ textDecoration: "none" }} to={'/job/details/'+list._id}> <Button name="Details" /></Link>
+
+                                                    <Link style={{ textDecoration: "none" }} to={'/job/details/' + list._id}> <Button name="Details" /></Link>
                                                 </div>
 
                                             </div>
@@ -102,7 +101,9 @@ class MoversJobsList extends Component {
                         </ul>
 
                     </div></>
-                }): null}
+                }) : <div className="text-center">
+                        <img src='/images/no-data-found.png' />
+                    </div>}
             </div>
         )
     }

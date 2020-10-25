@@ -83,3 +83,12 @@ export var addDeposit = async (data) => {
         console.log(error);
     }
 }
+
+export var updateDeposit = async (data) => {
+    try {
+        var blanket = await Axios.post(`user/update-blanket-deposit`, data)
+        return blanket
+    } catch (error) {
+        console.log(error);
+    }
+}

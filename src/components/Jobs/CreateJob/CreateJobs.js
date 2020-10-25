@@ -9,39 +9,41 @@ import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
+import { clone, cloneDeep } from "lodash"
 
 
-const initialState = {
-  title: "",
-  description: "",
-  services: [],
-  customerId: "",
-  startDate: "",
-  endDate: "",
-  startTime: "",
-  endTime: "",
 
-  from: "",
-  to: "",
-  titleError: "",
-  descriptionError: "",
-  multiError: "",
-  dateError: "",
-  timeError: "",
-  assigneeError: "",
-  locationfromError: "",
-  locationtoError: "",
-  assigneeList: [],
-  status: "pending",
-  note: [],
-  assigneesId: [],
-  add: 1,
-  locations: [{ from: '', to: '' }],
-  fromTo: []
-
-};
 
 class CreateJobs extends Component {
+  initialState = {
+    title: "",
+    description: "",
+    services: [],
+    customerId: "",
+    startDate: "",
+    dates: [''],
+    startTime: "",
+    endTime: "",
+
+    from: "",
+    to: "",
+    titleError: "",
+    descriptionError: "",
+    multiError: "",
+    dateError: "",
+    timeError: "",
+    assigneeError: "",
+    locationfromError: "",
+    locationtoError: "",
+    assigneeList: [],
+    status: "pending",
+    note: [],
+    assigneesId: [],
+    add: 1,
+    locations: [{ from: '', to: '' }],
+    fromTo: []
+
+  };
   // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
   options = [
     { name: "Srigar", id: 1 },
@@ -55,10 +57,6 @@ class CreateJobs extends Component {
     { id: 5, name: "Baby" },
     { id: 6, name: "Hot Tub" },
   ];
-  multiselectRef1 = React.createRef();
-  multiselectRef2 = React.createRef();
-  multiselectRef3 = React.createRef();
-  multiselectRef4 = React.createRef();
   timeOptions = [
     { name: "01:00 am", id: 1, value: "01:00:00" },
     { name: "02:00 am", id: 2, value: "02:00:00" },
@@ -86,7 +84,7 @@ class CreateJobs extends Component {
     { name: "12:00 am", id: 24, value: "00:00:00" },
   ];
 
-  state = initialState;
+  state = this.initialState;
   componentDidMount = () => {
     console.log('Create', this.props)
     getAllMovers()
@@ -104,11 +102,19 @@ class CreateJobs extends Component {
   };
 
   addLocation = () => {
-      if(this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
-        console.log(this.state)
-        this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
-        console.log(this.state)
-      }
+    if (this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
+      console.log(this.state)
+      this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
+      console.log(this.state)
+    }
+  }
+
+  addDate = () => {
+    if (this.state.dates[0]) {
+      console.log(this.state)
+      this.setState({ dates: [...this.state.dates, ''] });
+      console.log(this.state)
+    }
   }
   componentWillUnmount() {
     console.log('Unmount called')
@@ -194,8 +200,7 @@ class CreateJobs extends Component {
     let titleError = "";
     let descriptionError = "";
     let multiError = "";
-    let startDateError = "";
-    let EndDateError = "";
+    // let startDateError = "";
     let timeError = "";
     let assigneeError = "";
     let locationfromError = "";
@@ -217,12 +222,9 @@ class CreateJobs extends Component {
       assigneeError = "Assignee Should not be empty";
     }
 
-    if (!this.state.startDate) {
-      startDateError = "Date should not be empty";
-    }
-    if (!this.state.endDate) {
-      EndDateError = "Date should not be empty";
-    }
+    // if (!this.state.startDate) {
+    //   startDateError = "Date should not be empty";
+    // }
 
     if (!this.state.startTime) {
       timeError = "Time should not be empty";
@@ -248,8 +250,7 @@ class CreateJobs extends Component {
       titleError ||
       descriptionError ||
       multiError ||
-      startDateError ||
-      EndDateError ||
+      // startDateError ||
       timeError ||
       assigneeError ||
       locationfromError ||
@@ -259,8 +260,7 @@ class CreateJobs extends Component {
         titleError,
         descriptionError,
         multiError,
-        startDateError,
-        EndDateError,
+        // startDateError,
         timeError,
         assigneeError,
         locationfromError,
@@ -272,16 +272,13 @@ class CreateJobs extends Component {
     return true;
   };
 
-  handleStartDate = (date) => {
-    console.log(typeof date, date.toString());
-    this.setState({
-      startDate: date
-    });
-  };
+  handleStartDate = (date, i) => {
+    console.log(typeof date, date.toString(), i);
 
-  handleEndDate = (date) => {
+    let newState = cloneDeep(this.state)
+    newState.dates[i] = date;
     this.setState({
-      endDate: date
+      dates: newState.dates
     });
   };
 
@@ -351,10 +348,7 @@ class CreateJobs extends Component {
     newState.endTime = selectedTime;
     this.setState({ endTime: newState.endTime });
   };
-  resetValues = () => {
-    // By calling the belowe method will reset the selected values programatically
-    this.multiselectRef.current.resetSelectedValues();
-  }
+
   mySubmitHandler = (event) => {
     var { createJob, history } = this.props
     event.preventDefault();
@@ -369,7 +363,7 @@ class CreateJobs extends Component {
         description,
         services,
         startDate,
-        endDate,
+        dates,
         startTime,
         endTime,
         locations,
@@ -379,12 +373,13 @@ class CreateJobs extends Component {
         customerId,
       } = this.state;
 
+      let stringDates = dates.map(x => x.toDateString())
       var createJobObj = {
         title,
         description,
         services,
-        startDate: startDate.toString(),
-        endDate: endDate.toString(),
+        // startDate: startDate.toString(),
+        dates: stringDates,
         startTime,
         endTime,
         locations,
@@ -396,31 +391,12 @@ class CreateJobs extends Component {
       console.log(createJobObj);
       // var { history } = this.props;
       createJob(createJobObj)
-        // .then((res) => {
-        //   history.push("/job");
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
-      this.multiselectRef1.current.resetSelectedValues();
-      this.multiselectRef2.current.resetSelectedValues();
-      this.multiselectRef3.current.resetSelectedValues();
-      this.multiselectRef4.current.resetSelectedValues();
-      this.setState({
-        title: "",
-        description: "",
-        services: [],
-        startDate: "",
-        endDate: "",
-
-        locations: [{ from: '', to: '' }],
-        status: "",
-        note: "",
-        assigneesId: [],
-        customerId: "",
-        timeOptions: [],
-        servicesOptions: [],
+      .then((res) => {
+        history.push("/job");
       })
+      .catch((error) => {
+        console.log(error);
+      });
 
     }
 
@@ -436,7 +412,7 @@ class CreateJobs extends Component {
         <div className={`${style.tron}`}>
           <form onSubmit={this.mySubmitHandler}>
             <div className={`form-group ${style.input}`}>
-              <label htmlFor="">Customer Id</label>
+              <label htmlFor="">Customer Email</label>
               <input
                 type="input"
                 className="form-control"
@@ -444,7 +420,7 @@ class CreateJobs extends Component {
                 name="customerId"
                 value={this.state.customerId}
                 onChange={this.handleFormInput}
-                disabled
+                // disabled
               />
             </div>
 
@@ -473,6 +449,7 @@ class CreateJobs extends Component {
               <textarea
                 className={style.textarea}
                 id="ta"
+                rows="4"
                 placeholder="Job Description"
                 name="description"
                 value={this.state.description}
@@ -499,7 +476,6 @@ class CreateJobs extends Component {
                 displayValue="name" // Property name to display in the dropdown options
                 className="form-control"
                 placeholder="Services"
-                ref={this.multiselectRef1}
               />
             </div>
 
@@ -513,43 +489,32 @@ class CreateJobs extends Component {
             ) : null}
 
             <div className="row">
-              <div className="form-group col-3">
-                <DatePicker
-                  className={style.to}
-                  selected={this.state.startDate}
-                  onChange={this.handleStartDate}
-                  placeholderText="Start Date"
-                  className="form-control"
-                />
-              </div>
+              {this.state.dates.map((x, i) => {
+                return (
+                  <div className="form-group col-3">
+                    <DatePicker
+                      className={style.to}
+                      selected={this.state.dates[i]}
+                      onChange={(e) => this.handleStartDate(e, i)}
+                      placeholderText="Choose Dates"
+                      className="form-control"
+                    />
+                  </div>
+                )
+              })}
 
-              {this.state.startDateError ? (
+              {/* {this.state.startDateError ? (
                 <div
                   className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                   role="alert"
                 >
                   {this.state.startDateError}
                 </div>
-              ) : null}
+              ) : null} */}
 
-              <div className="form-group col-3">
-                <DatePicker
-                  className={style.to}
-                  selected={this.state.endDate}
-                  onChange={this.handleEndDate}
-                  placeholderText="End Date"
-                  className="form-control"
-                />
+              <div className="form-group col-3 my-0" onClick={this.addDate}>
+                <i className="fa fa-plus"></i>
               </div>
-
-              {this.state.EndDateError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.EndDateError}
-                </div>
-              ) : null}
             </div>
 
             <div className="row">
@@ -562,8 +527,7 @@ class CreateJobs extends Component {
                   className="form-control"
                   value={this.state.startTime}
                   id="starttime"
-                  ref={this.multiselectRef2}
-                  placeholder={this.state.startTime.length > 0 ? null : 'select time'}
+                  placeholder={this.state.startTime.length > 0 ? null : 'Start Time'}
                 />
               </div>
               {this.state.timeError ? (
@@ -583,8 +547,7 @@ class CreateJobs extends Component {
                   className="form-control"
                   value={this.state.endTime}
                   id="time"
-                  ref={this.multiselectRef3}
-                  placeholder={this.state.endTime.length > 0 ? null : 'select time'}
+                  placeholder={this.state.endTime.length > 0 ? null : 'Meet Time'}
                 />
               </div>
 
@@ -598,11 +561,6 @@ class CreateJobs extends Component {
               ) : null}
             </div>
 
-
-
-
-
-
             <div className="form-group">
               <Multiselect
                 className={style.multi}
@@ -612,7 +570,6 @@ class CreateJobs extends Component {
                 displayValue="name" // Property name to display in the dropdown options
                 className="form-control"
                 placeholder="Select Assignee"
-                ref={this.multiselectRef4}
               />
             </div>
 

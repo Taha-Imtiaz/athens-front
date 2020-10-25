@@ -62,9 +62,16 @@ const CustomerClaims = (props) => {
         console.log(newData)
         newData[updateIndex].updates.push(ob);
         console.log(newData[updateIndex])
+        var { showMessage, history } = props;
         updateClaim(newData[updateIndex]).then(res => {
+            console.log(res)
             if (res.data.status == 200) {
+                console.log('Inside', data[updateIndex].updates, newData[updateIndex].updates)
+                data[updateIndex].updates = res.data.claim.updates;
                 setShow(false);
+                setUpdate('');
+                // history.push('/claim/customer')
+                showMessage(res.data.message)
                 // data[updateIndex] = res.data.claim;
             }
             console.log(data)
@@ -118,7 +125,7 @@ const CustomerClaims = (props) => {
             </div>
         </div>
         {
-            data && data.map((x, i) => {
+            data && data.length > 0 ? data.map((x, i) => {
                 return (
                     <div className={style.jumbotron} key={x._id}>
                         <div className="row justify-content-between">
@@ -200,7 +207,9 @@ const CustomerClaims = (props) => {
                     </div>
                 )
             })
-        }
+                : <div className="text-center">
+                    <img src='/images/no-data-found.png' />
+                </div>}
         <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
                 <Modal.Title>Add Update</Modal.Title>

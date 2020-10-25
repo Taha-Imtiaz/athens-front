@@ -10,7 +10,7 @@ const DailySchedule = (props) => {
     const [weekNames, setWeekNames] = useState()
     const [tomorrow, setTomorrow] = useState(today.getDay() + 2)
     const [date, setDate] = useState(today.toString().split(' ')[0])
-    
+
     const [nextDate, setNextDate] = useState(new Date())
 
     const { getalljobs, getalljobsfiveday, jobs, movers } = props;
@@ -20,7 +20,7 @@ const DailySchedule = (props) => {
 
 
     console.log(day)
-      useEffect(() => {
+    useEffect(() => {
         getalljobs({
             "date": nextDate
         })
@@ -91,7 +91,7 @@ const DailySchedule = (props) => {
         let itemDate = new Date(date); // starting today
         date.setDate(date.getDate() + i);
         // temp.push(date);
-        
+
         console.log(date.toString().split(' ')[0])
         setNextDate(date)
         console.log(nextDate)
@@ -118,7 +118,7 @@ const DailySchedule = (props) => {
                 </ul>
             </div>
 
-            {props.jobs && props.jobs.data.jobs.map(list => {
+            {props.jobs && props.jobs.data.jobs.length > 0 ? props.jobs.data.jobs.map(list => {
                 return <><div className={`list-group ${style.list}`}>
                     <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
                         <div className="d-flex w-100 justify-content-between">
@@ -132,7 +132,9 @@ const DailySchedule = (props) => {
                         })}
                     </a>
                 </div></>
-            })}
+            }) : <div className="text-center">
+                    <img src='/images/no-data-found.png' />
+                </div>}
 
         </div>
 

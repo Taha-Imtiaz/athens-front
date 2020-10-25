@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Sign_In_Form from './components/signIn/signin';
 import SignInForm from './components/signIn/signin';
@@ -36,11 +36,11 @@ import SubmitDeposit from './components/Claims/SubmitDeposit/SubmitDeposit';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getLoginUser } from './Redux/user/userActions'
 
 function App(props) {
   const [show, setShow] = [false]
   const notify = (message) => toast(message);
-
   const { loading, showMessage } = props
   console.log(loading, showMessage)
 
@@ -59,8 +59,8 @@ function App(props) {
         <Route exact path="/customer" component={customerList} />
         <Route path="/customer/detail/:customerId" component={customerDetail} />
         <Route path="/customer/add" component={CustomerAdd} />
-        <Route path="/admin" component={AdminPage} />
-        <Route path="/signout" component={SignOut} />
+        {/* <Route path="/admin" component={AdminPage} /> */}
+        {/* <Route path="/signout" component={SignOut} /> */}
         <Route path="/claim/customer" component={CustomerClaims} />
         <Route exact path="/claim/customerdeposit" component={CustomerDeposit} />
         <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit} />
@@ -77,6 +77,7 @@ function App(props) {
         <Route path="/user/create" component={CreateUser} />
         <Route exact path="/account" component={AccountDisplay} />
         <Route path="/account/update" component={AccountUpdate} />
+        {/* Mover Routes */}
         <Route exact path="/mover" component={MoversJobsList} />
         <Route path="/mover/payment" component={Payment} />
         <Route path="/mover/calendar" component={MoversCalendar} />
@@ -89,8 +90,12 @@ function App(props) {
 }
 
 const mapStateToProps = state => ({
-  loading: state.common.loading,
+  // loading: state.common.loading,
   showMessage: state.common.displayMessage.message
 })
 
-export default connect(mapStateToProps)(App);
+const action = {
+  // getLoginUser
+}
+
+export default connect(mapStateToProps, null)(App);

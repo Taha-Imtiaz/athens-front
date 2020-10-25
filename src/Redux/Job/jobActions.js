@@ -60,7 +60,7 @@ export var createJob = (newJobObj) => {
 export var updateJob = async (jobId, jobObj) => {
   try {
     var updatedJob = await Axios.post(
-      `${baseUrl}user/update-job/${jobId}`,
+      `user/update-job/${jobId}`,
       jobObj
     );
     return updatedJob;

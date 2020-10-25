@@ -25,11 +25,25 @@ class CalendarApp extends Component {
 
     componentDidMount = () => {
         // const { getJobsByDate } = this.props;
-        getJobsByDate().then(res =>  {
-            this.setState({ 
-                myEventsList: res.data.jobs
+        getJobsByDate().then(res => {
+            console.log(res.data.jobs)
+            let jobs = []
+            res.data.jobs.map(x => {
+                x.dates.map(y => {
+                    let obj = {
+                        start: y,
+                        end: y,
+                        title: x.title,
+                        id: x.id
+                    }
+                    jobs.push(obj);
+                })
             })
-        } )
+            console.log(jobs)
+            this.setState({
+                myEventsList: jobs
+            })
+        })
     }
 
     onSelect = x => console.log(x)
@@ -94,6 +108,6 @@ class CalendarApp extends Component {
 // var actions = {
 //     getJobsByDate
 //   }
-  
+
 //   export default connect(null, actions)(CalendarApp)
-  export default CalendarApp
+export default CalendarApp

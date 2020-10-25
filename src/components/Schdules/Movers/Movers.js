@@ -1,10 +1,10 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Movers.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import { getAllMover } from '../../../Redux/Schedule/scheduleAction'
 
 const MoversSchedule = (props) => {
-   const [allMovers, setAllMovers] = useState()
+    const [allMovers, setAllMovers] = useState()
     useEffect(() => {
 
         getAllMover().then((res) => {
@@ -17,17 +17,17 @@ const MoversSchedule = (props) => {
     const routes = [{
         title: "Unavailable",
         path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px" alt = "icon"></img>
+        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
     },
     {
         title: "Daily Schedule",
         path: "daily",
-        icon: <img src='/images/Icon material-schedule.png' width="20px" alt = "icon"></img>
+        icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
 
     }, {
         title: "Movers",
         path: "/schedule/Movers",
-        icon: <img src='/images/truck.png' width="20px" alt = "icon"></img>
+        icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
 
     }
     ]
@@ -64,23 +64,27 @@ const MoversSchedule = (props) => {
             </div>
 
             <div className={`list-group ${style.list}`}>
-            {allMovers && allMovers.map( list => {
-              return <><div className={style.mar}>
-                    <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
-                        <div className="d-flex w-100 justify-content-between">
-                            <h5 className={`mb-1 ${style.name}`}>{list.name}</h5>
-                            <small>{list.attributes[0].name}</small>
-                        </div>
-                        <div className={style.para}>
-                        {list.weeklySchedule.map( status => {
-                        return <span className="mb-1">{status.status ? status.day.split("",3).join("") : null}&nbsp;</span>})}
-                        </div>
-                    </a>
-                </div></>})}
-               
-        </div>
+                {allMovers && allMovers.length > 0 ? allMovers.map(list => {
+                    return <><div className={style.mar}>
+                        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+                            <div className="d-flex w-100 justify-content-between">
+                                <h5 className={`mb-1 ${style.name}`}>{list.name}</h5>
+                                <small>{list.attributes[0].name}</small>
+                            </div>
+                            <div className={style.para}>
+                                {list.weeklySchedule.map(status => {
+                                    return <span className="mb-1">{status.status ? status.day.split("", 3).join("") : null}&nbsp;</span>
+                                })}
+                            </div>
+                        </a>
+                    </div></>
+                }) : <div className="text-center">
+                        <img src='/images/no-data-found.png' />
+                    </div>}
 
-    </div></div>
+            </div>
+
+        </div></div>
 
 }
 

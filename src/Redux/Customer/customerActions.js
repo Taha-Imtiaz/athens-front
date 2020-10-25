@@ -54,11 +54,16 @@ export var getCustomer = (customerId) => {
 //     }
 //     }
 
-export var addCustomer = (customerObj) => {
+export var addCustomer = (customerObj, callback) => {
     return async (dispatch) => {
         try {
             var addedCustomer = await Axios.post("user/customer-Registration", customerObj)
-            dispatch(showMessage(addedCustomer.data.message))
+            if(addedCustomer.data.status == 200) {
+                callback();
+                dispatch(showMessage(addedCustomer.data.message))
+            } else {
+                dispatch(showMessage(addedCustomer.data.message))
+            }
         } catch (error) {
             console.log(error)
         }

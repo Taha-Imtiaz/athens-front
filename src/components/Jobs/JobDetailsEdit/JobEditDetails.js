@@ -9,6 +9,7 @@ import { showMessage } from '../../../Redux/Common/commonActions'
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { clone, cloneDeep } from "lodash"
 
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,6 +30,7 @@ class JobEditDetails extends Component {
     assignee: [],
     assigneeList: [],
     startDate: "",
+    dates: [""],
     endDate: "",
     startTime: "",
     endTime: "",
@@ -40,12 +42,23 @@ class JobEditDetails extends Component {
     status: ''
   };
 
-  handleStartDate = (date) => {
+  // handleStartDate = (date) => {
+  //   this.setState({
+  //     startDate: date,
+  //     startDateInString: date.toString(),
+  //   });
+  // };
+
+  handleStartDate = (date, i) => {
+    console.log(typeof date, i);
+
+    let newState = cloneDeep(this.state)
+    newState.dates[i] = date;
     this.setState({
-      startDate: date,
-      startDateInString: date.toString(),
+      dates: newState.dates
     });
   };
+
   handleEndDate = (date) => {
     this.setState({
       endDate: date,
@@ -81,10 +94,12 @@ class JobEditDetails extends Component {
         return { id: index + 1, name: service };
       });
       let ids = res.data.job.assignee.map((x) => x._id);
+      let parsedDates = res.data.job.dates.map(x => Date.parse(x))
       this.setState({
         job: res.data.job,
         title: res.data.job.title,
         startDate: Date.parse(res.data.job.startDate),
+        dates: parsedDates,
         endDate: Date.parse(res.data.job.endDate),
         startDateInString: res.data.job.startDate,
         endDateInString: res.data.job.endDate,
@@ -163,6 +178,7 @@ class JobEditDetails extends Component {
     var {
       title,
       startDate,
+      dates,
       endDate,
       startTime,
       endTime,
@@ -187,9 +203,21 @@ class JobEditDetails extends Component {
       }, history
     } = this.props;
     var { showMessage } = this.props;
+    console.log(dates)
+    let stringDates = dates.map(x => {
+      console.log(typeof x)
+      if (typeof x == 'number') {
+        return new Date(x).toDateString()
+      } else {
+        return x.toDateString()
+      }
+      //   x.toDateString()
+      // console.log(typeof x ==)
+    })
     //  var {startDate, endDate,  title, description, services,startTime, endTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var updatedObj = {
       startDate: startDateInString,
+      dates: stringDates,
       endDate: endDateInString,
       title,
       description,
@@ -203,6 +231,7 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
+    console.log(jobId, updatedObj)
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")
@@ -248,7 +277,7 @@ class JobEditDetails extends Component {
 
   statusChanged = (status) => {
     this.setState({
-      status
+      status: status.toLowerCase()
     })
   };
 
@@ -315,6 +344,13 @@ class JobEditDetails extends Component {
       </div></>
   }
 
+  addDate = () => {
+    if (this.state.dates[0]) {
+      console.log(this.state)
+      this.setState({ dates: [...this.state.dates, ''] });
+      console.log(this.state)
+    }
+  }
 
   render() {
     var { job } = this.state;
@@ -373,7 +409,7 @@ class JobEditDetails extends Component {
                   />
                 </div>
                 <div className="row">
-                  <div className="col-6">
+                  {/* <div className="col-6">
                     <div className="form-group">
                       <DatePicker
                         className={style.to}
@@ -382,8 +418,24 @@ class JobEditDetails extends Component {
                         placeholderText="Start Date"
                       />
                     </div>
+                  </div> */}
+                  {this.state.dates.map((x, i) => {
+                    return (
+                      <div className="form-group col-3">
+                        <DatePicker
+                          className={style.to}
+                          selected={this.state.dates[i]}
+                          onChange={(e) => this.handleStartDate(e, i)}
+                          placeholderText="Choose Dates"
+                          className="form-control"
+                        />
+                      </div>
+                    )
+                  })}
+                  <div className="form-group col-3 my-0" onClick={this.addDate}>
+                    <i className="fa fa-plus"></i>
                   </div>
-                  <div className="col-6">
+                  {/* <div className="col-6">
                     <div className="form-group">
                       <DatePicker
                         className={style.to}
@@ -392,7 +444,7 @@ class JobEditDetails extends Component {
                         placeholderText="End Date"
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row">
                   <div className="col-6">
@@ -504,13 +556,6 @@ class JobEditDetails extends Component {
                     {option}
                   </button>
                 ))}
-
-                {/* <button className="dropdown-item" type="button">
-                  Another action
-                </button>
-                <button className="dropdown-item" type="button">
-                  Something else here
-                </button> */}
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import Button from '../../Button/Button';
 import { Link } from 'react-router-dom';
 import { getJob } from "../../../Redux/Mover/moverActions";
+import { connect } from 'react-redux';
 
 
 const localizer = momentLocalizer(moment)
@@ -21,17 +22,33 @@ class MoversCalendar extends Component {
     state = {
         date: new Date(),
         myEventsList: [
-           
         ]
     }
     componentDidMount = () => {
-        // const { getJobsByDate } = this.props;
-        getJob('5f907f70bc2d090017901d68').then(res =>  {
-        console.log(res.data.jobs)
-            this.setState({ 
-                myEventsList: res.data.jobs
+        const { user } = this.props;
+        console.log(user)
+        getJob().then(res => {
+            console.log(res)
+            // this.setState({
+            //     myEventsList: res.data.jobs
+            // })
+
+            let jobs = []
+            res.data.jobs.map(x => {
+                x.dates.map(y => {
+                    let obj = {
+                        start: y,
+                        end: y,
+                        title: x.title,
+                        id: x.id
+                    }
+                    jobs.push(obj);
+                })
             })
-        } )
+            this.setState({
+                myEventsList: jobs
+            })
+        })
     }
     onChange = date => this.setState({ date })
 
@@ -78,4 +95,14 @@ class MoversCalendar extends Component {
     }
 }
 
-export default MoversCalendar;
+// export default MoversCalendar;
+var mapStateToProps = (state) => ({
+    // moverJobs: state.moverJobs,
+    user: state.users.user
+});
+
+// var actions = {
+//     getMover
+// };
+
+export default connect(mapStateToProps, null)(MoversCalendar);

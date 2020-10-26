@@ -15,7 +15,6 @@ const Navbar = (props) => {
             var { getLoginUser } = props;
             getLoginUser()
         }
-
     }, []);
 
     var { user } = props;

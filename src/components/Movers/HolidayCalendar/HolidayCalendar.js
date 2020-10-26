@@ -8,9 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { showMessage } from '../../../Redux/Common/commonActions'
+import { connect } from "react-redux";
+
 // function handleDayClick(e) {
 //   console.log(e.toString())
 // }
+import { clone, cloneDeep } from "lodash"
 
 function renderDay(day) {
   const date = day.getDate();
@@ -37,44 +41,48 @@ function renderDay(day) {
   );
 }
 
-export default function Example() {
+function Example(props) {
   const [show, setShow] = useState(false)
   const [note, setNote] = useState('')
   const [dates, setDates] = useState([])
-
-
-
 
   const handleShow = () => {
     console.log('hi')
     setShow(true)
   };
   const handleClose = () => {
-
     setShow(false)
-
   };
   const handleDayClick = (e) => {
-    setDates([...dates, e.toString()])
-    console.log(e.toString())
+    let newDates = cloneDeep(dates)
+    let index = newDates.findIndex(x => x == e.toString())
+    if (index != -1) {
+      newDates.splice(index, 1)
+      setDates(newDates)
+    } else {
+      setDates([...newDates, e.toString()])
+    }
   }
 
   const addNote = () => {
+    let { showMessage } = props;
     let obj = {
       dates,
-      reason: note,
-      _id: '5f907f70bc2d090017901d68'
+      reason: note
     }
     console.log(obj)
-     holidayCalender(obj);
+    holidayCalender(obj).then(res => {
+      if (res.data.status == 200) {
+        setShow(false)
+        showMessage(res.data.message)
+      }
+    });
   };
   const handleAddNote = (e) => {
     setNote(e.target.value)
   };
   return (
     <>
-
-
       <div className="btnalign" style={{ float: 'right' }}>
         <button
           onClick={handleShow}
@@ -118,3 +126,8 @@ export default function Example() {
     </>
   );
 }
+var actions = {
+  showMessage
+};
+
+export default connect(null, actions)(Example);

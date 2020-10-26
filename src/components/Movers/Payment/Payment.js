@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import style from './Payment.module.css'
 import Button from '../../Button/Button';
 import { Link } from 'react-router-dom';
-
+import { payAmount } from '../../../Redux/Mover/moverActions'
 class Payment extends Component {
 
     state = {
@@ -34,6 +34,10 @@ class Payment extends Component {
     }
     componentDidMount() {
         this.loadStripe();
+        const { history } = this.props;
+        if (!this.props.location.jobId) {
+            history.push('/mover')
+        }
     }
 
     pay = (e) => {
@@ -53,9 +57,12 @@ class Payment extends Component {
                 let obj = {
                     stripeToken: response.id,
                     amount: this.state.amount,
-                    jobId: 7236823823
+                    jobId: this.props.location.jobId
                 }
                 console.log(obj)
+                payAmount(obj).then((res) => {
+                    console.log(res)
+                })
                 // this.setState({
                 //     message: `Success! Card token ${response.card.id}.`,
                 //     formProcess: false

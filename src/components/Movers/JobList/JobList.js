@@ -38,10 +38,19 @@ class MoversJobsList extends Component {
         updateJob(id, { status: this.state.status })
     };
 
+    markComplete = (list) => {
+        updateJob(list._id, { status: 'Completed' }).then((res) => {
+            console.log(res)
+            var { getMover } = this.props
+            getMover();
+        })
+    }
+
     render() {
         console.log(this.state.data)
         const { moverJobs, user } = this.props;
         if (user) {
+            console.log('Inside')
             getMover(user._id)
         }
 
@@ -67,33 +76,41 @@ class MoversJobsList extends Component {
 
                     </div>
                 </div>
-                {moverJobs ?.data ?.jobs ? moverJobs.data.jobs.map(list => {
+                {moverJobs ?.data ?.jobs.length > 0 ? moverJobs.data.jobs.map(list => {
                     return <><div className={`${style.jumbotron}`}>
 
                         <ul className="list-group">
                             <div className={style.li}>
                                 <li className=" checkbox list-group-item ">
                                     <div className="row justify-content-around">
-                                        <div className={`col-3 col-md-3`}>
+                                        <div className={`col-2 col-md-2`}>
                                             <div className={style.checkbox}>
                                                 <label className="form-check-label" htmlFor="exampleCheck1">{list.title}</label>
                                             </div>
                                         </div>
-                                        <div className="col-4 col-md-2">
+                                        <div className="col-4 col-md-3">
                                             <i className="fa fa-calendar ">{list.dates.map(x => x)}</i>
                                         </div>
-                                        {list.assignee.map(ass => {
-                                            return <><div className="col-4 col-md-2 d-flex justify-content-center">
-                                                <span>
-                                                    <i className="fa fa-user"></i>
-                                                    <label className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">{ass.name}</label>
-                                                </span>
-                                            </div></>
-                                        })}
-                                        <div className="col-4 col-md-2 d-flex justify-content-center ">
-                                            {list.status === 'completed' ? <label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label> : <><label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label>&nbsp;&nbsp;&nbsp;<Button onClick={() => this.handleJobUpdate(list._id)} name="Completed" /></>}
+
+                                        <div className="col-4 col-md-4 d-flex justify-content-center">
+                                            <span>
+                                                <i className="fa fa-user"></i>
+                                                {list.assignee.length > 0 ? list.assignee.map(ass => {
+                                                    return <label className={`checkbox-inline ${style.assignee}`} htmlFor="defaultCheck1">{ass.name}</label>
+                                                }) : 'No Assignees'}
+                                            </span>
                                         </div>
-                                        <div className="col-4 col-md-3">
+                                        {/* })} */}
+                                        {/* <div className="col-4 col-md-2 d-flex justify-content-center ">
+                                            {list.status === 'completed' ? <label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label> : <><label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label>&nbsp;&nbsp;&nbsp;<Button onClick={() => this.handleJobUpdate(list._id)} name="Completed" /></>}
+                                        </div> */}
+                                        {list.status === 'booked' ?
+                                            <div className="form-check col-md-2">
+                                                <input onClick={() => this.markComplete(list)} type="checkbox" className="form-check-input" id="exampleCheck1"></input>
+                                                <label onClick={() => this.markComplete(list)} className="form-check-label" htmlFor="exampleCheck1">Mark Complete</label>
+                                            </div>
+                                            : list.status}
+                                        <div className="col-2 col-md-1">
                                             <div className="form-check">
                                                 <div className={`d-flex justify-content-end`}>
 
@@ -114,7 +131,7 @@ class MoversJobsList extends Component {
                 }) : <div className="text-center">
                         <img src='/images/no-data-found.png' />
                     </div>}
-            </div>
+            </div >
         )
     }
 

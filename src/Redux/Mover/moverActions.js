@@ -2,7 +2,7 @@
 import { GET_MOVER } from "./moverConstants"
 import Axios from '../../utils/api'
 
-var baseUrl = 'https://athens-backend.herokuapp.com/api/'
+// var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 // var baseUrl = 'http://localhost:3000/api/'
 
 export var getMover = () => {
@@ -29,7 +29,7 @@ export var getMover = () => {
 export var updateJob = async (jobId, status) => {
   try {
     var updatedJob = await Axios.post(
-      `${baseUrl}user/update-job-status/${jobId}`,
+      `user/update-job-status/${jobId}`,
       status
     );
     return updatedJob;
@@ -39,14 +39,18 @@ export var updateJob = async (jobId, status) => {
 };
 
 
-export var getJob = async (jobId) => {
+export var getJob = async () => {
   try {
+    const token = localStorage.getItem('athens-token')
+    const config = {
+      headers: { Authorization: token }
+    };
     const date = new Date()
     let data = {
       date: date.toString()
     }
-    var jobs = await Axios.post(`${baseUrl}user/get-all-jobs-by-mover-on-date/${jobId}`,
-      data
+    var jobs = await Axios.post(`user/get-all-jobs-by-mover-on-date`,
+      data, config
     );
     return jobs;
   } catch (error) {
@@ -55,9 +59,12 @@ export var getJob = async (jobId) => {
 }
 
 export var holidayCalender = async (obj) => {
-
-  var days = await Axios.post(`${baseUrl}user/request-holidays/${obj._id}`,
-    obj
+  const token = localStorage.getItem('athens-token')
+  const config = {
+    headers: { Authorization: token }
+  };
+  var days = await Axios.post(`user/request-holidays`,
+    obj, config
   );
   return days;
 
@@ -65,7 +72,7 @@ export var holidayCalender = async (obj) => {
 
 export var setAvailability = async (obj, _id) => {
 
-  var days = await Axios.post(`${baseUrl}user/set-availability/${_id}`,
+  var days = await Axios.post(`user/set-availability/${_id}`,
     obj
   );
   return days;
@@ -87,3 +94,11 @@ export var setAvailability = async (obj, _id) => {
 //     }
 //     }
 
+export var payAmount = async (obj) => {
+
+  var payment = await Axios.post(`user/payment`,
+    obj
+  );
+  return payment;
+
+}

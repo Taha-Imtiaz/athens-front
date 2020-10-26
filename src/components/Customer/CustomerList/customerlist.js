@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerlist.module.css";
+import style from "./customerList.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { getAllCustomers } from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../Pagination/Pagination";
 import _ from "lodash";
+// import "./customerList.mod"
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;

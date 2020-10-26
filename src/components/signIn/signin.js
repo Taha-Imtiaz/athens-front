@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import SideBar from '../Sidebar/SideBar';
 import { Link } from 'react-router-dom'
 // import axios from 'axios'
-import { login } from '../../Redux/user/userActions'
+import { login } from '../../Redux/User/userActions'
 import API from '../../utils/api'
 import { connect } from "react-redux";
 
@@ -43,7 +43,7 @@ class SignInForm extends React.Component {
       emailError = "Invalid Email"
     }
 
-    if (!this.state.password) {
+    if (this.state.password === "") {
       passwordError = "Password should not be empty"
     }
 

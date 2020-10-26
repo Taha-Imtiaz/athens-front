@@ -8,7 +8,7 @@ import { getAllClaims, updateClaim, getClaimsByID } from "../../../Redux/Claims/
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import _ from 'lodash';
+import _, { transform } from 'lodash';
 import { clone, cloneDeep } from "lodash"
 import { showMessage } from '../../../Redux/Common/commonActions'
 
@@ -175,15 +175,17 @@ const CustomerClaims = (props) => {
                             <div className="col-10">
                                 {
                                     x.updates.length > 0 ? <div>
-                                        <h3>Updates</h3>
+                                        <h3>
+                                           Updates
+                                        </h3>
                                         {
                                             x.updates.map((x, i) => (
                                                 <div key={i} className="row">
                                                     <div className="col-8">
-                                                        {x.value}
+                                                    <li>   {x.value}</li> 
                                                     </div>
                                                     <div className="col-4">
-                                                        {x.timestamp}
+                                                      <li> {x.timestamp.split("T")[0]}</li> 
                                                     </div>
                                                 </div>
                                             ))
@@ -191,8 +193,8 @@ const CustomerClaims = (props) => {
                                     </div> : null
                                 }
                             </div>
-                            <div className="col-2">
-                                {x.status == 'open' ? <Button name="Add Update" onClick={() => handleShow(i)}></Button> : null
+                            <div className="col-2" style = {{transform:"translateY(1.5rem)"}}>
+                                {x.status == 'open' ? <Button name="Add Update"  onClick={() => handleShow(i)}></Button> : null
                                 }
                             </div>
                         </div>

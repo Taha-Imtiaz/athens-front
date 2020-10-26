@@ -74,9 +74,9 @@ class MoversJobsList extends Component {
                             <div className={style.li}>
                                 <li className=" checkbox list-group-item ">
                                     <div className="row justify-content-around">
-                                        <div className={`col-4 col-md-3`}>
+                                        <div className={`col-3 col-md-3`}>
                                             <div className={style.checkbox}>
-                                                <label className="form-check-label" htmlFor="exampleCheck1">Job</label>
+                                                <label className="form-check-label" htmlFor="exampleCheck1">{list.title}</label>
                                             </div>
                                         </div>
                                         <div className="col-4 col-md-2">

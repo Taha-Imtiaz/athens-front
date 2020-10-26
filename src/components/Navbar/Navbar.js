@@ -4,7 +4,7 @@ import style from './navbar.module.css'
 import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { compose } from 'redux'
-import { getLoginUser } from '../../Redux/user/userActions'
+import { getLoginUser } from '../../Redux/User/userActions'
 
 const Navbar = (props) => {
 

@@ -36,7 +36,7 @@ import SubmitDeposit from './components/Claims/SubmitDeposit/SubmitDeposit';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getLoginUser } from './Redux/user/userActions'
+import { getLoginUser } from './Redux/User/userActions'
 
 function App(props) {
   const [show, setShow] = [false]

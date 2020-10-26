@@ -6,7 +6,7 @@ import SideBar from "../../Sidebar/SideBar";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
-import { Modal } from "react-bootstrap";
+import { Modal, Alert } from "react-bootstrap";
 import { Button } from 'react-bootstrap';
 
 
@@ -31,6 +31,7 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     getCustomer(customerId);
+  
   }, []);
 
   const routes = [
@@ -77,6 +78,7 @@ const CustomerDetail = (props) => {
     // updateJob(jobObj, jobId)
     //     handleClose()
   }
+  console.log(customer?.jobs[0]?.assignee[0].jobs)
   return (
     <div>
       {customer && (
@@ -85,20 +87,24 @@ const CustomerDetail = (props) => {
             <div className="col-2">
               <SideBar routes={routes} key={customerId} />
             </div>
-            <div className="col-6">
+            
+            <div className="col-2" style = {{transform: "translateY(2rem)"}}>
               <div className={style.head}>
                 <h5>{customer.firstName} {customer.lastName}</h5>
-                <div>
+                  </div>
+                  </div>
+                <div className="col-2" style = {{transform: "translateY(2rem)"}}>
+                
                   <b> <label className={style.l1}>Phone</label></b>
                   <label className={style.l1}>{customer.phone}</label>
                 </div>
-                <div>
+                <div className="col-3" style = {{transform: "translateY(2rem)"}}>
                   <b> <label className={style.l1}>Email</label></b>
                   <label className={style.l2}>{customer.email}</label>
                 </div>
-              </div>
-            </div>
-            <div className="col-4">
+            
+           
+            <div className="col-3" style = {{transform: "translateY(2rem)"}}>
               {/* <div className={`row ${style.toprow}`}>
                 <div className="col-2">
                   <Button icon="fa fa-edit">Edit</Button>
@@ -107,21 +113,22 @@ const CustomerDetail = (props) => {
                   <Button icon="fa fa-trash">Delete</Button>
                 </div>
               </div> */}
-            </div>
-          </div>
-          <div className={style.btn}>
+               <div className={style.btn}>
             <Link style={{ textDecoration: "none" }} to={{
 
               pathname: "/job/create",
               customerId: customer.email
             }}>
               {" "}
-              <Button variant="primary" style={{ margin: "0 15rem" }}>
-                Create Job
-                </Button>
+             <button className = "btn btn-primary">Create Job</button>
 
             </Link>
           </div>
+            </div>
+       </div>
+         
+          {customer.jobs.length !== 0 ?
+          <div>
           <h3 className={style.sub}>Sub Contact</h3>
 
           <div className={style.container}>
@@ -159,17 +166,19 @@ const CustomerDetail = (props) => {
                     </div>
                   </div>
                 </div>
+               
               ))}
             </div>
           </div>
-
-         
+          </div>
+         : <h4 style = {{transform:"translate3d(40rem, 15rem, 0)"}}>No job added yet</h4> }
           {customer.jobs && customer.jobs.length > 0 ?
             <div className={style.jumbotron} style={{ padding: "1rem 0" }}>
               <div className="row">
                 <div className="col-4">
                   <h3 className={style.job}>Jobs:</h3>
                 </div>
+              
                 <div className="col-4">
                   <label className={style.assigned}>Assigned</label>
                 </div>
@@ -177,25 +186,27 @@ const CustomerDetail = (props) => {
                   <label className={style.status}>Status</label>
                 </div>
               </div>
-              {customer.jobs.map((job, i) => {
-                return <div className="row" key={i} style={{ margin: "2rem", borderBottom: "1px solid #a8a8a8" }} >
+              {/* <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">See All Jobs</button> */}
+              {customer?.jobs?.map((job, i) => {
+                return <div className="row" key={i} style={{ margin: "2rem", border: "1px solid #a8a8a8"}} >
+                      {/* <div class="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
 
                   <div className="col-4">
 
 
-                    <p style={{ padding: "5%" }}>
+                    <p>
                       {
-                        job.dates.map(x => x)
+                        job.dates.map(x => <p>{x}</p>)
                       }
                       <br></br>
                       {job.startTime} -{" "}
                       {job.endTime}
                     </p>
-                    <p style={{ padding: "5%" }}>{job.description}</p>
-                    {job.locations.map((list, i) => <p key={i} style={{ padding: "5%" }}>Pickup : {list.from} Drop Off : {list.to}</p>)}
+                    <p>{job.description}</p>
+                    {job.locations.map((list, i) => <p key={i}> <b> Pickup :</b> {list.from} <br/> <b> Drop Off :</b> {list.to}</p>)}
                   </div>
                   <div className="col-4">
-                    {job.assignee.map((assignee, i) => <p key={i}>{assignee}</p>)}
+                    {job.assignee.map((assignee, i) => <p>{assignee.name}</p>)}
 
                   </div>
                   <div className="col-4">
@@ -203,13 +214,13 @@ const CustomerDetail = (props) => {
                   </div>
 
                   <div>
-                    <h4 className={style.notesh}>Notes</h4>
-                    <p className={style.notesd} >
-
-                      {job.note.map((note, i) => <div key={i} className={`row`} style={{ margin: "3%" }} >
-
-                        {note.text}</div>)}
-                    </p>
+                   
+                    {/* <p className={style.notesd} > */}
+            {job.note.length > 0 && <h4 className={style.notesh}>Notes</h4>}    
+                      {job.note.map((note, i) => <div key={i} className={`row`} >
+                  
+                      <p style = {{transform:"translateX(1.5rem)"}}>  {note.text}</p></div>)}
+                    {/* </p> */}
                     {/* Add modal */}
                     {/* <Button onClick={handleShow} bsClass = "style-button" style= {{margin:" 2rem"}}>
              
@@ -234,9 +245,9 @@ const CustomerDetail = (props) => {
                     </Button>
                       </Modal.Footer>
                     </Modal>
-
-                  </div>
                 </div>
+                  </div>
+                // </div>
 
 
 

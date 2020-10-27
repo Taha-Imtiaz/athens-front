@@ -25,11 +25,30 @@ class SignInForm extends React.Component {
     // let loggedIn = false
     this.state = this.initialState
     let token = localStorage.getItem('athens-token')
-    if(token) {
-      console.log(this.props.user)
-      props.history.push('/customer')
+    // if (token) {
+    //   console.log(this.props.user)
+    //   props.history.push('/customer')
+    // }
+  }
+
+
+  componentDidMount() {
+    let token = localStorage.getItem('athens-token')
+    if (token) {
+      if (this.props.user) {
+        this.props.user.role == 'mover' ? this.props.history.push('/mover') : this.props.history.push('/customer')
+      }
     }
-    // loggedIn }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // this.setState({
+    //   user: nextProps.loggedinUser,
+    //   weeklySchedule: nextProps.loggedinUser.weeklySchedule
+    // });
+    if (nextProps.user) {
+      nextProps.user.role == 'mover' ? this.props.history.push('/mover') : this.props.history.push('/customer')
+    }
   }
 
   validate = () => {
@@ -67,11 +86,17 @@ class SignInForm extends React.Component {
         email: this.state.email,
         password: this.state.password
       }
-      login(obj, () => {
-        console.log('hell')
-        this.props.history.push('/customer')
+      // login(obj, () => {
+      //   console.log('hell')
+      //   this.props.history.push('/customer')
+      // })
+      login(obj).then(res => {
+        console.log(res.data.data.status, res.data, res.data.data)
+        if (res.data.status == 200) {
+          res.data.data.role == 'mover' ? this.props.history.push('/mover') : this.props.history.push('/customer')
+        }
       })
-      
+
     }
   }
 

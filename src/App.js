@@ -37,6 +37,8 @@ import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getLoginUser } from './Redux/User/userActions'
+import PrivateRoutes from './utils/private-routes';
+import PrivateRoute from './utils/private-routes';
 
 function App(props) {
   const [show, setShow] = [false]
@@ -54,34 +56,59 @@ function App(props) {
       <ToastContainer position="bottom-right" />
       <Switch>
         <Route exact path="/" component={SignInForm} />
-        <Route exact path="/customer" component={customerList} />
-        <Route path="/customer/detail/:customerId" component={customerDetail} />
-        <Route path="/customer/add" component={CustomerAdd} />
-        {/* <Route path="/admin" component={AdminPage} /> */}
-        {/* <Route path="/signout" component={SignOut} /> */}
-        <Route path="/claim/customer" component={CustomerClaims} />
-        <Route exact path="/claim/customerdeposit" component={CustomerDeposit} />
-        <Route path="/claim/customerdeposit/deposit" component={SubmitDeposit} />
-        <Route path="/claim/newclaim" component={NewClaim} exact />
-        <Route exact path="/job" component={JobsList} exact />
-        <Route path="/job/details/:jobId" component={JobDetails} />
-        <Route path="/job/create" component={CreateJobs} />
-        <Route path="/job/edit/:jobId" component={JobEditDetails} />
-        <Route path="/calendar" component={CalendarApp} />
-        <Route exact path="/schedule" component={UnavailableSchedule} />
-        <Route path="/schedule/daily" component={DailySchedule} />
-        <Route path="/schedule/movers" component={MoversSchedule} />
-        <Route exact path="/user" component={UsersList} />
-        <Route path="/user/create" component={CreateUser} />
-        <Route exact path="/account" component={AccountDisplay} />
-        <Route path="/account/update" component={AccountUpdate} />
-        {/* Mover Routes */}
-        <Route exact path="/mover" component={MoversJobsList} />
-        <Route path="/mover/payment" component={Payment} />
-        <Route path="/mover/calendar" component={MoversCalendar} />
-        <Route path="/mover/availability" component={Availability} />
-        <Route path="/mover/jobdetails/:jobId" component={MoversJobDetails} />
-        <Route path="/mover/holidaycalendar" component={Example} />
+        <PrivateRoute exact path="/customer" component={customerList} />
+        <PrivateRoute path="/customer/detail/:customerId" component={customerDetail} />
+        <PrivateRoute path="/customer/add" component={CustomerAdd} />
+        <PrivateRoute path="/claim/customer" component={CustomerClaims} />
+        <PrivateRoute exact path="/claim/customerdeposit" component={CustomerDeposit} />
+        <PrivateRoute path="/claim/customerdeposit/deposit" component={SubmitDeposit} />
+        <PrivateRoute path="/claim/newclaim" component={NewClaim} exact />
+        <PrivateRoute exact path="/job" component={JobsList} exact />
+        <PrivateRoute path="/job/details/:jobId" component={JobDetails} />
+        <PrivateRoute path="/job/create" component={CreateJobs} />
+        <PrivateRoute path="/job/edit/:jobId" component={JobEditDetails} />
+        <PrivateRoute path="/calendar" component={CalendarApp} />
+        <PrivateRoute exact path="/schedule" component={UnavailableSchedule} />
+        <PrivateRoute path="/schedule/daily" component={DailySchedule} />
+        <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
+        <PrivateRoute exact path="/user" component={UsersList} />
+        <PrivateRoute path="/user/create" component={CreateUser} />
+        <PrivateRoute exact path="/account" component={AccountDisplay} />
+        <PrivateRoute path="/account/update" component={AccountUpdate} />
+        <PrivateRoute exact path="/mover" component={MoversJobsList} />
+        <PrivateRoute path="/mover/payment" component={Payment} />
+        <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
+        <PrivateRoute path="/mover/availability" component={Availability} />
+        <PrivateRoute path="/mover/jobdetails/:jobId" component={MoversJobDetails} />
+        <PrivateRoute path="/mover/holidaycalendar" component={Example} />
+
+        {/* <Route exact path="/customer" component={customerList} />
+        <PrivateRoute path="/customer/detail/:customerId" component={customerDetail} />
+        <PrivateRoute path="/customer/add" component={CustomerAdd} />
+       
+        <PrivateRoute path="/claim/customer" component={CustomerClaims} />
+        <PrivateRoute exact path="/claim/customerdeposit" component={CustomerDeposit} />
+        <PrivateRoute path="/claim/customerdeposit/deposit" component={SubmitDeposit} />
+        <PrivateRoute path="/claim/newclaim" component={NewClaim} exact />
+        <PrivateRoute exact path="/job" component={JobsList} exact />
+        <PrivateRoute path="/job/details/:jobId" component={JobDetails} />
+        <PrivateRoute path="/job/create" component={CreateJobs} />
+        <PrivateRoute path="/job/edit/:jobId" component={JobEditDetails} />
+        <PrivateRoute path="/calendar" component={CalendarApp} />
+        <PrivateRoute exact path="/schedule" component={UnavailableSchedule} />
+        <PrivateRoute path="/schedule/daily" component={DailySchedule} />
+        <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
+        <PrivateRoute exact path="/user" component={UsersList} />
+        <PrivateRoute path="/user/create" component={CreateUser} />
+        <PrivateRoute exact path="/account" component={AccountDisplay} />
+        <PrivateRoute path="/account/update" component={AccountUpdate} />
+
+        <PrivateRoute exact path="/mover" component={MoversJobsList} />
+        <PrivateRoute path="/mover/payment" component={Payment} />
+        <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
+        <PrivateRoute path="/mover/availability" component={Availability} />
+        <PrivateRoute path="/mover/jobdetails/:jobId" component={MoversJobDetails} />
+        <PrivateRoute path="/mover/holidaycalendar" component={Example} /> */}
       </Switch>
     </div>
   );

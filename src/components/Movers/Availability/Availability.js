@@ -4,7 +4,7 @@ import style from './Availability.module.css'
 import { setAvailability } from '../../../Redux/Mover/moverActions'
 import { clone, cloneDeep } from "lodash"
 import { connect } from "react-redux";
-
+import { showMessage } from '../../../Redux/Common/commonActions'
 
 class Availability extends Component {
 
@@ -48,11 +48,19 @@ class Availability extends Component {
     }
 
     handleSubmit = (e) => {
+        var { showMessage } = this.props;
         e.preventDefault();
         let obj = {
             weeklySchedule: this.state.weeklySchedule
         }
         setAvailability(obj, this.state.user._id)
+        // setAvailability(obj, this.state.user._id).then(res => {
+        //     console.log(res)
+        //     if (res.data.status == 200) {
+        //         showMessage(res.data.message)
+        //         this.setState({ weeklySchedule: res.data.assignee.weeklySchedule })
+        //     }
+        // })
         console.log(this.state.weeklySchedule, this.state.user._id)
     }
 
@@ -99,12 +107,12 @@ class Availability extends Component {
 
 // export default Availability;
 
-// var actions = {
-//     showMessage
-//   }
+var actions = {
+    showMessage
+}
 
 var mapStateToProps = (state) => ({
     loggedinUser: state.users.user,
 });
 
-export default connect(mapStateToProps, null)(Availability);
+export default connect(mapStateToProps, actions)(Availability);

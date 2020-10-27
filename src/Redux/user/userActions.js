@@ -5,14 +5,14 @@ import { showMessage } from '../../Redux/Common/commonActions'
 
 var baseUrl = "https://athens-backend.herokuapp.com/api/";
 
-export var login = (credentials, callback) => {
+export var login = (credentials) => {
     return async (diaspatch) => {
         try {
             var user = await Axios.post("user/login", credentials)
             console.log(user)
             if (user.data.status == 200) {
                 localStorage.setItem('athens-token', user.data.token)
-                callback()
+                // callback()
                 diaspatch(showMessage(user.data.message))
                 diaspatch({
                     type: LOGGEDIN_USER,
@@ -20,6 +20,7 @@ export var login = (credentials, callback) => {
                         user: user.data.data
                     }
                 })
+                return user;
             } else {
                 diaspatch(showMessage(user.data.message))
             }

@@ -96,12 +96,13 @@ const CustomerClaims = (props) => {
             <div className="col-2">
                 <SideBar routes={routes} />
             </div>
-            <div className="col-4">
+            <div className="col-5">
                 <h3 className={style.head}>Claims</h3>
             </div>
-            <div className="col-3">
+            <div className="col-2">
                 <div className={style.btn}>
-                    <Link style={{ textDecoration: "none" }} to='/claim/newclaim'> <Button name="New Claim" /> </Link>
+                    <Link style={{ textDecoration: "none" }} to='/claim/newclaim'>
+                         <button style = {{transform:"translateX(7.5rem)", background:"#00ADEE"}} className = "btn btn-primary">New Claim</button> </Link>
                 </div>
             </div>
             <div className="col-2">

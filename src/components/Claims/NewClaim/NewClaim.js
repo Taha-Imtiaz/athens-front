@@ -249,7 +249,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
+                <input type="button" className="btn btn-primary" style = {{background:"#00ADEE"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>

@@ -5,22 +5,31 @@ import Button from "../../Button/Button";
 import { addDeposit } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
+import Autocomplete from "react-autocomplete";
 
 class SubmitDeposit extends Component {
   state = {
     quantity: '',
     cost: '',
-    customer: ''
+   customer: ''
   }
 
+  handleSearchFormInput = (value)=>{ 
+      
+    this.setState({
+      customer: value
+    })
+}
+
   handleSubmit = (e) => {
-    var { quantity, customer, cost } = this.state
+    var { quantity,customer, cost } = this.state
     e.preventDefault()
     let obj = {
       quantity,
-      customer,
+     customer,
       cost
     }
+    console.log(obj)
     var { showMessage } = this.props;
     addDeposit(obj).then(res => {
       showMessage(res.data.message)
@@ -40,23 +49,25 @@ class SubmitDeposit extends Component {
   }
 
   render() {
-    var { quantity, customer, cost } = this.state
+    var { quantity,customer, cost } = this.state
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <h3 className={style.head}>Blanket Deposit</h3>
-          <div className={`row ${style.myrow}`}>
-            <div className={`col-5 col-md-3 ${style.in}`}>
+      <div className = {style.depositForm }>
+        <div className={` jumbotron ${style.form}`} >
+        <form onSubmit={this.handleSubmit} >
+          <h3 className={style.head} style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>Blanket Deposit</h3>
+          
+            <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}} >
               <input
                 className={style.input_fields}
                 type="text"
                 name="customer"
                 value={customer}
-                placeholder="Customer Id"
+                placeholder="Email"
+               
                 onChange={this.handleFormInput}
               />
             </div>
-            <div className={`col-5 col-md-3 ${style.in}`}>
+            <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
               <input
                 className={style.input_fields}
                 type="number"
@@ -66,7 +77,7 @@ class SubmitDeposit extends Component {
                 onChange={this.handleFormInput}
               />
             </div>
-            <div className={`col-5 col-md-3 ${style.in}`}>
+            <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
               <input
                 className={style.input_fields}
                 type="number"
@@ -77,11 +88,12 @@ class SubmitDeposit extends Component {
                 onChange={this.handleFormInput}
               />
             </div>
-          </div>
-          <div className={style.btn}>
-            <Button name="Submit" />
+  
+          <div className={style.btn}  style = {{display: "flex", justifyContent:"center", alignItems:"center"}} >
+           <button className = "btn btn-primary" style = {{background: "#00ADEE"}} >Submit</button>
           </div>
         </form>
+        </div>
       </div >
     );
   }

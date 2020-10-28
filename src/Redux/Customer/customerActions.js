@@ -70,3 +70,20 @@ export var addCustomer = (customerObj, callback) => {
 
     }
 }
+
+export var getCustomerList = async () => {
+    try {
+        var customerList = await Axios.get("https://athens-backend.herokuapp.com/api/user/get-customer-list")
+        return customerList
+    } catch (error) {
+        console.log(error)
+    }
+}
+// export var searchCustomer = async (search) => {
+//     try {
+//         var searedCustomer = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-customer")
+//         return searedCustomer
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }

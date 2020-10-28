@@ -48,18 +48,24 @@ const CustomerDeposit = (props) => {
     setBlankets(newData)
     // Call Api
     if (type == 'save') {
-      let obj = {
+
+      var {user} = props
+      console.log(user)
+      var obj = {
         id: newData[i]._id,
-        userId: '5f914e1c3faab0001765bb33',
+        userId:user._id,
         quantity: newData[i].quantity,
         cost: newData[i].cost
       }
+      console.log(obj)
       updateDeposit(obj).then(res => {
+        console.log(obj)
         var { showMessage } = props;
         showMessage(res.data.message)
       }).catch(err => console.log(err))
     }
   }
+ 
   return <div>
     <div className="row">
       <div className="col-2">
@@ -103,7 +109,7 @@ const CustomerDeposit = (props) => {
                     <li key={i} className=" checkbox list-group-item">
                       <div className="row">
                         <div className="col-4">
-                          <label>{x.customer.firstName} {x.customer.lastName}</label>
+                          <label>{x?.customer?.firstName} {x?.customer?.lastName}</label>
                         </div>
                         {/* <div className="col-3">
                     <input type="number" value={x.quantity} onChange = {(e) => x.quantity == e.target.value}/>
@@ -150,4 +156,9 @@ var actions = {
   showMessage
 }
 
-export default connect(null, actions)(CustomerDeposit);
+
+var mapStateToProps = (state) =>({
+  user: state.users.user
+})
+
+export default connect(mapStateToProps, actions)(CustomerDeposit);

@@ -11,7 +11,7 @@ const Navbar = (props) => {
     useEffect(() => {
         const token = localStorage.getItem('athens-token')
         if (token) {
-            console.log('Inside')
+            // console.log('Inside')
             var { getLoginUser } = props;
             getLoginUser()
         }
@@ -56,7 +56,7 @@ const Navbar = (props) => {
                         </Link>
                                     </li>
                                     <li className={getNavLinkClass("/schedule")}>
-                                        <Link className="nav-link" to="/schedule">
+                                        <Link className="nav-link" to="/schedule/daily">
                                             Schedule
                         </Link>
                                     </li>
@@ -66,9 +66,6 @@ const Navbar = (props) => {
                         </Link>
                                     </li> : null}
                                     <li className={getNavLinkClass("/account")}>
-                                        <Link className="nav-link" to="/account">
-                                            Account
-                        </Link>
                                     </li>
                                     <li className={getNavLinkClass("/claim/customer")}>
                                         <Link className="nav-link" to="/claim/customer">
@@ -81,7 +78,7 @@ const Navbar = (props) => {
                         </Link>
                                     </li>
                                     <li>
-                                        <button className="btn btn-primary" onClick={logOut}>Log Out</button>
+                                        <button style = {{background:"#00ADEE", border: "transparent", color: "#ffffff", padding: "0.5rem", borderRadius: "0.25rem"}}   onClick={logOut}>Log Out</button>
                                         {/* <Link className={`nav-link ${style.logOut}`} to="/">
                                         Log Out
                         </Link> */}

@@ -6,17 +6,21 @@ import { getAllData } from "../../../Redux/Unavailable/unavailableAction";
 const UnavailableSchedule = (props) => {
     const [data, setData] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const routes = [{
-        title: "Unavailable",
-        path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
-    },
+    const routes = [
     {
         title: "Daily Schedule",
         path: "/schedule/daily",
         icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
 
-    }, {
+    },
+    
+    {
+        title: "Unavailable",
+        path: "/schedule",
+        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+    },
+
+    {
         title: "Movers",
         path: "/schedule/movers",
         icon: <img src='/images/truck.png' width="20px" alt="icon"></img>

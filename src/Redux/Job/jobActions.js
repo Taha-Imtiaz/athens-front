@@ -1,5 +1,5 @@
 // import Axios from "axios";
-import { GET_JOBS, GET_JOB } from "./jobConstants";
+import { GET_JOBS, GET_JOB, FILTER_JOB } from "./jobConstants";
 import Axios from '../../utils/api'
 import { showLoader, hideLoader, showMessage } from '../../Redux/Common/commonActions'
 // var baseUrl = 'http://10.0.4.213:3000/'
@@ -90,4 +90,20 @@ export var searchJobs = async (query) => {
   } catch (error) {
     console.log(error);
   }
+}
+export var filterJobsByDate =   (date) => {
+return async (dispatch) => {
+  try {
+    var dateFilter  = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-jobs-by-filter", date);
+    dispatch({
+      type: GET_JOBS,
+      payload: {
+        getJobs: dateFilter
+      },
+    });
+    // dispatch(hideLoader());
+  } catch (error) {
+    console.log(error);
+  }
+}
 }

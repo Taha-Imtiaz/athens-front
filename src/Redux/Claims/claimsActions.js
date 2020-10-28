@@ -77,7 +77,7 @@ export var updateClaim = async (data) => {
 
 export var addDeposit = async (data) => {
     try {
-        var blanket = await Axios.post(`user/add-blanket-deposit`, data)
+        var blanket = await Axios.post(`https://athens-backend.herokuapp.com/api/user/add-blanket-deposit`, data)
         return blanket
     } catch (error) {
         console.log(error);
@@ -86,7 +86,8 @@ export var addDeposit = async (data) => {
 
 export var updateDeposit = async (data) => {
     try {
-        var blanket = await Axios.post(`user/update-blanket-deposit`, data)
+        var blanket = await Axios.post(`https://athens-backend.herokuapp.com/api/user/update-blanket-deposit`, data)
+        console.log(data)
         return blanket
     } catch (error) {
         console.log(error);

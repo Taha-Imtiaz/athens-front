@@ -14,17 +14,20 @@ const MoversSchedule = (props) => {
         })
     }, [])
     console.log(allMovers)
-    const routes = [{
-        title: "Unavailable",
-        path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
-    },
+    const routes = [
     {
         title: "Daily Schedule",
         path: "daily",
         icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
 
-    }, {
+    },
+    
+    {
+        title: "Unavailable",
+        path: "/schedule",
+        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+    },
+    {
         title: "Movers",
         path: "/schedule/Movers",
         icon: <img src='/images/truck.png' width="20px" alt="icon"></img>

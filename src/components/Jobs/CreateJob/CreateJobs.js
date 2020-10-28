@@ -578,7 +578,7 @@ class CreateJobs extends Component {
 
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" name="Add Location" value="Add Location" onClick={this.addLocation} />
+                <input type="button" className="btn btn-primary" style = {{background:"#00ADEE"}} name="Add Location" value="Add Location" onClick={this.addLocation} />
               </div>
             </div><br />
 

@@ -1,4 +1,4 @@
-import { GET_JOBS, GET_JOB } from "./jobConstants"
+import { GET_JOBS, GET_JOB, FILTER_JOB } from "./jobConstants"
 
 var initialState = []
 
@@ -15,7 +15,8 @@ switch (type) {
         //     currentState.job =  payload.getJob
         // return [{...currentState}]
         
-
+case FILTER_JOB:
+    return [{...payload.dateFilter}]
     default:
         return state
 }

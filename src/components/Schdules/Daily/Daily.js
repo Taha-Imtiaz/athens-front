@@ -40,17 +40,20 @@ const DailySchedule = (props) => {
         })
 
     }, []);
-    const routes = [{
+    const routes = [
+        {
+            title: "Daily Schedule",
+            path: "/schedule/daily",
+            icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
+    
+        },
+        
+        {
         title: "Unavailable",
         path: "/schedule",
         icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
     },
-    {
-        title: "Daily Schedule",
-        path: "/schedule/daily",
-        icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
-
-    }, {
+    , {
         title: "Movers",
         path: "/schedule/Movers",
         icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
@@ -175,7 +178,7 @@ const DailySchedule = (props) => {
                 <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     {weekNames && weekNames.map((name, i) => {
                         return <li key={i} className={`nav-item ${style.items}`}>
-                            <a onClick={() => handleDateChange(i)} className={`nav-link active ${style.color}`} id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{name}</a>
+                            <a onClick={() => handleDateChange(i)} className={`nav-link active ${style.color}`} style = {{background: new Date() ? "#00ADEE" : "#6c757d"}} id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{name}</a>
                         </li>
                     })}
                 </ul>

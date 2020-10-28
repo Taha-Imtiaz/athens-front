@@ -1,16 +1,15 @@
 import React from "react";
 import style from "./JobDetails.module.css";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getJob } from "../../../Redux/Job/jobActions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  
 const JobDetails = (props) => {
   const width = window.innerWidth;
   var jobprops = props.location.jobProps;
@@ -38,9 +37,8 @@ const JobDetails = (props) => {
     setShow(true);
   };
 
- var handleClose = (notes) => {
-   setShow(false)
-  
+  var handleClose = (notes) => {
+    setShow(false);
   };
 
   return (
@@ -61,77 +59,77 @@ const JobDetails = (props) => {
                     <p className="card-text">{job.customer.email}</p>
                   </div>
                 </div>
-                  <div className="row" style = {{marginTop:"2rem", marginRight: "0.25rem"}}>
-                  <div
-                className={`card ${style.cardCustom}`}
-                style={{
-                  margin: "1rem",
-                  width: "100%",
-                  transform: "translateY(-1rem)",
-                }}
-              >
                 <div
-                  className={`container ${style.cont}`}
-                  style={{ margin: "1rem" }}
+                  className="row"
+                  style={{ marginTop: "2rem", marginRight: "0.25rem" }}
                 >
-                  <h5
-                    className={style.assigneehead}
-                    style={{ flexWrap: "nowrap" }}
+                  <div
+                    className={`card ${style.cardCustom}`}
+                    style={{
+                      margin: "1rem",
+                      width: "100%",
+                      transform: "translateY(-1rem)",
+                    }}
                   >
-                    Assignees
-                  </h5>
-                  {job.assignee.map((assignee) => (
-                    <p
-                      className={style.assigneehead}
-                      style={{ flexWrap: "nowrap" }}
+                    <div
+                      className={`container ${style.cont}`}
+                      style={{ margin: "1rem" }}
                     >
-                        <li> {assignee.name}</li>
-                     
-                    </p>
-                  ))}
+                      <h5
+                        className={style.assigneehead}
+                        style={{ flexWrap: "nowrap" }}
+                      >
+                        Assignees
+                      </h5>
+                      {job.assignee.map((assignee) => (
+                        <p
+                          className={style.assigneehead}
+                          style={{ flexWrap: "nowrap" }}
+                        >
+                          <li> {assignee.name}</li>
+                        </p>
+                      ))}
 
-                  {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
-                  <div>
-                    {/* <Button name="Activities"  style = {{margin: "0"}}/> */}
-                  
-                    {/* <!-- Modal --> */}
-                    <Modal
-                      show={show}
-                      onHide={handleClose}
-                      animation={false}
-                      centered
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Add Note</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <textarea
-                          name=""
-                          id=""
-                          cols="65"
-                          rows="5"
-                          name="Note"
-                      
-                        //   onChange={this.handleAddNote}
-                        ></textarea>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                          Close
-                        </Button>
-                        <Button variant="primary">
-                          Add Note
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
+                      {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
+                      <div>
+                        {/* <Button name="Activities"  style = {{margin: "0"}}/> */}
+
+                        {/* <!-- Modal --> */}
+                        <Modal
+                          show={show}
+                          onHide={handleClose}
+                          animation={false}
+                          centered
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title>Add Note</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <textarea
+                              name=""
+                              id=""
+                              cols="65"
+                              rows="5"
+                              name="Note"
+
+                              //   onChange={this.handleAddNote}
+                            ></textarea>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                              Close
+                            </Button>
+                            <Button variant="primary">Add Note</Button>
+                          </Modal.Footer>
+                        </Modal>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-                  </div>
-                  <div className="row">
-                      <div className="col-2"></div>
-                      <div className="col-10">
-                      <button 
+                <div className="row">
+                  <div className="col-2"></div>
+                  <div className="col-10">
+                    <button
                       type="button"
                       onClick={handleShow}
                       type="submit"
@@ -143,27 +141,13 @@ const JobDetails = (props) => {
                         padding: "0.5rem 1rem",
                         color: "#fff",
                         borderRadius: "0.25rem",
-                     
                       }}
                     >
                       Activities
                     </button>
-                      </div>
-                 
-
                   </div>
+                </div>
               </div>
-
-          
-
-
-
-
-
-
-
-
-              
 
               <div className="col-6 col-md-5">
                 <div className={`container ${style.containerCustom}`}>
@@ -195,28 +179,26 @@ const JobDetails = (props) => {
                           >
                             Pickup : {list.from} <br></br> Drop Off : {list.to}
                           </p>
-                          <br />
                         </>
                       );
                     })}
-                  <br />
+
                   {job.services.map((service) => (
-                    <span className={`badge badge-primary m-2 ${style.badges}`}>
+                    <span className={`badge badge-primary m-1 ${style.badges}`}>
                       {service.name}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className={`col-3 d-flex justify-content-end  col-md-3`}>
+              <div className={`col-3 justify-content-end  col-md-3`}>
                 <div className={style.btns}>
                   <Link
                     style={{ textDecoration: "none" }}
                     to={`/job/edit/${jobId}`}
                   >
-                   <button
+                    <button
                       type="button"
-
                       className={`btn btn-primary ${style.btnCustom}`}
                       style={{
                         background: "#0275d8",
@@ -225,7 +207,10 @@ const JobDetails = (props) => {
                         padding: "0.5rem 2rem",
                         color: "#fff",
                         borderRadius: "0.25rem",
-                      }}>Edit</button>
+                      }}
+                    >
+                      Edit
+                    </button>
                   </Link>
                 </div>
                 <div className={style.btns}>
@@ -238,7 +223,7 @@ const JobDetails = (props) => {
               </div>
             </div>
             <div className={`row ${style.row2}`}>
-            <div className="col-2"></div>
+              <div className="col-2"></div>
               <div className="col-10">
                 <div className={`${style.jumbo}`}>
                   <h3 className={style.jobHead}>Job Description</h3>
@@ -256,8 +241,6 @@ const JobDetails = (props) => {
                 </div>
               </div>
             </div>
-           
-            
           </>
         ) : null}
       </div>

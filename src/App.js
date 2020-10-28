@@ -68,8 +68,8 @@ function App(props) {
         <PrivateRoute path="/job/create" component={CreateJobs} />
         <PrivateRoute path="/job/edit/:jobId" component={JobEditDetails} />
         <PrivateRoute path="/calendar" component={CalendarApp} />
-        <PrivateRoute exact path="/schedule" component={UnavailableSchedule} />
         <PrivateRoute path="/schedule/daily" component={DailySchedule} />
+        <PrivateRoute exact path="/schedule" component={UnavailableSchedule} />
         <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
         <PrivateRoute exact path="/user" component={UsersList} />
         <PrivateRoute path="/user/create" component={CreateUser} />

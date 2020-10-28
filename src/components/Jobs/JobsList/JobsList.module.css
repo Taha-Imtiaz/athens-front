@@ -14,7 +14,12 @@
     margin-right: 11%;
     margin-top: 3%;
 }
-
+.listGroup li:nth-child(even)  {
+    /* background-color: #f7d2d8; */
+}
+.listGroup li:nth-child(odd)  {
+    /* background-color:  */
+}
 .create{
     margin-right: 3%;
     margin-top: 3%;

@@ -120,7 +120,7 @@ const CustomerDetail = (props) => {
               customerId: customer.email
             }}>
               {" "}
-             <button className = "btn btn-primary">Create Job</button>
+             <button className = "btn btn-primary" style = {{background:"#00ADEE"}}>Create Job</button>
 
             </Link>
           </div>

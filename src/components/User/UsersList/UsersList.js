@@ -15,11 +15,14 @@ import SearchBar from "../../SearchBar/SearchBar";
 const UsersList = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
+ console.log(currentPage)
   var usersObj = {
+    
     query: "",
     filter: {
       type: ""
-    }
+    },
+    page: currentPage
   };
 
   useEffect(() => {
@@ -28,6 +31,9 @@ const UsersList = (props) => {
   }, []);
 
   var handlePageChange = (page) => {
+    var { users, getUsers } = props;
+    console.log(page)
+    getUsers(usersObj);
     setCurrentPage(page);
   };
   const width = window.innerWidth;

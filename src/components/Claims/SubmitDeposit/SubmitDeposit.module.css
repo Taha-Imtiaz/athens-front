@@ -5,8 +5,8 @@
 }
 
 .head{
-    margin-top: 3%;
-    margin-left: 10%;
+     margin-top: 3%;
+    /*margin-left: 10%; */
 }
 
 .myrow{
@@ -14,11 +14,26 @@
     margin-top: 2%;
     margin-left: 10%;
 }
+.depositForm {
+    display: grid;
+    margin: 4rem 0;
+    grid-template-rows: 1fr;
+    grid-template-columns: 20fr 60fr 20fr;
+    /* background-color: aqua; */
+    grid-template-areas: ". f .";
 
+}
+option {
+    /* width: 40rem; */
+}
+.form {
+    grid-area: f;
+    /* background-color: #a8a8a8; */
+}
 .btn{
-   float: left;
+   /* float: left;
    margin-left: 11%;
-   margin-top: 1%;
+   margin-top: 1%; */
 }
 
 .btn-primary{
@@ -32,7 +47,12 @@
 .in{
     margin-top: 0.2%;
 }
-
+input {
+    width: 20rem;
+    margin: 1rem 0 ;
+    height: 2.4rem;
+    
+}
 @media only screen and (max-width: 576px) {
     .btn{
         float: left;

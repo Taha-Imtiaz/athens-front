@@ -29,7 +29,7 @@ const SearchBar = (props) => {
                     query: "",
                     sort: {
                         plainname: null,
-                        createdAt: null,
+                        createdAt: -1,
                     },
                 };
                 getAllCustomers(fetchCustomersObj);
@@ -101,9 +101,9 @@ const SearchBar = (props) => {
             </span>
         </div> */}
         <div className="input-group">
-            <input type="text" className="form-control" placeholder={title} onChange={(e) => setSearchValue(e.target.value)} />
+            <input type="text" className="form-control" placeholder={title} style = {{outline:"transparent"}} onChange={(e) => setSearchValue(e.target.value)} />
             <div className="input-group-append">
-                <button onClick={handleSearch} className="btn btn-secondary" type="button">
+                <button onClick={handleSearch} className="btn btn-secondary" style = {{width:"3rem", margin:"1rem 0"}} type="button">
                     <i className="fa fa-search"></i>
                 </button>
             </div>

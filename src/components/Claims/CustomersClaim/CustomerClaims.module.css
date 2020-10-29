@@ -1,7 +1,9 @@
 .toprow{
     margin-top: 2%;
 }
-
+*{
+   
+}
 .head{
     margin-left: 8%;
     margin-top: 2%;
@@ -11,12 +13,17 @@
     margin-top: 2%;
     margin-left: 20%;
 }
+.jobId:hover {
+    background: "none";
+}
 
 .jumbotron{
-    width: 75% !important;
+    /* width: 75% !important; */
     margin-left: 20%;
+    /* overflow-x: hidden; */
     margin-right: 5%;
-    background-color: #e9f2eb;
+  
+    /* background-color: #e9f2eb; */
     margin-top: 2%;
     text-align: left;
     padding: 10px;
@@ -42,13 +49,24 @@
 .p2{
     margin-left: 30%;
 }
-
+@media only screen and (max-width: 920px) {
+    .jumbotron{
+        /* width: 70% !important; */
+        /* margin-left: 20%; */
+        /* margin-right: 10%; */
+        /* background-color: #e9f2eb; */
+        width: 100% !important;
+        overflow-x: hidden;
+        /* margin-top: 5%; */
+        /* text-align: left; */
+    }
+}
 @media only screen and (max-width: 576px) {
     .jumbotron{
         width: 70% !important;
         margin-left: 20%;
         margin-right: 10%;
-        background-color: #e9f2eb;
+        /* background-color: #e9f2eb; */
         margin-top: 5%;
         text-align: left;
     }

@@ -185,9 +185,10 @@ const CustomerList = (props) => {
                         <li
                           className="checkbox list-group-item"
                           key={doc._id}
-                          style={{  background: "#5D5C61",
-                          borderBottom: "1px solid #a8a8a8",
-                          color:"#fff" }}
+                          style={{  background: "rgba(0,0,0,.03)",
+                          border: "1px solid rgba(0,0,0,0.125)",
+                          // color:"#fff"
+                         }}
                         >
                           <div className="row justify-content-around">
                             <div
@@ -225,7 +226,7 @@ const CustomerList = (props) => {
                                     icon={faInfoCircle}
                                     style={{
                                       transform: "translate3d(-1rem, 0.5rem, 0)",
-                                      color: "#fff",
+                                      color: "#000",
                                       display:"flex",
                                       justifyContent:"center",
                                       alignItems:"center"

@@ -33,6 +33,14 @@ const UsersList = (props) => {
   var handlePageChange = (page) => {
     var { users, getUsers } = props;
     console.log(page)
+    var usersObj = {
+    
+      query: "",
+      filter: {
+        type: ""
+      },
+      page: page
+    };
     getUsers(usersObj);
     setCurrentPage(page);
   };
@@ -72,6 +80,7 @@ const UsersList = (props) => {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                style = {{margin:"1.5rem"}}
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a className="dropdown-item" onClick={() => handleFilter('mover')}>
@@ -101,10 +110,22 @@ const UsersList = (props) => {
             {/* <Button name="Delete" /> */}
           </div>
           <div className={style.jumbotron}>
+            <div className="row" style={{margin:"0.75rem 0"}}>
+            <div className="col-4" style = {{transform:"translateX(3rem)", fontWeight:"bold"}}>Name</div>
+            <div className="col-5" style = {{transform:"translateX(5rem)", fontWeight:"bold"}}>Attribute</div>
+            <div className="col-3" style = {{transform:"translateX(4rem)", fontWeight:"bold"}}>Address</div>
+            </div>
             <ul className="list-group">
               <div className={style.li}>
                 {usersDocs && usersDocs.length > 0 ? usersDocs.map((usersDoc, i) => {
-                  return <li key={i} className=" checkbox list-group-item">
+                  return <li key={i} className=" checkbox list-group-item"
+                  style={{
+                    border: "1.5px solid rgba(0,0,0,.125)",
+                    background: "rgba(0,0,0,.03)",
+                    // color: "#fff",
+                  }}
+                  
+                  >
                     <div className="row justify-content-around">
                       <div className="col-3 col-md-4 text-left">
                         <b>

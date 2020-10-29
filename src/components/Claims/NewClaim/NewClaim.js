@@ -228,7 +228,7 @@ class NewClaim extends Component {
                     </div>
                     <div className="col-4">
                       <div className="form-group">
-                        <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} />
+                        <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style = {{margin:"-0.04rem 0"}}/>
                       </div>
 
                       {this.state.priceError ? (

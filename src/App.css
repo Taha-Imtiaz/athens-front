@@ -23,6 +23,9 @@ color: #00ADEE;
 /* *{
   margin-right: 0 !important
 } */
+*{
+  /* overflow-x: hidden; */
+}
 @media only screen and (max-width:576px) {
  .form_style {
    font-size: 0.9rem;

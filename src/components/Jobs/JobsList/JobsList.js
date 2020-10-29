@@ -279,13 +279,13 @@ console.log(date.toString())
               <div className={style.li}>
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
-                    <li
+                    <li 
                       key={i}
                       className=" checkbox list-group-item "
                       style={{
-                        borderBottom: "1px solid #a8a8a8",
-                        background: "#5D5C61",
-                        color: "#fff",
+                        border: "1px solid rgba(0, 0, 0, 0.125)",
+                        background: "rgba(0,0,0,.03)",
+                        // color: "#fff",
                       }}
                     >
                       <div className="row justify-content-around">
@@ -339,9 +339,9 @@ console.log(date.toString())
                           <label>
                             {job.services.map((service) => (
                               <label
-                                style={{ display: "flex", flexFlow: "column" }}
+                                // style={{ display: "flex"}}
                               >
-                                {service.name}
+                             { `${service} ` }
                               </label>
                             ))}
                           </label>

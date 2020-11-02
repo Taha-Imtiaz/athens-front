@@ -35,33 +35,14 @@ const MoversJobDetails = (props) => {
     return <div className={style.main}>
         {job &&
             <><div className={`row ${style.toprow}`}>
-                <div className={`col-6 ${style.title}`}>
-                    <h3>{job.title}</h3>
-                </div>
-                <div className={`col-6 ${style.topbtn}`}>
-                    <span className={`badge badge-primary ${style.badges2}`}>{job.status}</span>
-                </div>
-            </div>
-                <p>{job.startTime} - {job.meetTime}</p>
-                {job.locations.map((list, i) => <p key={i}>{list.from} to {list.to}</p>)}
-                {job.services.map((service, i) => <span key={i} className={`badge badge-primary ${style.badges}`}>{service.name}</span>)}
-
-                <h3 className={style.head}>Job Description</h3>
-                <div className={`card ${style.cardwidth}`}>
-                    <div className="card-body">
-                        <p className="card-text">{job.description}</p>
-                    </div>
-                </div>
-
-
-                <h3 className={style.head}>Assignee</h3>
-                {job.assignee.map((assignee, i) => <span key={i} className={`badge badge-primary ${style.badges2}`}>{assignee.name}</span>)}
+                <div className="col-3">
+              
 
 
 
-                <h3 className={style.head}>Customer</h3>
-                <div className={`card ${style.carddetail}`}>
-                    <div className="card-body">
+                <h3 style = {{fontFamily:"Roboto"}}>Customer</h3>
+                <div className={`card`}>
+                    <div className="card-body" style = {{fontFamily:"Roboto"}}>
                         <h5 className="card-title">Account Holder</h5>
                         <p className="card-text">{job.customer.firstName}</p>
                     </div>
@@ -72,22 +53,50 @@ const MoversJobDetails = (props) => {
                     </ul>
 
                 </div>
+                <div className="row">
+                    <div className="col">
+                <h3 className={style.head} style = {{fontFamily:"Roboto"}}>Assignee</h3>
+                {job.assignee.map((assignee, i) => 
+                <div className="card">
+                    <div className="card-body" style = {{fontFamily:"Roboto"}}>
+                <span key={i}>{assignee.name}</span>
+                </div>
+                </div>)}
+                </div>
+                </div>
+                </div>
+                <div className="col-7">
+                <div>
+                    <h3 style = {{fontFamily:"Roboto"}}>{job.title}</h3>
+                </div>
+                <p>{job.startTime} - {job.meetTime}</p>
+                {job.locations.map((list, i) => <p key={i}>{list.from} to {list.to}</p>)}
+                {job.services.map((service, i) => <span key={i} className={`badge badge-primary ${style.badges}`}>{service.name}</span>)}
 
-                <h3 className={style.head}>Notes</h3>
-                <div className={`card ${style.cardwidth}`}>
+                <h3 className={style.head} style = {{fontFamily:"Roboto"}}>Job Description</h3>
+                <div className={`card`} style = {{border:"2px solid rgba(0,0,0,0.125)"}}>
+                    <div className="card-body" style = {{fontFamily:"Roboto"}}>
+                        <p className="card-text">{job.description}</p>
+                    </div>
+                </div>
+
+
+                <h3 className={style.head} style = {{fontFamily:"Roboto"}}>Notes</h3>
+                <div className={`card`}  style = {{border:"2px solid rgba(0,0,0,0.125)"}}>
                     {job.note.map((note, i) =>
-                        <div key={i} className="card-body">
+                        <div key={i} className="card-body" style = {{fontFamily:"Roboto"}} >
                             <p className="card-text">{note.text}</p>
                         </div>
                     )}
                 </div>
 
+
                 {job.status == 'booked' || job.status == 'completed' ?
-                    <div className={`row ${style.btnrow}`}>
-                        <div className="col-6 d-flex">
+                    <div className={`row`}>
+                        <div className="col-3" style ={{transform:"translateY(1rem)"}}>
                             <Button name="Pay in Cash" onClick={paidInCash} />
                         </div>
-                        <div className={`col-6 d-flex ${style.onlinebtn}`}>
+                        <div className={`col-3 `} style ={{transform:"translate3d(-4rem,1rem, 0)"}}>
                             <Link to={{
                                 pathname: '/mover/payment',
                                 jobId: job._id
@@ -96,6 +105,22 @@ const MoversJobDetails = (props) => {
 
                     </div>
                     : null}
+                </div>
+               
+                                
+                <div className={`col-2`}>
+                <Button name={`${job.status}`} />
+                </div>      
+               
+            </div>
+               
+
+
+             
+
+               
+
+              
             </>}
     </div>
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerlist.module.css";
+import style from "./customerList.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -144,9 +144,9 @@ const CustomerList = (props) => {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              style={{ transform: "translateY(.8rem)" }}
+              style={{ transform: "translateY(-.3rem)" }}
             ></i>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{ margin: "-2rem" }}>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{ margin: "-0.5rem" }}>
               <a className="dropdown-item" onClick={handleSort}>
                 Sort By Name
               </a>
@@ -154,7 +154,7 @@ const CustomerList = (props) => {
                 Recently Added
               </a>
             </div>
-            <div>
+            <div style={{margin: '-0.5rem'}}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
                 <Button name="Create New" />

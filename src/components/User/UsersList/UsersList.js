@@ -78,7 +78,7 @@ const UsersList = (props) => {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-                style = {{margin:"1.5rem"}}
+                style={{ transform: "translateY(0.2rem)" }}
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a className="dropdown-item" onClick={() => handleFilter('mover')}>

@@ -194,7 +194,7 @@ class JobsList extends Component {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              style={{ transform: "translateY(1.5rem)" }}
+              style={{ transform: "translateY(0.2rem)" }}
             ></i>
             <div
               className="dropdown-menu"
@@ -236,7 +236,7 @@ class JobsList extends Component {
                 <Link style={{ textDecoration: "none" }} to="/calendar">
                   <button
                     className=" btn btn-primary"
-                    style={{ background: "#00ADEE", transform:"translateY(-4.8rem)"}}
+                    style={{ background: "#00ADEE", transform:navigator.userAgent.indexOf("Firefox")!== -1 ? "translateY(-3rem)": "translateY(-4.3rem)"}}
                   >
                     Calender
                   </button>

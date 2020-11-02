@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { getMover } from '../../../Redux/Mover/moverActions'
 import { updateJob } from '../../../Redux/Mover/moverActions'
 import { connect } from 'react-redux';
+import { showMessage } from '../../../Redux/Common/commonActions';
 const width = window.innerWidth
 
 class MoversJobsList extends Component {
@@ -37,9 +38,12 @@ class MoversJobsList extends Component {
     };
 
     markComplete = (list) => {
-        updateJob(list._id, { status: 'Completed' }).then((res) => {
-            var { getMover } = this.props
-            getMover();
+        updateJob(list._id, { status: 'completed' }).then((res) => {
+            if (res.data.status == 200) {
+                var { getMover, showMessage } = this.props
+                showMessage(res.data.message)
+                getMover();
+            }
         })
     }
 
@@ -138,6 +142,7 @@ var mapStateToProps = (state) => ({
 
 var actions = {
     getMover,
+    showMessage
 };
 
 export default connect(mapStateToProps, actions)(MoversJobsList);

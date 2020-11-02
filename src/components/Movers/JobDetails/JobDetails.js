@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { updateJob } from '../../../Redux/Mover/moverActions'
 
 import { getJob } from '../../../Redux/Job/jobActions'
+import { connect } from 'react-redux';
+import { showMessage } from '../../../Redux/Common/commonActions';
 
 const MoversJobDetails = (props) => {
 
@@ -20,9 +22,13 @@ const MoversJobDetails = (props) => {
     }, [])
 
     const paidInCash = () => {
-        let { history } = props;
+        let { history, showMessage } = props;
         updateJob(job._id, { status: 'Paid Cash' }).then((res) => {
-            history.push('/mover')
+            console.log(res)
+            if (res.data.status == 200) {
+                showMessage(res.data.message)
+                history.push('/mover')
+            }
         })
     }
 
@@ -94,4 +100,8 @@ const MoversJobDetails = (props) => {
     </div>
 }
 
-export default MoversJobDetails
+var actions = {
+    showMessage
+};
+
+export default connect(null, actions)(MoversJobDetails);

@@ -76,6 +76,7 @@ function Example(props) {
       }
     });
   };
+
   const handleAddNote = (e) => {
     setNote(e.target.value)
   };

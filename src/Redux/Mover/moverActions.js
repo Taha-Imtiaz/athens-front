@@ -39,13 +39,13 @@ export var updateJob = async (jobId, status) => {
 };
 
 
-export var getJob = async () => {
+export var getJob = async (date) => {
   try {
     const token = localStorage.getItem('athens-token')
     const config = {
       headers: { Authorization: token }
     };
-    const date = new Date()
+    // const date = new Date()
     let data = {
       date: date.toString()
     }

@@ -3,6 +3,9 @@ import style from './Payment.module.css'
 import Button from '../../Button/Button';
 import { Link } from 'react-router-dom';
 import { payAmount } from '../../../Redux/Mover/moverActions'
+import { connect } from 'react-redux';
+import { showMessage } from '../../../Redux/Common/commonActions';
+
 class Payment extends Component {
 
     state = {
@@ -57,6 +60,13 @@ class Payment extends Component {
                     jobId: this.props.location.jobId
                 }
                 payAmount(obj).then((res) => {
+                    let { history, showMessage } = this.props;
+                    if (res.data.status == 200) {
+                        showMessage(res.data.message)
+                        history.push('/mover')
+
+                    }
+                    console.log(res)
                 })
                 // this.setState({
                 //     message: `Success! Card token ${response.card.id}.`,
@@ -116,4 +126,8 @@ class Payment extends Component {
     }
 }
 
-export default Payment;
+var actions = {
+    showMessage
+};
+
+export default connect(null, actions)(Payment);

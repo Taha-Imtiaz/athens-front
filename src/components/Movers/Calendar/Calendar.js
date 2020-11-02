@@ -26,7 +26,9 @@ class MoversCalendar extends Component {
     }
     componentDidMount = () => {
         const { user } = this.props;
-        getJob().then(res => {
+        const date = new Date()
+        console.log(date)
+        getJob(date).then(res => {
             // this.setState({
             //     myEventsList: res.data.jobs
             // })
@@ -49,6 +51,31 @@ class MoversCalendar extends Component {
         })
     }
     onChange = date => this.setState({ date })
+
+    changeDate = x => {
+        console.log(x)
+        getJob(x).then(res => {
+            // this.setState({
+            //     myEventsList: res.data.jobs
+            // })
+
+            let jobs = []
+            res.data.jobs.map(x => {
+                x.dates.map(y => {
+                    let obj = {
+                        start: y,
+                        end: y,
+                        title: x.title,
+                        id: x.id
+                    }
+                    jobs.push(obj);
+                })
+            })
+            this.setState({
+                myEventsList: jobs
+            })
+        })
+    }
 
     render() {
         return (
@@ -77,6 +104,7 @@ class MoversCalendar extends Component {
                                     month: true
                                 }}
                                 popup={true}
+                                onNavigate={this.changeDate}
                             />
                         </div>
                     </div>

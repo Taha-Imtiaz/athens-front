@@ -33,7 +33,9 @@ class Availability extends Component {
         //     "status": false
         // }],
         user: '',
-        weeklySchedule: []
+        weeklySchedule: [],
+        update: true
+
     }
     // constructor(props) {
     //     super(props)
@@ -52,7 +54,10 @@ class Availability extends Component {
         let obj = {
             weeklySchedule: this.state.weeklySchedule
         }
-        setAvailability(obj, this.state.user._id)
+        setAvailability(obj, this.state.user._id).then(res => {
+            console.log(res)
+            showMessage(res.data.message)
+        })
         // setAvailability(obj, this.state.user._id).then(res => {
         //     if (res.data.status == 200) {
         //         showMessage(res.data.message)
@@ -71,10 +76,14 @@ class Availability extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            user: nextProps.loggedinUser,
-            weeklySchedule: nextProps.loggedinUser.weeklySchedule
-        });
+        if (this.state.update) {
+            this.setState({
+                user: nextProps.loggedinUser,
+                weeklySchedule: nextProps.loggedinUser.weeklySchedule,
+                update: false
+            });
+        }
+
     }
 
     render() {

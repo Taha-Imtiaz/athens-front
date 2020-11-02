@@ -65,16 +65,18 @@ function Example(props) {
 
   const addNote = () => {
     let { showMessage } = props;
-    let obj = {
-      dates,
-      reason: note
-    }
-    holidayCalender(obj).then(res => {
-      if (res.data.status == 200) {
-        setShow(false)
-        showMessage(res.data.message)
+    if (dates.length > 0 && note.length > 0) {
+      let obj = {
+        dates,
+        reason: note
       }
-    });
+      holidayCalender(obj).then(res => {
+        if (res.data.status == 200) {
+          setShow(false)
+          showMessage(res.data.message)
+        }
+      });
+    }
   };
 
   const handleAddNote = (e) => {
@@ -82,7 +84,7 @@ function Example(props) {
   };
   return (
     <>
-      <div className="btnalign" style={{ float: 'right' }}>
+      <div className="btnalign" style={{ float: 'right', marginRight: '20px', marginTop: '20px' }}>
         <button
           onClick={handleShow}
           type="submit"
@@ -118,7 +120,7 @@ function Example(props) {
             Close
             </Button>
           <Button variant="primary" onClick={addNote}>
-            Add Reason
+            Send Request
             </Button>
         </Modal.Footer>
       </Modal>

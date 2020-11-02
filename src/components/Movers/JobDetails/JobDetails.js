@@ -69,7 +69,7 @@ const MoversJobDetails = (props) => {
                 <div>
                     <h3 style = {{fontFamily:"Roboto"}}>{job.title}</h3>
                 </div>
-                <p>{job.startTime} {job.meetTime ? - job.meetTime : null}</p>
+                <p>{job.startTime} {job.meetTime ? '- ' + job.meetTime : null}</p>
                 {job.locations.map((list, i) => <p key={i}>{list.from} to {list.to}</p>)}
                 {job.services.map((service, i) => <span key={i} className={`badge badge-primary ${style.badges}`}>{service.name}</span>)}
 

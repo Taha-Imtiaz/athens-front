@@ -118,10 +118,6 @@ console.log(job?.activities)
                               <div className={`col-2 `}> <p>{activitiy.performer.name}</p></div>
                               <div className={`col-5`}><p>{activitiy.messageLogs}</p></div>
                               <div className={`col-5 `}><p>  {activitiy.timeStamp.split("G")[0]}</p></div>
-                              
-                           
-                            
-
 
                               </div>)}
                             

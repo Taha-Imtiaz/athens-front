@@ -63,6 +63,7 @@ class SubmitDeposit extends Component {
                 value={customer}
                 placeholder="Email"
                 onChange={this.handleFormInput}
+                style = {{margin:"1rem 0"}}
               />
             </div>
             <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
@@ -73,6 +74,7 @@ class SubmitDeposit extends Component {
                 value={quantity}
                 placeholder="Blanket Quantity"
                 onChange={this.handleFormInput}
+                style = {{margin:"1rem 0"}}
               />
             </div>
             <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
@@ -84,6 +86,7 @@ class SubmitDeposit extends Component {
                 disabled
                 placeholder="Cost in $"
                 onChange={this.handleFormInput}
+                  style = {{margin:"1rem 0"}}
               />
             </div>
   

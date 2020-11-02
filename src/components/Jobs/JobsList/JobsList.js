@@ -385,7 +385,7 @@ class JobsList extends Component {
                           onHide={this.handleClose}
                           animation={false}
                           centered
-                          backdrop={false}
+                          // backdrop={false}
                         >
                           <Modal.Header closeButton>
                             <Modal.Title>Booking Confirmation</Modal.Title>

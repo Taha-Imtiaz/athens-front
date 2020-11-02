@@ -9,26 +9,25 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import Button from '../../Button/Button';
 import { Link } from 'react-router-dom';
-import { getJob } from "../../../Redux/Mover/moverActions";
+import { getMoverJobs, getJob } from "../../../Redux/Mover/moverActions";
 import { connect } from 'react-redux';
 
 
 const localizer = momentLocalizer(moment)
 const now = new Date()
 
-
-
 class MoversCalendar extends Component {
     state = {
         date: new Date(),
         myEventsList: [
-        ]
+        ],
+        job: ''
     }
     componentDidMount = () => {
         const { user } = this.props;
         const date = new Date()
         console.log(date)
-        getJob(date).then(res => {
+        getMoverJobs(date).then(res => {
             // this.setState({
             //     myEventsList: res.data.jobs
             // })
@@ -54,7 +53,7 @@ class MoversCalendar extends Component {
 
     changeDate = x => {
         console.log(x)
-        getJob(x).then(res => {
+        getMoverJobs(x).then(res => {
             // this.setState({
             //     myEventsList: res.data.jobs
             // })
@@ -75,6 +74,18 @@ class MoversCalendar extends Component {
                 myEventsList: jobs
             })
         })
+    }
+
+    getJobDetails = e => {
+        getJob(e.id)
+            .then((res) => {
+                console.log(res.data.job)
+                this.setState({ job: res.data.job });
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
@@ -99,20 +110,34 @@ class MoversCalendar extends Component {
                                 events={this.state.myEventsList}
                                 startAccessor="start"
                                 endAccessor="end"
-                                style={{ height: 500, width: 900 }}
+                                style={{ height: 500, width: '90%' }}
                                 views={{
                                     month: true
                                 }}
                                 popup={true}
                                 onNavigate={this.changeDate}
+                                onSelectEvent={this.getJobDetails}
                             />
                         </div>
                     </div>
 
+                    <div className="col-3">
+                        {this.state.job ? <div>
+                            <h5 className={style.head}>Job Details</h5>
+                            <div className={`card ${style.cardCustom}`} >
+                                <div className="card-body">
+                                    <h5 className="card-title">{this.state.job.title}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">{this.state.job.status}</h6>
+                                    <p className="card-text">{this.state.job.description}</p>
+                                    <p className="card-text">Customer: {this.state.job.customer.email}</p>
+                                </div>
+                            </div>
+                        </div> : <h4>Please select job first.</h4>}
+
+
+
+                    </div>
                 </div>
-
-
-
 
             </div>
 

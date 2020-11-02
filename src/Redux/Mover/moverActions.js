@@ -39,7 +39,7 @@ export var updateJob = async (jobId, status) => {
 };
 
 
-export var getJob = async (date) => {
+export var getMoverJobs = async (date) => {
   try {
     const token = localStorage.getItem('athens-token')
     const config = {
@@ -102,3 +102,17 @@ export var payAmount = async (obj) => {
   return payment;
 
 }
+
+export var getJob = async (jobId) => {
+  // return async (dispatch) => {
+  try {
+    var getJob = await Axios.get(`user/get-job/${jobId}`);
+    return getJob;
+    //    dispatch({
+    //        type: GET_JOB,
+
+    //    })
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -87,7 +87,8 @@ class MoversJobsList extends Component {
                                             </div>
                                         </div>
                                         <div className="col-4 col-md-3">
-                                            <i className="fa fa-calendar ">{list.dates.map(x => `${x}`)}</i>
+                                            {/* <i className="fa fa-calendar ">{list.dates.map(x => `${x}`)}</i> */}
+                                            <i className="fa fa-calendar ">{list.dates[0]}...</i>
                                         </div>
 
                                         <div className="col-4 col-md-4 d-flex justify-content-center">

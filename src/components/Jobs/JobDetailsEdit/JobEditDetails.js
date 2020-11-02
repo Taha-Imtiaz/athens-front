@@ -95,13 +95,13 @@ class JobEditDetails extends Component {
         startDateInString: res.data.job.startDate,
         endDateInString: res.data.job.endDate,
         startTime: res.data.job.startTime,
-        meetTime: res.data.job.meetTime,
+        // meetTime: res.data.job.meetTime,
         locations: res.data.job.locations,
         description: res.data.job.description,
         options: services,
         assignee: res.data.job.assignee,
         // assigneeList:assigneeList,
-        assigneesId: ids,
+        // assigneesId: ids,
         note: res.data.job.note,
         userId: "5f732f880cf3f60894f771b9",
         status: res.data.job.status,
@@ -212,9 +212,9 @@ class JobEditDetails extends Component {
       description,
       services,
       startTime,
-      meetTime,
+      // meetTime,
       locations,
-      assigneesId,
+      // assigneesId,
       status,
       userId: loggedinUser._id,
       customerId,
@@ -226,6 +226,7 @@ class JobEditDetails extends Component {
     }).catch((error) => {
     });
   };
+  
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
     let newState = { ...this.state };

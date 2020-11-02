@@ -30,31 +30,25 @@ class MoversJobsList extends Component {
 
     // componentDidUpdate(props) {
     //     var { getMover } = props
-    //     console.log(props.user)
     // }
 
     handleJobUpdate = (id) => {
-        console.log(id)
         updateJob(id, { status: this.state.status })
     };
 
     markComplete = (list) => {
         updateJob(list._id, { status: 'Completed' }).then((res) => {
-            console.log(res)
             var { getMover } = this.props
             getMover();
         })
     }
 
     render() {
-        console.log(this.state.data)
         const { moverJobs, user } = this.props;
         if (user) {
-            console.log('Inside')
             getMover(user._id)
         }
 
-        console.log(moverJobs)
         return (
             <div className={style.toprow}>
                 <div className="row">
@@ -89,7 +83,7 @@ class MoversJobsList extends Component {
                                             </div>
                                         </div>
                                         <div className="col-4 col-md-3">
-                                            <i className="fa fa-calendar ">{list.dates.map(x => x)}</i>
+                                            <i className="fa fa-calendar ">{list.dates.map(x => `${x}`)}</i>
                                         </div>
 
                                         <div className="col-4 col-md-4 d-flex justify-content-center">

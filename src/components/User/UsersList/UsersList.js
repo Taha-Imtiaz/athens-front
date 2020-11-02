@@ -15,7 +15,6 @@ import SearchBar from "../../SearchBar/SearchBar";
 const UsersList = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
- console.log(currentPage)
   var usersObj = {
     
     query: "",
@@ -32,7 +31,6 @@ const UsersList = (props) => {
 
   var handlePageChange = (page) => {
     var { users, getUsers } = props;
-    console.log(page)
     var usersObj = {
     
       query: "",

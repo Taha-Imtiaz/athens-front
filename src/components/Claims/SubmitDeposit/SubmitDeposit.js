@@ -29,7 +29,6 @@ class SubmitDeposit extends Component {
      customer,
       cost
     }
-    console.log(obj)
     var { showMessage } = this.props;
     addDeposit(obj).then(res => {
       showMessage(res.data.message)
@@ -63,7 +62,6 @@ class SubmitDeposit extends Component {
                 name="customer"
                 value={customer}
                 placeholder="Email"
-               
                 onChange={this.handleFormInput}
               />
             </div>

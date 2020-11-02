@@ -47,7 +47,6 @@ function Example(props) {
   const [dates, setDates] = useState([])
 
   const handleShow = () => {
-    console.log('hi')
     setShow(true)
   };
   const handleClose = () => {
@@ -70,7 +69,6 @@ function Example(props) {
       dates,
       reason: note
     }
-    console.log(obj)
     holidayCalender(obj).then(res => {
       if (res.data.status == 200) {
         setShow(false)

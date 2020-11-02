@@ -27,9 +27,6 @@ const CustomerClaims = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
 var totalCount = claims.claims?.data?.claims?.total
-console.log(pageSize, currentPage)
-console.log(totalCount)
-
 
 
   useEffect(() => {
@@ -44,7 +41,6 @@ console.log(totalCount)
   var data = [];
   if (claims.claims) {
     data = claims.claims.data.claims;
-    console.log(data)
   }
 
   const routes = [
@@ -63,7 +59,6 @@ console.log(totalCount)
 
   var handlePageChange = (page) => {
     var { getAllClaims } = props;
-    console.log(page)
     var claimsObj = {
       status:"all",
       page: page
@@ -111,12 +106,10 @@ console.log(totalCount)
   };
 
   const handleCloseJob = (i) => {
-    console.log(i)
     var { showMessage } = props;
    
 
     data.docs[i].status = "closed";
-    console.log(data.docs[i].status)
     updateClaim(data.docs[i])
       .then((res) => {
         if (res.data.status == 200) {

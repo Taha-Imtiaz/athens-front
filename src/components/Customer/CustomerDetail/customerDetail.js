@@ -78,7 +78,6 @@ const CustomerDetail = (props) => {
     // updateJob(jobObj, jobId)
     //     handleClose()
   }
-  console.log(customer?.jobs[0]?.assignee[0].jobs)
   return (
     <div>
       {customer && (
@@ -200,7 +199,7 @@ const CustomerDetail = (props) => {
                       }
                       <br></br>
                       {job.startTime} -{" "}
-                      {job.endTime}
+                      {job.meetTime}
                     </p>
                     <p>{job.description}</p>
                     {job.locations.map((list, i) => <p key={i}> <b> Pickup :</b> {list.from} <br/> <b> Drop Off :</b> {list.to}</p>)}

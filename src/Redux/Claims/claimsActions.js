@@ -98,9 +98,7 @@ export var updateDeposit = async (data) => {
       `https://athens-backend.herokuapp.com/api/user/update-blanket-deposit`,
       data
     );
-    console.log(data);
     return blanket;
   } catch (error) {
-    console.log(error);
   }
 };

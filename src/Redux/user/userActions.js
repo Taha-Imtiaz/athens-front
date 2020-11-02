@@ -9,7 +9,6 @@ export var login = (credentials) => {
     return async (diaspatch) => {
         try {
             var user = await Axios.post("user/login", credentials)
-            console.log(user)
             if (user.data.status == 200) {
                 localStorage.setItem('athens-token', user.data.token)
                 // callback()
@@ -23,6 +22,7 @@ export var login = (credentials) => {
                 return user;
             } else {
                 diaspatch(showMessage(user.data.message))
+                return user;
             }
 
         } catch (error) {
@@ -41,7 +41,6 @@ export var getLoginUser = (credentials) => {
 
             var user = await Axios.get("user/get-user-by-token", config)
             // diaspatch(showMessage(user.data.message))
-            console.log(user)
             if (user.data.status == 200) {
                 // diaspatch({
                 //     type: GET_LOGGEDIN_USER,
@@ -87,11 +86,9 @@ export var createUser = async (newUserObj) => {
     // return async (dispatch) => {
     try {
         var createdUser = await Axios.post("user/create-user", newUserObj)
-        console.log(createdUser.data.message)
         // dispatch(showMessage(createdUser.data.message))
         return createdUser
     } catch (error) {
-        console.log(error)
     }
     // }
 }

@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 
 function PrivateRoute({ component: Component, ...rest }) {
     // let { user } = props;
-    // console.log(user)
     const isAuthenticated = (props) => {
         let token = localStorage.getItem('athens-token')
-        // console.log(appRoutes, appRoutes['admin'], props)
         if (token) {
             // let index = appRoutes['admin'].findIndex(x => x == props.location.pathname)
             // if (index != -1) {
@@ -24,7 +22,6 @@ function PrivateRoute({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={props => {
-                console.log(props)
                 return isAuthenticated(props) ? (
                     <Component {...props} />
                 ) : (

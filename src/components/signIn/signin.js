@@ -26,7 +26,6 @@ class SignInForm extends React.Component {
     this.state = this.initialState
     let token = localStorage.getItem('athens-token')
     // if (token) {
-    //   console.log(this.props.user)
     //   props.history.push('/customer')
     // }
   }
@@ -81,17 +80,15 @@ class SignInForm extends React.Component {
     const isValid = this.validate()
     var { login } = this.props;
     if (isValid) {
-      console.log(this.state)
       let obj = {
         email: this.state.email,
         password: this.state.password
       }
       // login(obj, () => {
-      //   console.log('hell')
       //   this.props.history.push('/customer')
       // })
       login(obj).then(res => {
-        console.log(res.data.data.status, res.data, res.data.data)
+        console.log(res)
         if (res.data.status == 200) {
           res.data.data.role == 'mover' ? this.props.history.push('/mover') : this.props.history.push('/customer')
         }

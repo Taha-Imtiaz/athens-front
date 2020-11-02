@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerList.module.css";
+import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const CustomerList = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var { getAllCustomers } = props;
-    var [show, setShow] = useState(false)
+  var [show, setShow] = useState(false)
   useEffect(() => {
     var fetchCustomersObj = {
       query: "",
@@ -51,7 +51,7 @@ const CustomerList = (props) => {
 
   var { customers } = props;
 
-  var totalCount = customers?.data.User.total;
+  var totalCount = customers ?.data.User.total;
 
   if (customers) {
     var {
@@ -111,15 +111,15 @@ const CustomerList = (props) => {
     getAllCustomers(sortCustomersObj);
   };
 
- var handleShow = () => {
+  var handleShow = () => {
     setShow(true)
   };
 
- var handleClose = () => {
-    
-      setShow(false)
-     
-  
+  var handleClose = () => {
+
+    setShow(false)
+
+
   };
 
   return (
@@ -135,7 +135,7 @@ const CustomerList = (props) => {
           <div className={`col-5 col-md-6 ${style.search}`}>
             <SearchBar type="customer" title="Type name or email" />
           </div>
-          <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
+          <div className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}>
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"
@@ -144,9 +144,9 @@ const CustomerList = (props) => {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              style = {{transform:"translateY(.8rem)"}}
+              style={{ transform: "translateY(.8rem)" }}
             ></i>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style = {{margin:"-2rem"}}>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{ margin: "-2rem" }}>
               <a className="dropdown-item" onClick={handleSort}>
                 Sort By Name
               </a>
@@ -154,18 +154,18 @@ const CustomerList = (props) => {
                 Recently Added
               </a>
             </div>
+            <div>
+              <Link style={{ textDecoration: "none" }} to="/customer/add">
+                {" "}
+                <Button name="Create New" />
+              </Link>
+            </div>
           </div>
+
         </div>
 
-        <div className={`d-flex justify-content-end ${style.buttons}`}>
-          <div className={` ${style.create}`} style = {{margin:"-5.5rem"}}>
-            <Link style={{ textDecoration: "none" }} to="/customer/add">
-              {" "}
-              <Button name="Create New" />
-            </Link>
-          </div>
-          {/* <Button name="Delete" /> */}
-        </div>
+        {/* <div className={`d-flex justify-content-end ${style.buttons}`}>
+        </div> */}
         {docs && docs.length > 0 ? (
           <div>
             <div className={style.jumbotron}>
@@ -185,10 +185,11 @@ const CustomerList = (props) => {
                         <li
                           className="checkbox list-group-item"
                           key={doc._id}
-                          style={{  background: "rgba(0,0,0,.03)",
-                          border: "1px solid rgba(0,0,0,0.125)",
-                          // color:"#fff"
-                         }}
+                          style={{
+                            background: "rgba(0,0,0,.03)",
+                            border: "1px solid rgba(0,0,0,0.125)",
+                            // color:"#fff"
+                          }}
                         >
                           <div className="row justify-content-around">
                             <div
@@ -227,9 +228,9 @@ const CustomerList = (props) => {
                                     style={{
                                       transform: "translate3d(-1rem, 0.5rem, 0)",
                                       color: "#000",
-                                      display:"flex",
-                                      justifyContent:"center",
-                                      alignItems:"center"
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center"
                                     }}
                                   />
                                 </Link>
@@ -293,10 +294,10 @@ const CustomerList = (props) => {
             />
           </div>
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
     </div>
   );

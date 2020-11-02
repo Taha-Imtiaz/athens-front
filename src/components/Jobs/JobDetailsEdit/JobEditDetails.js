@@ -33,7 +33,7 @@ class JobEditDetails extends Component {
     dates: [""],
     endDate: "",
     startTime: "",
-    endTime: "",
+    meetTime: "",
     title: "",
     job: null,
     Note: "",
@@ -43,8 +43,6 @@ class JobEditDetails extends Component {
   };
 
   handleStartDate = (date, i) => {
-    console.log(typeof date, i);
-
     let newState = cloneDeep(this.state)
     newState.dates[i] = date;
     this.setState({
@@ -97,7 +95,7 @@ class JobEditDetails extends Component {
         startDateInString: res.data.job.startDate,
         endDateInString: res.data.job.endDate,
         startTime: res.data.job.startTime,
-        endTime: res.data.job.endTime,
+        meetTime: res.data.job.meetTime,
         locations: res.data.job.locations,
         description: res.data.job.description,
         options: services,
@@ -174,7 +172,7 @@ class JobEditDetails extends Component {
       dates,
       endDate,
       startTime,
-      endTime,
+      meetTime,
       locations,
       services,
       options,
@@ -196,20 +194,16 @@ class JobEditDetails extends Component {
       }, history
     } = this.props;
     var { showMessage } = this.props;
-    console.log(dates)
     let stringDates = dates.map(x => {
-      console.log(typeof x)
       if (typeof x == 'number') {
         return new Date(x).toDateString()
       } else {
         return x.toDateString()
       }
       //   x.toDateString()
-      // console.log(typeof x ==)
     })
-    //  var {startDate, endDate,  title, description, services,startTime, endTime, from , to, status, assigneesId, customerId,userId } = this.state;
+    //  var {startDate, endDate,  title, description, services,startTime, meetTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var { loggedinUser } = this.props;
-    console.log(loggedinUser)
     var updatedObj = {
       startDate: startDateInString,
       dates: stringDates,
@@ -218,7 +212,7 @@ class JobEditDetails extends Component {
       description,
       services,
       startTime,
-      endTime,
+      meetTime,
       locations,
       assigneesId,
       status,
@@ -226,12 +220,10 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
-    console.log(jobId, updatedObj)
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")
     }).catch((error) => {
-      console.log(error)
     });
   };
   onSelect = (selectedList, selectedItem) => {
@@ -341,9 +333,7 @@ class JobEditDetails extends Component {
 
   addDate = () => {
     if (this.state.dates[0]) {
-      console.log(this.state)
       this.setState({ dates: [...this.state.dates, ''] });
-      console.log(this.state)
     }
   }
 
@@ -360,7 +350,7 @@ class JobEditDetails extends Component {
       startDate,
       endDate,
       startTime,
-      endTime,
+      meetTime,
       from,
       assignee,
       to,
@@ -464,8 +454,8 @@ class JobEditDetails extends Component {
                         id="time"
                         placeholder="Time"
                         aria-describedby="emailHelp"
-                        name="endTime"
-                        value={endTime}
+                        name="meetTime"
+                        value={meetTime}
                         onChange={this.handleFormInput}
                       />
                     </div>

@@ -13,7 +13,6 @@ const MoversSchedule = (props) => {
             console.log(error)
         })
     }, [])
-    console.log(allMovers)
     const routes = [
     {
         title: "Daily Schedule",

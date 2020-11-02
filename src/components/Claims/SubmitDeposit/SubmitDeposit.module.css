@@ -2,6 +2,9 @@
     width: 80%;
     padding-right: 5%;
     margin-top: 1%;
+    width: 20rem;
+    margin: 1rem 0 ;
+    height: 2.4rem;
 }
 
 .head{
@@ -47,12 +50,10 @@ option {
 .in{
     margin-top: 0.2%;
 }
-input {
-    width: 20rem;
-    margin: 1rem 0 ;
-    height: 2.4rem;
+/* input {
     
-}
+    
+} */
 @media only screen and (max-width: 576px) {
     .btn{
         float: left;

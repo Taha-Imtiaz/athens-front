@@ -156,7 +156,7 @@ const JobDetails = (props) => {
                   <p
                     style={{ transform: "translateY(-1rem)", margin: "2rem 0" }}
                   >
-                    Job Id: {job._id}
+                    Job Id: {job.jobId}
                   </p>
                   <br />
                   <br />

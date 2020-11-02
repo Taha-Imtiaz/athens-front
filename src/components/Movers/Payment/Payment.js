@@ -14,7 +14,6 @@ class Payment extends Component {
     }
 
     changeHandler = (e) => {
-        console.log(e.target.value)
         var { name, value } = e.target;
         this.setState({ [name]: value });
     }
@@ -41,7 +40,6 @@ class Payment extends Component {
     }
 
     pay = (e) => {
-        console.log(e)
         e.preventDefault();
 
         window.Stripe.card.createToken({
@@ -52,16 +50,13 @@ class Payment extends Component {
         }, (status, response) => {
 
             if (status === 200) {
-                console.log(response.id)
                 // Send Token To Backend
                 let obj = {
                     stripeToken: response.id,
                     amount: this.state.amount,
                     jobId: this.props.location.jobId
                 }
-                console.log(obj)
                 payAmount(obj).then((res) => {
-                    console.log(res)
                 })
                 // this.setState({
                 //     message: `Success! Card token ${response.card.id}.`,

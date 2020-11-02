@@ -50,16 +50,13 @@ const CustomerDeposit = (props) => {
     if (type == 'save') {
 
       var {user} = props
-      console.log(user)
       var obj = {
         id: newData[i]._id,
         userId:user._id,
         quantity: newData[i].quantity,
         cost: newData[i].cost
       }
-      console.log(obj)
       updateDeposit(obj).then(res => {
-        console.log(obj)
         var { showMessage } = props;
         showMessage(res.data.message)
       }).catch(err => console.log(err))

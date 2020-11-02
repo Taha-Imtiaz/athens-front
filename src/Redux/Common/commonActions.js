@@ -13,7 +13,6 @@ export var hideLoader = () => (dispatch) => {
 }
 
 export var showMessage = (message) => async (dispatch) => {
-    console.log(message)
     setTimeout(() => {
         dispatch({
             type: SHOW_MESSAGE,

@@ -32,12 +32,10 @@ const UnavailableSchedule = (props) => {
         getAllData().then(res => {
             setData(res.data)
             setIsLoading(false)
-            console.log(res.data)
         })
     }, []);
 
     const handleChange = (i) => {
-        console.log(i)
     }
     return <div className={``}>
 

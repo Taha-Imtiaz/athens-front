@@ -13,7 +13,6 @@ const SearchBar = (props) => {
     const [searchValue, setSearchValue] = useState('');
 
     function handleSearch(e) {
-        console.log(e, searchValue, props.type, props.title)
         if (props.type == 'customer') {
             if (searchValue) {
                 var fetchCustomersObj = {
@@ -103,7 +102,7 @@ const SearchBar = (props) => {
         <div className="input-group">
             <input type="text" className="form-control" placeholder={title} style = {{outline:"transparent"}} onChange={(e) => setSearchValue(e.target.value)} />
             <div className="input-group-append">
-                <button onClick={handleSearch} className="btn btn-secondary" style = {{width:"3rem", margin:"1rem 0"}} type="button">
+                <button onClick={handleSearch} className="btn btn-secondary" style = {{width:"3rem"}} type="button">
                     <i className="fa fa-search"></i>
                 </button>
             </div>

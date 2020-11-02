@@ -18,7 +18,6 @@ const Navbar = (props) => {
     }, []);
 
     var { user } = props;
-    console.log(user)
 
     const getNavLinkClass = path => {
         return props.location.pathname === path
@@ -41,67 +40,69 @@ const Navbar = (props) => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 {props.user ?
                     <ul className="navbar-nav ml-auto">
-                        {console.log(props.user.role)}
-                           { props.user.role != 'mover' ?
-                                <React.Fragment>
-                                    <li className={getNavLinkClass("/customer")}>
-                                        <Link className={`nav-link`} to="/customer">
-                                            Customer
+                        {props.user.role != 'mover' ?
+                            <React.Fragment>
+                                <li className={getNavLinkClass("/customer")}>
+                                    <Link className={`nav-link`} to="/customer">
+                                        Customer
                         </Link>
 
-                                    </li>
-                                    <li className={getNavLinkClass("/job")}>
-                                        <Link className="nav-link" to="/job">
-                                            Jobs
+                                </li>
+                                <li className={getNavLinkClass("/job")}>
+                                    <Link className="nav-link" to="/job">
+                                        Jobs
                         </Link>
-                                    </li>
-                                    <li className={getNavLinkClass("/schedule")}>
-                                        <Link className="nav-link" to="/schedule/daily">
-                                            Schedule
+                                </li>
+                                <li className={getNavLinkClass("/schedule")}>
+                                    <Link className="nav-link" to="/schedule/daily">
+                                        Schedule
                         </Link>
-                                    </li>
-                                    {props.user.role != 'manager' ? <li className={getNavLinkClass("/user")}>
-                                        <Link className="nav-link" to="/user">
-                                            Users
+                                </li>
+                                {props.user.role != 'manager' ? <li className={getNavLinkClass("/user")}>
+                                    <Link className="nav-link" to="/user">
+                                        Users
                         </Link>
-                                    </li> : null}
-                                    <li className={getNavLinkClass("/account")}>
-                                    </li>
-                                    <li className={getNavLinkClass("/claim/customer")}>
-                                        <Link className="nav-link" to="/claim/customer">
-                                            Claims
+                                </li> : null}
+                                <li className={getNavLinkClass("/account")}>
+                                    <Link className="nav-link" to="/account">
+                                        Account
                         </Link>
-                                    </li>
-                                    <li className={getNavLinkClass("/claim/customerdeposit")}>
-                                        <Link className="nav-link" to="/claim/customerdeposit">
-                                            Blankets
+                                </li>
+                                <li className={getNavLinkClass("/claim/customer")}>
+                                    <Link className="nav-link" to="/claim/customer">
+                                        Claims
                         </Link>
-                                    </li>
-                                    <li>
-                                        <button style = {{background:"#00ADEE", border: "transparent", color: "#ffffff", padding: "0.5rem", borderRadius: "0.25rem"}}   onClick={logOut}>Log Out</button>
-                                        {/* <Link className={`nav-link ${style.logOut}`} to="/">
+                                </li>
+                                <li className={getNavLinkClass("/claim/customerdeposit")}>
+                                    <Link className="nav-link" to="/claim/customerdeposit">
+                                        Blankets
+                        </Link>
+                                </li>
+                                <li>
+                                    <button style={{ background: "#00ADEE", border: "transparent", color: "#ffffff", padding: "0.5rem", borderRadius: "0.25rem" }} onClick={logOut}>Log Out</button>
+                                    {/* <Link className={`nav-link ${style.logOut}`} to="/">
                                         Log Out
                         </Link> */}
-                                    </li>
-                                </React.Fragment>
-                                :
-                                <React.Fragment>
-                                    <li className={getNavLinkClass("/mover")}>
-                                        <Link className="nav-link" to="/mover">
-                                            Jobs
+                                </li>
+                            </React.Fragment>
+                            :
+                            <React.Fragment>
+                                <li className={getNavLinkClass("/mover")}>
+                                    <Link className="nav-link" to="/mover">
+                                        Jobs
                         </Link>
-                                    </li>
-                                    <li className={getNavLinkClass("/mover/calendar")}>
-                                        <Link className="nav-link" to="/mover/calendar">
-                                            Calendar
+                                </li>
+                                <li className={getNavLinkClass("/mover/calendar")}>
+                                    <Link className="nav-link" to="/mover/calendar">
+                                        Calendar
                              </Link>
-                                    </li>
-                                    <li>
-                                        {/* <Link className="nav-link" to="/"> */}
-                                        <button className="btn btn-primary" onClick={logOut}>Log Out</button>
-                                        {/* </Link> */}
-                                    </li>
-                                </React.Fragment>
+                                </li>
+                                <li>
+                                    {/* <Link className="nav-link" to="/"> */}
+                                    <button className="btn btn-primary" onClick={logOut}>Log Out</button>
+                                    {/* </Link> */}
+                                </li>
+                            </React.Fragment>
                         }
                     </ul>
                     :

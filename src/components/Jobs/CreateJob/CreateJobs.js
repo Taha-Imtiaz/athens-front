@@ -11,9 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import { clone, cloneDeep } from "lodash"
 
-
-
-
 class CreateJobs extends Component {
   initialState = {
     title: "",
@@ -23,8 +20,8 @@ class CreateJobs extends Component {
     startDate: "",
     dates: [''],
     startTime: "",
-    endTime: "",
-
+    meetTime: "",
+    assigneeRequired: '',
     from: "",
     to: "",
     titleError: "",
@@ -41,8 +38,8 @@ class CreateJobs extends Component {
     assigneesId: [],
     add: 1,
     locations: [{ from: '', to: '' }],
-    fromTo: []
-
+    fromTo: [],
+    assigneeRequiredError: ''
   };
   // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
   options = [
@@ -194,7 +191,7 @@ class CreateJobs extends Component {
     let assigneeError = "";
     let locationfromError = "";
     let locationtoError = "";
-
+    let assigneeRequiredError = "";
     if (!this.state.title) {
       titleError = "Title should not be empty";
     }
@@ -219,12 +216,16 @@ class CreateJobs extends Component {
       timeError = "Time should not be empty";
     }
 
-    if (!this.state.endTime) {
-      timeError = "Time should not be empty";
-    }
+    // if (!this.state.meetTime) {
+    //   timeError = "Time should not be empty";
+    // }
 
     if (!this.state.assigneeList) {
       assigneeError = "Assignee should not be empty";
+    }
+
+    if (!this.state.assigneeRequired) {
+      assigneeRequiredError = "Required count should not be empty";
     }
 
     if (!this.state.locations[0].from) {
@@ -243,7 +244,7 @@ class CreateJobs extends Component {
       timeError ||
       assigneeError ||
       locationfromError ||
-      locationtoError
+      locationtoError || assigneeRequiredError
     ) {
       this.setState({
         titleError,
@@ -254,6 +255,7 @@ class CreateJobs extends Component {
         assigneeError,
         locationfromError,
         locationtoError,
+        assigneeRequiredError
       });
       return false;
     }
@@ -298,36 +300,28 @@ class CreateJobs extends Component {
   onAssigneeRemove = (selectedList, removedItem) => {
     let newState = { ...this.state };
     let removeItem = removedItem._id;
-    // console.log(newState.assigneesId)
     var updatedState = newState.assigneesId.findIndex(
       (assigneeId) => assigneeId === removeItem
     );
-    console.log(updatedState);
     newState.assigneesId.splice(updatedState, 1);
 
     this.setState({ newState });
-    console.log(newState);
-
     // newState.assigneesId.pus, value: "00:00:00"h(assigneeItem)
     // this.setState({ assignee: removedItem })
   };
 
   onStartTimeSelect = (selectedList, selectedTimeItem) => {
-    console.log(selectedTimeItem);
     let selectedTime = selectedTimeItem.value;
-    console.log(selectedTime);
     let newState = { ...this.state };
     newState.startTime = selectedTime;
     this.setState({ startTime: newState.startTime });
   };
 
   onEndTimeSelect = (selectedList, selectedTimeItem) => {
-    console.log(selectedTimeItem);
     let selectedTime = selectedTimeItem.value;
-    console.log(selectedTime);
     let newState = { ...this.state };
-    newState.endTime = selectedTime;
-    this.setState({ endTime: newState.endTime });
+    newState.meetTime = selectedTime;
+    this.setState({ meetTime: newState.meetTime });
   };
 
   mySubmitHandler = (event) => {
@@ -335,7 +329,6 @@ class CreateJobs extends Component {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      console.log(this.state);
       this.setState({
         ...this.state,
       });
@@ -346,7 +339,7 @@ class CreateJobs extends Component {
         startDate,
         dates,
         startTime,
-        endTime,
+        meetTime,
         locations,
         status,
         note,
@@ -362,29 +355,25 @@ class CreateJobs extends Component {
         // startDate: startDate.toString(),
         dates: stringDates,
         startTime,
-        endTime,
+        // meetTime,
         locations,
         status,
         note,
         assigneesId,
         customerId,
       };
-      console.log(createJobObj);
       // var { history } = this.props;
       createJob(createJobObj)
-      .then((res) => {
-        history.push("/job");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          history.push("/job");
+        })
+        .catch((error) => {
+        });
 
     }
 
   };
   render() {
-
-    console.log(this.state.locations[0].from.length)
     return (
       <div>
         <ToastContainer position="bottom-right" />
@@ -401,7 +390,7 @@ class CreateJobs extends Component {
                 name="customerId"
                 value={this.state.customerId}
                 onChange={this.handleFormInput}
-                // disabled
+              // disabled
               />
             </div>
 
@@ -499,7 +488,7 @@ class CreateJobs extends Component {
             </div>
 
             <div className="row">
-              <div className="form-group col-3" style={{ marginTop: "1rem" }}>
+              <div className="form-group col-5" style={{ marginTop: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions} // Options to display in the dropdown
@@ -519,30 +508,51 @@ class CreateJobs extends Component {
                   {this.state.timeError}
                 </div>
               ) : null}
-              <div className="form-group col-3" style={{ marginTop: "1rem" }}>
+              {/* <div className="form-group col-3" style={{ marginTop: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions}
                   onSelect={this.onEndTimeSelect}
                   displayValue="name"
                   className="form-control"
-                  value={this.state.endTime}
+                  value={this.state.meetTime}
                   id="time"
-                  placeholder={this.state.endTime.length > 0 ? null : 'Meet Time'}
+                  placeholder={this.state.meetTime.length > 0 ? null : 'Meet Time'}
                 />
-              </div>
+              </div> */}
 
-              {this.state.timeError ? (
+              {/* {this.state.timeError ? (
                 <div
                   className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                   role="alert"
                 >
                   {this.state.timeError}
                 </div>
+              ) : null} */}
+
+              <div className={`form-group col-5`} style={{ marginTop: "1rem" }}>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="assigneeRequired"
+                  placeholder="Number of movers required"
+                  name="assigneeRequired"
+                  value={this.state.assigneeRequired}
+                  onChange={this.handleFormInput}
+                />
+              </div>
+
+              {this.state.assigneeRequiredError ? (
+                <div
+                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                  role="alert"
+                >
+                  {this.state.assigneeRequiredError}
+                </div>
               ) : null}
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <Multiselect
                 className={style.multi}
                 options={this.state.assigneeList} // Options to display in the dropdown
@@ -552,22 +562,20 @@ class CreateJobs extends Component {
                 className="form-control"
                 placeholder="Select Assignee"
               />
-            </div>
+            </div> */}
 
-            {this.state.assigneeError ? (
+            {/* {this.state.assigneeError ? (
               <div
                 className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                 role="alert"
               >
                 {this.state.assigneeError}
               </div>
-            ) : null}
+            ) : null} */}
 
             <div className="row">
               <div className="col-12">
-                <div className="form-group">
-                  <label className={style.l1}>Location:</label>
-                </div>
+                <h5>Location:</h5>
               </div>
 
 
@@ -578,7 +586,7 @@ class CreateJobs extends Component {
 
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style = {{background:"#00ADEE"}} name="Add Location" value="Add Location" onClick={this.addLocation} />
+                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
               </div>
             </div><br />
 

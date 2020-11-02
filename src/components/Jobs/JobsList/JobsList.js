@@ -112,7 +112,6 @@ class JobsList extends Component {
   };
 
   handleSort = () => {
-    console.log("Caleed");
     var { getAllJobs } = this.props;
     var fetchJobsOnPageChange = {
       query: "",
@@ -132,14 +131,11 @@ class JobsList extends Component {
   filterJobByDate = (e) => {
     
  var {filterJobsByDate} = this.props
-    console.log(e.target.value)
     this.setState({
       dates: e.target.value,
     });
     var {dates} = this.state
-   console.log(dates);
    let date  = new Date(e.target.value)
-console.log(date.toString())
    var DateFilters = {
     filters: {
       dates:date.toString(),
@@ -148,7 +144,6 @@ console.log(date.toString())
   },
  page:1
    }
-  console.log(DateFilters)
    filterJobsByDate(DateFilters)
   };
 
@@ -173,7 +168,6 @@ console.log(date.toString())
   };
   render() {
     var { jobs } = this.props;
-    console.log(jobs);
     var { pageSize, currentPage } = this.state;
 
     var totalCount = jobs[0]?.data?.jobs.total;
@@ -265,7 +259,7 @@ console.log(date.toString())
               <div className="col-2">Date</div>
               <div className="col-2">Assignee</div>
               <div className="col-2" style={{ transform: "translateX(6rem)" }}>
-                Service
+                Services
               </div>
               <div className="col-2" style={{ transform: "translateX(5rem)" }}>
                 Status
@@ -341,7 +335,8 @@ console.log(date.toString())
                               <label
                                 // style={{ display: "flex"}}
                               >
-                             { `${service} ` }
+                             { `${service.name} ` }
+                             &nbsp;
                               </label>
                             ))}
                           </label>
@@ -371,7 +366,7 @@ console.log(date.toString())
                               icon={faInfoCircle}
                               style={{
                                 transform: "translateX(-2.5rem)",
-                                color: "white",
+                                // color: "white",
                               }}
                             />
                           </div>
@@ -393,7 +388,7 @@ console.log(date.toString())
                           backdrop={false}
                         >
                           <Modal.Header closeButton>
-                            <Modal.Title>Add Note</Modal.Title>
+                            <Modal.Title>Booking Confirmation</Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
                             <textarea
@@ -419,7 +414,7 @@ console.log(date.toString())
                               variant="primary"
                               // onClick={this.AddNote}
                             >
-                              Add Note
+                              Next
                             </button>
                           </Modal.Footer>
                         </Modal>

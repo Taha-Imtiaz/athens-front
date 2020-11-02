@@ -24,6 +24,8 @@ const DailySchedule = (props) => {
     const [date, setDate] = useState(today.toString())
 
     const [nextDate, setNextDate] = useState(new Date())
+    const [indexDate, setIndexDate] = useState(0)
+
 
     const { getalljobs, getalljobsfiveday, jobs, movers } = props;
     useEffect(() => { // get-all-jobs-on-date
@@ -45,20 +47,20 @@ const DailySchedule = (props) => {
             title: "Daily Schedule",
             path: "/schedule/daily",
             icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
-    
-        },
-        
-        {
-        title: "Unavailable",
-        path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
-    },
-    , {
-        title: "Movers",
-        path: "/schedule/Movers",
-        icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
 
-    }
+        },
+
+        {
+            title: "Unavailable",
+            path: "/schedule",
+            icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+        },
+        , {
+            title: "Movers",
+            path: "/schedule/Movers",
+            icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
+
+        }
     ]
 
     useEffect(() => {
@@ -90,7 +92,8 @@ const DailySchedule = (props) => {
     }, []);
 
     const handleDateChange = (i) => {
-
+        console.log(i)
+        setIndexDate(i)
         let date = new Date()
         let itemDate = new Date(date); // starting today
         date.setDate(date.getDate() + i);
@@ -106,7 +109,6 @@ const DailySchedule = (props) => {
             attributes: "",
         };
         getAllMovers(moversObj).then((moverRes) => {
-            console.log(moverRes)
             var mover = moverRes.data.movers.map((mover) => mover);
             // this.setState({
             //     assigneeList: mover,
@@ -114,7 +116,6 @@ const DailySchedule = (props) => {
             setAllMovers(mover)
 
         });
-        console.log(list)
         setJobToUpdate(list)
         setShow(true);
     }
@@ -132,7 +133,6 @@ const DailySchedule = (props) => {
         delete job.assignee;
         delete job.customer;
         // delete job._id;
-        console.log(job)
         updateJob(job._id, job).then((res) => {
             if (res.data.status == 200) {
                 getalljobs({
@@ -150,16 +150,12 @@ const DailySchedule = (props) => {
     }
 
     const onAssigneeSelect = (selectedList, selectedItem) => {
-        console.log(selectedList)
-        console.log(selectedItem)
         let job = cloneDeep(jobToUpdate)
         job.assignee = selectedList;
         // job.assigneesId = selectedList.map(x => x._id);
         setJobToUpdate(job)
     }
     const onAssigneeRemove = (selectedList, removedItem) => {
-        console.log(selectedList)
-        console.log(removedItem)
         let job = cloneDeep(jobToUpdate)
         job.assignee = selectedList;
         // job.assigneesId = selectedList.map(x => x._id);;
@@ -178,7 +174,7 @@ const DailySchedule = (props) => {
                 <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     {weekNames && weekNames.map((name, i) => {
                         return <li key={i} className={`nav-item ${style.items}`}>
-                            <a onClick={() => handleDateChange(i)} className={`nav-link active ${style.color}`} style = {{background: new Date() ? "#00ADEE" : "#6c757d"}} id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{name}</a>
+                            <a onClick={() => handleDateChange(i)} className={`nav-link active`} style={{ background: indexDate == i ? "#00ADEE" : "#6c757d" }} id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{name}</a>
                         </li>
                     })}
                 </ul>

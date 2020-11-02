@@ -40,7 +40,6 @@ class Availability extends Component {
     // }
 
     handleChange = (e) => {
-        console.log(e.target.value)
         let newData = cloneDeep(this.state);
         let index = newData.weeklySchedule.findIndex(x => x.day == e.target.value)
         newData.weeklySchedule[index].status = !newData.weeklySchedule[index].status
@@ -55,17 +54,14 @@ class Availability extends Component {
         }
         setAvailability(obj, this.state.user._id)
         // setAvailability(obj, this.state.user._id).then(res => {
-        //     console.log(res)
         //     if (res.data.status == 200) {
         //         showMessage(res.data.message)
         //         this.setState({ weeklySchedule: res.data.assignee.weeklySchedule })
         //     }
         // })
-        console.log(this.state.weeklySchedule, this.state.user._id)
     }
 
     componentDidMount() {
-        console.log(this.props, 'Hello')
         if (this.props.loggedinUser) {
             this.setState({
                 user: this.props.loggedinUser,
@@ -75,7 +71,6 @@ class Availability extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps', nextProps);
         this.setState({
             user: nextProps.loggedinUser,
             weeklySchedule: nextProps.loggedinUser.weeklySchedule

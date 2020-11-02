@@ -26,9 +26,7 @@ class MoversCalendar extends Component {
     }
     componentDidMount = () => {
         const { user } = this.props;
-        console.log(user)
         getJob().then(res => {
-            console.log(res)
             // this.setState({
             //     myEventsList: res.data.jobs
             // })

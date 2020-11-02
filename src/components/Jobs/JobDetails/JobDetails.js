@@ -110,14 +110,14 @@ console.log(job?.activities)
                          
                               <div className="row" style = {{fontWeight:"bold"}}>
                              <div className={`col-2`}> Name</div>
-                            <div className={`col-5`}>Message</div>
-                             <div className={`col-5`}>Date</div>
+                            <div className={`col-6`}>Message</div>
+                             <div className={`col-4`}>Date</div>
                              </div>
                            
                               {job?.activities?.map((activitiy) => <div className = "row">
                               <div className={`col-2 `}> <p>{activitiy.performer.name}</p></div>
-                              <div className={`col-5`}><p>{activitiy.messageLogs}</p></div>
-                              <div className={`col-5 `}><p>  {activitiy.timeStamp.split("G")[0]}</p></div>
+                              <div className={`col-6`}><p>{activitiy.messageLogs}</p></div>
+                              <div className={`col-4 `}><p>  {activitiy.timeStamp.split("G")[0]}</p></div>
                               
                            
                             

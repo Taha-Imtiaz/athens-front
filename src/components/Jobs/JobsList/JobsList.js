@@ -5,7 +5,7 @@ import Button from "../../Button/Button";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllJobs,  filterJobsByDate } from "../../../Redux/Job/jobActions";
+import { getAllJobs, filterJobsByDate } from "../../../Redux/Job/jobActions";
 import Pagination from "../../Pagination/Pagination";
 import SearchBar from "../../SearchBar/SearchBar";
 import { Popover } from "reactstrap";
@@ -129,22 +129,22 @@ class JobsList extends Component {
   };
 
   filterJobByDate = (e) => {
-    
- var {filterJobsByDate} = this.props
+
+    var { filterJobsByDate } = this.props
     this.setState({
       dates: e.target.value,
     });
-    var {dates} = this.state
-   let date  = new Date(e.target.value)
-   var DateFilters = {
-    filters: {
-      dates:date.toString(),
-      movedDate: "",
-     startYearMonth :date.toString()
-  },
- page:1
-   }
-   filterJobsByDate(DateFilters)
+    var { dates } = this.state
+    let date = new Date(e.target.value)
+    var DateFilters = {
+      filters: {
+        dates: date.toString(),
+        movedDate: "",
+        startYearMonth: date.toString()
+      },
+      page: 1
+    }
+    filterJobsByDate(DateFilters)
   };
 
   handleDateFilter = () => {
@@ -170,7 +170,7 @@ class JobsList extends Component {
     var { jobs } = this.props;
     var { pageSize, currentPage } = this.state;
 
-    var totalCount = jobs[0]?.data?.jobs.total;
+    var totalCount = jobs[0] ?.data ?.jobs.total;
     var { popoverOpen } = this.state;
     var { show, dates } = this.state;
     return (
@@ -178,7 +178,7 @@ class JobsList extends Component {
         <div className={`row justify-content-center ${style.toprow}`}>
           <div className="col-5 col-md-3">
             <b>
-              <h3 className={style.head}>Jobs List Page</h3>
+              <h3 className={style.head}>Jobs List</h3>
             </b>
           </div>
 
@@ -236,7 +236,7 @@ class JobsList extends Component {
                 <Link style={{ textDecoration: "none" }} to="/calendar">
                   <button
                     className=" btn btn-primary"
-                    style={{ background: "#00ADEE", transform:navigator.userAgent.indexOf("Firefox")!== -1 ? "translateY(-3rem)": "translateY(-4.3rem)"}}
+                    style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
                   >
                     Calender
                   </button>
@@ -256,7 +256,7 @@ class JobsList extends Component {
               <div className="col-2" style={{ transform: "translateX(-2rem)" }}>
                 Title
               </div>
-              <div className="col-2">Date</div>
+              <div className="col-2">Date(s)</div>
               <div className="col-2">Assignee</div>
               <div className="col-2" style={{ transform: "translateX(6rem)" }}>
                 Services
@@ -265,7 +265,7 @@ class JobsList extends Component {
                 Status
               </div>
               <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
-                Details
+                Actions
               </div>
             </div>
 
@@ -273,7 +273,7 @@ class JobsList extends Component {
               <div className={style.li}>
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
-                    <li 
+                    <li
                       key={i}
                       className=" checkbox list-group-item "
                       style={{
@@ -292,7 +292,7 @@ class JobsList extends Component {
                             {
                               <span>
                                 {job.dates[0]}
-                                {job.dates.length > 1 && (
+                                {/* {job.dates.length > 1 && (
                                   <span>
                                     <span
                                       id={`Popover${job._id}`}
@@ -310,7 +310,7 @@ class JobsList extends Component {
                                       </PopoverBody>
                                     </Popover>
                                   </span>
-                                )}
+                                )} */}
                               </span>
                             }
                           </i>
@@ -318,7 +318,7 @@ class JobsList extends Component {
                         <div className="col-4 col-md-3">
                           <span>
                             <i className="fa fa-user"></i>
-                            {job.assignee.map((x, i) => (
+                            {job.assignee.length > 0 ? job.assignee.map((x, i) => (
                               <label
                                 key={i}
                                 className={`checkbox-inline ${style.assignee}`}
@@ -326,17 +326,17 @@ class JobsList extends Component {
                               >
                                 {x.name}
                               </label>
-                            ))}
+                            )) : 'N/A'}
                           </span>
                         </div>
                         <div className="col-4 col-md-2">
                           <label>
                             {job.services.map((service) => (
                               <label
-                                // style={{ display: "flex"}}
+                              // style={{ display: "flex"}}
                               >
-                             { `${service.name} ` }
-                             &nbsp;
+                                {`${service.name} `}
+                                &nbsp;
                               </label>
                             ))}
                           </label>
@@ -396,9 +396,9 @@ class JobsList extends Component {
                               id=""
                               cols="65"
                               rows="5"
-                              // name="Note"
-                              // value={Note}
-                              // onChange={this.handleAddNote}
+                            // name="Note"
+                            // value={Note}
+                            // onChange={this.handleAddNote}
                             ></textarea>
                           </Modal.Body>
                           <Modal.Footer>
@@ -412,7 +412,7 @@ class JobsList extends Component {
                             <button
                               className="btn btn-primary"
                               variant="primary"
-                              // onClick={this.AddNote}
+                            // onClick={this.AddNote}
                             >
                               Next
                             </button>
@@ -432,10 +432,10 @@ class JobsList extends Component {
             />
           </div>
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
     );
   }

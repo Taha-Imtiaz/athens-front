@@ -19,20 +19,20 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../Pagination/Pagination";
 
 const CustomerClaims = (props) => {
-  var {claims} = props
+  var { claims } = props
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-var totalCount = claims.claims?.data?.claims?.total
+  var totalCount = claims.claims ?.data ?.claims ?.total
 
 
   useEffect(() => {
     var { getAllClaims } = props;
     var claimsObj = {
-      status:"all",
+      status: "all",
       page: currentPage
     }
     getAllClaims(claimsObj);
@@ -60,7 +60,7 @@ var totalCount = claims.claims?.data?.claims?.total
   var handlePageChange = (page) => {
     var { getAllClaims } = props;
     var claimsObj = {
-      status:"all",
+      status: "all",
       page: page
     }
     getAllClaims(claimsObj);
@@ -107,7 +107,7 @@ var totalCount = claims.claims?.data?.claims?.total
 
   const handleCloseJob = (i) => {
     var { showMessage } = props;
-   
+
 
     data.docs[i].status = "closed";
     updateClaim(data.docs[i])
@@ -120,8 +120,13 @@ var totalCount = claims.claims?.data?.claims?.total
   };
 
   const getClaimsByStatus = (e) => {
+    console.log(e.target.value)
     var { getAllClaims } = props;
-    getAllClaims(e.target.value);
+    var claimsObj = {
+      status: e.target.value,
+      page: currentPage
+    }
+    getAllClaims(claimsObj);
   };
 
   const toggleCollapse = (i) => {
@@ -132,229 +137,229 @@ var totalCount = claims.claims?.data?.claims?.total
     }
   };
   return (
-    <div style= {{overflowX:"hidden"}}>
+    <div style={{ overflowX: "hidden" }}>
       {data.docs &&
-     <div>
-      <div className="row">
-        <div className="col-2">
-          <SideBar routes={routes} />
-        </div>
-        <div className="col-5">
-          <h3 className={style.head}>Claims</h3>
-        </div>
-        <div className="col-2">
-          <div className={style.btn}>
-            <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
-              <button
-                style={{
-                  // transform: "translateX(3.5rem)",
-                  background: "#00ADEE",
-                }}
-                className="btn btn-primary"
-              >
-                New Claim
+        <div>
+          <div className="row">
+            <div className="col-2">
+              <SideBar routes={routes} />
+            </div>
+            <div className="col-5">
+              <h3 className={style.head}>Claims</h3>
+            </div>
+            <div className="col-2">
+              <div className={style.btn}>
+                <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
+                  <button
+                    style={{
+                      // transform: "translateX(3.5rem)",
+                      background: "#00ADEE",
+                    }}
+                    className="btn btn-primary"
+                  >
+                    New Claim
               </button>{" "}
-            </Link>
-          </div>
-        </div>
-        <div className="col-2">
-          <div className={`${style.btn}`}>
-            <div className="form-group">
-              <select className="form-control" onChange={getClaimsByStatus}>
-                <option value="all">All</option>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
-              </select>
+                </Link>
+              </div>
+            </div>
+            <div className="col-2">
+              <div className={`${style.btn}`}>
+                <div className="form-group">
+                  <select className="form-control" onChange={getClaimsByStatus}>
+                    <option value="all">All</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      {data.docs && data.docs.length > 0 ? (
-        <div>
-          <div className="row" style = {{display:"flex", marginTop:"1rem",marginBottom:"-1.5rem", fontWeight:"bold"}}>
-            <div className="col-4" style = {{transform:"translateX(20rem)"}}> Job Id</div>
-            <div className="col-4" style = {{transform:"translateX(15rem)"}}>Name</div>
-            <div className="col-4" style = {{transform:"translateX(7rem)"}}>Status</div>
-          </div>
-        <div id="accordion" className={style.jumbotron} >
-          
-          {data?.docs.map((x, i) => {
-            return (
-              <div class="card">
-                <div style = {{height:"4rem", overflow:"hidden", width:"100%"}}
-                  class="card-header"
-                  id="headingOne"
-                  onClick={() => toggleCollapse(i)}
-                >
-                  <h5 class="mb-0">
-                    <button
-                      // class="btn btn-link"
-                      data-toggle="collapse"
-                      data-target="#collapse"
-                      aria-expanded="true"
-                      aria-controls="#collapse"
-                      style ={{border:"none",outline:"none", background:"transparent"}}
-                    >
-                      <div>
-                        <h6 className = {`${style.jobId}`}>{x?.job?.jobId}</h6>
-                      </div>
-                    </button>
-                  </h5>
+          {data.docs && data.docs.length > 0 ? (
+            <div>
+              <div className="row" style={{ display: "flex", marginTop: "1rem", marginBottom: "-1.5rem", fontWeight: "bold" }}>
+                <div className="col-4" style={{ transform: "translateX(20rem)" }}> Job Id</div>
+                <div className="col-4" style={{ transform: "translateX(15rem)" }}>Name</div>
+                <div className="col-4" style={{ transform: "translateX(7rem)" }}>Status</div>
+              </div>
+              <div id="accordion" className={style.jumbotron} >
 
-                  <h6 style={{ transform: "translate3d(25rem, -1.8rem, 0)" }}>
-                    {x.customer.firstName} {x.customer.lastName}
-                  </h6>
-                  <div
-                    className="col-4"
-                    style={{ transform: "translate3d(45rem, -4rem, 0)" }}
-                  >
-                    {x.status.toLocaleUpperCase() }
-                  </div>
-                 
-                </div>
+                {data ?.docs.map((x, i) => {
+                  return (
+                    <div className="card" style={{ cursor: "pointer" }}>
+                      <div style={{ height: "4rem", overflow: "hidden", width: "100%" }}
+                        className="card-header"
+                        id="headingOne"
+                        onClick={() => toggleCollapse(i)}
+                      >
+                        <h5 className="mb-0">
+                          <button
+                            // className="btn btn-link"
+                            data-toggle="collapse"
+                            data-target="#collapse"
+                            aria-expanded="true"
+                            aria-controls="#collapse"
+                            style={{ border: "none", outline: "none", background: "transparent" }}
+                          >
+                            <div>
+                              <h6 className={`${style.jobId}`}>{x ?.job ?.jobId}</h6>
+                            </div>
+                          </button>
+                        </h5>
 
-                <div
-                  id="#collapse"
-                  className={showIndex == i ? "show" : "collapse"}
-                  aria-labelledby="headingOne"
-                  data-parent="#accordion"
-                >
-                  <div class="card-body">
-                    <div key={x._id}>
-                      <div className="row justify-content-between">
-                        
+                        <h6 style={{ transform: "translate3d(25rem, -1.8rem, 0)" }}>
+                          {x.customer.firstName} {x.customer.lastName}
+                        </h6>
+                        <div
+                          className="col-4"
+                          style={{ transform: "translate3d(45rem, -4rem, 0)" }}
+                        >
+                          {x.status.toLocaleUpperCase()}
+                        </div>
+
                       </div>
-                      
-                      {/* <div className="row">
+
+                      <div
+                        id="#collapse"
+                        className={showIndex == i ? "show" : "collapse"}
+                        aria-labelledby="headingOne"
+                        data-parent="#accordion"
+                      >
+                        <div className="card-body">
+                          <div key={x._id}>
+                            <div className="row justify-content-between">
+
+                            </div>
+
+                            {/* <div className="row">
                         <div className="col-10">
                             <p className={style.comp}>from {x.from} - to {x.to}</p>
                         </div>
                     </div> */}
-                      {x.claims.map((y, j) => {
-                        return (
-                          <div key={j}>
-                           
-                            <h6 className={style.sub}>
-                              Claim Type : {y.claimType}
-                            </h6>
-                            <div className="row">
-                              <div className="col-10">
-                                <p className={style.para}>
-                                  Description : {y.description}
-                                </p>
-                              </div>
-                              <div
-                    className="col-4"
-                    style={{ transform: "translate3d(45rem, -4rem, 0)" }}
-                  >
-                    {x.status == "open" ? (
-                      <Button
-                        name="Close Claim"
-                        onClick={() => handleCloseJob(i)}
-                      ></Button>
-                    ) : (
-                      null
-                    )}
-                  </div>
-                              <div className="col-2">
-                                <p className={style.p2}>${y.price}</p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                      <hr />
-                      {x.claims.length > 0 ? (
-                        <div className="row">
-                          <div className="col-10">
-                            {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
-                          </div>
-                          <div className="col-2">
-                            <p>
-                              {" "}
-                              Total: $
-                              {x.claims.reduce(function (a, b) {
-                                return a + b["price"];
-                              }, 0)}
-                            </p>
-                          </div>
-                        </div>
-                      ) : null}
-                      <hr />
-                      <div className="row">
-                        <div className="col-10">
-                          {x.updates.length > 0 ? (
-                            <div>
-                              <h3>Updates</h3>
-                              {x.updates.map((x, i) => (
-                                <div key={i} className="row">
-                                  <div className="col-8">
-                                    <li> {x.value}</li>
-                                  </div>
-                                  <div className="col-4">
-                                    <li> {x.timestamp.split("T")[0]}</li>
+                            {x.claims.map((y, j) => {
+                              return (
+                                <div key={j}>
+
+                                  <h6 className={style.sub}>
+                                    Claim Type : {y.claimType}
+                                  </h6>
+                                  <div className="row">
+                                    <div className="col-10">
+                                      <p className={style.para}>
+                                        Description : {y.description}
+                                      </p>
+                                    </div>
+                                    <div
+                                      className="col-4"
+                                      style={{ transform: "translate3d(45rem, -4rem, 0)" }}
+                                    >
+                                      {x.status == "open" ? (
+                                        <Button
+                                          name="Close Claim"
+                                          onClick={() => handleCloseJob(i)}
+                                        ></Button>
+                                      ) : (
+                                          null
+                                        )}
+                                    </div>
+                                    <div className="col-2">
+                                      <p className={style.p2}>${y.price}</p>
+                                    </div>
                                   </div>
                                 </div>
-                              ))}
+                              );
+                            })}
+                            <hr />
+                            {x.claims.length > 0 ? (
+                              <div className="row">
+                                <div className="col-10">
+                                  {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                </div>
+                                <div className="col-2">
+                                  <p>
+                                    {" "}
+                                    Total: $
+                              {x.claims.reduce(function (a, b) {
+                                      return a + b["price"];
+                                    }, 0)}
+                                  </p>
+                                </div>
+                              </div>
+                            ) : null}
+                            <hr />
+                            <div className="row">
+                              <div className="col-10">
+                                {x.updates.length > 0 ? (
+                                  <div>
+                                    <h3>Updates</h3>
+                                    {x.updates.map((x, i) => (
+                                      <div key={i} className="row">
+                                        <div className="col-8">
+                                          <li> {x.value}</li>
+                                        </div>
+                                        <div className="col-4">
+                                          <li> {x.timestamp.split("T")[0]}</li>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <div
+                                className="col-2"
+                              //   style={{ transform: "translateY(1.5rem)" }}
+                              >
+                                {x.status == "open" ? (
+                                  <Button
+                                    name="Add Update"
+                                    onClick={() => handleShow(i)}
+                                  ></Button>
+                                ) : null}
+                              </div>
                             </div>
-                          ) : null}
-                        </div>
-                        <div
-                          className="col-2"
-                        //   style={{ transform: "translateY(1.5rem)" }}
-                        >
-                          {x.status == "open" ? (
-                            <Button
-                              name="Add Update"
-                              onClick={() => handleShow(i)}
-                            ></Button>
-                          ) : null}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ) : (
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
+          <Modal show={show} onHide={handleClose} animation={false} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Update</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <textarea
+                name=""
+                id=""
+                cols="65"
+                rows="5"
+                name="Note"
+                value={update}
+                onChange={handleAddUpdate}
+              ></textarea>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={handleClose} name="Close"></Button>
+              <Button onClick={updateClaimData} name="Update"></Button>
+            </Modal.Footer>
+          </Modal>
+          <div style={{ transform: "translateX(15rem)" }}>
+            <Pagination
+              itemCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+
+            />
+          </div>
         </div>
-        </div>
-      ) : (
-        <div className="text-center">
-          <img src="/images/no-data-found.png" />
-        </div>
-      )}
-      <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Update</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <textarea
-            name=""
-            id=""
-            cols="65"
-            rows="5"
-            name="Note"
-            value={update}
-            onChange={handleAddUpdate}
-          ></textarea>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose} name="Close"></Button>
-          <Button onClick={updateClaimData} name="Update"></Button>
-        </Modal.Footer>
-      </Modal>
-      <div style = {{transform:"translateX(15rem)"}}>
-      <Pagination 
-        itemCount={totalCount}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      
-      />
-      </div>
-    </div>
-    }
+      }
     </div>
   );
 };

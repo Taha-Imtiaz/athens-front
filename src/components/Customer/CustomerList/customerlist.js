@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerList.module.css";
+import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -10,8 +10,6 @@ import Pagination from "../../Pagination/Pagination";
 import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "react-bootstrap";
-
 // import "./customerList.mod"
 
 const CustomerList = (props) => {

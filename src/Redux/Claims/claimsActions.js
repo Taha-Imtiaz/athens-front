@@ -5,6 +5,7 @@ import Axios from "../../utils/api";
 var baseUrl = "https://athens-backend.herokuapp.com/api/";
 
 export var getAllClaims = (data) => {
+  console.log(data)
   let body = {
     page: data.page,
   };

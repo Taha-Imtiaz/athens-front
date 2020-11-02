@@ -26,6 +26,7 @@ const JobDetails = (props) => {
   useEffect(() => {
     getJob(jobId)
       .then((res) => {
+        console.log(res.data.job.activities)
         setJob(res.data.job);
       })
       .catch((error) => {
@@ -40,7 +41,7 @@ const JobDetails = (props) => {
   var handleClose = (notes) => {
     setShow(false);
   };
-
+console.log(job?.activities)
   return (
     <div>
       <div>
@@ -95,31 +96,41 @@ const JobDetails = (props) => {
                         {/* <Button name="Activities"  style = {{margin: "0"}}/> */}
 
                         {/* <!-- Modal --> */}
-                        <Modal
+                        <Modal dialogClassName = {`${style.modal}`}
                           show={show}
                           onHide={handleClose}
                           animation={false}
                           centered
+                         
                         >
                           <Modal.Header closeButton>
-                            <Modal.Title>Add Note</Modal.Title>
+                            <Modal.Title>Activities</Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
-                            <textarea
-                              name=""
-                              id=""
-                              cols="65"
-                              rows="5"
-                              name="Note"
+                         
+                              <div className="row" style = {{fontWeight:"bold"}}>
+                             <div className={`col-2`}> Name</div>
+                            <div className={`col-5`}>Message</div>
+                             <div className={`col-5`}>Date</div>
+                             </div>
+                           
+                              {job?.activities?.map((activitiy) => <div className = "row">
+                              <div className={`col-2 `}> <p>{activitiy.performer.name}</p></div>
+                              <div className={`col-5`}><p>{activitiy.messageLogs}</p></div>
+                              <div className={`col-5 `}><p>  {activitiy.timeStamp.split("G")[0]}</p></div>
+                              
+                           
+                            
 
-                              //   onChange={this.handleAddNote}
-                            ></textarea>
+
+                              </div>)}
+                            
                           </Modal.Body>
                           <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                               Close
                             </Button>
-                            <Button variant="primary">Add Note</Button>
+                            {/* <Button variant="primary">Add Activity</Button> */}
                           </Modal.Footer>
                         </Modal>
                       </div>

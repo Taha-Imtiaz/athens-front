@@ -33,6 +33,11 @@ option {
     grid-area: f;
     /* background-color: #a8a8a8; */
 }
+.input_fields {
+    width: 20rem;
+    height: 2.2rem;
+    text-indent: 0.4rem;
+}
 .btn{
    /* float: left;
    margin-left: 11%;

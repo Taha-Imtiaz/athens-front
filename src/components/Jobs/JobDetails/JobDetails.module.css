@@ -24,6 +24,15 @@
     margin-top: 3%;
     background-color: #00ADEE !important;
 }
+.flex {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.modal {
+  
+    max-width: 50vw;
+}
 
 .btncustom{
     margin: 2%;
@@ -76,12 +85,22 @@
     .cardCustom {
         width: 15rem
     }
+    .modal {
+  
+        max-width: 60vw;
+    }
+    
 }
 
 @media only screen and (max-width:750px) {
     .cardCustom {
         width: 12rem
     }
+    .modal {
+  
+        max-width: 70vw;
+    }
+    
 }
 
 @media only screen and (max-width: 576px) {
@@ -101,10 +120,20 @@
         border: 1px solid lightgrey;
         box-shadow: 1px 2px lightgrey;
     }
+    .modal {
+        margin: 0 5rem;
+        max-width: 80vw;
+    }
+    
 }
 @media only screen and (max-width: 360px) {
     .cardCustom{
         width: 9rem;
         transform: translateX(-1rem);
     }
+    .modal {
+        margin: 0 ; 
+        max-width: 90vw;
+    }
+    
 }

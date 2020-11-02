@@ -371,7 +371,7 @@ class JobEditDetails extends Component {
                 <div className={`form-group ${style.input}`}>
                   <label htmlFor="">Customer Email</label>
                   <input
-                    type="input"
+                    type="email"
                     className="form-control"
                     id="jobTitle"
                     name="customerId"

@@ -1,105 +1,98 @@
-.main{
-    text-align: left;
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+.main {
+  text-align: left;
+  /* width: 70%; */
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.topbtn{
-  display:flex;
+.topbtn {
+  display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.title{
-    float: left;
+.title {
+  float: left;
 }
 
-.toprow{
-    margin-top: 10px;
+.toprow {
+  margin-top: 10px;
 }
 
-.badges{
-    padding: 5px 10px;
-    margin-left: 5px;
-    background-color: #00ADEE
+.badges {
+  padding: 5px 10px;
+  margin-left: 5px;
+  background-color: #00adee;
 }
 
-.head{
-    margin-top: 30px;
+.head {
+  margin-top: 30px;
 }
 
-.badges2{
-    padding: 15px 10px;
-    margin-left: 5px;
-    background-color: #00ADEE;
+.badges2 {
+  padding: 15px 10px;
+  margin-left: 5px;
+  background-color: #00adee;
 }
 
-.btnrow{
-    margin-top: 2%;
-    margin-bottom: 5%;
+.btnrow {
+  margin-top: 2%;
+  margin-bottom: 5%;
 }
 
-.onlinebtn{
-    transform: translateX(-22rem);
+.onlinebtn {
+  transform: translateX(-22rem);
 }
 
-.cardwidth{
-    width: 90%;
+.cardwidth {
+  /* width: 90%; */
 }
 
-.carddetail{
-    width: 40%;
+.carddetail {
+  width: 40%;
 }
 
 @media only screen and (max-width: 576px) {
-    .main{
-        text-align: left;
-        width: 90%;
-        margin-left: 10%;
-        margin-right: 15%;
-    }
-    .onlinebtn{
-        transform: translateX(-10rem);
-    }
+  .main {
+    text-align: left;
+    width: 90%;
+    margin-left: 10%;
+    margin-right: 15%;
+  }
+  .onlinebtn {
+    transform: translateX(-10rem);
+  }
 
-    .btnrow{
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
-    
+  .btnrow {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
 }
 
-
-
-
 @media only screen and (max-width: 450px) {
-    
-    .onlinebtn{
-        transform: translateX(-8rem);
-    }
+  .onlinebtn {
+    transform: translateX(-8rem);
+  }
 
-    .btnrow{
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
-    
+  .btnrow {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
 }
 
 @media only screen and (max-width: 400px) {
-    .main{
-        text-align: left;
-        width: 90%;
-        margin-left: 10%;
-        margin-right: 15%;
-    }
-    .onlinebtn{
-        transform: translateX(-6rem);
-    }
+  .main {
+    text-align: left;
+    width: 90%;
+    margin-left: 10%;
+    margin-right: 15%;
+  }
+  .onlinebtn {
+    transform: translateX(-6rem);
+  }
 
-    .btnrow{
-        margin-top: 5%;
-        margin-bottom: 5%;
-    }
-    
+  .btnrow {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
 }

@@ -13,6 +13,7 @@ import { PopoverHeader, PopoverBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
+import JobConfirmation from "../JobConfirmation/JobConfirmation";
 
 const width = window.innerWidth;
 
@@ -27,15 +28,17 @@ class JobsList extends Component {
     popoverOpen: false,
     show: false,
     dates: "",
+    jobToConfirm: ""
   };
   handleToggle = () =>
     this.setState({
       popoverOpen: !this.popoverOpen,
     });
 
-  handleShow = () => {
+  handleShow = (data) => {
     this.setState({
       show: true,
+      jobToConfirm: data
     });
   };
 
@@ -378,33 +381,24 @@ class JobsList extends Component {
                             transform: "translateX(-2.5rem)",
                             // color: "white",
                           }}
-                          onClick={this.handleShow}
+                          onClick={() => this.handleShow(job)}
                         />
                         <Modal
                           show={show}
                           onHide={this.handleClose}
                           animation={false}
                           centered
-                          // backdrop={false}
+                        // backdrop={false}
                         >
                           <Modal.Header closeButton>
-                            <Modal.Title>Booking Confirmation</Modal.Title>
+                            {/* <Modal.Title>Booking Confirmation</Modal.Title> */}
                           </Modal.Header>
                           <Modal.Body>
-                            <textarea
-                              name=""
-                              id=""
-                              cols="65"
-                              rows="5"
-                            // name="Note"
-                            // value={Note}
-                            // onChange={this.handleAddNote}
-                            ></textarea>
+                            <JobConfirmation data={this.state.jobToConfirm} />
                           </Modal.Body>
-                          <Modal.Footer>
+                          {/* <Modal.Footer>
                             <button
                               className="btn btn-primary"
-                              // variant="secondary"
                               onClick={this.handleClose}
                             >
                               Close
@@ -412,11 +406,10 @@ class JobsList extends Component {
                             <button
                               className="btn btn-primary"
                               variant="primary"
-                            // onClick={this.AddNote}
                             >
                               Next
                             </button>
-                          </Modal.Footer>
+                          </Modal.Footer> */}
                         </Modal>
                       </div>
                     </li>

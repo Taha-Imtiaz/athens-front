@@ -204,9 +204,9 @@ class CreateJobs extends Component {
       multiError = "Services Should not be empty";
     }
 
-    if (this.state.assigneesId.length === 0) {
-      assigneeError = "Assignee Should not be empty";
-    }
+    // if (this.state.assigneesId.length === 0) {
+    //   assigneeError = "Assignee Should not be empty";
+    // }
 
     // if (!this.state.startDate) {
     //   startDateError = "Date should not be empty";
@@ -242,7 +242,7 @@ class CreateJobs extends Component {
       multiError ||
       // startDateError ||
       timeError ||
-      assigneeError ||
+      // assigneeError ||
       locationfromError ||
       locationtoError || assigneeRequiredError
     ) {
@@ -252,7 +252,7 @@ class CreateJobs extends Component {
         multiError,
         // startDateError,
         timeError,
-        assigneeError,
+        // assigneeError,
         locationfromError,
         locationtoError,
         assigneeRequiredError

@@ -13,7 +13,15 @@
     width: 50%;
     margin-left: 5%;
 }
-
+.formStyle {
+    display: grid;
+    grid-template-columns: 25fr 50fr 25fr;
+    grid-template-areas: ". form .";
+}
+.form {
+    grid-area: form;
+   
+}
 .head{
     margin-bottom: 2%;
     margin-left: 5%;

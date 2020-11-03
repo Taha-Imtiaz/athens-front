@@ -325,7 +325,7 @@ class CreateJobs extends Component {
   };
 
   mySubmitHandler = (event) => {
-    var { createJob, history } = this.props
+    var { createJob, history, loggedInUser } = this.props
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
@@ -361,7 +361,9 @@ class CreateJobs extends Component {
         note,
         assigneesId,
         customerId,
+        userId: loggedInUser._id
       };
+      console.log(createJobObj)
       // var { history } = this.props;
       createJob(createJobObj)
         .then((res) => {
@@ -607,5 +609,10 @@ var actions = {
   createJob
 }
 
-export default connect(null, actions)(CreateJobs);
+
+var mapStateToProps = (state) => ({
+  loggedInUser: state.users.user
+});
+
+export default connect(mapStateToProps, actions)(CreateJobs);
 // export default CreateJobs;

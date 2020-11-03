@@ -383,20 +383,28 @@ class JobsList extends Component {
                           }}
                           onClick={() => this.handleShow(job)}
                         />
-                        <Modal
-                          show={show}
-                          onHide={this.handleClose}
-                          animation={false}
-                          centered
-                        // backdrop={false}
-                        >
-                          <Modal.Header closeButton>
-                            {/* <Modal.Title>Booking Confirmation</Modal.Title> */}
-                          </Modal.Header>
-                          <Modal.Body>
-                            <JobConfirmation data={this.state.jobToConfirm} />
-                          </Modal.Body>
-                          {/* <Modal.Footer>
+
+                      </div>
+                    </li>
+                  );
+                })}
+              </div>
+            </ul>
+
+            <Modal dialogClassName={`${style.modal}`}
+              show={show}
+              onHide={this.handleClose}
+              animation={false}
+              centered
+            // backdrop={false}
+            >
+              <Modal.Header closeButton>
+                {/* <Modal.Title>Booking Confirmation</Modal.Title> */}
+              </Modal.Header>
+              <Modal.Body>
+                <JobConfirmation data={this.state.jobToConfirm} />
+              </Modal.Body>
+              {/* <Modal.Footer>
                             <button
                               className="btn btn-primary"
                               onClick={this.handleClose}
@@ -410,13 +418,7 @@ class JobsList extends Component {
                               Next
                             </button>
                           </Modal.Footer> */}
-                        </Modal>
-                      </div>
-                    </li>
-                  );
-                })}
-              </div>
-            </ul>
+            </Modal>
             <Pagination
               itemCount={totalCount}
               pageSize={pageSize}

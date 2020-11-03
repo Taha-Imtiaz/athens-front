@@ -10,20 +10,18 @@ import Typography from '@material-ui/core/Typography';
 import { clone, cloneDeep } from "lodash"
 import DatePicker from "react-datepicker";
 import { Multiselect } from "multiselect-react-dropdown";
+import { payAmount } from '../../../Redux/Mover/moverActions'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
     button: {
-        marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
     },
-    actionsContainer: {
-        marginBottom: theme.spacing(2),
-    },
-    resetContainer: {
-        padding: theme.spacing(3),
+    instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
 }));
 
@@ -60,19 +58,22 @@ export default function JobConfirmation(props) {
         { name: "12:00 am", id: 24, value: "00:00:00" },
     ];
 
-    console.log(props)
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [data, setData] = React.useState('');
-    const steps = getSteps();
+    const [payment, setPayment] = React.useState({});
+    const [startTime, setStartTime] = React.useState(['01:00:00']);
 
+
+    const steps = getSteps();
 
     useEffect(() => {
         let job = cloneDeep(props.data)
-        console.log(job.dates)
+        loadStripe();
+        console.log(job.startTime)
         let parsedDates = job.dates.map(x => typeof x == 'string' ? Date.parse(x) : x)
-        let index = timeOptions.findIndex(x => x.value == job.startTime)
-        console.log(index)
+        // let index = timeOptions.findIndex(x => x.value == job.startTime)
+        // setStartTime(job.startTime)
         job.dates = parsedDates;
         // if (index != -1) {
         //     job.startTime = timeOptions[index].name;
@@ -81,7 +82,11 @@ export default function JobConfirmation(props) {
     }, [])
 
     const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        if (activeStep === steps.length - 1) {
+            pay();
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     };
 
     const handleBack = () => {
@@ -94,14 +99,14 @@ export default function JobConfirmation(props) {
     const handleStartDate = (date, i) => {
         let newState = cloneDeep(data)
         newState.dates[i] = date;
-        setData({
-            dates: newState.dates
-        });
+        setData(newState);
     };
 
     const addDate = () => {
         if (data.dates[0]) {
-            setData({ dates: [...data.dates, ''] });
+            let newState = cloneDeep(data)
+            newState.dates.push(new Date());
+            setData(newState);
         }
     }
 
@@ -109,8 +114,123 @@ export default function JobConfirmation(props) {
         let selectedTime = selectedTimeItem.value;
         let newState = { ...data };
         newState.startTime = selectedTime;
-        setData({ startTime: newState.startTime });
+        setData(newState);
+        setStartTime(selectedTime)
     };
+
+    const handleFormInput = (event) => {
+        console.log()
+        var { name, value } = event.target
+        let updatedCustomer = cloneDeep(data)
+        updatedCustomer.customer[name] = value;
+        setData(updatedCustomer)
+    }
+
+
+    const hanldeLocationInput = (i, e) => {
+        let job = cloneDeep(data);
+        job.locations[i].from = e.target.value
+        setData(job);
+    }
+
+    const hanldeLocationInputTo = (i, e) => {
+        let job = cloneDeep(data);
+        job.locations[i].to = e.target.value
+        setData(job);
+    }
+
+    const showLocation = (i) => {
+        return <><div className="col-4">
+            <div className="form-group">
+
+            </div>
+        </div>
+            <div className="col-4">
+                <div className="form-group">
+                    <input
+                        type="input"
+                        className="form-control"
+                        id="from"
+                        placeholder="Pickup"
+                        name="from"
+                        value={data.locations[i].from}
+                        onChange={(e) => hanldeLocationInput(i, e)}
+                    />
+                </div>
+            </div>
+            <div className="col-4">
+                <input
+                    type="input"
+                    className="form-control"
+                    id="to"
+                    placeholder="Drop Off"
+                    name="to"
+                    value={data.locations[i].to}
+                    onChange={(e) => hanldeLocationInputTo(i, e)}
+                />
+            </div></>
+    }
+
+    const loadStripe = () => {
+
+        if (!window.document.getElementById('stripe-script')) {
+            var s = window.document.createElement("script");
+            s.id = "stripe-script";
+            s.type = "text/javascript";
+            s.src = "https://js.stripe.com/v2/";
+            s.onload = () => {
+                window['Stripe'].setPublishableKey('pk_test_51HfgSrIoqQ2sulu0x4TK6K2atQHghj1iIthjdrpD9qkE1yLx8nEFEYysxJrXn16tz6caSn1kMFFD6YnUl2MK05C800tBcU5bIH');
+            }
+            window.document.body.appendChild(s);
+        }
+    }
+
+    const changeHandler = (e) => {
+        var { name, value } = e.target;
+        let updatedPayment = cloneDeep(payment)
+        updatedPayment[name] = value;
+        setPayment(updatedPayment);
+    }
+
+    const pay = (e) => {
+        // e.preventDefault();
+        console.log(data, 'Data')
+        console.log(payment, 'Payment')
+
+        window.Stripe.card.createToken({
+            number: payment.number,
+            exp_month: payment.exp_month,
+            exp_year: payment.exp_year,
+            cvc: payment.cvc
+        }, (status, response) => {
+
+            if (status === 200) {
+                let obj = {
+                    stripeToken: response.id,
+                    amount: payment.amount,
+                    jobId: data._id
+                }
+                // payAmount(obj).then((res) => {
+                //     let { history, showMessage } = this.props;
+                //     if (res.data.status == 200) {
+                //         showMessage(res.data.message)
+                //         history.push('/mover')
+                //     }
+                //     console.log(res)
+                // })
+                // this.setState({
+                //     message: `Success! Card token ${response.card.id}.`,
+                //     formProcess: false
+                // });
+
+            } else {
+                // this.setState({
+                //     message: response.error.message,
+                //     formProcess: false
+                // });
+            }
+        });
+    }
 
     const getStepContent = (step) => {
         console.log(data)
@@ -121,7 +241,7 @@ export default function JobConfirmation(props) {
                     <div className="row">
                         {data && data.dates.map((x, i) => {
                             return (
-                                <div className="form-group col-5">
+                                <div className="form-group col-3">
                                     <DatePicker
                                         selected={data.dates[i]}
                                         onChange={(e) => handleStartDate(e, i)}
@@ -131,17 +251,9 @@ export default function JobConfirmation(props) {
                                 </div>
                             )
                         })}
-                        {/* {data.startDateError ? (
-                    <div
-                      className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                      role="alert"
-                    >
-                      {data.startDateError}
-                    </div>
-                  ) : null} */}
 
                         <div className="form-group col-2 my-0" onClick={addDate}>
-                            <i className="fa fa-plus"></i>
+                            <i className="fa fa-plus">Add Date</i>
                         </div>
                     </div>
                     <h6>Time:</h6>
@@ -149,26 +261,83 @@ export default function JobConfirmation(props) {
                     <div className="row">
                         {data && <div className="form-group col-12" style={{ marginTop: "1rem" }}>
                             <Multiselect
-                                // className={style.multi}
                                 options={timeOptions} // Options to display in the dropdown
                                 onSelect={onStartTimeSelect} // Function will trigger on select event
                                 displayValue="name" // Property name to display in the dropdown options
                                 className="form-control"
-                                value={data.startTime}
+                                // value={startTime}
+                                // selectedValues ={startTime}
                                 id="starttime"
-                                placeholder={data.startTime.length > 0 ? null : 'Start Time'}
+                                placeholder={data.startTime.length > 0 ? console.log(data.startTime) : 'Start Time'}
                             />
                         </div>}
                     </div>
-
                 </form>
             case 1:
-                return 'An ad group contains one or more ads which target a shared set of keywords.';
+                return <form>
+                    {data && <div>
+                        <div className="form-group">
+                            <label htmlFor="exampleInputEmail1">First Name</label>
+                            <input type="input" className="form-control" id="firstName" name="firstName" value={data.customer.firstName} onChange={handleFormInput} />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="exampleInputEmail1">Last Name</label>
+                            <input type="input" className="form-control" id="lastName" name="lastName" value={data.customer.lastName} onChange={handleFormInput} />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="exampleInputEmail1">Phone Number</label>
+                            <input type="input" className="form-control" id="phone_number" name="phone" value={data.customer.phone} onChange={handleFormInput} />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="exampleInputEmail1">Email address</label>
+                            <input type="email" className="form-control" name="email" value={data.customer.email} onChange={handleFormInput} />
+                        </div>
+                    </div>}
+                </form>;
             case 2:
-                return `Try out different ad text to see what brings in the most customers,
-                  and learn how to enhance your ads using features like ad extensions.
-                  If you run into any problems with your ads, find out how to tell if
-                  they're running and how to resolve approval issues.`;
+                return <div>{data.locations.map((ll, i) => {
+                    return showLocation(i)
+                })}</div>
+            case 3:
+                return <div>
+                    <div className="text-center" style={{ margin: "26px" }}>
+                        <h5>Payment Information</h5>
+                        {/* <span><i className="fa fa-cc-paypal" style={{ fontSize: "36px" }}></i></span>
+                        <span><i className="fa fa-cc-visa" style={{ fontSize: "36px", backgroundColor: "red" }}></i></span>
+                        <span><i className="fa fa-cc-mastercard" style={{ fontSize: "36px" }}></i></span> */}
+                    </div>
+                    <form>
+                        <div className="form-group">
+                            <input type="text" className="form-control" id="cardno" placeholder="Card Number" name="number" onChange={changeHandler} />
+                        </div>
+                        <p>Testing Card #: 4242424242424242</p>
+                        <div className="row">
+                            <div className="col-6">
+                                <div className="form-group">
+                                    <input type="text" className="form-control" id="month" placeholder="Month" name="exp_month" onChange={changeHandler} />
+                                </div>
+                            </div>
+
+                            <div className="col-6">
+                                <div className="form-group">
+                                    <input type="text" className="form-control" id="year" placeholder="Year" name="exp_year" onChange={changeHandler} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <input type="text" className="form-control" id="name" placeholder="CVC" name="cvc" onChange={changeHandler} />
+                        </div>
+                        <div className="form-group">
+                            <input type="number" className="form-control" id="amount" placeholder="Amount (Plus tip if any)" name="amount" onChange={changeHandler} />
+                        </div>
+
+                        {/* <input type="button" className="btn btn-primary" name="pay" value="Pay" onClick={pay} /> */}
+
+                    </form>
+                </div>
             default:
                 return 'Unknown step';
         }
@@ -176,43 +345,47 @@ export default function JobConfirmation(props) {
 
     return (
         <div className={classes.root}>
-            <Stepper activeStep={activeStep} orientation="vertical">
-                {steps.map((label, index) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                        <StepContent>
-                            <div>{getStepContent(index)}</div>
-                            <div className={classes.actionsContainer}>
-                                <div>
-                                    <Button
-                                        disabled={activeStep === 0}
-                                        onClick={handleBack}
-                                        className={classes.button}
-                                    >
-                                        Back
-                  </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                    >
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                    </Button>
-                                </div>
-                            </div>
-                        </StepContent>
-                    </Step>
-                ))}
+            <Stepper activeStep={activeStep}>
+                {steps.map((label, index) => {
+                    const stepProps = {};
+                    const labelProps = {};
+                    return (
+                        <Step key={label} {...stepProps}>
+                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        </Step>
+                    );
+                })}
             </Stepper>
-            {activeStep === steps.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
-                    <Button onClick={handleReset} className={classes.button}>
-                        Reset
-          </Button>
-                </Paper>
-            )}
+            <div>
+                {activeStep === steps.length ? (
+                    <div>
+                        <Typography className={classes.instructions}>
+                            All steps completed - you&apos;re finished
+                </Typography>
+                        <Button onClick={handleReset} className={classes.button}>
+                            Reset
+                </Button>
+                    </div>
+                ) : (
+                        <div>
+                            {
+                                getStepContent(activeStep)/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
+                            <div>
+                                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                    Back
+                  </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleNext}
+                                    className={classes.button}
+                                >
+                                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+            </div>
         </div>
     );
 }

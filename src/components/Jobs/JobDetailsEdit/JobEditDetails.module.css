@@ -13,9 +13,18 @@
     /* border: 1px solid lightgrey;
     box-shadow: 1px 2px lightgrey; */
 }
+.formStyle {
+    display: grid;
+    grid-template-columns: 20fr 60fr 20fr;
+    grid-template-areas: ". form .";
+}
+.form {
+    grid-area: form;
+    /* background-color: aqua; */
+}
 
 .head{
-    margin-left: 7%;
+    /* margin-left: 7%; */
     margin-top: 2%;
 }
 
@@ -34,16 +43,16 @@
     background-color: #00ADEE !important; 
 }
 .btnalign{
-    width: 25%;
-    margin-top: 3%;
+    /* width: 25%; */
+    /* margin-top: 5%;
     margin-bottom: 5%;
-    margin-left: 6%;
+    margin-left: 6%; */
 }
 
 .assigneehead{
-    margin-top: 3%;
+    /* margin-top: 3%;
     text-align: left;
-    margin-left: 6%;
+    margin-left: 6%; */
 }
 
 .badge{
@@ -69,7 +78,7 @@
 }
 
 .jobtag{
-    margin-left: 1%;
+    /* margin-left: 1%; */
 }
 
 .para{

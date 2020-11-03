@@ -21,7 +21,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TextField } from "@material-ui/core";
+import { TextareaAutosize, TextField } from "@material-ui/core";
 
 class JobEditDetails extends Component {
   servicesOptions = [
@@ -427,6 +427,30 @@ class JobEditDetails extends Component {
             value={this.state.title} onChange={this.handleFormInput}
           />
                 </div>
+                <div className = "form-group">
+                  <h4>Job Description</h4>
+                <TextareaAutosize
+                 rowsMin={5}
+               
+                 required
+                
+                 id="description"
+               
+                 name="description"
+                 
+                 value={description} onChange={this.handleFormInput}
+              />
+            </div>
+
+            <div className="form-group">
+                  <Multiselect
+                    selectedValues={this.state.services}
+                    options={this.servicesOptions} // Options to display in the dropdown
+                    onSelect={this.onSelect} // Function will trigger on select event
+                    onRemove={this.onRemove} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                  />
+                </div>
                 <div className="row">
                   {/* <div className="col-6">
                     <div className="form-group">
@@ -609,15 +633,7 @@ class JobEditDetails extends Component {
                 </div>
               
 
-                <div className="form-group">
-                  <Multiselect
-                    selectedValues={this.state.services}
-                    options={this.servicesOptions} // Options to display in the dropdown
-                    onSelect={this.onSelect} // Function will trigger on select event
-                    onRemove={this.onRemove} // Function will trigger on remove event
-                    displayValue="name" // Property name to display in the dropdown options
-                  />
-                </div>
+             
               </form>
             </div>
           </div>
@@ -648,24 +664,8 @@ class JobEditDetails extends Component {
           </div>
         </div>
         <div >
-          <h4 className={style.jobtag}>Job Description</h4>
-          <form>
-            <div className = "col-10">
-              <TextField
-                 variant="outlined"
-            // margin="normal"
-            required
-            fullWidth
-            size="small"
-                name="description"
-                value={description}
-                // label = "Job Description"
-                id=""
-                onChange={this.handleFormInput}
-                style={{transform:"translateX(-1.3rem)"}}
-              />
-            </div>
-          </form>
+          
+          
         </div>
 
         <h4 style={{margin:"0.8rem 0"}}>Assignees</h4>
@@ -702,7 +702,7 @@ class JobEditDetails extends Component {
               onClick={this.handleShow}
               type="submit"
               className={`btn btn-primary ${style.btnCustom}`}
-          style = {{transform:"translate3d(-3rem, 1rem, 0)"}}
+          style = {{transform:"translate3d(-3rem, 0, 0)"}}
             >
               Add Notes
             </button>
@@ -714,14 +714,14 @@ class JobEditDetails extends Component {
             type="submit"
             className={`btn btn-primary ${style.btnCustom}`}
             onClick={this.handleJobUpdate}
-            style = {{transform:"translate3d(-0.4rem, 1rem, 0)"}}
+            style = {{transform:"translate3d(-0.4rem, 0, 0)"}}
           >
             Update
           </button>
           <button
             type="submit"
             className={`btn btn-primary col-4 ${style.btnCustom}`}
-            style = {{transform:"translate3d(0.4rem, 1rem, 0)"}}
+            style = {{transform:"translate3d(0.4rem, 0, 0)"}}
           >
             Reset
           </button>

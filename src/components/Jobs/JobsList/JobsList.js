@@ -49,6 +49,29 @@ class JobsList extends Component {
       // note: notes,
     });
   };
+
+  handleCloseAndRefresh = () => {
+    this.setState({
+      show: false,
+      // note: notes,
+    });
+    var { getAllJobs } = this.props;
+    var jobObj = {
+      query: "",
+      filters: {
+        startDate: "",
+        endDate: "",
+        movedDate: "",
+        tag: "ABC",
+        startYearMonth: "",
+      },
+      sort: {
+        createdAt: -1,
+      },
+      page: 1,
+    };
+    getAllJobs(jobObj);
+  }
   // var [pageSize, setPageSize] = useState(10);
   // var [currentPage, setCurrentPage] = useState(1)
   componentDidMount = () => {
@@ -329,7 +352,7 @@ class JobsList extends Component {
                               >
                                 {x.name}
                               </label>
-                            )) : 'N/A'}
+                            )) : <label className={style.assignee}>N/A</label>}
                           </span>
                         </div>
                         <div className="col-4 col-md-2">
@@ -375,7 +398,7 @@ class JobsList extends Component {
                           </div>
                         </Link>
 
-                        <FontAwesomeIcon
+                        {job.status == 'pending' ? <FontAwesomeIcon
                           icon={faBook}
                           style={{
                             transform: "translateX(-2.5rem)",
@@ -383,6 +406,7 @@ class JobsList extends Component {
                           }}
                           onClick={() => this.handleShow(job)}
                         />
+                          : null}
 
                       </div>
                     </li>
@@ -399,10 +423,10 @@ class JobsList extends Component {
             // backdrop={false}
             >
               <Modal.Header closeButton>
-                {/* <Modal.Title>Booking Confirmation</Modal.Title> */}
+                <Modal.Title>Booking Confirmation</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <JobConfirmation data={this.state.jobToConfirm} />
+                <JobConfirmation data={this.state.jobToConfirm} close={this.handleCloseAndRefresh} />
               </Modal.Body>
               {/* <Modal.Footer>
                             <button

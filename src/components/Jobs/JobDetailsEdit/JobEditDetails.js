@@ -14,6 +14,7 @@ import { clone, cloneDeep } from "lodash"
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { TextField } from "@material-ui/core";
 
 class JobEditDetails extends Component {
   servicesOptions = [
@@ -370,20 +371,25 @@ class JobEditDetails extends Component {
             <div className={`${style.tron}`}>
               <form>
                 <div className={`form-group ${style.input}`}>
-                  <label htmlFor="">Customer Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="jobTitle"
-                    name="customerId"
-                    value={this.state.customerId}
-                    onChange={this.handleFormInput}
-                  // disabled
-                  />
+                
+                  
+                  <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="customerId"
+            label="Cutomer Id"
+            name="customerId"
+            autoComplete="customerId"
+            autoFocus
+            value={this.state.customerId} onChange={this.handleFormInput}
+          />
                 </div>
 
                 <div className="form-group">
-                  <input
+                  {/* <input
                     type="input"
                     className="form-control"
                     id="jobTitle"
@@ -392,7 +398,21 @@ class JobEditDetails extends Component {
                     name="title"
                     value={title}
                     onChange={this.handleFormInput}
-                  />
+                  /> */}
+                  
+                  <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="title"
+            label="Job Title"
+            name="title"
+            autoComplete="title"
+            autoFocus
+            value={this.state.title} onChange={this.handleFormInput}
+          />
                 </div>
                 <div className="row">
                   {/* <div className="col-6">
@@ -435,7 +455,7 @@ class JobEditDetails extends Component {
                 <div className="row">
                   <div className="col-6">
                     <div className="form-group">
-                      <input
+                      {/* <input
                         type="input"
                         className="form-control"
                         id="time"
@@ -444,12 +464,26 @@ class JobEditDetails extends Component {
                         name="startTime"
                         value={startTime}
                         onChange={this.handleFormInput}
-                      />
+                      /> */}
+                      
+                      <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="email"
+            label="StartTime"
+            name="startTime"
+            autoComplete="startTime"
+            autoFocus
+            value={startTime} onChange={this.handleFormInput}
+          />
                     </div>
                   </div>
                   <div className="col-6">
                     <div className="form-group">
-                      <input
+                      {/* <input
                         type="input"
                         className="form-control"
                         id="time"
@@ -458,7 +492,21 @@ class JobEditDetails extends Component {
                         name="meetTime"
                         value={meetTime}
                         onChange={this.handleFormInput}
-                      />
+                      /> */}
+                      
+                      <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="meetTime"
+            label="End Time"
+            name="meetTime"
+            autoComplete="meetTime"
+            autoFocus
+            value={meetTime} onChange={this.handleFormInput}
+          />
                     </div>
                   </div>
                 </div>
@@ -474,7 +522,7 @@ class JobEditDetails extends Component {
 
                     return <><div className="col-4">
                       <div className="form-group">
-                        <input
+                        {/* <input
                           type="input"
                           className="form-control"
                           id="from"
@@ -483,7 +531,22 @@ class JobEditDetails extends Component {
                           name="from"
                           value={list.from}
                           onChange={(e) => this.hanldeLocationInput(i, e)}
-                        />
+                        /> */}
+
+                        
+                <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="from"
+            label="From"
+            name="from"
+            autoComplete="from"
+            autoFocus
+            value={list.from}  onChange={(e) => this.hanldeLocationInput(i, e)}
+          />
                       </div>
                     </div>
                       <div className="col-4">

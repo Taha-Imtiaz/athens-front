@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import { addCustomer } from '../../../Redux/Customer/customerActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FormControl, TextField } from '@material-ui/core';
+import { FormHelperText, InputLabel } from '@material-ui/core';
+import { Input } from '@material-ui/core';
 
 
 
@@ -108,6 +111,7 @@ class CustomerAdd extends Component {
                 email,
                 subContacts
             }
+            console.log(addCustomerObj)
             addCustomer(addCustomerObj, () => {
                 history.goBack();
             })
@@ -115,6 +119,7 @@ class CustomerAdd extends Component {
     }
 
     addContacts = () => {
+        console.log("add")
         if (this.state.subContacts[0].phone && this.state.subContacts[0].email) {
             this.setState({
                 subContacts: [...this.state.subContacts, {
@@ -127,15 +132,28 @@ class CustomerAdd extends Component {
 
     render() {
         return (
-            <div>
+            <div className={`${style.formStyle}`}>
+                <div className={`${style.form}`}>
                 <h3 className={style.head}>Create New Customer</h3>
-                <div className={`${style.jumbotron}`}>
+                <div >
 
                     <form onSubmit={this.mySubmitHandler}>
-                        <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">First Name</label>
-                            <input type="input" className="form-control" id="firstName" name="firstName" value={this.state.firstName} onChange={this.handleFormInput} />
-                        </div>
+                       
+             <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            // style = {{height:"1.5rem",margin:"2rem 0"}}
+            id="firstName"
+            size="small"
+            label="First Name"
+            name="firstName"
+            autoComplete="firstName"
+            autoFocus
+            value={this.state.firstName} onChange={this.handleFormInput}
+          />
+                      
 
                         {this.state.firstNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
@@ -144,12 +162,20 @@ class CustomerAdd extends Component {
 
 
                             </div>) : null}
-
-                        <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Last Name</label>
-                            <input type="input" className="form-control" id="lastName" name="lastName" value={this.state.lastName} onChange={this.handleFormInput} />
-                        </div>
-
+                      
+                      <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            size="small"
+            label="Last Name"
+            name="lastName"
+            autoComplete="lastName"
+            autoFocus
+            value={this.state.lastName} onChange={this.handleFormInput}
+          />
                         {this.state.lastNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.lastNameError}
@@ -157,11 +183,21 @@ class CustomerAdd extends Component {
                             </div>) : null}
 
 
-                        <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Phone Number</label>
-                            <input type="input" className="form-control" id="phone_number" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
-                        </div>
-
+                        
+                          
+                            <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth 
+            size="small"
+            id="phone"
+            label="Phone Number"
+            name="phone"
+            autoComplete="phone"
+            autoFocus
+            value={this.state.phone} onChange={this.handleFormInput}
+          />
                         {this.state.phoneNumberError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.phoneNumberError}
@@ -171,11 +207,22 @@ class CustomerAdd extends Component {
                             </div>) : null}
 
 
-                        <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Email address</label>
-                            <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleFormInput} />
-                        </div>
-
+                     
+    
+                      
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={this.state.email} onChange={this.handleFormInput}
+          />
                         {this.state.emailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.emailError}
@@ -188,18 +235,43 @@ class CustomerAdd extends Component {
                     {this.state.subContacts.map((x, i) => {
                         return (
                             <div key={i}>
-                                <form>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Phone Number</label>
-                                        <input type="input" className="form-control" id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} />
-                                    </div>
+                                <form >
+                                    
+                                        {/* <InputLabel htmlFor ="phone_number">Phone Number</InputLabel>
+                                        <Input  id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
+                                  
+                                        <TextField
+            variant="outlined"
+            margin="normal"
+            size="small"
+            // required
+            fullWidth
+            id="phone_number"
+            label="Phone Number"
+            name="phone"
+            autoComplete="phone_number"
+            autoFocus
+            value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)}
+          />
 
 
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Email address</label>
-                                        <input type="email" className="form-control" name="email" value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)} />
-                                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                                    </div>
+                                  
+                                        {/* <InputLabel htmlFor="emailalt">Email address</InputLabel>
+                                        <Input type="email" id = "emailalt"  name="email" value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
+                                        {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
+                                        <TextField
+            variant="outlined"
+            margin="normal"
+            // required
+            fullWidth
+            id="emailalt"
+            label="Email Address"
+            size="small"
+            name="email"
+            autoComplete="emailalt"
+            autoFocus
+            value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)}
+          />
 
                                 </form>
                             </div>
@@ -217,6 +289,7 @@ class CustomerAdd extends Component {
                     </div>
                 </div>
             </div >
+            </div>
         );
     }
 }

@@ -6,6 +6,7 @@ import { createUser } from "../../../Redux/User/userActions";
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import { showMessage } from '../../../Redux/Common/commonActions'
+import { TextField } from "@material-ui/core";
 
 const initialState = {
   name: "",
@@ -143,18 +144,22 @@ class CreateUser extends Component {
     return (
       <div>
         {/* <ToastContainer position="bottom-right" /> */}
+      
+        <div className={style.jumbotron}>
         <div>
           <h3 className={style.head}>Create New User</h3>
         </div>
-        <div className={style.jumbotron}>
           <div className={style.container}>
             <form>
               <div className="form-group">
-                <input
-                  type="input"
-                  className="form-control"
+                <TextField
+                 variant="outlined"
+            margin="normal"style = {{margin:"0 2rem"}}
+            required
+            fullWidth
+            size="small"
                   id="name"
-                  placeholder="Full Name"
+                  label="Full Name"
                   name="name"
                   value={this.state.name}
                   onChange={this.handleFormInput}
@@ -171,11 +176,14 @@ class CreateUser extends Component {
               ) : null}
 
               <div className="form-group">
-                <input
-                  type="email"
-                  className="form-control"
+                <TextField
+                 variant="outlined"
+           style = {{margin:"0 2rem"}}
+            required
+            fullWidth
+            size="small"
                   id="email"
-                  placeholder="Email Address"
+                  label="Email Address"
                   name="email"
                   value={this.state.email}
                   onChange={this.handleFormInput}
@@ -192,11 +200,14 @@ class CreateUser extends Component {
               ) : null}
 
               <div className="form-group">
-                <input
-                  type="input"
-                  className="form-control"
+                <TextField
+                 variant="outlined"
+            margin="normal"style = {{margin:"0 2rem"}}
+            required
+            fullWidth
+            size="small"
                   id="phnumber"
-                  placeholder="Phone Number"
+                  label="Phone Number"
                   name="phone"
                   value={this.state.phone}
                   onChange={this.handleFormInput}
@@ -213,11 +224,14 @@ class CreateUser extends Component {
               ) : null}
 
               <div className="form-group">
-                <input
-                  type="email"
-                  className="form-control"
+                <TextField
+                 variant="outlined"
+            margin="normal"style = {{margin:"0 2rem"}}
+            required
+            fullWidth
+            size="small"
                   id="address"
-                  placeholder="Address"
+                  label="Address"
                   name="address"
                   value={this.state.address}
                   onChange={this.handleFormInput}
@@ -233,9 +247,9 @@ class CreateUser extends Component {
                 </div>
               ) : null}
 
-              <div className="form-row text-align-around">
-                <div className="col">
-                  <div className="form-group">
+              <div>
+                
+                  <div className="form-group" style = {{margin:" 1rem 2rem", width:"100%"}}>
                     <Multiselect
                       className={style.multi}
                       singleSelect={true}
@@ -245,8 +259,9 @@ class CreateUser extends Component {
                       displayValue="name" // Property name to display in the dropdown options
                       className="form-control"
                       placeholder="Select Type"
+                    
                     />
-                  </div>
+                 
                 </div>
 
                 {this.state.typeError ? (
@@ -258,7 +273,7 @@ class CreateUser extends Component {
                   </div>
                 ) : null}
               </div>
-              <div className="form-group">
+              <div className="form-group" style = {{margin:" 1rem 2rem", width:"100%"}}>
                 <Multiselect
                   className={style.multi}
                   singleSelect={true}
@@ -268,6 +283,7 @@ class CreateUser extends Component {
                   displayValue="name" // Property name to display in the dropdown options
                   className="form-control"
                   placeholder="Select Attribute"
+                
                 />
               </div>
 
@@ -281,7 +297,7 @@ class CreateUser extends Component {
               ) : null}
 
               <div className={style.mb}>
-                <Button name="Create" onClick={this.mySubmitHandler} />
+                <button className = "btn btn-primary" onClick={this.mySubmitHandler} >Create</button>
               </div>
             </form>
           </div>

@@ -190,6 +190,7 @@ class JobEditDetails extends Component {
       assigneesId,
       assignee,
       status,
+      jobType,
       startDateInString,
       endDateInString,
       assigneeRequired,
@@ -223,6 +224,7 @@ class JobEditDetails extends Component {
       description,
       services,
       assigneeRequired,
+      jobType,
       startTime,
       // meetTime,
       locations,
@@ -232,6 +234,7 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
+    console.log(updatedObj)
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")

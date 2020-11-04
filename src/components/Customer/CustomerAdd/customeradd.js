@@ -133,7 +133,7 @@ class CustomerAdd extends Component {
     render() {
         return (
             <div className={`${style.formStyle}`}>
-                <div className={`${style.form}`}>
+                <div className={`${style.form} `}>
                 <h3 className={style.head}>Create New Customer</h3>
                 <div >
 
@@ -141,10 +141,10 @@ class CustomerAdd extends Component {
                        
              <TextField
             variant="outlined"
-            margin="normal"
+           
             required
-            fullWidth
-            // style = {{height:"1.5rem",margin:"2rem 0"}}
+         
+            style = {{margin:"1rem 2rem", width:"92%"}}
             id="firstName"
             size="small"
             label="First Name"
@@ -164,10 +164,11 @@ class CustomerAdd extends Component {
                             </div>) : null}
                       
                       <TextField
-            variant="outlined"
-            margin="normal"
+           variant="outlined"
+           required
+           style = {{margin:"1rem 2rem", width:"92%"}}
             required
-            fullWidth
+          
             id="lastName"
             size="small"
             label="Last Name"
@@ -186,10 +187,13 @@ class CustomerAdd extends Component {
                         
                           
                             <TextField
-            variant="outlined"
-            margin="normal"
+          variant="outlined"
+           
+          required
+       
+          style = {{margin:"1rem 2rem", width:"92%"}}
             required
-            fullWidth 
+           
             size="small"
             id="phone"
             label="Phone Number"
@@ -211,10 +215,13 @@ class CustomerAdd extends Component {
     
                       
                             <TextField
-                 variant="outlined"
-            margin="normal"
+               variant="outlined"
+           
+               required
+            
+               style = {{margin:"1rem 2rem", width:"92%"}}
             required
-            fullWidth
+          
             size="small"
             id="email"
             label="Email Address"
@@ -231,7 +238,7 @@ class CustomerAdd extends Component {
 
                             </div>) : null}
                     </form>
-                    <h3>Sub Contact</h3>
+                    <h3 style = {{margin:"0 2rem"}}>Sub Contact</h3>
                     {this.state.subContacts.map((x, i) => {
                         return (
                             <div key={i}>
@@ -241,11 +248,13 @@ class CustomerAdd extends Component {
                                         <Input  id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
                                   
                                         <TextField
-            variant="outlined"
-            margin="normal"
+          variant="outlined"
+          required
+       
+          style = {{margin:"1rem 1.5rem", width:"92%"}}
             size="small"
             // required
-            fullWidth
+          
             id="phone_number"
             label="Phone Number"
             name="phone"
@@ -260,10 +269,13 @@ class CustomerAdd extends Component {
                                         <Input type="email" id = "emailalt"  name="email" value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
                                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                                         <TextField
-            variant="outlined"
-            margin="normal"
+           variant="outlined"
+           
+           required
+        
+           style = {{margin:"1rem 1.5rem", width:"92%"}}
             // required
-            fullWidth
+          
             id="emailalt"
             label="Email Address"
             size="small"
@@ -278,14 +290,16 @@ class CustomerAdd extends Component {
                         )
                     })}
                     < div className="form-group">
-                        <div style={{ float: 'right' }}>
+                        <div style={{ float: 'right' }} className = "row">
                             {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
                             <Button onClick={this.addContacts} name="Add Another"></Button>
                         </div>
                     </div>
-                    <div className={`d-flex justify-content-start`}>
-                        <Button name="Submit" onClick={this.mySubmitHandler} />
+                    <div className="row">
+                    <div className={`col-12` }>
+                        <button  onClick={this.mySubmitHandler}  className ={ `btn btn-primary ${style.button}`}>Submit</button>
                         {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
+                    </div>
                     </div>
                 </div>
             </div >

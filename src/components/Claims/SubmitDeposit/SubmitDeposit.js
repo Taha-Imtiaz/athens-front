@@ -6,6 +6,7 @@ import { addDeposit } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
 import Autocomplete from "react-autocomplete";
+import { TextField } from "@material-ui/core";
 
 class SubmitDeposit extends Component {
   state = {
@@ -56,35 +57,44 @@ class SubmitDeposit extends Component {
           <h3 className={style.head} style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>Blanket Deposit</h3>
           
             <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}} >
-              <input
-                className={style.input_fields}
-                type="text"
+              <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
                 name="customer"
                 value={customer}
-                placeholder="Email"
+                label="Email"
                 onChange={this.handleFormInput}
                 style = {{margin:"1rem 0"}}
               />
             </div>
             <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
-              <input
-                className={style.input_fields}
-                type="number"
+              <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
                 name="quantity"
                 value={quantity}
-                placeholder="Blanket Quantity"
+                label="Blanket Quantity"
                 onChange={this.handleFormInput}
                 style = {{margin:"1rem 0"}}
               />
             </div>
             <div style = {{display: "flex", justifyContent:"center", alignItems:"center"}}>
-              <input
-                className={style.input_fields}
-                type="number"
+              <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
                 name="cost"
                 value={cost}
                 disabled
-                placeholder="Cost in $"
+                label="Cost in $"
                 onChange={this.handleFormInput}
                   style = {{margin:"1rem 0"}}
               />

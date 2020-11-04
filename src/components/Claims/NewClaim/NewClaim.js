@@ -8,6 +8,7 @@ import API from '../../../utils/api'
 import { connect } from "react-redux";
 import { addClaim } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
+import { TextareaAutosize, TextField } from '@material-ui/core';
 
 
 
@@ -186,7 +187,12 @@ class NewClaim extends Component {
         <div className={`jumbotron ${style.form}`}>
           <form>
             <div className="form-group">
-              <input type="input" className="form-control" id="jobid" placeholder="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
+              <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small" id="jobid" label="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
             </div>
 
             {this.state.jobIdError ? (
@@ -196,7 +202,7 @@ class NewClaim extends Component {
               </div>) : null}
 
             {/* <div className="form-group">
-              <input type="input" className="form-control" id="customerId" placeholder="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
+              <input type="input" className="form-control" id="customerId" label="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
             </div>
 
             {this.state.customerIdError ? (
@@ -212,7 +218,7 @@ class NewClaim extends Component {
                   < div className="row">
                     <div className="col-8">
                       <div className="form-group">
-                        {/* <input type="input" className="form-control" id="claimType" placeholder="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
+                        {/* <input type="input" className="form-control" id="claimType" label="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
                         <select onChange={(e) => this.hanldeClaimsInput(e, i)} className="form-control" id="exampleFormControlSelect1" name="claimType">
                           <option>Damage To House</option>
                           <option>Damage To Item</option>
@@ -228,7 +234,13 @@ class NewClaim extends Component {
                     </div>
                     <div className="col-4">
                       <div className="form-group">
-                        <input type="input" className="form-control" id="price" placeholder="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style = {{margin:"-0.04rem 0"}}/>
+                        <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+             id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style = {{margin:"-0.04rem 0"}}/>
                       </div>
 
                       {this.state.priceError ? (
@@ -241,7 +253,9 @@ class NewClaim extends Component {
 
                   </div>
                   <div className="form-group">
-                    <textarea type="text" className="form-control" id="description" placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
+                    <TextareaAutosize
+             rowsMax={4}
+   id="description" placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
                   </div>
                 </div>
               )

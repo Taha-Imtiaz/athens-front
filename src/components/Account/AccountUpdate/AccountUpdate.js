@@ -4,6 +4,7 @@ import Button from '../../Button/Button'
 import API from '../../../utils/api'
 import { getUserData, updateUser } from '../../../Redux/User/userActions';
 import { connect } from 'react-redux';
+import { TextField } from '@material-ui/core';
 
 
 const initialState = {
@@ -132,7 +133,13 @@ class AccountUpdate extends Component {
                 <div className={style.form}>
                     <form>
                         <div className="form-group">
-                            <input type="input" className="form-control" id="name" placeholder="Enter Name" name="name" value={this.state.name} onChange={this.handleFormInput} />
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+             id="name" label="Enter Name" name="name" value={this.state.name} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.nameError ? (
@@ -144,7 +151,13 @@ class AccountUpdate extends Component {
                             </div>) : null}
 
                         <div className="form-group">
-                            <input type="email" className="form-control" id="email" placeholder="Enter Email" name="email" value={this.state.email} onChange={this.handleFormInput} />
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            id="email" label="Enter Email" name="email" value={this.state.email} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.emailError ? (
@@ -159,7 +172,13 @@ class AccountUpdate extends Component {
 
 
                         <div className="form-group">
-                            <input type="input" className="form-control" id="name" placeholder="Enter Phone" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+             id="name" label="Enter Phone" name="phone" value={this.state.phone} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.phoneError ? (
@@ -171,7 +190,13 @@ class AccountUpdate extends Component {
                             </div>) : null}
 
                         <div className="form-group">
-                            <input type="input" className="form-control" id="name" placeholder="Enter Address" name="address" value={this.state.address} onChange={this.handleFormInput} />
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+             id="name" label="Enter Address" name="address" value={this.state.address} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.addressError ? (
@@ -183,7 +208,14 @@ class AccountUpdate extends Component {
                             </div>) : null}
 
                         <div className="form-group">
-                            <input type="password" className="form-control" id="password" placeholder="Enter Password" name="password" value={this.state.password} onChange={this.handleFormInput} />
+                            <TextField
+                 variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            size="small"
+            type = "password"
+            id="password" label="Enter Password" name="password" value={this.state.password} onChange={this.handleFormInput} />
                         </div>
 
                         {this.state.passwordError ? (

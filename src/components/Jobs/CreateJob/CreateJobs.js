@@ -415,7 +415,8 @@ class CreateJobs extends Component {
         assigneesId,
         customerId,
         selectedDate,
-        assigneeRequired
+        assigneeRequired,
+        jobType
       } = this.state;
 
       let stringDates = dates.map(x => x.toDateString())
@@ -434,7 +435,8 @@ class CreateJobs extends Component {
         assigneesId,
         assigneeRequired,
         customerId,
-        userId: loggedInUser._id
+        userId: loggedInUser._id,
+        jobType
       };
       console.log(createJobObj)
       // var { history } = this.props;
@@ -686,9 +688,9 @@ class CreateJobs extends Component {
         </Select>
       </FormControl> */}
 
-                <div class="form-group" style={{ marginTop: "1rem" }}>
+                <div className="form-group" style={{ marginTop: "1rem" }}>
 
-                  <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
+                  <select className="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
                     <option >Fixed</option>
                     <option>Hourly based</option>
 

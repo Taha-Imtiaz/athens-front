@@ -173,7 +173,7 @@ class CustomerAdd extends Component {
             label="Last Name"
             name="lastName"
             autoComplete="lastName"
-            autoFocus
+            
             value={this.state.lastName} onChange={this.handleFormInput}
           />
                         {this.state.lastNameError ? (
@@ -195,7 +195,7 @@ class CustomerAdd extends Component {
             label="Phone Number"
             name="phone"
             autoComplete="phone"
-            autoFocus
+            
             value={this.state.phone} onChange={this.handleFormInput}
           />
                         {this.state.phoneNumberError ? (
@@ -220,7 +220,7 @@ class CustomerAdd extends Component {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
+            
             value={this.state.email} onChange={this.handleFormInput}
           />
                         {this.state.emailError ? (
@@ -250,7 +250,7 @@ class CustomerAdd extends Component {
             label="Phone Number"
             name="phone"
             autoComplete="phone_number"
-            autoFocus
+            
             value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)}
           />
 
@@ -269,7 +269,7 @@ class CustomerAdd extends Component {
             size="small"
             name="email"
             autoComplete="emailalt"
-            autoFocus
+            
             value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)}
           />
 

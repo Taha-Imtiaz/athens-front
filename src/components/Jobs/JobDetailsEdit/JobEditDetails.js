@@ -382,10 +382,10 @@ class JobEditDetails extends Component {
       <div className={`${style.formStyle}`}>
         <div className={`${style.form}`}>
           {/* <ToastContainer position="bottom-right"/> */}
-          <h3 className={style.head}>Job Details Edit</h3>
+          <h3 style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"2rem"}}>Job Details Edit</h3>
           <div className="row">
-            <div>
-              <div >
+            
+             
                 <form>
                   <div>
 
@@ -394,7 +394,8 @@ class JobEditDetails extends Component {
                       variant="outlined"
                       margin="normal"
                       required
-                      fullWidth
+                     
+                      style = {{transform:"translateX(3rem)", width:"100%"}}
                       size="small"
                       id="customerId"
                       label="Cutomer Id"
@@ -422,6 +423,7 @@ class JobEditDetails extends Component {
                       margin="normal"
                       required
                       fullWidth
+                      style = {{transform:"translateX(3rem)", width:"100%"}}
                       size="small"
                       id="title"
                       label="Job Title"
@@ -432,12 +434,12 @@ class JobEditDetails extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <h4>Job Description</h4>
+                    <h4   style = {{transform:"translateX(3rem)", width:"100%"}}>Job Description</h4>
                     <TextareaAutosize
                       rowsMin={5}
 
                       required
-
+                      style = {{transform:"translateX(3rem)", width:"100%"}}
                       id="description"
 
                       name="description"
@@ -446,7 +448,7 @@ class JobEditDetails extends Component {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-group"   style = {{transform:"translateX(3rem)", width:"100%"}}>
                     <Multiselect
                       selectedValues={this.state.services}
                       options={this.servicesOptions} // Options to display in the dropdown
@@ -468,7 +470,7 @@ class JobEditDetails extends Component {
                   </div> */}
                     {this.state.dates.map((x, i) => {
                       return (
-                        <div className="form-group col-4">
+                        <div className="form-group col-4"   style = {{transform:"translateX(3rem)", width:"100%"}}>
                           {/* <DatePicker
                           className={style.to}
                           selected={this.state.dates[i]}
@@ -496,7 +498,7 @@ class JobEditDetails extends Component {
                       )
                     })}
                     <div className="form-group col-3 my-0" onClick={this.addDate}>
-                      <i className="fa fa-plus" style={{ transform: "translateY(1.5rem)" }}></i>
+                      <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
                     </div>
                     {/* <div className="col-6">
                     <div className="form-group">
@@ -523,7 +525,7 @@ class JobEditDetails extends Component {
                         label="StartTime"
                         name="startTime"
                         autoComplete="startTime"
-                        
+                        style = {{transform:"translateX(3rem)", width:"100%"}}
                         value={startTime} onChange={this.handleFormInput}
                       />
 
@@ -539,6 +541,7 @@ class JobEditDetails extends Component {
                         required
                         fullWidth
                         size="small"
+                        style = {{transform:"translateX(3rem)", width:"100%"}}
                         id="assigneeRequired"
                         label="Movers Required"
                         autoComplete="Number of movers required"
@@ -560,7 +563,7 @@ class JobEditDetails extends Component {
                     <div className={`col-4`}>
 
 
-                      <div class="form-group" style={{ marginTop: "1rem" }}>
+                      <div class="form-group"    style = {{transform:"translateX(3rem)", marginTop: "1rem" , width:"100%"}}>
 
                         <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
                           <option >Fixed</option>
@@ -574,28 +577,17 @@ class JobEditDetails extends Component {
 
 
                   <div className="row">
-                    <div className="col-12">
-                      <div className="form-group">
-                        <label>Location:</label>
+                    <div className="col-3">
+                      <div className="form-group"   style = {{transform:"translateX(3rem)", width:"100%",marginTop:"1rem"}} >
+                        <h4>Location:</h4>
                       </div>
                     </div>
 
                     {this.state.locations && this.state.locations.map((list, i) => {
 
-                      return <><div className="col-5">
+                      return <><div className="col-4">
                         <div className="form-group">
-                          {/* <input
-                          type="input"
-                          className="form-control"
-                          id="from"
-                          placeholder="Pickup"
-                          aria-describedby="emailHelp"
-                          name="from"
-                          value={list.from}
-                          onChange={(e) => this.hanldeLocationInput(i, e)}
-                        /> */}
-
-
+                          
                           <TextField
                             variant="outlined"
                             margin="normal"
@@ -611,7 +603,7 @@ class JobEditDetails extends Component {
                           />
                         </div>
                       </div>
-                        <div className="col-5">
+                        <div className="col-4">
                           <TextField
                             variant="outlined"
                             margin="normal"
@@ -629,7 +621,7 @@ class JobEditDetails extends Component {
                         {/* <br> */}
                       </>
                     })}
-                    <div className="col-2">
+                    <div className="col-1">
                       <i className="fa fa-plus" style={{ transform: "translateY(1.5rem)" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
                     </div>
                   </div>
@@ -637,8 +629,8 @@ class JobEditDetails extends Component {
 
 
                 </form>
-              </div>
-            </div>
+             
+           
             <div className="col-4">
               {/* <div className="dropdown">
               <button
@@ -698,34 +690,44 @@ class JobEditDetails extends Component {
 
 
 
-            <div className="btnalign">
-              <button
+            <div className="row">
+            
+              <div className={`col-12`} style = {{justifyContent:"center", alignItems:"center", display:"flex"}}>
+              <button 
                 onClick={this.handleShow}
                 type="submit"
                 className={`btn btn-primary ${style.btnCustom}`}
-                style={{ transform: "translate3d(-3rem, 0, 0)" }}
+                style={{ transform: "translate3d(-3rem, 0, 0)", width:"100%", display:"flex",
+                justifyContent:"center", alignItems:"center"
+              }}
               >
                 Add Notes
             </button>
             </div>
+            </div>
           </div>
+          <div className="row">
           <div className={`col-4 ${style.btnalign}`} style={{ marginBottom: "1.5rem" }}>
 
             <button
               type="submit"
               className={`btn btn-primary ${style.btnCustom}`}
               onClick={this.handleJobUpdate}
-              style={{ transform: "translate3d(-0.4rem, 0, 0)" }}
+              style={{ transform: "translate3d(0rem, 0, 0)" }}
             >
               Update
           </button>
+          </div>
+          <div className={`col-4 ${style.btnalign}`}>
             <button
               type="submit"
-              className={`btn btn-primary col-4 ${style.btnCustom}`}
-              style={{ transform: "translate3d(0.4rem, 0, 0)" }}
+              className={`btn btn-primary  ${style.btnCustom}`}
+              style={{ transform: "translate3d(0.4rem, 0, 0)", width:"100%" }}
             >
               Reset
           </button>
+          </div>
+         
           </div>
           <Modal show={show} onHide={this.handleClose} animation={false} centered>
             <Modal.Header closeButton>

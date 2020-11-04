@@ -3,21 +3,30 @@
 }
 
 .tron{
-    margin-top: 2%;
-    width: 60%;
-    /* background-color: #e9f2eb; */
-    margin-bottom: 2%;
-    margin-left: 20%;
-    margin-right: 20%;
+    display: grid;
+    grid-template-columns: 20fr 60fr 20fr;
+    grid-template-areas: ". form .";
+    background-color: white;
+}
+.form {
+    grid-area: form;
+    background-color:  #e9ecef;
+    margin: 2rem 0;
+    border-radius: 0.4rem;
 }
 
 .head{
-    margin-top: 2%;
-    margin-left: 20%;
+     margin-top: 2%;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.btnsubmit{
-    float: left;
+.btnsubmit button{
+   width: 90%;
+   margin: 1rem 2rem;
+   background-color:  #00ADEE ;
 }
 
 .textarea{

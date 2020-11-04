@@ -185,18 +185,14 @@ class CreateJobs extends Component {
 
 
   showLocation = (i) => {
-    return <><div className="col-4">
-      <div className="form-group">
-
-      </div>
-    </div>
+    return <>
       <div className="col-4">
         <div className="form-group">
           <TextField
             variant="outlined"
             margin="normal"
             required
-            fullWidth
+            
             size="small"
             id="from"
             label="Pickup"
@@ -219,7 +215,7 @@ class CreateJobs extends Component {
           variant="outlined"
           margin="normal"
           required
-          fullWidth
+          
           size="small"
           id="to"
           label="Drop Off"
@@ -452,11 +448,13 @@ class CreateJobs extends Component {
   };
   render() {
     return (
-      <div>
+      <div style ={{background:"#e9ecef"}}>
         <ToastContainer position="bottom-right" />
-        <h3 className={style.head}>Create New Job</h3>
+        
 
         <div className={`${style.tron}`}>
+          <div className={`${style.form}`}>
+            <h3 className={style.head}>Create New Job</h3>
           <form onSubmit={this.mySubmitHandler}>
             <div>
               {/* <label htmlFor="">Customer Email</label>
@@ -471,9 +469,9 @@ class CreateJobs extends Component {
               /> */}
               <TextField
                 variant="outlined"
-                margin="normal"
+               style ={{margin:"1rem 2rem", width:"90%"}}
                 required
-                fullWidth
+                
                 size="small"
                 id="customerId"
                 label="Cutomer Email"
@@ -487,9 +485,9 @@ class CreateJobs extends Component {
             <div>
               <TextField
                 variant="outlined"
-                margin="normal"
+              
                 required
-                fullWidth
+                style ={{margin:"1rem 2rem", width:"90%"}}
                 size="small"
                 id="title"
                 label="Job Title"
@@ -512,6 +510,7 @@ class CreateJobs extends Component {
             <div className="form-group">
               <TextareaAutosize
                 className={style.textarea}
+                style ={{margin:"1rem 2rem", width:"90%"}}
                 rowsMin={4}
                 id="ta"
                 // rows="4"
@@ -531,7 +530,7 @@ class CreateJobs extends Component {
               </div>
             ) : null}
 
-            <div className="form-group">
+            <div className="form-group"  style ={{margin:"1rem 2rem", width:"90%"}}>
 
               {/* <InputLabel id="label">Age</InputLabel>
 <Select labelId="label" id="select" value="20">
@@ -562,7 +561,7 @@ class CreateJobs extends Component {
             <div className="row">
               {this.state.dates.map((x, i) => {
                 return (
-                  <div className="form-group col-3">
+                  <div className="form-group col-3"    style ={{margin:"1rem 2rem", width:"90%"}}>
                     {/* <DatePicker
                       className={style.to}
                       selected={this.state.dates[i]}
@@ -575,7 +574,7 @@ class CreateJobs extends Component {
                       <Grid container justify="space-around">
                         <KeyboardDatePicker
                           margin="normal"
-                          fullWidth
+                          
                           id="date-picker-dialog"
                           format="MM/dd/yyyy"
                           value={this.state.dates[i]}
@@ -600,12 +599,12 @@ class CreateJobs extends Component {
               ) : null} */}
 
               <div className="form-group col-3 my-0" onClick={this.addDate}>
-                <i className="fa fa-plus" style={{ transform: "translateY(1.3rem)" }}></i>
+                <i className="fa fa-plus" style={{ transform: "translateY(2.2rem)" }}></i>
               </div>
             </div>
 
             <div className="row">
-              <div className="form-group col-3" style={{ marginTop: "1rem" }}>
+              <div className="form-group col-3" style={{ margin: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions} // Options to display in the dropdown
@@ -653,10 +652,10 @@ class CreateJobs extends Component {
                   variant="outlined"
                   margin="normal"
                   required
-                  fullWidth
+                  
                   size="small"
                   id="assigneeRequired"
-                  label="Number of movers required"
+                  label="Movers Required"
                   autoComplete="Number of movers required"
                   name="assigneeRequired"
                   value={this.state.assigneeRequired}
@@ -721,8 +720,9 @@ class CreateJobs extends Component {
             ) : null} */}
 
             <div className="row">
-              <div className="col-12">
+              <div className="col-3"    style ={{margin:" 1rem", width:"90%"}}>
                 <h5>Location:</h5>
+                
               </div>
 
 
@@ -733,7 +733,7 @@ class CreateJobs extends Component {
 
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE",marginRight:"1rem" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
               </div>
             </div><br />
 
@@ -745,6 +745,7 @@ class CreateJobs extends Component {
             </div>
           </form>
         </div>
+      </div>
       </div>
     );
   }

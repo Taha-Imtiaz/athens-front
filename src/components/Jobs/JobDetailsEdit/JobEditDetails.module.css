@@ -20,17 +20,20 @@
 }
 .form {
     grid-area: form;
-    /* background-color: aqua; */
+    background-color:  #e9ecef;
+    margin: 2rem 0;
+    border-radius: 0.4rem;
 }
 
 .head{
     /* margin-left: 7%; */
-    margin-top: 2%;
+    /* margin-top: 2%; */
 }
 
 .btnCustom{
     margin-left: 2%;
     background-color: #00ADEE;
+    width: 100%;
     margin-bottom: 2%;
 }
 

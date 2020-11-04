@@ -17,9 +17,9 @@ const AccountDisplay = (props) => {
     //     setUser(loggedInUser)
     // }, [user])
 
-    return <div className={style.acc}>
+    return <div className={style.acc} style = {{ display:"flex",justifyContent:"center", alignItems:"center"}}>
         {loggedInUser &&
-            <div className="card" style={{ width: "25rem" }}>
+            <div className="card" style={{ width: "25rem"}}>
                 <div className="card-body">
                     <h5 className="card-title">Account Holder</h5>
                     <p className="card-text">{loggedInUser.name}</p>
@@ -33,7 +33,7 @@ const AccountDisplay = (props) => {
                     <Link style={{ textDecoration: "none" }} to={{
                         pathname: '/account/update',
                         userId: loggedInUser._id
-                    }}> <Button name="Edit" /> </Link>
+                    }}> <button className = {`btn btn-primary`} style = {{width:"100%", background:"#00ADEE"}}>Edit</button> </Link>
                 </div>
             </div>
         }

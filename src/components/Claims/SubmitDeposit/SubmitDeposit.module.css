@@ -19,7 +19,7 @@
 }
 .depositForm {
     display: grid;
-    margin: 4rem 0;
+   
     grid-template-rows: 1fr;
     grid-template-columns: 20fr 60fr 20fr;
     /* background-color: aqua; */
@@ -31,6 +31,8 @@ option {
 }
 .form {
     grid-area: f;
+    margin: 2rem 0;
+
     /* background-color: #a8a8a8; */
 }
 .input_fields {

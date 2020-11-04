@@ -1,11 +1,14 @@
 .acc{
     margin-top: 2%;
-    float: left;
+  
     margin-left: 5%;
     text-align: left;
+    /* background-color: rebeccapurple; */
 }
 
-
+.button {
+  
+}
 @media only screen and (max-width: 500px) {
     .acc{
         margin-top: 5%;

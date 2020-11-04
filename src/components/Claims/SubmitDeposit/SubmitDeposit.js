@@ -30,6 +30,7 @@ class SubmitDeposit extends Component {
      customer,
       cost
     }
+    console.log(obj)
     var { showMessage } = this.props;
     addDeposit(obj).then(res => {
       showMessage(res.data.message)
@@ -101,7 +102,7 @@ class SubmitDeposit extends Component {
             </div>
   
           <div className={style.btn}  style = {{display: "flex", justifyContent:"center", alignItems:"center"}} >
-           <button className = "btn btn-primary" style = {{background: "#00ADEE"}} >Submit</button>
+           <button className = "btn btn-primary" style = {{background: "#00ADEE", width:"100%"}} >Submit</button>
           </div>
         </form>
         </div>

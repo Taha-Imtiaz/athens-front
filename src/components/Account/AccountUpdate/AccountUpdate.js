@@ -128,11 +128,13 @@ class AccountUpdate extends Component {
 
     render() {
         return (
-            <div>
-                <h3 className={style.head}>Account</h3>
+            <div className={style.head}>
+              
+
                 <div className={style.form}>
+                <h3 style = {{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"2rem"}} >Account</h3>
                     <form>
-                        <div className="form-group">
+                        <div className="form-group" style={{margin:"1rem 2rem"}}>
                             <TextField
                  variant="outlined"
             margin="normal"
@@ -150,7 +152,7 @@ class AccountUpdate extends Component {
 
                             </div>) : null}
 
-                        <div className="form-group">
+                        <div className="form-group" style={{margin:"1rem 2rem"}}>
                             <TextField
                  variant="outlined"
             margin="normal"
@@ -171,7 +173,7 @@ class AccountUpdate extends Component {
 
 
 
-                        <div className="form-group">
+                        <div className="form-group" style={{margin:"1rem 2rem"}}>
                             <TextField
                  variant="outlined"
             margin="normal"
@@ -189,7 +191,7 @@ class AccountUpdate extends Component {
 
                             </div>) : null}
 
-                        <div className="form-group">
+                        <div className="form-group" style={{margin:"1rem 2rem"}}>
                             <TextField
                  variant="outlined"
             margin="normal"
@@ -207,7 +209,7 @@ class AccountUpdate extends Component {
 
                             </div>) : null}
 
-                        <div className="form-group">
+                        <div className="form-group" style={{margin:"1rem 2rem"}}>
                             <TextField
                  variant="outlined"
             margin="normal"
@@ -226,8 +228,8 @@ class AccountUpdate extends Component {
 
                             </div>) : null}
                     </form>
-                    <div className={style.btn}>
-                        <Button name="Update" onClick={this.mySubmitHandler} />
+                    <div className={style.btn} style={{margin:"1rem 2rem"}}>
+                        <button className = {`btn btn-primary`} style={{width:"100% ", background:"#00ADEE"}} onClick={this.mySubmitHandler}>Update</button>
                     </div>
                 </div>
             </div>

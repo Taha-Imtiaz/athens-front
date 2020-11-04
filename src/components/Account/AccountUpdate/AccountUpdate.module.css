@@ -1,13 +1,20 @@
 .head{
-    float: left;
-    margin-left: 10%;
-    margin-bottom: 2%;
+    /* float: left; */
+    /* margin-left: 10%; */
+    /* margin-bottom: 2%; */
+    display: grid;
+    grid-template-columns: 20fr 60fr 20fr;
+    grid-template-areas: ". form .";
 }
 
 .form{
-    width: 30%;
+    grid-area: form;
+    background-color: #e9ecef;
+    margin: 2rem 0;
+    border-radius: 0.4rem;
+    /* width: 30%;
     margin-left: 10%;
-    margin-top: 5%;
+    margin-top: 5%; */
 }
 
 .msg{
@@ -17,7 +24,7 @@
   }
 
 .btn{
-    float: left;
+   
     margin-top: 1%;
 }
 

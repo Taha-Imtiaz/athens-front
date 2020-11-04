@@ -6,13 +6,31 @@ import Button from '../../Button/Button'
 import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
 import { connect } from "react-redux";
-import { addClaim } from '../../../Redux/Claims/claimsActions'
+import { addClaim, getCustomersAndJobs } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { TextareaAutosize, TextField } from '@material-ui/core';
 
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from '@material-ui/core/styles';
 
 class NewClaim extends Component {
+
+  countries = [
+    { code: 'AD', label: 'Andorra', phone: '376' },
+    { code: 'AE', label: 'United Arab Emirates', phone: '971' },
+    { code: 'AF', label: 'Afghanistan', phone: '93' },
+    { code: 'AG', label: 'Antigua and Barbuda', phone: '1-268' },
+    { code: 'AI', label: 'Anguilla', phone: '1-264' },
+    { code: 'FO', label: 'Faroe Islands', phone: '298' },
+    { code: 'FR', label: 'France', phone: '33', suggested: true },
+    { code: 'GA', label: 'Gabon', phone: '241' },
+    { code: 'GB', label: 'United Kingdom', phone: '44' },
+    { code: 'GD', label: 'Grenada', phone: '1-473' },
+    { code: 'GE', label: 'Georgia', phone: '995' },
+    { code: 'GF', label: 'French Guiana', phone: '594' },
+    { code: 'GG', label: 'Guernsey', phone: '44' },
+    { code: 'GH', label: 'Ghana', phone: '233' }
+  ]
   initialState = {
     customerId: "",
     jobId: "",
@@ -36,10 +54,24 @@ class NewClaim extends Component {
     fromDateError: "",
     toDateError: "",
     locationfromError: "",
-    locationtoError: ""
+    locationtoError: "",
+    inputValues: '',
+    inputValue: '',
+    customers: [],
+    jobs: [],
+    selectedCustomer: '',
+    selectedJob: ''
   }
 
   state = { ...this.initialState }
+
+
+  componentDidMount = () => {
+    getCustomersAndJobs().then((res) => {
+      console.log(res)
+      this.setState({ customers: res.data.customers })
+    })
+  }
 
   handleFormInput = (event) => {
     var { name, value } = event.target
@@ -112,13 +144,11 @@ class NewClaim extends Component {
 
 
   mySubmitHandler = (event) => {
-
     event.preventDefault();
-    // const isValid = this.validate()
-    // if (isValid) {
-    let { customerId, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
+    let { customerId, selectedJob, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
+
     let data = {
-      jobId,
+      jobId: selectedJob.jobId,
       claims
     }
     var { history, showMessage } = this.props;
@@ -129,9 +159,6 @@ class NewClaim extends Component {
       .catch((error) => {
         console.log(error);
       });
-    // this.setState(initialState)
-    // }
-
   }
 
   addAnotherClaim = () => {
@@ -179,20 +206,102 @@ class NewClaim extends Component {
   //   // this.componentCleanup();
   //   // window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
   // }
+  getCustomerJobs = customer => {
+    if (customer) {
+      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName })
+    } else {
+      this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
+    }
+    console.log(customer)
+  }
   render() {
     return (
       <div>
         <h3 className={style.head}>New Claim</h3>
+        {this.state.customers.length > 0 ? <Autocomplete
+          value={this.state.selectedCustomer}
+          onChange={(event, newValue) => {
+            this.getCustomerJobs(newValue); // Get the customer and get job
+          }}
+          // inputValue={this.state.selectedCustomer}
+          // onInputChange={(event, newInputValue) => {
+          //   console.log(newInputValue);
+          // }}
+          id="country-select-demo"
+          style={{ width: 300 }}
+          options={this.state.customers}
+          // classes={{
+          //   option: classes.option,
+          // }}
+          autoHighlight
+          getOptionLabel={(option) => option.firstName ? option.firstName : option}
+          renderOption={(option) => (
+            <React.Fragment>
+              {/* <span>{countryToFlag(option.code)}</span> */}
+              {/* <span>Hello</span> */}
+              {option.firstName} ({option.email})
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Choose a customer"
+              variant="outlined"
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: 'new-password', // disable autocomplete and autofill
+              }}
+            />
+          )}
+        /> : null}
+
+        <Autocomplete
+          value={this.state.selectedJob}
+          onChange={(event, newValue) => {
+            this.setState({ selectedJob: newValue }); // Get the customer and get job
+          }}
+          // inputValue={this.state.selectedCustomer}
+          // onInputChange={(event, newInputValue) => {
+          //   console.log(newInputValue);
+          // }}
+          id="country-select-demo"
+          style={{ width: 300 }}
+          options={this.state.jobs}
+          // classes={{
+          //   option: classes.option,
+          // }}
+          autoHighlight
+          getOptionLabel={(option) => option.title ? option.title : option}
+          renderOption={(option) => (
+            <React.Fragment>
+              {/* <span>{countryToFlag(option.code)}</span> */}
+              {/* <span>Hello</span> */}
+              {option.title} ({option.status})
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Choose a job"
+              variant="outlined"
+              disabled={!this.state.selectedCustomer}
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: 'new-password', // disable autocomplete and autofill
+              }}
+            />
+          )}
+        />
 
         <div className={`jumbotron ${style.form}`}>
           <form>
             <div className="form-group">
               <TextField
-                 variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            size="small" id="jobid" label="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small" id="jobid" label="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
             </div>
 
             {this.state.jobIdError ? (
@@ -235,12 +344,12 @@ class NewClaim extends Component {
                     <div className="col-4">
                       <div className="form-group">
                         <TextField
-                 variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            size="small"
-             id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style = {{margin:"-0.04rem 0"}}/>
+                          variant="outlined"
+                          margin="normal"
+                          required
+                          fullWidth
+                          size="small"
+                          id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem 0" }} />
                       </div>
 
                       {this.state.priceError ? (
@@ -254,8 +363,8 @@ class NewClaim extends Component {
                   </div>
                   <div className="form-group">
                     <TextareaAutosize
-             rowsMax={4}
-   id="description" placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
+                      rowsMax={4}
+                      id="description" placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
                   </div>
                 </div>
               )
@@ -263,7 +372,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style = {{background:"#00ADEE"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
+                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE" }} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>

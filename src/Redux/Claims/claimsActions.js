@@ -103,3 +103,12 @@ export var updateDeposit = async (data) => {
   } catch (error) {
   }
 };
+
+export var getCustomersAndJobs = async () => {
+  try {
+    var customers = await Axios.get(`user/get-all-customers-jobs`);
+    return customers;
+  } catch (error) {
+    console.log(error);
+  }
+};

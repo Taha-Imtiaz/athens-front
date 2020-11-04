@@ -1,13 +1,19 @@
 .head{
-    margin-left: 30%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin: 2rem 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 2rem ; */
 }
 
 .form{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 60%;
     margin-left: 20%;
     margin-right: 20%;
+    background-color:  #e9ecef;
+    border-radius: 0.4rem;
 }
 
 .l1{

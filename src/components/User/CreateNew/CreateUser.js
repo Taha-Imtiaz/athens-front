@@ -144,20 +144,21 @@ class CreateUser extends Component {
     return (
       <div>
         {/* <ToastContainer position="bottom-right" /> */}
-      
+
         <div className={style.jumbotron}>
-        <div>
-          <h3 className={style.head}>Create New User</h3>
-        </div>
+          <div>
+            <h3 className={style.head}>Create New User</h3>
+          </div>
           <div className={style.container}>
             <form>
               <div className="form-group">
                 <TextField
-                 variant="outlined"
-            margin="normal"style = {{margin:"0 2rem"}}
-            required
-            fullWidth
-            size="small"
+                  variant="outlined"
+                  margin="normal" style={{ margin: "0 2rem" }}
+                  required
+                  fullWidth
+                  size="small"
+                  autoFocus
                   id="name"
                   label="Full Name"
                   name="name"
@@ -177,11 +178,11 @@ class CreateUser extends Component {
 
               <div className="form-group">
                 <TextField
-                 variant="outlined"
-           style = {{margin:"0 2rem"}}
-            required
-            fullWidth
-            size="small"
+                  variant="outlined"
+                  style={{ margin: "0 2rem" }}
+                  required
+                  fullWidth
+                  size="small"
                   id="email"
                   label="Email Address"
                   name="email"
@@ -201,11 +202,11 @@ class CreateUser extends Component {
 
               <div className="form-group">
                 <TextField
-                 variant="outlined"
-            margin="normal"style = {{margin:"0 2rem"}}
-            required
-            fullWidth
-            size="small"
+                  variant="outlined"
+                  margin="normal" style={{ margin: "0 2rem" }}
+                  required
+                  fullWidth
+                  size="small"
                   id="phnumber"
                   label="Phone Number"
                   name="phone"
@@ -225,11 +226,11 @@ class CreateUser extends Component {
 
               <div className="form-group">
                 <TextField
-                 variant="outlined"
-            margin="normal"style = {{margin:"0 2rem"}}
-            required
-            fullWidth
-            size="small"
+                  variant="outlined"
+                  margin="normal" style={{ margin: "0 2rem" }}
+                  required
+                  fullWidth
+                  size="small"
                   id="address"
                   label="Address"
                   name="address"
@@ -248,20 +249,20 @@ class CreateUser extends Component {
               ) : null}
 
               <div>
-                
-                  <div className="form-group" style = {{margin:" 1rem 2rem", width:"100%"}}>
-                    <Multiselect
-                      className={style.multi}
-                      singleSelect={true}
-                      options={this.typeOptions} // Options to display in the dropdown
-                      onSelect={this.onTypeSelect} // Function will trigger on select event
-                      onRemove={this.onRemove} // Function will trigger on remove event
-                      displayValue="name" // Property name to display in the dropdown options
-                      className="form-control"
-                      placeholder="Select Type"
-                    
-                    />
-                 
+
+                <div className="form-group" style={{ margin: " 1rem 2rem", width: "100%" }}>
+                  <Multiselect
+                    className={style.multi}
+                    singleSelect={true}
+                    options={this.typeOptions} // Options to display in the dropdown
+                    onSelect={this.onTypeSelect} // Function will trigger on select event
+                    onRemove={this.onRemove} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                    className="form-control"
+                    placeholder="Select Type"
+
+                  />
+
                 </div>
 
                 {this.state.typeError ? (
@@ -273,7 +274,7 @@ class CreateUser extends Component {
                   </div>
                 ) : null}
               </div>
-              <div className="form-group" style = {{margin:" 1rem 2rem", width:"100%"}}>
+              <div className="form-group" style={{ margin: " 1rem 2rem", width: "100%" }}>
                 <Multiselect
                   className={style.multi}
                   singleSelect={true}
@@ -283,7 +284,7 @@ class CreateUser extends Component {
                   displayValue="name" // Property name to display in the dropdown options
                   className="form-control"
                   placeholder="Select Attribute"
-                
+
                 />
               </div>
 
@@ -297,7 +298,7 @@ class CreateUser extends Component {
               ) : null}
 
               <div className={style.mb}>
-                <button className = "btn btn-primary" onClick={this.mySubmitHandler} >Create</button>
+                <button className="btn btn-primary" onClick={this.mySubmitHandler} >Create</button>
               </div>
             </form>
           </div>

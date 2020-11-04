@@ -217,97 +217,94 @@ class NewClaim extends Component {
   render() {
     return (
       <div>
-        
-        
-
         <div className={`${style.form}`}>
-        <h3 className={style.head}>New Claim</h3>
+          <h3 className={style.head}>New Claim</h3>
           <form>
-          {this.state.customers.length > 0 ? <Autocomplete
-          value={this.state.selectedCustomer}
-          onChange={(event, newValue) => {
-            this.getCustomerJobs(newValue); // Get the customer and get job
-          }}
-          // inputValue={this.state.selectedCustomer}
-          // onInputChange={(event, newInputValue) => {
-          //   console.log(newInputValue);
-          // }}
-          id="country-select-demo"
-          style={{ width: "100%",margin:"1rem 0"}}
-          size = "small"
-          options={this.state.customers}
-          // classes={{
-          //   option: classes.option,
-          // }}
-          autoHighlight
-          getOptionLabel={(option) => option.firstName ? option.firstName : option}
-          renderOption={(option) => (
-            <React.Fragment>
-              {/* <span>{countryToFlag(option.code)}</span> */}
-              {/* <span>Hello</span> */}
-              {option.firstName} ({option.email})
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a customer"
-              style={{margin:"1rem 2rem", width:"90%"}}
-              variant="outlined"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
+            {this.state.customers.length > 0 ? <Autocomplete
+              value={this.state.selectedCustomer}
+              onChange={(event, newValue) => {
+                this.getCustomerJobs(newValue); // Get the customer and get job
               }}
-            />
-          )}
-        /> : null}
+              // inputValue={this.state.selectedCustomer}
+              // onInputChange={(event, newInputValue) => {
+              //   console.log(newInputValue);
+              // }}
+              id="country-select-demo"
+              style={{ width: "100%", margin: "1rem 0" }}
+              size="small"
+              options={this.state.customers}
+              // classes={{
+              //   option: classes.option,
+              // }}
+              autoHighlight
+              getOptionLabel={(option) => option.firstName ? option.firstName : option}
+              renderOption={(option) => (
+                <React.Fragment>
+                  {/* <span>{countryToFlag(option.code)}</span> */}
+                  {/* <span>Hello</span> */}
+                  {option.firstName} ({option.email})
+            </React.Fragment>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Choose a customer"
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  variant="outlined"
+                  inputProps={{
+                    ...params.inputProps,
+                    autoComplete: 'new-password', // disable autocomplete and autofill
+                  }}
+                />
+              )}
+            /> : null}
 
-        <Autocomplete
-          value={this.state.selectedJob}
-          onChange={(event, newValue) => {
-            this.setState({ selectedJob: newValue }); // Get the customer and get job
-          }}
-          // inputValue={this.state.selectedCustomer}
-          // onInputChange={(event, newInputValue) => {
-          //   console.log(newInputValue);
-          // }}
-          id="country-select-demo"
-          style={{ width: "100%",margin:"1rem 0"}}
-          size = "small"
-          options={this.state.jobs}
-          // classes={{
-          //   option: classes.option,
-          // }}
-          autoHighlight
-          getOptionLabel={(option) => option.title ? option.title : option}
-          renderOption={(option) => (
-            <React.Fragment>
-              {/* <span>{countryToFlag(option.code)}</span> */}
-              {/* <span>Hello</span> */}
-              {option.title} ({option.status})
-            </React.Fragment>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a job"
-              style={{margin:"1rem 2rem", width:"90%"}}
-              variant="outlined"
-              disabled={!this.state.selectedCustomer}
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password', // disable autocomplete and autofill
+            <Autocomplete
+              value={this.state.selectedJob}
+              onChange={(event, newValue) => {
+                this.setState({ selectedJob: newValue }); // Get the customer and get job
               }}
+              // inputValue={this.state.selectedCustomer}
+              // onInputChange={(event, newInputValue) => {
+              //   console.log(newInputValue);
+              // }}
+              id="country-select-demo"
+              style={{ width: "100%", margin: "1rem 0" }}
+              size="small"
+              options={this.state.jobs}
+              // classes={{
+              //   option: classes.option,
+              // }}
+              autoHighlight
+              getOptionLabel={(option) => option.title ? option.title : option}
+              renderOption={(option) => (
+                <React.Fragment>
+                  {/* <span>{countryToFlag(option.code)}</span> */}
+                  {/* <span>Hello</span> */}
+                  {option.title} ({option.status})
+            </React.Fragment>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Choose a job"
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  variant="outlined"
+                  disabled={!this.state.selectedCustomer}
+                  inputProps={{
+                    ...params.inputProps,
+                    autoComplete: 'new-password', // disable autocomplete and autofill
+                  }}
+                />
+              )}
             />
-          )}
-        />
             <div className="form-group">
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                style={{margin:"1rem 2rem", width:"90%"}}
+                style={{ margin: "1rem 2rem", width: "90%" }}
                 size="small" id="jobid" label="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
             </div>
 
@@ -333,7 +330,7 @@ class NewClaim extends Component {
                 <div key={i}>
                   < div className="row">
                     <div className="col-8">
-                      <div className="form-group"    style={{margin:"0 2rem", width:"90%"}}>
+                      <div className="form-group" style={{ margin: "0 2rem", width: "90%" }}>
                         {/* <input type="input" className="form-control" id="claimType" label="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
                         <select onChange={(e) => this.hanldeClaimsInput(e, i)} className="form-control" id="exampleFormControlSelect1" name="claimType">
                           <option>Damage To House</option>
@@ -353,9 +350,9 @@ class NewClaim extends Component {
                         <TextField
                           variant="outlined"
                           margin="normal"
-                          style={{margin:"2rem", width:"90%"}}
+                          style={{ margin: "2rem", width: "90%" }}
                           required
-                         
+
                           size="small"
                           id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem 0" }} />
                       </div>
@@ -373,8 +370,8 @@ class NewClaim extends Component {
                     <TextareaAutosize
                       rowsMax={4}
                       id="description"
-                      style={{margin:"1rem 2rem", width:"90%"}}
-                       placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
+                      style={{ margin: "1rem 2rem", width: "90%" }}
+                      placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
                   </div>
                 </div>
               )
@@ -382,7 +379,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE",marginRight:"2rem" }} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
+                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE", marginRight: "2rem" }} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
@@ -467,7 +464,7 @@ class NewClaim extends Component {
 
 
             <div>
-              <button className = "btn btn-primary" style={{width:"100%", background:"#00ADEE", margin:"2rem", width:"90%"}} onClick={this.mySubmitHandler} >Submit</button>
+              <button className="btn btn-primary" style={{ width: "100%", background: "#00ADEE", margin: "2rem", width: "90%" }} onClick={this.mySubmitHandler} >Submit</button>
             </div>
 
           </form>

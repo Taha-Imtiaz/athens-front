@@ -4,7 +4,7 @@ import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER } from "./customerConstants"
 // import { GET_Customers } from "./userConstants"
 import Axios from '../../utils/api'
 import { showMessage } from '../../Redux/Common/commonActions'
-// var baseUrl = 'https://athens-backend.herokuapp.com/api/'
+// var baseUrl = ''
 // var baseUrl = 'http://localhost:3000/api/'
 
 export var getAllCustomers = (customersObj) => {
@@ -73,7 +73,7 @@ export var addCustomer = (customerObj, callback) => {
 
 export var getCustomerList = async () => {
     try {
-        var customerList = await Axios.get("https://athens-backend.herokuapp.com/api/user/get-customer-list")
+        var customerList = await Axios.get("user/get-customer-list")
         return customerList
     } catch (error) {
         console.log(error)
@@ -81,7 +81,7 @@ export var getCustomerList = async () => {
 }
 // export var searchCustomer = async (search) => {
 //     try {
-//         var searedCustomer = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-customer")
+//         var searedCustomer = await Axios.post("user/get-all-customer")
 //         return searedCustomer
 //     } catch (error) {
 //         console.log(error)

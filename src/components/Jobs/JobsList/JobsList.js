@@ -166,7 +166,7 @@ class JobsList extends Component {
       filters: {
         dates: date.toString(),
         movedDate: "",
-        startYearMonth: date.toString()
+        startYearMonth: ""
       },
       page: 1
     }

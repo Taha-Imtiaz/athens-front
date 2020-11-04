@@ -17,24 +17,24 @@ import _, { transform } from "lodash";
 import { clone, cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../Pagination/Pagination";
+import moment from "moment";
 
 const CustomerClaims = (props) => {
-  var { claims } = props
+  var { claims } = props;
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims ?.data ?.claims ?.total
-
+  var totalCount = claims.claims?.data?.claims?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
     var claimsObj = {
       status: "all",
-      page: currentPage
-    }
+      page: currentPage,
+    };
     getAllClaims(claimsObj);
   }, []);
   var { claims } = props;
@@ -56,13 +56,12 @@ const CustomerClaims = (props) => {
     },
   ];
 
-
   var handlePageChange = (page) => {
     var { getAllClaims } = props;
     var claimsObj = {
       status: "all",
-      page: page
-    }
+      page: page,
+    };
     getAllClaims(claimsObj);
     setCurrentPage(page);
   };
@@ -86,7 +85,7 @@ const CustomerClaims = (props) => {
       value: update,
     };
     let newData = cloneDeep(data.docs);
-    console.log(newData, updateIndex)
+    console.log(newData, updateIndex);
     newData[updateIndex].updates.push(ob);
     var { showMessage, history } = props;
     updateClaim(newData[updateIndex])
@@ -107,7 +106,6 @@ const CustomerClaims = (props) => {
   const handleCloseJob = (i) => {
     var { showMessage } = props;
 
-
     data.docs[i].status = "closed";
     updateClaim(data.docs[i])
       .then((res) => {
@@ -119,12 +117,12 @@ const CustomerClaims = (props) => {
   };
 
   const getClaimsByStatus = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     var { getAllClaims } = props;
     var claimsObj = {
       status: e.target.value,
-      page: currentPage
-    }
+      page: currentPage,
+    };
     getAllClaims(claimsObj);
   };
 
@@ -137,7 +135,7 @@ const CustomerClaims = (props) => {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      {data.docs &&
+      {data.docs && (
         <div>
           <div className="row">
             <div className="col-2">
@@ -157,7 +155,7 @@ const CustomerClaims = (props) => {
                     className="btn btn-primary"
                   >
                     New Claim
-              </button>{" "}
+                  </button>{" "}
                 </Link>
               </div>
             </div>
@@ -175,160 +173,195 @@ const CustomerClaims = (props) => {
           </div>
           {data.docs && data.docs.length > 0 ? (
             <div>
-              <div className="row" style={{ display: "flex", marginTop: "1rem", marginBottom: "-1.5rem", fontWeight: "bold" }}>
-                <div className="col-3" style={{ transform: "translateX(20rem)" }}> Job Id</div>
-                <div className="col-3" style={{ transform: "translateX(15rem)" }}>Name</div>
-                <div className="col-3" style={{ transform: "translateX(7rem)" }}>Status</div>
-                <div className="col-3" style={{ transform: "translateX(1rem)" }}>Last Update</div>
+              <div
+                className={`row ${style.jumbotron}`}
+                style={{
+                  display: "flex",
+                  marginTop: "1rem",
+                  marginBottom: "-1.5rem",
+                  fontWeight: "bold",
+                }}
+              >
+                <div className="col-3"> Job Id</div>
+                <div className="col-3">Name</div>
+                <div className="col-3">Status</div>
+                <div className="col-3">Last Update</div>
               </div>
-              <div id="accordion" className={style.jumbotron} >
-
-                {data.docs && data.docs.map((x, i) => {
-                  return (
-                    <div className="card" style={{ cursor: "pointer" }}>
-                      <div style={{ height: "4rem", overflow: "hidden", width: "100%" }}
-                        className="card-header"
-                        id="headingOne"
-                        onClick={() => toggleCollapse(i)}
-                      >
-                        <h5 className="mb-0">
-                          <button
-                            // className="btn btn-link"
-                            data-toggle="collapse"
-                            data-target="#collapse"
-                            aria-expanded="true"
-                            aria-controls="#collapse"
-                            style={{ border: "none", outline: "none", background: "transparent" }}
-                          >
-                            <div>
-                              <h6 className={`${style.jobId}`}>{x ?.job ?.jobId}</h6>
-                            </div>
-                          </button>
-                        </h5>
-
-                        <h6 style={{ transform: "translate3d(25rem, -1.8rem, 0)" }}>
-                          {x.customer.firstName} {x.customer.lastName}
-                        </h6>
+              <div id="accordion" className={style.jumbotron}>
+                {data.docs &&
+                  data.docs.map((x, i) => {
+                    return (
+                      <div className="card" style={{ cursor: "pointer" }}>
                         <div
-                          className="col-4"
-                          style={{ transform: "translate3d(45rem, -4rem, 0)" }}
+                          style={{
+                            height: "4rem",
+                            overflow: "hidden",
+                            width: "100%",
+                          }}
+                          className="card-header"
+                          id="headingOne"
+                          onClick={() => toggleCollapse(i)}
                         >
-                          {x.status.toLocaleUpperCase()}
+                          <h5 className="mb-0">
+                            <button
+                              // className="btn btn-link"
+                              data-toggle="collapse"
+                              data-target="#collapse"
+                              aria-expanded="true"
+                              aria-controls="#collapse"
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                background: "transparent",
+                              }}
+                            >
+                              <div className="col-3">
+                                <h6 className={`${style.jobId}`}>
+                                  {x?.job?.jobId}
+                                </h6>
+                              </div>
+                            </button>
+                          </h5>
+
+                          <div className="col-3">
+                            <h6
+                              style={{
+                                transform: "translate3d(13rem, -1.8rem, 0)",
+                              }}
+                            >
+                              {x.customer.firstName} {x.customer.lastName}
+                            </h6>
+                          </div>
+                          <div
+                            className="col-4"
+                            style={{
+                              transform: "translate3d(30rem, -3.5rem, 0)",
+                            }}
+                          >
+                            {x.status.toLocaleUpperCase()}
+                          </div>
+                          <div
+                            className="col-"
+                            style={{
+                              transform: "translate3d(45rem, -5rem, 0)",
+                            }}
+                          >
+                            {x.updates[x.updates.length - 1].timestamp}
+                          </div>
                         </div>
 
-                      </div>
+                        <div
+                          id="#collapse"
+                          className={showIndex == i ? "show" : "collapse"}
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion"
+                        >
+                          <div className="card-body">
+                            <div key={x._id}>
+                              <div className="row justify-content-between"></div>
 
-                      <div
-                        id="#collapse"
-                        className={showIndex == i ? "show" : "collapse"}
-                        aria-labelledby="headingOne"
-                        data-parent="#accordion"
-                      >
-                        <div className="card-body">
-                          <div key={x._id}>
-                            <div className="row justify-content-between">
-
-                            </div>
-
-                            {/* <div className="row">
+                              {/* <div className="row">
                         <div className="col-10">
                             <p className={style.comp}>from {x.from} - to {x.to}</p>
                         </div>
                     </div> */}
-                            {x.claims.map((y, j) => {
-                              return (
-                                <div key={j}>
-
-                                  <h6 className={style.sub}>
-                                    Claim Type : {y.claimType}
-                                  </h6>
-                                  <div className="row">
-                                    <div className="col-10">
-                                      <p className={style.para}>
-                                        Description : {y.description}
-                                      </p>
-                                    </div>
-                                    <div
-                                      className="col-4"
-                                      style={{ transform: "translate3d(45rem, -4rem, 0)" }}
-                                    >
-                                      {x.status == "open" ? (
-                                        <Button
-                                          name="Close Claim"
-                                          onClick={() => handleCloseJob(i)}
-                                        ></Button>
-                                      ) : (
-                                          null
-                                        )}
-                                    </div>
-                                    <div className="col-2">
-                                      <p className={style.p2}>${y.price}</p>
+                              {x.claims.map((y, j) => {
+                                return (
+                                  <div key={j}>
+                                    <h6 className={style.sub}>
+                                      Claim Type : {y.claimType}
+                                    </h6>
+                                    <div className="row">
+                                      <div className="col-10">
+                                        <p className={style.para}>
+                                          Description : {y.description}
+                                        </p>
+                                      </div>
+                                      <div
+                                        className="col-4"
+                                        style={{
+                                          transform:
+                                            "translate3d(45rem, -4rem, 0)",
+                                        }}
+                                      >
+                                        {x.status == "open" ? (
+                                          <Button
+                                            name="Close Claim"
+                                            onClick={() => handleCloseJob(i)}
+                                          ></Button>
+                                        ) : null}
+                                      </div>
+                                      <div className="col-2">
+                                        <p className={style.p2}>${y.price}</p>
+                                      </div>
                                     </div>
                                   </div>
+                                );
+                              })}
+                              <hr />
+                              {x.claims.length > 0 ? (
+                                <div className="row">
+                                  <div className="col-10">
+                                    {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                  </div>
+                                  <div className="col-2">
+                                    <p>
+                                      {" "}
+                                      Total: $
+                                      {x.claims.reduce(function (a, b) {
+                                        return a + b["price"];
+                                      }, 0)}
+                                    </p>
+                                  </div>
                                 </div>
-                              );
-                            })}
-                            <hr />
-                            {x.claims.length > 0 ? (
+                              ) : null}
+                              <hr />
                               <div className="row">
                                 <div className="col-10">
-                                  {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
-                                </div>
-                                <div className="col-2">
-                                  <p>
-                                    {" "}
-                                    Total: $
-                              {x.claims.reduce(function (a, b) {
-                                      return a + b["price"];
-                                    }, 0)}
-                                  </p>
-                                </div>
-                              </div>
-                            ) : null}
-                            <hr />
-                            <div className="row">
-                              <div className="col-10">
-                                {x.updates.length > 0 ? (
-                                  <div>
-                                    <h3>Updates</h3>
-                                    {x.updates.map((x, i) => (
-                                      <div key={i} className="row">
-                                        <div className="col-8">
-                                          <li> {x.value}</li>
+                                  {x.updates.length > 0 ? (
+                                    <div>
+                                      <h3>Updates</h3>
+                                      {x.updates.map((x, i) => (
+                                        <div key={i} className="row">
+                                          <div className="col-8">
+                                            <li> {x.value}</li>
+                                          </div>
+                                          <div className="col-4">
+                                            <li>
+                                              {" "}
+                                              {x.timestamp.split("T")[0]}
+                                            </li>
+                                          </div>
                                         </div>
-                                        <div className="col-4">
-                                          <li> {x.timestamp.split("T")[0]}</li>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                ) : null}
-                              </div>
-                              <div
-                                className="col-2"
-                              //   style={{ transform: "translateY(1.5rem)" }}
-                              >
-                                {x.status == "open" ? (
-                                  <Button
-                                    name="Add Update"
-                                    onClick={() => handleShow(i)}
-                                  ></Button>
-                                ) : null}
+                                      ))}
+                                    </div>
+                                  ) : null}
+                                </div>
+                                <div
+                                  className="col-2"
+                                  //   style={{ transform: "translateY(1.5rem)" }}
+                                >
+                                  {x.status == "open" ? (
+                                    <Button
+                                      name="Add Update"
+                                      onClick={() => handleShow(i)}
+                                    ></Button>
+                                  ) : null}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>
@@ -355,11 +388,10 @@ const CustomerClaims = (props) => {
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={handlePageChange}
-
             />
           </div>
         </div>
-      }
+      )}
     </div>
   );
 };

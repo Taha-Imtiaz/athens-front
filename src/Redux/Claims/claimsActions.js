@@ -2,7 +2,7 @@
 import { GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants";
 import Axios from "../../utils/api";
 
-var baseUrl = "https://athens-backend.herokuapp.com/api/";
+// var baseUrl = "";
 
 export var getAllClaims = (data) => {
   console.log(data)
@@ -10,8 +10,7 @@ export var getAllClaims = (data) => {
     page: data.page,
   };
   return async (dispatch) => {
-    var claims = await Axios.post(
-      baseUrl + "user/get-all-claims/" + data.status,
+    var claims = await Axios.post("user/get-all-claims/" + data.status,
       body
     );
     //update app's state
@@ -84,7 +83,7 @@ export var updateClaim = async (data) => {
 export var addDeposit = async (data) => {
   try {
     var blanket = await Axios.post(
-      `https://athens-backend.herokuapp.com/api/user/add-blanket-deposit`,
+      `user/add-blanket-deposit`,
       data
     );
     return blanket;
@@ -96,7 +95,7 @@ export var addDeposit = async (data) => {
 export var updateDeposit = async (data) => {
   try {
     var blanket = await Axios.post(
-      `https://athens-backend.herokuapp.com/api/user/update-blanket-deposit`,
+      `user/update-blanket-deposit`,
       data
     );
     return blanket;

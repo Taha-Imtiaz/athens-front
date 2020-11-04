@@ -85,18 +85,17 @@ const CustomerClaims = (props) => {
       timestamp: new Date(),
       value: update,
     };
-    let newData = cloneDeep(data);
+    let newData = cloneDeep(data.docs);
+    console.log(newData, updateIndex)
     newData[updateIndex].updates.push(ob);
     var { showMessage, history } = props;
     updateClaim(newData[updateIndex])
       .then((res) => {
         if (res.data.status == 200) {
-          data[updateIndex].updates = res.data.claim.updates;
+          data.docs[updateIndex].updates = res.data.claim.updates;
           setShow(false);
           setUpdate("");
-          // history.push('/claim/customer')
           showMessage(res.data.message);
-          // data[updateIndex] = res.data.claim;
         }
       })
       .catch((err) => console.log(err));
@@ -177,13 +176,14 @@ const CustomerClaims = (props) => {
           {data.docs && data.docs.length > 0 ? (
             <div>
               <div className="row" style={{ display: "flex", marginTop: "1rem", marginBottom: "-1.5rem", fontWeight: "bold" }}>
-                <div className="col-4" style={{ transform: "translateX(20rem)" }}> Job Id</div>
-                <div className="col-4" style={{ transform: "translateX(15rem)" }}>Name</div>
-                <div className="col-4" style={{ transform: "translateX(7rem)" }}>Status</div>
+                <div className="col-3" style={{ transform: "translateX(20rem)" }}> Job Id</div>
+                <div className="col-3" style={{ transform: "translateX(15rem)" }}>Name</div>
+                <div className="col-3" style={{ transform: "translateX(7rem)" }}>Status</div>
+                <div className="col-3" style={{ transform: "translateX(1rem)" }}>Last Update</div>
               </div>
               <div id="accordion" className={style.jumbotron} >
 
-                {data ?.docs.map((x, i) => {
+                {data.docs && data.docs.map((x, i) => {
                   return (
                     <div className="card" style={{ cursor: "pointer" }}>
                       <div style={{ height: "4rem", overflow: "hidden", width: "100%" }}
@@ -346,7 +346,7 @@ const CustomerClaims = (props) => {
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={handleClose} name="Close"></Button>
-              <Button onClick={updateClaimData} name="Update"></Button>
+              <Button onClick={updateClaimData} name="Add"></Button>
             </Modal.Footer>
           </Modal>
           <div style={{ transform: "translateX(15rem)" }}>

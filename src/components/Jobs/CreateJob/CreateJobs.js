@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import { clone, cloneDeep } from "lodash"
-import { InputLabel, Menu, MenuItem, Button,Select, TextareaAutosize, TextField } from "@material-ui/core";
+import { InputLabel, Menu, MenuItem, Button, Select, TextareaAutosize, TextField } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles'
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
@@ -25,7 +25,7 @@ import { FormControl } from "react-bootstrap";
 
 class CreateJobs extends Component {
 
-  
+
   initialState = {
     title: "",
     description: "",
@@ -34,7 +34,7 @@ class CreateJobs extends Component {
     startDate: "",
     dates: [new Date()],
     startTime: "",
-    anchorEl:"",
+    anchorEl: "",
     meetTime: "",
     assigneeRequired: '',
     from: "",
@@ -48,7 +48,7 @@ class CreateJobs extends Component {
     locationfromError: "",
     locationtoError: "",
     assigneeList: [],
-    jobType:"fixed",
+    jobType: "fixed",
     status: "pending",
     note: [],
     assigneesId: [],
@@ -63,7 +63,7 @@ class CreateJobs extends Component {
     { name: "Srigar", id: 1 },
     { name: "Sam", id: 2 },
   ];
-  
+
   servicesOptions = [
     { id: 1, name: "Pakaging" },
     { id: 2, name: "Loading" },
@@ -99,7 +99,7 @@ class CreateJobs extends Component {
     { name: "11:00 pm", id: 23, value: "23:00:00" },
     { name: "12:00 am", id: 24, value: "00:00:00" },
   ];
- ;
+  ;
   state = this.initialState;
 
 
@@ -130,9 +130,9 @@ class CreateJobs extends Component {
 
   handleChange = (event) => {
     this.setState({
-     jobTypeOptions: event.target.value
-   })
- };
+      jobTypeOptions: event.target.value
+    })
+  };
   MaterialUIPickers = () => {
     // The first commit of Material-UI
     // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -140,22 +140,23 @@ class CreateJobs extends Component {
 
 
 
- handleClick = (event) => {
-   this.setState({
-  anchorEl:   event.currentTarget
-  })}
- 
- handleClose = () => {
-   this.setState({
-    anchorEl:     null
-  });
-}
-    handleDateChange = (date) => {
-      console.log(date)
+  handleClick = (event) => {
+    this.setState({
+      anchorEl: event.currentTarget
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      anchorEl: null
+    });
+  }
+  handleDateChange = (date) => {
+    console.log(date)
     //  this.setState({
     //    dates:date
     //  })
-    };
+  };
   addLocation = () => {
     if (this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
       this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
@@ -192,7 +193,7 @@ class CreateJobs extends Component {
       <div className="col-4">
         <div className="form-group">
           <TextField
-                 variant="outlined"
+            variant="outlined"
             margin="normal"
             required
             fullWidth
@@ -215,11 +216,11 @@ class CreateJobs extends Component {
       </div>
       <div className="col-4">
         <TextField
-                 variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            size="small"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          size="small"
           id="to"
           label="Drop Off"
           name="to"
@@ -407,14 +408,15 @@ class CreateJobs extends Component {
         dates,
         startTime,
         meetTime,
-       
+
         locations,
         status,
         note,
         assigneesId,
         customerId,
         selectedDate,
-        assigneeRequired
+        assigneeRequired,
+        jobType
       } = this.state;
 
       let stringDates = dates.map(x => x.toDateString())
@@ -422,7 +424,7 @@ class CreateJobs extends Component {
         title,
         description,
         services,
-    
+
         // startDate: startDate.toString(),
         dates: stringDates,
         startTime,
@@ -433,11 +435,12 @@ class CreateJobs extends Component {
         assigneesId,
         assigneeRequired,
         customerId,
-        userId: loggedInUser._id
+        userId: loggedInUser._id,
+        jobType
       };
       console.log(createJobObj)
       // var { history } = this.props;
-       createJob(createJobObj)
+      createJob(createJobObj)
         .then((res) => {
           history.push("/job");
         })
@@ -466,35 +469,35 @@ class CreateJobs extends Component {
                 onChange={this.handleFormInput}
               // disabled
               /> */}
-                   <TextField
-                 variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            size="small"
-            id="customerId"
-            label="Cutomer Email"
-            name="customerId"
-            autoComplete="customerId"
-            autoFocus
-            value={this.state.customerId} onChange={this.handleFormInput}
-          />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="customerId"
+                label="Cutomer Email"
+                name="customerId"
+                autoComplete="customerId"
+                autoFocus
+                value={this.state.customerId} onChange={this.handleFormInput}
+              />
             </div>
 
             <div>
-            <TextField
-                 variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            size="small"
-            id="title"
-            label="Job Title"
-            name="title"
-            autoComplete="title"
-            autoFocus
-            value={this.state.title} onChange={this.handleFormInput}
-          />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="title"
+                label="Job Title"
+                name="title"
+                autoComplete="title"
+                autoFocus
+                value={this.state.title} onChange={this.handleFormInput}
+              />
             </div>
 
             {this.state.titleError ? (
@@ -530,7 +533,7 @@ class CreateJobs extends Component {
 
             <div className="form-group">
 
-            {/* <InputLabel id="label">Age</InputLabel>
+              {/* <InputLabel id="label">Age</InputLabel>
 <Select labelId="label" id="select" value="20">
   <MenuItem value="10">{this.servicesOptions}</MenuItem>
 
@@ -568,22 +571,21 @@ class CreateJobs extends Component {
                       className="form-control"
                     /> */}
 
-<MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-      <KeyboardDatePicker
-          margin="normal"
-          fullWidth
-          id="date-picker-dialog"
-         
-          format="MM/dd/yyyy"
-          value={this.state.dates[i]}
-          onChange={(e) => this.handleStartDate(e, i)}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        </Grid>
-        </MuiPickersUtilsProvider>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          margin="normal"
+                          fullWidth
+                          id="date-picker-dialog"
+                          format="MM/dd/yyyy"
+                          value={this.state.dates[i]}
+                          onChange={(e) => this.handleStartDate(e, i)}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
                   </div>
                 )
               })}
@@ -598,7 +600,7 @@ class CreateJobs extends Component {
               ) : null} */}
 
               <div className="form-group col-3 my-0" onClick={this.addDate}>
-                <i className="fa fa-plus" style={{transform:"translateY(1.3rem)"}}></i>
+                <i className="fa fa-plus" style={{ transform: "translateY(1.3rem)" }}></i>
               </div>
             </div>
 
@@ -652,10 +654,10 @@ class CreateJobs extends Component {
                   margin="normal"
                   required
                   fullWidth
-                    size="small"
+                  size="small"
                   id="assigneeRequired"
                   label="Number of movers required"
-                 autoComplete="Number of movers required"
+                  autoComplete="Number of movers required"
                   name="assigneeRequired"
                   value={this.state.assigneeRequired}
                   onChange={this.handleFormInput}
@@ -671,8 +673,8 @@ class CreateJobs extends Component {
                 </div>
               ) : null}
 
-<div className={`form-group col-4`}>
-{/* <FormControl className={this.classes.formControl}>
+              <div className={`form-group col-4`}>
+                {/* <FormControl className={this.classes.formControl}>
         <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -686,17 +688,17 @@ class CreateJobs extends Component {
         </Select>
       </FormControl> */}
 
-<div class="form-group" style={{marginTop:"1rem"}}>
+                <div className="form-group" style={{ marginTop: "1rem" }}>
 
-  <select class="form-control" value = {this.state.jobType} id="sel1" name = "jobType" onChange ={this.handleFormInput}>
-    <option >Fixed</option>
-    <option>Hourly based</option>
-  
-  </select>
-</div>
+                  <select className="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
+                    <option >Fixed</option>
+                    <option>Hourly based</option>
+
+                  </select>
                 </div>
+              </div>
             </div>
-              
+
             {/* <div className="form-group">
               <Multiselect
                 className={style.multi}
@@ -738,7 +740,7 @@ class CreateJobs extends Component {
 
             <div className="form-group">
               <div className={style.btnsubmit}>
-                <button className = "btn btn-primary" onClick={this.mySubmitHandler} >Submit</button>
+                <button className="btn btn-primary" onClick={this.mySubmitHandler} >Submit</button>
               </div>
             </div>
           </form>

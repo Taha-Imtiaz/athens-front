@@ -37,6 +37,7 @@ export var getJob = async (jobId) => {
     console.log(error);
   }
 };
+
 export var getAllMovers = async () => {
   try {
     var getMovers = await Axios.get("user/get-all-movers");
@@ -91,19 +92,28 @@ export var searchJobs = async (query) => {
     console.log(error);
   }
 }
-export var filterJobsByDate =   (date) => {
-return async (dispatch) => {
-  try {
-    var dateFilter  = await Axios.post("https://athens-backend.herokuapp.com/api/user/get-all-jobs-by-filter", date);
-    dispatch({
-      type: GET_JOBS,
-      payload: {
-        getJobs: dateFilter
-      },
-    });
-    // dispatch(hideLoader());
-  } catch (error) {
-    console.log(error);
+export var filterJobsByDate = (date) => {
+  return async (dispatch) => {
+    try {
+      var dateFilter = await Axios.post("user/get-all-jobs-by-filter", date);
+      dispatch({
+        type: GET_JOBS,
+        payload: {
+          getJobs: dateFilter
+        },
+      });
+      // dispatch(hideLoader());
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
+
+export var confirmJob = async (obj) => {
+
+  var confirmation = await Axios.post(`user/confirm-booking`,
+    obj
+  );
+  return confirmation;
+
 }

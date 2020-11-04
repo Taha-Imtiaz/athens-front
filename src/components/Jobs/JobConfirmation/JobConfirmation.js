@@ -11,6 +11,9 @@ import { clone, cloneDeep } from "lodash"
 import DatePicker from "react-datepicker";
 import { Multiselect } from "multiselect-react-dropdown";
 import { payAmount } from '../../../Redux/Mover/moverActions'
+import { confirmJob } from '../../../Redux/Job/jobActions'
+import { showMessage } from '../../../Redux/Common/commonActions'
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +32,7 @@ function getSteps() {
     return ['Confirm Date and Time', 'Confirm Contact Info', 'Confirm PU/DO Addresseses', 'Deposit'];
 }
 
-export default function JobConfirmation(props) {
+function JobConfirmation(props) {
 
     const timeOptions = [
         { name: "01:00 am", id: 1, value: "01:00:00" },
@@ -62,7 +65,6 @@ export default function JobConfirmation(props) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [data, setData] = React.useState('');
     const [payment, setPayment] = React.useState({});
-    const [startTime, setStartTime] = React.useState(['01:00:00']);
 
 
     const steps = getSteps();
@@ -73,7 +75,6 @@ export default function JobConfirmation(props) {
         console.log(job.startTime)
         let parsedDates = job.dates.map(x => typeof x == 'string' ? Date.parse(x) : x)
         // let index = timeOptions.findIndex(x => x.value == job.startTime)
-        // setStartTime(job.startTime)
         job.dates = parsedDates;
         // if (index != -1) {
         //     job.startTime = timeOptions[index].name;
@@ -115,7 +116,6 @@ export default function JobConfirmation(props) {
         let newState = { ...data };
         newState.startTime = selectedTime;
         setData(newState);
-        setStartTime(selectedTime)
     };
 
     const handleFormInput = (event) => {
@@ -197,6 +197,8 @@ export default function JobConfirmation(props) {
         console.log(data, 'Data')
         console.log(payment, 'Payment')
 
+
+
         window.Stripe.card.createToken({
             number: payment.number,
             exp_month: payment.exp_month,
@@ -205,19 +207,36 @@ export default function JobConfirmation(props) {
         }, (status, response) => {
 
             if (status === 200) {
+                let stringDates = data.dates.map(x => {
+                    if (typeof x == 'number') {
+                        return new Date(x).toDateString()
+                    } else {
+                        return x.toDateString()
+                    }
+                    //   x.toDateString()
+                })
                 let obj = {
                     stripeToken: response.id,
                     amount: payment.amount,
-                    jobId: data._id
+                    jobbyId: data._id,
+                    dates: stringDates,
+                    startTime: data.startTime,
+                    phone: data.customer.phone,
+                    locations: data.locations,
+                    email: data.customer.email,
+                    customerId: data.customer._id
                 }
-                // payAmount(obj).then((res) => {
-                //     let { history, showMessage } = this.props;
-                //     if (res.data.status == 200) {
-                //         showMessage(res.data.message)
-                //         history.push('/mover')
-                //     }
-                //     console.log(res)
-                // })
+                console.log(obj)
+                confirmJob(obj).then((res) => {
+                    let { showMessage } = props;
+                    if (res.data.status == 200) {
+                        console.log(res)
+                        showMessage(res.data.message)
+                        // history.push('/job')
+                        props.close();
+                    }
+                    console.log(res)
+                })
                 // this.setState({
                 //     message: `Success! Card token ${response.card.id}.`,
                 //     formProcess: false
@@ -261,12 +280,13 @@ export default function JobConfirmation(props) {
                     <div className="row">
                         {data && <div className="form-group col-12" style={{ marginTop: "1rem" }}>
                             <Multiselect
+                                singleSelect={true}
                                 options={timeOptions} // Options to display in the dropdown
                                 onSelect={onStartTimeSelect} // Function will trigger on select event
                                 displayValue="name" // Property name to display in the dropdown options
                                 className="form-control"
                                 // value={startTime}
-                                // selectedValues ={startTime}
+                                // selectedValues ={[data.startTime]}
                                 id="starttime"
                                 placeholder={data.startTime.length > 0 ? console.log(data.startTime) : 'Start Time'}
                             />
@@ -331,7 +351,7 @@ export default function JobConfirmation(props) {
                             <input type="text" className="form-control" id="name" placeholder="CVC" name="cvc" onChange={changeHandler} />
                         </div>
                         <div className="form-group">
-                            <input type="number" className="form-control" id="amount" placeholder="Amount (Plus tip if any)" name="amount" onChange={changeHandler} />
+                            <input type="number" className="form-control" id="amount" placeholder="Amount" name="amount" onChange={changeHandler} />
                         </div>
 
                         {/* <input type="button" className="btn btn-primary" name="pay" value="Pay" onClick={pay} /> */}
@@ -367,7 +387,7 @@ export default function JobConfirmation(props) {
                 </Button>
                     </div>
                 ) : (
-                        <div>
+                        <div style={{ margin: "5px 30px" }}>
                             {
                                 getStepContent(activeStep)/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
                             <div>
@@ -389,3 +409,9 @@ export default function JobConfirmation(props) {
         </div>
     );
 }
+
+var actions = {
+    showMessage
+}
+
+export default connect(null, actions)(JobConfirmation);

@@ -200,16 +200,10 @@ class CreateJobs extends Component {
             name="from"
             value={this.state.locations[i].from}
             onChange={(e) => this.hanldeLocationInput(i, e)}
+            error = {this.state.locationfromError}
           />
         </div>
-        {this.state.locationfromError ? (
-          <div
-            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-            role="alert"
-          >
-            {this.state.locationfromError}
-          </div>
-        ) : null}
+       
       </div>
       <div className="col-4">
         <TextField
@@ -223,15 +217,9 @@ class CreateJobs extends Component {
           name="to"
           value={this.state.locations[i].to}
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
+          state = {this.state.locationtoError}
         />
-        {this.state.locationtoError ? (
-          <div
-            className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-            role="alert"
-          >
-            {this.state.locationtoError}
-          </div>
-        ) : null}
+        
       </div></>
   }
 
@@ -506,31 +494,6 @@ class CreateJobs extends Component {
 
            
 
-            <div className="form-group">
-              <TextareaAutosize
-                className={style.textarea}
-                style ={{margin:"1rem 2rem", width:"90%"}}
-                rowsMin={4}
-                id="ta"
-                // rows="4"
-                placeholder="Job Description"
-                name="description"
-                value={this.state.description}
-                error = {this.state.descriptionError}
-                onChange={this.handleFormInput}
-              ></TextareaAutosize>
-            </div>
-
-          
-
-              {this.state.titleError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.titleError}
-                </div>
-              ) : null}
 
               <div className="form-group">
                 <TextareaAutosize
@@ -541,18 +504,12 @@ class CreateJobs extends Component {
                   placeholder="Job Description"
                   name="description"
                   value={this.state.description}
+                  error = {this.state.descriptionError}
                   onChange={this.handleFormInput}
                 ></TextareaAutosize>
               </div>
 
-              {this.state.descriptionError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.descriptionError}
-                </div>
-              ) : null}
+             
 
               <div className="form-group" style={{ margin: "1rem 2rem", width: "90%" }}>
                 <Autocomplete
@@ -565,21 +522,14 @@ class CreateJobs extends Component {
                   id="multiple-limit-tags"
                   options={this.servicesOptions}
                   getOptionLabel={(option) => option.name ? option.name : option}
+                  error = {this.state.multiError}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
                   )}
                 />
               </div>
 
-              {this.state.multiError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.multiError}
-                </div>
-              ) : null}
-
+             
               <div className="row">
                 {this.state.dates.map((x, i) => {
                   return (
@@ -673,18 +623,12 @@ class CreateJobs extends Component {
                     autoComplete="Number of movers required"
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
+                    error = {this.state.assigneeRequiredError}
                     onChange={this.handleFormInput}
                   />
                 </div>
 
-                {this.state.assigneeRequiredError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.assigneeRequiredError}
-                  </div>
-                ) : null}
+              
 
                 <div className={`form-group col-5`}>
                   {/* <FormControl className={this.classes.formControl}>

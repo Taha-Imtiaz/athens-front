@@ -45,6 +45,13 @@ class JobEditDetails extends Component {
     meetTime: "",
     jobType: "fixed",
     title: "",
+    titleError:"",
+    descriptionError:"",
+    servicesError :"",
+    assigneeError:"",
+    moversError :"",
+    locationFromError:"",
+    locationToError: "",
     job: null,
     Note: "",
     customerId: "",
@@ -60,7 +67,48 @@ class JobEditDetails extends Component {
       dates: newState.dates
     });
   };
+handleValidation = () =>{
+  var {title,description, option, startDate,assigneeRequired, from, to} = this.state
+  if(title === "" ) {
+    this.setState({
+      titleError = "Title should not be empty"
+    })
+  }
+  if(description === "" ) {
+    this.setState({
+      descriptionError = "description should not be empty"
+    })
+  }
+  if(option === "" ) {
+    this.setState({
+     servicesError = "Title should not be empty"
+    })
+  }
+  if(assignee === "" ) {
+    this.setState({
+      assigneeError = "assignee should not be empty"
+    })
+  }
+  if(from === "" ) {
+    this.setState({
+      locationFromError = "from should not be empty"
+    })
+  }
 
+  if(to === "" ) {
+    this.setState({
+     locationToError = "to should not be empty"
+    })
+  }
+  if(titleError|| descriptionError || servicesError || assigneeError || locationFromError || locationToError){
+    return false
+  }
+  else {
+    return true
+  }
+
+
+}
   handleEndDate = (date) => {
     this.setState({
       endDate: date,
@@ -219,7 +267,7 @@ class JobEditDetails extends Component {
     //  var {startDate, endDate,  title, description, services,startTime, meetTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var { loggedinUser } = this.props;
     var updatedObj = {
-      dates: stringDates,
+      dates: stringDates, 
       title,
       description,
       services,
@@ -233,13 +281,14 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
+    if(this.handleValidation()) {
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")
     }).catch((error) => {
     });
   };
-
+  }
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
     let newState = { ...this.state };

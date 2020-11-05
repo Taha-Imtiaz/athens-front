@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerList.module.css";
+import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -24,8 +24,10 @@ const CustomerList = (props) => {
     var fetchCustomersObj = {
       query: "",
       sort: {
-        plainname: 1,
+        plainName: null,
         createdAt: null,
+        updatedAt: -1
+
       },
       page: 1,
     };
@@ -36,8 +38,9 @@ const CustomerList = (props) => {
     var fetchCustomersOnPageChange = {
       query: "",
       sort: {
-        plainname: order,
+        plainName: null,
         createdAt: null,
+        updatedAt: -1
       },
       page: page,
     };
@@ -68,8 +71,9 @@ const CustomerList = (props) => {
       var sortCustomersObj = {
         query: "",
         sort: {
-          plainname: -1,
+          plainName: -1,
           createdAt: null,
+          updatedAt: null
         },
         page: 1,
       };
@@ -78,8 +82,9 @@ const CustomerList = (props) => {
       var sortCustomersObj = {
         query: "",
         sort: {
-          plainname: 1,
+          plainName: 1,
           createdAt: null,
+          updatedAt: null
         },
         page: 1,
       };
@@ -88,21 +93,38 @@ const CustomerList = (props) => {
       var sortCustomersObj = {
         query: "",
         sort: {
-          plainname: 1,
+          plainName: 1,
           createdAt: null,
+          updatedAt: null
         },
         page: 1,
       };
     }
     getAllCustomers(sortCustomersObj);
   };
+
   var handleDateFilter = () => {
     setOrder(null);
     var sortCustomersObj = {
       query: "",
       sort: {
-        plainname: null,
+        plainName: null,
         createdAt: -1,
+        updatedAt: null
+      },
+      page: 1,
+    };
+    getAllCustomers(sortCustomersObj);
+  };
+
+  var handleUpdtedAtFilter = () => {
+    setOrder(null);
+    var sortCustomersObj = {
+      query: "",
+      sort: {
+        plainName: null,
+        createdAt: null,
+        updatedAt: -1
       },
       page: 1,
     };
@@ -131,7 +153,7 @@ const CustomerList = (props) => {
           </div>
 
           <div className={`col-5 col-md-6 ${style.search}`}>
-            <SearchBar type="customer" title="Type name or email" />
+            <SearchBar type="customer" title="Type first name or email" />
           </div>
           <div className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}>
             <i
@@ -145,14 +167,17 @@ const CustomerList = (props) => {
               style={{ transform: "translateY(-.3rem)" }}
             ></i>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{ margin: "-0.5rem" }}>
-              <a className="dropdown-item" onClick={handleSort}>
-                Sort By Name
+              <a className="dropdown-item" onClick={handleUpdtedAtFilter}>
+                Recently Updated
               </a>
               <a className="dropdown-item" onClick={handleDateFilter}>
                 Recently Added
               </a>
+              <a className="dropdown-item" onClick={handleSort}>
+                Sort By Name
+              </a>
             </div>
-            <div style={{margin: '-0.5rem'}}>
+            <div style={{ margin: '-0.5rem' }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
                 <Button name="Create New" />

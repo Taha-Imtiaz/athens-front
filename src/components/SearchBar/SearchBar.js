@@ -20,6 +20,8 @@ const SearchBar = (props) => {
                     sort: {
                         plainname: null,
                         createdAt: null,
+                        updatedAt: null
+
                     },
                 };
                 getAllCustomers(fetchCustomersObj);
@@ -29,6 +31,7 @@ const SearchBar = (props) => {
                     sort: {
                         plainname: null,
                         createdAt: -1,
+                        updatedAt: null
                     },
                 };
                 getAllCustomers(fetchCustomersObj);
@@ -38,16 +41,16 @@ const SearchBar = (props) => {
             if (searchValue) {
                 var usersObj = {
                     query: searchValue,
-                    filter:{
-                      type:""
-                  }
+                    filter: {
+                        type: ""
+                    }
                 }
                 getUsers(usersObj);
             } else {
                 var usersObj = {
                     query: "",
-                    filter:{
-                        type:""
+                    filter: {
+                        type: ""
                     }
                 };
                 getUsers(usersObj);
@@ -66,7 +69,7 @@ const SearchBar = (props) => {
                     },
                     sort: {
                         createdAt: -1
-                      },
+                    },
                     page: 1
                 }
             } else {
@@ -81,7 +84,7 @@ const SearchBar = (props) => {
                     },
                     sort: {
                         createdAt: -1
-                      },
+                    },
                     page: 1
                 }
             }
@@ -100,9 +103,9 @@ const SearchBar = (props) => {
             </span>
         </div> */}
         <div className="input-group">
-            <input type="text" className="form-control" placeholder={title} style = {{outline:"transparent"}} onChange={(e) => setSearchValue(e.target.value)} />
+            <input type="text" className="form-control" placeholder={title} style={{ outline: "transparent" }} onChange={(e) => setSearchValue(e.target.value)} />
             <div className="input-group-append">
-                <button onClick={handleSearch} className="btn btn-secondary" style = {{width:"3rem"}} type="button">
+                <button onClick={handleSearch} className="btn btn-secondary" style={{ width: "3rem" }} type="button">
                     <i className="fa fa-search"></i>
                 </button>
             </div>

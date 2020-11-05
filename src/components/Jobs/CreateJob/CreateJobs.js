@@ -9,7 +9,7 @@ import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
-import { clone, cloneDeep } from "lodash"
+import { clone, cloneDeep, uniqBy } from "lodash"
 import { InputLabel, Menu, MenuItem, Button, Select, TextareaAutosize, TextField } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles'
 import 'date-fns';
@@ -21,6 +21,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { FormControl } from "react-bootstrap";
+import { Autocomplete } from "@material-ui/lab";
 
 
 class CreateJobs extends Component {
@@ -192,7 +193,7 @@ class CreateJobs extends Component {
             variant="outlined"
             margin="normal"
             required
-            
+
             size="small"
             id="from"
             label="Pickup"
@@ -215,7 +216,7 @@ class CreateJobs extends Component {
           variant="outlined"
           margin="normal"
           required
-          
+
           size="small"
           id="to"
           label="Drop Off"
@@ -442,154 +443,134 @@ class CreateJobs extends Component {
         })
         .catch((error) => {
         });
-
     }
-
   };
+
+  servicesChanged = (newValue) => {
+    let arr = uniqBy(newValue, 'id');
+    this.setState({ services: arr })
+  }
+
   render() {
     return (
-      <div style ={{background:"#e9ecef"}}>
+      <div style={{ background: "#e9ecef" }}>
         <ToastContainer position="bottom-right" />
-        
+
 
         <div className={`${style.tron}`}>
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
-          <form onSubmit={this.mySubmitHandler}>
-            <div>
-              {/* <label htmlFor="">Customer Email</label>
-              <input
-                type="input"
-                className="form-control"
-                id="jobTitle"
-                name="customerId"
-                value={this.state.customerId}
-                onChange={this.handleFormInput}
-              // disabled
-              /> */}
-              <TextField
-                variant="outlined"
-               style ={{margin:"1rem 2rem", width:"90%"}}
-                required
-                
-                size="small"
-                id="customerId"
-                label="Cutomer Email"
-                name="customerId"
-                autoComplete="customerId"
-                autoFocus
-                value={this.state.customerId} onChange={this.handleFormInput}
-              />
-            </div>
-
-            <div>
-              <TextField
-                variant="outlined"
-              
-                required
-                style ={{margin:"1rem 2rem", width:"90%"}}
-                size="small"
-                id="title"
-                label="Job Title"
-                name="title"
-                autoComplete="title"
-                autoFocus
-                value={this.state.title} onChange={this.handleFormInput}
-              />
-            </div>
-
-            {this.state.titleError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.titleError}
+            <form onSubmit={this.mySubmitHandler}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  required
+                  size="small"
+                  id="customerId"
+                  label="Cutomer Email"
+                  name="customerId"
+                  autoComplete="customerId"
+                  autoFocus
+                  value={this.state.customerId} onChange={this.handleFormInput}
+                />
               </div>
-            ) : null}
-
-            <div className="form-group">
-              <TextareaAutosize
-                className={style.textarea}
-                style ={{margin:"1rem 2rem", width:"90%"}}
-                rowsMin={4}
-                id="ta"
-                // rows="4"
-                placeholder="Job Description"
-                name="description"
-                value={this.state.description}
-                onChange={this.handleFormInput}
-              ></TextareaAutosize>
-            </div>
-
-            {this.state.descriptionError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.descriptionError}
+              <div>
+                <TextField
+                  variant="outlined"
+                  required
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  size="small"
+                  id="title"
+                  label="Job Title"
+                  name="title"
+                  autoComplete="title"
+                  autoFocus
+                  value={this.state.title} onChange={this.handleFormInput}
+                />
               </div>
-            ) : null}
 
-            <div className="form-group"  style ={{margin:"1rem 2rem", width:"90%"}}>
+              {this.state.titleError ? (
+                <div
+                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                  role="alert"
+                >
+                  {this.state.titleError}
+                </div>
+              ) : null}
 
-              {/* <InputLabel id="label">Age</InputLabel>
-<Select labelId="label" id="select" value="20">
-  <MenuItem value="10">{this.servicesOptions}</MenuItem>
-
-</Select> */}
-              <Multiselect
-                className={style.multi}
-                // selectedValues = {this.servicesOptions}
-                options={this.servicesOptions} // Options to display in the dropdown
-                onSelect={this.onSelect} // Function will trigger on select event
-                onRemove={this.onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                className="form-control"
-                placeholder="Services"
-              />
-            </div>
-
-            {this.state.multiError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.multiError}
+              <div className="form-group">
+                <TextareaAutosize
+                  className={style.textarea}
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  rowsMin={4}
+                  id="ta"
+                  placeholder="Job Description"
+                  name="description"
+                  value={this.state.description}
+                  onChange={this.handleFormInput}
+                ></TextareaAutosize>
               </div>
-            ) : null}
 
-            <div className="row">
-              {this.state.dates.map((x, i) => {
-                return (
-                  <div className="form-group col-3"    style ={{margin:"1rem 2rem", width:"90%"}}>
-                    {/* <DatePicker
-                      className={style.to}
-                      selected={this.state.dates[i]}
-                      onChange={(e) => this.handleStartDate(e, i)}
-                      placeholderText="Choose Dates"
-                      className="form-control"
-                    /> */}
+              {this.state.descriptionError ? (
+                <div
+                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                  role="alert"
+                >
+                  {this.state.descriptionError}
+                </div>
+              ) : null}
 
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid container justify="space-around">
-                        <KeyboardDatePicker
-                          margin="normal"
-                          
-                          id="date-picker-dialog"
-                          format="MM/dd/yyyy"
-                          value={this.state.dates[i]}
-                          onChange={(e) => this.handleStartDate(e, i)}
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                          }}
-                        />
-                      </Grid>
-                    </MuiPickersUtilsProvider>
-                  </div>
-                )
-              })}
+              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%" }}>
+                <Autocomplete
+                  multiple
+                  value={this.state.services}
+                  onChange={(event, newValue) => {
+                    this.servicesChanged(newValue)
+                  }}
+                  limitTags={10}
+                  id="multiple-limit-tags"
+                  options={this.servicesOptions}
+                  getOptionLabel={(option) => option.name ? option.name : option}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
+                  )}
+                />
+              </div>
 
-              {/* {this.state.startDateError ? (
+              {this.state.multiError ? (
+                <div
+                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                  role="alert"
+                >
+                  {this.state.multiError}
+                </div>
+              ) : null}
+
+              <div className="row">
+                {this.state.dates.map((x, i) => {
+                  return (
+                    <div className="form-group col-3" style={{ margin: "1rem 2rem", width: "90%" }}>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardDatePicker
+                            margin="normal"
+
+                            id="date-picker-dialog"
+                            format="MM/dd/yyyy"
+                            value={this.state.dates[i]}
+                            onChange={(e) => this.handleStartDate(e, i)}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </div>
+                  )
+                })}
+
+                {/* {this.state.startDateError ? (
                 <div
                   className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                   role="alert"
@@ -598,13 +579,13 @@ class CreateJobs extends Component {
                 </div>
               ) : null} */}
 
-              <div className="form-group col-3 my-0" onClick={this.addDate}>
-                <i className="fa fa-plus" style={{ transform: "translateY(2.2rem)" }}></i>
+                <div className="form-group col-3 my-0" onClick={this.addDate}>
+                  <i className="fa fa-plus" style={{ transform: "translateY(2.2rem)" }}></i>
+                </div>
               </div>
-            </div>
 
-            <div className="row">
-              {/* <div className="form-group col-3" style={{ margin: "1rem" }}>
+              <div className="row">
+                {/* <div className="form-group col-3" style={{ margin: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions} // Options to display in the dropdown
@@ -624,7 +605,7 @@ class CreateJobs extends Component {
                   {this.state.timeError}
                 </div>
               ) : null} */}
-              {/* <div className="form-group col-3" style={{ marginTop: "1rem" }}>
+                {/* <div className="form-group col-3" style={{ marginTop: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions}
@@ -637,7 +618,7 @@ class CreateJobs extends Component {
                 />
               </div> */}
 
-              {/* {this.state.timeError ? (
+                {/* {this.state.timeError ? (
                 <div
                   className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                   role="alert"
@@ -645,36 +626,35 @@ class CreateJobs extends Component {
                   {this.state.timeError}
                 </div>
               ) : null} */}
-              <div className="col-1"></div>
-
-              <div className={`form-group col-5`} >
-                <TextField
-                  type="number"
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  size="small"
-                  id="assigneeRequired"
-                  label="Movers Required"
-                  autoComplete="Number of movers required"
-                  name="assigneeRequired"
-                  value={this.state.assigneeRequired}
-                  onChange={this.handleFormInput}
-                />
-              </div>
-
-              {this.state.assigneeRequiredError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.assigneeRequiredError}
+                <div className="col-1"></div>
+                <div className={`form-group col-5`} >
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="assigneeRequired"
+                    label="Movers Required"
+                    autoComplete="Number of movers required"
+                    name="assigneeRequired"
+                    value={this.state.assigneeRequired}
+                    onChange={this.handleFormInput}
+                  />
                 </div>
-              ) : null}
 
-              <div className={`form-group col-5`}>
-                {/* <FormControl className={this.classes.formControl}>
+                {this.state.assigneeRequiredError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.assigneeRequiredError}
+                  </div>
+                ) : null}
+
+                <div className={`form-group col-5`}>
+                  {/* <FormControl className={this.classes.formControl}>
         <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -688,19 +668,19 @@ class CreateJobs extends Component {
         </Select>
       </FormControl> */}
 
-                <div className="form-group" style={{ marginTop: "1rem" }}>
+                  <div className="form-group" style={{ marginTop: "1rem" }}>
 
-                  <select className="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                    <option >Fixed</option>
-                    <option>Hourly based</option>
+                    <select className="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
+                      <option >Fixed</option>
+                      <option>Hourly based</option>
 
-                  </select>
+                    </select>
+                  </div>
                 </div>
+                <div className="col-1"></div>
               </div>
-              <div className="col-1"></div>
-            </div>
 
-            {/* <div className="form-group">
+              {/* <div className="form-group">
               <Multiselect
                 className={style.multi}
                 options={this.state.assigneeList} // Options to display in the dropdown
@@ -712,7 +692,7 @@ class CreateJobs extends Component {
               />
             </div> */}
 
-            {/* {this.state.assigneeError ? (
+              {/* {this.state.assigneeError ? (
               <div
                 className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                 role="alert"
@@ -721,33 +701,33 @@ class CreateJobs extends Component {
               </div>
             ) : null} */}
 
-            <div className="row">
-              <div className="col-3"    style ={{margin:" 1rem", width:"90%"}}>
-                <h5>Location:</h5>
-                
+              <div className="row">
+                <div className="col-3" style={{ margin: " 1rem", width: "90%" }}>
+                  <h5>Location:</h5>
+
+                </div>
+
+
+                {this.state.locations.map((ll, i) => {
+                  return this.showLocation(i)
+                })}
               </div>
 
+              <div className="form-group">
+                <div style={{ float: 'right' }}>
+                  <input type="button" className="btn btn-primary" style={{ background: "#00ADEE", marginRight: "1rem" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+                </div>
+              </div><br />
 
-              {this.state.locations.map((ll, i) => {
-                return this.showLocation(i)
-              })}
-            </div>
 
-            <div className="form-group">
-              <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE",marginRight:"1rem" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+              <div className="form-group">
+                <div className={style.btnsubmit}>
+                  <button className="btn btn-primary" onClick={this.mySubmitHandler} >Submit</button>
+                </div>
               </div>
-            </div><br />
-
-
-            <div className="form-group">
-              <div className={style.btnsubmit}>
-                <button className="btn btn-primary" onClick={this.mySubmitHandler} >Submit</button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
     );
   }

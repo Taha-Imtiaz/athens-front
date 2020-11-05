@@ -264,7 +264,7 @@ class JobsList extends Component {
                     className=" btn btn-primary"
                     style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
                   >
-                    Calender
+                    Calendar
                   </button>
                 </Link>
               </div>

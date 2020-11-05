@@ -288,7 +288,7 @@ function JobConfirmation(props) {
                                 // value={startTime}
                                 // selectedValues ={[data.startTime]}
                                 id="starttime"
-                                placeholder={data.startTime.length > 0 ? console.log(data.startTime) : 'Start Time'}
+                                placeholder='Start Time'
                             />
                         </div>}
                     </div>

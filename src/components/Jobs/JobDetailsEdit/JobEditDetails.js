@@ -9,7 +9,7 @@ import { showMessage } from '../../../Redux/Common/commonActions'
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { clone, cloneDeep } from "lodash"
+import { clone, cloneDeep, uniqBy } from "lodash"
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -81,7 +81,6 @@ class JobEditDetails extends Component {
         services: res.data.job.services,
         assignee: res.data.job.assignee,
       });
-      console.log(this.state.services)
       var moversObj = {
         name: "",
         address: "",
@@ -220,15 +219,12 @@ class JobEditDetails extends Component {
     //  var {startDate, endDate,  title, description, services,startTime, meetTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var { loggedinUser } = this.props;
     var updatedObj = {
-      startDate: startDateInString,
       dates: stringDates,
-      endDate: endDateInString,
       title,
       description,
       services,
       assigneeRequired,
       jobType,
-      startTime,
       // meetTime,
       locations,
       // assigneesId,
@@ -237,7 +233,6 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
-    console.log(updatedObj)
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")
@@ -246,7 +241,6 @@ class JobEditDetails extends Component {
   };
 
   onSelect = (selectedList, selectedItem) => {
-    console.log(selectedItem)
     let serviceItem = selectedItem;
     let newState = { ...this.state };
     newState.services.push(serviceItem);
@@ -357,6 +351,11 @@ class JobEditDetails extends Component {
     }
   }
 
+  servicesChanged = (newValue) => {
+    let arr = uniqBy(newValue, 'id');
+    this.setState({ services: arr })
+  }
+
   render() {
     var { job } = this.state;
     var {
@@ -385,32 +384,32 @@ class JobEditDetails extends Component {
       <div className={`${style.formStyle}`}>
         <div className={`${style.form}`}>
           {/* <ToastContainer position="bottom-right"/> */}
-          <h3 style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"2rem"}}>Job Details Edit</h3>
+          <h3 style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "2rem" }}>Job Details Edit</h3>
           <div className="row">
-            
-             
-                <form>
-                  <div>
 
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                     
-                      style = {{transform:"translateX(3rem)", width:"100%"}}
-                      size="small"
-                      id="customerId"
-                      label="Cutomer Id"
-                      name="customerId"
-                      autoComplete="customerId"
-                      
-                      value={this.state.customerId} onChange={this.handleFormInput}
-                    />
-                  </div>
+            <form>
+              <div>
 
-                  <div className="form-group">
-                    {/* <input
+
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+
+                  style={{ transform: "translateX(3rem)", width: "100%" }}
+                  size="small"
+                  id="customerId"
+                  label="Cutomer Id"
+                  name="customerId"
+                  autoComplete="customerId"
+
+                  value={this.state.customerId} onChange={this.handleFormInput}
+                />
+              </div>
+
+              <div className="form-group">
+                {/* <input
                     type="input"
                     className="form-control"
                     id="jobTitle"
@@ -421,61 +420,62 @@ class JobEditDetails extends Component {
                     onChange={this.handleFormInput}
                   /> */}
 
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      style = {{transform:"translateX(3rem)", width:"100%"}}
-                      size="small"
-                      id="title"
-                      label="Job Title"
-                      name="title"
-                      autoComplete="title"
-                      autoFocus
-                      value={this.state.title} onChange={this.handleFormInput}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <h4   style = {{transform:"translateX(3rem)", width:"100%"}}>Job Description</h4>
-                    <TextareaAutosize
-                      rowsMin={5}
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  style={{ transform: "translateX(3rem)", width: "100%" }}
+                  size="small"
+                  id="title"
+                  label="Job Title"
+                  name="title"
+                  autoComplete="title"
+                  autoFocus
+                  value={this.state.title} onChange={this.handleFormInput}
+                />
+              </div>
+              <div className="form-group">
+                <h4 style={{ transform: "translateX(3rem)", width: "100%" }}>Job Description</h4>
+                <TextareaAutosize
+                  rowsMin={5}
 
-                      required
-                      style = {{transform:"translateX(3rem)", width:"100%"}}
-                      id="description"
+                  required
+                  style={{ transform: "translateX(3rem)", width: "100%" }}
+                  id="description"
 
-                      name="description"
+                  name="description"
 
-                      value={description} onChange={this.handleFormInput}
-                    />
-                  </div>
+                  value={description} onChange={this.handleFormInput}
+                />
+              </div>
 
-                  <div className="form-group"   style = {{transform:"translateX(3rem)", zIndex: "9999", width:"100%"}}>
-                    {/* <Multiselect
+              <div className="form-group" style={{ transform: "translateX(3rem)", zIndex: "9999", width: "100%" }}>
+                {/* <Multiselect
                       selectedValues={this.state.services}
                       options={this.servicesOptions} // Options to display in the dropdown
                       onSelect={this.onSelect} // Function will trigger on select event
                       onRemove={this.onRemove} // Function will trigger on remove event
                       displayValue="name" // Property name to display in the dropdown options
                     /> */}
-             { this.state.customerId &&   <Autocomplete
-        multiple
-        // value={this.state.services}
-        id="multiple-limit-tags"
-        options={this.servicesOptions}
-        getOptionLabel={(option) => option.name? option.name: option}
-        onChange={(event, newValue) => {
-          this.onSelect(event, newValue); // Get the customer and get job
-        }}
-        defaultValue={this.state.services}
-        renderInput={(params) => (
-          <TextField {...params} variant="outlined" label="limitTags" placeholder="Favorites" />
-        )}
-      />}
-                  </div>
-                  <div className="row">
-                    {/* <div className="col-6">
+                {this.state.customerId && <Autocomplete
+                  multiple
+                  value={this.state.services}
+                  onChange={(event, newValue) => {
+                    this.servicesChanged(newValue)
+                  }}
+                  limitTags={10}
+                  id="multiple-limit-tags"
+                  options={this.servicesOptions}
+                  getOptionLabel={(option) => option.name ? option.name : option}
+                  defaultValue={this.state.services.splice()}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
+                  )}
+                />}
+              </div>
+              <div className="row">
+                {/* <div className="col-6">
                     <div className="form-group">
                       <DatePicker
                         className={style.to}
@@ -485,39 +485,39 @@ class JobEditDetails extends Component {
                       />
                     </div>
                   </div> */}
-                    {this.state.dates.map((x, i) => {
-                      return (
-                        <div className="form-group col-4"   style = {{transform:"translateX(3rem)", width:"100%"}}>
-                          {/* <DatePicker
+                {this.state.dates.map((x, i) => {
+                  return (
+                    <div className="form-group col-4" style={{ transform: "translateX(3rem)", width: "100%" }}>
+                      {/* <DatePicker
                           className={style.to}
                           selected={this.state.dates[i]}
                           onChange={(e) => this.handleStartDate(e, i)}
                           placeholderText="Choose Dates"
                           className="form-control"
                         /> */}
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justify="space-around">
-                              <KeyboardDatePicker
-                                margin="normal"
-                                fullWidth
-                                id="date-picker-dialog"
-                                style = {{zIndex:"-1"}}
-                                format="MM/dd/yyyy"
-                                value={this.state.dates[i]}
-                                onChange={(e) => this.handleStartDate(e, i)}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                              />
-                            </Grid>
-                          </MuiPickersUtilsProvider>
-                        </div>
-                      )
-                    })}
-                    <div className="form-group col-3 my-0" onClick={this.addDate}>
-                      <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardDatePicker
+                            margin="normal"
+                            fullWidth
+                            id="date-picker-dialog"
+                            style={{ zIndex: "-1" }}
+                            format="MM/dd/yyyy"
+                            value={this.state.dates[i]}
+                            onChange={(e) => this.handleStartDate(e, i)}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
                     </div>
-                    {/* <div className="col-6">
+                  )
+                })}
+                <div className="form-group col-3 my-0" onClick={this.addDate}>
+                  <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
+                </div>
+                {/* <div className="col-6">
                     <div className="form-group">
                       <DatePicker
                         className={style.to}
@@ -527,9 +527,9 @@ class JobEditDetails extends Component {
                       />
                     </div>
                   </div> */}
-                  </div>
-                  <div className="row">
-                    {/* <div className="col-4">
+              </div>
+              <div className="row">
+                {/* <div className="col-4">
 
 
                       <TextField
@@ -550,104 +550,104 @@ class JobEditDetails extends Component {
 
 
 
-                    <div className="col-6" >
+                <div className="col-6" >
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    style={{ transform: "translateX(3rem)", width: "100%" }}
+                    id="assigneeRequired"
+                    label="Movers Required"
+                    autoComplete="Number of movers required"
+                    name="assigneeRequired"
+                    value={this.state.assigneeRequired}
+                    onChange={this.handleFormInput}
+                  />
+                </div>
+
+                {this.state.assigneeRequiredError ? (
+                  <div
+                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
+                    role="alert"
+                  >
+                    {this.state.assigneeRequiredError}
+                  </div>
+                ) : null}
+
+                <div className={`col-6`}>
+
+
+                  <div class="form-group" style={{ transform: "translateX(3rem)", marginTop: "1rem", width: "100%" }}>
+
+                    <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
+                      <option >Fixed</option>
+                      <option>Hourly based</option>
+
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div className="row">
+                <div className="col-3">
+                  <div className="form-group" style={{ transform: "translateX(3rem)", width: "100%", marginTop: "1rem" }} >
+                    <h4>Location:</h4>
+                  </div>
+                </div>
+
+                {this.state.locations && this.state.locations.map((list, i) => {
+
+                  return <><div className="col-4">
+                    <div className="form-group">
+
                       <TextField
-                        type="number"
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         size="small"
-                        style = {{transform:"translateX(3rem)", width:"100%"}}
-                        id="assigneeRequired"
-                        label="Movers Required"
-                        autoComplete="Number of movers required"
-                        name="assigneeRequired"
-                        value={this.state.assigneeRequired}
-                        onChange={this.handleFormInput}
+                        id="from"
+                        label="From"
+                        name="from"
+                        autoComplete="from"
+
+                        value={list.from} onChange={(e) => this.hanldeLocationInput(i, e)}
                       />
                     </div>
-
-                    {this.state.assigneeRequiredError ? (
-                      <div
-                        className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                        role="alert"
-                      >
-                        {this.state.assigneeRequiredError}
-                      </div>
-                    ) : null}
-
-                    <div className={`col-6`}>
-
-
-                      <div class="form-group"    style = {{transform:"translateX(3rem)", marginTop: "1rem" , width:"100%"}}>
-
-                        <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                          <option >Fixed</option>
-                          <option>Hourly based</option>
-
-                        </select>
-                      </div>
-                    </div>
                   </div>
-
-
-
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="form-group"   style = {{transform:"translateX(3rem)", width:"100%",marginTop:"1rem"}} >
-                        <h4>Location:</h4>
-                      </div>
+                    <div className="col-4">
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        size="small"
+                        id="to"
+                        label="Drop Off"
+                        aria-describedby="emailHelp"
+                        name="to"
+                        value={list.to}
+                        onChange={(e) => this.hanldeLocationInputTo(i, e)}
+                      />
                     </div>
-
-                    {this.state.locations && this.state.locations.map((list, i) => {
-
-                      return <><div className="col-4">
-                        <div className="form-group">
-                          
-                          <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            size="small"
-                            id="from"
-                            label="From"
-                            name="from"
-                            autoComplete="from"
-                            
-                            value={list.from} onChange={(e) => this.hanldeLocationInput(i, e)}
-                          />
-                        </div>
-                      </div>
-                        <div className="col-4">
-                          <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            size="small"
-                            id="to"
-                            label="Drop Off"
-                            aria-describedby="emailHelp"
-                            name="to"
-                            value={list.to}
-                            onChange={(e) => this.hanldeLocationInputTo(i, e)}
-                          />
-                        </div>
-                        {/* <br> */}
-                      </>
-                    })}
-                    <div className="col-1">
-                      <i className="fa fa-plus" style={{ transform: "translateY(1.5rem)" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
-                    </div>
-                  </div>
+                    {/* <br> */}
+                  </>
+                })}
+                <div className="col-1">
+                  <i className="fa fa-plus" style={{ transform: "translateY(1.5rem)" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+                </div>
+              </div>
 
 
 
-                </form>
-             
-           
+            </form>
+
+
             <div className="col-4">
               {/* <div className="dropdown">
               <button
@@ -708,43 +708,44 @@ class JobEditDetails extends Component {
 
 
             <div className="row">
-            
-              <div className={`col-12`} style = {{justifyContent:"center", alignItems:"center", display:"flex"}}>
-              <button 
-                onClick={this.handleShow}
-                type="submit"
-                className={`btn btn-primary ${style.btnCustom}`}
-                style={{ transform: "translate3d(-3rem, 0, 0)", width:"100%", display:"flex",
-                justifyContent:"center", alignItems:"center"
-              }}
-              >
-                Add Notes
+
+              <div className={`col-12`} style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
+                <button
+                  onClick={this.handleShow}
+                  type="submit"
+                  className={`btn btn-primary ${style.btnCustom}`}
+                  style={{
+                    transform: "translate3d(-3rem, 0, 0)", width: "100%", display: "flex",
+                    justifyContent: "center", alignItems: "center"
+                  }}
+                >
+                  Add Notes
             </button>
-            </div>
+              </div>
             </div>
           </div>
           <div className="row">
-          <div className={`col-4 ${style.btnalign}`} style={{ marginBottom: "1.5rem" }}>
+            <div className={`col-4 ${style.btnalign}`} style={{ marginBottom: "1.5rem" }}>
 
-            <button
-              type="submit"
-              className={`btn btn-primary ${style.btnCustom}`}
-              onClick={this.handleJobUpdate}
-              style={{ transform: "translate3d(0rem, 0, 0)" }}
-            >
-              Update
+              <button
+                type="submit"
+                className={`btn btn-primary ${style.btnCustom}`}
+                onClick={this.handleJobUpdate}
+                style={{ transform: "translate3d(0rem, 0, 0)" }}
+              >
+                Update
           </button>
-          </div>
-          <div className={`col-4 ${style.btnalign}`}>
-            <button
-              type="submit"
-              className={`btn btn-primary  ${style.btnCustom}`}
-              style={{ transform: "translate3d(0.4rem, 0, 0)", width:"100%" }}
-            >
-              Reset
+            </div>
+            <div className={`col-4 ${style.btnalign}`}>
+              <button
+                type="submit"
+                className={`btn btn-primary  ${style.btnCustom}`}
+                style={{ transform: "translate3d(0.4rem, 0, 0)", width: "100%" }}
+              >
+                Reset
           </button>
-          </div>
-         
+            </div>
+
           </div>
           <Modal show={show} onHide={this.handleClose} animation={false} centered>
             <Modal.Header closeButton>

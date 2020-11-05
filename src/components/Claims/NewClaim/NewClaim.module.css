@@ -1,9 +1,10 @@
 .head{
-    margin: 2rem 0 !important;
+    padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin: 2rem ; */
+ 
+  /* background-color: rebeccapurple; */
 }
 
 .form{

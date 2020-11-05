@@ -33,7 +33,7 @@ class CreateJobs extends Component {
     customerId: "",
     startDate: "",
     dates: [new Date()],
-    startTime: "",
+    // startTime: "",
     anchorEl: "",
     meetTime: "",
     assigneeRequired: '',
@@ -276,9 +276,9 @@ class CreateJobs extends Component {
     //   startDateError = "Date should not be empty";
     // }
 
-    if (!this.state.startTime) {
-      timeError = "Time should not be empty";
-    }
+    // if (!this.state.startTime) {
+    //   timeError = "Time should not be empty";
+    // }
 
     // if (!this.state.meetTime) {
     //   timeError = "Time should not be empty";
@@ -402,7 +402,7 @@ class CreateJobs extends Component {
         services,
         startDate,
         dates,
-        startTime,
+        // startTime,
         meetTime,
 
         locations,
@@ -423,7 +423,7 @@ class CreateJobs extends Component {
 
         // startDate: startDate.toString(),
         dates: stringDates,
-        startTime,
+        // startTime,
         // meetTime,
         locations,
         status,
@@ -604,7 +604,7 @@ class CreateJobs extends Component {
             </div>
 
             <div className="row">
-              <div className="form-group col-3" style={{ margin: "1rem" }}>
+              {/* <div className="form-group col-3" style={{ margin: "1rem" }}>
                 <Multiselect
                   className={style.multi}
                   options={this.timeOptions} // Options to display in the dropdown
@@ -623,7 +623,7 @@ class CreateJobs extends Component {
                 >
                   {this.state.timeError}
                 </div>
-              ) : null}
+              ) : null} */}
               {/* <div className="form-group col-3" style={{ marginTop: "1rem" }}>
                 <Multiselect
                   className={style.multi}
@@ -645,14 +645,15 @@ class CreateJobs extends Component {
                   {this.state.timeError}
                 </div>
               ) : null} */}
+              <div className="col-1"></div>
 
-              <div className={`form-group col-4`} >
+              <div className={`form-group col-5`} >
                 <TextField
                   type="number"
                   variant="outlined"
                   margin="normal"
                   required
-                  
+                  fullWidth
                   size="small"
                   id="assigneeRequired"
                   label="Movers Required"
@@ -672,7 +673,7 @@ class CreateJobs extends Component {
                 </div>
               ) : null}
 
-              <div className={`form-group col-4`}>
+              <div className={`form-group col-5`}>
                 {/* <FormControl className={this.classes.formControl}>
         <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
         <Select
@@ -696,6 +697,7 @@ class CreateJobs extends Component {
                   </select>
                 </div>
               </div>
+              <div className="col-1"></div>
             </div>
 
             {/* <div className="form-group">

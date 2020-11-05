@@ -21,7 +21,8 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TextareaAutosize, TextField } from "@material-ui/core";
+import { Chip, TextareaAutosize, TextField } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
 
 class JobEditDetails extends Component {
   servicesOptions = [
@@ -80,6 +81,7 @@ class JobEditDetails extends Component {
         services: res.data.job.services,
         assignee: res.data.job.assignee,
       });
+      console.log(this.state.services)
       var moversObj = {
         name: "",
         address: "",
@@ -244,6 +246,7 @@ class JobEditDetails extends Component {
   };
 
   onSelect = (selectedList, selectedItem) => {
+    console.log(selectedItem)
     let serviceItem = selectedItem;
     let newState = { ...this.state };
     newState.services.push(serviceItem);
@@ -448,14 +451,28 @@ class JobEditDetails extends Component {
                     />
                   </div>
 
-                  <div className="form-group"   style = {{transform:"translateX(3rem)", width:"100%"}}>
-                    <Multiselect
+                  <div className="form-group"   style = {{transform:"translateX(3rem)", zIndex: "9999", width:"100%"}}>
+                    {/* <Multiselect
                       selectedValues={this.state.services}
                       options={this.servicesOptions} // Options to display in the dropdown
                       onSelect={this.onSelect} // Function will trigger on select event
                       onRemove={this.onRemove} // Function will trigger on remove event
                       displayValue="name" // Property name to display in the dropdown options
-                    />
+                    /> */}
+             { this.state.customerId &&   <Autocomplete
+        multiple
+        // value={this.state.services}
+        id="multiple-limit-tags"
+        options={this.servicesOptions}
+        getOptionLabel={(option) => option.name? option.name: option}
+        onChange={(event, newValue) => {
+          this.onSelect(event, newValue); // Get the customer and get job
+        }}
+        defaultValue={this.state.services}
+        renderInput={(params) => (
+          <TextField {...params} variant="outlined" label="limitTags" placeholder="Favorites" />
+        )}
+      />}
                   </div>
                   <div className="row">
                     {/* <div className="col-6">
@@ -484,7 +501,7 @@ class JobEditDetails extends Component {
                                 margin="normal"
                                 fullWidth
                                 id="date-picker-dialog"
-
+                                style = {{zIndex:"-1"}}
                                 format="MM/dd/yyyy"
                                 value={this.state.dates[i]}
                                 onChange={(e) => this.handleStartDate(e, i)}
@@ -512,7 +529,7 @@ class JobEditDetails extends Component {
                   </div> */}
                   </div>
                   <div className="row">
-                    <div className="col-4">
+                    {/* <div className="col-4">
 
 
                       <TextField
@@ -529,11 +546,11 @@ class JobEditDetails extends Component {
                         value={startTime} onChange={this.handleFormInput}
                       />
 
-                    </div>
+                    </div> */}
 
 
 
-                    <div className="col-4" >
+                    <div className="col-6" >
                       <TextField
                         type="number"
                         variant="outlined"
@@ -560,7 +577,7 @@ class JobEditDetails extends Component {
                       </div>
                     ) : null}
 
-                    <div className={`col-4`}>
+                    <div className={`col-6`}>
 
 
                       <div class="form-group"    style = {{transform:"translateX(3rem)", marginTop: "1rem" , width:"100%"}}>

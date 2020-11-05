@@ -86,7 +86,7 @@ const CustomerDetail = (props) => {
             <div className="col-2">
               <SideBar routes={routes} key={customerId} />
             </div>
-            
+           
             <div className="col-2" style = {{transform: "translateY(2rem)"}}>
               <div className={style.head}>
                 <h5>{customer.firstName} {customer.lastName}</h5>
@@ -101,7 +101,7 @@ const CustomerDetail = (props) => {
                   <b> <label className={style.l1}>Email</label></b>
                   <label className={style.l2}>{customer.email}</label>
                 </div>
-            
+               
            
             <div className="col-3" style = {{transform: "translateY(2rem)"}}>
               {/* <div className={`row ${style.toprow}`}>
@@ -174,42 +174,47 @@ const CustomerDetail = (props) => {
           {customer.jobs && customer.jobs.length > 0 ?
             <div className={style.jumbotron} style={{ padding: "1rem 0" }}>
               <div className="row">
-                <div className="col-4">
+                <div className="col-6">
                   <h3 className={style.job}>Jobs:</h3>
                 </div>
-              
-                <div className="col-4">
-                  <label className={style.assigned}>Assigned</label>
+                <div className="col-2">
+                  <h3 className={style.assigned}>Assigned</h3>
                 </div>
-                <div className="col-4">
-                  <label className={style.status}>Status</label>
+              <div className="col-1"></div>
+               
+
+                <div className="col-2" >
+                  <h3 className={style.status}>Status</h3>
                 </div>
+                <div className="col-1"></div>
               </div>
               {/* <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">See All Jobs</button> */}
               {customer?.jobs?.map((job, i) => {
-                return <div className="row" key={i} style={{ margin: "2rem", border: "1px solid #a8a8a8"}} >
+                return <div className="row" key={i} style={{ margin: "2rem", borderBottom: "1px solid #a8a8a8"}} >
                       {/* <div class="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
 
-                  <div className="col-4">
-
-
+                  <div className="col-6">
+                    <div className="row">
+                    <h4 className="col-4">Job Title</h4>
+                    <p className="col-4">{job.title}</p>
+                   </div>
                     <p>
                       {
                         job.dates.map(x => <p>{x}</p>)
                       }
                       <br></br>
-                      {job.startTime} -{" "}
-                      {job.meetTime}
+                      {job.startTime}
+                      
                     </p>
                     <p>{job.description}</p>
                     {job.locations.map((list, i) => <p key={i}> <b> Pickup :</b> {list.from} <br/> <b> Drop Off :</b> {list.to}</p>)}
                   </div>
-                  <div className="col-4">
+                  <div className="col-3">
                     {job.assignee.map((assignee, i) => <p>{assignee.name}</p>)}
 
                   </div>
-                  <div className="col-4">
-                    <p style={{ padding: "5%" }}>{job.status}</p>
+                  <div className="col-3" style={{ display:"flex",justifyContent:"center", alignItems:"center"}}>
+                    <p>{job.status}</p>
                   </div>
 
                   <div>

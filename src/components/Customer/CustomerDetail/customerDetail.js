@@ -86,22 +86,26 @@ const CustomerDetail = (props) => {
             <div className="col-2">
               <SideBar routes={routes} key={customerId} />
             </div>
-           
-            <div className="col-2" style = {{transform: "translateY(2rem)"}}>
-              <div className={style.head}>
-                <h5>{customer.firstName} {customer.lastName}</h5>
+           <div className="col" style = {{ margin:"2rem 1rem",height:"5rem"}}>
+             <h3>Customer Information</h3>
+             <hr/>
+             <div className="row" >
+            <div className="col-4">
+            <b> <label className={style.l1}>Name</label></b>
+                <p className={style.l1} style = {{transform:"translateY(-0.5rem)"}}>{customer.firstName} {customer.lastName}</p>
+                 
                   </div>
-                  </div>
-                <div className="col-2" style = {{transform: "translateY(2rem)"}}>
+                <div className="col-4" style = {{padding:"0.5rem 0"}}>
                 
                   <b> <label className={style.l1}>Phone</label></b>
-                  <label className={style.l1}>{customer.phone}</label>
+                  <p className={style.l1} style = {{transform:"translateY(-0.5rem)"}}>{customer.phone}</p>
                 </div>
-                <div className="col-3" style = {{transform: "translateY(2rem)"}}>
+                <div className="col-4" style = {{padding:"0.5rem 0"}}>
                   <b> <label className={style.l1}>Email</label></b>
-                  <label className={style.l2}>{customer.email}</label>
+                  <p style = {{transform:"translate3d(0.5rem, -0.5rem,0)"}}>{customer.email}</p>
                 </div>
-               
+               </div>
+               </div>
            
             <div className="col-3" style = {{transform: "translateY(2rem)"}}>
               {/* <div className={`row ${style.toprow}`}>
@@ -194,10 +198,10 @@ const CustomerDetail = (props) => {
                       {/* <div class="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
 
                   <div className="col-6">
-                    <div className="row">
-                    <h4 className="col-4">Job Title</h4>
-                    <p className="col-4">{job.title}</p>
-                   </div>
+                   
+                    <h4 className="col">Job Title</h4>
+                    <p className="col">{job.title}</p>
+                  
                     <p>
                       {
                         job.dates.map(x => <p>{x}</p>)

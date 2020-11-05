@@ -29,6 +29,9 @@ class CustomerAdd extends Component {
             lastNameError: "",
             emailError: "",
             phoneNumberError: "",
+            subContactPhoneError: "",
+            subContactEmailError: ""
+
         }
         this.state = { ...initialState }
     }
@@ -40,6 +43,7 @@ class CustomerAdd extends Component {
         let firstNameError = ''
         let lastNameError = ''
         let phoneNumberError = ''
+       
 
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -66,12 +70,11 @@ class CustomerAdd extends Component {
         // if (!this.state.phoneContacts) {
         //     altnumberError = "Phone Number should not be empty"
         // }
+     
 
 
-
-
-        if (emailError || firstNameError || lastNameError || phoneNumberError) {
-            this.setState({ firstNameError, lastNameError, emailError, phoneNumberError })
+        if (emailError || firstNameError || lastNameError || phoneNumberError ) {
+            this.setState({ firstNameError, lastNameError, emailError, phoneNumberError})
             return false
         }
 
@@ -91,6 +94,7 @@ class CustomerAdd extends Component {
     }
 
     hanldeContactsInput = (e, i) => {
+       
         let updatedContacts = this.state.subContacts.slice();
         updatedContacts[i][e.target.name] = e.target.value
         this.setState({ subContacts: updatedContacts });
@@ -111,10 +115,14 @@ class CustomerAdd extends Component {
                 email,
                 subContacts
             }
-            console.log(addCustomerObj)
+            console.log(subContacts)
+            var x = subContacts[0].phone.length
+            console.log(x)
+            if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
             addCustomer(addCustomerObj, () => {
                 history.goBack();
             })
+        }
         }
     }
 
@@ -149,17 +157,18 @@ class CustomerAdd extends Component {
             name="firstName"
             autoComplete="firstName"
             autoFocus
+            error = {this.state.firstNameError}
             value={this.state.firstName} onChange={this.handleFormInput}
           />
                       
 
-                        {this.state.firstNameError ? (
+                        {/* {this.state.firstNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.firstNameError}
 
 
 
-                            </div>) : null}
+                            </div>) : null} */}
                       
                       <TextField
            variant="outlined"
@@ -172,14 +181,14 @@ class CustomerAdd extends Component {
             label="Last Name"
             name="lastName"
             autoComplete="lastName"
-            
+            error = {this.state.lastNameError}
             value={this.state.lastName} onChange={this.handleFormInput}
           />
-                        {this.state.lastNameError ? (
+                        {/* {this.state.lastNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.lastNameError}
 
-                            </div>) : null}
+                            </div>) : null} */}
 
 
                         
@@ -197,16 +206,16 @@ class CustomerAdd extends Component {
             label="Phone Number"
             name="phone"
             autoComplete="phone"
-            
+            error = {this.state.phoneNumberError}
             value={this.state.phone} onChange={this.handleFormInput}
           />
-                        {this.state.phoneNumberError ? (
+                        {/* {this.state.phoneNumberError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.phoneNumberError}
 
 
 
-                            </div>) : null}
+                            </div>) : null} */}
 
 
                      
@@ -225,16 +234,17 @@ class CustomerAdd extends Component {
             label="Email Address"
             name="email"
             autoComplete="email"
+            error = {this.state.emailError}
             
             value={this.state.email} onChange={this.handleFormInput}
           />
-                        {this.state.emailError ? (
+                        {/* {this.state.emailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.emailError}
 
 
 
-                            </div>) : null}
+                            </div>) : null} */}
                     </form>
                     <h3 style = {{margin:"0 2rem"}}>Sub Contact</h3>
                     {this.state.subContacts.map((x, i) => {
@@ -257,6 +267,7 @@ class CustomerAdd extends Component {
             label="Phone Number"
             name="phone"
             autoComplete="phone_number"
+            error = {this.state.subContactPhoneError}
             
             value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)}
           />
@@ -279,7 +290,7 @@ class CustomerAdd extends Component {
             size="small"
             name="email"
             autoComplete="emailalt"
-            
+            error = {this.state.subContactEmailError}
             value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)}
           />
 

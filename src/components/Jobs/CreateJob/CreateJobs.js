@@ -494,18 +494,12 @@ class CreateJobs extends Component {
                 name="title"
                 autoComplete="title"
                 autoFocus
+                error = {this.state.titleError}
                 value={this.state.title} onChange={this.handleFormInput}
               />
             </div>
 
-            {this.state.titleError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.titleError}
-              </div>
-            ) : null}
+           
 
             <div className="form-group">
               <TextareaAutosize
@@ -517,18 +511,12 @@ class CreateJobs extends Component {
                 placeholder="Job Description"
                 name="description"
                 value={this.state.description}
+                error = {this.state.descriptionError}
                 onChange={this.handleFormInput}
               ></TextareaAutosize>
             </div>
 
-            {this.state.descriptionError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.descriptionError}
-              </div>
-            ) : null}
+          
 
             <div className="form-group"  style ={{margin:"1rem 2rem", width:"90%"}}>
 
@@ -546,18 +534,11 @@ class CreateJobs extends Component {
                 displayValue="name" // Property name to display in the dropdown options
                 className="form-control"
                 placeholder="Services"
+                error = {this.state.multiError}
               />
             </div>
 
-            {this.state.multiError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.multiError}
-              </div>
-            ) : null}
-
+           
             <div className="row">
               {this.state.dates.map((x, i) => {
                 return (
@@ -574,7 +555,7 @@ class CreateJobs extends Component {
                       <Grid container justify="space-around">
                         <KeyboardDatePicker
                           margin="normal"
-                          
+                          error = {this.state.startDateError}
                           id="date-picker-dialog"
                           format="MM/dd/yyyy"
                           value={this.state.dates[i]}

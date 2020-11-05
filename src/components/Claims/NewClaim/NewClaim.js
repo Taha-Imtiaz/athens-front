@@ -208,7 +208,7 @@ class NewClaim extends Component {
   // }
   getCustomerJobs = customer => {
     if (customer) {
-      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName })
+      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName, selectedJob: '' })
     } else {
       this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
     }
@@ -298,7 +298,7 @@ class NewClaim extends Component {
                 />
               )}
             />
-            <div className="form-group">
+            {/* <div className="form-group">
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -312,7 +312,7 @@ class NewClaim extends Component {
               <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                 {this.state.jobIdError}
 
-              </div>) : null}
+              </div>) : null} */}
 
             {/* <div className="form-group">
               <input type="input" className="form-control" id="customerId" label="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />

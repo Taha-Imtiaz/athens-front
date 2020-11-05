@@ -70,9 +70,8 @@ export var updateJob = async (jobId, jobObj) => {
   }
 };
 
-export var getJobsByDate = async () => {
+export var getJobsByDate = async (date) => {
   try {
-    const date = new Date()
     let data = {
       date: date.toString()
     }

@@ -27,7 +27,7 @@ const CustomerClaims = (props) => {
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims?.data?.claims?.total;
+  var totalCount = claims.claims ?.data ?.claims ?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
@@ -217,7 +217,7 @@ const CustomerClaims = (props) => {
                             >
                               <div className="col-3">
                                 <h6 className={`${style.jobId}`}>
-                                  {x?.job?.jobId}
+                                  {x ?.job ?.jobId}
                                 </h6>
                               </div>
                             </button>
@@ -246,7 +246,7 @@ const CustomerClaims = (props) => {
                               transform: "translate3d(45rem, -5rem, 0)",
                             }}
                           >
-                            {x.updates[x.updates.length - 1].timestamp}
+                            {x.updates.length > 0 ? x.updates[x.updates.length - 1].timestamp : x.createdAt}
                           </div>
                         </div>
 
@@ -339,7 +339,7 @@ const CustomerClaims = (props) => {
                                 </div>
                                 <div
                                   className="col-2"
-                                  //   style={{ transform: "translateY(1.5rem)" }}
+                                //   style={{ transform: "translateY(1.5rem)" }}
                                 >
                                   {x.status == "open" ? (
                                     <Button
@@ -358,10 +358,10 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>

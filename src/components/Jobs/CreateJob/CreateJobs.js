@@ -460,35 +460,68 @@ class CreateJobs extends Component {
         <div className={`${style.tron}`}>
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
-            <form onSubmit={this.mySubmitHandler}>
-              <div>
-                <TextField
-                  variant="outlined"
-                  style={{ margin: "1rem 2rem", width: "90%" }}
-                  required
-                  size="small"
-                  id="customerId"
-                  label="Cutomer Email"
-                  name="customerId"
-                  autoComplete="customerId"
-                  autoFocus
-                  value={this.state.customerId} onChange={this.handleFormInput}
-                />
-              </div>
-              <div>
-                <TextField
-                  variant="outlined"
-                  required
-                  style={{ margin: "1rem 2rem", width: "90%" }}
-                  size="small"
-                  id="title"
-                  label="Job Title"
-                  name="title"
-                  autoComplete="title"
-                  autoFocus
-                  value={this.state.title} onChange={this.handleFormInput}
-                />
-              </div>
+          <form onSubmit={this.mySubmitHandler}>
+            <div>
+              {/* <label htmlFor="">Customer Email</label>
+              <input
+                type="input"
+                className="form-control"
+                id="jobTitle"
+                name="customerId"
+                value={this.state.customerId}
+                onChange={this.handleFormInput}
+              // disabled
+              /> */}
+              <TextField
+                variant="outlined"
+               style ={{margin:"1rem 2rem", width:"90%"}}
+                required
+                
+                size="small"
+                id="customerId"
+                label="Cutomer Email"
+                name="customerId"
+                autoComplete="customerId"
+                autoFocus
+                value={this.state.customerId} onChange={this.handleFormInput}
+              />
+            </div>
+
+            <div>
+              <TextField
+                variant="outlined"
+              
+                required
+                style ={{margin:"1rem 2rem", width:"90%"}}
+                size="small"
+                id="title"
+                label="Job Title"
+                name="title"
+                autoComplete="title"
+                autoFocus
+                error = {this.state.titleError}
+                value={this.state.title} onChange={this.handleFormInput}
+              />
+            </div>
+
+           
+
+            <div className="form-group">
+              <TextareaAutosize
+                className={style.textarea}
+                style ={{margin:"1rem 2rem", width:"90%"}}
+                rowsMin={4}
+                id="ta"
+                // rows="4"
+                placeholder="Job Description"
+                name="description"
+                value={this.state.description}
+                error = {this.state.descriptionError}
+                onChange={this.handleFormInput}
+              ></TextareaAutosize>
+            </div>
+
+          
 
               {this.state.titleError ? (
                 <div

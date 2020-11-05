@@ -59,6 +59,9 @@
   }
 .l1{
     margin-left: 5%;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
   .l2{
       margin-left: 2%;
@@ -103,7 +106,7 @@
 }
 
 .job{
-    margin-left: 5%;
+    margin-left: 20%;
 }
 
 .assigned{

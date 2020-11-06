@@ -164,17 +164,11 @@ class CreateUser extends Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleFormInput}
+                  error = {this.state.nameError}
                 />
               </div>
 
-              {this.state.nameError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.nameError}
-                </div>
-              ) : null}
+             
 
               <div className="form-group">
                 <TextField
@@ -188,18 +182,11 @@ class CreateUser extends Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.handleFormInput}
+                  error = {this.state.emailError}
                 />
               </div>
 
-              {this.state.emailError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.emailError}
-                </div>
-              ) : null}
-
+             
               <div className="form-group">
                 <TextField
                   variant="outlined"
@@ -212,17 +199,10 @@ class CreateUser extends Component {
                   name="phone"
                   value={this.state.phone}
                   onChange={this.handleFormInput}
+                  error = {this.state.numberError}
                 />
               </div>
 
-              {this.state.numberError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.numberError}
-                </div>
-              ) : null}
 
               <div className="form-group">
                 <TextField
@@ -235,18 +215,12 @@ class CreateUser extends Component {
                   label="Address"
                   name="address"
                   value={this.state.address}
+                  error = {this.state.addressError}
                   onChange={this.handleFormInput}
                 />
               </div>
 
-              {this.state.addressError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.addressError}
-                </div>
-              ) : null}
+            
 
               <div>
 
@@ -260,19 +234,13 @@ class CreateUser extends Component {
                     displayValue="name" // Property name to display in the dropdown options
                     className="form-control"
                     placeholder="Select Type"
+                    error = {this.state.typeError}
 
                   />
 
                 </div>
 
-                {this.state.typeError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.typeError}
-                  </div>
-                ) : null}
+                
               </div>
               <div className="form-group" style={{ margin: " 1rem 2rem", width: "100%" }}>
                 <Multiselect
@@ -284,19 +252,12 @@ class CreateUser extends Component {
                   displayValue="name" // Property name to display in the dropdown options
                   className="form-control"
                   placeholder="Select Attribute"
+                  error = {this.state.attributeError}
 
                 />
               </div>
 
-              {this.state.attributeError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.attributeError}
-                </div>
-              ) : null}
-
+            
               <div className={style.mb}>
                 <button className="btn btn-primary" onClick={this.mySubmitHandler} >Create</button>
               </div>

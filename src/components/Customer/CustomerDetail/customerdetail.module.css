@@ -73,9 +73,9 @@
     margin-bottom: 1%;
 }
   .container{
-     width: 60%;
+     width: 70%;
       margin-top: 2%;
-      margin-right: 20%;
+      margin-right: 10%;
       margin-left: 20%;
       width: auto;
       margin-bottom: 1%;
@@ -97,14 +97,18 @@
   transform: translate(-50%);
 }
 .jumbotron{
-    width: 60%;
+    width: 70%;
     margin-left: 20%;
-    margin-right: 20%;
+    margin-right: 10%;
     margin-top: 2%;
     text-align: left;
     background-color:#e9f2eb;
 }
+.jobName {
+  
+    margin-left: 5%;
 
+}
 .job{
     margin-left: 20%;
 }
@@ -130,7 +134,8 @@
   margin: 0 2rem;
 }
 .btn2{
-    margin-left: 60%;
+    /* margin-left: 60%; */
+    /* margin-right: 5%; */
 }
 
 .btn{
@@ -167,7 +172,9 @@
    margin-bottom: 5%;
    background-color: #e9f2eb;
 }
-
+.styledCard {
+  width: 70%;
+}
 .btn{
   float: right;
   margin-right: 3%;

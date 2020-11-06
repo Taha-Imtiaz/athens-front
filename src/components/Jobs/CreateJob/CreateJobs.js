@@ -217,7 +217,7 @@ class CreateJobs extends Component {
           name="to"
           value={this.state.locations[i].to}
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
-          state = {this.state.locationtoError}
+          error = {this.state.locationtoError}
         />
         
       </div></>

@@ -68,38 +68,40 @@ class JobEditDetails extends Component {
     });
   };
 handleValidation = () =>{
-  var {title,description, option, startDate,assigneeRequired, from, to} = this.state
+  var {title,description, option, startDate,assigneeRequired, locations} = this.state
+  console.log(locations)
   if(title === "" ) {
     this.setState({
-      titleError = "Title should not be empty"
+      titleError: "Title should not be empty"
     })
   }
   if(description === "" ) {
     this.setState({
-      descriptionError = "description should not be empty"
+      descriptionError : "description should not be empty"
     })
   }
   if(option === "" ) {
     this.setState({
-     servicesError = "Title should not be empty"
+     servicesError : "Services should not be empty"
     })
   }
-  if(assignee === "" ) {
+  if(assigneeRequired === "" ) {
     this.setState({
-      assigneeError = "assignee should not be empty"
+      assigneeError : "assignee should not be empty"
     })
   }
-  if(from === "" ) {
+  if(locations[0].from === "" ) {
     this.setState({
-      locationFromError = "from should not be empty"
+      locationFromError :"from should not be empty"
     })
   }
 
-  if(to === "" ) {
+  if(locations[0].to === "" ) {
     this.setState({
-     locationToError = "to should not be empty"
+     locationToError : "to should not be empty"
     })
   }
+  var {titleError, descriptionError, servicesError, assigneeError,locationFromError, locationToError} = this.state
   if(titleError|| descriptionError || servicesError || assigneeError || locationFromError || locationToError){
     return false
   }
@@ -125,6 +127,7 @@ handleValidation = () =>{
     var { title, job } = this.state;
 
     getJob(jobId).then((res) => {
+      console.log(res)
       this.setState({
         services: res.data.job.services,
         assignee: res.data.job.assignee,
@@ -135,6 +138,7 @@ handleValidation = () =>{
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
+        console.log(moverRes)
         var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
@@ -156,6 +160,7 @@ handleValidation = () =>{
         startTime: res.data.job.startTime,
         // meetTime: res.data.job.meetTime,
         locations: res.data.job.locations,
+        jobType:res.data.job.jobType,
         description: res.data.job.description,
         options: services,
         assignee: res.data.job.assignee,
@@ -482,6 +487,7 @@ handleValidation = () =>{
                   autoComplete="title"
                   autoFocus
                   value={this.state.title} onChange={this.handleFormInput}
+                  error = {this.state.titleError}
                 />
               </div>
               <div className="form-group">
@@ -494,7 +500,7 @@ handleValidation = () =>{
                   id="description"
 
                   name="description"
-
+                  error = {this.state.descriptionError}
                   value={description} onChange={this.handleFormInput}
                 />
               </div>
@@ -614,17 +620,18 @@ handleValidation = () =>{
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
                     onChange={this.handleFormInput}
+                    error = {this.state.assigneeError}
                   />
                 </div>
 
-                {this.state.assigneeRequiredError ? (
+                {/* {this.state.assigneeRequiredError ? (
                   <div
                     className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                     role="alert"
                   >
                     {this.state.assigneeRequiredError}
                   </div>
-                ) : null}
+                ) : null} */}
 
                 <div className={`col-6`}>
 
@@ -632,9 +639,19 @@ handleValidation = () =>{
                   <div class="form-group" style={{ transform: "translateX(3rem)", marginTop: "1rem", width: "100%" }}>
 
                     <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                      <option >Fixed</option>
-                      <option>Hourly based</option>
-
+                    {this.state.jobType === "fixed"? (  
+                      <React.Fragment>
+                        <option>{this.state.jobType}</option>
+                      <option>hourly based</option>
+                    
+                      </React.Fragment>
+                     ):(
+                    <React.Fragment>
+                        <option >{this.state.jobType}</option>
+                      <option>fixed</option>
+                    </React.Fragment>
+                     )
+                    }
                     </select>
                   </div>
                 </div>
@@ -664,7 +681,7 @@ handleValidation = () =>{
                         label="From"
                         name="from"
                         autoComplete="from"
-
+                      error = {this.state.locationFromError}
                         value={list.from} onChange={(e) => this.hanldeLocationInput(i, e)}
                       />
                     </div>
@@ -677,6 +694,7 @@ handleValidation = () =>{
                         fullWidth
                         size="small"
                         id="to"
+                        error = {this.state.locationToError}
                         label="Drop Off"
                         aria-describedby="emailHelp"
                         name="to"

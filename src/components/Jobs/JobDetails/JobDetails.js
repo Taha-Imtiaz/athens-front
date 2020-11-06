@@ -9,6 +9,10 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Chip } from "@material-ui/core";
+
+import MyLocationOutlinedIcon from '@material-ui/icons/MyLocationOutlined';
+import LocationOffIcon from '@material-ui/icons/LocationOff';
 
 const JobDetails = (props) => {
   const width = window.innerWidth;
@@ -156,84 +160,39 @@ const JobDetails = (props) => {
                 </div>
               </div>
 
-              <div className="col-6 col-md-5">
-                <div className={`container ${style.containerCustom}`}>
-                  <h3 className={style.head}>{job.title}</h3>
-                  <br></br>
-                  <p
-                    style={{ transform: "translateY(-1rem)", margin: "2rem 0" }}
-                  >
-                    Job Id: {job.jobId}
+              <div className="col-8 jumbotron">
+                <div className="row">
+                  <div className="col-8">
+              <h3>{job.title}</h3>
+
+              <div>
+                 
+                
+                  <p>
+                   
                   </p>
-                  <br />
-                  <br />
-                  <p
-                    className={style.para}
-                    style={{ transform: "translateY(-2rem)" }}
+               
+                  <label
+                    // className={style.para}
+                    // style={{ transform: "translateY(-2rem)" }}
                   >
                     {job.dates.map((x) => x)}
-                  </p>
-                  <br />
-                  <br />
-
-                  {job.locations &&
-                    job.locations.map((list) => {
-                      return (
-                        <>
-                          <p
-                            className={style.para}
-                            style={{ transform: "translateY(-3rem)" }}
-                          >
-                            Pickup : {list.from} <br></br> Drop Off : {list.to}
-                          </p>
-                        </>
-                      );
-                    })}
-
-                  {job.services.map((service) => (
-                    <span className={`badge badge-primary m-1 ${style.badges}`}>
-                      {service.name}
-                    </span>
+                  </label>
+                 <p>
+                 {job.services.map((service) => (
+                      <Chip
+                      variant = "outlined"
+                        size="small"
+                        label={service.name}
+                        clickable
+                        color="primary"
+                        style = {{margin:"0.2rem"}}
+                      />
                   ))}
-                </div>
-              </div>
+                
+                 </p>
 
-              <div className={`col-3 justify-content-end  col-md-3`}>
-                <div className={style.btns}>
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={`/job/edit/${jobId}`}
-                  >
-                    <button
-                      type="button"
-                      className={`btn btn-primary ${style.btnCustom}`}
-                      style={{
-                        background: "#0275d8",
-                        border: "none",
-                        outline: "none",
-                        padding: "0.5rem 2rem",
-                        color: "#fff",
-                        borderRadius: "0.25rem",
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                </div>
-                <div className={style.btns}>
-                  {/* <Button name="Status" /> */}
-                </div>
-
-                <div className={style.btns}>
-                  {/* <Button name={width < 576 ? "" : "Delete"} icon="fa fa-trash" /> */}
-                </div>
-              </div>
-            </div>
-            <div className={`row ${style.row2}`}>
-              <div className="col-2"></div>
-              <div className="col-10">
-                <div className={`${style.jumbo}`}>
-                  <h3 className={style.jobHead}>Job Description</h3>
+                 {/* <h3 className={style.jobHead}>Job Description</h3> */}
                   <p className={style.para}>{job.description}</p>
 
                   {job.note.length !== 0 && (
@@ -244,10 +203,67 @@ const JobDetails = (props) => {
                       ))}
                     </div>
                   )}
-                  {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
+
+                  {job.locations &&
+                    job.locations.map((list) => {
+                      return (
+                        <>
+                          <p
+                            className={style.para}
+                           
+                          >
+                          <MyLocationOutlinedIcon color = "primary" style={{marginRight:"0.4rem"}} /> {list.from} <br></br> <LocationOffIcon color = "primary" style={{marginRight:"0.4rem"}}/>  {list.to}
+                          </p>
+                        </>
+                      );
+                    })}
+
+                  
+                </div>
+                  </div>
+                  <div className="col-2">
+               <h5> Job Id: {job.jobId}</h5>
+                  </div>
+                  <div className="col-2">
+                  <Chip
+                              variant = "outlined"
+                                size="small"
+                                label={job.status}
+                                clickable
+                                color="primary"
+                              />
+                  </div>
+                </div>
+                <div >
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={`/job/edit/${jobId}`}
+                  >
+                    <button
+                      type="button"
+                      className={`btn btn-primary`}
+                      style={{
+                        background: "#0275d8",
+                        border: "none",
+                        outline: "none",
+                        padding: "0.5rem 2rem",
+                        color: "#fff",
+                        float:"right",
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </Link>
                 </div>
               </div>
+
+              
             </div>
+            
+                  
+                  {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
+              
           </>
         ) : null}
       </div>

@@ -12,7 +12,26 @@ class SubmitDeposit extends Component {
   state = {
     quantity: '',
     cost: '',
-   customer: ''
+   customer: '',
+   quantityError:"",
+  customerError:""
+
+  }
+  handleValidate = () =>{
+    var {customer, quantity} = this.state
+    if(customer === "") {
+      this.setState({
+        customerError:"Email should not be empty"
+      })
+    }
+    if(quantity === "") {
+      this.setState({
+        quantityError:"Quantity should not be empty"
+      })
+    }
+
+    
+
   }
 
   handleSearchFormInput = (value)=>{ 
@@ -32,9 +51,11 @@ class SubmitDeposit extends Component {
     }
     console.log(obj)
     var { showMessage } = this.props;
-    addDeposit(obj).then(res => {
-      showMessage(res.data.message)
-    })
+  if(this.handleValidate()) {
+    // addDeposit(obj).then(res => {
+    //   showMessage(res.data.message)
+    // })
+  }
   };
 
   handleFormInput = (e) => {
@@ -61,11 +82,12 @@ class SubmitDeposit extends Component {
               <TextField
                  variant="outlined"
             margin="normal"
-            required
+           
             fullWidth
             size="small"
                 name="customer"
                 value={customer}
+                error = {this.state.customerError}
                 label="Email"
                 onChange={this.handleFormInput}
                 style = {{margin:"1rem 0"}}
@@ -75,13 +97,14 @@ class SubmitDeposit extends Component {
               <TextField
                  variant="outlined"
             margin="normal"
-            required
+           
             fullWidth
             size="small"
                 name="quantity"
                 value={quantity}
                 label="Blanket Quantity"
                 onChange={this.handleFormInput}
+                error = {this.state.quantityError}
                 style = {{margin:"1rem 0"}}
               />
             </div>

@@ -69,6 +69,7 @@ class NewClaim extends Component {
   componentDidMount = () => {
     getCustomersAndJobs().then((res) => {
       console.log(res)
+      console.log(this.state.customers.length)
       this.setState({ customers: res.data.customers })
     })
   }
@@ -96,11 +97,11 @@ class NewClaim extends Component {
     let locationtoError = ""
 
 
-    // if (!this.state.customerId) {
-    //   customerIdError = "Customer Id should not be empty"
-    // }
+    if (this.state.selectedCustomer.length === 0) {
+      customerIdError = "Customer Id should not be empty"
+    }
 
-    if (!this.state.jobId) {
+    if (this.state.selectedJob.length === 0) {
       jobIdError = "Error! should not be empty"
     }
 
@@ -145,6 +146,7 @@ class NewClaim extends Component {
 
   mySubmitHandler = (event) => {
     event.preventDefault();
+
     let { customerId, selectedJob, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
 
     let data = {
@@ -152,13 +154,16 @@ class NewClaim extends Component {
       claims
     }
     var { history, showMessage } = this.props;
-    addClaim(data).then((res) => {
-      showMessage(res.data.message)
-      history.push("/claim/customer");
-    })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(this.state.selectedCustomer.length)
+  if(this.validate()) {
+    // addClaim(data).then((res) => {
+    //   showMessage(res.data.message)
+    //   history.push("/claim/customer");
+    // })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }
   }
 
   addAnotherClaim = () => {
@@ -251,6 +256,7 @@ class NewClaim extends Component {
                   label="Choose a customer"
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   variant="outlined"
+                  error = {this.state.customerIdError}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: 'new-password', // disable autocomplete and autofill
@@ -290,7 +296,8 @@ class NewClaim extends Component {
                   label="Choose a job"
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   variant="outlined"
-                  disabled={!this.state.selectedCustomer}
+                  // disabled={!this.state.selectedCustomer}
+                  error = {this.state.jobIdError}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: 'new-password', // disable autocomplete and autofill
@@ -338,12 +345,7 @@ class NewClaim extends Component {
                         </select>
                       </div>
 
-                      {this.state.itemError ? (
-                        <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                          {this.state.itemError}
-
-                        </div>) : null}
-
+                    
                     </div>
                     <div className="col-4">
                       <div className="form-group">
@@ -352,16 +354,12 @@ class NewClaim extends Component {
                           margin="normal"
                           style={{ margin: "2rem", width: "90%" }}
                           required
-
+                          error = {this.state.priceError}
                           size="small"
                           id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem 0" }} />
                       </div>
 
-                      {this.state.priceError ? (
-                        <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                          {this.state.priceError}
-
-                        </div>) : null}
+                      
 
                     </div>
 
@@ -383,11 +381,7 @@ class NewClaim extends Component {
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
-            {this.state.descriptionError ? (
-              <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                {this.state.descriptionError}
-              </div>) : null}
-
+           
             {/* 
             <div className={`row`}>
 

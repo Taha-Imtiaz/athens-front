@@ -45,6 +45,13 @@ class JobEditDetails extends Component {
     meetTime: "",
     jobType: "fixed",
     title: "",
+    titleError:"",
+    descriptionError:"",
+    servicesError :"",
+    assigneeError:"",
+    moversError :"",
+    locationFromError:"",
+    locationToError: "",
     job: null,
     Note: "",
     customerId: "",
@@ -60,7 +67,50 @@ class JobEditDetails extends Component {
       dates: newState.dates
     });
   };
+handleValidation = () =>{
+  var {title,description, option, startDate,assigneeRequired, locations} = this.state
+  console.log(locations)
+  if(title === "" ) {
+    this.setState({
+      titleError: "Title should not be empty"
+    })
+  }
+  if(description === "" ) {
+    this.setState({
+      descriptionError : "description should not be empty"
+    })
+  }
+  if(option === "" ) {
+    this.setState({
+     servicesError : "Services should not be empty"
+    })
+  }
+  if(assigneeRequired === "" ) {
+    this.setState({
+      assigneeError : "assignee should not be empty"
+    })
+  }
+  if(locations[0].from === "" ) {
+    this.setState({
+      locationFromError :"from should not be empty"
+    })
+  }
 
+  if(locations[0].to === "" ) {
+    this.setState({
+     locationToError : "to should not be empty"
+    })
+  }
+  var {titleError, descriptionError, servicesError, assigneeError,locationFromError, locationToError} = this.state
+  if(titleError|| descriptionError || servicesError || assigneeError || locationFromError || locationToError){
+    return false
+  }
+  else {
+    return true
+  }
+
+
+}
   handleEndDate = (date) => {
     this.setState({
       endDate: date,
@@ -77,6 +127,7 @@ class JobEditDetails extends Component {
     var { title, job } = this.state;
 
     getJob(jobId).then((res) => {
+      console.log(res)
       this.setState({
         services: res.data.job.services,
         assignee: res.data.job.assignee,
@@ -87,6 +138,7 @@ class JobEditDetails extends Component {
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
+        console.log(moverRes)
         var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
@@ -108,6 +160,7 @@ class JobEditDetails extends Component {
         startTime: res.data.job.startTime,
         // meetTime: res.data.job.meetTime,
         locations: res.data.job.locations,
+        jobType:res.data.job.jobType,
         description: res.data.job.description,
         options: services,
         assignee: res.data.job.assignee,
@@ -219,7 +272,7 @@ class JobEditDetails extends Component {
     //  var {startDate, endDate,  title, description, services,startTime, meetTime, from , to, status, assigneesId, customerId,userId } = this.state;
     var { loggedinUser } = this.props;
     var updatedObj = {
-      dates: stringDates,
+      dates: stringDates, 
       title,
       description,
       services,
@@ -233,13 +286,14 @@ class JobEditDetails extends Component {
       customerId,
       note
     };
+    if(this.handleValidation()) {
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
       history.push("/job")
     }).catch((error) => {
     });
   };
-
+  }
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
     let newState = { ...this.state };
@@ -433,6 +487,7 @@ class JobEditDetails extends Component {
                   autoComplete="title"
                   autoFocus
                   value={this.state.title} onChange={this.handleFormInput}
+                  error = {this.state.titleError}
                 />
               </div>
               <div className="form-group">
@@ -445,7 +500,7 @@ class JobEditDetails extends Component {
                   id="description"
 
                   name="description"
-
+                  error = {this.state.descriptionError}
                   value={description} onChange={this.handleFormInput}
                 />
               </div>
@@ -565,17 +620,18 @@ class JobEditDetails extends Component {
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
                     onChange={this.handleFormInput}
+                    error = {this.state.assigneeError}
                   />
                 </div>
 
-                {this.state.assigneeRequiredError ? (
+                {/* {this.state.assigneeRequiredError ? (
                   <div
                     className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
                     role="alert"
                   >
                     {this.state.assigneeRequiredError}
                   </div>
-                ) : null}
+                ) : null} */}
 
                 <div className={`col-6`}>
 
@@ -583,9 +639,19 @@ class JobEditDetails extends Component {
                   <div class="form-group" style={{ transform: "translateX(3rem)", marginTop: "1rem", width: "100%" }}>
 
                     <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                      <option >Fixed</option>
-                      <option>Hourly based</option>
-
+                    {this.state.jobType === "fixed"? (  
+                      <React.Fragment>
+                        <option>{this.state.jobType}</option>
+                      <option>hourly based</option>
+                    
+                      </React.Fragment>
+                     ):(
+                    <React.Fragment>
+                        <option >{this.state.jobType}</option>
+                      <option>fixed</option>
+                    </React.Fragment>
+                     )
+                    }
                     </select>
                   </div>
                 </div>
@@ -615,7 +681,7 @@ class JobEditDetails extends Component {
                         label="From"
                         name="from"
                         autoComplete="from"
-
+                      error = {this.state.locationFromError}
                         value={list.from} onChange={(e) => this.hanldeLocationInput(i, e)}
                       />
                     </div>
@@ -628,6 +694,7 @@ class JobEditDetails extends Component {
                         fullWidth
                         size="small"
                         id="to"
+                        error = {this.state.locationToError}
                         label="Drop Off"
                         aria-describedby="emailHelp"
                         name="to"

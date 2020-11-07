@@ -358,7 +358,7 @@ handleValidation = () =>{
     return <>
 
       <div className="col-4">
-        <div className="form-group">
+        <div>
           <input
             type="input"
             className="form-control"
@@ -436,21 +436,21 @@ handleValidation = () =>{
     } = this.state;
     return (
       <div className={`${style.formStyle}`}>
-        <div className={`${style.form}`}>
+        <div className={`${style.form}`} >
           {/* <ToastContainer position="bottom-right"/> */}
           <h3 style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "2rem" }}>Job Details Edit</h3>
           <div className="row">
 
 
-            <form>
-              <div>
+            <form style={{width:"85%"}}>
+              <div >
 
 
-                <TextField
+                <TextField 
                   variant="outlined"
                   margin="normal"
                   required
-
+                
                   style={{ transform: "translateX(3rem)", width: "100%" }}
                   size="small"
                   id="customerId"
@@ -462,72 +462,8 @@ handleValidation = () =>{
                 />
               </div>
 
-              <div className="row">
-                {/* <div className="col-6">
-                    <div className="form-group">
-                      <DatePicker
-                        className={style.to}
-                        selected={startDate}
-                        onChange={this.handleStartDate}
-                        placeholderText="Start Date"
-                      />
-                    </div>
-                  </div> */}
-                {this.state.dates.map((x, i) => {
-                  return (
-                    <div className="form-group col-4" style={{ transform: "translateX(3rem)", width: "100%" }}>
-                      {/* <DatePicker
-                          className={style.to}
-                          selected={this.state.dates[i]}
-                          onChange={(e) => this.handleStartDate(e, i)}
-                          placeholderText="Choose Dates"
-                          className="form-control"
-                        /> */}
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardDatePicker
-                            margin="normal"
-                            fullWidth
-                            id="date-picker-dialog"
-                            style={{ zIndex: "-1" }}
-                            format="MM/dd/yyyy"
-                            value={this.state.dates[i]}
-                            onChange={(e) => this.handleStartDate(e, i)}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change date',
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    </div>
-                  )
-                })}
-                <div className="form-group col-3 my-0" onClick={this.addDate}>
-                  <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
-                </div>
-                {/* <div className="col-6">
-                    <div className="form-group">
-                      <DatePicker
-                        className={style.to}
-                        selected={endDate}
-                        onChange={this.handleEndDate}
-                        placeholderText="End Date"
-                      />
-                    </div>
-                  </div> */}
-              </div>
-
-              <div className="form-group">
-                {/* <input
-                    type="input"
-                    className="form-control"
-                    id="jobTitle"
-                    placeholder="Job Title"
-                    aria-describedby="emailHelp"
-                    name="title"
-                    value={title}
-                    onChange={this.handleFormInput}
-                  /> */}
+              <div>
+                
 
                 <TextField
                   variant="outlined"
@@ -545,31 +481,26 @@ handleValidation = () =>{
                   error = {this.state.titleError}
                 />
               </div>
-              <div className="form-group">
+              <div>
                 <h4 style={{ transform: "translateX(3rem)", width: "100%" }}>Job Description</h4>
                 <TextareaAutosize
                   rowsMin={5}
 
                   required
-                  style={{ transform: "translateX(3rem)", width: "100%" }}
+                  style={{ transform: "translateX(3rem)", width: "100%",margin:"1.4rem 0" }}
                   id="description"
-
+               
                   name="description"
                   error = {this.state.descriptionError}
                   value={description} onChange={this.handleFormInput}
                 />
               </div>
 
-              <div className="form-group" style={{ transform: "translateX(3rem)", zIndex: "9999", width: "100%" }}>
-                {/* <Multiselect
-                      selectedValues={this.state.services}
-                      options={this.servicesOptions} // Options to display in the dropdown
-                      onSelect={this.onSelect} // Function will trigger on select event
-                      onRemove={this.onRemove} // Function will trigger on remove event
-                      displayValue="name" // Property name to display in the dropdown options
-                    /> */}
+              <div style={{ transform: "translateX(3rem)",width: "100%" }}>
+                
                 {this.state.customerId && <Autocomplete
                   multiple
+                  margin= "normal"
                   value={this.state.services}
                   onChange={(event, newValue) => {
                     this.servicesChanged(newValue)
@@ -584,29 +515,47 @@ handleValidation = () =>{
                   )}
                 />}
               </div>
+            
               
+               {this.state.dates.map((x, i) => {
+                  return (
+                   
+                     
+                      
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid>
+                           <div className="col-12" style={{ transform: "translateX(3rem)", width:"100%"}}>
+                          <KeyboardDatePicker
+                            margin="normal"
+                            fullWidth
+                           
+                            id="date-picker-dialog"
+                            // style={{ zIndex: "-1" }}
+                            format="MM/dd/yyyy"
+                            value={this.state.dates[i]}
+                            onChange={(e) => this.handleStartDate(e, i)}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                          />
+                          </div>
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                   
+                    
+                    
+                  )
+                })}
+                <div className="row">
+                  <div className="col-11"></div>
+                  <div onClick={this.addDate} className = "col-1" style={{  transform: "translateX(3rem)" }}>
+                  <i className="fa fa-plus"></i>
+                </div>
+                </div>
+                
+            
               <div className="row">
-                {/* <div className="col-4">
-
-
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        size="small"
-                        id="email"
-                        label="StartTime"
-                        name="startTime"
-                        autoComplete="startTime"
-                        style = {{transform:"translateX(3rem)", width:"100%"}}
-                        value={startTime} onChange={this.handleFormInput}
-                      />
-
-                    </div> */}
-
-
-
+               
                 <div className="col-6" >
                   <TextField
                     type="number"
@@ -626,14 +575,6 @@ handleValidation = () =>{
                   />
                 </div>
 
-                {/* {this.state.assigneeRequiredError ? (
-                  <div
-                    className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                    role="alert"
-                  >
-                    {this.state.assigneeRequiredError}
-                  </div>
-                ) : null} */}
 
                 <div className={`col-6`}>
 
@@ -662,16 +603,18 @@ handleValidation = () =>{
 
 
               <div className="row">
-                <div className="col-3">
-                  <div className="form-group" style={{ transform: "translateX(3rem)", width: "100%", marginTop: "1rem" }} >
+                <div className="col-12">
+                  <div style={{ transform: "translateX(3rem)", width: "100%", marginTop: "1rem" }} >
                     <h4>Location:</h4>
                   </div>
                 </div>
-
+                </div>
                 {this.state.locations && this.state.locations.map((list, i) => {
 
-                  return <><div className="col-4">
-                    <div className="form-group">
+                  return  <div className="row" style = {{transform:"translateX(3rem)"}}>
+                    {/* <div className="col"></div> */}
+                    <div className="col-6">
+                   
 
                       <TextField
                         variant="outlined"
@@ -684,11 +627,12 @@ handleValidation = () =>{
                         name="from"
                         autoComplete="from"
                       error = {this.state.locationFromError}
+                      
                         value={list.from} onChange={(e) => this.hanldeLocationInput(i, e)}
                       />
-                    </div>
+                  
                   </div>
-                    <div className="col-4">
+                    <div className="col-6">
                       <TextField
                         variant="outlined"
                         margin="normal"
@@ -704,20 +648,24 @@ handleValidation = () =>{
                         onChange={(e) => this.hanldeLocationInputTo(i, e)}
                       />
                     </div>
-                    {/* <br> */}
-                  </>
+                  </div>
+                  
                 })}
-                <div className="col-1">
-                  <i className="fa fa-plus" style={{ transform: "translateY(1.5rem)" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+                <div>
+                  <div className="col-11"></div>
+                  <div className="col-1" style={{float:"right", transform:"translate3d(5rem,0rem, 0)"}}>
+                  <i className="fa fa-plus"  name="Add Location" value="Add Location" onClick={this.addLocation} />
+                  </div>
+                 
                 </div>
-              </div>
+             
 
 
 
             </form>
 
 
-            <div className="col-4">
+          
               {/* <div className="dropdown">
               <button
                 className={`btn btn-primary dropdown-toggle ${style.colors}`}
@@ -741,7 +689,7 @@ handleValidation = () =>{
                 ))}
               </div>
             </div> */}
-            </div>
+          
           </div>
           <div >
 
@@ -784,7 +732,7 @@ handleValidation = () =>{
                   type="submit"
                   className={`btn btn-primary ${style.btnCustom}`}
                   style={{
-                    transform: "translate3d(-3rem, 0, 0)", width: "100%", display: "flex",
+                    // transform: "translate3d(-3rem, 0, 0)", width: "100%", display: "flex",
                     justifyContent: "center", alignItems: "center"
                   }}
                 >

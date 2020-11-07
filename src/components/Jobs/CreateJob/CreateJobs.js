@@ -186,14 +186,16 @@ class CreateJobs extends Component {
 
 
   showLocation = (i) => {
-    return <>
-      <div className="col-4">
+    return <div className = "row">
+      <div className="col-1"></div>
+      <div className="col-5">
         <div className="form-group">
           <TextField
             variant="outlined"
             margin="normal"
             required
-
+            style={{width:"90%",margin:"0 1rem"}}
+          fullWidth
             size="small"
             id="from"
             label="Pickup"
@@ -205,11 +207,14 @@ class CreateJobs extends Component {
         </div>
 
       </div>
-      <div className="col-4">
+     
+      <div className="col-5">
         <TextField
+        fullWidth
           variant="outlined"
           margin="normal"
           required
+          style={{width:"90%",margin:"0 1rem"}}
 
           size="small"
           id="to"
@@ -219,8 +224,10 @@ class CreateJobs extends Component {
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
           error={this.state.locationtoError}
         />
-
-      </div></>
+        
+      </div>
+      <div className="col-1"></div>
+      </div>
   }
 
 
@@ -473,15 +480,16 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="row">
+             
+              <div>
                 {this.state.dates.map((x, i) => {
                   return (
-                    <div className="form-group col-3" style={{ margin: "1rem 2rem", width: "90%" }}>
+                    <div className="col-12" style={{ margin: "1rem 2rem", width: "90%" }}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around">
+                        <Grid>
                           <KeyboardDatePicker
                             margin="normal"
-
+                            fullWidth
                             id="date-picker-dialog"
                             format="MM/dd/yyyy"
                             value={this.state.dates[i]}
@@ -495,20 +503,17 @@ class CreateJobs extends Component {
                     </div>
                   )
                 })}
-
-                {/* {this.state.startDateError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.startDateError}
                 </div>
-              ) : null} */}
 
-                <div className="form-group col-3 my-0" onClick={this.addDate}>
-                  <i className="fa fa-plus" style={{ transform: "translateY(2.2rem)" }}></i>
+              
+
+               <div className="row">
+                 <div className="col-11"></div>
+                 <div className="form-group col-1" onClick={this.addDate}>
+                  <i className="fa fa-plus" style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}></i>
                 </div>
-              </div>
+               </div>
+              
 
 
               <div>
@@ -678,21 +683,27 @@ class CreateJobs extends Component {
 
               <div className="row">
                 <div className="col-3" style={{ margin: " 1rem", width: "90%" }}>
-                  <h5>Location:</h5>
+                  <h4>Location:</h4>
 
                 </div>
 
-
-                {this.state.locations.map((ll, i) => {
-                  return this.showLocation(i)
-                })}
               </div>
 
-              <div className="form-group">
-                <div style={{ float: 'right' }}>
-                  <input type="button" className="btn btn-primary" style={{ background: "#00ADEE", marginRight: "1rem" }} name="Add Location" value="Add Location" onClick={this.addLocation} />
+              {this.state.locations.map((ll, i) => {
+                  return this.showLocation(i)
+                })}
+                <div className="row">
+                  <div className="col-11"></div>
+                  <div className="col-1">
+                  <div className="form-group">
+                <div>
+                  <i className="fa fa-plus" onClick={this.addLocation}></i>
                 </div>
-              </div><br />
+              </div>
+                  </div>
+                </div>
+
+              <br />
 
 
               <div className="form-group">

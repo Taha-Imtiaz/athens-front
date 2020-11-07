@@ -462,6 +462,61 @@ handleValidation = () =>{
                 />
               </div>
 
+              <div className="row">
+                {/* <div className="col-6">
+                    <div className="form-group">
+                      <DatePicker
+                        className={style.to}
+                        selected={startDate}
+                        onChange={this.handleStartDate}
+                        placeholderText="Start Date"
+                      />
+                    </div>
+                  </div> */}
+                {this.state.dates.map((x, i) => {
+                  return (
+                    <div className="form-group col-4" style={{ transform: "translateX(3rem)", width: "100%" }}>
+                      {/* <DatePicker
+                          className={style.to}
+                          selected={this.state.dates[i]}
+                          onChange={(e) => this.handleStartDate(e, i)}
+                          placeholderText="Choose Dates"
+                          className="form-control"
+                        /> */}
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container justify="space-around">
+                          <KeyboardDatePicker
+                            margin="normal"
+                            fullWidth
+                            id="date-picker-dialog"
+                            style={{ zIndex: "-1" }}
+                            format="MM/dd/yyyy"
+                            value={this.state.dates[i]}
+                            onChange={(e) => this.handleStartDate(e, i)}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                          />
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                    </div>
+                  )
+                })}
+                <div className="form-group col-3 my-0" onClick={this.addDate}>
+                  <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
+                </div>
+                {/* <div className="col-6">
+                    <div className="form-group">
+                      <DatePicker
+                        className={style.to}
+                        selected={endDate}
+                        onChange={this.handleEndDate}
+                        placeholderText="End Date"
+                      />
+                    </div>
+                  </div> */}
+              </div>
+
               <div className="form-group">
                 {/* <input
                     type="input"
@@ -529,60 +584,7 @@ handleValidation = () =>{
                   )}
                 />}
               </div>
-              <div className="row">
-                {/* <div className="col-6">
-                    <div className="form-group">
-                      <DatePicker
-                        className={style.to}
-                        selected={startDate}
-                        onChange={this.handleStartDate}
-                        placeholderText="Start Date"
-                      />
-                    </div>
-                  </div> */}
-                {this.state.dates.map((x, i) => {
-                  return (
-                    <div className="form-group col-4" style={{ transform: "translateX(3rem)", width: "100%" }}>
-                      {/* <DatePicker
-                          className={style.to}
-                          selected={this.state.dates[i]}
-                          onChange={(e) => this.handleStartDate(e, i)}
-                          placeholderText="Choose Dates"
-                          className="form-control"
-                        /> */}
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid container justify="space-around">
-                          <KeyboardDatePicker
-                            margin="normal"
-                            fullWidth
-                            id="date-picker-dialog"
-                            style={{ zIndex: "-1" }}
-                            format="MM/dd/yyyy"
-                            value={this.state.dates[i]}
-                            onChange={(e) => this.handleStartDate(e, i)}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change date',
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    </div>
-                  )
-                })}
-                <div className="form-group col-3 my-0" onClick={this.addDate}>
-                  <i className="fa fa-plus" style={{ transform: "translate3d(1rem,1.5rem,0)" }}></i>
-                </div>
-                {/* <div className="col-6">
-                    <div className="form-group">
-                      <DatePicker
-                        className={style.to}
-                        selected={endDate}
-                        onChange={this.handleEndDate}
-                        placeholderText="End Date"
-                      />
-                    </div>
-                  </div> */}
-              </div>
+              
               <div className="row">
                 {/* <div className="col-4">
 

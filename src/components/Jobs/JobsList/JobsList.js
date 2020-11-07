@@ -259,12 +259,12 @@ class JobsList extends Component {
                 className={` ${style.create}`}
                 style={{ paddingRight: "0.5rem" }}
               >
-                <Link style={{ textDecoration: "none" }} to="/calendar">
+                <Link style={{ textDecoration: "none" }} to="/job/create">
                   <button
                     className=" btn btn-primary"
                     style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
                   >
-                    Calendar
+                    Create New
                   </button>
                 </Link>
               </div>

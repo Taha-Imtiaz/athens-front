@@ -47,8 +47,8 @@ const DailySchedule = (props) => {
     }, []);
 
     const generatePDF = (job) => {
-        let dates = job.dates.join(' - ');
-        let services = job.services.map(e => e.name).join(' - ');
+        let dates = job.dates.join(' | ');
+        let services = job.services.map(e => e.name).join(' | ');
         // var doc = new jsPDF();
 
         // doc.text(20, 20, 'Information of job: ' + job.jobId)
@@ -171,7 +171,7 @@ const DailySchedule = (props) => {
         doc
             .setFont("times")
             .setFontSize(11)
-            .text(50, 285, job.startTime);
+            .text(50, 285, job.startTime ? job.startTime : 'No Time Added');
         // doc
         //     .setFont("times")
         //     .setFontSize(10)

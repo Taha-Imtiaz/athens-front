@@ -13,6 +13,7 @@ import { Chip } from "@material-ui/core";
 
 import MyLocationOutlinedIcon from '@material-ui/icons/MyLocationOutlined';
 import LocationOffIcon from '@material-ui/icons/LocationOff';
+import JobConfirmation from "../JobConfirmation/JobConfirmation";
 
 const JobDetails = (props) => {
   const width = window.innerWidth;
@@ -27,10 +28,11 @@ const JobDetails = (props) => {
     },
   } = props;
   var [show, setShow] = useState(false);
+  var [showBooking, setShowBooking] = useState(false);
+
   useEffect(() => {
     getJob(jobId)
       .then((res) => {
-        console.log(res.data.job.activities)
         setJob(res.data.job);
       })
       .catch((error) => {
@@ -45,7 +47,17 @@ const JobDetails = (props) => {
   var handleClose = (notes) => {
     setShow(false);
   };
-  console.log(job ?.activities)
+
+  const handleCloseAndRefresh = () => {
+    setShowBooking(false);
+    getJob(jobId)
+      .then((res) => {
+        setJob(res.data.job);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <div>
       <div>
@@ -58,7 +70,13 @@ const JobDetails = (props) => {
                   <div className="card-body">
                     <h5 className="card-title">Customer</h5>
                     <h6 className="card-subtitle mb-2 text-muted">
-                      {job.customer.firstName} {job.customer.lastName}
+                      <Link
+                        style={{ textDecoration: "none" }}
+                        to={`/customer/detail/${job.customer._id}`}
+                      >
+                        {job.customer.firstName} {job.customer.lastName}
+                      </Link>
+
                     </h6>
                     <p className="card-text">{job.customer.phone}</p>
                     <p className="card-text">{job.customer.email}</p>
@@ -86,20 +104,15 @@ const JobDetails = (props) => {
                       >
                         Assignees
                       </h5>
-                      {job.assignee.map((assignee) => (
+                      {job.assignee.length > 0 ? job.assignee.map((assignee) => (
                         <p
                           className={style.assigneehead}
                           style={{ flexWrap: "nowrap" }}
                         >
                           <li> {assignee.name}</li>
                         </p>
-                      ))}
-
-                      {/* <p className={style.assigneehead} style = {{flexWrap:"nowrap"}}>Assignee 2</p> */}
+                      )) : <p>Not Added</p>}
                       <div>
-                        {/* <Button name="Activities"  style = {{margin: "0"}}/> */}
-
-                        {/* <!-- Modal --> */}
                         <Modal dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
@@ -163,75 +176,75 @@ const JobDetails = (props) => {
               <div className="col-8 jumbotron">
                 <div className="row">
                   <div className="col-8">
-              <h3>{job.title}</h3>
+                    <h3>{job.title}</h3>
 
-              <div>
-                 
-                
-                  <p>
-                   
-                  </p>
-               
-                  <label
-                    // className={style.para}
-                    // style={{ transform: "translateY(-2rem)" }}
-                  >
-                    {job.dates.map((x) => x)}
-                  </label>
-                 <p>
-                 {job.services.map((service) => (
-                      <Chip
-                      variant = "outlined"
-                        size="small"
-                        label={service.name}
-                        clickable
-                        color="primary"
-                        style = {{margin:"0.2rem"}}
-                      />
-                  ))}
-                
-                 </p>
-
-                 {/* <h3 className={style.jobHead}>Job Description</h3> */}
-                  <p className={style.para}>{job.description}</p>
-
-                  {job.note.length !== 0 && (
                     <div>
-                      <h3 className={style.jobHead}>Notes</h3>
-                      {job.note.map((x) => (
-                        <p className={style.para}>{x.text}</p>
-                      ))}
+
+
+                      <p>
+
+                      </p>
+
+                      <label
+                      // className={style.para}
+                      // style={{ transform: "translateY(-2rem)" }}
+                      >
+                        {job.dates.map((x) => x)}
+                      </label>
+                      <p>
+                        {job.services.map((service) => (
+                          <Chip
+                            variant="outlined"
+                            size="small"
+                            label={service.name}
+                            clickable
+                            color="primary"
+                            style={{ margin: "0.2rem" }}
+                          />
+                        ))}
+
+                      </p>
+
+                      {/* <h3 className={style.jobHead}>Job Description</h3> */}
+                      <p className={style.para}>{job.description}</p>
+
+                      {job.note.length !== 0 && (
+                        <div>
+                          <h3 className={style.jobHead}>Notes</h3>
+                          {job.note.map((x) => (
+                            <p className={style.para}>{x.text}</p>
+                          ))}
+                        </div>
+                      )}
+
+                      {job.locations &&
+                        job.locations.map((list) => {
+                          return (
+                            <>
+                              <p
+                                className={style.para}
+
+                              >
+                                <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.from} <br></br> <LocationOffIcon color="primary" style={{ marginRight: "0.4rem" }} />  {list.to}
+                              </p>
+                            </>
+                          );
+                        })}
+
+
                     </div>
-                  )}
-
-                  {job.locations &&
-                    job.locations.map((list) => {
-                      return (
-                        <>
-                          <p
-                            className={style.para}
-                           
-                          >
-                          <MyLocationOutlinedIcon color = "primary" style={{marginRight:"0.4rem"}} /> {list.from} <br></br> <LocationOffIcon color = "primary" style={{marginRight:"0.4rem"}}/>  {list.to}
-                          </p>
-                        </>
-                      );
-                    })}
-
-                  
-                </div>
                   </div>
                   <div className="col-2">
-               <h5> Job Id: {job.jobId}</h5>
+                    <h6> Job Id: {job.jobId}</h6>
                   </div>
                   <div className="col-2">
-                  <Chip
-                              variant = "outlined"
-                                size="small"
-                                label={job.status}
-                                clickable
-                                color="primary"
-                              />
+                    <Chip
+                      variant="outlined"
+                      size="small"
+                      label={job.status}
+                      clickable
+                      color="primary"
+                    />
                   </div>
                 </div>
                 <div >
@@ -248,25 +261,63 @@ const JobDetails = (props) => {
                         outline: "none",
                         padding: "0.5rem 2rem",
                         color: "#fff",
-                        float:"right",
+                        float: "right",
                         borderRadius: "0.25rem",
                       }}
                     >
                       Edit
                     </button>
                   </Link>
+                  {job.status != 'booked' ? <button
+                    onClick={() => setShowBooking(true)}
+                    type="button"
+                    className={`btn btn-primary mr-2`}
+                    style={{
+                      background: "#0275d8",
+                      border: "none",
+                      outline: "none",
+                      padding: "0.5rem 2rem",
+                      color: "#fff",
+                      float: "right",
+                      borderRadius: "0.25rem",
+                    }}
+                  >
+                    Book
+                    </button> : null}
                 </div>
               </div>
-
-              
             </div>
-            
-                  
-                  {/* <button className={`btn btn-primary ${style.btnCustom}`}>Add Notes</button> */}
-              
           </>
         ) : null}
       </div>
+      <Modal dialogClassName={`${style.modal}`}
+        show={showBooking}
+        onHide={() => setShowBooking(false)}
+        animation={false}
+        centered
+      // backdrop={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Booking Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <JobConfirmation data={job} close={handleCloseAndRefresh} />
+        </Modal.Body>
+        {/* <Modal.Footer>
+                            <button
+                              className="btn btn-primary"
+                              onClick={this.handleClose}
+                            >
+                              Close
+                            </button>
+                            <button
+                              className="btn btn-primary"
+                              variant="primary"
+                            >
+                              Next
+                            </button>
+                          </Modal.Footer> */}
+      </Modal>
     </div>
   );
 };

@@ -19,11 +19,6 @@ const CustomerDetail = (props) => {
   var [note, setNote] = useState("");
 
   var { customer, getCustomer } = props;
-  // var formatStartDate, formatEndDate;
-  if (customer?.jobs.length !== 0) {
-    // formatStartDate = new Date(customer ?.jobs[0].startDate);
-    // formatEndDate = new Date(customer ?.jobs[0].endDate);
-  }
   var {
     match: {
       params: { customerId },
@@ -51,29 +46,6 @@ const CustomerDetail = (props) => {
     setNote(value);
   };
   var AddNote = () => {
-    var jobId = customer.job._id;
-    var jobObj = {
-      //   title:"Deputy Officer",
-      // description:"ABC 123",
-      // services:["ABC","ABC1"],
-      // date:"12/12/12",
-      // time:"24:45 AM",
-      // from:"ABC Road",
-      // to:"ABCD Road",
-      // status:"updated",
-      //  note:[{
-      //     text:"Hi 1 2 3"
-      // },{
-      //     text:"Hi 1 2 3 4"
-      // },{
-      //     text:"Hi 1 2 3 4 5"
-      // }]
-      // {...jobObj}
-      // ...customer.job.note.push()
-    };
-
-    // updateJob(jobObj, jobId)
-    //     handleClose()
   };
   return (
     <div>
@@ -85,7 +57,7 @@ const CustomerDetail = (props) => {
             </div>
             <div
               className="col"
-              
+
               style={{ margin: "2rem 1rem", height: "5rem" }}
             >
               <h3>Customer Information</h3>
@@ -156,7 +128,7 @@ const CustomerDetail = (props) => {
             </div>
           </div>
 
-          {customer.jobs.length !== 0 ? (
+          {customer.subContacts.length !== 0 ? (
             <div>
               <h4 className={style.sub}>Sub Contact</h4>
 
@@ -178,7 +150,6 @@ const CustomerDetail = (props) => {
                           </button>
                         </h5>
                       </div>
-
                       <div
                         id="collapseOne"
                         className="collapse show"
@@ -187,16 +158,16 @@ const CustomerDetail = (props) => {
                       >
                         <div className="card-body">
                           <div className="row">
-                          <div className="col-2">
-                         {x.length !==0 && <h5 className={style.l1}>Email</h5>}
-                          <label className={style.l1}>{x.phone}</label>
+                            <div className="col-2">
+                              {x.length !== 0 && <h6 className={style.l1}>Email</h6>}
+                              <label className={style.l1}>{x.phone}</label>
+                            </div>
+                            <div className="col-2">
+                              {x.length !== 0 && <h6 className={style.l1}>Phone</h6>}
+                              <label className={style.l2}>{x.email}</label>
+                            </div>
                           </div>
-                         <div className="col-2">
-                         {x.length!==0 && <h5 className={style.l1}>Phone</h5>}
-                          <label className={style.l2}>{x.email}</label>
-                         </div>
-                          </div>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -204,11 +175,7 @@ const CustomerDetail = (props) => {
                 </div>
               </div>
             </div>
-          ) : (
-            <h4 style={{ transform: "translate3d(40rem, 15rem, 0)" }}>
-              No job added yet
-            </h4>
-          )}
+          ) : null}
           {customer.jobs && customer.jobs.length > 0 ? (
             <div>
               <h3 className={`${style.job}`}>Jobs</h3>
@@ -230,21 +197,27 @@ const CustomerDetail = (props) => {
               </div> */}
 
               {/* <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">See All Jobs</button> */}
-              {customer?.jobs?.map((job, i) => {
+              {customer ?.jobs ?.map((job, i) => {
                 return (
                   <div className={style.jumbotron}>
                     <div className="row" key={i} style={{ padding: "2rem" }}>
                       {/* <div class="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
 
                       <div className="col-7">
-                        <h5>{job.title}</h5>
-
-                        {job.dates.map((x,i) => (
-                        i=== 0 ?  <label >
-                        {x}
-                      </label>: <label >
-                           <span style={{padding:"0.5rem"}}>|</span>{x}
-                          </label>
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          to={{
+                            pathname: "/job/details/" + job._id
+                          }}
+                        >
+                          <h5>{job.title}</h5>
+                        </Link>
+                        {job.dates.map((x, i) => (
+                          i === 0 ? <label >
+                            {x}
+                          </label> : <label >
+                              <span style={{ padding: "0.5rem" }}>|</span>{x}
+                            </label>
 
                         ))}
                         <p>
@@ -253,7 +226,7 @@ const CustomerDetail = (props) => {
                               style={{ display: "inline", padding: "0 0.2rem" }}
                             >
                               <Chip
-                              variant = "outlined"
+                                variant="outlined"
                                 size="small"
                                 label={service.name}
                                 clickable
@@ -267,49 +240,49 @@ const CustomerDetail = (props) => {
                           {job.startTime}
                         </label> */}
 
-                        
+
                       </div>
                       <div className="col-3" >
                         {job.assignee.length > 0 ? (
-                          <div style={{display:"flex"}}>
+                          <div style={{ display: "flex" }}>
                             {job.assignee.map((assignee, i) => (
-                        i===0 ?   <p>{assignee.name}</p> : 
-                          <p>
-                            <span style = {{padding:"0.5rem"}}>|</span>
-                          {assignee.name}</p>
-                        ))}
+                              i === 0 ? <p>{assignee.name}</p> :
+                                <p>
+                                  <span style={{ padding: "0.5rem" }}>|</span>
+                                  {assignee.name}</p>
+                            ))}
                           </div>
-                        ): <p>No Assignee</p> }
+                        ) : <p>No Assignee</p>}
                       </div>
                       <div className="col-2">
                         <p>
-                        <Chip
-                              variant = "outlined"
-                                size="small"
-                                label={job.status}
-                                clickable
-                                color="primary"
-                              />
+                          <Chip
+                            variant="outlined"
+                            size="small"
+                            label={job.status}
+                            clickable
+                            color="primary"
+                          />
                         </p>
                       </div>
 
-                          <div className = "col-12">
-                          <p>
+                      <div className="col-12">
+                        <p>
                           {job.description}
                         </p>
-                         </div>
-                        
-                        {job.locations.map((list, i) => (
-                          <div className="col-12">
+                      </div>
+
+                      {job.locations.map((list, i) => (
+                        <div className="col-12">
                           <p key={i}>
                             {" "}
-                          <label>  <MyLocationOutlinedIcon color = "primary" style={{margin:"0 0.5rem"}}/> {list.from} {" "}</label>
-                           <p> <b> <LocationOffIcon color = "primary" style={{margin:"0 0.5rem"}}/></b> {list.to}</p>
-                           <hr/>
+                            <label>  <MyLocationOutlinedIcon color="primary" style={{ margin: "0 0.5rem" }} /> {list.from} {" "}</label>
+                            <p> <b> <LocationOffIcon color="primary" style={{ margin: "0 0.5rem" }} /></b> {list.to}</p>
+                            <hr />
                           </p>
                         </div>
-                        ))}
-                         
+                      ))}
+
                       <div>
                         {/* <p className={style.notesd} > */}
                         {job.note.length > 0 && (
@@ -367,7 +340,11 @@ const CustomerDetail = (props) => {
                 );
               })}
             </div>
-          ) : null}
+          ) : (
+              <h4 style={{ transform: "translate3d(40rem, 15rem, 0)" }}>
+                No job added yet
+          </h4>
+            )}
           <br />
         </div>
       )}

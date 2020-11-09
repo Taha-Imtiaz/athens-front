@@ -289,7 +289,7 @@ handleValidation = () =>{
     if(this.handleValidation()) {
     updateJob(jobId, updatedObj).then((res) => {
       showMessage(res.data.message)
-      history.push("/job")
+      history.push("/job/details/" + jobId)
     }).catch((error) => {
     });
   };

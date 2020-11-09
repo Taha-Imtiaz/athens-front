@@ -12,6 +12,11 @@ import { TextareaAutosize, TextField } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 class NewClaim extends Component {
 
@@ -68,8 +73,6 @@ class NewClaim extends Component {
 
   componentDidMount = () => {
     getCustomersAndJobs().then((res) => {
-      console.log(res)
-      console.log(this.state.customers.length)
       this.setState({ customers: res.data.customers })
     })
   }
@@ -91,52 +94,30 @@ class NewClaim extends Component {
     let itemError = ""
     let priceError = ""
     let descriptionError = ""
-    let fromDateError = ""
-    let toDateError = ""
-    let locationfromError = ""
-    let locationtoError = ""
-
 
     if (this.state.selectedCustomer.length === 0) {
       customerIdError = "Customer Id should not be empty"
     }
 
-    if (this.state.selectedJob.length === 0) {
+    if (!this.state.selectedJob) {
       jobIdError = "Error! should not be empty"
     }
 
-    if (!this.state.item) {
-      itemError = "Error! should not be empty"
-    }
+    // if (!this.state.item) {
+    //   itemError = "Error! should not be empty"
+    // }
 
-    if (!this.state.price) {
-      priceError = "Error! should not be empty"
-    }
+    // if (!this.state.price) {
+    //   priceError = "Error! should not be empty"
+    // }
 
-    if (!this.state.description) {
-      descriptionError = "Error! should not be empty"
-    }
-
-    if (!this.state.fromDate) {
-      fromDateError = "Error! should not be empty"
-    }
-
-    if (!this.state.toDate) {
-      toDateError = "Error! should not be empty"
-    }
-
-    if (!this.state.locationfrom) {
-      locationfromError = "Error! should not be empty"
-    }
-
-    if (!this.state.locationto) {
-      locationtoError = "Error! should not be empty"
-    }
+    // if (!this.state.description) {
+    //   descriptionError = "Error! should not be empty"
+    // }
 
 
-
-    if (customerIdError || jobIdError || itemError || priceError || descriptionError || fromDateError || toDateError || locationfromError || locationtoError) {
-      this.setState({ customerIdError, jobIdError, itemError, priceError, descriptionError, fromDateError, toDateError, locationfromError, locationtoError })
+    if (customerIdError || jobIdError || itemError || priceError || descriptionError) {
+      this.setState({ customerIdError, jobIdError, itemError, priceError, descriptionError })
       return false
     }
 
@@ -146,33 +127,30 @@ class NewClaim extends Component {
 
   mySubmitHandler = (event) => {
     event.preventDefault();
-
     let { customerId, selectedJob, claims, jobId, item, price, description, fromDate, toDate, locationfrom, locationto } = this.state;
-
-    let data = {
-      jobId: selectedJob.jobId,
-      claims
+    if (this.validate()) {
+      var { history, showMessage } = this.props;
+      let data = {
+        jobId: selectedJob.jobId,
+        claims
+      }
+      addClaim(data).then((res) => {
+        showMessage(res.data.message)
+        history.push("/claim/customer");
+      })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    var { history, showMessage } = this.props;
-    console.log(this.state.selectedCustomer.length)
-  if(this.validate()) {
-    // addClaim(data).then((res) => {
-    //   showMessage(res.data.message)
-    //   history.push("/claim/customer");
-    // })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-  }
   }
 
   addAnotherClaim = () => {
     if (this.state.claims[0].claimType && this.state.claims[0].description && this.state.claims[0].price) {
       this.setState({
         claims: [...this.state.claims, {
-          claimType: null,
-          price: null,
-          description: null
+          claimType: 'Damage To House',
+          price: 0,
+          description: ''
         }]
       });
     }
@@ -213,11 +191,10 @@ class NewClaim extends Component {
   // }
   getCustomerJobs = customer => {
     if (customer) {
-      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName, selectedJob: '' })
+      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName, selectedJob: '', customerIdError: '' })
     } else {
       this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
     }
-    console.log(customer)
   }
   render() {
     return (
@@ -256,7 +233,7 @@ class NewClaim extends Component {
                   label="Choose a customer"
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   variant="outlined"
-                  error = {this.state.customerIdError}
+                  error={this.state.customerIdError}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: 'new-password', // disable autocomplete and autofill
@@ -268,7 +245,7 @@ class NewClaim extends Component {
             <Autocomplete
               value={this.state.selectedJob}
               onChange={(event, newValue) => {
-                this.setState({ selectedJob: newValue }); // Get the customer and get job
+                this.setState({ selectedJob: newValue ? newValue : '', jobIdError: '' }); // Get the customer and get job
               }}
               // inputValue={this.state.selectedCustomer}
               // onInputChange={(event, newInputValue) => {
@@ -297,7 +274,7 @@ class NewClaim extends Component {
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   variant="outlined"
                   // disabled={!this.state.selectedCustomer}
-                  error = {this.state.jobIdError}
+                  error={this.state.jobIdError}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: 'new-password', // disable autocomplete and autofill
@@ -335,17 +312,32 @@ class NewClaim extends Component {
             {this.state.claims.map((x, i) => {
               return (
                 <div key={i}>
+                  {i == 0 ? null : <hr></hr>}
                   < div className="row">
                     <div className="col-8">
-                      <div className="form-group" style={{ margin: "0 2rem", width: "90%" }}>
-                        {/* <input type="input" className="form-control" id="claimType" label="Damage Type" name="claimType" value={this.state.claimType} onChange={this.handleFormInput} /> */}
+                      {/* <div className="form-group" style={{ margin: "0 2rem", width: "90%" }}>
                         <select onChange={(e) => this.hanldeClaimsInput(e, i)} className="form-control" id="exampleFormControlSelect1" name="claimType">
                           <option>Damage To House</option>
                           <option>Damage To Item</option>
                         </select>
-                      </div>
-
-                    
+                      </div> */}
+                      <FormControl variant="outlined" style={{ margin: "0 2rem", width: "90%" }} margin='dense'>
+                        <InputLabel id="demo-simple-select-outlined-label">Claim Type</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={this.state.claims[i].claimType}
+                          onChange={(e) => this.hanldeClaimsInput(e, i)}
+                          label="Claim Type"
+                          name="claimType"
+                        >
+                          {/* <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem> */}
+                          <MenuItem value={'Damage To House'}>Damage To House</MenuItem>
+                          <MenuItem value={'Damage To Item'}>Damage To Item</MenuItem>
+                        </Select>
+                      </FormControl>
                     </div>
                     <div className="col-4">
                       <div className="form-group">
@@ -354,12 +346,12 @@ class NewClaim extends Component {
                           margin="normal"
                           style={{ margin: "2rem", width: "90%" }}
                           required
-                          error = {this.state.priceError}
+                          // error = {this.state.priceError}
                           size="small"
                           id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem 0" }} />
                       </div>
 
-                      
+
 
                     </div>
 
@@ -381,7 +373,7 @@ class NewClaim extends Component {
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
-           
+
             {/* 
             <div className={`row`}>
 

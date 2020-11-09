@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerList.module.css";
+import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
 import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
@@ -196,56 +196,54 @@ const CustomerList = (props) => {
                 className="row"
                 style={{ margin: "1rem 3rem", fontWeight: "bold" }}
               >
-                <div className="col-4">Name</div>
-                <div className="col-7">Email</div>
-                <div className="col-1">Actions</div>
+                <div className="col-md-4">Name</div>
+                <div className="col-md-6">Email</div>
+                <div className="col-md-2">Jobs</div>
               </div>
               <div>
                 <ul className="list-group">
                   <div className={`${style.li}`}>
                     {docs.map((doc) => {
                       return (
-                        <li
-                          className="checkbox list-group-item"
-                          key={doc._id}
-                          style={{
-                            background: "rgba(0,0,0,.03)",
-                            border: "1px solid rgba(0,0,0,0.125)",
-                            // color:"#fff"
-                          }}
-                        >
-                          <div className="row justify-content-around">
-                            <div
-                              className={`col-8 col-md-4 text-left ${style.flex}`}
-                            >
-                              <span>
-                                {/* <input type="checkbox" id="defaultCheck1" value="" />
+                        <Link
+                          style={{ textDecoration: "none", color: "black" }}
+                          to={`/customer/detail/${doc._id}`}>
+                          <li
+                            className="checkbox list-group-item"
+                            key={doc._id}
+                            style={{
+                              background: "rgba(0,0,0,.03)",
+                              border: "1px solid rgba(0,0,0,0.125)",
+                              // color:"#fff"
+                            }}
+                          >
+                            <div className="row justify-content-around">
+                              <div
+                                className={`col-8 col-md-4 text-left ${style.flex}`}
+                              >
+                                <span>
+                                  {/* <input type="checkbox" id="defaultCheck1" value="" />
                             <label
                               className={`checkbox-inline ${style.input}`}
                               htmlFor="defaultCheck1"
                             >
                               {doc.name}
                             </label> */}
-                                {doc.firstName} {doc.lastName}
-                              </span>
-                            </div>
-                            <div
-                              className={`col-4 col-md-4 d-flex justify-content-start ${style.flex} ${style.fr}`}
-                            >
-                              <p>{doc.email}</p>
-                            </div>
-                            <div
-                              className={`col-12 col-md-4 d-flex justify-content-end ${style.fr}`}
-                            >
-                              <div>
-                                <Link
+                                  {doc.firstName} {doc.lastName}
+                                </span>
+                              </div>
+                              <div
+                                className={`col-4 col-md-6 d-flex justify-content-start ${style.flex} ${style.fr}`}
+                              >
+                                <p>{doc.email}</p>
+                              </div>
+                              <div
+                                className={`col-12 col-md-2 d-flex justify-content-start ${style.fr}`}
+                              >
+                                <div>
+                                  {/* <Link
                                   style={{ textDecoration: "none" }}
-                                  to={`/customer/detail/${doc._id}`}
-                                >
-                                  {/* <Button
-                                    name={width < 576 ? "" : "Details"}
-                                    icon="fa fa-info-circle"
-                                  /> */}
+                                  to={`/customer/detail/${doc._id}`}>
                                   <FontAwesomeIcon
                                     icon={faInfoCircle}
                                     style={{
@@ -256,52 +254,13 @@ const CustomerList = (props) => {
                                       alignItems: "center"
                                     }}
                                   />
-                                </Link>
-                                {/* <FontAwesomeIcon
-                                  icon={faBook}
-                                  style={{ transform: "translateX(-1rem)" }}
-                                  onClick = {handleShow}
-                                />
-                                <Modal
-                                  show={show}
-                                  onHide={handleClose}
-                                  animation={false}
-                                  centered
-                                  
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>Add Note</Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    <textarea
-                                      name=""
-                                      id=""
-                                      cols="65"
-                                      rows="5"
-                                      // name="Note"
-                                      // value={Note}
-                                      // onChange={this.handleAddNote}
-                                    ></textarea>
-                                  </Modal.Body>
-                                  <Modal.Footer>
-                                    <button className = "btn btn-primary"
-                                      variant="secondary"
-                                      onClick={handleClose}
-                                    >
-                                      Close
-                                    </button>
-                                    <button className = "btn btn-primary"
-                                      variant="primary"
-                                      // onClick={this.AddNote}
-                                    >
-                                      Add Note
-                                    </button>
-                                  </Modal.Footer>
-                                </Modal> */}
+                                </Link> */}
+                                  {doc.jobs.length}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </li>
+                          </li>
+                        </Link>
                       );
                     })}
                   </div>

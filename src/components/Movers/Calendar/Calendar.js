@@ -129,7 +129,13 @@ class MoversCalendar extends Component {
                                     <h5 className="card-title">{this.state.job.title}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">{this.state.job.status}</h6>
                                     <p className="card-text">{this.state.job.description}</p>
-                                    <p className="card-text">Customer: {this.state.job.customer.email}</p>
+                                    <p className="card-text">Customer:
+                                    <Link
+                                            style={{ textDecoration: "none" }}
+                                            to={`/customer/detail/${this.state.job.customer._id}`}>
+                                            &nbsp;
+                                            {this.state.job.customer.email}
+                                        </Link></p>
                                 </div>
                             </div>
                         </div> : <h4>Please select job first.</h4>}

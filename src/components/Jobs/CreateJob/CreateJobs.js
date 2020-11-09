@@ -202,10 +202,10 @@ class CreateJobs extends Component {
             name="from"
             value={this.state.locations[i].from}
             onChange={(e) => this.hanldeLocationInput(i, e)}
-            error = {this.state.locationfromError}
+            error={this.state.locationfromError}
           />
         </div>
-       
+
       </div>
      
       <div className="col-5">
@@ -222,7 +222,7 @@ class CreateJobs extends Component {
           name="to"
           value={this.state.locations[i].to}
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
-          error = {this.state.locationtoError}
+          error={this.state.locationtoError}
         />
         
       </div>
@@ -450,14 +450,12 @@ class CreateJobs extends Component {
     return (
       <div style={{ background: "#e9ecef" }}>
         <ToastContainer position="bottom-right" />
-
-
         <div className={`${style.tron}`}>
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
-          <form onSubmit={this.mySubmitHandler}>
-            <div>
-              {/* <label htmlFor="">Customer Email</label>
+            <form onSubmit={this.mySubmitHandler}>
+              <div>
+                {/* <label htmlFor="">Customer Email</label>
               <input
                 type="input"
                 className="form-control"
@@ -467,72 +465,18 @@ class CreateJobs extends Component {
                 onChange={this.handleFormInput}
               // disabled
               /> */}
-              <TextField
-                variant="outlined"
-               style ={{margin:"1rem 2rem", width:"90%"}}
-                required
-                
-                size="small"
-                id="customerId"
-                label="Cutomer Email"
-                name="customerId"
-                autoComplete="customerId"
-                autoFocus
-                value={this.state.customerId} onChange={this.handleFormInput}
-              />
-            </div>
-
-            <div>
-              <TextField
-                variant="outlined"
-              
-                required
-                style ={{margin:"1rem 2rem", width:"90%"}}
-                size="small"
-                id="title"
-                label="Job Title"
-                name="title"
-                autoComplete="title"
-                autoFocus
-                error = {this.state.titleError}
-                value={this.state.title} onChange={this.handleFormInput}
-              />
-            </div>
-
-           
-
-
-              <div className="form-group">
-                <TextareaAutosize
-                  className={style.textarea}
+                <TextField
+                  variant="outlined"
                   style={{ margin: "1rem 2rem", width: "90%" }}
-                  rowsMin={4}
-                  id="ta"
-                  placeholder="Job Description"
-                  name="description"
-                  value={this.state.description}
-                  error = {this.state.descriptionError}
-                  onChange={this.handleFormInput}
-                ></TextareaAutosize>
-              </div>
+                  required
 
-             
-
-              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%" }}>
-                <Autocomplete
-                  multiple
-                  value={this.state.services}
-                  onChange={(event, newValue) => {
-                    this.servicesChanged(newValue)
-                  }}
-                  limitTags={10}
-                  id="multiple-limit-tags"
-                  options={this.servicesOptions}
-                  getOptionLabel={(option) => option.name ? option.name : option}
-                  error = {this.state.multiError}
-                  renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
-                  )}
+                  size="small"
+                  id="customerId"
+                  label="Cutomer Email"
+                  name="customerId"
+                  autoComplete="customerId"
+                  autoFocus
+                  value={this.state.customerId} onChange={this.handleFormInput}
                 />
               </div>
 
@@ -570,6 +514,61 @@ class CreateJobs extends Component {
                 </div>
                </div>
               
+
+
+              <div>
+                <TextField
+                  variant="outlined"
+
+                  required
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  size="small"
+                  id="title"
+                  label="Job Title"
+                  name="title"
+                  autoComplete="title"
+                  autoFocus
+                  error={this.state.titleError}
+                  value={this.state.title} onChange={this.handleFormInput}
+                />
+              </div>
+
+
+
+
+              <div className="form-group">
+                <TextareaAutosize
+                  className={style.textarea}
+                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  rowsMin={4}
+                  id="ta"
+                  placeholder="Job Description"
+                  name="description"
+                  value={this.state.description}
+                  error={this.state.descriptionError}
+                  onChange={this.handleFormInput}
+                ></TextareaAutosize>
+              </div>
+
+
+
+              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%" }}>
+                <Autocomplete
+                  multiple
+                  value={this.state.services}
+                  onChange={(event, newValue) => {
+                    this.servicesChanged(newValue)
+                  }}
+                  limitTags={10}
+                  id="multiple-limit-tags"
+                  options={this.servicesOptions}
+                  getOptionLabel={(option) => option.name ? option.name : option}
+                  error={this.state.multiError}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
+                  )}
+                />
+              </div>
 
               <div className="row">
                 {/* <div className="form-group col-3" style={{ margin: "1rem" }}>
@@ -627,12 +626,12 @@ class CreateJobs extends Component {
                     autoComplete="Number of movers required"
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
-                    error = {this.state.assigneeRequiredError}
+                    error={this.state.assigneeRequiredError}
                     onChange={this.handleFormInput}
                   />
                 </div>
 
-              
+
 
                 <div className={`form-group col-5`}>
                   {/* <FormControl className={this.classes.formControl}>

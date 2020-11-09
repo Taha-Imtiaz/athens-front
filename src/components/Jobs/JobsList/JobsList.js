@@ -259,12 +259,12 @@ class JobsList extends Component {
                 className={` ${style.create}`}
                 style={{ paddingRight: "0.5rem" }}
               >
-                <Link style={{ textDecoration: "none" }} to="/calendar">
+                <Link style={{ textDecoration: "none" }} to="/job/create">
                   <button
                     className=" btn btn-primary"
                     style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
                   >
-                    Calendar
+                    Create New
                   </button>
                 </Link>
               </div>
@@ -290,35 +290,40 @@ class JobsList extends Component {
               <div className="col-2" style={{ transform: "translateX(5rem)" }}>
                 Status
               </div>
-              <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
+              {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
                 Actions
-              </div>
+              </div> */}
             </div>
 
             <ul className={style.listGroup}>
               <div className={style.li}>
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
-                    <li
-                      key={i}
-                      className=" checkbox list-group-item "
-                      style={{
-                        border: "1px solid rgba(0, 0, 0, 0.125)",
-                        background: "rgba(0,0,0,.03)",
-                        // color: "#fff",
-                      }}
-                    >
-                      <div className="row justify-content-around">
-                        <div className="col-4 col-md-2 text-left">
-                          <label>{job.title}</label>
-                        </div>
-                        <div className="col-4 col-md-2">
-                          <i className="fa fa-calendar">
-                            {" "}
-                            {
-                              <span>
-                                {job.dates[0]}
-                                {/* {job.dates.length > 1 && (
+                    <Link style={{ textDecoration: "none", color: "black" }}
+                      to={{
+                        pathname: `/job/details/${job._id}`,
+                        jobProps: job,
+                      }}>
+                      <li
+                        key={i}
+                        className=" checkbox list-group-item "
+                        style={{
+                          border: "1px solid rgba(0, 0, 0, 0.125)",
+                          background: "rgba(0,0,0,.03)",
+                          // color: "#fff",
+                        }}
+                      >
+                        <div className="row justify-content-around">
+                          <div className="col-4 col-md-2 text-left">
+                            <label>{job.title}</label>
+                          </div>
+                          <div className="col-4 col-md-2">
+                            <i className="fa fa-calendar">
+                              {" "}
+                              {
+                                <span>
+                                  {job.dates[0]}
+                                  {/* {job.dates.length > 1 && (
                                   <span>
                                     <span
                                       id={`Popover${job._id}`}
@@ -337,42 +342,42 @@ class JobsList extends Component {
                                     </Popover>
                                   </span>
                                 )} */}
-                              </span>
-                            }
-                          </i>
-                        </div>
-                        <div className="col-4 col-md-3">
-                          <span>
-                            <i className="fa fa-user"></i>
-                            {job.assignee.length > 0 ? job.assignee.map((x, i) => (
-                              <label
-                                key={i}
-                                className={`checkbox-inline ${style.assignee}`}
-                                htmlFor="defaultCheck1"
-                              >
-                                {x.name}
+                                </span>
+                              }
+                            </i>
+                          </div>
+                          <div className="col-4 col-md-3">
+                            <span>
+                              <i className="fa fa-user"></i>
+                              {job.assignee.length > 0 ? job.assignee.map((x, i) => (
+                                <label
+                                  key={i}
+                                  className={`checkbox-inline ${style.assignee}`}
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {x.name}
+                                </label>
+                              )) : <label className={style.assignee}>N/A</label>}
+                            </span>
+                          </div>
+                          <div className="col-4 col-md-2">
+                            <label>
+                              {job.services.map((service) => (
+                                <label
+                                // style={{ display: "flex"}}
+                                >
+                                  {`${service.name} `}
+                                  &nbsp;
                               </label>
-                            )) : <label className={style.assignee}>N/A</label>}
-                          </span>
-                        </div>
-                        <div className="col-4 col-md-2">
-                          <label>
-                            {job.services.map((service) => (
-                              <label
-                              // style={{ display: "flex"}}
-                              >
-                                {`${service.name} `}
-                                &nbsp;
-                              </label>
-                            ))}
-                          </label>
-                        </div>
-                        <div className="col-4 col-md-1">
-                          <label style={{ transform: "translateX(-2rem)" }}>
-                            {job.status}
-                          </label>
-                        </div>
-                        <Link
+                              ))}
+                            </label>
+                          </div>
+                          <div className="col-4 col-md-1">
+                            <label style={{ transform: "translateX(-2rem)" }}>
+                              {job.status}
+                            </label>
+                          </div>
+                          {/* <Link
                           style={{ textDecoration: "none", color: "black" }}
                           to={{
                             pathname: `/job/details/${job._id}`,
@@ -380,36 +385,17 @@ class JobsList extends Component {
                           }}
                         >
                           <div className="col-4 col-md-1">
-                            {/* <button
-                              icon="fa fa-edit"
-                              className="btn btn-primary"
-                              style={{ background: "#00ADEE" }}
-                            >
-                              Details
-                            </button> */}
-
                             <FontAwesomeIcon
                               icon={faInfoCircle}
                               style={{
                                 transform: "translateX(-2.5rem)",
-                                // color: "white",
                               }}
                             />
                           </div>
-                        </Link>
-
-                        {job.status == 'pending' ? <FontAwesomeIcon
-                          icon={faBook}
-                          style={{
-                            transform: "translateX(-2.5rem)",
-                            // color: "white",
-                          }}
-                          onClick={() => this.handleShow(job)}
-                        />
-                          : null}
-
-                      </div>
-                    </li>
+                        </Link> */}
+                        </div>
+                      </li>
+                    </Link>
                   );
                 })}
               </div>

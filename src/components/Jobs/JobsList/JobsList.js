@@ -277,17 +277,17 @@ class JobsList extends Component {
 
         {jobs[0] && jobs[0].data.jobs.docs.length > 0 ? (
           <div className={`${style.jumbotron}`}>
-            <div className="row" style={{ margin: "1rem", fontWeight: "bold" }}>
-              <div className="col-1"></div>
-              <div className="col-2" style={{ transform: "translateX(-2rem)" }}>
+            <div className="row" style={{ margin: "1rem", fontWeight: "bold"}}>
+             
+              <div className="col-2" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                 Title
               </div>
-              <div className="col-2">Date(s)</div>
-              <div className="col-2">Assignee</div>
-              <div className="col-2" style={{ transform: "translateX(6rem)" }}>
+              <div className="col-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}  >Date(s)</div>
+              <div className="col-2" style={{display:"flex", justifyContent:"center", alignItems:"center"}}  >Assignee</div>
+              <div className="col-4" style={{display:"flex", justifyContent:"center", alignItems:"center"}}   >
                 Services
               </div>
-              <div className="col-2" style={{ transform: "translateX(5rem)" }}>
+              <div className="col-1" style={{transform:"translateX(-2rem)"}} >
                 Status
               </div>
               {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>

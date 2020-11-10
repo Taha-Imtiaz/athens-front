@@ -12,6 +12,8 @@ import { clone, cloneDeep } from "lodash"
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable'
+import { Link } from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
 
 
 const DailySchedule = (props) => {
@@ -31,6 +33,7 @@ const DailySchedule = (props) => {
 
 
     const { getalljobs, getalljobsfiveday, jobs, movers } = props;
+    console.log(movers)
     useEffect(() => { // get-all-jobs-on-date
         getalljobs({
             "date": nextDate.toString()
@@ -40,6 +43,9 @@ const DailySchedule = (props) => {
 
     useEffect(() => {
         const { movers } = props;
+       if(movers) {
+           console.log(movers)
+       }
         getalljobsfiveday({
             "date": date
         })
@@ -367,10 +373,39 @@ const DailySchedule = (props) => {
         <div className={`col-3 ${style.mov}`}>
             <h5 className={style.movehead}>Movers</h5>
             {movers && movers.map((list, i) => {
-                return <><h6 key={i} className={style.movname}>{list.mover.name}</h6>
-                    {list.availabilityStatus.map((status, j) => {
+                return <div>
+                
+               <div className="row">
+                   <div className="col-2"></div>
+                   <div className="col-3"> <h5 key={i} className={style.movname} >
+                    {list.mover.name}</h5></div>
+               </div>
+                {movers.length > 0 ?
+                  <div>
+                      {list.mover.jobs.map((job) => <div className = "row">
+                       <Link to ={`/job/details/${job._id}`} style={{textDecoration:"none"}} className = "col-8">
+
+                       <Chip
+              
+                label={job.title}
+                clickable
+                color="primary"
+               
+                variant="outlined"
+                    ></Chip>
+                           </Link>
+                         
+                   <p className = "col-2"> {job.startTime}</p>
+                      </div>)}
+                  
+
+                    </div>: <h4>Available</h4>
+                    }
+
+                    {/* {list.availabilityStatus.map((status, j) => {
                         return <span key={j} className={status ? `badge badge-primary mr-2 ${style.color}` : `badge badge-secondary mr-2 ${style.color}`}>{status ? 'Avaiable' : 'Unavaiable'}</span>
-                    })}</>
+                    })} */}
+                    </div>
             })}
         </div>
         <Modal show={show} onHide={handleClose} animation={false} centered>

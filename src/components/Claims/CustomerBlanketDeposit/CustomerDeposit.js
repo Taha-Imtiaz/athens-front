@@ -82,7 +82,7 @@ const CustomerDeposit = (props) => {
         </div>
 
         {blankets && blankets.length > 0 ?
-          <div>
+          <div className = "col-12">
             <div className={`row ${style.myrow} `} >
               <div className={`col-4 ${style.flex}`} style={{fontWeight:"bold"}}>
                 <h6>Customer</h6>
@@ -99,11 +99,11 @@ const CustomerDeposit = (props) => {
             </div>
 
             <div className={style.jumbotron}>
-              <ul className="list-group" style = {{margin:"0 3rem"}}>
+              <ul className="list-group" style = {{margin:"2rem 0"}}>
                 {blankets.map((x, i) => {
                   // x.edit = true;
                   return (
-                    <li key={i} className=" checkbox list-group-item">
+                    <li key={i} className="list-group-item">
                       <div className="row">
                         <div className="col-4">
                           <label>{x?.customer?.firstName} {x?.customer?.lastName}</label>

@@ -69,8 +69,8 @@
 
 .sub{
     margin-left: 20%;
-    margin-top: 5%;
-    margin-bottom: 1%;
+    /* margin-top: 5%; */
+    /* margin-bottom: 1%; */
 }
   .container{
      width: 70%;
@@ -92,14 +92,18 @@
   justify-content: center;
   align-items: center;
 }
+.modal {
+  max-width: 70vw;
+}
+
 .modal-dialog {
   background-color: blueviolet;
   transform: translate(-50%);
 }
 .jumbotron{
-    width: 70%;
-    margin-left: 20%;
-    margin-right: 10%;
+    /* width: 70%; */
+    /* margin-left: 20%;
+    margin-right: 10%; */
     margin-top: 2%;
     text-align: left;
     background-color:#e9f2eb;
@@ -110,7 +114,8 @@
 
 }
 .job{
-    margin-left: 20%;
+    /* margin-left: 20%; */
+    margin-top: 2%;
 }
 
 .assigned{

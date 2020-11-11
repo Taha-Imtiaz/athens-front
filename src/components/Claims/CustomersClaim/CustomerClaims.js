@@ -27,7 +27,7 @@ const CustomerClaims = (props) => {
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims ?.data ?.claims ?.total;
+  var totalCount = claims.claims?.data?.claims?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
@@ -202,26 +202,11 @@ const CustomerClaims = (props) => {
                           id="headingOne"
                           onClick={() => toggleCollapse(i)}
                         >
-                          <h5 className="mb-0">
-                            <button
-                              // className="btn btn-link"
-                              data-toggle="collapse"
-                              data-target="#collapse"
-                              aria-expanded="true"
-                              aria-controls="#collapse"
-                              style={{
-                                border: "none",
-                                outline: "none",
-                                background: "transparent",
-                              }}
-                            >
-                              <div className="col-3">
-                                <h6 className={`${style.jobId}`}>
-                                  {x ?.job ?.jobId}
-                                </h6>
-                              </div>
-                            </button>
-                          </h5>
+                          <div className="col-3">
+                            <h6 className={`${style.jobId}`}>
+                              {x?.job?.jobId}
+                            </h6>
+                          </div>
 
                           <div className="col-3">
                             <h6
@@ -246,7 +231,9 @@ const CustomerClaims = (props) => {
                               transform: "translate3d(45rem, -5rem, 0)",
                             }}
                           >
-                            {x.updates.length > 0 ? x.updates[x.updates.length - 1].timestamp : x.createdAt}
+                            {x.updates.length > 0
+                              ? x.updates[x.updates.length - 1].timestamp
+                              : x.createdAt}
                           </div>
                         </div>
 
@@ -260,11 +247,6 @@ const CustomerClaims = (props) => {
                             <div key={x._id}>
                               <div className="row justify-content-between"></div>
 
-                              {/* <div className="row">
-                        <div className="col-10">
-                            <p className={style.comp}>from {x.from} - to {x.to}</p>
-                        </div>
-                    </div> */}
                               {x.claims.map((y, j) => {
                                 return (
                                   <div key={j}>
@@ -277,20 +259,7 @@ const CustomerClaims = (props) => {
                                           Description : {y.description}
                                         </p>
                                       </div>
-                                      <div
-                                        className="col-4"
-                                        style={{
-                                          transform:
-                                            "translate3d(45rem, -4rem, 0)",
-                                        }}
-                                      >
-                                        {x.status == "open" ? (
-                                          <Button
-                                            name="Close Claim"
-                                            onClick={() => handleCloseJob(i)}
-                                          ></Button>
-                                        ) : null}
-                                      </div>
+
                                       <div className="col-2">
                                         <p className={style.p2}>${y.price}</p>
                                       </div>
@@ -317,7 +286,7 @@ const CustomerClaims = (props) => {
                               ) : null}
                               <hr />
                               <div className="row">
-                                <div className="col-10">
+                                <div className="col-12">
                                   {x.updates.length > 0 ? (
                                     <div>
                                       <h3>Updates</h3>
@@ -337,18 +306,32 @@ const CustomerClaims = (props) => {
                                     </div>
                                   ) : null}
                                 </div>
+                              </div>
+                              <div className="row">
+                             
                                 <div
-                                  className="col-2"
+                                className="col-2"
                                 //   style={{ transform: "translateY(1.5rem)" }}
-                                >
+                              >
+                                {x.status == "open" ? (
+                                  <Button
+                                    name="Add Update"
+                                    onClick={() => handleShow(i)}
+                                  ></Button>
+                                ) : null}
+                              </div>
+
+                              <div
+                                  className="col-2"  >
                                   {x.status == "open" ? (
                                     <Button
-                                      name="Add Update"
-                                      onClick={() => handleShow(i)}
+                                      name="Close Claim"
+                                      onClick={() => handleCloseJob(i)}
                                     ></Button>
                                   ) : null}
                                 </div>
                               </div>
+                             
                             </div>
                           </div>
                         </div>
@@ -358,10 +341,10 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>

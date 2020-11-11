@@ -185,20 +185,7 @@ const CustomerDetail = (props) => {
   };
   // var { children, value, index, ...other } = props;
 
-  const styles = theme => ({
-
-    default_tabStyle:{
-    color: 'black',
-    fontSize:11,
-    backgroundColor: 'blue',
-   },
-   
-    active_tabStyle:{
-    fontSize:11,
-    color: 'white',
-    backgroundColor: 'red',
-   }
-   })
+  
    
   return (
     <div>
@@ -212,7 +199,7 @@ const CustomerDetail = (props) => {
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
-                    <Tabs style= {{background:"#00ADEE"}} 
+                    <Tabs style= {{background:"#00ADEE", border:"none"}} 
                     
                       onChange={handleChange}
                       
@@ -222,18 +209,10 @@ const CustomerDetail = (props) => {
                     >
                       <Tab
                         label="Customer Information"
-                        className={`col-4 `}
-                      //  style = {{borderBottom:  value === value ? "2px solid red" : null}}
-                      />
-                      <Tab label="Claims"  className="col-4"
-                        // style = {{borderBottom:  value === value ? "2px solid red" : null}}
-                         />
-                      <Tab  
-                      // style = {{borderBottom:  value === value ? "2px solid red" : null}}
-                        label="Blanket"
-                        className="col-4"
-                       
-                      />
+                        className={`col-4 `}/>
+                      <Tab label="Claims"  className="col-4"/>
+                      <Tab    label="Blanket"
+                        className="col-4"  />
                     </Tabs>
                   </AppBar>
                   <TabPanel value={value} index={0}>

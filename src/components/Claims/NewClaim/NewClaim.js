@@ -315,12 +315,7 @@ class NewClaim extends Component {
                   {i == 0 ? null : <hr></hr>}
                   < div className="row">
                     <div className="col-8">
-                      {/* <div className="form-group" style={{ margin: "0 2rem", width: "90%" }}>
-                        <select onChange={(e) => this.hanldeClaimsInput(e, i)} className="form-control" id="exampleFormControlSelect1" name="claimType">
-                          <option>Damage To House</option>
-                          <option>Damage To Item</option>
-                        </select>
-                      </div> */}
+                      
                       <FormControl variant="outlined" style={{ margin: "0 2rem", width: "90%" }} margin='dense'>
                         <InputLabel id="demo-simple-select-outlined-label">Claim Type</InputLabel>
                         <Select
@@ -331,9 +326,7 @@ class NewClaim extends Component {
                           label="Claim Type"
                           name="claimType"
                         >
-                          {/* <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem> */}
+                      
                           <MenuItem value={'Damage To House'}>Damage To House</MenuItem>
                           <MenuItem value={'Damage To Item'}>Damage To Item</MenuItem>
                         </Select>

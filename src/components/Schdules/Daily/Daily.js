@@ -53,7 +53,8 @@ const DailySchedule = (props) => {
     });
   }, []);
 
-  const generatePDF = (job) => {
+  const generatePDF = (e, job) => {
+    e.preventDefault()
     let dates = job.dates.join(" | ");
     let services = job.services.map((e) => e.name).join(" | ");
     // var doc = new jsPDF();
@@ -368,11 +369,12 @@ const DailySchedule = (props) => {
       setShowIndex(i);
     }
   };
-  var handlePropagation = (e) => {
-      console.log("stop propagation")
-    //   e.preventDefault();
-    e.stopPropagation()
-  }
+  // var handlePropagation = (e) => {
+  //     console.log("stop propagation")
+  //     console.log(e)
+  //   //   e.preventDefault();
+  //   // e.stopPropagation()
+  // }
   var jobDetailsNavigate = (jobId) => {
       var {history,movers} = props
     console.log("double click is called")
@@ -487,8 +489,8 @@ const DailySchedule = (props) => {
                         alignItems: "center",
                       }}
                     >
-                      <button onClick={() => generatePDF(list)}>
-                        <i className="fa fa-print" onClick= {(e) => handlePropagation(e)}></i>Print
+                      <button onClick={(e) => generatePDF(e,list)}>
+                        <i className="fa fa-print"></i>Print
                       </button>
                     </small>
                   </div>
@@ -580,7 +582,7 @@ const DailySchedule = (props) => {
               <div>
                 <div className="row">
                   {/* <div className="col-2"></div> */}
-                  <div className="col-6">
+                  <div className="col-12">
                     {" "}
                     <h6 key={i} className={style.movname}>
                       <label style={{ fontWeight: "normal" }}>{i + 1}.</label>{" "}
@@ -589,19 +591,20 @@ const DailySchedule = (props) => {
                   </div>
                 </div>
                 <div>
-                  {movers.length > 0 ? (
+                  {list.mover.length > 0 ? (
                     <div>
                       {list.mover.jobs.map((job) => (
                         <div className="row">
                           <p className="col-8">
                             {/*  */}
+                            <span style={{ margin: "0.2rem 0.4rem" }}>
+                                &#42;
+                              </span>
                             <Link
                               to={`/job/details/${job._id}`}
                               style={{ textDecoration: "none" }}
                             >
-                              <span style={{ margin: "0.2rem 0.4rem" }}>
-                                &#42;
-                              </span>
+                              
                               {job.title}
                             </Link>
                           </p>
@@ -619,7 +622,7 @@ const DailySchedule = (props) => {
                       ))}
                     </div>
                   ) : (
-                    <h4>Available</h4>
+                    <h6>Not Available</h6>
                   )}
                   <hr />
                 </div>

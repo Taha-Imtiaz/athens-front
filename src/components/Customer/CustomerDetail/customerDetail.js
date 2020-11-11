@@ -576,9 +576,9 @@ const CustomerDetail = (props) => {
                                 className="col-"
                                 style={{
                                   transform: "translate3d(35rem, -3rem, 0)",
-                                }}
-                              >
-                                {claim ?.updatedAt}
+                                }}>
+                                    {/* {claim ?.updatedAt.toDateString()} */}
+                                {claim ?.updatedAt.split("T")[0]} <span>|</span> {claim ?.updatedAt.split("T")[1].split(".")[0]}
                               </div>
                             </div>
 
@@ -618,10 +618,11 @@ const CustomerDetail = (props) => {
 
 
                                         </div>
+                                        <hr/>
                                       </div>
                                     );
                                   })}
-                                  <hr />
+                                 
                                   {claim.claims.length > 0 ? (
                                     <div className="row">
                                       <div className="col-10">

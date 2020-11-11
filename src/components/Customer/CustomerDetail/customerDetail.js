@@ -27,7 +27,8 @@ const CustomerDetail = (props) => {
   const handleShow = () => setShow(true);
   var [note, setNote] = useState("");
   var [addClaim, setAddClaim] = useState(false)
-  var [edit, setEdit] = useState(true)
+  var [edit, setEdit] = useState(false)
+  var [blanketValue, setBlanketValue] = useState(0)
 
   var { customer, getCustomer } = props;
   var {
@@ -37,10 +38,11 @@ const CustomerDetail = (props) => {
   } = props;
 
   var data = []
-    if (customer?.claim) {
-      console.log(customer)
-      data = customer.claim
-    }
+  if (customer ?.claim) {
+    // setBlanketValue(customer.blanketDeposit.cost)
+    console.log(customer)
+    data = customer.claim
+  }
 
   const updateClaimData = () => {
     let ob = {
@@ -69,12 +71,12 @@ const CustomerDetail = (props) => {
   ;
   useEffect(() => {
     getCustomer(customerId);
-   
+
   }, []);
   console.log(customer);
 
 
-  
+
   const routes = [
     {
       title: "Claims",
@@ -91,11 +93,11 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => {};
+  var AddNote = () => { };
 
   var [value, setValue] = useState(0);
 
-  
+
   const handleChange = (event, newValue) => {
     console.log(event.target.value)
     setValue(newValue);
@@ -138,38 +140,38 @@ const CustomerDetail = (props) => {
   };
 
   const decrement = (x, i) => {
-    let newData = cloneDeep(blankets);
-    newData[i].quantity = --x.quantity;
-    setBlankets(newData);
+    // let newData = cloneDeep(blankets);
+    // newData[i].quantity = --x.quantity;
+    // setBlankets(newData);
+    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity - 1
   };
 
   const increment = (x, i) => {
-    let newData = cloneDeep(blankets);
-    newData[i].quantity = ++x.quantity;
-    setBlankets(newData);
+    // let newData = cloneDeep(blankets);
+    // newData[i].quantity = ++x.quantity;
+    // setBlankets(newData);
+    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1
   };
 
   const closeEdit = (i, type) => {
-    let newData = cloneDeep(blankets);
-    console.log(newData)
-    newData.edit = !newData.edit;
-    setBlankets(newData);
+    // let newData = cloneDeep(blankets);
+    // console.log(newData)
+    // newData.edit = !newData.edit;
+    // setBlankets(newData);
     // Call Api
-    if (type == "save") {
-      var { user } = props;
-      var obj = {
-        id: newData._id,
-        userId: user._id,
-        quantity: newData.quantity,
-        cost: newData.cost,
-      };
-      updateDeposit(obj)
-        .then((res) => {
-          var { showMessage } = props;
-          showMessage(res.data.message);
-        })
-        .catch((err) => console.log(err));
-    }
+    var { user } = props;
+    var obj = {
+      id: customer.blanketDepositnewData._id,
+      userId: user._id,
+      quantity: blanketValue,
+      cost: blanketValue.cost,
+    };
+    updateDeposit(obj)
+      .then((res) => {
+        var { showMessage } = props;
+        showMessage(res.data.message);
+      })
+      .catch((err) => console.log(err));
   };
   const handleCloseJob = (i) => {
     var { showMessage } = props;
@@ -187,19 +189,19 @@ const CustomerDetail = (props) => {
 
   const styles = theme => ({
 
-    default_tabStyle:{
-    color: 'black',
-    fontSize:11,
-    backgroundColor: 'blue',
-   },
-   
-    active_tabStyle:{
-    fontSize:11,
-    color: 'white',
-    backgroundColor: 'red',
-   }
-   })
-   
+    default_tabStyle: {
+      color: 'black',
+      fontSize: 11,
+      backgroundColor: 'blue',
+    },
+
+    active_tabStyle: {
+      fontSize: 11,
+      color: 'white',
+      backgroundColor: 'red',
+    }
+  })
+
   return (
     <div>
       {customer && (
@@ -212,27 +214,27 @@ const CustomerDetail = (props) => {
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
-                    <Tabs style= {{background:"#00ADEE"}} 
-                    
+                    <Tabs style={{ background: "#00ADEE" }}
+
                       onChange={handleChange}
-                      
-                      value = {value}
+
+                      value={value}
                       aria-label="simple tabs example"
-                      
+
                     >
                       <Tab
                         label="Customer Information"
                         className={`col-4 `}
                       //  style = {{borderBottom:  value === value ? "2px solid red" : null}}
                       />
-                      <Tab label="Claims"  className="col-4"
-                        // style = {{borderBottom:  value === value ? "2px solid red" : null}}
-                         />
-                      <Tab  
+                      <Tab label="Claims" className="col-4"
                       // style = {{borderBottom:  value === value ? "2px solid red" : null}}
+                      />
+                      <Tab
+                        // style = {{borderBottom:  value === value ? "2px solid red" : null}}
                         label="Blanket"
                         className="col-4"
-                       
+
                       />
                     </Tabs>
                   </AppBar>
@@ -340,7 +342,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
 
-                          {customer?.jobs?.map((job, i) => {
+                          {customer ?.jobs ?.map((job, i) => {
                             return (
                               <div className={style.jumbotron}>
                                 <div
@@ -363,13 +365,13 @@ const CustomerDetail = (props) => {
                                       i === 0 ? (
                                         <label>{x}</label>
                                       ) : (
-                                        <label>
-                                          <span style={{ padding: "0.5rem" }}>
-                                            |
+                                          <label>
+                                            <span style={{ padding: "0.5rem" }}>
+                                              |
                                           </span>
-                                          {x}
-                                        </label>
-                                      )
+                                            {x}
+                                          </label>
+                                        )
                                     )}
                                     <p>
                                       {job.services.map((service) => (
@@ -401,20 +403,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                            <p>
-                                              <span
-                                                style={{ padding: "0.5rem" }}
-                                              >
-                                                |
+                                              <p>
+                                                <span
+                                                  style={{ padding: "0.5rem" }}
+                                                >
+                                                  |
                                               </span>
-                                              {assignee.name}
-                                            </p>
-                                          )
+                                                {assignee.name}
+                                              </p>
+                                            )
                                         )}
                                       </div>
                                     ) : (
-                                      <p>No Assignee</p>
-                                    )}
+                                        <p>No Assignee</p>
+                                      )}
                                   </div>
                                   <div className="col-2">
                                     <p>
@@ -528,57 +530,57 @@ const CustomerDetail = (props) => {
                           })}
                         </div>
                       ) : (
-                        <h4
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            margin: "2rem 0",
-                          }}
-                        >
-                          No job added yet
+                          <h4
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              margin: "2rem 0",
+                            }}
+                          >
+                            No job added yet
                         </h4>
-                      )}
+                        )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
-                    {customer?.claim.length > 0 && <div className="row" style={{ fontWeight: "bold" }}>
-                      <div className="col-4" style={{transform:"translateX(1.5rem)"}}>JobId</div>
-                      <div className="col-4" style={{transform:"translateX(1.5rem)"}}>Status</div>
-                      <div className="col-4" style={{transform:"translateX(1.5rem)"}}> Last Update</div>
+                    {customer ?.claim.length > 0 && <div className="row" style={{ fontWeight: "bold" }}>
+                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>JobId</div>
+                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>Status</div>
+                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}> Last Update</div>
                     </div>}
                     <div id="accordion">
-                      {customer?.claim.length >0  ? (
-                      customer.claim.map((claim,i) => {
-                  return   <div className="card" style={{ cursor: "pointer" }}>
-                        <div
-                          style={{
-                            height: "4rem",
-                            overflow: "hidden",
-                            width: "100%",
-                          }}
-                          className="card-header"
-                          id="headingOne"
-                          onClick={() => toggleCollapse(claim._id)}
-                        >
-                          <h5 className="mb-0">
-                            <button
-                              // className="btn btn-link"
-                              data-toggle="collapse"
-                              data-target="#collapse"
-                              aria-expanded="true"
-                              aria-controls="#collapse"
+                      {customer ?.claim.length > 0 ? (
+                        customer.claim.map((claim, i) => {
+                          return <div className="card" style={{ cursor: "pointer" }}>
+                            <div
                               style={{
-                                border: "none",
-                                outline: "none",
-                                background: "transparent",
+                                height: "4rem",
+                                overflow: "hidden",
+                                width: "100%",
                               }}
+                              className="card-header"
+                              id="headingOne"
+                              onClick={() => toggleCollapse(claim._id)}
                             >
-                              <div>{claim.job.jobId}</div>
-                            </button>
-                          </h5>
+                              <h5 className="mb-0">
+                                <button
+                                  // className="btn btn-link"
+                                  data-toggle="collapse"
+                                  data-target="#collapse"
+                                  aria-expanded="true"
+                                  aria-controls="#collapse"
+                                  style={{
+                                    border: "none",
+                                    outline: "none",
+                                    background: "transparent",
+                                  }}
+                                >
+                                  <div>{claim.job.jobId}</div>
+                                </button>
+                              </h5>
 
-                          {/* <div className="col-3">
+                              {/* <div className="col-3">
                           <h6
                             style={{
                               transform: "translate3d(13rem, -1.8rem, 0)",
@@ -587,163 +589,163 @@ const CustomerDetail = (props) => {
                             {x.description} 
                           </h6>
                         </div> */}
-                          <div
-                            className="col-4"
-                            style={{
-                              transform: "translate3d(17rem, -1.5rem, 0)",
-                            }}
-                          >
-                            {claim.status}
-                          </div>
-                          <div
-                            className="col-"
-                            style={{
-                              transform: "translate3d(35rem, -3rem, 0)",
-                            }}
-                          >
-                            {claim?.updatedAt}
-                          </div>
-                        </div>
+                              <div
+                                className="col-4"
+                                style={{
+                                  transform: "translate3d(17rem, -1.5rem, 0)",
+                                }}
+                              >
+                                {claim.status}
+                              </div>
+                              <div
+                                className="col-"
+                                style={{
+                                  transform: "translate3d(35rem, -3rem, 0)",
+                                }}
+                              >
+                                {claim ?.updatedAt}
+                              </div>
+                            </div>
 
-                        <div
-                          id="#collapse"
-                          className={
-                            showIndex == claim._id
-                              ? "show"
-                              : "collapse"
-                          }
-                          aria-labelledby="headingOne"
-                          data-parent="#accordion"
-                        >
-                          <div className="card-body">
-                            <div>
-                              {/* //key={x._id} */}
-                              <div className="row justify-content-between"></div>
+                            <div
+                              id="#collapse"
+                              className={
+                                showIndex == claim._id
+                                  ? "show"
+                                  : "collapse"
+                              }
+                              aria-labelledby="headingOne"
+                              data-parent="#accordion"
+                            >
+                              <div className="card-body">
+                                <div>
+                                  {/* //key={x._id} */}
+                                  <div className="row justify-content-between"></div>
 
-                              {/* <div className="row">
+                                  {/* <div className="row">
                       <div className="col-10">
                           <p className={style.comp}>from {x.from} - to {x.to}</p>
                       </div>
                   </div> */}
-                              {claim.claims.map((y, j) => {
-                                return (
-                                  <div key={j}>
-                                    <h6>Claim Type : {y.claimType}</h6>
+                                  {claim.claims.map((y, j) => {
+                                    return (
+                                      <div key={j}>
+                                        <h6>Claim Type : {y.claimType}</h6>
+                                        <div className="row">
+                                          <div className="col-11">
+                                            <p className={style.para}>
+                                              Description : {y.description}
+                                            </p>
+                                          </div>
+                                          <div className="col-1">
+                                            <p>${y.price}</p>
+                                          </div>
+
+
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                  <hr />
+                                  {claim.claims.length > 0 ? (
                                     <div className="row">
-                                      <div className="col-11">
-                                        <p className={style.para}>
-                                          Description : {y.description}
+                                      <div className="col-10">
+                                        {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                      </div>
+                                      <div className="col-2">
+                                        <p>
+                                          {" "}
+                                          Total: $
+                                      {claim.claims.reduce(function (
+                                            a,
+                                            b
+                                          ) {
+                                            return a + b["price"];
+                                          },
+                                            0)}
                                         </p>
                                       </div>
-                                      <div className="col-1">
-                                        <p>${y.price}</p>
-                                      </div>
-                                     
-                                     
                                     </div>
-                                  </div>
-                                );
-                              })}
-                              <hr />
-                              {claim.claims.length > 0 ? (
-                                <div className="row">
-                                  <div className="col-10">
-                                    {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
-                                  </div>
-                                  <div className="col-2">
-                                    <p>
-                                      {" "}
-                                      Total: $
-                                      {claim.claims.reduce(function (
-                                        a,
-                                        b
-                                      ) {
-                                        return a + b["price"];
-                                      },
-                                      0)}
-                                    </p>
-                                  </div>
-                                </div>
-                              ) : null}
-                              <hr />
-                              <div className="row">
-                                <div className="col-10">
-                                  {claim.updates.length > 0 ? (
-                                  <div>
-                                    <h3>Updates</h3>
-                                    {claim.updates.map((x, i) => (
-                                      <div key={i} className="row">
-                                        <div className="col-8">
-                                          <li> {x.value}</li>
+                                  ) : null}
+                                  <hr />
+                                  <div className="row">
+                                    <div className="col-10">
+                                      {claim.updates.length > 0 ? (
+                                        <div>
+                                          <h3>Updates</h3>
+                                          {claim.updates.map((x, i) => (
+                                            <div key={i} className="row">
+                                              <div className="col-8">
+                                                <li> {x.value}</li>
+                                              </div>
+                                              <div className="col-4">
+                                                <li>
+                                                  {" "}
+                                                  {x.timestamp.split("T")[0]}
+                                                </li>
+                                              </div>
+                                            </div>
+                                          ))}
                                         </div>
-                                        <div className="col-4">
-                                          <li>
-                                            {" "}
-                                            {x.timestamp.split("T")[0]}
-                                          </li>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                ) : null}
-                                </div>
-                                <div className="col-6"></div>
-                                <div className="col-6">
-                               
-                              <div style={{float:"right"}}>
-                                       {claim.status == "open" ? (
-                                        <button
-                                          className = "btn btn-primary"
-                                          onClick={() => handleCloseJob(i)}
-                                        > Close Claim</button>
                                       ) : null}
                                     </div>
-                                    <div
-                                  
-                                  style={{float:"right", margin:" 0 0.2rem"}}
-                              >
-                                {claim.status == "open" ? (
-                                <button className = "btn btn-primary"
-                                style={{
-                                 
-                                  
-                                }}
-                                 
-                                  onClick={() => addNewClaim(i)}
-                                >Add Update</button>
-                              ) : null}
-                              </div>
+                                    <div className="col-6"></div>
+                                    <div className="col-6">
+
+                                      <div style={{ float: "right" }}>
+                                        {claim.status == "open" ? (
+                                          <button
+                                            className="btn btn-primary"
+                                            onClick={() => handleCloseJob(i)}
+                                          > Close Claim</button>
+                                        ) : null}
+                                      </div>
+                                      <div
+
+                                        style={{ float: "right", margin: " 0 0.2rem" }}
+                                      >
+                                        {claim.status == "open" ? (
+                                          <button className="btn btn-primary"
+                                            style={{
+
+
+                                            }}
+
+                                            onClick={() => addNewClaim(i)}
+                                          >Add Update</button>
+                                        ) : null}
+                                      </div>
+                                    </div>
+
+                                  </div>
                                 </div>
-                               
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      })
-                      ):<div className="text-center">
-                      <img src='/images/no-data-found.png' />
-                    </div>}
+                        })
+                      ) : <div className="text-center">
+                          <img src='/images/no-data-found.png' />
+                        </div>}
                       <Modal show={show} onHide={handleClose} animation={false} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Add Update</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <textarea
-                name=""
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={update}
-                onChange={handleAddUpdate}
-              ></textarea>
-            </Modal.Body>
-            <Modal.Footer>
-              <button className = "btn btn-primary"  onClick={handleClose}>Close</button>
-              <button className = "btn btn-primary" onClick={updateClaimData}> Add</button>
-            </Modal.Footer>
-          </Modal>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Add Update</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <textarea
+                            name=""
+                            id=""
+                            cols="65"
+                            rows="5"
+                            name="Note"
+                            value={update}
+                            onChange={handleAddUpdate}
+                          ></textarea>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <button className="btn btn-primary" onClick={handleClose}>Close</button>
+                          <button className="btn btn-primary" onClick={updateClaimData}> Add</button>
+                        </Modal.Footer>
+                      </Modal>
                     </div>
                   </TabPanel>
 
@@ -784,21 +786,21 @@ const CustomerDetail = (props) => {
                         <div className={style.jumbotron}>
                           <ul
                             className="list-group"
-                          
+
                           >
-                         
+
                             <li className="checkbox list-group-item">
                               {/* key={i} */}
                               <div className="row">
                                 <div className="col-3">
                                   <label>
-                                    {customer?.firstName} {customer?.lastName}
+                                    {customer ?.firstName} {customer ?.lastName}
                                   </label>
                                 </div>
 
                                 <div class="col-3">
                                   <div class="input-group">
-                                    {!customer.blanketDeposit.edit ? (
+                                    {edit ? (
                                       <span class="input-group-btn">
                                         <button
                                           type="button"
@@ -828,7 +830,7 @@ const CustomerDetail = (props) => {
                                       min="1"
                                       onChange={() => console.log("Changed")}
                                     ></input>
-                                    {!customer.blanketDeposit.edit ? (
+                                    {edit ? (
                                       <span class="input-group-btn">
                                         <button
                                           type="button"
@@ -853,42 +855,42 @@ const CustomerDetail = (props) => {
                                 </div>
                                 <div className="col-3">
                                   <label>
-                                    {customer?.blanketDeposit.quantity * 15}$
+                                    {customer ?.blanketDeposit.quantity * 15}$
                                   </label>
                                 </div>
                                 <div className="col-2">
                                   {customer.blanketDeposit.edit ? (
                                     <label
                                       className="fa fa-edit"
-                                      onClick={() => closeEdit("edit")}
+                                      onClick={() => setEdit(true)}
                                     >
                                       {" "}
                                       Edit
                                     </label>
                                   ) : (
-                                    <label
-                                      className="fa fa-save"
-                                      onClick={() => closeEdit(customer.blanketDeposit._id, "save")}
-                                    >
-                                      {" "}
-                                      Save
+                                      <label
+                                        className="fa fa-save"
+                                        onClick={() => closeEdit(customer.blanketDeposit._id, "save")}
+                                      >
+                                        {" "}
+                                        Save
                                     </label>
-                                  )}
+                                    )}
                                 </div>
                               </div>
                             </li>
                           </ul>
                         </div>
-                       <div className={`row ${style.flex}`} style={{margin:"2rem 0"}}>
-                       <button
-                    className="btn btn-primary"
-                    onClick={handleShow}
-                    style={{ background: "#00ADEE" }}
-                  >
-                    Activities
+                        <div className={`row ${style.flex}`} style={{ margin: "2rem 0" }}>
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleShow}
+                            style={{ background: "#00ADEE" }}
+                          >
+                            Activities
                   </button>
-                       </div>
-                       <Modal dialogClassName={`${style.modal}`}
+                        </div>
+                        <Modal dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
                           animation={false}
@@ -923,10 +925,10 @@ const CustomerDetail = (props) => {
                         </Modal>
                       </div>
                     ) : (
-                      <div className="text-center">
-                        <img src="/images/no-data-found.png" />
-                      </div>
-                    )}
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
                   </TabPanel>
                 </div>
               </div>
@@ -964,6 +966,7 @@ const CustomerDetail = (props) => {
 };
 var mapStateToProps = (state) => ({
   customer: state.customers.data ? state.customers.data.customer : null,
+  user: state.users.user
 });
 
 var actions = {

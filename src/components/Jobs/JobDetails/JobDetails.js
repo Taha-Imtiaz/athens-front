@@ -206,7 +206,7 @@ const JobDetails = (props) => {
                       </p>
 
                       {/* <h3 className={style.jobHead}>Job Description</h3> */}
-                      <p className={style.para}>{job.description}</p>
+                      <p className={style.para} style ={{whiteSpace: "pre"}}>{job.description}</p>
 
                       {job.note.length !== 0 && (
                         <div>

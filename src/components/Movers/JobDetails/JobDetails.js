@@ -76,7 +76,7 @@ const MoversJobDetails = (props) => {
                 <h3 className={style.head} style = {{fontFamily:"Roboto"}}>Job Description</h3>
                 <div className={`card`} style = {{border:"2px solid rgba(0,0,0,0.125)"}}>
                     <div className="card-body" style = {{fontFamily:"Roboto"}}>
-                        <p className="card-text">{job.description}</p>
+                        <p className="card-text" style ={{whiteSpace: "pre"}}>{job.description}</p>
                     </div>
                 </div>
 

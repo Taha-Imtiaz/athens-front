@@ -28,7 +28,7 @@ const CustomerDetail = (props) => {
   var [note, setNote] = useState("");
   var [addClaim, setAddClaim] = useState(false)
   var [edit, setEdit] = useState(false)
-  var [blanketValue, setBlanketValue] = useState(0)
+  var [blanketValue, setBlanketValue] = useState("")
 
   var { customer, getCustomer } = props;
   var {
@@ -40,7 +40,6 @@ const CustomerDetail = (props) => {
   var data = []
   if (customer ?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
-    console.log(customer)
     data = customer.claim
   }
 
@@ -50,13 +49,11 @@ const CustomerDetail = (props) => {
       value: update,
     };
     let newData = cloneDeep(data);
-    console.log(newData, updateIndex);
     newData[updateIndex].updates.push(ob);
     var { showMessage, history } = props;
     updateClaim(newData[updateIndex])
       .then((res) => {
         if (res.data.status == 200) {
-          console.log(res.data.claim.updates)
           data[updateIndex].updates = res.data.claim.updates;
           setShow(false);
           setUpdate("");
@@ -71,11 +68,12 @@ const CustomerDetail = (props) => {
   ;
   useEffect(() => {
     getCustomer(customerId);
-
   }, []);
-  console.log(customer);
 
 
+  useEffect(() => {
+    setBlanketValue(customer ?.blanketDeposit)
+  }, [customer]);
 
   const routes = [
     {
@@ -99,12 +97,9 @@ const CustomerDetail = (props) => {
 
 
   const handleChange = (event, newValue) => {
-    console.log(event.target.value)
     setValue(newValue);
-    console.log(value, newValue)
   };
   const addNewClaim = (i) => {
-    console.log(i)
     setShow(true)
     setAddClaim(true);
     setUpdateIndex(i);
@@ -123,7 +118,7 @@ const CustomerDetail = (props) => {
       >
         {value === index && (
           <Box p={3}>
-            <Typography>{children}</Typography>
+            {children}
           </Box>
         )}
       </div>
@@ -153,26 +148,27 @@ const CustomerDetail = (props) => {
     customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1
   };
 
-  const closeEdit = (i, type) => {
+  const closeEdit = (type) => {
     // let newData = cloneDeep(blankets);
-    // console.log(newData)
     // newData.edit = !newData.edit;
     // setBlankets(newData);
     // Call Api
     var { user } = props;
     var obj = {
-      id: customer.blanketDepositnewData._id,
+      id: blanketValue._id,
       userId: user._id,
-      quantity: blanketValue,
+      quantity: blanketValue.quantity,
       cost: blanketValue.cost,
     };
     updateDeposit(obj)
       .then((res) => {
         var { showMessage } = props;
+        setEdit(false)
         showMessage(res.data.message);
       })
       .catch((err) => console.log(err));
   };
+
   const handleCloseJob = (i) => {
     var { showMessage } = props;
 
@@ -344,13 +340,13 @@ const CustomerDetail = (props) => {
 
                           {customer ?.jobs ?.map((job, i) => {
                             return (
-                              <div className={style.jumbotron}>
+                              <div key={i} className={style.jumbotron}>
                                 <div
                                   className="row"
                                   key={i}
                                   style={{ padding: "2rem" }}
                                 >
-                                  {/* <div class="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
+                                  {/* <div className="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
 
                                   <div className="col-7">
                                     <Link
@@ -363,7 +359,7 @@ const CustomerDetail = (props) => {
                                     </Link>
                                     {job.dates.map((x, i) =>
                                       i === 0 ? (
-                                        <label>{x}</label>
+                                        <label key={i}>{x}</label>
                                       ) : (
                                           <label>
                                             <span style={{ padding: "0.5rem" }}>
@@ -373,9 +369,9 @@ const CustomerDetail = (props) => {
                                           </label>
                                         )
                                     )}
-                                    <p>
-                                      {job.services.map((service) => (
-                                        <label
+                                    <div>
+                                      {job.services.map((service, i) => (
+                                        <label key={i}
                                           style={{
                                             display: "inline",
                                             padding: "0 0.2rem",
@@ -390,7 +386,7 @@ const CustomerDetail = (props) => {
                                           />
                                         </label>
                                       ))}
-                                    </p>
+                                    </div>
                                     {/* <label style={{ transform: "translateY(-1rem)" }}>
                           {" "}
                           {job.startTime}
@@ -419,7 +415,7 @@ const CustomerDetail = (props) => {
                                       )}
                                   </div>
                                   <div className="col-2">
-                                    <p>
+                                    <span>
                                       <Chip
                                         variant="outlined"
                                         size="small"
@@ -427,16 +423,16 @@ const CustomerDetail = (props) => {
                                         clickable
                                         color="primary"
                                       />
-                                    </p>
+                                    </span>
                                   </div>
 
                                   <div className="col-12">
-                                    <p>{job.description}</p>
+                                    <p style ={{whiteSpace: "pre"}}>{job.description}</p>
                                   </div>
 
                                   {job.locations.map((list, i) => (
-                                    <div className="col-12">
-                                      <p key={i}>
+                                    <div className="col-12" key={i}>
+                                      <span >
                                         {" "}
                                         <label>
                                           {" "}
@@ -446,7 +442,7 @@ const CustomerDetail = (props) => {
                                           />{" "}
                                           {list.from}{" "}
                                         </label>
-                                        <p>
+                                        <div>
                                           {" "}
                                           <b>
                                             {" "}
@@ -456,9 +452,9 @@ const CustomerDetail = (props) => {
                                             />
                                           </b>{" "}
                                           {list.to}
-                                        </p>
+                                        </div>
                                         <hr />
-                                      </p>
+                                      </span>
                                     </div>
                                   ))}
 
@@ -552,7 +548,7 @@ const CustomerDetail = (props) => {
                     <div id="accordion">
                       {customer ?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
-                          return <div className="card" style={{ cursor: "pointer" }}>
+                          return <div key={i} className="card" style={{ cursor: "pointer" }}>
                             <div
                               style={{
                                 height: "4rem",
@@ -754,7 +750,7 @@ const CustomerDetail = (props) => {
                     index={2}
                     style={{ border: "transparent" }}
                   >
-                    {customer.blanketDeposit ? (
+                    {blanketValue ? (
                       <div>
                         <div className={`row`}>
                           <div
@@ -798,22 +794,24 @@ const CustomerDetail = (props) => {
                                   </label>
                                 </div>
 
-                                <div class="col-3">
-                                  <div class="input-group">
+                                <div className="col-3">
+                                  <div className="input-group">
                                     {edit ? (
-                                      <span class="input-group-btn">
+                                      <span className="input-group-btn">
                                         <button
                                           type="button"
-                                          class="btn btn-default btn-number"
-                                          onClick={() =>
-                                            decrement(
-                                              customer.blanketDeposit,
-                                              customer.blanketDeposit._id
-                                            )
+                                          className="btn btn-default btn-number"
+                                          onClick={() => {
+                                            let data = cloneDeep(blanketValue)
+                                            data.quantity = data.quantity - 1;
+                                            data.cost = data.quantity * 15;
+                                            setBlanketValue(data);
+                                            customer.blanketDeposit.quantity = customer.blanketDeposit.quantity - 1
+                                          }
                                           }
                                         >
                                           <span
-                                            class="fa fa-minus"
+                                            className="fa fa-minus"
                                             style={{
                                               transform: "translateY(-0.25rem)",
                                             }}
@@ -822,28 +820,29 @@ const CustomerDetail = (props) => {
                                       </span>
                                     ) : null}
                                     <input
-                                      disabled={customer.blanketDeposit.edit}
+                                      disabled={!edit}
                                       type="text"
-                                      class="form-control input-number"
-                                      value={customer.blanketDeposit.quantity}
+                                      className="form-control input-number"
+                                      value={blanketValue.quantity}
                                       style={{ margin: "-0.25rem 0" }}
                                       min="1"
-                                      onChange={() => console.log("Changed")}
                                     ></input>
                                     {edit ? (
-                                      <span class="input-group-btn">
+                                      <span className="input-group-btn">
                                         <button
                                           type="button"
-                                          class="btn btn-default btn-number"
-                                          onClick={() =>
-                                            increment(
-                                              customer.blanketDeposit,
-                                              customer.blanketDeposit._id
-                                            )
+                                          className="btn btn-default btn-number"
+                                          onClick={() => {
+                                            let data = cloneDeep(blanketValue)
+                                            data.quantity = data.quantity + 1;
+                                            data.cost = data.quantity * 15;
+                                            setBlanketValue(data);
+                                            customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1
+                                          }
                                           }
                                         >
                                           <span
-                                            class="fa fa-plus"
+                                            className="fa fa-plus"
                                             style={{
                                               transform: "translateY(-0.25rem)",
                                             }}
@@ -855,11 +854,11 @@ const CustomerDetail = (props) => {
                                 </div>
                                 <div className="col-3">
                                   <label>
-                                    {customer ?.blanketDeposit.quantity * 15}$
+                                    {blanketValue.quantity * 15}$
                                   </label>
                                 </div>
                                 <div className="col-2">
-                                  {customer.blanketDeposit.edit ? (
+                                  {!edit ? (
                                     <label
                                       className="fa fa-edit"
                                       onClick={() => setEdit(true)}
@@ -870,7 +869,7 @@ const CustomerDetail = (props) => {
                                   ) : (
                                       <label
                                         className="fa fa-save"
-                                        onClick={() => closeEdit(customer.blanketDeposit._id, "save")}
+                                        onClick={() => closeEdit("save")}
                                       >
                                         {" "}
                                         Save
@@ -908,10 +907,10 @@ const CustomerDetail = (props) => {
                               <div className={`col-4`}>Timestamp</div>
                             </div>
 
-                            {customer.blanketDeposit.activities.map((activity) => <div className="row">
+                            {blanketValue && blanketValue.activities.map((activity, i) => <div key={i} className="row">
                               <div className={`col-2 `}> <p>{activity.performer.name}</p></div>
                               <div className={`col-6`}>
-                                {activity.messageLogs.map(x => <p>* {x}</p>)}
+                                {activity.messageLogs.map((x, i) => <p key={i}>* {x}</p>)}
                               </div>
                               <div className={`col-4 `}><p>  {activity.timeStamp.split("G")[0]}</p></div>
                             </div>)}
@@ -957,11 +956,12 @@ const CustomerDetail = (props) => {
 
           <br />
         </div>
-      )}
+      )
+      }
       {/* //  : (
       //    <Redirect to="/customer"/>
       //  )} */}
-    </div>
+    </div >
   );
 };
 var mapStateToProps = (state) => ({

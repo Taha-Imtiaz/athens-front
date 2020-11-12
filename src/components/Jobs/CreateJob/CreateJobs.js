@@ -3,7 +3,7 @@ import style from "./CreateJobs.module.css";
 import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-
+import FormControl from '@material-ui/core/FormControl'
 import API from "../../../utils/api";
 import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,9 +20,10 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { FormControl } from "react-bootstrap";
+// import { FormControl } from "react-bootstrap";
 import { Autocomplete } from "@material-ui/lab";
-
+var today = new Date();
+var time = today.getHours() + ":" + today.getMinutes() 
 
 class CreateJobs extends Component {
 
@@ -34,7 +35,7 @@ class CreateJobs extends Component {
     customerId: "",
     startDate: "",
     dates: [new Date()],
-    // startTime: "",
+    startTime: time,
     anchorEl: "",
     meetTime: "",
     assigneeRequired: '',
@@ -398,7 +399,7 @@ class CreateJobs extends Component {
         services,
         startDate,
         dates,
-        // startTime,
+        startTime,
         meetTime,
 
         locations,
@@ -419,7 +420,7 @@ class CreateJobs extends Component {
 
         // startDate: startDate.toString(),
         dates: stringDates,
-        // startTime,
+        startTime,
         // meetTime,
         locations,
         status,
@@ -431,13 +432,13 @@ class CreateJobs extends Component {
         jobType
       };
       console.log(createJobObj)
-      // var { history } = this.props;
-      createJob(createJobObj)
-        .then((res) => {
-          history.push("/job");
-        })
-        .catch((error) => {
-        });
+      var { history } = this.props;
+      // createJob(createJobObj)
+      //   .then((res) => {
+      //     history.push("/job");
+      //   })
+      //   .catch((error) => {
+      //   });
     }
   };
 
@@ -570,50 +571,31 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="row">
-                {/* <div className="form-group col-3" style={{ margin: "1rem" }}>
-                <Multiselect
-                  className={style.multi}
-                  options={this.timeOptions} // Options to display in the dropdown
-                  onSelect={this.onStartTimeSelect} // Function will trigger on select event
-                  displayValue="name" // Property name to display in the dropdown options
-                  className="form-control"
-                  value={this.state.startTime}
-                  id="starttime"
-                  placeholder={this.state.startTime.length > 0 ? null : 'Start Time'}
-                />
+              <div className="row" style={{margin:"0 2rem"}}>
+            
+                <div className="form-group col-6" style={{}}>
+                <TextField
+        id="time"
+        label="Start Time"
+        type="time"
+        name = "startTime"
+        value = {this.state.startTime}
+        onChange = {this.handleFormInput}
+        fullWidth
+        defaultValue="07:30"
+        // className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        inputProps={{
+          step: 300, // 5 min
+        }}
+      />
               </div>
-              {this.state.timeError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.timeError}
-                </div>
-              ) : null} */}
-                {/* <div className="form-group col-3" style={{ marginTop: "1rem" }}>
-                <Multiselect
-                  className={style.multi}
-                  options={this.timeOptions}
-                  onSelect={this.onEndTimeSelect}
-                  displayValue="name"
-                  className="form-control"
-                  value={this.state.meetTime}
-                  id="time"
-                  placeholder={this.state.meetTime.length > 0 ? null : 'Meet Time'}
-                />
-              </div> */}
 
-                {/* {this.state.timeError ? (
-                <div
-                  className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                  role="alert"
-                >
-                  {this.state.timeError}
-                </div>
-              ) : null} */}
-                <div className="col-1"></div>
-                <div className={`form-group col-5`} >
+              
+{/*               
+                <div className={`form-group col-4`} >
                   <TextField
                     type="number"
                     variant="outlined"
@@ -629,35 +611,29 @@ class CreateJobs extends Component {
                     error={this.state.assigneeRequiredError}
                     onChange={this.handleFormInput}
                   />
+                </div> */}
+
+
+
+                <div className="col-6">
+  
+                  <FormControl variant="outlined" style={{ marginTop: "1rem", width: "90%" }} margin='dense'>
+                        <InputLabel id="demo-simple-select-outlined-label">Job Type</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={this.state.jobType}
+                          onChange={this.handleFormInput}
+                          label="Job Type"
+                          name="jobType"
+                        >
+                      
+                          <MenuItem value={'Fixed'}>Fixed</MenuItem>
+                          <MenuItem value={'Hourly Based'}>Hourly Based</MenuItem>
+                        </Select>
+                      </FormControl>
                 </div>
-
-
-
-                <div className={`form-group col-5`}>
-                  {/* <FormControl className={this.classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={this.state.jobTypeOptions}
-          onChange={this.handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl> */}
-
-                  <div className="form-group" style={{ marginTop: "1rem" }}>
-
-                    <select className="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                      <option >Fixed</option>
-                      <option>Hourly based</option>
-
-                    </select>
-                  </div>
-                </div>
-                <div className="col-1"></div>
+                {/* <div className="col-1"></div> */}
               </div>
 
               {/* <div className="form-group">

@@ -41,6 +41,7 @@ const CustomerClaims = (props) => {
   var data = [];
   if (claims.claims) {
     data = claims.claims.data.claims;
+    console.log(data.docs)
   }
 
   const routes = [
@@ -232,8 +233,14 @@ const CustomerClaims = (props) => {
                             }}
                           >
                             {x.updates.length > 0
-                              ? x.updates[x.updates.length - 1].timestamp
-                              : x.createdAt}
+                              ? <div>
+                               { x.updates[x.updates.length - 1].timestamp.split("T")[0]}
+                               <span> | </span> { x.updates[x.updates.length - 1].timestamp.split("T")[1].split(".")[0]}
+                              </div> 
+                              : <div>
+                                {x.createdAt.split("T")[0]} <span> | </span> {x.createdAt.split("T")[1].split(".")[0]}
+                              </div>
+                              }
                           </div>
                         </div>
 
@@ -264,10 +271,11 @@ const CustomerClaims = (props) => {
                                         <p className={style.p2}>${y.price}</p>
                                       </div>
                                     </div>
+                                    <hr/>
                                   </div>
                                 );
                               })}
-                              <hr />
+                             
                               {x.claims.length > 0 ? (
                                 <div className="row">
                                   <div className="col-10">
@@ -307,11 +315,11 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
                               </div>
-                              <div className="row">
-                             
+                              <div className="row" style={{margin:"1rem 0"}}>
+                             <div className="col-8"></div>
                                 <div
                                 className="col-2"
-                                //   style={{ transform: "translateY(1.5rem)" }}
+                                  style={{ transform: "translateX(2.5rem)" }}
                               >
                                 {x.status == "open" ? (
                                   <Button

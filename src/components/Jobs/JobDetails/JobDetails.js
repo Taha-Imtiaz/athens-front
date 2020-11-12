@@ -189,7 +189,7 @@ const JobDetails = (props) => {
                       // className={style.para}
                       // style={{ transform: "translateY(-2rem)" }}
                       >
-                        {job.dates.map((x) => x)}
+                        {job.dates.map((x,i ) =>  i === 0 ? x : <span> | {x} </span> )}
                       </label>
                       <p>
                         {job.services.map((service) => (
@@ -206,7 +206,29 @@ const JobDetails = (props) => {
                       </p>
 
                       {/* <h3 className={style.jobHead}>Job Description</h3> */}
-                      <p className={style.para} style ={{whiteSpace: "pre"}}>{job.description}</p>
+                     
+
+
+                    </div>
+                  </div>
+                  <div className="col-2">
+                    <h6> Job Id: {job.jobId}</h6>
+                  </div>
+                  <div className="col-2">
+                    <Chip
+                      variant="outlined"
+                      size="small"
+                      label={job.status}
+                      clickable
+                      color="primary"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                       <div className="col-12">
+                       <p className={style.para}>{job.description}</p>
+                       </div>
+                     </div>
 
                       {job.note.length !== 0 && (
                         <div>
@@ -230,23 +252,6 @@ const JobDetails = (props) => {
                             </>
                           );
                         })}
-
-
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <h6> Job Id: {job.jobId}</h6>
-                  </div>
-                  <div className="col-2">
-                    <Chip
-                      variant="outlined"
-                      size="small"
-                      label={job.status}
-                      clickable
-                      color="primary"
-                    />
-                  </div>
-                </div>
                 <div >
                   <Link
                     style={{ textDecoration: "none" }}

@@ -25,6 +25,8 @@ import { Autocomplete } from "@material-ui/lab";
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes() 
 
+console.log(time)
+
 class CreateJobs extends Component {
 
 
@@ -456,16 +458,7 @@ class CreateJobs extends Component {
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               <div>
-                {/* <label htmlFor="">Customer Email</label>
-              <input
-                type="input"
-                className="form-control"
-                id="jobTitle"
-                name="customerId"
-                value={this.state.customerId}
-                onChange={this.handleFormInput}
-              // disabled
-              /> */}
+               
                 <TextField
                   variant="outlined"
                   style={{ margin: "1rem 2rem", width: "90%" }}
@@ -548,6 +541,7 @@ class CreateJobs extends Component {
                   value={this.state.description}
                   error={this.state.descriptionError}
                   onChange={this.handleFormInput}
+                  autoFocus
                 ></TextareaAutosize>
               </div>
 
@@ -573,7 +567,7 @@ class CreateJobs extends Component {
 
               <div className="row" style={{margin:"0 2rem"}}>
             
-                <div className="form-group col-6" style={{}}>
+                <div className="form-group col-6" style={{marginTop:"1rem"}}>
                 <TextField
         id="time"
         label="Start Time"
@@ -581,8 +575,10 @@ class CreateJobs extends Component {
         name = "startTime"
         value = {this.state.startTime}
         onChange = {this.handleFormInput}
+        variant = "outlined"
+        size = "small"
         fullWidth
-        defaultValue="07:30"
+        // defaultValue="07:30"
         // className={classes.textField}
         InputLabelProps={{
           shrink: true,

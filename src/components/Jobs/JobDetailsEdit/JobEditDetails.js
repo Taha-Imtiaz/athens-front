@@ -602,7 +602,7 @@ class JobEditDetails extends Component {
                 className="row"
                 style={{ transform: "translateX(3rem)", width: "100%" }}
               >
-                <div className="col-6">
+                <div className="col-6" style={{marginTop:"1rem"}}>
                   <TextField
                     id="time"
                     fullWidth
@@ -611,6 +611,8 @@ class JobEditDetails extends Component {
                     name="startTime"
                     value={this.state.startTime}
                     onChange={this.handleFormInput}
+                    variant = "outlined"
+                     size = "small"
                     defaultValue="07:30"
                     // className={classes.textField}
                     InputLabelProps={{
@@ -622,44 +624,14 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                {/* <div className="col-4">
-                  <TextField
-                    type="number"
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    size="small"
-                    id="assigneeRequired"
-                    label="Movers Required"
-                    autoComplete="Number of movers required"
-                    name="assigneeRequired"
-                    value={this.state.assigneeRequired}
-                    onChange={this.handleFormInput}
-                    error={this.state.assigneeError}
-                  />
-                </div> */}
+               
 
                 <div className={`col-6`}>
                   <div
                     class="form-group"
                     style={{ transform: "translateX(3rem)",marginTop:"0.4rem", width: "100%" }}
                   >
-                    {/* <select class="form-control" value={this.state.jobType} id="sel1" name="jobType" onChange={this.handleFormInput}>
-                    {this.state.jobType === "fixed"? (  
-                      <React.Fragment>
-                        <option>{this.state.jobType}</option>
-                      <option>hourly based</option>
-                    
-                      </React.Fragment>
-                     ):(
-                    <React.Fragment>
-                        <option >{this.state.jobType}</option>
-                      <option>fixed</option>
-                    </React.Fragment>
-                     )
-                    }
-                    </select> */}
+                   
 
                     <FormControl
                       variant="outlined"

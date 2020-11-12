@@ -39,6 +39,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getLoginUser } from './Redux/User/userActions'
 import PrivateRoutes from './utils/private-routes';
 import PrivateRoute from './utils/private-routes';
+import HeadingComponent from './components/Headings/headings';
 
 function App(props) {
   const [show, setShow] = [false]
@@ -55,6 +56,7 @@ function App(props) {
       <Navbar />
       <ToastContainer position="bottom-right" />
       <Switch>
+      <Route exact path="/heading" component={HeadingComponent} />
         <Route exact path="/" component={SignInForm} />
         <PrivateRoute exact path="/customer" component={customerList} />
         <PrivateRoute path="/customer/detail/:customerId" component={customerDetail} />

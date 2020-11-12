@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './heading.css'
 
 const HeadingComponent = (props)=>{
-    return <h1 className="head">{props.name}</h1>
+    useEffect(() => {
+        props.history.push("/schedule/daily")
+    })
+    return <span></span>
 }
 
 export default HeadingComponent

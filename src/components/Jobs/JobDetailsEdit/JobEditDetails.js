@@ -802,7 +802,7 @@ class JobEditDetails extends Component {
                   type="submit"
                   className={`btn btn-primary ${style.btnCustom}`}
                   style={{
-                    // transform: "translate3d(-3rem, 0, 0)", width: "100%", display: "flex",
+                    width:"90%",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
@@ -814,25 +814,27 @@ class JobEditDetails extends Component {
           </div>
           <div className="row">
             <div
-              className={`col-4 ${style.btnalign}`}
-              style={{ marginBottom: "1.5rem" }}
+              className={`col-6 ${style.btnalign}`}
+              
             >
               <button
                 type="submit"
                 className={`btn btn-primary ${style.btnCustom}`}
                 onClick={this.handleJobUpdate}
-                style={{ transform: "translate3d(0rem, 0, 0)" }}
+
+                style={{  width:"90%", transform:"translateX(2rem)" }}
               >
                 Update
               </button>
             </div>
-            <div className={`col-4 ${style.btnalign}`}>
+            <div className={`col-6 ${style.btnalign}`}>
               <button
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
-                  transform: "translate3d(0.4rem, 0, 0)",
-                  width: "100%",
+                 
+                  width: "90%",
+                  // transform:"translateX(-1.5rem)"
                 }}
               >
                 Reset

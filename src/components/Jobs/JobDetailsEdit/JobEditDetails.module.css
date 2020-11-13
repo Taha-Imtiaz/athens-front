@@ -5,11 +5,11 @@
 }
 
 .tron2{
-    width: 53%;
+    /* width: 53%;
     margin-left: 6%;
-    margin-right: 9%;
-    text-align: left;
-    margin-bottom: 1%;
+    margin-right: 9%; */
+    /* text-align: left; */
+    /* margin-bottom: 1%; */
     /* border: 1px solid lightgrey;
     box-shadow: 1px 2px lightgrey; */
 }
@@ -33,10 +33,10 @@
 }
 
 .btnCustom{
-    margin-left: 2%;
+   margin-top:2rem;
     background-color: #00ADEE;
-    width: 100%;
-    margin-bottom: 2%;
+    /* width: 100%; */
+    /* margin-bottom: 2%; */
 }
 
 .color{

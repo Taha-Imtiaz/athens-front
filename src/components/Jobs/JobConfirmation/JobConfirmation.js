@@ -14,6 +14,8 @@ import { payAmount } from '../../../Redux/Mover/moverActions'
 import { confirmJob } from '../../../Redux/Job/jobActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
+import { TextField } from '@material-ui/core';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
 }));
+var today = new Date();
+var time = today.getHours() + ":" + today.getMinutes() 
 
 function getSteps() {
     return ['Confirm Date and Time', 'Confirm Contact Info', 'Confirm PU/DO Addresseses', 'Deposit'];
@@ -34,6 +38,7 @@ function getSteps() {
 
 function JobConfirmation(props) {
 
+    var [startTime, setStartTime] = useState(null)
     const timeOptions = [
         { name: "01:00 am", id: 1, value: "01:00:00" },
         { name: "02:00 am", id: 2, value: "02:00:00" },
@@ -82,6 +87,11 @@ function JobConfirmation(props) {
         setData(job)
     }, [])
 
+    var handleTimeSelect = (e) => {
+        var {name, value} = e.target
+        console.log(name, value)
+        setStartTime(value)
+    }
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
             pay();
@@ -253,6 +263,7 @@ function JobConfirmation(props) {
 
     const getStepContent = (step) => {
         console.log(data)
+        
         switch (step) {
             case 0:
                 return <form>
@@ -279,7 +290,7 @@ function JobConfirmation(props) {
 
                     <div className="row">
                         {data && <div className="form-group col-12" style={{ marginTop: "1rem" }}>
-                            <Multiselect
+                            {/* <Multiselect
                                 singleSelect={true}
                                 options={timeOptions} // Options to display in the dropdown
                                 onSelect={onStartTimeSelect} // Function will trigger on select event
@@ -289,7 +300,27 @@ function JobConfirmation(props) {
                                 // selectedValues ={[data.startTime]}
                                 id="starttime"
                                 placeholder='Start Time'
-                            />
+                            /> */}
+
+                <TextField
+                    id="time"
+                    fullWidth
+                    label="Start Time"
+                    type="time"
+                    name="startTime"
+                    value={startTime}
+                    onChange={handleTimeSelect}
+                    variant = "outlined"
+                     size = "small"
+                    // defaultValue="07:30"
+                    // className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 300, // 5 min
+                    }}
+                  />
                         </div>}
                     </div>
                 </form>

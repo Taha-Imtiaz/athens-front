@@ -56,7 +56,7 @@ function App(props) {
       <Navbar />
       <ToastContainer position="bottom-right" />
       <Switch>
-      <Route exact path="/heading" component={HeadingComponent} />
+      <Route exact path="/schedule/daiily" component={HeadingComponent} />
         <Route exact path="/" component={SignInForm} />
         <PrivateRoute exact path="/customer" component={customerList} />
         <PrivateRoute path="/customer/detail/:customerId" component={customerDetail} />

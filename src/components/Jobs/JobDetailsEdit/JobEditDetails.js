@@ -166,7 +166,7 @@ class JobEditDetails extends Component {
       };
       getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
-        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
+        var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
         });
@@ -308,6 +308,7 @@ class JobEditDetails extends Component {
       // meetTime,
       locations,
       // assigneesId,
+      startTime,
       status,
       userId: loggedinUser._id,
       customerId,
@@ -319,7 +320,7 @@ class JobEditDetails extends Component {
           showMessage(res.data.message);
           history.push("/job/details/" + jobId);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
   onSelect = (selectedList, selectedItem) => {
@@ -571,6 +572,7 @@ class JobEditDetails extends Component {
                         style={{ transform: "translateX(3rem)", width: "100%" }}
                       >
                         <KeyboardDatePicker
+                          inputVariant="outlined"
                           margin="normal"
                           fullWidth
                           id="date-picker-dialog"
@@ -602,7 +604,7 @@ class JobEditDetails extends Component {
                 className="row"
                 style={{ transform: "translateX(3rem)", width: "100%" }}
               >
-                <div className="col-6" style={{marginTop:"1rem"}}>
+                <div className="col-4" style={{ marginTop: "1rem" }}>
                   <TextField
                     id="time"
                     fullWidth
@@ -611,8 +613,8 @@ class JobEditDetails extends Component {
                     name="startTime"
                     value={this.state.startTime}
                     onChange={this.handleFormInput}
-                    variant = "outlined"
-                     size = "small"
+                    variant="outlined"
+                    size="small"
                     defaultValue="07:30"
                     // className={classes.textField}
                     InputLabelProps={{
@@ -624,14 +626,30 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-               
+                <div className={`form-group col-4`} >
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="assigneeRequired"
+                    label="Movers Required"
+                    autoComplete="Number of movers required"
+                    name="assigneeRequired"
+                    value={this.state.assigneeRequired}
+                    error={this.state.assigneeRequiredError}
+                    onChange={this.handleFormInput}
+                  />
+                </div>
 
-                <div className={`col-6`}>
+                <div className={`col-4`}>
                   <div
                     class="form-group"
-                    style={{ transform: "translateX(3rem)",marginTop:"0.4rem", width: "100%" }}
+                    style={{ transform: "translateX(3rem)", marginTop: "0.4rem", width: "100%" }}
                   >
-                   
+
 
                     <FormControl
                       variant="outlined"
@@ -649,12 +667,12 @@ class JobEditDetails extends Component {
                         label="Job Type"
                         name="jobType"
                       >
-                        <MenuItem value = {this.state.jobType}>{this.state.jobType}</MenuItem>
+                        <MenuItem value={this.state.jobType}>{this.state.jobType}</MenuItem>
                         {this.state.jobType === "fixed" ? (
-                          <MenuItem value = {"hourly based"}>hourly based</MenuItem>
+                          <MenuItem value={"hourly based"}>hourly based</MenuItem>
                         ) : (
-                          <MenuItem value={"fixed"}>fixed</MenuItem>
-                        )}
+                            <MenuItem value={"fixed"}>fixed</MenuItem>
+                          )}
                       </Select>
                     </FormControl>
                   </div>
@@ -775,9 +793,9 @@ class JobEditDetails extends Component {
           </div>
         </div> */}
           <div className={`${style.tron2}`}>
-            {note?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
+            {note ?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
 
-            {note?.map((note) => (
+            {note ?.map((note) => (
               <div style={{ display: "flex" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
@@ -802,7 +820,7 @@ class JobEditDetails extends Component {
                   type="submit"
                   className={`btn btn-primary ${style.btnCustom}`}
                   style={{
-                    width:"90%",
+                    width: "90%",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
@@ -815,14 +833,14 @@ class JobEditDetails extends Component {
           <div className="row">
             <div
               className={`col-6 ${style.btnalign}`}
-              
+
             >
               <button
                 type="submit"
                 className={`btn btn-primary ${style.btnCustom}`}
                 onClick={this.handleJobUpdate}
 
-                style={{  width:"90%", transform:"translateX(2rem)" }}
+                style={{ width: "90%", transform: "translateX(2rem)" }}
               >
                 Update
               </button>
@@ -832,7 +850,7 @@ class JobEditDetails extends Component {
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
-                 
+
                   width: "90%",
                   // transform:"translateX(-1.5rem)"
                 }}

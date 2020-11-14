@@ -23,7 +23,7 @@ import {
 // import { FormControl } from "react-bootstrap";
 import { Autocomplete } from "@material-ui/lab";
 var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes() 
+var time = today.getHours() + ":" + today.getMinutes()
 
 console.log(time)
 
@@ -189,7 +189,7 @@ class CreateJobs extends Component {
 
 
   showLocation = (i) => {
-    return <div className = "row">
+    return <div className="row">
       <div className="col-1"></div>
       <div className="col-5">
         <div className="form-group">
@@ -197,8 +197,8 @@ class CreateJobs extends Component {
             variant="outlined"
             margin="normal"
             required
-            style={{width:"90%",margin:"0 1rem"}}
-          fullWidth
+            style={{ width: "90%", margin: "0 1rem" }}
+            fullWidth
             size="small"
             id="from"
             label="Pickup"
@@ -210,14 +210,14 @@ class CreateJobs extends Component {
         </div>
 
       </div>
-     
+
       <div className="col-5">
         <TextField
-        fullWidth
+          fullWidth
           variant="outlined"
           margin="normal"
           required
-          style={{width:"90%",margin:"0 1rem"}}
+          style={{ width: "90%", margin: "0 1rem" }}
 
           size="small"
           id="to"
@@ -227,10 +227,10 @@ class CreateJobs extends Component {
           onChange={(e) => this.hanldeLocationInputTo(i, e)}
           error={this.state.locationtoError}
         />
-        
+
       </div>
       <div className="col-1"></div>
-      </div>
+    </div>
   }
 
 
@@ -283,9 +283,9 @@ class CreateJobs extends Component {
     //   timeError = "Time should not be empty";
     // }
 
-    if (!this.state.assigneeList) {
-      assigneeError = "Assignee should not be empty";
-    }
+    // if (!this.state.assigneeList) {
+    //   assigneeError = "Assignee should not be empty";
+    // }
 
     if (!this.state.assigneeRequired) {
       assigneeRequiredError = "Required count should not be empty";
@@ -307,8 +307,18 @@ class CreateJobs extends Component {
       timeError ||
       // assigneeError ||
       locationfromError ||
-      locationtoError || assigneeRequiredError
+      locationtoError ||
+      assigneeRequiredError
     ) {
+      console.log(titleError,
+        descriptionError,
+        multiError,
+        // startDateError,
+        timeError,
+        // assigneeError,
+        locationfromError,
+        locationtoError,
+        assigneeRequiredError)
       this.setState({
         titleError,
         descriptionError,
@@ -390,8 +400,12 @@ class CreateJobs extends Component {
   mySubmitHandler = (event) => {
     var { createJob, history, loggedInUser } = this.props
     event.preventDefault();
+    console.log(event)
+
     const isValid = this.validate();
+    console.log(isValid, event)
     if (isValid) {
+
       this.setState({
         ...this.state,
       });
@@ -435,12 +449,12 @@ class CreateJobs extends Component {
       };
       console.log(createJobObj)
       var { history } = this.props;
-      // createJob(createJobObj)
-      //   .then((res) => {
-      //     history.push("/job");
-      //   })
-      //   .catch((error) => {
-      //   });
+      createJob(createJobObj)
+        .then((res) => {
+          history.push("/job");
+        })
+        .catch((error) => {
+        });
     }
   };
 
@@ -458,7 +472,7 @@ class CreateJobs extends Component {
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               <div>
-               
+
                 <TextField
                   variant="outlined"
                   style={{ margin: "1rem 2rem", width: "90%" }}
@@ -474,7 +488,7 @@ class CreateJobs extends Component {
                 />
               </div>
 
-             
+
               <div>
                 {this.state.dates.map((x, i) => {
                   return (
@@ -482,6 +496,7 @@ class CreateJobs extends Component {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid>
                           <KeyboardDatePicker
+                            inputVariant="outlined"
                             margin="normal"
                             fullWidth
                             id="date-picker-dialog"
@@ -497,18 +512,16 @@ class CreateJobs extends Component {
                     </div>
                   )
                 })}
-                </div>
+              </div>
 
-              
 
-               <div className="row">
-                 <div className="col-11"></div>
-                 <div className="form-group col-1" onClick={this.addDate}>
+
+              <div className="row">
+                <div className="col-11"></div>
+                <div className="form-group col-1" onClick={this.addDate}>
                   <i className="fa fa-plus" style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}></i>
                 </div>
-               </div>
-              
-
+              </div>
 
               <div>
                 <TextField
@@ -527,9 +540,6 @@ class CreateJobs extends Component {
                 />
               </div>
 
-
-
-
               <div className="form-group">
                 <TextareaAutosize
                   className={style.textarea}
@@ -541,7 +551,6 @@ class CreateJobs extends Component {
                   value={this.state.description}
                   error={this.state.descriptionError}
                   onChange={this.handleFormInput}
-                  autoFocus
                 ></TextareaAutosize>
               </div>
 
@@ -565,32 +574,32 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="row" style={{margin:"0 2rem"}}>
-            
-                <div className="form-group col-6" style={{marginTop:"1rem"}}>
-                <TextField
-        id="time"
-        label="Start Time"
-        type="time"
-        name = "startTime"
-        value = {this.state.startTime}
-        onChange = {this.handleFormInput}
-        variant = "outlined"
-        size = "small"
-        fullWidth
-        // defaultValue="07:30"
-        // className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-      />
-              </div>
+              <div className="row" style={{ margin: "0 2rem" }}>
 
-              
-{/*               
+                <div className="form-group col-4" style={{ marginTop: "1rem" }}>
+                  <TextField
+                    id="time"
+                    label="Start Time"
+                    type="time"
+                    name="startTime"
+                    value={this.state.startTime}
+                    onChange={this.handleFormInput}
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    // defaultValue="07:30"
+                    // className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 300, // 5 min
+                    }}
+                  />
+                </div>
+
+
+
                 <div className={`form-group col-4`} >
                   <TextField
                     type="number"
@@ -607,27 +616,27 @@ class CreateJobs extends Component {
                     error={this.state.assigneeRequiredError}
                     onChange={this.handleFormInput}
                   />
-                </div> */}
+                </div>
 
 
 
-                <div className="col-6">
-  
+                <div className="col-4">
+
                   <FormControl variant="outlined" style={{ marginTop: "1rem", width: "90%" }} margin='dense'>
-                        <InputLabel id="demo-simple-select-outlined-label">Job Type</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          id="demo-simple-select-outlined"
-                          value={this.state.jobType}
-                          onChange={this.handleFormInput}
-                          label="Job Type"
-                          name="jobType"
-                        >
-                      
-                          <MenuItem value={'Fixed'}>Fixed</MenuItem>
-                          <MenuItem value={'Hourly Based'}>Hourly Based</MenuItem>
-                        </Select>
-                      </FormControl>
+                    <InputLabel id="demo-simple-select-outlined-label">Job Type</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={this.state.jobType}
+                      onChange={this.handleFormInput}
+                      label="Job Type"
+                      name="jobType"
+                    >
+
+                      <MenuItem value={'Fixed'}>Fixed</MenuItem>
+                      <MenuItem value={'Hourly Based'}>Hourly Based</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
                 {/* <div className="col-1"></div> */}
               </div>
@@ -655,25 +664,25 @@ class CreateJobs extends Component {
 
               <div className="row">
                 <div className="col-3" style={{ margin: " 1rem", width: "90%" }}>
-                  <h4>Location:</h4>
+                  <h5>Location:</h5>
 
                 </div>
 
               </div>
 
               {this.state.locations.map((ll, i) => {
-                  return this.showLocation(i)
-                })}
-                <div className="row">
-                  <div className="col-11"></div>
-                  <div className="col-1">
+                return this.showLocation(i)
+              })}
+              <div className="row">
+                <div className="col-11"></div>
+                <div className="col-1">
                   <div className="form-group">
-                <div>
-                  <i className="fa fa-plus" onClick={this.addLocation}></i>
-                </div>
-              </div>
+                    <div>
+                      <i className="fa fa-plus" onClick={this.addLocation}></i>
+                    </div>
                   </div>
                 </div>
+              </div>
 
               <br />
 

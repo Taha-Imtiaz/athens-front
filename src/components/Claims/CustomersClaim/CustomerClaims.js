@@ -27,7 +27,7 @@ const CustomerClaims = (props) => {
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims?.data?.claims?.total;
+  var totalCount = claims.claims ?.data ?.claims ?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
@@ -81,24 +81,26 @@ const CustomerClaims = (props) => {
     // });
   };
   const updateClaimData = () => {
-    let ob = {
-      timestamp: new Date(),
-      value: update,
-    };
-    let newData = cloneDeep(data.docs);
-    console.log(newData, updateIndex);
-    newData[updateIndex].updates.push(ob);
-    var { showMessage, history } = props;
-    updateClaim(newData[updateIndex])
-      .then((res) => {
-        if (res.data.status == 200) {
-          data.docs[updateIndex].updates = res.data.claim.updates;
-          setShow(false);
-          setUpdate("");
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+    if (update.length > 0) {
+      let ob = {
+        timestamp: new Date(),
+        value: update,
+      };
+      let newData = cloneDeep(data.docs);
+      console.log(newData, updateIndex);
+      newData[updateIndex].updates.push(ob);
+      var { showMessage, history } = props;
+      updateClaim(newData[updateIndex])
+        .then((res) => {
+          if (res.data.status == 200) {
+            data.docs[updateIndex].updates = res.data.claim.updates;
+            setShow(false);
+            setUpdate("");
+            showMessage(res.data.message);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
   const handleAddUpdate = (e) => {
     setUpdate(e.target.value);
@@ -192,12 +194,13 @@ const CustomerClaims = (props) => {
                 {data.docs &&
                   data.docs.map((x, i) => {
                     return (
-                      <div className="card" style={{ cursor: "pointer" }}>
+                      <div className="card">
                         <div
                           style={{
                             height: "4rem",
                             overflow: "hidden",
                             width: "100%",
+                            cursor: "pointer"
                           }}
                           className="card-header"
                           id="headingOne"
@@ -205,7 +208,7 @@ const CustomerClaims = (props) => {
                         >
                           <div className="col-3">
                             <h6 className={`${style.jobId}`}>
-                              {x?.job?.jobId}
+                              {x ?.job ?.jobId}
                             </h6>
                           </div>
 
@@ -234,13 +237,13 @@ const CustomerClaims = (props) => {
                           >
                             {x.updates.length > 0
                               ? <div>
-                               { x.updates[x.updates.length - 1].timestamp.split("T")[0]}
-                               <span> | </span> { x.updates[x.updates.length - 1].timestamp.split("T")[1].split(".")[0]}
-                              </div> 
+                                {x.updates[x.updates.length - 1].timestamp.split("T")[0]}
+                                <span> | </span> {x.updates[x.updates.length - 1].timestamp.split("T")[1].split(".")[0]}
+                              </div>
                               : <div>
                                 {x.createdAt.split("T")[0]} <span> | </span> {x.createdAt.split("T")[1].split(".")[0]}
                               </div>
-                              }
+                            }
                           </div>
                         </div>
 
@@ -271,11 +274,11 @@ const CustomerClaims = (props) => {
                                         <p className={style.p2}>${y.price}</p>
                                       </div>
                                     </div>
-                                    <hr/>
+                                    <hr />
                                   </div>
                                 );
                               })}
-                             
+
                               {x.claims.length > 0 ? (
                                 <div className="row">
                                   <div className="col-10">
@@ -315,21 +318,21 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
                               </div>
-                              <div className="row" style={{margin:"1rem 0"}}>
-                             <div className="col-8"></div>
+                              <div className="row" style={{ margin: "1rem 0" }}>
+                                <div className="col-8"></div>
                                 <div
-                                className="col-2"
+                                  className="col-2"
                                   style={{ transform: "translateX(2.5rem)" }}
-                              >
-                                {x.status == "open" ? (
-                                  <Button
-                                    name="Add Update"
-                                    onClick={() => handleShow(i)}
-                                  ></Button>
-                                ) : null}
-                              </div>
+                                >
+                                  {x.status == "open" ? (
+                                    <Button
+                                      name="Add Update"
+                                      onClick={() => handleShow(i)}
+                                    ></Button>
+                                  ) : null}
+                                </div>
 
-                              <div
+                                <div
                                   className="col-2"  >
                                   {x.status == "open" ? (
                                     <Button
@@ -339,7 +342,7 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
                               </div>
-                             
+
                             </div>
                           </div>
                         </div>
@@ -349,10 +352,10 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>

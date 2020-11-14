@@ -776,7 +776,7 @@ const DailySchedule = (props) => {
         )}
       </div>
 
-      <div className={`col-3 ${style.mov}`}>
+      <div className={`col-3 ${style.mov}`} >
         <h4 className={style.movehead}>Movers</h4>
         {movers &&
           movers.map((list, i) => {

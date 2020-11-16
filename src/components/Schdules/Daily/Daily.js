@@ -480,9 +480,9 @@ const DailySchedule = (props) => {
     popover: {
       pointerEvents: "none",
     },
-    paper: {
-      padding: theme.spacing(1),
-    },
+    // paper: {
+    //   padding: theme.spacing(1),
+    // },
   }));
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);

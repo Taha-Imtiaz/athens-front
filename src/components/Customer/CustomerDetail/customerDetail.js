@@ -874,6 +874,7 @@ const CustomerDetail = (props) => {
                           onHide={handleClose}
                           animation={false}
                           centered
+                          scrollable
 
                         >
                           <Modal.Header closeButton>

@@ -113,11 +113,36 @@ const JobDetails = (props) => {
                         </p>
                       )) : <p>Not Added</p>}
                       <div>
-                        <Modal dialogClassName={`${style.modal}`}
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-2"></div>
+                  <div className="col-10">
+                    <button
+                      type="button"
+                      onClick={handleShow}
+                      type="submit"
+                      className={`btn btn-primary ${style.btnCustom}`}
+                      style={{
+                        background: "#0275d8",
+                        border: "none",
+                        outline: "none",
+                        padding: "0.5rem 1rem",
+                        color: "#fff",
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      Activities
+                    </button>
+                    <Modal dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
                           animation={false}
                           centered
+                          scrollable
 
                         >
                           <Modal.Header closeButton>
@@ -146,29 +171,6 @@ const JobDetails = (props) => {
                             {/* <Button variant="primary">Add Activity</Button> */}
                           </Modal.Footer>
                         </Modal>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-2"></div>
-                  <div className="col-10">
-                    <button
-                      type="button"
-                      onClick={handleShow}
-                      type="submit"
-                      className={`btn btn-primary ${style.btnCustom}`}
-                      style={{
-                        background: "#0275d8",
-                        border: "none",
-                        outline: "none",
-                        padding: "0.5rem 1rem",
-                        color: "#fff",
-                        borderRadius: "0.25rem",
-                      }}
-                    >
-                      Activities
-                    </button>
                   </div>
                 </div>
               </div>

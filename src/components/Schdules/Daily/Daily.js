@@ -44,7 +44,6 @@ const DailySchedule = (props) => {
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const { getalljobs, getalljobsfiveday, jobs, movers } = props;
 
-  console.log(movers);
   useEffect(() => {
     // get-all-jobs-on-date
     getalljobs({
@@ -55,7 +54,6 @@ const DailySchedule = (props) => {
   useEffect(() => {
     const { movers } = props;
     if (movers) {
-      console.log(movers);
     }
     getalljobsfiveday({
       date: date,
@@ -81,7 +79,6 @@ const DailySchedule = (props) => {
 
     const doc = new jsPDF("p", "pt");
     const date = new Date();
-    console.log(date);
     const columns = [
       { title: "Name", dataKey: "name" },
       { title: "Email", dataKey: "email" },
@@ -301,13 +298,13 @@ const DailySchedule = (props) => {
   }, []);
 
   const handleDateChange = (i) => {
-    console.log(props.jobs);
-    console.log(i);
     setIndexDate(i);
     let date = new Date();
     let itemDate = new Date(date); // starting today
     date.setDate(date.getDate() + i);
     setNextDate(date);
+    setOpenedPopoverId(null);
+    setAnchorEl(null);
     // let date = new Date() + (i + 1);
     // let newDate = new Date(date)
   };
@@ -331,33 +328,20 @@ const DailySchedule = (props) => {
   const handleClose = () => {
     setShow(false);
   };
+
+
   const updateJobAssignee = (e, job) => {
-    console.log("stop");
     e.stopPropagation();
     var { loggedinUser, showMessage } = props;
-
-    console.log(job);
-    // let job = cloneDeep(jobToUpdate);
-    // job.assigneesId = job.assignee.filter((x) => x._id);
-
-    job.userId = loggedinUser._id;
-    job.customerId = job.customer.email;
-    delete job.assignee;
-    delete job.customer;
-    // delete job._id;
-    updateJob(job._id, job)
+    let jobToUpdate = cloneDeep(job)
+    jobToUpdate.userId = loggedinUser._id;
+    jobToUpdate.customerId = jobToUpdate.customer.email;
+    delete jobToUpdate.assignee;
+    delete jobToUpdate.customer;
+    updateJob(jobToUpdate._id, jobToUpdate)
       .then((res) => {
         if (res.data.status == 200) {
           showMessage(res.data.message);
-          // getalljobs({
-          //   date: nextDate.toString(),
-          // });
-          // getalljobsfiveday({
-          //   date: date,
-          // });
-          // showMessage(res.data.message);
-          // // setShow(false);
-          // window.location.reload();
           props.history.push("/schedule/daiily");
         }
       })
@@ -365,6 +349,30 @@ const DailySchedule = (props) => {
         console.log(error);
       });
   };
+
+  const removeAssignee = (e, job, assignee) => {
+    e.stopPropagation();
+    var { loggedinUser, showMessage } = props;
+    let jobToUpdate = cloneDeep(job)
+    jobToUpdate.userId = loggedinUser._id;
+    jobToUpdate.customerId = jobToUpdate.customer.email;
+    let assigneesId = jobToUpdate.assignee.map((x) => x._id);
+    let assigneeIndex = jobToUpdate.assignee.findIndex(x => x._id == assignee)
+    assigneesId.splice(assigneeIndex, 1)
+    jobToUpdate.assigneesId = assigneesId;
+    delete jobToUpdate.assignee;
+    delete jobToUpdate.customer;
+    updateJob(jobToUpdate._id, jobToUpdate)
+      .then((res) => {
+        if (res.data.status == 200) {
+          showMessage(res.data.message);
+          props.history.push("/schedule/daiily");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const onAssigneeSelect = (selectedList, selectedItem) => {
     let job = cloneDeep(jobToUpdate);
@@ -387,24 +395,20 @@ const DailySchedule = (props) => {
     }
   };
   // var handlePropagation = (e) => {
-  //   console.log("stop propagation");
   //     // e.preventDefault();
   //   e.stopPropagation();
   // };
   var jobDetailsNavigate = (jobId) => {
     var { history, movers } = props;
-    console.log("double click is called");
     history.push(`/job/details/${jobId}`);
   };
 
   const onStart = () => {
     // this.setState({ activeDrags: ++this.state.activeDrags });
-    console.log("Start");
   };
 
   const onStop = () => {
     // this.setState({ activeDrags: --this.state.activeDrags });
-    console.log("Stop");
   };
 
   const onDrag = (e, p) => {
@@ -424,22 +428,17 @@ const DailySchedule = (props) => {
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0]
+    var id = document.elementsFromPoint(e.pageX, e.pageY)[4] ?.children[0]
       ?.innerText;
-    console.log(id);
     let jobIndex = props.jobs.data.jobs.findIndex(
       (x) => x.jobId == parseInt(id)
     );
-    console.log(jobIndex);
     if (jobIndex != -1) {
-      console.log(id);
       var moverId = document.elementsFromPoint(e.pageX, e.pageY)[0].children[1]
         .innerHTML;
-      console.log(props.jobs.data.jobs);
       var requiredJob = props.jobs.data.jobs.filter(
         (job) => job.jobId === parseInt(id)
       );
-      console.log(requiredJob);
       let assigneesId = requiredJob[0].assignee.map((x) => x._id);
 
       let index = requiredJob[0].assignee.findIndex((x) => x._id == moverId);
@@ -463,7 +462,6 @@ const DailySchedule = (props) => {
         // setJobToUpdate(requiredJob[0])
         let job = cloneDeep(requiredJob[0]);
         updateJobAssignee(e, job);
-        console.log(job);
       }
 
       // console.log(document.elementsFromPoint(e.pageX, e.pageY)[0].children[1].innerHTML)
@@ -486,18 +484,22 @@ const DailySchedule = (props) => {
   }));
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openedPopoverId, setOpenedPopoverId] = useState(null);
 
-  const handlePopoverOpen = (event) => {
-    console.log(event.currentTarget);
+  const handlePopoverOpen = (event, id) => {
+    event.stopPropagation()
+    setOpenedPopoverId(id);
     setAnchorEl(event.currentTarget);
+
   };
 
-  const handlePopoverClose = () => {
+  const handlePopoverClose = (event) => {
+    event.stopPropagation();
+    setOpenedPopoverId(null);
     setAnchorEl(null);
   };
 
   const open = Boolean(anchorEl);
-
   return (
     <div className={`row ${style.toprow}`}>
       <div className="col-2">
@@ -533,7 +535,7 @@ const DailySchedule = (props) => {
           </ul>
         </div>
         <hr></hr>
-        {props.jobs?.data.jobs.length > 0 && (
+        {props.jobs ?.data.jobs.length > 0 && (
           <div
             className={`row card-header`}
             style={{
@@ -547,7 +549,7 @@ const DailySchedule = (props) => {
             <div className="col-3">Title</div>
             <div
               className="col-2"
-              // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
             >
               Time
             </div>
@@ -583,14 +585,14 @@ const DailySchedule = (props) => {
                   </div>
                   <div
                     className="col-3"
-                    // style={{ transform: "translateX(-1.2rem)" }}
+                  // style={{ transform: "translateX(-1.2rem)" }}
                   >
                     {list.title}
                   </div>
 
                   <div
                     className="col-2"
-                    //  style={{ marginLeft: "0.2rem" }}
+                  //  style={{ marginLeft: "0.2rem" }}
                   >
                     {/* {list.services.map((ser, j) => {
                                             return (
@@ -614,8 +616,8 @@ const DailySchedule = (props) => {
                         <Typography
                           aria-owns={open ? "mouse-over-popover" : undefined}
                           aria-haspopup="true"
-                          onMouseEnter={handlePopoverOpen}
-                          //   onMouseLeave={handlePopoverClose}
+                          onMouseEnter={(e) => handlePopoverOpen(e, list.jobId)}
+                        // onMouseLeave={handlePopoverClose}
                         >
                           {" "}
                           ....
@@ -623,11 +625,11 @@ const DailySchedule = (props) => {
 
                         <Popover
                           id="mouse-over-popover"
-                          className={classes.popover}
-                          classes={{
-                            paper: classes.paper,
-                          }}
-                          open={open}
+                          // className={classes.popover}
+                          // classes={{
+                          //   paper: classes.paper,
+                          // }}
+                          open={openedPopoverId == list.jobId}
                           anchorEl={anchorEl}
                           anchorOrigin={{
                             vertical: "bottom",
@@ -640,23 +642,20 @@ const DailySchedule = (props) => {
                           style={{
                             width: "100%",
                             height: "100%",
-                            zIndex: 10000,
+                            // zIndex: 10000,
                           }}
                           onClose={handlePopoverClose}
-                          disableRestoreFocus
+                        // disableRestoreFocus
                         >
                           {list.assignee.map((assignee) => (
                             <div style={{ display: "flex" }}>
-                              <Typography
-                                style={{ width: "94%" }}
-                                onMouseEnter={handlePopoverOpen}
-                              >{` ${assignee.name} `}</Typography>
+                              {assignee.name}
                               <FontAwesomeIcon
                                 style={{
                                   color: "#a8a8a8",
                                   transform: "translateY(0.2rem)",
                                 }}
-                                onClick={(e) => updateJobAssignee(e, list)}
+                                onClick={(e) => removeAssignee(e, list, assignee._id)}
                                 icon={faTimes}
                                 size="1x"
                               />
@@ -665,8 +664,8 @@ const DailySchedule = (props) => {
                         </Popover>
                       </div>
                     ) : (
-                      " N/A"
-                    )}
+                        " N/A"
+                      )}
                   </div>
                   <div className="col-2">
                     <small
@@ -679,11 +678,11 @@ const DailySchedule = (props) => {
                     >
                       <button
                         onClick={(e) => generatePDF(e, list)}
-                        // onClick = {(e) => handlePropagation(e)}
+                      // onClick = {(e) => handlePropagation(e)}
                       >
                         <i
                           className="fa fa-print"
-                          // onClick={(e) => handlePropagation(e)}
+                        // onClick={(e) => handlePropagation(e)}
                         ></i>
                         Print
                       </button>
@@ -770,10 +769,10 @@ const DailySchedule = (props) => {
             );
           })
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
 
       <div className={`col-3 ${style.mov}`} >
@@ -834,8 +833,8 @@ const DailySchedule = (props) => {
                       ))}
                     </div>
                   ) : (
-                    <h6>Available</h6>
-                  )}
+                      <h6>Available</h6>
+                    )}
                   <hr />
                 </div>
 
@@ -864,7 +863,7 @@ const DailySchedule = (props) => {
             {/* {assignee?.map((assign) => assign.name)} */}
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate?.assignee}
+                selectedValues={jobToUpdate ?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

@@ -225,7 +225,7 @@ class JobsList extends Component {
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
-              style={{ margin: "-2.5rem", width: "15rem" }}
+              style={{ margin: "-2.5rem", width: "15rem",cursor:"pointer" }}
             >
               <a className="dropdown-item" onClick={this.handleSort}>
                 Sort By Name

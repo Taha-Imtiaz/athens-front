@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
 import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import { parse } from "date-fns";
-import { Popover, Typography } from "@material-ui/core";
+import { Avatar, ListItem, ListItemAvatar, ListItemText, Popover, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -648,17 +648,42 @@ const DailySchedule = (props) => {
                         // disableRestoreFocus
                         >
                           {list.assignee.map((assignee) => (
-                            <div style={{ display: "flex" }}>
-                              {assignee.name}
-                              <FontAwesomeIcon
-                                style={{
-                                  color: "#a8a8a8",
-                                  transform: "translateY(0.2rem)",
-                                }}
-                                onClick={(e) => removeAssignee(e, list, assignee._id)}
-                                icon={faTimes}
-                                size="1x"
+                            // <div style={{ display: "flex" }}>
+                            //   {assignee.name}
+                            //   <FontAwesomeIcon
+                            //     style={{
+                            //       color: "#a8a8a8",
+                            //       transform: "translateY(0.2rem)",
+                            //     }}
+                            //     onClick={(e) => removeAssignee(e, list, assignee._id)}
+                            //     icon={faTimes}
+                            //     size="1x"
+                            //   />
+                            // </div>
+                            <div>
+                              <ListItem>
+                              <ListItemText 
+                                primary={assignee.name}
+                                // secondary="Jan 9, 2014"
                               />
+                              <ListItemAvatar>
+                               
+                                  <FontAwesomeIcon 
+                                    style={{
+                                      color: "#a8a8a8",
+                                      float:"right"
+                                      
+                                    }}
+                                    onClick={(e) =>
+                                      removeAssignee(e, list, assignee._id)
+                                    }
+                                    icon={faTimes}
+                                    size="1x"
+                                  />
+                               
+                              </ListItemAvatar>
+                             
+                            </ListItem>
                             </div>
                           ))}
                         </Popover>
@@ -696,7 +721,7 @@ const DailySchedule = (props) => {
                   data-parent="#accordion"
                 >
                   <div className="card-body">
-                    <h5 style={{ margin: "1rem 0" }}>Job Details</h5>
+                    <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
                     <div className="row">
                       <div className="col-3">
                         <h6>Job Id</h6>
@@ -712,7 +737,7 @@ const DailySchedule = (props) => {
                       </div>
                     </div>
 
-                    <div className="row ">
+                    <div className="row" style={{fontSize:"0.92rem"}}>
                       <div className="col-3">
                         {list.jobId} {list.customer.lastName}
                       </div>
@@ -742,7 +767,7 @@ const DailySchedule = (props) => {
                       <p>{list.description}</p>
                     </div>
                     <hr />
-                    <h4 style={{ margin: "1rem 0" }}>Customer Details</h4>
+                    <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
                     <div className="row">
                       <div className="col-4">
                         <h6>Name</h6>
@@ -756,7 +781,7 @@ const DailySchedule = (props) => {
                     </div>
 
                     {/* key={x._id} */}
-                    <div className="row ">
+                    <div className="row " style={{fontSize:"0.92rem"}}>
                       <div className="col-4">
                         {list.customer.firstName} {list.customer.lastName}
                       </div>

@@ -211,7 +211,7 @@ class JobsList extends Component {
           <div className={`col-5 col-md-6 ${style.search}`}>
             <SearchBar type="job" title="Type title or services" />
           </div>
-          <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
+          <div className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}>
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"
@@ -220,7 +220,7 @@ class JobsList extends Component {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              style={{ transform: "translateY(0.2rem)" }}
+              style={{ transform: "translateY(-0.3rem)" }}
             ></i>
             <div
               className="dropdown-menu"
@@ -242,52 +242,33 @@ class JobsList extends Component {
                 onChange={(e) => this.filterJobByDate(e)}
               />
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            {/* <h3 className={style.head}>Jobs List Page</h3> */}
-          </div>
-
-          {/* <div className={`col-4`}>
-            <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Calendar" /> </Link>
-          </div> */}
-
-          <div className="col-6">
-            <div className={`d-flex justify-content-end ${style.buttons}`}>
-              <div
-                className={` ${style.create}`}
-                style={{ paddingRight: "0.5rem" }}
-              >
-                <Link style={{ textDecoration: "none" }} to="/job/create">
-                  <button
+            <div style={{margin: '-0.5rem'}}>
+            <Link style={{ textDecoration: "none" }} to="/job/create">
+                  <Button name="Create New"
                     className=" btn btn-primary"
                     style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
                   >
-                    Create New
-                  </button>
+                    
+                  </Button>
                 </Link>
-              </div>
-              <div className={style.btndel}>
-                {/* <Button name="Delete" /> */}
-              </div>
             </div>
           </div>
         </div>
+      
 
         {jobs[0] && jobs[0].data.jobs.docs.length > 0 ? (
           <div className={`${style.jumbotron}`}>
-            <div className="row" style={{ margin: "1rem", fontWeight: "bold"}}>
+            <div className="row justify-content-around" style={{ margin: "1rem 4%", fontWeight: "bold"}}>
              
-              <div className="col-2" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+              <div className="col-4 col-md-2">
                 Title
               </div>
-              <div className="col-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}  >Date(s)</div>
-              <div className="col-2" style={{display:"flex", justifyContent:"center", alignItems:"center"}}  >Assignee</div>
-              <div className="col-4" style={{display:"flex", justifyContent:"center", alignItems:"center"}}   >
+              <div className="col-4 col-md-2"  >Date(s)</div>
+              <div className="col-4 col-md-3"  >Assignee</div>
+              <div className="col-4 col-md-2"   >
                 Services
               </div>
-              <div className="col-1" style={{transform:"translateX(-2rem)"}} >
+              <div className="col-4 col-md-1" style={{transform:"translateX(-2rem)"}} >
                 Status
               </div>
               {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
@@ -295,7 +276,7 @@ class JobsList extends Component {
               </div> */}
             </div>
 
-            <ul className={style.listGroup}>
+            <ul className="list-group">
               <div className={style.li}>
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
@@ -314,7 +295,7 @@ class JobsList extends Component {
                         }}
                       >
                         <div className="row justify-content-around">
-                          <div className="col-4 col-md-2 text-left">
+                          <div className="col-4 col-md-2">
                             <label>{job.title}</label>
                           </div>
                           <div className="col-4 col-md-2">

@@ -1,7 +1,7 @@
 // import Axios from "axios"
 import { GET_USERS, LOGGEDIN_USER, GET_LOGGEDIN_USER } from "./userConstants"
 import Axios from '../../utils/api'
-import { showMessage } from '../../Redux/Common/commonActions'
+import { showMessage } from '../Common/commonActions'
 
 var baseUrl = "https://athens-backend.herokuapp.com/api/";
 

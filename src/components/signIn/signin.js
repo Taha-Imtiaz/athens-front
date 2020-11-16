@@ -7,9 +7,10 @@ import { Redirect } from 'react-router-dom';
 import SideBar from '../Sidebar/SideBar';
 import { Link } from 'react-router-dom'
 // import axios from 'axios'
-import { login } from '../../Redux/User/userActions'
+// import { login } from '../../Redux/User/userAction
 import API from '../../utils/api'
 import { connect } from "react-redux";
+import { login } from '../../Redux/User/userActions';
 
 
 

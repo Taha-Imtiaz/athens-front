@@ -22,9 +22,20 @@ import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
 import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import { parse } from "date-fns";
-import { Avatar, ListItem, ListItemAvatar, ListItemText, Popover, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretLeft,
+  faCaretRight,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 const DailySchedule = (props) => {
   const [show, setShow] = useState(false);
@@ -32,14 +43,19 @@ const DailySchedule = (props) => {
   const [allMovers, setAllMovers] = useState();
   const [showIndex, setShowIndex] = useState(null);
   const [today, setToday] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  console.log(today, startDate);
   const [day, setDay] = useState(new Date().getDay());
   const [weekNames, setWeekNames] = useState();
   const [tomorrow, setTomorrow] = useState(today.getDay() + 2);
+  const [tomorrowDate, setTomorrowDate] = useState(new Date(today));
   // const [date, setDate] = useState(today.toString().split(' ')[0])
   const [date, setDate] = useState(today.toString());
 
   const [nextDate, setNextDate] = useState(new Date());
   const [indexDate, setIndexDate] = useState(0);
+  var [getCurrentDay, setCurrentDay] = useState(day);
+  console.log(getCurrentDay);
   // const [state, updateState] = React.useState(1);
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const { getalljobs, getalljobsfiveday, jobs, movers } = props;
@@ -47,9 +63,9 @@ const DailySchedule = (props) => {
   useEffect(() => {
     // get-all-jobs-on-date
     getalljobs({
-      date: nextDate.toString(),
+      date: today.toString(),
     });
-  }, [nextDate]);
+  }, [today]);
 
   useEffect(() => {
     const { movers } = props;
@@ -212,7 +228,7 @@ const DailySchedule = (props) => {
       icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
     },
   ];
-
+console.log(props.jobs?.data.jobs)
   useEffect(() => {
     switch (day) {
       case 0:
@@ -298,11 +314,20 @@ const DailySchedule = (props) => {
   }, []);
 
   const handleDateChange = (i) => {
+    console.log(i);
     setIndexDate(i);
+    // let newToday = startDate;
+    // const yesterday = new Date(newToday);
+    // yesterday.setDate(yesterday.getDate() + i);
+    // // newToday.toDateString();
+    // yesterday.toDateString();
+    // setStartDate(yesterday);
+
     let date = new Date();
-    let itemDate = new Date(date); // starting today
-    date.setDate(date.getDate() + i);
-    setNextDate(date);
+    let itemDate = new Date(startDate); // starting today
+    date.setDate(itemDate.getDate() + i);
+    // setStartDate(date);
+    setToday(date);
     setOpenedPopoverId(null);
     setAnchorEl(null);
     // let date = new Date() + (i + 1);
@@ -329,11 +354,10 @@ const DailySchedule = (props) => {
     setShow(false);
   };
 
-
   const updateJobAssignee = (e, job) => {
     e.stopPropagation();
     var { loggedinUser, showMessage } = props;
-    let jobToUpdate = cloneDeep(job)
+    let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
     delete jobToUpdate.assignee;
@@ -353,12 +377,14 @@ const DailySchedule = (props) => {
   const removeAssignee = (e, job, assignee) => {
     e.stopPropagation();
     var { loggedinUser, showMessage } = props;
-    let jobToUpdate = cloneDeep(job)
+    let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
     let assigneesId = jobToUpdate.assignee.map((x) => x._id);
-    let assigneeIndex = jobToUpdate.assignee.findIndex(x => x._id == assignee)
-    assigneesId.splice(assigneeIndex, 1)
+    let assigneeIndex = jobToUpdate.assignee.findIndex(
+      (x) => x._id == assignee
+    );
+    assigneesId.splice(assigneeIndex, 1);
     jobToUpdate.assigneesId = assigneesId;
     delete jobToUpdate.assignee;
     delete jobToUpdate.customer;
@@ -372,7 +398,7 @@ const DailySchedule = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   const onAssigneeSelect = (selectedList, selectedItem) => {
     let job = cloneDeep(jobToUpdate);
@@ -428,14 +454,16 @@ const DailySchedule = (props) => {
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[4] ?.children[0]
-      ?.innerText;
+    console.log(document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0].children[1].children[1].innerHTML);
+    var id = document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0].children[1].children[1].innerHTML;
+   
     let jobIndex = props.jobs.data.jobs.findIndex(
       (x) => x.jobId == parseInt(id)
     );
     if (jobIndex != -1) {
       var moverId = document.elementsFromPoint(e.pageX, e.pageY)[0].children[1]
         .innerHTML;
+        console.log(moverId)
       var requiredJob = props.jobs.data.jobs.filter(
         (job) => job.jobId === parseInt(id)
       );
@@ -468,6 +496,13 @@ const DailySchedule = (props) => {
     } else {
       // window.location.reload();
       var { showMessage } = props;
+      var id = document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0];
+      // ?.innerText;
+      console.log(id);
+      let jobIndex = props.jobs.data.jobs.findIndex(
+        (x) => x.jobId == parseInt(id)
+      );
+      console.log(jobIndex);
       showMessage("Please drop on assignee list.");
       props.history.push("/schedule/daiily");
     }
@@ -487,16 +522,207 @@ const DailySchedule = (props) => {
   const [openedPopoverId, setOpenedPopoverId] = useState(null);
 
   const handlePopoverOpen = (event, id) => {
-    event.stopPropagation()
+    event.stopPropagation();
     setOpenedPopoverId(id);
     setAnchorEl(event.currentTarget);
-
   };
 
   const handlePopoverClose = (event) => {
     event.stopPropagation();
     setOpenedPopoverId(null);
     setAnchorEl(null);
+  };
+
+  const seePreviousWeekDays = () => {
+    let newDay = day === 0 ? 6 : day - 1;
+
+    // setToday();
+    // {
+    //   new Date(new Date().setDate(new Date().getDate() + i)).toDateString();
+    // }
+    let newToday = startDate;
+    const yesterday = new Date(newToday);
+    yesterday.setDate(yesterday.getDate() - 1);
+    // newToday.toDateString();
+    yesterday.toDateString();
+    setStartDate(yesterday);
+    switch (newDay) {
+      case 0:
+        setWeekNames([
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ]);
+        break;
+      case 1:
+        setWeekNames([
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ]);
+        break;
+      case 2:
+        setWeekNames([
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+        ]);
+        break;
+      case 3:
+        setWeekNames([
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+        ]);
+        break;
+      case 4:
+        setWeekNames([
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+        ]);
+        break;
+      case 5:
+        setWeekNames([
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+        ]);
+        break;
+      case 6:
+        setWeekNames([
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ]);
+        break;
+      default:
+        setWeekNames([]);
+    }
+    setIndexDate(indexDate + 1);
+    setDay(newDay);
+  };
+  const seeNextWeekDays = () => {
+    let newDay = day === 6 ? 0 : day + 1;
+
+    let newToday = startDate;
+    const yesterday = new Date(newToday);
+    yesterday.setDate(yesterday.getDate() + 1);
+    // newToday.toDateString();
+    yesterday.toDateString();
+    setStartDate(yesterday);
+
+    switch (newDay) {
+      case 0:
+        setWeekNames([
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ]);
+        break;
+      case 1:
+        setWeekNames([
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ]);
+        break;
+      case 2:
+        setWeekNames([
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+        ]);
+        break;
+      case 3:
+        setWeekNames([
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+        ]);
+        break;
+      case 4:
+        setWeekNames([
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+        ]);
+        break;
+      case 5:
+        setWeekNames([
+          "Friday",
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+        ]);
+        break;
+      case 6:
+        setWeekNames([
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ]);
+        break;
+      default:
+        setWeekNames([]);
+    }
+    setIndexDate(indexDate - 1);
+    setDay(newDay);
   };
 
   const open = Boolean(anchorEl);
@@ -506,10 +732,16 @@ const DailySchedule = (props) => {
         <SideBar routes={routes} />
       </div>
 
-      <div className={`col-7 justify-content-center ${style.fr}`}>
+      <div className={`col-8`}>
         <h5 className={style.head}>Daily Schedule</h5>
-        <div className={style.lists}>
-          <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        
+        <div className={`row ${style.lists}`}>
+          <FontAwesomeIcon
+            className="col-1"
+            icon={faCaretLeft}
+            onClick={() => seePreviousWeekDays()}
+          />
+          <ul className="nav nav-pills col-10" id="pills-tab" role="tablist">
             {weekNames &&
               weekNames.map((name, i) => {
                 return (
@@ -519,6 +751,9 @@ const DailySchedule = (props) => {
                       className={`nav-link active`}
                       style={{
                         background: indexDate == i ? "#00ADEE" : "#6c757d",
+                        height: "2.3rem",
+                        width: "100%",
+                        // fontSize:"0.7rem"
                       }}
                       id="pills-home-tab"
                       data-toggle="pill"
@@ -529,13 +764,40 @@ const DailySchedule = (props) => {
                     >
                       {name}
                     </a>
+                    {indexDate === i ? (
+                      <span class="badge badge-primary">
+                        {today.toDateString()}{" "}
+                      </span>
+                    ) : (
+                      <span class="badge badge-secondary">
+                        {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
+                        {new Date(
+                          new Date().setDate(startDate.getDate() + i)
+                        ).toDateString()}
+                      </span>
+                    )}
                   </li>
                 );
               })}
           </ul>
+          <FontAwesomeIcon
+            icon={faCaretRight}
+            className="col-1"
+            onClick={() => seeNextWeekDays()}
+          />
+          
+        </div>
+        <hr/>
+        <div className="row" style={{margin:"1.5rem 2rem"}}>
+          <div className="col-6">
+            <h6>{`Total Jobs : `} <span style={{fontWeight:"normal"}}>{props.jobs?.data?.jobs.length}</span> </h6>
+          </div>
+          <div className="col-6">
+            <h6>{`Total movers :`} <span style={{fontWeight:"normal"}}> {props.movers?.length}</span> </h6>
+          </div>
         </div>
         <hr></hr>
-        {props.jobs ?.data.jobs.length > 0 && (
+        {props.jobs?.data.jobs.length > 0 && (
           <div
             className={`row card-header`}
             style={{
@@ -545,15 +807,16 @@ const DailySchedule = (props) => {
               borderBottom: "none",
             }}
           >
-            <div className="col-1">Id</div>
-            <div className="col-3">Title</div>
+            
+            <div className="col-2">Title</div>
+            <div className="col-3">Assignee Required</div>
             <div
               className="col-2"
-            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+              // style={{ display: "flex", transform: "translateX(0.75rem)" }}
             >
               Time
             </div>
-            <div className="col-4">Assignee</div>
+            <div className="col-3">Assignee</div>
 
             <div className="col-2">
               <span style={{ float: "right" }}>Action</span>
@@ -569,7 +832,7 @@ const DailySchedule = (props) => {
                   key={i}
                   className="row"
                   style={{
-                    height: "4rem",
+                    // height: "4rem",
                     overflow: "hidden",
                     // backgroundColor: "red",
                     width: "100%",
@@ -580,19 +843,21 @@ const DailySchedule = (props) => {
                   onClick={() => toggleCollapse(i)}
                   onDoubleClick={() => jobDetailsNavigate(list._id)}
                 >
-                  <div className="col-1">
-                    <h6>{list.jobId}</h6>
-                  </div>
+                  
                   <div
-                    className="col-3"
-                  // style={{ transform: "translateX(-1.2rem)" }}
+                    className="col-2"
+                    // style={{ transform: "translateX(-1.2rem)" }}
                   >
                     {list.title}
                   </div>
 
+                  <div className="col-3">
+               <span> {list.assigneeRequired}</span> <span style={{display:"none"}}>{list.jobId}</span>
+                  </div>
+
                   <div
                     className="col-2"
-                  //  style={{ marginLeft: "0.2rem" }}
+                    //  style={{ marginLeft: "0.2rem" }}
                   >
                     {/* {list.services.map((ser, j) => {
                                             return (
@@ -607,13 +872,13 @@ const DailySchedule = (props) => {
                                         })} */}
                     {list.startTime ? list.startTime : "N/A"}
                   </div>
-                  <div className="col-4" style={{ display: "flex" }}>
-                    <i className="fa fa-user"></i>
+                  <div className="col-3" style={{}}>
+                    {/* <i className="fa fa-user"></i> */}
                     {list.assignee.length > 0 ? (
-                      <div style={{ display: "flex" }}>
-                        {`${list.assignee[0].name}   `}
+                      <div style={{ width: "100%" }}>
+                        {/* {`${list.assignee[0].name}   `} */}
 
-                        <Typography
+                        {/* <Typography
                           aria-owns={open ? "mouse-over-popover" : undefined}
                           aria-haspopup="true"
                           onMouseEnter={(e) => handlePopoverOpen(e, list.jobId)}
@@ -621,9 +886,9 @@ const DailySchedule = (props) => {
                         >
                           {" "}
                           ....
-                        </Typography>
+                        </Typography> */}
 
-                        <Popover
+                        {/* <Popover
                           id="mouse-over-popover"
                           // className={classes.popover}
                           // classes={{
@@ -646,51 +911,54 @@ const DailySchedule = (props) => {
                           }}
                           onClose={handlePopoverClose}
                         // disableRestoreFocus
-                        >
-                          {list.assignee.map((assignee) => (
-                            // <div style={{ display: "flex" }}>
-                            //   {assignee.name}
-                            //   <FontAwesomeIcon
-                            //     style={{
-                            //       color: "#a8a8a8",
-                            //       transform: "translateY(0.2rem)",
-                            //     }}
-                            //     onClick={(e) => removeAssignee(e, list, assignee._id)}
-                            //     icon={faTimes}
-                            //     size="1x"
-                            //   />
-                            // </div>
-                            <div>
-                              <ListItem>
-                              <ListItemText 
-                                primary={assignee.name}
-                                // secondary="Jan 9, 2014"
-                              />
-                              <ListItemAvatar>
-                               
-                                  <FontAwesomeIcon 
-                                    style={{
-                                      color: "#a8a8a8",
-                                      float:"right"
-                                      
-                                    }}
-                                    onClick={(e) =>
-                                      removeAssignee(e, list, assignee._id)
-                                    }
-                                    icon={faTimes}
-                                    size="1x"
-                                  />
-                               
-                              </ListItemAvatar>
-                             
-                            </ListItem>
-                            </div>
-                          ))}
-                        </Popover>
+                        > */}
+                        {list.assignee.map((assignee) => (
+                          // <div style={{ display: "flex" }}>
+                          //   {assignee.name}
+                          //   <FontAwesomeIcon
+                          //     style={{
+                          //       color: "#a8a8a8",
+                          //       transform: "translateY(0.2rem)",
+                          //     }}
+                          //     onClick={(e) => removeAssignee(e, list, assignee._id)}
+                          //     icon={faTimes}
+                          //     size="1x"
+                          //   />
+                          // </div>
+
+                          <ListItem
+                            style={{
+                              width: "100%",
+                              position: "relative",
+                              margin: "0",
+                              padding: "0",
+                            }}
+                          >
+                            <ListItemText
+                              style={{ width: "90%" }}
+                              primary={assignee.name}
+                              // secondary="Jan 9, 2014"
+                            />
+
+                            <FontAwesomeIcon
+                              style={{
+                                color: "#a8a8a8",
+                                // float:"right",
+                                width: "10%",
+                              }}
+                              onClick={(e) =>
+                                removeAssignee(e, list, assignee._id)
+                              }
+                              icon={faTimes}
+                              size="1x"
+                            />
+                          </ListItem>
+                        ))}
+                        {/* </Popover> */}
                       </div>
                     ) : (
-                        " N/A"
-                      )}
+                      " N/A"
+                    )}
                   </div>
                   <div className="col-2">
                     <small
@@ -703,11 +971,11 @@ const DailySchedule = (props) => {
                     >
                       <button
                         onClick={(e) => generatePDF(e, list)}
-                      // onClick = {(e) => handlePropagation(e)}
+                        // onClick = {(e) => handlePropagation(e)}
                       >
                         <i
                           className="fa fa-print"
-                        // onClick={(e) => handlePropagation(e)}
+                          // onClick={(e) => handlePropagation(e)}
                         ></i>
                         Print
                       </button>
@@ -737,7 +1005,7 @@ const DailySchedule = (props) => {
                       </div>
                     </div>
 
-                    <div className="row" style={{fontSize:"0.92rem"}}>
+                    <div className="row" style={{ fontSize: "0.92rem" }}>
                       <div className="col-3">
                         {list.jobId} {list.customer.lastName}
                       </div>
@@ -781,7 +1049,7 @@ const DailySchedule = (props) => {
                     </div>
 
                     {/* key={x._id} */}
-                    <div className="row " style={{fontSize:"0.92rem"}}>
+                    <div className="row " style={{ fontSize: "0.92rem" }}>
                       <div className="col-4">
                         {list.customer.firstName} {list.customer.lastName}
                       </div>
@@ -794,13 +1062,13 @@ const DailySchedule = (props) => {
             );
           })
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
 
-      <div className={`col-3 ${style.mov}`} >
+      <div className={`col-2 ${style.mov}`}>
         <h4 className={style.movehead}>Movers</h4>
         {movers &&
           movers.map((list, i) => {
@@ -832,7 +1100,7 @@ const DailySchedule = (props) => {
                     <div>
                       {list.mover.jobs.map((job) => (
                         <div className="row">
-                          <p className="col-8">
+                          <p className="col-7">
                             {/*  */}
                             <Link
                               to={`/job/details/${job._id}`}
@@ -843,23 +1111,21 @@ const DailySchedule = (props) => {
                               </span>
                               {job.title}
                             </Link>
-                          </p>
-
-                          <p className="col-2">
-                            {" "}
-                            <Chip
-                              label={job.startTime}
-                              clickable
-                              color="primary"
-                              variant="outlined"
-                            ></Chip>
-                          </p>
+                          </p>{" "}
+                          <Chip
+                            className="col-4"
+                            label={job.startTime}
+                            clickable
+                            color="primary"
+                            size="small"
+                            variant="outlined"
+                          ></Chip>
                         </div>
                       ))}
                     </div>
                   ) : (
-                      <h6>Available</h6>
-                    )}
+                    <h6>Available</h6>
+                  )}
                   <hr />
                 </div>
 
@@ -888,7 +1154,7 @@ const DailySchedule = (props) => {
             {/* {assignee?.map((assign) => assign.name)} */}
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
+                selectedValues={jobToUpdate?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

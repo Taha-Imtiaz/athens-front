@@ -450,9 +450,17 @@ const DailySchedule = (props) => {
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    console.log(document.elementsFromPoint(e.pageX, e.pageY))
-    console.log(document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1] ?.children[1] ?.innerHTML)
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1] ?.children[1] ?.innerHTML ? document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1] ?.children[1] ?.innerHTML : document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1] ?.children[1] ?.innerHTML;
+    console.log(document.elementsFromPoint(e.pageX, e.pageY));
+    console.log(
+      document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]?.children[1]
+        ?.innerHTML
+    );
+    var id = document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
+      ?.children[1]?.innerHTML
+      ? document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
+          ?.children[1]?.innerHTML
+      : document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
+          ?.children[1]?.innerHTML;
 
     let jobIndex = props.jobs.data.jobs.findIndex(
       (x) => x.jobId == parseInt(id)
@@ -487,7 +495,6 @@ const DailySchedule = (props) => {
         let job = cloneDeep(requiredJob[0]);
         updateJobAssignee(e, job);
       }
-
     } else {
       // window.location.reload();
       var { showMessage } = props;
@@ -712,24 +719,36 @@ const DailySchedule = (props) => {
     setIndexDate(indexDate - 1);
     setDay(newDay);
   };
+  console.log(props.jobs?.data?.jobs);
+
+  const printAllJobs = (e) => {
+    for (var job of props.jobs?.data?.jobs) {
+      generatePDF(e, job);
+    }
+  };
 
   const open = Boolean(anchorEl);
   return (
-    <div className={`row ${style.toprow}`}>
-      <div className="col-2">
+    <div className={`row `}>
+      <div className="col-2" style={{}}>
         <SideBar routes={routes} />
       </div>
 
       <div className={`col-8`}>
         <h5 className={style.head}>Daily Schedule</h5>
 
-        <div className={`row ${style.lists}`}>
+        <div className={`row ${style.lists}`} style={{}}>
+          <div className="col-1" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
           <FontAwesomeIcon
-            className="col-1"
+            // className="col-1"
             icon={faCaretLeft}
+            size="2x"
             onClick={() => seePreviousWeekDays()}
+            
+           
           />
-          <ul className="nav nav-pills col-10" id="pills-tab" role="tablist">
+          </div>
+          <ul className="nav nav-pills col-10" id="pills-tab" role="tablist" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
             {weekNames &&
               weekNames.map((name, i) => {
                 return (
@@ -753,39 +772,65 @@ const DailySchedule = (props) => {
                       {name}
                     </a>
                     {indexDate === i ? (
-                      <span class="badge badge-primary">
+                      <span class="badge badge-primary"
+                      style={{background:"#00ADEE"}}
+                      >
                         {today.toDateString()}{" "}
                       </span>
                     ) : (
-                        <span class="badge badge-secondary">
-                          {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
-                          {new Date(
-                            new Date().setDate(startDate.getDate() + i)
-                          ).toDateString()}
-                        </span>
-                      )}
+                      <span class="badge badge-secondary">
+                        {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
+                        {new Date(
+                          new Date().setDate(startDate.getDate() + i)
+                        ).toDateString()}
+                      </span>
+                    )}
                   </li>
                 );
               })}
           </ul>
-          <FontAwesomeIcon
-            icon={faCaretRight}
-            className="col-1"
-            onClick={() => seeNextWeekDays()}
-          />
-
+          <div className="col-1" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <FontAwesomeIcon
+              icon={faCaretRight}
+              size="2x"
+              // style={{ float:"right" }}
+              onClick={() => seeNextWeekDays()}
+            />
+          </div>
         </div>
         <hr />
-        <div className="row" style={{ margin: "1.5rem 2rem" }}>
-          <div className="col-6">
-            <h6>{`Total Jobs : `} <span style={{ fontWeight: "normal" }}>{props.jobs ?.data ?.jobs.length}</span> </h6>
+        <div className="row">
+          <div className="col-1"></div>
+          <div className="col-4">
+            {props.jobs?.data?.jobs.length > 0 && (
+              <h6>
+                {`Total Jobs : `}{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  {props.jobs?.data?.jobs.length}
+                </span>{" "}
+              </h6>
+            )}
           </div>
-          <div className="col-6">
-            <h6>{`Total movers :`} <span style={{ fontWeight: "normal" }}> {props.movers ?.length}</span> </h6>
+          <div className="col-4">
+            {props.movers?.length > 0 && (
+              <h6>
+                {`Total movers :`}{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  {" "}
+                  {props.movers?.length}
+                </span>{" "}
+              </h6>
+            )}
+          </div>
+          <div className="col-3">
+            <button className = "btn btn-primary" style={{background:"#00ADEE"}} onClick={printAllJobs}>
+              <i className="fa fa-print" style={{padding:"0 0.4rem"}}></i>
+              Print All
+            </button>
           </div>
         </div>
         <hr></hr>
-        {props.jobs ?.data.jobs.length > 0 && (
+        {props.jobs?.data.jobs.length > 0 && (
           <div
             className={`row card-header`}
             style={{
@@ -795,12 +840,11 @@ const DailySchedule = (props) => {
               borderBottom: "none",
             }}
           >
-
-            <div className="col-2">Title</div>
-            <div className="col-3">Assignee Required</div>
+            <div className="col-3">Title</div>
+            <div className="col-2">Ass. Req.</div>
             <div
               className="col-2"
-            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+              // style={{ display: "flex", transform: "translateX(0.75rem)" }}
             >
               Time
             </div>
@@ -831,21 +875,21 @@ const DailySchedule = (props) => {
                   onClick={() => toggleCollapse(i)}
                   onDoubleClick={() => jobDetailsNavigate(list._id)}
                 >
-
                   <div
-                    className="col-2"
-                  // style={{ transform: "translateX(-1.2rem)" }}
+                    className="col-3"
+                    // style={{ transform: "translateX(-1.2rem)" }}
                   >
                     {list.title}
                   </div>
 
-                  <div className="col-3">
-                    <span> {list.assigneeRequired}</span> <span style={{ display: "none" }}>{list.jobId}</span>
+                  <div className="col-2">
+                    <span> {list.assigneeRequired}</span>{" "}
+                    <span style={{ display: "none" }}>{list.jobId}</span>
                   </div>
 
                   <div
                     className="col-2"
-                  //  style={{ marginLeft: "0.2rem" }}
+                    //  style={{ marginLeft: "0.2rem" }}
                   >
                     {/* {list.services.map((ser, j) => {
                                             return (
@@ -922,10 +966,11 @@ const DailySchedule = (props) => {
                               padding: "0",
                             }}
                           >
+                           <span style={{padding:"0 0.4rem"}}> &#42;</span>
                             <ListItemText
                               style={{ width: "90%" }}
                               primary={assignee.name}
-                            // secondary="Jan 9, 2014"
+                              // secondary="Jan 9, 2014"
                             />
 
                             <FontAwesomeIcon
@@ -945,8 +990,8 @@ const DailySchedule = (props) => {
                         {/* </Popover> */}
                       </div>
                     ) : (
-                        " N/A"
-                      )}
+                      " N/A"
+                    )}
                   </div>
                   <div className="col-2">
                     <small
@@ -959,11 +1004,11 @@ const DailySchedule = (props) => {
                     >
                       <button
                         onClick={(e) => generatePDF(e, list)}
-                      // onClick = {(e) => handlePropagation(e)}
+                        // onClick = {(e) => handlePropagation(e)}
                       >
                         <i
                           className="fa fa-print"
-                        // onClick={(e) => handlePropagation(e)}
+                          // onClick={(e) => handlePropagation(e)}
                         ></i>
                         Print
                       </button>
@@ -1050,13 +1095,14 @@ const DailySchedule = (props) => {
             );
           })
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
 
-      <div className={`col-2 ${style.mov}`}>
+      <div className={`col-2 ${style.mov} ${style.scroll}`}>
+        
         <h4 className={style.movehead}>Movers</h4>
         {movers &&
           movers.map((list, i) => {
@@ -1112,8 +1158,8 @@ const DailySchedule = (props) => {
                       ))}
                     </div>
                   ) : (
-                      <h6>Available</h6>
-                    )}
+                    <h6>Available</h6>
+                  )}
                   <hr />
                 </div>
 
@@ -1142,7 +1188,7 @@ const DailySchedule = (props) => {
             {/* {assignee?.map((assign) => assign.name)} */}
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
+                selectedValues={jobToUpdate?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

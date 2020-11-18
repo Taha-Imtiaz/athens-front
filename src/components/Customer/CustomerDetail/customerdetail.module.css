@@ -108,13 +108,13 @@
  
 /* Handle */
 .modal ::-webkit-scrollbar-thumb {
-  background: red; 
+  background: #00ADEE; 
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .modal ::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
+  background: #00ADEE; 
 }
 
 .modal-dialog {

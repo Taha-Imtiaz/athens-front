@@ -27,7 +27,7 @@ const CustomerClaims = (props) => {
   const [showIndex, setShowIndex] = useState(null);
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims ?.data ?.claims ?.total;
+  var totalCount = claims.claims?.data?.claims?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
@@ -41,7 +41,7 @@ const CustomerClaims = (props) => {
   var data = [];
   if (claims.claims) {
     data = claims.claims.data.claims;
-    console.log(data.docs)
+    console.log(data.docs);
   }
 
   const routes = [
@@ -144,34 +144,45 @@ const CustomerClaims = (props) => {
             <div className="col-2">
               <SideBar routes={routes} />
             </div>
-            <div className="col-5">
+            <div className="col-5" style={{margin:" 1rem"}}>
               <h3 className={style.head}>Claims</h3>
             </div>
-            <div className="col-2">
-              <div className={style.btn}>
-                <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
-                  <button
-                    style={{
-                      // transform: "translateX(3.5rem)",
-                      background: "#00ADEE",
-                    }}
-                    className="btn btn-primary"
-                  >
-                    New Claim
-                  </button>{" "}
-                </Link>
-              </div>
+            <div
+              className={`col-2 ${style.btn}`}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-start",
+               margin:" 1rem"
+                // margin:"0 1rem"
+                // background:"red"
+              }}
+            >
+              {/* <div className={style.btn}> */}
+              <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
+                <button
+                  style={{
+                    // transform: "translateX(3.5rem)
+                    background: "#00ADEE",
+                    marginTop: "3%",
+
+                  }}
+                  className={`btn btn-primary `}
+                >
+                  New Claim
+                </button>{" "}
+              </Link>
             </div>
-            <div className="col-2">
-              <div className={`${style.btn}`}>
-                <div className="form-group">
+            <div className="col-2" >
+              
+                <div className="form-group"style={{marginTop:"2%", margin:" 1rem"}}>
                   <select className="form-control" onChange={getClaimsByStatus}>
                     <option value="all">All</option>
                     <option value="open">Open</option>
                     <option value="closed">Closed</option>
                   </select>
                 </div>
-              </div>
+              
             </div>
           </div>
           {data.docs && data.docs.length > 0 ? (
@@ -200,7 +211,7 @@ const CustomerClaims = (props) => {
                             height: "4rem",
                             overflow: "hidden",
                             width: "100%",
-                            cursor: "pointer"
+                            cursor: "pointer",
                           }}
                           className="card-header"
                           id="headingOne"
@@ -208,7 +219,7 @@ const CustomerClaims = (props) => {
                         >
                           <div className="col-3">
                             <h6 className={`${style.jobId}`}>
-                              {x ?.job ?.jobId}
+                              {x?.job?.jobId}
                             </h6>
                           </div>
 
@@ -235,15 +246,26 @@ const CustomerClaims = (props) => {
                               transform: "translate3d(45rem, -5rem, 0)",
                             }}
                           >
-                            {x.updates.length > 0
-                              ? <div>
-                                {x.updates[x.updates.length - 1].timestamp.split("T")[0]}
-                                <span> | </span> {x.updates[x.updates.length - 1].timestamp.split("T")[1].split(".")[0]}
+                            {x.updates.length > 0 ? (
+                              <div>
+                                {
+                                  x.updates[
+                                    x.updates.length - 1
+                                  ].timestamp.split("T")[0]
+                                }
+                                <span> | </span>{" "}
+                                {
+                                  x.updates[x.updates.length - 1].timestamp
+                                    .split("T")[1]
+                                    .split(".")[0]
+                                }
                               </div>
-                              : <div>
-                                {x.createdAt.split("T")[0]} <span> | </span> {x.createdAt.split("T")[1].split(".")[0]}
+                            ) : (
+                              <div>
+                                {x.createdAt.split("T")[0]} <span> | </span>{" "}
+                                {x.createdAt.split("T")[1].split(".")[0]}
                               </div>
-                            }
+                            )}
                           </div>
                         </div>
 
@@ -332,8 +354,7 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
 
-                                <div
-                                  className="col-2"  >
+                                <div className="col-2">
                                   {x.status == "open" ? (
                                     <Button
                                       name="Close Claim"
@@ -342,7 +363,6 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -352,10 +372,10 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
           <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>

@@ -29,6 +29,42 @@
     margin-right: 3%;
     margin-bottom: 5%;
 }
+/* .scroll {
+    padding-right: 20px; 
+    margin-left: -12px;
+    position: sticky;
+    top: 0;
+    height: min-content;
+    overflow-y: scroll;
+} */
+
+body {
+    overflow-x: hidden;
+}
+.scroll {
+    /* background-color: brown; */
+}
+.scroll::-webkit-scrollbar {
+    width: 10px !important;
+    
+  }
+  
+  /* Track */
+  .scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey !important; 
+    border-radius: 10px !important;
+  }
+   
+  /* Handle */
+  .scroll::-webkit-scrollbar-thumb {
+    background: #00ADEE !important;
+    border-radius: 10px !important;
+  }
+  
+  /* Handle on hover */
+  .scroll::-webkit-scrollbar-thumb:hover {
+    background: #00ADEE !important; 
+  }
 
 .para{
     text-align: left;

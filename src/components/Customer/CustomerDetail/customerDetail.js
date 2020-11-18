@@ -897,7 +897,7 @@ const CustomerDetail = (props) => {
                             </div>)}
                           </Modal.Body>
                           <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
+                            <Button variant="primary" style={{background:"#00ADEE"}} onClick={handleClose}>
                               Close
                             </Button>
                             {/* <Button variant="primary">Add Activity</Button> */}

@@ -44,7 +44,6 @@ const DailySchedule = (props) => {
   const [showIndex, setShowIndex] = useState(null);
   const [today, setToday] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
-  console.log(today, startDate);
   const [day, setDay] = useState(new Date().getDay());
   const [weekNames, setWeekNames] = useState();
   const [tomorrow, setTomorrow] = useState(today.getDay() + 2);
@@ -55,7 +54,6 @@ const DailySchedule = (props) => {
   const [nextDate, setNextDate] = useState(new Date());
   const [indexDate, setIndexDate] = useState(0);
   var [getCurrentDay, setCurrentDay] = useState(day);
-  console.log(getCurrentDay);
   // const [state, updateState] = React.useState(1);
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const { getalljobs, getalljobsfiveday, jobs, movers } = props;
@@ -228,7 +226,6 @@ const DailySchedule = (props) => {
       icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
     },
   ];
-console.log(props.jobs?.data.jobs)
   useEffect(() => {
     switch (day) {
       case 0:
@@ -314,7 +311,6 @@ console.log(props.jobs?.data.jobs)
   }, []);
 
   const handleDateChange = (i) => {
-    console.log(i);
     setIndexDate(i);
     // let newToday = startDate;
     // const yesterday = new Date(newToday);
@@ -454,16 +450,16 @@ console.log(props.jobs?.data.jobs)
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    console.log(document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0].children[1].children[1].innerHTML);
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0].children[1].children[1].innerHTML;
-   
+    console.log(document.elementsFromPoint(e.pageX, e.pageY))
+    console.log(document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1] ?.children[1] ?.innerHTML)
+    var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1] ?.children[1] ?.innerHTML ? document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1] ?.children[1] ?.innerHTML : document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1] ?.children[1] ?.innerHTML;
+
     let jobIndex = props.jobs.data.jobs.findIndex(
       (x) => x.jobId == parseInt(id)
     );
     if (jobIndex != -1) {
       var moverId = document.elementsFromPoint(e.pageX, e.pageY)[0].children[1]
         .innerHTML;
-        console.log(moverId)
       var requiredJob = props.jobs.data.jobs.filter(
         (job) => job.jobId === parseInt(id)
       );
@@ -492,17 +488,9 @@ console.log(props.jobs?.data.jobs)
         updateJobAssignee(e, job);
       }
 
-      // console.log(document.elementsFromPoint(e.pageX, e.pageY)[0].children[1].innerHTML)
     } else {
       // window.location.reload();
       var { showMessage } = props;
-      var id = document.elementsFromPoint(e.pageX, e.pageY)[4]?.children[0];
-      // ?.innerText;
-      console.log(id);
-      let jobIndex = props.jobs.data.jobs.findIndex(
-        (x) => x.jobId == parseInt(id)
-      );
-      console.log(jobIndex);
       showMessage("Please drop on assignee list.");
       props.history.push("/schedule/daiily");
     }
@@ -734,7 +722,7 @@ console.log(props.jobs?.data.jobs)
 
       <div className={`col-8`}>
         <h5 className={style.head}>Daily Schedule</h5>
-        
+
         <div className={`row ${style.lists}`}>
           <FontAwesomeIcon
             className="col-1"
@@ -769,13 +757,13 @@ console.log(props.jobs?.data.jobs)
                         {today.toDateString()}{" "}
                       </span>
                     ) : (
-                      <span class="badge badge-secondary">
-                        {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
-                        {new Date(
-                          new Date().setDate(startDate.getDate() + i)
-                        ).toDateString()}
-                      </span>
-                    )}
+                        <span class="badge badge-secondary">
+                          {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
+                          {new Date(
+                            new Date().setDate(startDate.getDate() + i)
+                          ).toDateString()}
+                        </span>
+                      )}
                   </li>
                 );
               })}
@@ -785,19 +773,19 @@ console.log(props.jobs?.data.jobs)
             className="col-1"
             onClick={() => seeNextWeekDays()}
           />
-          
+
         </div>
-        <hr/>
-        <div className="row" style={{margin:"1.5rem 2rem"}}>
+        <hr />
+        <div className="row" style={{ margin: "1.5rem 2rem" }}>
           <div className="col-6">
-            <h6>{`Total Jobs : `} <span style={{fontWeight:"normal"}}>{props.jobs?.data?.jobs.length}</span> </h6>
+            <h6>{`Total Jobs : `} <span style={{ fontWeight: "normal" }}>{props.jobs ?.data ?.jobs.length}</span> </h6>
           </div>
           <div className="col-6">
-            <h6>{`Total movers :`} <span style={{fontWeight:"normal"}}> {props.movers?.length}</span> </h6>
+            <h6>{`Total movers :`} <span style={{ fontWeight: "normal" }}> {props.movers ?.length}</span> </h6>
           </div>
         </div>
         <hr></hr>
-        {props.jobs?.data.jobs.length > 0 && (
+        {props.jobs ?.data.jobs.length > 0 && (
           <div
             className={`row card-header`}
             style={{
@@ -807,12 +795,12 @@ console.log(props.jobs?.data.jobs)
               borderBottom: "none",
             }}
           >
-            
+
             <div className="col-2">Title</div>
             <div className="col-3">Assignee Required</div>
             <div
               className="col-2"
-              // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
             >
               Time
             </div>
@@ -843,21 +831,21 @@ console.log(props.jobs?.data.jobs)
                   onClick={() => toggleCollapse(i)}
                   onDoubleClick={() => jobDetailsNavigate(list._id)}
                 >
-                  
+
                   <div
                     className="col-2"
-                    // style={{ transform: "translateX(-1.2rem)" }}
+                  // style={{ transform: "translateX(-1.2rem)" }}
                   >
                     {list.title}
                   </div>
 
                   <div className="col-3">
-               <span> {list.assigneeRequired}</span> <span style={{display:"none"}}>{list.jobId}</span>
+                    <span> {list.assigneeRequired}</span> <span style={{ display: "none" }}>{list.jobId}</span>
                   </div>
 
                   <div
                     className="col-2"
-                    //  style={{ marginLeft: "0.2rem" }}
+                  //  style={{ marginLeft: "0.2rem" }}
                   >
                     {/* {list.services.map((ser, j) => {
                                             return (
@@ -937,7 +925,7 @@ console.log(props.jobs?.data.jobs)
                             <ListItemText
                               style={{ width: "90%" }}
                               primary={assignee.name}
-                              // secondary="Jan 9, 2014"
+                            // secondary="Jan 9, 2014"
                             />
 
                             <FontAwesomeIcon
@@ -957,8 +945,8 @@ console.log(props.jobs?.data.jobs)
                         {/* </Popover> */}
                       </div>
                     ) : (
-                      " N/A"
-                    )}
+                        " N/A"
+                      )}
                   </div>
                   <div className="col-2">
                     <small
@@ -971,11 +959,11 @@ console.log(props.jobs?.data.jobs)
                     >
                       <button
                         onClick={(e) => generatePDF(e, list)}
-                        // onClick = {(e) => handlePropagation(e)}
+                      // onClick = {(e) => handlePropagation(e)}
                       >
                         <i
                           className="fa fa-print"
-                          // onClick={(e) => handlePropagation(e)}
+                        // onClick={(e) => handlePropagation(e)}
                         ></i>
                         Print
                       </button>
@@ -1062,10 +1050,10 @@ console.log(props.jobs?.data.jobs)
             );
           })
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
 
       <div className={`col-2 ${style.mov}`}>
@@ -1124,8 +1112,8 @@ console.log(props.jobs?.data.jobs)
                       ))}
                     </div>
                   ) : (
-                    <h6>Available</h6>
-                  )}
+                      <h6>Available</h6>
+                    )}
                   <hr />
                 </div>
 
@@ -1154,7 +1142,7 @@ console.log(props.jobs?.data.jobs)
             {/* {assignee?.map((assign) => assign.name)} */}
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate?.assignee}
+                selectedValues={jobToUpdate ?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

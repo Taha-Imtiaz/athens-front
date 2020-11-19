@@ -197,6 +197,7 @@ class CalendarApp extends Component {
                 
                <div>
                  {this.state.currentDayJobs.length !== 0 ? 
+                //  currentDayJobs is a object
                 <div className={`card ${style.cardCustom}`}>
                 <div className="card-body">
                   <h5 className="card-title">

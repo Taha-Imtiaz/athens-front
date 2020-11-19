@@ -3,33 +3,44 @@ import style from "./CreateJobs.module.css";
 import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import FormControl from '@material-ui/core/FormControl'
+import FormControl from "@material-ui/core/FormControl";
 import API from "../../../utils/api";
-import { getAllMovers, createJob } from "../../../Redux/Job/jobActions";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { connect } from 'react-redux';
-import { clone, cloneDeep, uniqBy } from "lodash"
-import { InputLabel, Menu, MenuItem, Button, Select, TextareaAutosize, TextField } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles'
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import {
+  getAllMovers,
+  createJob,
+  getServices,
+  addService,
+} from "../../../Redux/Job/jobActions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { connect } from "react-redux";
+import { clone, cloneDeep, uniqBy } from "lodash";
+import {
+  InputLabel,
+  Menu,
+  MenuItem,
+  Button,
+  Select,
+  TextareaAutosize,
+  TextField,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
 // import { FormControl } from "react-bootstrap";
 import { Autocomplete } from "@material-ui/lab";
 var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes()
+var time = today.getHours() + ":" + today.getMinutes();
 
-console.log(time)
+console.log(time);
 
 class CreateJobs extends Component {
-
-
   initialState = {
     title: "",
     description: "",
@@ -40,7 +51,7 @@ class CreateJobs extends Component {
     startTime: time,
     anchorEl: "",
     meetTime: "",
-    assigneeRequired: '',
+    assigneeRequired: "",
     from: "",
     to: "",
     titleError: "",
@@ -57,10 +68,11 @@ class CreateJobs extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: [{ from: '', to: '' }],
+    locations: [{ from: "", to: "" }],
     fromTo: [],
-    assigneeRequiredError: '',
-    selectedDate: new Date()
+    assigneeRequiredError: "",
+    selectedDate: new Date(),
+    newService: "",
   };
   // assigneeOptions = [{ name: 'Person1', id: 1 , value: "00:00:00"}, { name: 'Person2', id: 2 , value: "00:00:00"}]
   options = [
@@ -76,7 +88,7 @@ class CreateJobs extends Component {
     { id: 5, name: "Baby" },
     { id: 6, name: "Hot Tub" },
   ];
-  jobTypeOptions = ""
+  jobTypeOptions = "";
   timeOptions = [
     { name: "01:00 am", id: 1, value: "01:00:00" },
     { name: "02:00 am", id: 2, value: "02:00:00" },
@@ -103,9 +115,7 @@ class CreateJobs extends Component {
     { name: "11:00 pm", id: 23, value: "23:00:00" },
     { name: "12:00 am", id: 24, value: "00:00:00" },
   ];
-  ;
   state = this.initialState;
-
 
   //  useStyles = makeStyles((theme) => ({
   //   formControl: {
@@ -119,12 +129,20 @@ class CreateJobs extends Component {
 
   // classes = this.useStyles();
   componentDidMount = () => {
-    getAllMovers()
+    getAllMovers().then((res) => {
+      var moverId = res.data.movers.map((mover) => mover._id);
+      this.setState({
+        assigneeList: res.data.movers,
+        customerId: this.props.location.customerId,
+        // serviceOptions: this.servicesOptions,
+      });
+    });
+    getServices()
       .then((res) => {
-        var moverId = res.data.movers.map((mover) => mover._id);
+        console.log(res);
+        console.log(this.state.services);
         this.setState({
-          assigneeList: res.data.movers,
-          customerId: this.props.location.customerId,
+          serviceOptions: res.data.data,
         });
       })
       .catch((error) => {
@@ -134,109 +152,108 @@ class CreateJobs extends Component {
 
   handleChange = (event) => {
     this.setState({
-      jobTypeOptions: event.target.value
-    })
+      jobTypeOptions: event.target.value,
+    });
   };
   MaterialUIPickers = () => {
     // The first commit of Material-UI
     // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-  }
-
-
+  };
 
   handleClick = (event) => {
     this.setState({
-      anchorEl: event.currentTarget
-    })
-  }
+      anchorEl: event.currentTarget,
+    });
+  };
 
   handleClose = () => {
     this.setState({
-      anchorEl: null
+      anchorEl: null,
     });
-  }
+  };
   handleDateChange = (date) => {
-    console.log(date)
+    console.log(date);
     //  this.setState({
     //    dates:date
     //  })
   };
   addLocation = () => {
-    if (this.state.locations[0].from.length > 0 && this.state.locations[0].to.length > 0) {
-      this.setState({ locations: [...this.state.locations, { from: null, to: null }] });
+    if (
+      this.state.locations[0].from.length > 0 &&
+      this.state.locations[0].to.length > 0
+    ) {
+      this.setState({
+        locations: [...this.state.locations, { from: null, to: null }],
+      });
     }
-  }
+  };
 
   addDate = () => {
     if (this.state.dates[0]) {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
-  }
-  componentWillUnmount() {
-  }
+  };
+  componentWillUnmount() {}
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
-    updateLocation[i].from = e.target.value
+    updateLocation[i].from = e.target.value;
     this.setState({ locations: updateLocation });
-  }
+  };
 
   hanldeLocationInputTo = (i, e) => {
     let updateLocation = this.state.locations.slice();
-    updateLocation[i].to = e.target.value
+    updateLocation[i].to = e.target.value;
     this.setState({ locations: updateLocation });
-  }
-
+  };
 
   showLocation = (i) => {
-    return <div className="row">
-      <div className="col-1"></div>
-      <div className="col-5">
-        <div className="form-group">
+    return (
+      <div className="row">
+        <div className="col-1"></div>
+        <div className="col-5">
+          <div className="form-group">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              style={{ width: "90%", margin: "0 1rem" }}
+              fullWidth
+              size="small"
+              id="from"
+              label="Pickup"
+              name="from"
+              value={this.state.locations[i].from}
+              onChange={(e) => this.hanldeLocationInput(i, e)}
+              error={this.state.locationfromError}
+            />
+          </div>
+        </div>
+
+        <div className="col-5">
           <TextField
+            fullWidth
             variant="outlined"
             margin="normal"
             required
             style={{ width: "90%", margin: "0 1rem" }}
-            fullWidth
             size="small"
-            id="from"
-            label="Pickup"
-            name="from"
-            value={this.state.locations[i].from}
-            onChange={(e) => this.hanldeLocationInput(i, e)}
-            error={this.state.locationfromError}
+            id="to"
+            label="Drop Off"
+            name="to"
+            value={this.state.locations[i].to}
+            onChange={(e) => this.hanldeLocationInputTo(i, e)}
+            error={this.state.locationtoError}
           />
         </div>
-
+        <div className="col-1"></div>
       </div>
-
-      <div className="col-5">
-        <TextField
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          required
-          style={{ width: "90%", margin: "0 1rem" }}
-
-          size="small"
-          id="to"
-          label="Drop Off"
-          name="to"
-          value={this.state.locations[i].to}
-          onChange={(e) => this.hanldeLocationInputTo(i, e)}
-          error={this.state.locationtoError}
-        />
-
-      </div>
-      <div className="col-1"></div>
-    </div>
-  }
-
+    );
+  };
 
   handleFormInput = (event) => {
     var { name, value } = event.target;
-    console.log(name, value)
+    console.log(name, value);
     this.setState({ [name]: value });
     if (value == "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
@@ -310,16 +327,7 @@ class CreateJobs extends Component {
       locationtoError ||
       assigneeRequiredError
     ) {
-      console.log(titleError,
-        descriptionError,
-        multiError,
-        // startDateError,
-        timeError,
-        // assigneeError,
-        locationfromError,
-        locationtoError,
-        assigneeRequiredError)
-      this.setState({
+      console.log(
         titleError,
         descriptionError,
         multiError,
@@ -329,6 +337,17 @@ class CreateJobs extends Component {
         locationfromError,
         locationtoError,
         assigneeRequiredError
+      );
+      this.setState({
+        titleError,
+        descriptionError,
+        multiError,
+        // startDateError,
+        timeError,
+        // assigneeError,
+        locationfromError,
+        locationtoError,
+        assigneeRequiredError,
       });
       return false;
     }
@@ -337,13 +356,12 @@ class CreateJobs extends Component {
   };
 
   handleStartDate = (date, i) => {
-    let newState = cloneDeep(this.state)
+    let newState = cloneDeep(this.state);
     newState.dates[i] = date;
     this.setState({
-      dates: newState.dates
+      dates: newState.dates,
     });
   };
-
 
   onSelect = (selectedList, selectedItem) => {
     let serviceItem = selectedItem;
@@ -398,14 +416,13 @@ class CreateJobs extends Component {
   };
 
   mySubmitHandler = (event) => {
-    var { createJob, history, loggedInUser } = this.props
+    var { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
-    console.log(event)
+    console.log(event);
 
     const isValid = this.validate();
-    console.log(isValid, event)
+    console.log(isValid, event);
     if (isValid) {
-
       this.setState({
         ...this.state,
       });
@@ -425,10 +442,11 @@ class CreateJobs extends Component {
         customerId,
         selectedDate,
         assigneeRequired,
-        jobType
+        jobType,
       } = this.state;
 
-      let stringDates = dates.map(x => x.toDateString())
+      let stringDates = dates.map((x) => x.toDateString());
+
       var createJobObj = {
         title,
         description,
@@ -445,23 +463,64 @@ class CreateJobs extends Component {
         assigneeRequired,
         customerId,
         userId: loggedInUser._id,
-        jobType
+        jobType,
       };
-      console.log(createJobObj)
+      console.log(createJobObj);
       var { history } = this.props;
       createJob(createJobObj)
         .then((res) => {
-          history.push("/job");
+          console.log(res.data);
+          // history.push("/job/details/" + res.data._id);
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
     }
   };
 
   servicesChanged = (newValue) => {
-    let arr = uniqBy(newValue, 'id');
-    this.setState({ services: arr })
-  }
+    let arr = uniqBy(newValue, "_id");
+    this.setState({ services: arr });
+  };
+  addCustomService = (e) => {
+    // console.log(this.state.serviceOptions)
+    e.preventDefault();
+
+    console.log(e.target.value);
+
+    if (e.target.value) {
+      this.setState({
+        newService: e.target.value,
+      });
+      console.log(this.state.newService);
+
+      var serviceAdded = {
+        name: this.state.newService,
+      };
+      if (e.keyCode === 13 && e.target.value) {
+        addService({
+          service: {
+            name: this.state.newService,
+          },
+        }).then((res) => {
+          console.log(res.data);
+          let services = cloneDeep(this.state.services);
+          services.push(res.data.data);
+
+          let serviceOptions = cloneDeep(this.state.serviceOptions);
+          serviceOptions.push(res.data.data);
+          this.setState({
+            serviceOptions,
+            services,
+          });
+        });
+      }
+    } else {
+      this.setState({
+        newService: "",
+      });
+    }
+
+    console.log(this.state.serviceOptions);
+  };
 
   render() {
     return (
@@ -472,27 +531,28 @@ class CreateJobs extends Component {
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               <div>
-
                 <TextField
                   variant="outlined"
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   required
-
                   size="small"
                   id="customerId"
                   label="Cutomer Email"
                   name="customerId"
                   autoComplete="customerId"
                   autoFocus
-                  value={this.state.customerId} onChange={this.handleFormInput}
+                  value={this.state.customerId}
+                  onChange={this.handleFormInput}
                 />
               </div>
-
 
               <div>
                 {this.state.dates.map((x, i) => {
                   return (
-                    <div className="col-12" style={{ margin: "1rem 2rem", width: "90%" }}>
+                    <div
+                      className="col-12"
+                      style={{ margin: "1rem 2rem", width: "90%" }}
+                    >
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid>
                           <KeyboardDatePicker
@@ -504,29 +564,29 @@ class CreateJobs extends Component {
                             value={this.state.dates[i]}
                             onChange={(e) => this.handleStartDate(e, i)}
                             KeyboardButtonProps={{
-                              'aria-label': 'change date',
+                              "aria-label": "change date",
                             }}
                           />
                         </Grid>
                       </MuiPickersUtilsProvider>
                     </div>
-                  )
+                  );
                 })}
               </div>
-
-
 
               <div className="row">
                 <div className="col-11"></div>
                 <div className="form-group col-1" onClick={this.addDate}>
-                  <i className="fa fa-plus" style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}></i>
+                  <i
+                    className="fa fa-plus"
+                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                  ></i>
                 </div>
               </div>
 
               <div>
                 <TextField
                   variant="outlined"
-
                   required
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   size="small"
@@ -536,7 +596,8 @@ class CreateJobs extends Component {
                   autoComplete="title"
                   autoFocus
                   error={this.state.titleError}
-                  value={this.state.title} onChange={this.handleFormInput}
+                  value={this.state.title}
+                  onChange={this.handleFormInput}
                 />
               </div>
 
@@ -554,28 +615,39 @@ class CreateJobs extends Component {
                 ></TextareaAutosize>
               </div>
 
-
-
-              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%" }}>
+              <div
+                className="form-group"
+                style={{ margin: "1rem 2rem", width: "90%" }}
+              >
                 <Autocomplete
                   multiple
+                  noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   onChange={(event, newValue) => {
-                    this.servicesChanged(newValue)
+                    this.servicesChanged(newValue);
                   }}
                   limitTags={10}
                   id="multiple-limit-tags"
-                  options={this.servicesOptions}
-                  getOptionLabel={(option) => option.name ? option.name : option}
+                  options={
+                    this.state.serviceOptions ? this.state.serviceOptions : []
+                  }
+                  getOptionLabel={(option) =>
+                    option.name ? option.name : option
+                  }
                   error={this.state.multiError}
                   renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Services" placeholder="Services" />
+                    <TextField
+                      onKeyUp={(e) => this.addCustomService(e)}
+                      {...params}
+                      variant="outlined"
+                      label="Services"
+                      placeholder="Services"
+                    />
                   )}
                 />
               </div>
 
               <div className="row" style={{ margin: "0 2rem" }}>
-
                 <div className="form-group col-4" style={{ marginTop: "1rem" }}>
                   <TextField
                     id="time"
@@ -598,9 +670,7 @@ class CreateJobs extends Component {
                   />
                 </div>
 
-
-
-                <div className={`form-group col-4`} >
+                <div className={`form-group col-4`}>
                   <TextField
                     type="number"
                     variant="outlined"
@@ -618,12 +688,15 @@ class CreateJobs extends Component {
                   />
                 </div>
 
-
-
                 <div className="col-4">
-
-                  <FormControl variant="outlined" style={{ marginTop: "1rem", width: "90%" }} margin='dense'>
-                    <InputLabel id="demo-simple-select-outlined-label">Job Type</InputLabel>
+                  <FormControl
+                    variant="outlined"
+                    style={{ marginTop: "1rem", width: "90%" }}
+                    margin="dense"
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Job Type
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
@@ -632,9 +705,8 @@ class CreateJobs extends Component {
                       label="Job Type"
                       name="jobType"
                     >
-
-                      <MenuItem value={'Fixed'}>Fixed</MenuItem>
-                      <MenuItem value={'Hourly Based'}>Hourly Based</MenuItem>
+                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                      <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -663,15 +735,16 @@ class CreateJobs extends Component {
             ) : null} */}
 
               <div className="row">
-                <div className="col-3" style={{ margin: " 1rem", width: "90%" }}>
+                <div
+                  className="col-3"
+                  style={{ margin: " 1rem", width: "90%" }}
+                >
                   <h5>Location:</h5>
-
                 </div>
-
               </div>
 
               {this.state.locations.map((ll, i) => {
-                return this.showLocation(i)
+                return this.showLocation(i);
               })}
               <div className="row">
                 <div className="col-11"></div>
@@ -686,10 +759,15 @@ class CreateJobs extends Component {
 
               <br />
 
-
               <div className="form-group">
                 <div className={style.btnsubmit}>
-                  <button className="btn btn-primary" onClick={this.mySubmitHandler} >Submit</button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={this.mySubmitHandler}
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </form>
@@ -701,12 +779,11 @@ class CreateJobs extends Component {
 }
 
 var actions = {
-  createJob
-}
-
+  createJob,
+};
 
 var mapStateToProps = (state) => ({
-  loggedInUser: state.users.user
+  loggedInUser: state.users.user,
 });
 
 export default connect(mapStateToProps, actions)(CreateJobs);

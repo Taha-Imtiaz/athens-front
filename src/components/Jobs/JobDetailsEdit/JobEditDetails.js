@@ -4,7 +4,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Multiselect } from "multiselect-react-dropdown";
 import { connect } from "react-redux";
-import { getJob, getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
+import {
+  getJob,
+  getAllMovers,
+  updateJob,
+  addService,
+  getServices,
+} from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -67,6 +73,7 @@ class JobEditDetails extends Component {
     statusOptions: ["Booked", "Completed", "Pending"],
     status: "",
     assigneeRequired: "",
+    newService: "",
   };
 
   handleStartDate = (date, i) => {
@@ -166,11 +173,23 @@ class JobEditDetails extends Component {
       };
       getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
-        var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
+        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
         });
       });
+      getServices()
+        .then((res) => {
+          console.log(res);
+          console.log(this.state.services);
+          this.setState({
+            serviceOptions: res.data.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       var services = res.data.job.services.map((service, index) => {
         return { id: index + 1, name: service };
       });
@@ -199,6 +218,7 @@ class JobEditDetails extends Component {
         show: false,
         customerId: res.data.job.customer.email,
         assigneeRequired: res.data.job.assigneeRequired,
+        // newService: res.data.job.newService,
       });
     });
   };
@@ -320,7 +340,7 @@ class JobEditDetails extends Component {
           showMessage(res.data.message);
           history.push("/job/details/" + jobId);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     }
   };
   onSelect = (selectedList, selectedItem) => {
@@ -437,8 +457,48 @@ class JobEditDetails extends Component {
   };
 
   servicesChanged = (newValue) => {
-    let arr = uniqBy(newValue, "id");
+    let arr = uniqBy(newValue, "_id");
     this.setState({ services: arr });
+  };
+
+  addCustomService = (e) => {
+    // console.log(this.state.serviceOptions)
+    e.preventDefault();
+
+    console.log(e.target.value);
+
+    if (e.target.value) {
+      this.setState({
+        newService: e.target.value,
+      });
+      console.log(this.state.newService);
+
+      var serviceAdded = {
+        name: this.state.newService,
+      };
+      if (e.keyCode === 13 && e.target.value) {
+        addService({
+          service: {
+            name: this.state.newService,
+          },
+        }).then((res) => {
+          console.log(res.data);
+          let services = cloneDeep(this.state.services);
+          services.push(res.data.data);
+
+          let serviceOptions = cloneDeep(this.state.serviceOptions);
+          serviceOptions.push(res.data.data);
+          this.setState({
+            serviceOptions,
+            services,
+          });
+        });
+      }
+    } else {
+      this.setState({
+        newService: "",
+      });
+    }
   };
 
   render() {
@@ -539,20 +599,23 @@ class JobEditDetails extends Component {
                 {this.state.customerId && (
                   <Autocomplete
                     multiple
-                    margin="normal"
+                    noOptionsText={`Add '${this.state.newService}' to Services`}
                     value={this.state.services}
                     onChange={(event, newValue) => {
                       this.servicesChanged(newValue);
                     }}
                     limitTags={10}
                     id="multiple-limit-tags"
-                    options={this.servicesOptions}
+                    options={
+                      this.state.serviceOptions ? this.state.serviceOptions : []
+                    }
                     getOptionLabel={(option) =>
                       option.name ? option.name : option
                     }
-                    defaultValue={this.state.services.splice()}
+                    error={this.state.multiError}
                     renderInput={(params) => (
                       <TextField
+                        onKeyUp={(e) => this.addCustomService(e)}
                         {...params}
                         variant="outlined"
                         label="Services"
@@ -626,7 +689,7 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                <div className={`form-group col-4`} >
+                <div className={`form-group col-4`}>
                   <TextField
                     type="number"
                     variant="outlined"
@@ -647,10 +710,12 @@ class JobEditDetails extends Component {
                 <div className={`col-4`}>
                   <div
                     class="form-group"
-                    style={{ transform: "translateX(3rem)", marginTop: "0.4rem", width: "100%" }}
+                    style={{
+                      transform: "translateX(3rem)",
+                      marginTop: "0.4rem",
+                      width: "100%",
+                    }}
                   >
-
-
                     <FormControl
                       variant="outlined"
                       style={{ width: "90%" }}
@@ -667,12 +732,16 @@ class JobEditDetails extends Component {
                         label="Job Type"
                         name="jobType"
                       >
-                        <MenuItem value={this.state.jobType}>{this.state.jobType}</MenuItem>
+                        <MenuItem value={this.state.jobType}>
+                          {this.state.jobType}
+                        </MenuItem>
                         {this.state.jobType === "fixed" ? (
-                          <MenuItem value={"hourly based"}>hourly based</MenuItem>
+                          <MenuItem value={"hourly based"}>
+                            hourly based
+                          </MenuItem>
                         ) : (
-                            <MenuItem value={"fixed"}>fixed</MenuItem>
-                          )}
+                          <MenuItem value={"fixed"}>fixed</MenuItem>
+                        )}
                       </Select>
                     </FormControl>
                   </div>
@@ -793,9 +862,9 @@ class JobEditDetails extends Component {
           </div>
         </div> */}
           <div className={`${style.tron2}`}>
-            {note ?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
+            {note?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
 
-            {note ?.map((note) => (
+            {note?.map((note) => (
               <div style={{ display: "flex" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
@@ -831,15 +900,11 @@ class JobEditDetails extends Component {
             </div>
           </div>
           <div className="row">
-            <div
-              className={`col-6 ${style.btnalign}`}
-
-            >
+            <div className={`col-6 ${style.btnalign}`}>
               <button
                 type="submit"
                 className={`btn btn-primary ${style.btnCustom}`}
                 onClick={this.handleJobUpdate}
-
                 style={{ width: "90%", transform: "translateX(2rem)" }}
               >
                 Update
@@ -850,7 +915,6 @@ class JobEditDetails extends Component {
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
-
                   width: "90%",
                   // transform:"translateX(-1.5rem)"
                 }}

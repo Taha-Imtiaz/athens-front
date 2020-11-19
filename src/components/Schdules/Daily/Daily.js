@@ -450,17 +450,18 @@ const DailySchedule = (props) => {
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    console.log(document.elementsFromPoint(e.pageX, e.pageY));
+    console.log(parseInt(document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
+    ?.children[1]?.innerHTML));
     console.log(
       document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]?.children[1]
         ?.innerHTML
     );
     var id = document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
       ?.children[1]?.innerHTML
-      ? document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
-          ?.children[1]?.innerHTML
-      : document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
-          ?.children[1]?.innerHTML;
+      ? parseInt(document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
+      ?.children[1]?.innerHTML)
+      : parseInt(document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
+      ?.children[1]?.innerHTML)
 
     let jobIndex = props.jobs.data.jobs.findIndex(
       (x) => x.jobId == parseInt(id)
@@ -1101,8 +1102,8 @@ const DailySchedule = (props) => {
         )}
       </div>
 
-      <div className={`col-2 ${style.mov} ${style.scroll}`}>
-        
+      <div className={`col-2 ${style.mov}`} id ="mov"> 
+        <div className = {style.scroll}>
         <h4 className={style.movehead}>Movers</h4>
         {movers &&
           movers.map((list, i) => {
@@ -1169,6 +1170,8 @@ const DailySchedule = (props) => {
               </div>
             );
           })}
+        </div>
+        
       </div>
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>

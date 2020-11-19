@@ -120,3 +120,20 @@ export var confirmJob = async (obj) => {
   var confirmation = await Axios.post(`user/confirm-booking`, obj);
   return confirmation;
 };
+export var getServices = async () => {
+  try {
+    var services  = await Axios.get("user/get-services")
+    return services
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export var addService = async (serviceObj) => {
+  try {
+    var serviceAdded = await Axios.post("user/add-services", serviceObj)
+    return serviceAdded
+  } catch (error) {
+    console.log(error)
+  }
+}

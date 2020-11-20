@@ -41,16 +41,16 @@
 body {
     overflow-x: hidden;
 }
-.scroll {
+/* .scroll {
     display: block;
-  /* width: 10em; */
+  
   overflow-y: hidden;
   overflow-x: hidden;
   width: 100%;
   clear: both;
   display: inline-block;
   height: 32em;
-}
+} */
 .movname {
     /* overflow: hidden; */
 }

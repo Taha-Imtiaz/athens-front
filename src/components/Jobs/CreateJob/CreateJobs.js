@@ -193,7 +193,7 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
@@ -467,12 +467,14 @@ class CreateJobs extends Component {
       };
       console.log(createJobObj);
       var { history } = this.props;
-      createJob(createJobObj)
-        .then((res) => {
-          console.log(res.data);
-          // history.push("/job/details/" + res.data._id);
-        })
-        .catch((error) => {});
+      createJob(createJobObj, (job) => {
+        history.push("/job/details/" + job.data.data._id);
+      })
+      // .then((res) => {
+      //   console.log(res.data);
+      //   // history.push("/job/details/" + res.data._id);
+      // })
+      // .catch((error) => {});
     }
   };
 

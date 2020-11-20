@@ -259,7 +259,7 @@ const CustomerDetail = (props) => {
 
                       {customer.subContacts.length !== 0 ? (
                         <div>
-                          <h4>Sub Contact</h4>
+                          <h4>Alternate Contact</h4>
 
                           <div>
                             <div className="accordion" id="accordionExample">

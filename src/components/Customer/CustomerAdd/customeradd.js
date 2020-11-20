@@ -43,7 +43,7 @@ class CustomerAdd extends Component {
         let firstNameError = ''
         let lastNameError = ''
         let phoneNumberError = ''
-       
+
 
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -70,11 +70,11 @@ class CustomerAdd extends Component {
         // if (!this.state.phoneContacts) {
         //     altnumberError = "Phone Number should not be empty"
         // }
-     
 
 
-        if (emailError || firstNameError || lastNameError || phoneNumberError ) {
-            this.setState({ firstNameError, lastNameError, emailError, phoneNumberError})
+
+        if (emailError || firstNameError || lastNameError || phoneNumberError) {
+            this.setState({ firstNameError, lastNameError, emailError, phoneNumberError })
             return false
         }
 
@@ -94,7 +94,7 @@ class CustomerAdd extends Component {
     }
 
     hanldeContactsInput = (e, i) => {
-       
+
         let updatedContacts = this.state.subContacts.slice();
         updatedContacts[i][e.target.name] = e.target.value
         this.setState({ subContacts: updatedContacts });
@@ -118,11 +118,12 @@ class CustomerAdd extends Component {
             console.log(subContacts)
             var x = subContacts[0].phone.length
             console.log(x)
-            if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
-            addCustomer(addCustomerObj, () => {
-                history.goBack();
+            // if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
+            addCustomer(addCustomerObj, (customer) => {
+                console.log(customer)
+                history.push('/customer/detail/' + customer.data.data._id)
             })
-        }
+            // }
         }
     }
 
@@ -142,74 +143,74 @@ class CustomerAdd extends Component {
         return (
             <div className={`${style.formStyle}`}>
                 <div className={`${style.form} `}>
-                <h3 className={style.head}>Create New Customer</h3>
-                <div >
+                    <h3 className={style.head}>Create New Customer</h3>
+                    <div >
 
-                    <form onSubmit={this.mySubmitHandler}>
-                       
-             <TextField
-            variant="outlined"
-            required
-            style = {{margin:"1rem 2rem", width:"92%"}}
-            id="firstName"
-            size="small"
-            label="First Name"
-            name="firstName"
-            autoComplete="firstName"
-            autoFocus
-            error = {this.state.firstNameError}
-            value={this.state.firstName} onChange={this.handleFormInput}
-          />
-                      
+                        <form onSubmit={this.mySubmitHandler}>
 
-                        {/* {this.state.firstNameError ? (
+                            <TextField
+                                variant="outlined"
+                                required
+                                style={{ margin: "1rem 2rem", width: "92%" }}
+                                id="firstName"
+                                size="small"
+                                label="First Name"
+                                name="firstName"
+                                autoComplete="firstName"
+                                autoFocus
+                                error={this.state.firstNameError}
+                                value={this.state.firstName} onChange={this.handleFormInput}
+                            />
+
+
+                            {/* {this.state.firstNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.firstNameError}
 
 
 
                             </div>) : null} */}
-                      
-                      <TextField
-           variant="outlined"
-           required
-           style = {{margin:"1rem 2rem", width:"92%"}}
-            required
-          
-            id="lastName"
-            size="small"
-            label="Last Name"
-            name="lastName"
-            autoComplete="lastName"
-            error = {this.state.lastNameError}
-            value={this.state.lastName} onChange={this.handleFormInput}
-          />
-                        {/* {this.state.lastNameError ? (
+
+                            <TextField
+                                variant="outlined"
+                                required
+                                style={{ margin: "1rem 2rem", width: "92%" }}
+                                required
+
+                                id="lastName"
+                                size="small"
+                                label="Last Name"
+                                name="lastName"
+                                autoComplete="lastName"
+                                error={this.state.lastNameError}
+                                value={this.state.lastName} onChange={this.handleFormInput}
+                            />
+                            {/* {this.state.lastNameError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.lastNameError}
 
                             </div>) : null} */}
 
 
-                        
-                          
+
+
                             <TextField
-          variant="outlined"
-           
-          required
-       
-          style = {{margin:"1rem 2rem", width:"92%"}}
-            required
-           
-            size="small"
-            id="phone"
-            label="Phone Number"
-            name="phone"
-            autoComplete="phone"
-            error = {this.state.phoneNumberError}
-            value={this.state.phone} onChange={this.handleFormInput}
-          />
-                        {/* {this.state.phoneNumberError ? (
+                                variant="outlined"
+
+                                required
+
+                                style={{ margin: "1rem 2rem", width: "92%" }}
+                                required
+
+                                size="small"
+                                id="phone"
+                                label="Phone Number"
+                                name="phone"
+                                autoComplete="phone"
+                                error={this.state.phoneNumberError}
+                                value={this.state.phone} onChange={this.handleFormInput}
+                            />
+                            {/* {this.state.phoneNumberError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.phoneNumberError}
 
@@ -218,100 +219,100 @@ class CustomerAdd extends Component {
                             </div>) : null} */}
 
 
-                     
-    
-                      
+
+
+
                             <TextField
-               variant="outlined"
-           
-               required
-            
-               style = {{margin:"1rem 2rem", width:"92%"}}
-            required
-          
-            size="small"
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            error = {this.state.emailError}
-            
-            value={this.state.email} onChange={this.handleFormInput}
-          />
-                        {/* {this.state.emailError ? (
+                                variant="outlined"
+
+                                required
+
+                                style={{ margin: "1rem 2rem", width: "92%" }}
+                                required
+
+                                size="small"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                error={this.state.emailError}
+
+                                value={this.state.email} onChange={this.handleFormInput}
+                            />
+                            {/* {this.state.emailError ? (
                             <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
                                 {this.state.emailError}
 
 
 
                             </div>) : null} */}
-                    </form>
-                    <h3 style = {{margin:"0 2rem"}}>Sub Contact</h3>
-                    {this.state.subContacts.map((x, i) => {
-                        return (
-                            <div key={i}>
-                                <form >
-                                    
+                        </form>
+                        <h4 style={{ margin: "0 2rem" }}>Alternate Contact</h4>
+                        {this.state.subContacts.map((x, i) => {
+                            return (
+                                <div key={i}>
+                                    <form >
+
                                         {/* <InputLabel htmlFor ="phone_number">Phone Number</InputLabel>
                                         <Input  id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
-                                  
+
                                         <TextField
-          variant="outlined"
-          required
-       
-          style = {{margin:"1rem 1.5rem", width:"92%"}}
-            size="small"
-            // required
-          
-            id="phone_number"
-            label="Phone Number"
-            name="phone"
-            autoComplete="phone_number"
-            error = {this.state.subContactPhoneError}
-            
-            value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)}
-          />
+                                            variant="outlined"
+                                            required
+
+                                            style={{ margin: "1rem 1.5rem", width: "92%" }}
+                                            size="small"
+                                            // required
+
+                                            id="phone_number"
+                                            label="Phone Number"
+                                            name="phone"
+                                            autoComplete="phone_number"
+                                            error={this.state.subContactPhoneError}
+
+                                            value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)}
+                                        />
 
 
-                                  
+
                                         {/* <InputLabel htmlFor="emailalt">Email address</InputLabel>
                                         <Input type="email" id = "emailalt"  name="email" value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
                                         {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                                         <TextField
-           variant="outlined"
-           
-           required
-        
-           style = {{margin:"1rem 1.5rem", width:"92%"}}
-            // required
-          
-            id="emailalt"
-            label="Email Address"
-            size="small"
-            name="email"
-            autoComplete="emailalt"
-            error = {this.state.subContactEmailError}
-            value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)}
-          />
+                                            variant="outlined"
 
-                                </form>
+                                            required
+
+                                            style={{ margin: "1rem 1.5rem", width: "92%" }}
+                                            // required
+
+                                            id="emailalt"
+                                            label="Email Address"
+                                            size="small"
+                                            name="email"
+                                            autoComplete="emailalt"
+                                            error={this.state.subContactEmailError}
+                                            value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)}
+                                        />
+
+                                    </form>
+                                </div>
+                            )
+                        })}
+                        < div className="form-group">
+                            <div style={{ float: 'right' }} className="row">
+                                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
+                                <Button onClick={this.addContacts} name="Add Another"></Button>
                             </div>
-                        )
-                    })}
-                    < div className="form-group">
-                        <div style={{ float: 'right' }} className = "row">
-                            {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
-                            <Button onClick={this.addContacts} name="Add Another"></Button>
+                        </div>
+                        <div className="row">
+                            <div className={`col-12`}>
+                                <button onClick={this.mySubmitHandler} className={`btn btn-primary ${style.button}`}>Submit</button>
+                                {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
+                            </div>
                         </div>
                     </div>
-                    <div className="row">
-                    <div className={`col-12` }>
-                        <button  onClick={this.mySubmitHandler}  className ={ `btn btn-primary ${style.button}`}>Submit</button>
-                        {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-                    </div>
-                    </div>
-                </div>
-            </div >
+                </div >
             </div>
         );
     }

@@ -49,11 +49,16 @@ export var getAllMovers = async () => {
     console.log(error);
   }
 };
-export var createJob = (newJobObj) => {
+export var createJob = (newJobObj, callback) => {
   return async (dispatch) => {
     try {
       var newJob = await Axios.post("user/create-job", newJobObj);
-      dispatch(showMessage(newJob.data.message));
+      if (newJob.data.status == 200) {
+        callback(newJob);
+        dispatch(showMessage(newJob.data.message));
+      } else {
+        dispatch(showMessage(newJob.data.message));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +127,7 @@ export var confirmJob = async (obj) => {
 };
 export var getServices = async () => {
   try {
-    var services  = await Axios.get("user/get-services")
+    var services = await Axios.get("user/get-services")
     return services
   } catch (error) {
     console.log(error)

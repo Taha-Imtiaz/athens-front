@@ -114,7 +114,7 @@ class CalendarApp extends Component {
     return (
       <div>
         <div className={`row ${style.toprow}`}>
-          <div className="col-8">
+          <div className="col-9">
             <div className={style.cal}>
               <Calendar
                 // selectable
@@ -122,7 +122,7 @@ class CalendarApp extends Component {
                 events={this.state.myEventsList}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500, width: "90%" }}
+                style={{ height: 500, width: "99%" }}
                 views={{
                   month: true,
                 }}
@@ -133,7 +133,7 @@ class CalendarApp extends Component {
             </div>
           </div>
 
-          <div className="col-3">
+          <div className="col-3 text-center">
             {this.state.job ? (
               <div>
                 <h5 className={style.head}>Job Details</h5>
@@ -221,7 +221,7 @@ class CalendarApp extends Component {
                     </Link>
                   </p>
                 </div>
-              </div> : <h6>No Jobs Available for today</h6> 
+              </div> : <h6>No Jobs Available</h6> 
                 }
                </div>
                 }

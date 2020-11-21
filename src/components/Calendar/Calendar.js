@@ -53,6 +53,7 @@ class CalendarApp extends Component {
       .then((res) => {
         this.setState({
           currentDayJobs: res.data.jobs,
+          date: date
         });
       })
       .catch((error) => {
@@ -79,6 +80,7 @@ class CalendarApp extends Component {
   changeDate = (x) => {
     console.log(x);
     var date = x;
+    console.log(date)
     getJobsByDate(x).then((res) => {
       let jobs = [];
       res.data.jobs.map((x) => {
@@ -102,6 +104,7 @@ class CalendarApp extends Component {
           console.log(res)
         this.setState({
           currentDayJobs: res.data.jobs,
+          date:date
         });
       })
       .catch((error) => {
@@ -114,7 +117,10 @@ class CalendarApp extends Component {
     getJob(e.id)
       .then((res) => {
         console.log(res.data);
-        this.setState({ currentDayJobs: res.data.job });
+        this.setState({ 
+          currentDayJobs: res.data.job ,
+          date: res.data.job.dates
+        });
         console.log(res);
       })
       .catch((error) => {
@@ -147,58 +153,37 @@ class CalendarApp extends Component {
           </div>
 
           <div className="col-3 text-center">
-            {this.state.job ? (
-              <div>
-                <h5 className={style.head}>{new Date().toString()}</h5>
-
-                  <div className="card-header row"
-                  id="headingOne"
-                  onClick={() => this.toggleCollapse()}>
-
-
-               <div>
-               {this.state.job.description}
-               </div>
-
-                <div
-                  id="#collapse"
-                  // className={this.state.showIndex== i ? "show" : "collapse"}
-                  aria-labelledby="headingOne"
-                  
-                  data-parent="#accordion"
-                >
-                  <div className="card-body">
-                    <h5>{this.state.job.title}</h5>
-                    <h6 >
-                      {this.state.job.status}
-                    </h6>
-                    <p style={{ whiteSpace: "pre" }}>
-                      {this.state.job.description}
-                    </p>
-                    <p >
-                      Customer:
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        to={`/customer/detail/${this.state.job.customer._id}`}
-                      >
-                        &nbsp;
-                        {this.state.job.customer.email}
-                      </Link>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              </div>
-            ) : (
+          
               <div>
                
                 {this.state.currentDayJobs.length  ?
                 <div>
-                  {this.state.currentDayJobs.map((job) => (
-                  <div>
-                    <div className={`card ${style.cardCustom}`}>
+                   <h6>{this.state.date.toDateString()}</h6>
+                  {this.state.currentDayJobs.map((job,i) => (
+                  <div className = "card"
+                  style = {{
+                    marginBottom:"1.5rem", 
+                  // boxShadow: "0px 2px lightgrey"
+                }}
+                  >
+                     <div
+                  className="card-header"
+                  id="headingOne"
+                  onClick={() => this.toggleCollapse(i)}
+                 
+                  
+                >
+              <h5 className="btn-link">{job.title}</h5>
+                </div>
+
+
+                    <div  
+                    id="#collapse"
+                  className={this.state.showIndex === i ? "show" : "collapse"}
+                  aria-labelledby="headingOne"
+                  data-parent="#accordion">
                       <div className="card-body">
-                        <h5 className="card-title">{job.title}</h5>
+                      
                         <h6 className="card-subtitle mb-2 text-muted">
                           {job.status}
                         </h6>
@@ -222,14 +207,27 @@ class CalendarApp extends Component {
                 </div> :
                 
                <div>
+                    <h6>{this.state.date[0]}</h6>
                  {this.state.currentDayJobs.length !== 0 ? 
                 //  currentDayJobs is a object
-                <div className={`card ${style.cardCustom}`}>
+                 <div id="accordion">
+                   <div className="card">
+                  <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                   <h5 className="btn-link">
+              { this.state.currentDayJobs?.title}
+              
+              </h5>
+               </div>
+                 <div  
+                    id="collapseOne"
+                    class = "collapse show"
+                  // className={this.state.showIndex === i ? "show" : "collapse"}
+                  aria-labelledby="headingOne"
+                  data-parent="#accordion">
+                   
+
                 <div className="card-body">
-                  <h5 className="card-title">
-                    { this.state.currentDayJobs?.title}
-                    
-                    </h5>
+                 
                   <h6 className="card-subtitle mb-2 text-muted">
                  { this.state.currentDayJobs?.status}   
                   </h6>
@@ -247,110 +245,27 @@ class CalendarApp extends Component {
                     </Link>
                   </p>
                 </div>
-              </div> : <h6>No Jobs Available</h6> 
+                </div>
+
+
+
+            </div>
+             
+            </div>
+            
+                
+              : <h6>No Jobs Available</h6> 
                 }
                </div>
                 }
                 </div>
              
-            )}
+         
             
 
 
 
-                {/* <div
-                  key={i}
-                  className="row"
-                  style={{
-                    // height: "4rem",
-                    overflow: "hidden",
-                    // backgroundColor: "red",
-                    width: "100%",
-                    display: "flex",
-                  }}
-                  className="card-header"
-                  id="headingOne"
-                  onClick={() => this.toggleCollapse(i)}
-                  onDoubleClick={() => jobDetailsNavigate(list._id)}
-                >
-
-                  <div
-                  id="#collapse"
-                  className={this.state.showIndex== i ? "show" : "collapse"}
-                  aria-labelledby="headingOne"
-                  data-parent="#accordion"
-                >
-                  <div className="card-body">
-                    <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
-                    <div className="row">
-                      <div className="col-3">
-                        <h6>Job Id</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Title</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Type</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Status</h6>
-                      </div>
-                    </div>
-
-                    <div className="row" style={{ fontSize: "0.92rem" }}>
-                      <div className="col-3">
-                        {list.jobId} {list.customer.lastName}
-                      </div>
-                      <div className="col-3">{list.title}</div>
-                      <div className="col-3">{list.jobType}</div>
-                      <div className="col-3">
-                        <Chip
-                          label={list.status}
-                          clickable
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        ></Chip>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <h5
-                        style={{
-                          margin: "1rem 0",
-                          transform: "translateX(1rem)",
-                        }}
-                      >
-                        Job Description
-                      </h5>
-                    </div>
-                    <div className="row" style={{ margin: "0.4rem 0" }}>
-                      <p>{list.description}</p>
-                    </div>
-                    <hr />
-                    <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
-                    <div className="row">
-                      <div className="col-4">
-                        <h6>Name</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Email</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Phone</h6>
-                      </div>
-                    </div>*/}
-
-                    {/* key={x._id} */}
-                    {/* <div className="row " style={{ fontSize: "0.92rem" }}>
-                      <div className="col-4">
-                        {list.customer.firstName} {list.customer.lastName}
-                      </div>
-                      <div className="col-4">{list.customer.email}</div>
-                      <div className="col-4">{list.customer.phone}</div>
-                    </div>
-                  </div>
-                </div>
-                </div>  */}
+               
            </div>
          </div>
        </div>

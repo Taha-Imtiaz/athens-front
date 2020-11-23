@@ -909,7 +909,7 @@ const DailySchedule = (props) => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6>
-              Total Assignee:
+              Total Assignee Req.:
               {props.jobs?.data?.jobs.length > 0 ? (
                 props.jobs.data.jobs.reduce(
                   (sum, currentValue) => sum + currentValue.assigneeRequired,
@@ -1209,7 +1209,7 @@ const DailySchedule = (props) => {
 
                     <div className="row" style={{ fontSize: "0.92rem" }}>
                       <div className="col-3">
-                        {list.jobId} {list.customer.lastName}
+                        {list.jobId}
                       </div>
                       <div className="col-3">{list.title}</div>
                       <div className="col-3">{list.jobType}</div>

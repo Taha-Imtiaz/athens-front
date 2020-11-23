@@ -266,14 +266,19 @@ const CustomerList = (props) => {
                   </div>
                 </ul>
               </div>
-            </div>
 
-            <Pagination
+              <div className = {style.jumbotron}>
+          <Pagination
               itemCount={totalCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={handlePageChange}
+              
             />
+          </div>
+            </div>
+
+        
           </div>
         ) : (
             <div className="text-center">

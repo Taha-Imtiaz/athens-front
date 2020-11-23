@@ -26,6 +26,9 @@ color: #00ADEE;
 *{
   /* overflow-x: hidden; */
 }
+.page-item.active .page-link {
+  background-color: #00ADEE !important;
+}
 @media only screen and (max-width:576px) {
  .form_style {
    font-size: 0.9rem;

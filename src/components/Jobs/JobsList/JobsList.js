@@ -8,14 +8,27 @@ import { connect } from "react-redux";
 import { getAllJobs, filterJobsByDate } from "../../../Redux/Job/jobActions";
 import Pagination from "../../Pagination/Pagination";
 import SearchBar from "../../SearchBar/SearchBar";
-import { Popover } from "reactstrap";
-import { PopoverHeader, PopoverBody } from "reactstrap";
+import  Popover  from "@material-ui/core/Popover";
+// import { PopoverHeader, PopoverBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
+import { Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { compose } from "redux";
 
-const width = window.innerWidth;
+
+
+
+const styles = theme => ({
+  popover: {
+    pointerEvents: 'none',
+  },
+  paper: {
+    padding: theme.spacing(1),
+  },
+});
 
 class JobsList extends Component {
   state = {
@@ -23,12 +36,17 @@ class JobsList extends Component {
     startDateTo2: "",
     startDateTo3: "",
     startDateTo4: "",
+    anchorEl: null,
+    openedPopoverId: null,
+    openedDatePopoverId:null,
+    openedAssigneePopoverId:null,
     pageSize: 10,
     currentPage: 1,
     popoverOpen: false,
+
     show: false,
     dates: "",
-    jobToConfirm: ""
+    jobToConfirm: "",
   };
   handleToggle = () =>
     this.setState({
@@ -38,7 +56,7 @@ class JobsList extends Component {
   handleShow = (data) => {
     this.setState({
       show: true,
-      jobToConfirm: data
+      jobToConfirm: data,
     });
   };
 
@@ -71,7 +89,7 @@ class JobsList extends Component {
       page: 1,
     };
     getAllJobs(jobObj);
-  }
+  };
   // var [pageSize, setPageSize] = useState(10);
   // var [currentPage, setCurrentPage] = useState(1)
   componentDidMount = () => {
@@ -155,22 +173,21 @@ class JobsList extends Component {
   };
 
   filterJobByDate = (e) => {
-
-    var { filterJobsByDate } = this.props
+    var { filterJobsByDate } = this.props;
     this.setState({
       dates: e.target.value,
     });
-    var { dates } = this.state
-    let date = new Date(e.target.value)
+    var { dates } = this.state;
+    let date = new Date(e.target.value);
     var DateFilters = {
       filters: {
         dates: date.toString(),
         movedDate: "",
-        startYearMonth: ""
+        startYearMonth: "",
       },
-      page: 1
-    }
-    filterJobsByDate(DateFilters)
+      page: 1,
+    };
+    filterJobsByDate(DateFilters);
   };
 
   handleDateFilter = () => {
@@ -192,11 +209,59 @@ class JobsList extends Component {
     };
     getAllJobs(fetchJobsOnPageChange);
   };
+
+  handlePopoverOpen = (event,id) => {
+    console.log(id)
+    this.setState({
+      anchorEl: event.currentTarget,
+      openedPopoverId:id
+    });
+  };
+
+  handlePopoverClose = () => {
+    this.setState({
+      anchorEl: null,
+      openedPopoverId: null
+    });
+  };
+
+  handleDatePopoverOpen = (event,id) => {
+    console.log(id)
+    this.setState({
+      anchorEl: event.currentTarget,
+      openedDatePopoverId:id
+    });
+  };
+
+  handleDatePopoverClose = () => {
+    this.setState({
+      anchorEl: null,
+      openedDatePopoverId: null
+    });
+  };
+
+
+  handleAssigneePopoverOpen = (event,id) => {
+    console.log(id)
+    this.setState({
+      anchorEl: event.currentTarget,
+      openedAssigneePopoverId:id
+    });
+  };
+
+  handleAssigneePopoverClose = () => {
+    this.setState({
+      anchorEl: null,
+      openedAssigneePopoverId: null
+    });
+  };
   render() {
     var { jobs } = this.props;
     var { pageSize, currentPage } = this.state;
+    var {classes} = this.props
+    const open = Boolean(this.state.anchorEl);
 
-    var totalCount = jobs[0] ?.data ?.jobs.total;
+    var totalCount = jobs[0]?.data?.jobs.total;
     var { popoverOpen } = this.state;
     var { show, dates } = this.state;
     return (
@@ -211,7 +276,9 @@ class JobsList extends Component {
           <div className={`col-5 col-md-6 ${style.search}`}>
             <SearchBar type="job" title="Type title or services" />
           </div>
-          <div className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}>
+          <div
+            className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}
+          >
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"
@@ -225,7 +292,7 @@ class JobsList extends Component {
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
-              style={{ margin: "-2.5rem", width: "15rem",cursor:"pointer" }}
+              style={{ margin: "-2.5rem", width: "15rem", cursor: "pointer" }}
             >
               <a className="dropdown-item" onClick={this.handleSort}>
                 Sort By Name
@@ -242,33 +309,38 @@ class JobsList extends Component {
                 onChange={(e) => this.filterJobByDate(e)}
               />
             </div>
-            <div style={{margin: '-0.5rem'}}>
-            <Link style={{ textDecoration: "none" }} to="/job/create">
-                  <Button name="Create New"
-                    className=" btn btn-primary"
-                    style={{ background: "#00ADEE", transform: navigator.userAgent.indexOf("Firefox") !== -1 ? "translateY(-3rem)" : "translateY(-4.3rem)" }}
-                  >
-                    
-                  </Button>
-                </Link>
+            <div style={{ margin: "-0.5rem" }}>
+              <Link style={{ textDecoration: "none" }} to="/job/create">
+                <Button
+                  name="Create New"
+                  className=" btn btn-primary"
+                  style={{
+                    background: "#00ADEE",
+                    transform:
+                      navigator.userAgent.indexOf("Firefox") !== -1
+                        ? "translateY(-3rem)"
+                        : "translateY(-4.3rem)",
+                  }}
+                ></Button>
+              </Link>
             </div>
           </div>
         </div>
-      
 
         {jobs[0] && jobs[0].data.jobs.docs.length > 0 ? (
           <div className={`${style.jumbotron}`}>
-            <div className="row justify-content-around" style={{ margin: "1rem 4%", fontWeight: "bold"}}>
-             
-              <div className="col-4 col-md-2">
-                Title
-              </div>
-              <div className="col-4 col-md-2"  >Date(s)</div>
-              <div className="col-4 col-md-3"  >Assignee</div>
-              <div className="col-4 col-md-2"   >
-                Services
-              </div>
-              <div className="col-4 col-md-1" style={{transform:"translateX(-2rem)"}} >
+            <div
+              className="row justify-content-around"
+              style={{ margin: "1rem 4%", fontWeight: "bold" }}
+            >
+              <div className="col-4 col-md-2">Title</div>
+              <div className="col-4 col-md-2">Date(s)</div>
+              <div className="col-4 col-md-3">Assignee</div>
+              <div className="col-4 col-md-2">Services</div>
+              <div
+                className="col-4 col-md-1"
+                style={{ transform: "translateX(-2rem)" }}
+              >
                 Status
               </div>
               {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
@@ -280,11 +352,13 @@ class JobsList extends Component {
               <div className={style.li}>
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
-                    <Link style={{ textDecoration: "none", color: "black" }}
+                    <Link
+                      style={{ textDecoration: "none", color: "black" }}
                       to={{
                         pathname: `/job/details/${job._id}`,
                         jobProps: job,
-                      }}>
+                      }}
+                    >
                       <li
                         key={i}
                         className=" checkbox list-group-item "
@@ -294,63 +368,161 @@ class JobsList extends Component {
                           // color: "#fff",
                         }}
                       >
-                        <div className="row justify-content-around">
+                        <div className="row justify-content-around" >
                           <div className="col-4 col-md-2">
                             <label>{job.title}</label>
                           </div>
-                          <div className="col-4 col-md-2">
-                            <i className="fa fa-calendar">
+                          <div className="col-4 col-md-2" style = {{display:"flex"}}>
+                            <i className="fa fa-calendar"> </i>
                               {" "}
                               {
-                                <span>
+                                <span style = {{display:"flex"}}>
                                   {job.dates[0]}
-                                  {/* {job.dates.length > 1 && (
-                                  <span>
-                                    <span
-                                      id={`Popover${job._id}`}
-                                    >{` .....`}</span>
-                                    <Popover
-                                      placement="bottom"
-                                      isOpen={popoverOpen}
-                                      target={`Popover${job._id}`}
-                                      toggle={this.handleToggle}
-                                    >
-                                      <PopoverBody>
-                                        {job.dates.filter(
-                                          (date) => date !== date[0]
-                                        )}
-                                      </PopoverBody>
-                                    </Popover>
-                                  </span>
-                                )} */}
+                                {job.dates.length > 1 && 
+                                <div>
+                                    <Typography
+                                aria-owns={
+                                  open ? "mouse-over-popover" : undefined
+                                }
+                                aria-haspopup="true"
+                                onMouseEnter={(e) => this.handleDatePopoverOpen(e, job._id)}
+                                onMouseLeave={this.handleDatePopoverClose}
+                              >
+                                ...
+                              </Typography>
+
+                              <Popover
+                                id="mouse-over-popover"
+                                className={classes.popover}
+                                classes={{
+                                  paper: classes.paper,
+                                }}
+                               
+                                open={this.state.openedDatePopoverId == job._id}
+                                anchorEl={this.state.anchorEl}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                  vertical: "top",
+                                  horizontal: "left",
+                                }}
+                                onClose={this.handlePopoverClose}
+                                disableRestoreFocus
+                              >
+                               {job.dates.map((date) =>  <Typography>{date}</Typography>)}
+                              </Popover>
+                                </div>
+                                }
                                 </span>
                               }
-                            </i>
+                           
                           </div>
                           <div className="col-4 col-md-3">
-                            <span>
+                            <span style={{display:"flex"}}>
                               <i className="fa fa-user"></i>
-                              {job.assignee.length > 0 ? job.assignee.map((x, i) => (
-                                <label
-                                  key={i}
-                                  className={`checkbox-inline ${style.assignee}`}
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {x.name}
-                                </label>
-                              )) : <label className={style.assignee}>N/A</label>}
+                                {job.assignee.length > 0 ?  job.assignee[0].name :"N/A" }
+
+                               {job.assignee.length > 1 && 
+                               
+                               <div>
+                                  <Typography
+                                aria-owns={
+                                  open ? "mouse-over-popover" : undefined
+                                }
+                                aria-haspopup="true"
+                                onMouseEnter={(e) => this.handleAssigneePopoverOpen(e, job._id)}
+                                onMouseLeave={this.handleAssigneePopoverClose}
+                              >
+                                ...
+                              </Typography>
+
+                              <Popover
+                                id="mouse-over-popover"
+                                className={classes.popover}
+                                classes={{
+                                  paper: classes.paper,
+                                }}
+                               
+                                open={this.state.openedAssigneePopoverId == job._id}
+                                anchorEl={this.state.anchorEl}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                  vertical: "top",
+                                  horizontal: "left",
+                                }}
+                                onClose={this.handlePopoverClose}
+                                disableRestoreFocus
+                              >
+                               {job.assignee.map((assignee) =>  <Typography>{assignee.name}</Typography>)}
+                              </Popover>
+
+                               </div>
+                               
+                               }
+                              
+
+                              {/* {job.assignee.length > 0 ? (
+                                job.assignee.map((x, i) => (
+                                  <label
+                                    key={i}
+                                    className={`checkbox-inline ${style.assignee}`}
+                                    htmlFor="defaultCheck1"
+                                  >
+                                    {x.name}
+                                  </label>
+                                ))
+                              ) : (
+                                <label className={style.assignee}>N/A</label>
+                              )} */}
                             </span>
                           </div>
                           <div className="col-4 col-md-2">
-                            <label>
-                              {job.services.map((service) => (
-                                <label
-                                // style={{ display: "flex"}}
-                                >
-                                  {`${service.name} `}
-                                  &nbsp;
-                              </label>
-                              ))}
+                            <label style={{ display: "flex" }}>
+                              {job.services ? job.services[0].name : null}
+                             {job.services.length > 1 &&
+                              <div>
+
+<Typography
+                                aria-owns={
+                                  open ? "mouse-over-popover" : undefined
+                                }
+                                aria-haspopup="true"
+                                onMouseEnter={(e) => this.handlePopoverOpen(e, job._id)}
+                                onMouseLeave={this.handlePopoverClose}
+                              >
+                                ...
+                              </Typography>
+
+                              <Popover
+                                id="mouse-over-popover"
+                                className={classes.popover}
+                                classes={{
+                                  paper: classes.paper,
+                                }}
+                               
+                                open={this.state.openedPopoverId == job._id}
+                                anchorEl={this.state.anchorEl}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                  vertical: "top",
+                                  horizontal: "left",
+                                }}
+                                onClose={this.handlePopoverClose}
+                                disableRestoreFocus
+                              >
+                               {job.services.map((service) =>  <Typography>{service.name}</Typography>)}
+                              </Popover>
+                              </div>
+                              }
+
                             </label>
                           </div>
                           <div className="col-4 col-md-1">
@@ -381,19 +553,31 @@ class JobsList extends Component {
                 })}
               </div>
             </ul>
+            <div className={style.jumbotron}>
+              <Pagination
+                itemCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
 
-            <Modal dialogClassName={`${style.modal}`}
+            <Modal
+              dialogClassName={`${style.modal}`}
               show={show}
               onHide={this.handleClose}
               animation={false}
               centered
-            // backdrop={false}
+              // backdrop={false}
             >
               <Modal.Header closeButton>
                 <Modal.Title>Booking Confirmation</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <JobConfirmation data={this.state.jobToConfirm} close={this.handleCloseAndRefresh} />
+                <JobConfirmation
+                  data={this.state.jobToConfirm}
+                  close={this.handleCloseAndRefresh}
+                />
               </Modal.Body>
               {/* <Modal.Footer>
                             <button
@@ -410,18 +594,12 @@ class JobsList extends Component {
                             </button>
                           </Modal.Footer> */}
             </Modal>
-            <Pagination
-              itemCount={totalCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePageChange}
-            />
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
     );
   }
@@ -432,7 +610,7 @@ var mapStateToProps = (state) => ({
 
 var actions = {
   getAllJobs,
-  filterJobsByDate
+  filterJobsByDate,
 };
 
-export default connect(mapStateToProps, actions)(JobsList);
+export default compose(connect(mapStateToProps, actions), withStyles(styles))(JobsList);

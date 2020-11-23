@@ -396,12 +396,13 @@ const CustomerClaims = (props) => {
               <Button onClick={updateClaimData} name="Add"></Button>
             </Modal.Footer>
           </Modal>
-          <div style={{ transform: "translateX(15rem)" }}>
-            <Pagination
+          <div className = {style.jumbotron}>
+            <Pagination 
               itemCount={totalCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={handlePageChange}
+              
             />
           </div>
         </div>

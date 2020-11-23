@@ -1,6 +1,9 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import "./Pagination.css"
+
+
 const Pagination = (props) => {
     const { itemCount, pageSize, currentPage, onPageChange } = props
 
@@ -10,9 +13,13 @@ const Pagination = (props) => {
     //generate array with thesse numbers
   
     return (
-      <nav>
-        <ul className='pagination' style = {{margin:"0.5rem 1.5rem"}}>
-          {pages.map(page => (<li key={page} className={page === currentPage ? 'page-item active' : 'page-item'}>
+      <nav style={{float:"right"}}>
+        <ul className='pagination' style = {{}}>
+          {pages.map(page => (<li key={page}
+           className={page === currentPage ? `page-item active` : 'page-item'}
+           
+          // style={{backgroundColor:page === currentPage ? '#00ADEE' : '#fff'}}
+          >
             <a className='page-link' onClick={() => onPageChange(page)}>{page}</a></li>))}
   
   

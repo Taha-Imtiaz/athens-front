@@ -8,7 +8,6 @@ import { getUsers } from "../../../Redux/User/userActions";
 import Pagination from "../../Pagination/Pagination";
 import SearchBar from "../../SearchBar/SearchBar";
 
-
 // import { connect } from 'react-redux'
 // import { getAllUsers } from '../../../Redux/user/userActions'
 
@@ -16,12 +15,11 @@ const UsersList = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var usersObj = {
-    
     query: "",
     filter: {
-      type: ""
+      type: "",
     },
-    page: currentPage
+    page: currentPage,
   };
 
   useEffect(() => {
@@ -32,34 +30,33 @@ const UsersList = (props) => {
   var handlePageChange = (page) => {
     var { users, getUsers } = props;
     var usersObj = {
-    
       query: "",
       filter: {
-        type: ""
+        type: "",
       },
-      page: page
+      page: page,
     };
     getUsers(usersObj);
     setCurrentPage(page);
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-  var totalCount = users?.users?.total
-  var usersDocs = users?.users?.docs 
+  var totalCount = users?.users?.total;
+  var usersDocs = users?.users?.docs;
 
   var handleFilter = (name) => {
     var sortUserObj = {
       query: "",
       filter: {
-        type: name
-      }
+        type: name,
+      },
     };
-    getUsers(sortUserObj)
-  }
+    getUsers(sortUserObj);
+  };
 
   return (
-    <div style={{ marginTop: '10px' }}>
-      {usersDocs &&
+    <div style={{ marginTop: "10px" }}>
+      {usersDocs && (
         <div>
           <div className="row">
             <div className="col-3 col-md-3">
@@ -81,10 +78,16 @@ const UsersList = (props) => {
                 style={{ transform: "translateY(0.2rem)" }}
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a className="dropdown-item" onClick={() => handleFilter('mover')}>
+                <a
+                  className="dropdown-item"
+                  onClick={() => handleFilter("mover")}
+                >
                   Movers
                 </a>
-                <a className="dropdown-item" onClick={() => handleFilter('manager')}>
+                <a
+                  className="dropdown-item"
+                  onClick={() => handleFilter("manager")}
+                >
                   Managers
                 </a>
               </div>
@@ -108,61 +111,86 @@ const UsersList = (props) => {
             {/* <Button name="Delete" /> */}
           </div>
           <div className={style.jumbotron}>
-            <div className="row" style={{margin:"0.75rem 0"}}>
-            <div className="col-4" style = {{transform:"translateX(3rem)", fontWeight:"bold"}}>Name</div>
-            <div className="col-5" style = {{transform:"translateX(5rem)", fontWeight:"bold"}}>Attribute</div>
-            <div className="col-3" style = {{transform:"translateX(4rem)", fontWeight:"bold"}}>Address</div>
+            <div className="row" style={{ margin: "0.75rem 0" }}>
+              <div
+                className="col-4"
+                style={{ transform: "translateX(3rem)", fontWeight: "bold" }}
+              >
+                Name
+              </div>
+              <div
+                className="col-5"
+                style={{ transform: "translateX(5rem)", fontWeight: "bold" }}
+              >
+                Attribute
+              </div>
+              <div
+                className="col-3"
+                style={{ transform: "translateX(4rem)", fontWeight: "bold" }}
+              >
+                Address
+              </div>
             </div>
             <ul className="list-group">
               <div className={style.li}>
-                {usersDocs && usersDocs.length > 0 ? usersDocs.map((usersDoc, i) => {
-                  return <li key={i} className=" checkbox list-group-item"
-                  style={{
-                    border: "1.5px solid rgba(0,0,0,.125)",
-                    background: "rgba(0,0,0,.03)",
-                    // color: "#fff",
-                  }}
-                  
-                  >
-                    <div className="row justify-content-around">
-                      <div className="col-3 col-md-4 text-left">
-                        <b>
-                          <span>
-                            {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
-                            <label
-                              className={`checkbox-inline ${style.input}`}
-                              htmlFor="defaultCheck1"
-                            >
-                              {usersDoc.name}
+                {usersDocs && usersDocs.length > 0 ? (
+                  usersDocs.map((usersDoc, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className=" checkbox list-group-item"
+                        style={{
+                          border: "1.5px solid rgba(0,0,0,.125)",
+                          background: "rgba(0,0,0,.03)",
+                          // color: "#fff",
+                        }}
+                      >
+                        <div className="row justify-content-around">
+                          <div className="col-3 col-md-4 text-left">
+                            <b>
+                              <span>
+                                {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
+                                <label
+                                  className={`checkbox-inline ${style.input}`}
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {usersDoc.name}
+                                </label>
+                              </span>
+                            </b>
+                          </div>
+                          <div className="col-5 col-md-4">
+                            <label>
+                              {usersDoc.attributes.map(
+                                (attribute) => attribute.name
+                              )}
                             </label>
-                          </span>
-                        </b>
-                      </div>
-                      <div className="col-5 col-md-4">
-                        <label>{usersDoc.attributes.map((attribute) => attribute.name)}</label>
-                      </div>
-                      <div className="col-2">
-                        <label htmlFor="">{usersDoc.address}</label>
-                      </div>
-
-                    </div>
-                  </li>
-                }) : <div className="text-center">
-                    <img src='/images/no-data-found.png' />
-                  </div>}
-
+                          </div>
+                          <div className="col-2">
+                            <label htmlFor="">{usersDoc.address}</label>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <div className="text-center">
+                    <img src="/images/no-data-found.png" />
+                  </div>
+                )}
               </div>
             </ul>
           </div>
-
-          <Pagination
-            itemCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <div className={style.jumbotron}>
+            <Pagination
+              itemCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
-      }
+      )}
     </div>
   );
 };

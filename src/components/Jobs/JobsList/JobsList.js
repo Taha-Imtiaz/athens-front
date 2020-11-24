@@ -159,7 +159,7 @@ class JobsList extends Component {
     var { getAllJobs } = this.props;
     var fetchJobsOnPageChange = {
       query: "",
-      filters: {
+      sort: {
         startDate: "",
         endDate: "",
         movedDate: "",
@@ -373,7 +373,7 @@ class JobsList extends Component {
                             <label>{job.title}</label>
                           </div>
                           <div className="col-4 col-md-2" style = {{display:"flex"}}>
-                            <i className="fa fa-calendar"> </i>
+                            <i className="fa fa-calendar" style={{padding:"0 0.5rem"}}> </i>
                               {" "}
                               {
                                 <span style = {{display:"flex"}}>
@@ -421,7 +421,7 @@ class JobsList extends Component {
                           </div>
                           <div className="col-4 col-md-3">
                             <span style={{display:"flex"}}>
-                              <i className="fa fa-user"></i>
+                              <i className="fa fa-user" style={{padding:"0 0.5rem"}}></i>
                                 {job.assignee.length > 0 ?  job.assignee[0].name :"N/A" }
 
                                {job.assignee.length > 1 && 

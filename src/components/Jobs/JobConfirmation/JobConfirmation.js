@@ -220,6 +220,7 @@ function JobConfirmation(props) {
                     //   x.toDateString()
                 })
                 let obj = {
+                    paidInCash:false,
                     stripeToken: response.id,
                     amount: payment.amount,
                     jobbyId: data._id,
@@ -256,7 +257,38 @@ function JobConfirmation(props) {
     }
 
     const handleSubmitWithoutPay = () => {
-
+                let stringDates = data.dates.map(x => {
+                    if (typeof x == 'number') {
+                        return new Date(x).toDateString()
+                    } else {
+                        return x.toDateString()
+                    }
+                })
+                let obj = {
+                    paidInCash:true,
+                    jobbyId: data._id,
+                    dates: stringDates,
+                    startTime: data.startTime,
+                    phone: data.customer.phone,
+                    locations: data.locations,
+                    email: data.customer.email,
+                    customerId: data.customer._id
+                }
+                console.log(obj)
+                confirmJob(obj).then((res) => {
+                    let { showMessage } = props;
+                    if (res.data.status == 200) {
+                        console.log(res)
+                        showMessage(res.data.message)
+                        // history.push('/job')
+                        props.close();
+                    }
+                    console.log(res)
+                })
+                // this.setState({
+                //     message: `Success! Card token ${response.card.id}.`,
+                //     formProcess: false
+                // });
     }
 
     const getStepContent = (step) => {
@@ -386,7 +418,7 @@ function JobConfirmation(props) {
                         {/* <input type="button" className="btn btn-primary" name="pay" value="Pay" onClick={pay} /> */}
 
                     </form>
-                    <Button onClick={handleSubmitWithoutPay} className={classes.button}>
+                    <Button onClick={handleSubmitWithoutPay} style={{float:"right"}} className={classes.button}>
                         Skip And Submit
                   </Button>
                 </div>

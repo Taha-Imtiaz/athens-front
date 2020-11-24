@@ -66,7 +66,9 @@ class CalendarApp extends Component {
   handleSelect = (x) => console.log(x);
 
   toggleCollapse = (i) => {
+    console.log("toggle" + i)
     if (i == this.state.showIndex) {
+
       this.setState({
         showIndex: null,
       });
@@ -81,16 +83,47 @@ class CalendarApp extends Component {
     var date = x;
     console.log(date.toString());
 
+
+    getJobsByDate(date).then((res) => {
+      let jobs = [];
+      res.data.jobs.map((x) => {
+        x.dates.map((y) => {
+          let obj = {
+            start: y,
+            end: y,
+            title: x.title,
+            id: x.id,
+          };
+          jobs.push(obj);
+        });
+      });
+      this.setState({
+        myEventsList: jobs,
+      });
+    });
+
+    getAllJobsOnDate(date)
+      .then((res) => {
+        console.log(date)
+        console.log(res);
+        this.setState({
+          currentDayJobs: res.data.jobs,
+          date: date,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   getJobDetails = (e) => {
-    console.log(e);
+    console.log(e.start);
     getJob(e.id)
       .then((res) => {
         console.log(res.data);
         this.setState({
           currentDayJobs: res.data.job,
-          date: res.data.job.dates,
+          date: e.start,
         });
         console.log(res);
       })
@@ -100,7 +133,9 @@ class CalendarApp extends Component {
   };
 
   getJobDetailsOnSlotClick = (e) => {
+    console.log(e)
     let date = e.end;
+    console.log(date)
     getJobsByDate(date).then((res) => {
       let jobs = [];
       res.data.jobs.map((x) => {
@@ -164,6 +199,7 @@ class CalendarApp extends Component {
                 <div>
                   <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date.toDateString()}</h5>
                   {this.state.currentDayJobs.map((job, i) => (
+                    <div id = "accordion">
                     <div
                       className={`card ${style.card}`}
                       style={
@@ -173,10 +209,18 @@ class CalendarApp extends Component {
                         }
                       }
                     >
+                        {/* data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne" */}
                       <div
                         className={`card-header ${style.cardHeader}`}
                         id="headingOne"
-                        onClick={() => this.toggleCollapse(i)}
+                        // onClick={() => this.toggleCollapse(i)}
+                        aria-expanded="true"
+                        data-toggle="collapse"
+                        data-target={`#collapse${i}`}
+                        aria-controls="collapse"
                       >
                         <div>
                         <Link
@@ -191,14 +235,14 @@ class CalendarApp extends Component {
                         <div>
                           {/* <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label> */}
 
-                          {job.startTime ? <Chip
+                          {job.startTime && <Chip
                             label={job.startTime}
                             clickable
                             color="primary"
                             variant="outlined"
                             size="small"
                             style={{ margin: " 0 0.2rem" }}
-                          /> : null}
+                          /> }
                           <Chip
                             label={job.status}
                             clickable
@@ -211,10 +255,11 @@ class CalendarApp extends Component {
                       </div>
 
                       <div
-                        id="#collapse"
-                        className={
-                          this.state.showIndex === i ? "show" : "collapse"
-                        }
+                        id={`collapse${i}`}
+                        // className={
+                        //   // this.state.showIndex === i ? "show" : "collapse"
+                        // }
+                        class="collapse show"
                         aria-labelledby="headingOne"
                         data-parent="#accordion"
                       >
@@ -239,13 +284,18 @@ class CalendarApp extends Component {
                         </div>
                       </div>
                     </div>
+                    </div>
                   ))}
                 </div>
               ) : (
                   <div>
-                    <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date[0]}</h5>
+                   
                     {this.state.currentDayJobs.length !== 0 ? (
+                      
                       //  currentDayJobs is a object
+                     
+                      <div>
+                         <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date.toString()}</h5>
                       <div id="accordion">
                         <div className={`card ${style.card}`}>
                           <div
@@ -270,14 +320,16 @@ class CalendarApp extends Component {
                             </Link>
                             </div>
                             <div>
+                           { this.state.currentDayJobs ?.startTime &&
                               <Chip
-                                label={this.state.currentDayJobs ?.startTime ? this.state.currentDayJobs ?.startTime : null}
+                                label={ this.state.currentDayJobs ?.startTime }
                                 clickable
                                 color="primary"
                                 variant="outlined"
                                 size="small"
                                 style={{ margin: " 0 0.2rem" }}
                               />
+                              }
                               <Chip
                                 label={this.state.currentDayJobs ?.status}
                                 clickable
@@ -316,6 +368,7 @@ class CalendarApp extends Component {
                             </div>
                           </div>
                         </div>
+                      </div>
                       </div>
                     ) : (
                         <div>

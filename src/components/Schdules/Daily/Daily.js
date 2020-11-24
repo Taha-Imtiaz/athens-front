@@ -38,6 +38,8 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
+var moverAssignedDate
+
 const DailySchedule = (props) => {
   const [show, setShow] = useState(false);
   var [newAssignee, setAssignee] = useState("");
@@ -504,14 +506,21 @@ const DailySchedule = (props) => {
       } else {
         let index = movers.findIndex((x) => x.mover._id == moverId);
         console.log(moverId);
-        let moverJobs = movers[index].mover.jobs.length > 0 ? true : false;
+        
+
+         moverAssignedDate = movers[index].mover.jobs.filter((job) => job.dates.some((date) => date === today.toDateString())) 
+        console.log(moverAssignedDate);
+        let moverJobs = moverAssignedDate.length > 0 ? true : false;
+    
         if (moverJobs) {
+          // {today.toDateString()}{" "}
           console.log(moverId);
           setModalShow(true);
 
           var mover = movers.find((x) => x.mover._id == moverId);
           if (mover !== -1) {
             console.log(mover);
+
             setMover(mover);
 
             //  assigneesId.push(moverId);
@@ -781,7 +790,7 @@ const DailySchedule = (props) => {
     // <Link to = "/schedule/daiily"/>
   };
   const open = Boolean(anchorEl);
-  console.log(mover)
+  console.log(mover);
   return (
     <div className={`row `}>
       <div className="col-2" style={{}}>
@@ -1114,11 +1123,19 @@ const DailySchedule = (props) => {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                   {mover && <h5> {mover.mover.name} <span style={{fontWeight:"normal"}}>has been assigned to these jobs:</span> </h5>}
+                      {mover && (
+                        <h5>
+                          {" "}
+                          {mover.mover.name}{" "}
+                          <span style={{ fontWeight: "normal" }}>
+                            has been assigned to these jobs:
+                          </span>{" "}
+                        </h5>
+                      )}
                       <div>
                         {mover && (
                           <div style={{ margin: "1.5rem 1rem" }}>
-                            {mover.mover.jobs.map((job) => (
+                            {moverAssignedDate.map((job) => (
                               <div className="row">
                                 <p className="col-8">
                                   <Link
@@ -1208,9 +1225,7 @@ const DailySchedule = (props) => {
                     </div>
 
                     <div className="row" style={{ fontSize: "0.92rem" }}>
-                      <div className="col-3">
-                        {list.jobId}
-                      </div>
+                      <div className="col-3">{list.jobId}</div>
                       <div className="col-3">{list.title}</div>
                       <div className="col-3">{list.jobType}</div>
                       <div className="col-3">
@@ -1285,7 +1300,7 @@ const DailySchedule = (props) => {
                       <div className="col-12">
                         {" "}
                         <h6
-                          style={{ cursor: "move" }}
+                          style={{ cursor: "pointer" }}
                           key={i}
                           className={style.movname}
                         >

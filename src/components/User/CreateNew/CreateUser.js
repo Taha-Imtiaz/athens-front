@@ -29,9 +29,9 @@ class CreateUser extends Component {
     { name: "Mover", id: 2 },
   ];
   attributeOptions = [
-    { name: "Attribute 1" },
-    { name: "Attribute 2" },
-    { name: "Attribute 3" },
+    { name: "crew leaders  " },
+    { name: "movers" },
+    { name: "new movers" },
   ];
 
   constructor(props) {

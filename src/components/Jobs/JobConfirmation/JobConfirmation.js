@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes() 
+var time = today.getHours() + ":" + today.getMinutes()
 
 function getSteps() {
     return ['Confirm Date and Time', 'Confirm Contact Info', 'Confirm PU/DO Addresseses', 'Deposit'];
@@ -88,7 +88,7 @@ function JobConfirmation(props) {
     }, [])
 
     var handleTimeSelect = (e) => {
-        var {name, value} = e.target
+        var { name, value } = e.target
         console.log(name, value)
         setStartTime(value)
     }
@@ -203,12 +203,6 @@ function JobConfirmation(props) {
     }
 
     const pay = (e) => {
-        // e.preventDefault();
-        console.log(data, 'Data')
-        console.log(payment, 'Payment')
-
-
-
         window.Stripe.card.createToken({
             number: payment.number,
             exp_month: payment.exp_month,
@@ -261,9 +255,13 @@ function JobConfirmation(props) {
         });
     }
 
+    const handleSubmitWithoutPay = () => {
+
+    }
+
     const getStepContent = (step) => {
         console.log(data)
-        
+
         switch (step) {
             case 0:
                 return <form>
@@ -302,25 +300,25 @@ function JobConfirmation(props) {
                                 placeholder='Start Time'
                             /> */}
 
-                <TextField
-                    id="time"
-                    fullWidth
-                    label="Start Time"
-                    type="time"
-                    name="startTime"
-                    value={startTime}
-                    onChange={handleTimeSelect}
-                    variant = "outlined"
-                     size = "small"
-                    // defaultValue="07:30"
-                    // className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      step: 300, // 5 min
-                    }}
-                  />
+                            <TextField
+                                id="time"
+                                fullWidth
+                                label="Start Time"
+                                type="time"
+                                name="startTime"
+                                value={startTime}
+                                onChange={handleTimeSelect}
+                                variant="outlined"
+                                size="small"
+                                // defaultValue="07:30"
+                                // className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                inputProps={{
+                                    step: 300, // 5 min
+                                }}
+                            />
                         </div>}
                     </div>
                 </form>
@@ -388,6 +386,9 @@ function JobConfirmation(props) {
                         {/* <input type="button" className="btn btn-primary" name="pay" value="Pay" onClick={pay} /> */}
 
                     </form>
+                    <Button onClick={handleSubmitWithoutPay} className={classes.button}>
+                        Skip And Submit
+                  </Button>
                 </div>
             default:
                 return 'Unknown step';

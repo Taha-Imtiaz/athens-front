@@ -923,7 +923,7 @@ const CustomerDetail = (props) => {
                 >
                   {" "}
                   <Button
-                    className="btn btn-primary"
+                   
                     style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                   >
                     Create Job

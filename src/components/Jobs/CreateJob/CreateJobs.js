@@ -763,13 +763,13 @@ class CreateJobs extends Component {
 
               <div className="form-group">
                 <div className={style.btnsubmit}>
-                  <button
+                  <Button
                     type="button"
-                    className="btn btn-primary"
+                    style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                     onClick={this.mySubmitHandler}
                   >
                     Submit
-                  </button>
+                  </Button>
                 </div>
               </div>
             </form>

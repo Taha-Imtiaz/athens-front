@@ -22,10 +22,10 @@ const AccountDisplay = (props) => {
             <div className="card" style={{ width: "25rem"}}>
                 <div className="card-body">
                     <h5 className="card-title">Account Holder</h5>
-                    <p className="card-text">{loggedInUser.name}</p>
+                    <p className="card-text" style={{ fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>{loggedInUser.name}</p>
                 </div>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item"><span>Email: </span>{loggedInUser.email}</li>
+                <ul className="list-group list-group-flush" >
+                    <li className="list-group-item" style={{ fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}><span>Email: </span>{loggedInUser.email}</li>
                     {/* <li className="list-group-item"><span>Password: </span>*******</li> */}
                 </ul>
                 <div className="card-body">

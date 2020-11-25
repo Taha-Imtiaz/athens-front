@@ -111,7 +111,7 @@ const UsersList = (props) => {
             {/* <Button name="Delete" /> */}
           </div>
           <div className={style.jumbotron}>
-            <div className="row" style={{ margin: "0.75rem 0" }}>
+            <div className="row" style={{ margin: "0.75rem 0", fontFamily:"sans-serif" }}>
               <div
                 className="col-4"
                 style={{ transform: "translateX(3rem)", fontWeight: "bold" }}
@@ -136,12 +136,12 @@ const UsersList = (props) => {
                 {usersDocs && usersDocs.length > 0 ? (
                   usersDocs.map((usersDoc, i) => {
                     return (
-                      <li
+                      <li 
                         key={i}
-                        className=" checkbox list-group-item"
+                        className={`checkbox list-group-item ${style.list}`}
                         style={{
-                          border: "1.5px solid rgba(0,0,0,.125)",
-                          background: "rgba(0,0,0,.03)",
+                         
+                         
                           // color: "#fff",
                         }}
                       >

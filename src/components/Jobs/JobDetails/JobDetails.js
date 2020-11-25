@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./JobDetails.module.css";
-import { Button } from "react-bootstrap";
+import { Button } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getJob } from "../../../Redux/Job/jobActions";
@@ -66,9 +66,9 @@ const JobDetails = (props) => {
             {" "}
             <div className={`row ${style.toprow}`}>
               <div className="col-3 col-md-3">
-                <div className={`card ${style.cardCustom}`}>
+                <div className={`card ${style.cardCustom}`} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                   <div className="card-body">
-                    <h5 className="card-title">Customer</h5>
+                    <h5 className="card-title" style={{fontFamily:"sans-serif"}}>Customer</h5>
                     <h6 className="card-subtitle mb-2 text-muted">
                       <Link
                         style={{ textDecoration: "none" }}
@@ -100,18 +100,18 @@ const JobDetails = (props) => {
                     >
                       <h5
                         className={style.assigneehead}
-                        style={{ flexWrap: "nowrap" }}
+                        style={{ flexWrap: "nowrap", fontFamily:"sans-serif" }}
                       >
                         Assignees
                       </h5>
                       {job.assignee.length > 0 ? job.assignee.map((assignee) => (
-                        <p
+                        <p style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}
                           className={style.assigneehead}
                           style={{ flexWrap: "nowrap" }}
                         >
                           <li> {assignee.name}</li>
                         </p>
-                      )) : <p>Not Added</p>}
+                      )) : <p style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>Not Added</p>}
                       <div>
                        
                       </div>
@@ -140,7 +140,7 @@ const JobDetails = (props) => {
                     <Modal dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
-                          animation={false}
+                          // animation={false}
                           centered
                           scrollable
 
@@ -150,13 +150,13 @@ const JobDetails = (props) => {
                           </Modal.Header>
                           <Modal.Body>
 
-                            <div className="row" style={{ fontWeight: "bold" }}>
+                            <div className="row" style={{ fontWeight: "bold", fontFamily:"sans-serif" }}>
                               <div className={`col-2`}>Performer</div>
                               <div className={`col-6`}>Message</div>
                               <div className={`col-4`}>Timestamp</div>
                             </div>
 
-                            {job.activities.map((activitiy) => <div className="row">
+                            {job.activities.map((activitiy) => <div className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                               <div className={`col-2 `}> <p>{activitiy.performer.name}</p></div>
                               <div className={`col-6`}>
                                 {activitiy.messageLogs.map(x => <p>* {x}</p>)}
@@ -183,17 +183,15 @@ const JobDetails = (props) => {
                     <div>
 
 
-                      <p>
+                     
 
-                      </p>
-
-                      <label
+                      <label style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}
                       // className={style.para}
                       // style={{ transform: "translateY(-2rem)" }}
                       >
                         {job.dates.map((x,i ) =>  i === 0 ? x : <span> | {x} </span> )}
                       </label>
-                      <p>
+                      <p style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                         {job.services.map((service) => (
                           <Chip
                             variant="outlined"
@@ -214,7 +212,7 @@ const JobDetails = (props) => {
                     </div>
                   </div>
                   <div className="col-2">
-                    <h6> Job Id: {job.jobId}</h6>
+                    <h6 style={{fontFamily:"sans-serif"}}> Job Id: {job.jobId}</h6>
                   </div>
                   <div className="col-2">
                     <Chip
@@ -226,8 +224,8 @@ const JobDetails = (props) => {
                     />
                   </div>
                 </div>
-                <div className="row">
-                       <div className="col-12">
+                <div className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                       <div className="col-12" >
                        <p className={style.para}>{job.description}</p>
                        </div>
                      </div>
@@ -236,7 +234,7 @@ const JobDetails = (props) => {
                         <div>
                           <h3 className={style.jobHead}>Notes</h3>
                           {job.note.map((x) => (
-                            <p className={style.para}>{x.text}</p>
+                            <p style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}} className={style.para}>{x.text}</p>
                           ))}
                         </div>
                       )}
@@ -247,7 +245,7 @@ const JobDetails = (props) => {
                             <>
                               <p
                                 className={style.para}
-
+                                style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}
                               >
                                 <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.from} <br></br> <LocationOffIcon color="primary" style={{ marginRight: "0.4rem" }} />  {list.to}
                               </p>
@@ -267,6 +265,7 @@ const JobDetails = (props) => {
                         border: "none",
                         outline: "none",
                         padding: "0.5rem 2rem",
+                        backgroundColor:"#00ADEE",
                         color: "#fff",
                         float: "right",
                         borderRadius: "0.25rem",
@@ -285,6 +284,7 @@ const JobDetails = (props) => {
                       outline: "none",
                       padding: "0.5rem 2rem",
                       color: "#fff",
+                      backgroundColor:"#00ADEE",
                       float: "right",
                       borderRadius: "0.25rem",
                     }}

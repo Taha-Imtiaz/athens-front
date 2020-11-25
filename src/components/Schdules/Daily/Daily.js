@@ -798,7 +798,7 @@ const DailySchedule = (props) => {
       </div>
 
       <div className={`col-8`}>
-        <h5 className={style.head}>Daily Schedule</h5>
+        <h5 className={style.head} style={{}}>Daily Schedule</h5>
 
         <div className={`row ${style.lists}`} style={{}}>
           <div
@@ -829,7 +829,7 @@ const DailySchedule = (props) => {
             {weekNames &&
               weekNames.map((name, i) => {
                 return (
-                  <li key={i} className={`nav-item ${style.items}`}>
+                  <li key={i} className={`nav-item ${style.items}`} style={{fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                     <a
                       onClick={() => handleDateChange(i)}
                       className={`nav-link active`}
@@ -890,7 +890,7 @@ const DailySchedule = (props) => {
             className="col-2"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <h6>
+            <h6 style={{fontFamily:"sans-serif"}}>
               {`Total Jobs : `}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {props.jobs?.data?.jobs.length}
@@ -901,7 +901,7 @@ const DailySchedule = (props) => {
             className="col-2"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <h6>
+            <h6 style={{fontFamily:"sans-serif"}}>
               {`Total movers :`}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {" "}
@@ -917,7 +917,7 @@ const DailySchedule = (props) => {
             className="col-2"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <h6>
+            <h6 style={{fontFamily:"sans-serif"}}>
               Total Assignee Req.:
               {props.jobs?.data?.jobs.length > 0 ? (
                 props.jobs.data.jobs.reduce(
@@ -952,6 +952,7 @@ const DailySchedule = (props) => {
               margin: "1rem 0",
               backgroundColor: "transparent",
               borderBottom: "none",
+             fontFamily:"sans-serif"
             }}
           >
             <div className="col-3">Title</div>
@@ -973,8 +974,8 @@ const DailySchedule = (props) => {
         {props.jobs && props.jobs.data.jobs.length > 0 ? (
           props.jobs.data.jobs.map((list, i) => {
             return (
-              <div>
-                <div
+              <div id= "accordion">
+                <div style={{}}
                   key={i}
                   className="row"
                   style={{
@@ -983,8 +984,14 @@ const DailySchedule = (props) => {
                     // backgroundColor: "red",
                     width: "100%",
                     display: "flex",
+                    fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
                   }}
                   className="card-header"
+
+                  aria-expanded="true"
+                  data-toggle="collapse"
+                  data-target={`#collapse${i}`}
+                  aria-controls="collapse"
                   id="headingOne"
                   onClick={() => toggleCollapse(i)}
                   onDoubleClick={() => jobDetailsNavigate(list._id)}
@@ -1202,12 +1209,13 @@ const DailySchedule = (props) => {
                   </div>
                 </div>
                 <div
-                  id="#collapse"
-                  className={showIndex == i ? "show" : "collapse"}
-                  aria-labelledby="headingOne"
-                  data-parent="#accordion"
+                   id={`collapse${i}`}
+                       
+                        class="collapse show"
+                        aria-labelledby="headingOne"
+                        data-parent="#accordion"
                 >
-                  <div className="card-body">
+                  <div className="card-body" >
                     <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
                     <div className="row">
                       <div className="col-3">
@@ -1224,7 +1232,7 @@ const DailySchedule = (props) => {
                       </div>
                     </div>
 
-                    <div className="row" style={{ fontSize: "0.92rem" }}>
+                    <div className="row" style={{ fontSize: "0.92rem", fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                       <div className="col-3">{list.jobId}</div>
                       <div className="col-3">{list.title}</div>
                       <div className="col-3">{list.jobType}</div>
@@ -1248,7 +1256,7 @@ const DailySchedule = (props) => {
                         Job Description
                       </h5>
                     </div>
-                    <div className="row" style={{ margin: "0.4rem 0" }}>
+                    <div className="row" style={{ margin: "0.4rem 0", fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                       <p>{list.description}</p>
                     </div>
                     <hr />
@@ -1266,7 +1274,7 @@ const DailySchedule = (props) => {
                     </div>
 
                     {/* key={x._id} */}
-                    <div className="row " style={{ fontSize: "0.92rem" }}>
+                    <div className="row " style={{ fontSize: "0.92rem" , fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                       <div className="col-4">
                         {list.customer.firstName} {list.customer.lastName}
                       </div>
@@ -1292,7 +1300,7 @@ const DailySchedule = (props) => {
             movers.map((list, i) => {
               return (
                 <div>
-                  <div className="row">
+                  <div className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                     <Draggable
                       {...dragHandlers}
                       defaultPosition={{ x: 0, y: 0 }}

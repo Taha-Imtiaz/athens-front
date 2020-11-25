@@ -32,6 +32,7 @@ class CreateUser extends Component {
     { name: "crew leaders  " },
     { name: "movers" },
     { name: "new movers" },
+    { name: "new Manager" },
   ];
 
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import style from "./customerlist.module.css";
 import SearchBar from "../../SearchBar/SearchBar";
-import Button from "../../Button/Button";
+// import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllCustomers } from "../../../Redux/Customer/customerActions";
@@ -10,7 +10,11 @@ import Pagination from "../../Pagination/Pagination";
 import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
-// import "./customerList.mod"
+import Button from '@material-ui/core/Button';
+
+
+
+
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
@@ -180,7 +184,7 @@ const CustomerList = (props) => {
             <div style={{ margin: '-0.5rem' }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
-                <Button name="Create New" />
+                <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Create New</Button>
               </Link>
             </div>
           </div>
@@ -194,7 +198,7 @@ const CustomerList = (props) => {
             <div className={style.jumbotron}>
               <div
                 className="row"
-                style={{ margin: "1rem 3rem", fontWeight: "bold" }}
+                style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily:"sans-serif" }}
               >
                 <div className="col-md-4">Name</div>
                 <div className="col-md-6">Email</div>
@@ -209,11 +213,10 @@ const CustomerList = (props) => {
                           style={{ textDecoration: "none", color: "black" }}
                           to={`/customer/detail/${doc._id}`}>
                           <li
-                            className="checkbox list-group-item"
+                            className={`checkbox list-group-item ${style.list}`}
                             key={doc._id}
                             style={{
-                              background: "rgba(0,0,0,.03)",
-                              border: "1px solid rgba(0,0,0,0.125)",
+                             
                               // color:"#fff"
                             }}
                           >

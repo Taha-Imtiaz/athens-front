@@ -11,7 +11,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 import  Popover  from "@material-ui/core/Popover";
 // import { PopoverHeader, PopoverBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faBook, faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
 import { Typography } from "@material-ui/core";
@@ -121,15 +121,16 @@ class JobsList extends Component {
     var { getAllJobs } = this.props;
     var fetchJobsOnPageChange = {
       query: "",
-      filters: {
-        startDate: "",
-        endDate: "",
-        movedDate: "",
-        tag: "ABC",
-        startYearMonth: "",
+      sort: {
+        startDate: null,
+        endDate: null,
+        plainTitle:1,
+        movedDate: null,
+        tag: null,
+        startYearMonth: null,
       },
       page: page,
-    };
+    }
 
     getAllJobs(fetchJobsOnPageChange);
     this.setState({
@@ -160,13 +161,14 @@ class JobsList extends Component {
     var fetchJobsOnPageChange = {
       query: "",
       sort: {
-        startDate: "",
-        endDate: "",
-        movedDate: "",
-        tag: "",
-        startYearMonth: "",
+        startDate: null,
+        endDate: null,
+        plainTitle:1,
+        movedDate: null,
+        tag: null,
+        startYearMonth: null,
       },
-      page: 1,
+      page: this.state.currentPage,
     };
 
     getAllJobs(fetchJobsOnPageChange);
@@ -330,7 +332,7 @@ class JobsList extends Component {
         {jobs[0] && jobs[0].data.jobs.docs.length > 0 ? (
           <div className={`${style.jumbotron}`}>
             <div
-              className="row justify-content-around"
+              className={`row justify-content-around ${style.header}`}
               style={{ margin: "1rem 4%", fontWeight: "bold" }}
             >
               <div className="col-4 col-md-2">Title</div>
@@ -361,10 +363,9 @@ class JobsList extends Component {
                     >
                       <li
                         key={i}
-                        className=" checkbox list-group-item "
+                        className={`checkbox list-group-item ${style.list}` }
                         style={{
-                          border: "1px solid rgba(0, 0, 0, 0.125)",
-                          background: "rgba(0,0,0,.03)",
+                          
                           // color: "#fff",
                         }}
                       >
@@ -373,7 +374,9 @@ class JobsList extends Component {
                             <label>{job.title}</label>
                           </div>
                           <div className="col-4 col-md-2" style = {{display:"flex"}}>
-                            <i className="fa fa-calendar" style={{padding:"0 0.5rem"}}> </i>
+                            {/* <i className="far fa-calendar-alt" > </i> */}
+                            <FontAwesomeIcon icon = {faCalendarAlt} style={{margin:"0.2rem 0.5rem"}}/>
+
                               {" "}
                               {
                                 <span style = {{display:"flex"}}>
@@ -421,7 +424,7 @@ class JobsList extends Component {
                           </div>
                           <div className="col-4 col-md-3">
                             <span style={{display:"flex"}}>
-                              <i className="fa fa-user" style={{padding:"0 0.5rem"}}></i>
+                              <FontAwesomeIcon icon = {faUser} style = {{margin:"0.2rem 0.5rem"}}/>
                                 {job.assignee.length > 0 ?  job.assignee[0].name :"N/A" }
 
                                {job.assignee.length > 1 && 

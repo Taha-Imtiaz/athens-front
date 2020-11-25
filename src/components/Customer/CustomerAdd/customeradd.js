@@ -1,7 +1,8 @@
 // import Navbar from '../../Navbar/Navbar'
 import style from './customeradd.module.css'
 // import SideBar from '../../Sidebar/SideBar'
-import Button from '../../Button/Button'
+// import Button from '../../Button/Button'
+import Button from "@material-ui/core/Button"
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCustomer } from '../../../Redux/Customer/customerActions';
@@ -302,12 +303,12 @@ class CustomerAdd extends Component {
                         < div className="form-group">
                             <div style={{ float: 'right' }} className="row">
                                 {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
-                                <Button onClick={this.addContacts} name="Add Another"></Button>
+                                <Button onClick={this.addContacts} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} >Add Another</Button>
                             </div>
                         </div>
                         <div className="row">
-                            <div className={`col-12`}>
-                                <button onClick={this.mySubmitHandler} className={`btn btn-primary ${style.button}`}>Submit</button>
+                            <div className={`col`}>
+                                <Button onClick={this.mySubmitHandler} className={`${style.button}`} style={{background:"#00ADEE", margin:  "1rem 1.5rem", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Submit</Button>
                                 {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
                             </div>
                         </div>

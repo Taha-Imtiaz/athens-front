@@ -173,8 +173,8 @@ class CalendarApp extends Component {
     return (
       <div>
         <div className={`row ${style.toprow}`}>
-          <div className="col-9">
-            <div className={style.cal}>
+          <div className="col-9" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+            <div className={style.cal} >
               <Calendar
                 selectable
                 localizer={localizer}
@@ -197,9 +197,9 @@ class CalendarApp extends Component {
             <div>
               {this.state.currentDayJobs.length ? (
                 <div>
-                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date.toDateString()}</h5>
+                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toDateString()}</h5>
                   {this.state.currentDayJobs.map((job, i) => (
-                    <div id = "accordion">
+                    <div id = "accordion" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                     <div
                       className={`card ${style.card}`}
                       style={
@@ -295,8 +295,8 @@ class CalendarApp extends Component {
                       //  currentDayJobs is a object
                      
                       <div>
-                         <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date.toString()}</h5>
-                      <div id="accordion">
+                         <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toString()}</h5>
+                      <div id="accordion" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                         <div className={`card ${style.card}`}>
                           <div
                             class={`card-header ${style.cardHeader}`}
@@ -371,10 +371,10 @@ class CalendarApp extends Component {
                       </div>
                       </div>
                     ) : (
-                        <div>
-                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>{this.state.date.toDateString()}</h5>
+                        <div style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toDateString()}</h5>
                           <hr />
-                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>No Jobs Available</h5>
+                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>No Jobs Available</h5>
                         </div>
                       )}
                   </div>

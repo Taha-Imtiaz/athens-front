@@ -194,6 +194,7 @@ const CustomerClaims = (props) => {
                   marginTop: "1rem",
                   marginBottom: "-1.5rem",
                   fontWeight: "bold",
+                  fontFamily:"sans-serif"
                 }}
               >
                 <div className="col-3"> Job Id</div>
@@ -212,8 +213,14 @@ const CustomerClaims = (props) => {
                             overflow: "hidden",
                             width: "100%",
                             cursor: "pointer",
+                            fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
+                            
                           }}
-                          className="card-header"
+                          className={`card-header ${style.card}`}
+                          aria-expanded="true"
+                          data-toggle="collapse"
+                          data-target={`#collapse${i}`}
+                          aria-controls="collapse"
                           id="headingOne"
                           onClick={() => toggleCollapse(i)}
                         >
@@ -270,10 +277,11 @@ const CustomerClaims = (props) => {
                         </div>
 
                         <div
-                          id="#collapse"
-                          className={showIndex == i ? "show" : "collapse"}
-                          aria-labelledby="headingOne"
-                          data-parent="#accordion"
+                            id={`collapse${i}`}
+                           
+                            class="collapse show"
+                            aria-labelledby="headingOne"
+                            data-parent="#accordion"
                         >
                           <div className="card-body">
                             <div key={x._id}>
@@ -287,12 +295,13 @@ const CustomerClaims = (props) => {
                                     </h6>
                                     <div className="row">
                                       <div className="col-10">
-                                        <p className={style.para}>
+                            
+                                        <p className={style.para} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                                           Description : {y.description}
                                         </p>
                                       </div>
 
-                                      <div className="col-2">
+                                      <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                                         <p className={style.p2}>${y.price}</p>
                                       </div>
                                     </div>
@@ -324,7 +333,7 @@ const CustomerClaims = (props) => {
                                     <div>
                                       <h3>Updates</h3>
                                       {x.updates.map((x, i) => (
-                                        <div key={i} className="row">
+                                        <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                                           <div className="col-8">
                                             <li> {x.value}</li>
                                           </div>

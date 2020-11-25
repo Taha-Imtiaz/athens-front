@@ -7,7 +7,8 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
 import { Modal, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import Button from '@material-ui/core/Button';
+
 import Chip from "@material-ui/core/Chip";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
@@ -214,10 +215,10 @@ const CustomerDetail = (props) => {
                     </Tabs>
                   </AppBar>
                   <TabPanel value={value} index={0}>
-                    <div>
+                    <div style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                       <h3>Customer Information</h3>
                       <hr />
-                      <div className="row">
+                      <div className="row" style={{fontFamily:"sans-serif"}}>
                         <div className="col-4">
                           <b>
                             {" "}
@@ -519,7 +520,7 @@ const CustomerDetail = (props) => {
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
-                    {customer ?.claim.length > 0 && <div className="row" style={{ fontWeight: "bold" }}>
+                    {customer ?.claim.length > 0 && <div className="row" style={{ fontWeight: "bold",fontFamily:"sans-serif" }}>
                       <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>JobId</div>
                       <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>Status</div>
                       <div className="col-4" style={{ transform: "translateX(1.5rem)" }}> Last Update</div>
@@ -527,7 +528,7 @@ const CustomerDetail = (props) => {
                     <div id="accordion">
                       {customer ?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
-                          return <div key={i} className="card" style={{ cursor: "pointer" }}>
+                          return <div key={i} className="card" style={{ cursor: "pointer", fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                             <div
                               style={{
                                 height: "4rem",
@@ -670,10 +671,10 @@ const CustomerDetail = (props) => {
 
                                       <div style={{ float: "right" }}>
                                         {claim.status == "open" ? (
-                                          <button
-                                            className="btn btn-primary"
+                                          <Button
+                                          style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                                             onClick={() => handleCloseJob(i)}
-                                          > Close Claim</button>
+                                          > Close Claim</Button>
                                         ) : null}
                                       </div>
                                       <div
@@ -681,14 +682,11 @@ const CustomerDetail = (props) => {
                                         style={{ float: "right", margin: " 0 0.2rem" }}
                                       >
                                         {claim.status == "open" ? (
-                                          <button className="btn btn-primary"
-                                            style={{
-
-
-                                            }}
+                                          <Button className="btn btn-primary"
+                                          style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
 
                                             onClick={() => addNewClaim(i)}
-                                          >Add Update</button>
+                                          >Add Update</Button>
                                         ) : null}
                                       </div>
                                     </div>
@@ -732,7 +730,7 @@ const CustomerDetail = (props) => {
                   >
                     {blanketValue ? (
                       <div>
-                        <div className={`row`}>
+                        <div className={`row`} style={{fontFamily:"sans-serif"}}>
                           <div
                             className={`col-3`}
                             style={{ fontWeight: "bold" }}
@@ -759,7 +757,7 @@ const CustomerDetail = (props) => {
                           </div>
                         </div>
 
-                        <div className={style.jumbotron}>
+                        <div className={style.jumbotron} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                           <ul
                             className="list-group"
 
@@ -861,18 +859,18 @@ const CustomerDetail = (props) => {
                           </ul>
                         </div>
                         <div className={`row ${style.flex}`} style={{ margin: "2rem 0" }}>
-                          <button
-                            className="btn btn-primary"
+                          <Button
+                            // className="btn btn-primary"
                             onClick={handleShow}
-                            style={{ background: "#00ADEE" }}
+                            style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                           >
                             Activities
-                  </button>
+                  </Button>
                         </div>
                         <Modal dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
-                          animation={false}
+                          // animation={false}
                           centered
                           scrollable
 
@@ -882,13 +880,13 @@ const CustomerDetail = (props) => {
                           </Modal.Header>
                           <Modal.Body>
 
-                            <div className="row" style={{ fontWeight: "bold" }}>
+                            <div className="row" style={{ fontWeight: "bold" , fontFamily: "sans-serif"}}>
                               <div className={`col-2`}>Performer</div>
                               <div className={`col-6`}>Message</div>
                               <div className={`col-4`}>Timestamp</div>
                             </div>
 
-                            {blanketValue && blanketValue.activities.map((activity, i) => <div key={i} className="row">
+                            {blanketValue && blanketValue.activities.map((activity, i) => <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                               <div className={`col-2 `}> <p>{activity.performer.name}</p></div>
                               <div className={`col-6`}>
                                 {activity.messageLogs.map((x, i) => <p key={i}>* {x}</p>)}
@@ -897,7 +895,7 @@ const CustomerDetail = (props) => {
                             </div>)}
                           </Modal.Body>
                           <Modal.Footer>
-                            <Button variant="primary" style={{background:"#00ADEE"}} onClick={handleClose}>
+                            <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} onClick={handleClose}>
                               Close
                             </Button>
                             {/* <Button variant="primary">Add Activity</Button> */}
@@ -924,12 +922,12 @@ const CustomerDetail = (props) => {
                   }}
                 >
                   {" "}
-                  <button
+                  <Button
                     className="btn btn-primary"
-                    style={{ background: "#00ADEE" }}
+                    style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                   >
                     Create Job
-                  </button>
+                  </Button>
                 </Link>
               </div>
             </div>

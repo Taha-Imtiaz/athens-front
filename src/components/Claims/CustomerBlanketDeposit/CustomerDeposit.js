@@ -7,6 +7,8 @@ import { getDeposits, updateDeposit } from '../../../Redux/Claims/claimsActions'
 import { clone, cloneDeep } from "lodash"
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 
 const CustomerDeposit = (props) => {
 
@@ -83,7 +85,7 @@ const CustomerDeposit = (props) => {
 
         {blankets && blankets.length > 0 ?
           <div className = "col-12">
-            <div className={`row ${style.myrow} `} >
+            <div className={`row ${style.myrow} `}  >
               <div className={`col-4 ${style.flex}`} style={{fontWeight:"bold"}}>
                 <h6>Customer</h6>
               </div>
@@ -99,11 +101,11 @@ const CustomerDeposit = (props) => {
             </div>
 
             <div className={style.jumbotron}>
-              <ul className="list-group" style = {{margin:"2rem 0"}}>
+              <ul className="list-group" style = {{margin:"1rem 0"}}>
                 {blankets.map((x, i) => {
                   // x.edit = true;
                   return (
-                    <li key={i} className="list-group-item">
+                    <li key={i} className="list-group-item" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                       <div className="row">
                         <div className="col-4">
                           <label>{x?.customer?.firstName} {x?.customer?.lastName}</label>
@@ -130,7 +132,9 @@ const CustomerDeposit = (props) => {
                           <label>{x.quantity * 15}$</label>
                         </div>
                         <div className="col-2">
-                          {x.edit ? <label className="fa fa-edit" onClick={() => closeEdit(i, 'edit')}> Edit</label> : <label className="fa fa-save" onClick={() => closeEdit(i, 'save')}> Save</label>}
+                          {x.edit ? <div>
+                            <FontAwesomeIcon icon = {faEdit} onClick={() => closeEdit(i, 'edit')}>  </FontAwesomeIcon> <label htmlFor=""> Edit</label>
+                          </div> : <div><FontAwesomeIcon icon = {faSave} onClick={() => closeEdit(i, 'save')}>  </FontAwesomeIcon> <label htmlFor=""> Save</label></div> }
                         </div>
                       </div>
                     </li>

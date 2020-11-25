@@ -28,7 +28,10 @@
     text-align: left;
     padding: 10px;
 }
-
+.card:hover {
+background-color: #00ADEE;
+color: #fff;
+}
 .sub{
     margin-left: 1%;
 }

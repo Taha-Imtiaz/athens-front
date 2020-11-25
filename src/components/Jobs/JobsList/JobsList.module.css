@@ -5,11 +5,26 @@
 .jumbotron{
     margin: auto !important;
     padding: 2%;;
+    /* font-family: ; */
+
 }
 
 .btndel{
     margin-right: 11%;
     margin-top: 3%;
+}
+.list {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+      background: rgba(0,0,0,.03);
+    
+}
+.header {
+    font-family: sans-serif;
+}
+.list:hover {
+    background-color:  #00ADEE;
+    color: #FFF;
 }
 
 .create{

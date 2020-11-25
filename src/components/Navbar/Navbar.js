@@ -5,6 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { compose } from 'redux'
 import { getLoginUser } from '../../Redux/User/userActions'
+import Button from '@material-ui/core/Button';
 
 const Navbar = (props) => {
 
@@ -58,7 +59,7 @@ const Navbar = (props) => {
                                         Calendar
                         </Link>
                                 </li>
-                                <li className={getNavLinkClass("/schedule")}>
+                                <li className={getNavLinkClass("/schedule/daily")}>
                                     <Link className="nav-link" to="/schedule/daily">
                                         Schedule
                         </Link>
@@ -84,7 +85,9 @@ const Navbar = (props) => {
                         </Link>
                                 </li>
                                 <li>
-                                    <button style={{ background: "#00ADEE", border: "transparent", color: "#ffffff", padding: "0.5rem", borderRadius: "0.25rem" }} onClick={logOut}>Log Out</button>
+                                    <Button 
+                                    
+                                    style={{ background: "#00ADEE", border: "transparent", color: "#ffffff", padding: "0.5rem", borderRadius: "0.25rem" , fontFamily:"sans-serif", textTransform:"none"}} onClick={logOut}>Log Out</Button>
                                     {/* <Link className={`nav-link ${style.logOut}`} to="/">
                                         Log Out
                         </Link> */}
@@ -104,7 +107,9 @@ const Navbar = (props) => {
                                 </li>
                                 <li>
                                     {/* <Link className="nav-link" to="/"> */}
-                                    <button className="btn btn-primary" onClick={logOut}>Log Out</button>
+                                    <Button variant="contained" color="primary" onClick={logOut}>Log Out</Button>
+       
+      
                                     {/* </Link> */}
                                 </li>
                             </React.Fragment>

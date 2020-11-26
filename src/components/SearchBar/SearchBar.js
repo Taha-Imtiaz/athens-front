@@ -3,7 +3,7 @@ import style from './SearchBar.module.css'
 import { connect } from "react-redux";
 import { getAllCustomers } from "../../Redux/Customer/customerActions"
 import { getAllJobs } from "../../Redux/Job/jobActions"
-import { getUsers } from "../../Redux/User/userActions";
+import { getUsers } from "../../Redux/user/userActions";
 
 
 const SearchBar = (props) => {

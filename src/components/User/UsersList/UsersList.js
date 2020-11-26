@@ -4,7 +4,7 @@ import {Button} from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { Pagination } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getUsers } from "../../../Redux/User/userActions";
+import { getUsers } from "../../../Redux/user/userActions";
 import Pagination from "../../Pagination/Pagination";
 import SearchBar from "../../SearchBar/SearchBar";
 

@@ -68,7 +68,6 @@ class CalendarApp extends Component {
   toggleCollapse = (i) => {
     console.log("toggle" + i)
     if (i == this.state.showIndex) {
-
       this.setState({
         showIndex: null,
       });
@@ -78,10 +77,11 @@ class CalendarApp extends Component {
       });
     }
   };
+
   changeDate = (x) => {
-    console.log(x);
-    var date = x;
-    console.log(date.toString());
+      console.log(x);
+      var date = x;
+      console.log(date.toString());
 
 
     getJobsByDate(date).then((res) => {
@@ -198,7 +198,8 @@ class CalendarApp extends Component {
             <div>
               {this.state.currentDayJobs.length ? (
                 <div>
-                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toDateString()}</h5>
+                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>
+                    {this.state.date.toDateString()}</h5>
                   {this.state.currentDayJobs.map((job, i) => (
                     <div id = "accordion" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                     <div
@@ -217,10 +218,10 @@ class CalendarApp extends Component {
                       <div
                         className={`card-header ${style.cardHeader}`}
                         id="headingOne"
-                        // onClick={() => this.toggleCollapse(i)}
+                        onClick={() => this.toggleCollapse(i)}
                         aria-expanded="true"
                         data-toggle="collapse"
-                        data-target={`#collapse${i}`}
+                        // data-target={`#collapse${i}`}
                         aria-controls="collapse"
                       >
                         <div>

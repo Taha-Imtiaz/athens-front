@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import style from "./AccountUpdate.module.css";
 import Button from "../../Button/Button";
 import API from "../../../utils/api";
-import { getUserData, updateUser } from "../../../Redux/User/userActions";
+import { getUserData, updateUser } from "../../../Redux/user/userActions";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
 

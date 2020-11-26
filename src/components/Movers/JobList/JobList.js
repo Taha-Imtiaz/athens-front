@@ -74,12 +74,28 @@ class MoversJobsList extends Component {
 
                     </div>
                 </div>
+                <div
+                className={`row justify-content-around ${style.header}`}
+                style={{ margin: "1rem 4%", fontWeight: "bold" }}
+                >
+                <div className="col-4 col-md-2 text-center" >Title</div>
+                <div className="col-4 col-md-2">Date</div>
+                <div className="col-4 col-md-3">Assignee</div>
+                <div
+                    className="col-4 col-md-1"
+                    style={{ transform: "translateX(-2rem)" }}
+                >
+                    Status
+                </div>
+                {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
+                    Actions
+                </div> */}
+                </div>
                 {moverJobs ?.data ?.jobs.length > 0 ? moverJobs.data.jobs.map(list => {
                     return <><div className={`${style.jumbotron}`}>
-
-                        <ul className="list-group">
+                        <ul className="list-group text-center">
                             <div className={style.li}>
-                                <li className=" checkbox list-group-item ">
+                                <li className= {`checkbox list-group-item ${style.list}`} >
                                     <div className="row justify-content-around">
                                         <div className={`col-2 col-md-2`}>
                                             <div className={style.checkbox}>
@@ -111,8 +127,7 @@ class MoversJobsList extends Component {
                                             : list.status}
                                         <div className="col-2 col-md-1">
                                             <div className="form-check">
-                                                <div className={`d-flex justify-content-end`}>
-
+                                                <div >
                                                     <Link style={{ textDecoration: "none" }} to={'/mover/jobdetails/' + list._id}> <Button name="Details" /></Link>
                                                 </div>
 

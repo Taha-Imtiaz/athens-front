@@ -3,9 +3,9 @@ import style from './AccountDisplay.module.css'
 import { Switch, Link } from 'react-router-dom'
 import AccountUpdate from '../AccountUpdate/AccountUpdate'
 import Button from '../../Button/Button'
-import { getUserData } from '../../../Redux/User/userActions'
+import { getUserData } from '../../../Redux/user/userActions'
 import { useState } from 'react'
-import { getLoginUser } from '../../../Redux/User/userActions'
+import { getLoginUser } from '../../../Redux/user/userActions'
 import { connect } from 'react-redux';
 
 const AccountDisplay = (props) => {

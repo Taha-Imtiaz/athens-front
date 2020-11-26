@@ -9,11 +9,11 @@ import {Provider} from 'react-redux'
 
 ReactDOM.render(
   <Provider store = {store}>
-  <React.StrictMode>
+  <React.Fragment>
     <BrowserRouter>
     <App />
     </BrowserRouter>
-  </React.StrictMode>
+  </React.Fragment>
   </Provider>,
   document.getElementById('root')
 );

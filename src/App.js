@@ -36,7 +36,7 @@ import SubmitDeposit from "./components/Claims/SubmitDeposit/SubmitDeposit";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getLoginUser } from "./Redux/User/userActions";
+import { getLoginUser } from "./Redux/user/userActions";
 import PrivateRoutes from "./utils/private-routes";
 import PrivateRoute from "./utils/private-routes";
 import HeadingComponent from "./components/Headings/headings";

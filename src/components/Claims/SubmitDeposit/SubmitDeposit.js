@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CustomerDeposit from "../CustomerBlanketDeposit/CustomerDeposit";
 import style from "./SubmitDeposit.module.css";
-import Button from "../../Button/Button";
+import {Button} from "@material-ui/core";
 import { addDeposit } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
@@ -125,7 +125,7 @@ class SubmitDeposit extends Component {
             </div>
   
           <div className={style.btn}  style = {{display: "flex", justifyContent:"center", alignItems:"center"}} >
-           <button className = "btn btn-primary" style = {{background: "#00ADEE", width:"100%"}} >Submit</button>
+           <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", width:"100%"}} >Submit</Button>
           </div>
         </form>
         </div>

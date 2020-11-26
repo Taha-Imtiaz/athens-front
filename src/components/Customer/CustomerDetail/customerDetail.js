@@ -7,14 +7,17 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
 import { Modal, Alert } from "react-bootstrap";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 import Chip from "@material-ui/core/Chip";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
 import { AppBar, Box, Tab, Tabs, Typography } from "@material-ui/core";
 import { TabPanel } from "@material-ui/lab";
-import { updateClaim, updateDeposit } from "../../../Redux/Claims/claimsActions";
+import {
+  updateClaim,
+  updateDeposit,
+} from "../../../Redux/Claims/claimsActions";
 
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
@@ -27,9 +30,9 @@ const CustomerDetail = (props) => {
   const [updateIndex, setUpdateIndex] = useState(0);
   const handleShow = () => setShow(true);
   var [note, setNote] = useState("");
-  var [addClaim, setAddClaim] = useState(false)
-  var [edit, setEdit] = useState(false)
-  var [blanketValue, setBlanketValue] = useState("")
+  var [addClaim, setAddClaim] = useState(false);
+  var [edit, setEdit] = useState(false);
+  var [blanketValue, setBlanketValue] = useState("");
 
   var { customer, getCustomer } = props;
   var {
@@ -38,10 +41,10 @@ const CustomerDetail = (props) => {
     },
   } = props;
 
-  var data = []
-  if (customer ?.claim) {
+  var data = [];
+  if (customer?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
-    data = customer.claim
+    data = customer.claim;
   }
 
   const updateClaimData = () => {
@@ -66,14 +69,12 @@ const CustomerDetail = (props) => {
   const handleAddUpdate = (e) => {
     setUpdate(e.target.value);
   };
-  ;
   useEffect(() => {
     getCustomer(customerId);
   }, []);
 
-
   useEffect(() => {
-    setBlanketValue(customer ?.blanketDeposit)
+    setBlanketValue(customer?.blanketDeposit);
   }, [customer]);
 
   const routes = [
@@ -92,20 +93,18 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => { };
+  var AddNote = () => {};
 
   var [value, setValue] = useState(0);
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const addNewClaim = (i) => {
-    setShow(true)
+    setShow(true);
     setAddClaim(true);
     setUpdateIndex(i);
-  }
-
+  };
 
   const TabPanel = (props) => {
     var { children, value, index, ...other } = props;
@@ -117,11 +116,7 @@ const CustomerDetail = (props) => {
         aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box p={3}>
-            {children}
-          </Box>
-        )}
+        {value === index && <Box p={3}>{children}</Box>}
       </div>
     );
   };
@@ -139,14 +134,14 @@ const CustomerDetail = (props) => {
     // let newData = cloneDeep(blankets);
     // newData[i].quantity = --x.quantity;
     // setBlankets(newData);
-    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity - 1
+    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity - 1;
   };
 
   const increment = (x, i) => {
     // let newData = cloneDeep(blankets);
     // newData[i].quantity = ++x.quantity;
     // setBlankets(newData);
-    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1
+    customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1;
   };
 
   const closeEdit = (type) => {
@@ -164,7 +159,7 @@ const CustomerDetail = (props) => {
     updateDeposit(obj)
       .then((res) => {
         var { showMessage } = props;
-        setEdit(false)
+        setEdit(false);
         showMessage(res.data.message);
       })
       .catch((err) => console.log(err));
@@ -184,8 +179,6 @@ const CustomerDetail = (props) => {
   };
   // var { children, value, index, ...other } = props;
 
-  
-   
   return (
     <div>
       {customer && (
@@ -198,27 +191,27 @@ const CustomerDetail = (props) => {
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
-                    <Tabs style= {{background:"#00ADEE", border:"none"}} 
-                    
+                    <Tabs
+                      style={{ background: "#00ADEE", border: "none" }}
                       onChange={handleChange}
-
                       value={value}
                       aria-label="simple tabs example"
-
                     >
-                      <Tab
-                        label="Customer Information"
-                        className={`col-4 `}/>
-                      <Tab label="Claims"  className="col-4"/>
-                      <Tab    label="Blanket"
-                        className="col-4"  />
+                      <Tab label="Customer Information" className={`col-4 `} />
+                      <Tab label="Claims" className="col-4" />
+                      <Tab label="Blanket" className="col-4" />
                     </Tabs>
                   </AppBar>
                   <TabPanel value={value} index={0}>
-                    <div style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                    <div
+                      style={{
+                        fontFamily:
+                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                      }}
+                    >
                       <h3>Customer Information</h3>
                       <hr />
-                      <div className="row" style={{fontFamily:"sans-serif"}}>
+                      <div className="row" style={{ fontFamily: "sans-serif" }}>
                         <div className="col-4">
                           <b>
                             {" "}
@@ -318,7 +311,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
 
-                          {customer ?.jobs ?.map((job, i) => {
+                          {customer?.jobs?.map((job, i) => {
                             return (
                               <div key={i} className={style.jumbotron}>
                                 <div
@@ -341,17 +334,18 @@ const CustomerDetail = (props) => {
                                       i === 0 ? (
                                         <label key={i}>{x}</label>
                                       ) : (
-                                          <label>
-                                            <span style={{ padding: "0.5rem" }}>
-                                              |
+                                        <label>
+                                          <span style={{ padding: "0.5rem" }}>
+                                            |
                                           </span>
-                                            {x}
-                                          </label>
-                                        )
+                                          {x}
+                                        </label>
+                                      )
                                     )}
                                     <div>
                                       {job.services.map((service, i) => (
-                                        <label key={i}
+                                        <label
+                                          key={i}
                                           style={{
                                             display: "inline",
                                             padding: "0 0.2rem",
@@ -379,20 +373,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                              <p>
-                                                <span
-                                                  style={{ padding: "0.5rem" }}
-                                                >
-                                                  |
+                                            <p>
+                                              <span
+                                                style={{ padding: "0.5rem" }}
+                                              >
+                                                |
                                               </span>
-                                                {assignee.name}
-                                              </p>
-                                            )
+                                              {assignee.name}
+                                            </p>
+                                          )
                                         )}
                                       </div>
                                     ) : (
-                                        <p>No Assignee</p>
-                                      )}
+                                      <p>No Assignee</p>
+                                    )}
                                   </div>
                                   <div className="col-2">
                                     <span>
@@ -407,12 +401,14 @@ const CustomerDetail = (props) => {
                                   </div>
 
                                   <div className="col-12">
-                                    <p style ={{whiteSpace: "pre"}}>{job.description}</p>
+                                    <p style={{ whiteSpace: "pre" }}>
+                                      {job.description}
+                                    </p>
                                   </div>
 
                                   {job.locations.map((list, i) => (
                                     <div className="col-12" key={i}>
-                                      <span >
+                                      <span>
                                         {" "}
                                         <label>
                                           {" "}
@@ -506,201 +502,208 @@ const CustomerDetail = (props) => {
                           })}
                         </div>
                       ) : (
-                          <h4
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              margin: "2rem 0",
-                            }}
-                          >
-                            No job added yet
+                        <h4
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "2rem 0",
+                          }}
+                        >
+                          No job added yet
                         </h4>
-                        )}
+                      )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
-                    {customer ?.claim.length > 0 && <div className="row" style={{ fontWeight: "bold",fontFamily:"sans-serif" }}>
-                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>JobId</div>
-                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}>Status</div>
-                      <div className="col-4" style={{ transform: "translateX(1.5rem)" }}> Last Update</div>
-                    </div>}
+                    {customer?.claim.length > 0 && (
+                      <div
+                        className="row"
+                        style={{
+                          fontWeight: "bold",
+                          fontFamily: "sans-serif",
+                          margin: "1rem 0",
+                        }}
+                      >
+                        <div className="col-4">JobId</div>
+                        <div className="col-4">Status</div>
+                        <div className="col-4"> Last Update</div>
+                      </div>
+                    )}
                     <div id="accordion">
-                      {customer ?.claim.length > 0 ? (
+                      {customer?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
-                          return <div key={i} className="card" style={{ cursor: "pointer", fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                          return (
                             <div
+                              key={i}
                               style={{
-                                height: "4rem",
-                                overflow: "hidden",
-                                width: "100%",
+                                // cursor: "pointer",
+                                fontFamily:
+                                  "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                               }}
-                              className="card-header"
-                              id="headingOne"
-                              onClick={() => toggleCollapse(claim._id)}
                             >
-                              <h5 className="mb-0">
-                                <button
-                                  // className="btn btn-link"
-                                  data-toggle="collapse"
-                                  data-target="#collapse"
-                                  aria-expanded="true"
-                                  aria-controls="#collapse"
-                                  style={{
-                                    border: "none",
-                                    outline: "none",
-                                    background: "transparent",
-                                  }}
-                                >
-                                  <div>{claim.job.jobId}</div>
-                                </button>
-                              </h5>
-
-                              {/* <div className="col-3">
-                          <h6
-                            style={{
-                              transform: "translate3d(13rem, -1.8rem, 0)",
-                            }}
-                          >
-                            {x.description} 
-                          </h6>
-                        </div> */}
                               <div
-                                className="col-4"
+                                className={`card-header row ${style.cardHeader}`}
+                                aria-expanded="true"
+                                data-toggle="collapse"
+                                data-target={`#collapse${i}`}
                                 style={{
-                                  transform: "translate3d(17rem, -1.5rem, 0)",
+                                  height: "4rem",
+                                  overflow: "hidden",
+                                  width: "100%",
+                                  cursor: "pointer",
+                                  fontFamily:
+                                    "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                                 }}
+                                aria-controls="collapse"
+                                id="headingOne"
                               >
-                                {claim.status}
+                                <div className="col-4">{claim.job.jobId}</div>
+
+                                <div className="col-4">{claim.status}</div>
+                                <div className="col-4">
+                                  {/* {claim ?.updatedAt.toDateString()} */}
+                                  {claim?.updatedAt.split("T")[0]}{" "}
+                                  <span>|</span>{" "}
+                                  {claim?.updatedAt.split("T")[1].split(".")[0]}
+                                </div>
                               </div>
+
                               <div
-                                className="col-"
-                                style={{
-                                  transform: "translate3d(35rem, -3rem, 0)",
-                                }}>
-                                    {/* {claim ?.updatedAt.toDateString()} */}
-                                {claim ?.updatedAt.split("T")[0]} <span>|</span> {claim ?.updatedAt.split("T")[1].split(".")[0]}
-                              </div>
-                            </div>
+                                id={`collapse${i}`}
+                                class="collapse show"
+                                aria-labelledby="headingOne"
+                                data-parent="#accordion"
+                              >
+                                <div className="card-body">
+                                  <div>
+                                    {/* //key={x._id} */}
+                                    <div className="row justify-content-between"></div>
 
-                            <div
-                              id="#collapse"
-                              className={
-                                showIndex == claim._id
-                                  ? "show"
-                                  : "collapse"
-                              }
-                              aria-labelledby="headingOne"
-                              data-parent="#accordion"
-                            >
-                              <div className="card-body">
-                                <div>
-                                  {/* //key={x._id} */}
-                                  <div className="row justify-content-between"></div>
-
-                                  {/* <div className="row">
+                                    {/* <div className="row">
                       <div className="col-10">
                           <p className={style.comp}>from {x.from} - to {x.to}</p>
                       </div>
                   </div> */}
-                                  {claim.claims.map((y, j) => {
-                                    return (
-                                      <div key={j}>
-                                        <h6>Claim Type : {y.claimType}</h6>
-                                        <div className="row">
-                                          <div className="col-11">
-                                            <p className={style.para}>
-                                              Description : {y.description}
-                                            </p>
+                                    {claim.claims.map((y, j) => {
+                                      return (
+                                        <div key={j}>
+                                          <h6>Claim Type : {y.claimType}</h6>
+                                          <div className="row">
+                                            <div className="col-11">
+                                              <p className={style.para}>
+                                                Description : {y.description}
+                                              </p>
+                                            </div>
+                                            <div className="col-1">
+                                              <p>${y.price}</p>
+                                            </div>
                                           </div>
-                                          <div className="col-1">
-                                            <p>${y.price}</p>
-                                          </div>
-
-
+                                          <hr />
                                         </div>
-                                        <hr/>
+                                      );
+                                    })}
+
+                                    {claim.claims.length > 0 ? (
+                                      <div className="row">
+                                        <div className="col-10">
+                                          {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                        </div>
+                                        <div className="col-2">
+                                          <p>
+                                            {" "}
+                                            Total: $
+                                            {claim.claims.reduce(function (
+                                              a,
+                                              b
+                                            ) {
+                                              return a + b["price"];
+                                            },
+                                            0)}
+                                          </p>
+                                        </div>
                                       </div>
-                                    );
-                                  })}
-                                 
-                                  {claim.claims.length > 0 ? (
+                                    ) : null}
+                                    <hr />
                                     <div className="row">
                                       <div className="col-10">
-                                        {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
-                                      </div>
-                                      <div className="col-2">
-                                        <p>
-                                          {" "}
-                                          Total: $
-                                      {claim.claims.reduce(function (
-                                            a,
-                                            b
-                                          ) {
-                                            return a + b["price"];
-                                          },
-                                            0)}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  ) : null}
-                                  <hr />
-                                  <div className="row">
-                                    <div className="col-10">
-                                      {claim.updates.length > 0 ? (
-                                        <div>
-                                          <h3>Updates</h3>
-                                          {claim.updates.map((x, i) => (
-                                            <div key={i} className="row">
-                                              <div className="col-8">
-                                                <li> {x.value}</li>
+                                        {claim.updates.length > 0 ? (
+                                          <div>
+                                            <h3>Updates</h3>
+                                            {claim.updates.map((x, i) => (
+                                              <div key={i} className="row">
+                                                <div className="col-8">
+                                                  <li> {x.value}</li>
+                                                </div>
+                                                <div className="col-4">
+                                                  <li>
+                                                    {" "}
+                                                    {x.timestamp.split("T")[0]}
+                                                  </li>
+                                                </div>
                                               </div>
-                                              <div className="col-4">
-                                                <li>
-                                                  {" "}
-                                                  {x.timestamp.split("T")[0]}
-                                                </li>
-                                              </div>
-                                            </div>
-                                          ))}
+                                            ))}
+                                          </div>
+                                        ) : null}
+                                      </div>
+                                      <div className="col-6"></div>
+                                      <div className="col-6">
+                                        <div style={{ float: "right" }}>
+                                          {claim.status == "open" ? (
+                                            <Button
+                                              style={{
+                                                background: "#00ADEE",
+                                                textTransform: "none",
+                                                color: "#FFF",
+                                                fontFamily: "sans-serif",
+                                              }}
+                                              onClick={() => handleCloseJob(i)}
+                                            >
+                                              {" "}
+                                              Close Claim
+                                            </Button>
+                                          ) : null}
                                         </div>
-                                      ) : null}
-                                    </div>
-                                    <div className="col-6"></div>
-                                    <div className="col-6">
-
-                                      <div style={{ float: "right" }}>
-                                        {claim.status == "open" ? (
-                                          <Button
-                                          style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
-                                            onClick={() => handleCloseJob(i)}
-                                          > Close Claim</Button>
-                                        ) : null}
-                                      </div>
-                                      <div
-
-                                        style={{ float: "right", margin: " 0 0.2rem" }}
-                                      >
-                                        {claim.status == "open" ? (
-                                          <Button className="btn btn-primary"
-                                          style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
-
-                                            onClick={() => addNewClaim(i)}
-                                          >Add Update</Button>
-                                        ) : null}
+                                        <div
+                                          style={{
+                                            float: "right",
+                                            margin: " 0 0.2rem",
+                                          }}
+                                        >
+                                          {claim.status == "open" ? (
+                                            <Button
+                                              className="btn btn-primary"
+                                              style={{
+                                                background: "#00ADEE",
+                                                textTransform: "none",
+                                                color: "#FFF",
+                                                fontFamily: "sans-serif",
+                                              }}
+                                              onClick={() => addNewClaim(i)}
+                                            >
+                                              Add Update
+                                            </Button>
+                                          ) : null}
+                                        </div>
                                       </div>
                                     </div>
-
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          );
                         })
-                      ) : <div className="text-center">
-                          <img src='/images/no-data-found.png' />
-                        </div>}
-                      <Modal show={show} onHide={handleClose} animation={false} centered>
+                      ) : (
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
+                      <Modal
+                        show={show}
+                        onHide={handleClose}
+                        animation={false}
+                        centered
+                      >
                         <Modal.Header closeButton>
                           <Modal.Title>Add Update</Modal.Title>
                         </Modal.Header>
@@ -716,8 +719,19 @@ const CustomerDetail = (props) => {
                           ></textarea>
                         </Modal.Body>
                         <Modal.Footer>
-                          <button className="btn btn-primary" onClick={handleClose}>Close</button>
-                          <button className="btn btn-primary" onClick={updateClaimData}> Add</button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleClose}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="btn btn-primary"
+                            onClick={updateClaimData}
+                          >
+                            {" "}
+                            Add
+                          </button>
                         </Modal.Footer>
                       </Modal>
                     </div>
@@ -730,7 +744,10 @@ const CustomerDetail = (props) => {
                   >
                     {blanketValue ? (
                       <div>
-                        <div className={`row`} style={{fontFamily:"sans-serif"}}>
+                        <div
+                          className={`row`}
+                          style={{ fontFamily: "sans-serif" }}
+                        >
                           <div
                             className={`col-3`}
                             style={{ fontWeight: "bold" }}
@@ -757,18 +774,20 @@ const CustomerDetail = (props) => {
                           </div>
                         </div>
 
-                        <div className={style.jumbotron} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                          <ul
-                            className="list-group"
-
-                          >
-
+                        <div
+                          className={style.jumbotron}
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                          }}
+                        >
+                          <ul className="list-group">
                             <li className="checkbox list-group-item">
                               {/* key={i} */}
                               <div className="row">
                                 <div className="col-3">
                                   <label>
-                                    {customer ?.firstName} {customer ?.lastName}
+                                    {customer?.firstName} {customer?.lastName}
                                   </label>
                                 </div>
 
@@ -780,13 +799,14 @@ const CustomerDetail = (props) => {
                                           type="button"
                                           className="btn btn-default btn-number"
                                           onClick={() => {
-                                            let data = cloneDeep(blanketValue)
+                                            let data = cloneDeep(blanketValue);
                                             data.quantity = data.quantity - 1;
                                             data.cost = data.quantity * 15;
                                             setBlanketValue(data);
-                                            customer.blanketDeposit.quantity = customer.blanketDeposit.quantity - 1
-                                          }
-                                          }
+                                            customer.blanketDeposit.quantity =
+                                              customer.blanketDeposit.quantity -
+                                              1;
+                                          }}
                                         >
                                           <span
                                             className="fa fa-minus"
@@ -811,13 +831,14 @@ const CustomerDetail = (props) => {
                                           type="button"
                                           className="btn btn-default btn-number"
                                           onClick={() => {
-                                            let data = cloneDeep(blanketValue)
+                                            let data = cloneDeep(blanketValue);
                                             data.quantity = data.quantity + 1;
                                             data.cost = data.quantity * 15;
                                             setBlanketValue(data);
-                                            customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1
-                                          }
-                                          }
+                                            customer.blanketDeposit.quantity =
+                                              customer.blanketDeposit.quantity +
+                                              1;
+                                          }}
                                         >
                                           <span
                                             className="fa fa-plus"
@@ -831,9 +852,7 @@ const CustomerDetail = (props) => {
                                   </div>
                                 </div>
                                 <div className="col-3">
-                                  <label>
-                                    {blanketValue.quantity * 15}$
-                                  </label>
+                                  <label>{blanketValue.quantity * 15}$</label>
                                 </div>
                                 <div className="col-2">
                                   {!edit ? (
@@ -845,57 +864,95 @@ const CustomerDetail = (props) => {
                                       Edit
                                     </label>
                                   ) : (
-                                      <label
-                                        className="fa fa-save"
-                                        onClick={() => closeEdit("save")}
-                                      >
-                                        {" "}
-                                        Save
+                                    <label
+                                      className="fa fa-save"
+                                      onClick={() => closeEdit("save")}
+                                    >
+                                      {" "}
+                                      Save
                                     </label>
-                                    )}
+                                  )}
                                 </div>
                               </div>
                             </li>
                           </ul>
                         </div>
-                        <div className={`row ${style.flex}`} style={{ margin: "2rem 0" }}>
+                        <div
+                          className={`row ${style.flex}`}
+                          style={{ margin: "2rem 0" }}
+                        >
                           <Button
                             // className="btn btn-primary"
                             onClick={handleShow}
-                            style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                            style={{
+                              background: "#00ADEE",
+                              textTransform: "none",
+                              color: "#FFF",
+                              fontFamily: "sans-serif",
+                            }}
                           >
                             Activities
-                  </Button>
+                          </Button>
                         </div>
-                        <Modal dialogClassName={`${style.modal}`}
+                        <Modal
+                          dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
                           // animation={false}
                           centered
                           scrollable
-
                         >
                           <Modal.Header closeButton>
                             <Modal.Title>Activities</Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
-
-                            <div className="row" style={{ fontWeight: "bold" , fontFamily: "sans-serif"}}>
+                            <div
+                              className="row"
+                              style={{
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
                               <div className={`col-2`}>Performer</div>
                               <div className={`col-6`}>Message</div>
                               <div className={`col-4`}>Timestamp</div>
                             </div>
 
-                            {blanketValue && blanketValue.activities.map((activity, i) => <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                              <div className={`col-2 `}> <p>{activity.performer.name}</p></div>
-                              <div className={`col-6`}>
-                                {activity.messageLogs.map((x, i) => <p key={i}>* {x}</p>)}
-                              </div>
-                              <div className={`col-4 `}><p>  {activity.timeStamp.split("G")[0]}</p></div>
-                            </div>)}
+                            {blanketValue &&
+                              blanketValue.activities.map((activity, i) => (
+                                <div
+                                  key={i}
+                                  className="row"
+                                  style={{
+                                    fontFamily:
+                                      "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                  }}
+                                >
+                                  <div className={`col-2 `}>
+                                    {" "}
+                                    <p>{activity.performer.name}</p>
+                                  </div>
+                                  <div className={`col-6`}>
+                                    {activity.messageLogs.map((x, i) => (
+                                      <p key={i}>* {x}</p>
+                                    ))}
+                                  </div>
+                                  <div className={`col-4 `}>
+                                    <p> {activity.timeStamp.split("G")[0]}</p>
+                                  </div>
+                                </div>
+                              ))}
                           </Modal.Body>
                           <Modal.Footer>
-                            <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} onClick={handleClose}>
+                            <Button
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
+                              }}
+                              onClick={handleClose}
+                            >
                               Close
                             </Button>
                             {/* <Button variant="primary">Add Activity</Button> */}
@@ -903,10 +960,10 @@ const CustomerDetail = (props) => {
                         </Modal>
                       </div>
                     ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
+                      <div className="text-center">
+                        <img src="/images/no-data-found.png" />
+                      </div>
+                    )}
                   </TabPanel>
                 </div>
               </div>
@@ -923,8 +980,12 @@ const CustomerDetail = (props) => {
                 >
                   {" "}
                   <Button
-                   
-                    style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                    style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                    }}
                   >
                     Create Job
                   </Button>
@@ -935,21 +996,20 @@ const CustomerDetail = (props) => {
 
           <br />
         </div>
-      )
-      }
+      )}
       {/* //  : (
       //    <Redirect to="/customer"/>
       //  )} */}
-    </div >
+    </div>
   );
 };
 var mapStateToProps = (state) => ({
   customer: state.customers.data ? state.customers.data.customer : null,
-  user: state.users.user
+  user: state.users.user,
 });
 
 var actions = {
   getCustomer,
-  showMessage
+  showMessage,
 };
 export default connect(mapStateToProps, actions)(CustomerDetail);

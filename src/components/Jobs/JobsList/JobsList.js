@@ -8,22 +8,24 @@ import { connect } from "react-redux";
 import { getAllJobs, filterJobsByDate } from "../../../Redux/Job/jobActions";
 import Pagination from "../../Pagination/Pagination";
 import SearchBar from "../../SearchBar/SearchBar";
-import  Popover  from "@material-ui/core/Popover";
+import Popover from "@material-ui/core/Popover";
 // import { PopoverHeader, PopoverBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faBook, faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faBook,
+  faCalendarAlt,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 
-
-
-
-const styles = theme => ({
+const styles = (theme) => ({
   popover: {
-    pointerEvents: 'none',
+    pointerEvents: "none",
   },
   paper: {
     padding: theme.spacing(1),
@@ -38,12 +40,14 @@ class JobsList extends Component {
     startDateTo4: "",
     anchorEl: null,
     openedPopoverId: null,
-    openedDatePopoverId:null,
-    openedAssigneePopoverId:null,
+    openedDatePopoverId: null,
+    openedAssigneePopoverId: null,
     pageSize: 10,
     currentPage: 1,
     popoverOpen: false,
-
+    sortByName:false,
+    recentlyAdded:false,
+    assigneeRequired:false,
     show: false,
     dates: "",
     jobToConfirm: "",
@@ -96,14 +100,9 @@ class JobsList extends Component {
     var { getAllJobs } = this.props;
     var jobObj = {
       query: "",
-      filters: {
-        startDate: "",
-        endDate: "",
-        movedDate: "",
-        tag: "ABC",
-        startYearMonth: "",
-      },
       sort: {
+        assigneeRequired: null,
+        plainTitle:"",
         createdAt: -1,
       },
       page: 1,
@@ -119,23 +118,69 @@ class JobsList extends Component {
 
   handlePageChange = (page) => {
     var { getAllJobs } = this.props;
-    var fetchJobsOnPageChange = {
-      query: "",
-      sort: {
-        startDate: null,
-        endDate: null,
-        plainTitle:1,
-        movedDate: null,
-        tag: null,
-        startYearMonth: null,
-      },
-      page: page,
+    if(this.state.sortByName === true) {
+      var fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          startDate: null,
+          endDate: null,
+          plainTitle: 1,
+          movedDate: null,
+          tag: null,
+          startYearMonth: null,
+          assigneeRequired:null,
+          createdAt:null
+        },
+        page: page,
+      };
+      this.setState({
+        currentPage: page,
+      });
     }
-
+    else if(this.state.recentlyAdded === true) {
+      var fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          assigneeRequired: null,
+          plainTitle:"",
+          createdAt: -1,
+        },
+        page: page,
+      };
+      this.setState({
+        currentPage: page,
+      });
+    }
+    else if(this.state.assigneeRequired === true) {
+      var fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          assigneeRequired: -1,
+          plainTitle:"",
+          createdAt: null,
+        },
+        page: page,
+      };
+      this.setState({
+        currentPage: page,
+      });
+    }
+    else {
+      var fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          assigneeRequired: null,
+          plainTitle:"",
+          createdAt: -1,
+        },
+        page: page,
+      };
+      this.setState({
+        currentPage: page,
+      });
+    }
     getAllJobs(fetchJobsOnPageChange);
-    this.setState({
-      currentPage: page,
-    });
+   
   };
 
   handleChangeTo2 = (date) => {
@@ -158,19 +203,27 @@ class JobsList extends Component {
 
   handleSort = () => {
     var { getAllJobs } = this.props;
+    this.setState({
+      sortByName: true
+    })
     var fetchJobsOnPageChange = {
       query: "",
       sort: {
         startDate: null,
         endDate: null,
-        plainTitle:1,
+        plainTitle: 1,
         movedDate: null,
         tag: null,
         startYearMonth: null,
+        assigneeRequired:null, 
+        createdAt: null
       },
-      page: this.state.currentPage,
-    };
+      page: 1,
 
+    };
+this.setState({
+  currentPage:1
+})
     getAllJobs(fetchJobsOnPageChange);
   };
 
@@ -186,81 +239,104 @@ class JobsList extends Component {
         dates: date.toString(),
         movedDate: "",
         startYearMonth: "",
+        nearestDate:"",
+        sortLast:null
       },
       page: 1,
     };
+    this.setState({
+      currentPage:1
+    })
     filterJobsByDate(DateFilters);
   };
 
   handleDateFilter = () => {
     var { getAllJobs } = this.props;
-
+    this.setState({
+      recentlyAdded:true
+    })
     var fetchJobsOnPageChange = {
       query: "",
-      filters: {
-        startDate: "",
-        endDate: "",
-        movedDate: "",
-        tag: "",
-        startYearMonth: "",
-      },
       sort: {
+        assigneeRequired: null,
+        plainTitle:"",
         createdAt: -1,
       },
       page: 1,
     };
+    this.setState({
+      currentPage:1
+    })
     getAllJobs(fetchJobsOnPageChange);
   };
+handleAssigneeRequired = () => {
+  var { getAllJobs } = this.props;
+  this.setState({
+    assigneeRequired:true
+  })
 
-  handlePopoverOpen = (event,id) => {
-    console.log(id)
+  var fetchJobsOnPageChange = {
+    query: "",
+    sort: {
+      assigneeRequired: -1,
+      plainTitle:"",
+      createdAt: null,
+    },
+    page: 1,
+  };
+  this.setState({
+    currentPage:1
+  })
+  getAllJobs(fetchJobsOnPageChange);
+}
+  handlePopoverOpen = (event, id) => {
+    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
-      openedPopoverId:id
+      openedPopoverId: id,
     });
   };
 
   handlePopoverClose = () => {
     this.setState({
       anchorEl: null,
-      openedPopoverId: null
+      openedPopoverId: null,
     });
   };
 
-  handleDatePopoverOpen = (event,id) => {
-    console.log(id)
+  handleDatePopoverOpen = (event, id) => {
+    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
-      openedDatePopoverId:id
+      openedDatePopoverId: id,
     });
   };
 
   handleDatePopoverClose = () => {
     this.setState({
       anchorEl: null,
-      openedDatePopoverId: null
+      openedDatePopoverId: null,
     });
   };
 
-
-  handleAssigneePopoverOpen = (event,id) => {
-    console.log(id)
+  handleAssigneePopoverOpen = (event, id) => {
+    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
-      openedAssigneePopoverId:id
+      openedAssigneePopoverId: id,
     });
   };
 
   handleAssigneePopoverClose = () => {
     this.setState({
       anchorEl: null,
-      openedAssigneePopoverId: null
+      openedAssigneePopoverId: null,
     });
   };
   render() {
     var { jobs } = this.props;
     var { pageSize, currentPage } = this.state;
-    var {classes} = this.props
+    var { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
 
     var totalCount = jobs[0]?.data?.jobs.total;
@@ -294,20 +370,29 @@ class JobsList extends Component {
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
-              style={{ margin: "-2.5rem", width: "15rem", cursor: "pointer" }}
+              style={{width: "15rem", cursor: "pointer" }}
             >
-              <a className="dropdown-item" onClick={this.handleSort}>
-                Sort By Name
+              <h5 className="dropdown-item" style={{fontFamily:"sans-serif"}}>Sort</h5><hr/>
+              <a className="dropdown-item" onClick={this.handleSort} style={{}}>
+                Sort By Title
               </a>
-              <a className="dropdown-item" onClick={this.handleDateFilter}>
-                Recently Added
+              <a className="dropdown-item" onClick={this.handleDateFilter} style={{}}>
+              Sort By Recently Added
               </a>
+
+
+
+              <a className="dropdown-item" onClick={this.handleAssigneeRequired} style={{}}>
+               Sort By Assignee Required
+              </a>
+              <hr/>
+              <h5 style={{fontFamily:"sans-serif"}} className="dropdown-item">Filters</h5><hr/>
               <input
                 type="date"
                 name="dates"
                 value={dates}
                 id=""
-                style={{ width: "10rem", margin: " 1rem 2rem" }}
+                style={{ width: "11rem", margin: " 1rem 2rem" }}
                 onChange={(e) => this.filterJobByDate(e)}
               />
             </div>
@@ -363,111 +448,130 @@ class JobsList extends Component {
                     >
                       <li
                         key={i}
-                        className={`checkbox list-group-item ${style.list}` }
-                        style={{
-                          
-                          // color: "#fff",
-                        }}
+                        className={`checkbox list-group-item ${style.list}`}
+                        style={
+                          {
+                            // color: "#fff",
+                          }
+                        }
                       >
-                        <div className="row justify-content-around" >
+                        <div className="row justify-content-around">
                           <div className="col-4 col-md-2">
                             <label>{job.title}</label>
                           </div>
-                          <div className="col-4 col-md-2" style = {{display:"flex"}}>
+                          <div
+                            className="col-4 col-md-2"
+                            style={{ display: "flex" }}
+                          >
                             {/* <i className="far fa-calendar-alt" > </i> */}
-                            <FontAwesomeIcon icon = {faCalendarAlt} style={{margin:"0.2rem 0.5rem"}}/>
-
-                              {" "}
-                              {
-                                <span style = {{display:"flex"}}>
-                                  {job.dates[0]}
-                                {job.dates.length > 1 && 
-                                <div>
+                            <FontAwesomeIcon
+                              icon={faCalendarAlt}
+                              style={{ margin: "0.2rem 0.5rem" }}
+                            />{" "}
+                            {
+                              <span style={{ display: "flex" }}>
+                                {job.dates[0]}
+                                {job.dates.length > 1 && (
+                                  <div>
                                     <Typography
-                                aria-owns={
-                                  open ? "mouse-over-popover" : undefined
-                                }
-                                aria-haspopup="true"
-                                onMouseEnter={(e) => this.handleDatePopoverOpen(e, job._id)}
-                                onMouseLeave={this.handleDatePopoverClose}
-                              >
-                                ...
-                              </Typography>
+                                      aria-owns={
+                                        open ? "mouse-over-popover" : undefined
+                                      }
+                                      aria-haspopup="true"
+                                      onMouseEnter={(e) =>
+                                        this.handleDatePopoverOpen(e, job._id)
+                                      }
+                                      onMouseLeave={this.handleDatePopoverClose}
+                                    >
+                                      ...
+                                    </Typography>
 
-                              <Popover
-                                id="mouse-over-popover"
-                                className={classes.popover}
-                                classes={{
-                                  paper: classes.paper,
-                                }}
-                               
-                                open={this.state.openedDatePopoverId == job._id}
-                                anchorEl={this.state.anchorEl}
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "left",
-                                }}
-                                transformOrigin={{
-                                  vertical: "top",
-                                  horizontal: "left",
-                                }}
-                                onClose={this.handlePopoverClose}
-                                disableRestoreFocus
-                              >
-                               {job.dates.map((date) =>  <Typography>{date}</Typography>)}
-                              </Popover>
-                                </div>
-                                }
-                                </span>
-                              }
-                           
+                                    <Popover
+                                      id="mouse-over-popover"
+                                      className={classes.popover}
+                                      classes={{
+                                        paper: classes.paper,
+                                      }}
+                                      open={
+                                        this.state.openedDatePopoverId ==
+                                        job._id
+                                      }
+                                      anchorEl={this.state.anchorEl}
+                                      anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "left",
+                                      }}
+                                      transformOrigin={{
+                                        vertical: "top",
+                                        horizontal: "left",
+                                      }}
+                                      onClose={this.handlePopoverClose}
+                                      disableRestoreFocus
+                                    >
+                                      {job.dates.map((date) => (
+                                        <Typography>{date}</Typography>
+                                      ))}
+                                    </Popover>
+                                  </div>
+                                )}
+                              </span>
+                            }
                           </div>
                           <div className="col-4 col-md-3">
-                            <span style={{display:"flex"}}>
-                              <FontAwesomeIcon icon = {faUser} style = {{margin:"0.2rem 0.5rem"}}/>
-                                {job.assignee.length > 0 ?  job.assignee[0].name :"N/A" }
+                            <span style={{ display: "flex" }}>
+                              <FontAwesomeIcon
+                                icon={faUser}
+                                style={{ margin: "0.2rem 0.5rem" }}
+                              />
+                              {job.assignee.length > 0
+                                ? job.assignee[0].name
+                                : "N/A"}
 
-                               {job.assignee.length > 1 && 
-                               
-                               <div>
+                              {job.assignee.length > 1 && (
+                                <div>
                                   <Typography
-                                aria-owns={
-                                  open ? "mouse-over-popover" : undefined
-                                }
-                                aria-haspopup="true"
-                                onMouseEnter={(e) => this.handleAssigneePopoverOpen(e, job._id)}
-                                onMouseLeave={this.handleAssigneePopoverClose}
-                              >
-                                ...
-                              </Typography>
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handleAssigneePopoverOpen(e, job._id)
+                                    }
+                                    onMouseLeave={
+                                      this.handleAssigneePopoverClose
+                                    }
+                                  >
+                                    ...
+                                  </Typography>
 
-                              <Popover
-                                id="mouse-over-popover"
-                                className={classes.popover}
-                                classes={{
-                                  paper: classes.paper,
-                                }}
-                               
-                                open={this.state.openedAssigneePopoverId == job._id}
-                                anchorEl={this.state.anchorEl}
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "left",
-                                }}
-                                transformOrigin={{
-                                  vertical: "top",
-                                  horizontal: "left",
-                                }}
-                                onClose={this.handlePopoverClose}
-                                disableRestoreFocus
-                              >
-                               {job.assignee.map((assignee) =>  <Typography>{assignee.name}</Typography>)}
-                              </Popover>
-
-                               </div>
-                               
-                               }
-                              
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={
+                                      this.state.openedAssigneePopoverId ==
+                                      job._id
+                                    }
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
+                                  >
+                                    {job.assignee.map((assignee) => (
+                                      <Typography>{assignee.name}</Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
 
                               {/* {job.assignee.length > 0 ? (
                                 job.assignee.map((x, i) => (
@@ -487,45 +591,46 @@ class JobsList extends Component {
                           <div className="col-4 col-md-2">
                             <label style={{ display: "flex" }}>
                               {job.services ? job.services[0].name : null}
-                             {job.services.length > 1 &&
-                              <div>
+                              {job.services.length > 1 && (
+                                <div>
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handlePopoverOpen(e, job._id)
+                                    }
+                                    onMouseLeave={this.handlePopoverClose}
+                                  >
+                                    ...
+                                  </Typography>
 
-<Typography
-                                aria-owns={
-                                  open ? "mouse-over-popover" : undefined
-                                }
-                                aria-haspopup="true"
-                                onMouseEnter={(e) => this.handlePopoverOpen(e, job._id)}
-                                onMouseLeave={this.handlePopoverClose}
-                              >
-                                ...
-                              </Typography>
-
-                              <Popover
-                                id="mouse-over-popover"
-                                className={classes.popover}
-                                classes={{
-                                  paper: classes.paper,
-                                }}
-                               
-                                open={this.state.openedPopoverId == job._id}
-                                anchorEl={this.state.anchorEl}
-                                anchorOrigin={{
-                                  vertical: "bottom",
-                                  horizontal: "left",
-                                }}
-                                transformOrigin={{
-                                  vertical: "top",
-                                  horizontal: "left",
-                                }}
-                                onClose={this.handlePopoverClose}
-                                disableRestoreFocus
-                              >
-                               {job.services.map((service) =>  <Typography>{service.name}</Typography>)}
-                              </Popover>
-                              </div>
-                              }
-
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={this.state.openedPopoverId == job._id}
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
+                                  >
+                                    {job.services.map((service) => (
+                                      <Typography>{service.name}</Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
                             </label>
                           </div>
                           <div className="col-4 col-md-1">
@@ -616,4 +721,7 @@ var actions = {
   filterJobsByDate,
 };
 
-export default compose(connect(mapStateToProps, actions), withStyles(styles))(JobsList);
+export default compose(
+  connect(mapStateToProps, actions),
+  withStyles(styles)
+)(JobsList);

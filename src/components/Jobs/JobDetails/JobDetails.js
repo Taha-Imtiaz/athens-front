@@ -165,7 +165,7 @@ const JobDetails = (props) => {
                             </div>)}
                           </Modal.Body>
                           <Modal.Footer>
-                            <Button variant="primary" style={{background:"#00ADEE"}} onClick={handleClose}>
+                            <Button  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} onClick={handleClose}>
                               Close
                             </Button>
                             {/* <Button variant="primary">Add Activity</Button> */}
@@ -257,40 +257,21 @@ const JobDetails = (props) => {
                     style={{ textDecoration: "none" }}
                     to={`/job/edit/${jobId}`}
                   >
-                    <button
+                    <Button
                       type="button"
-                      className={`btn btn-primary`}
-                      style={{
-                        background: "#0275d8",
-                        border: "none",
-                        outline: "none",
-                        padding: "0.5rem 2rem",
-                        backgroundColor:"#00ADEE",
-                        color: "#fff",
-                        float: "right",
-                        borderRadius: "0.25rem",
-                      }}
+                     
+                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", float:"right",margin:"0 0.4rem"}}
                     >
                       Edit
-                    </button>
+                    </Button>
                   </Link>
-                  {job.status != 'booked' ? <button
+                  {job.status != 'booked' ? <Button
                     onClick={() => setShowBooking(true)}
                     type="button"
-                    className={`btn btn-primary mr-2`}
-                    style={{
-                      background: "#0275d8",
-                      border: "none",
-                      outline: "none",
-                      padding: "0.5rem 2rem",
-                      color: "#fff",
-                      backgroundColor:"#00ADEE",
-                      float: "right",
-                      borderRadius: "0.25rem",
-                    }}
+                    style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", float:"right"}}
                   >
                     Book
-                    </button> : null}
+                    </Button> : null}
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import style from './NewClaim.module.css'
 import DatePicker from "react-datepicker";
 
-import Button from '../../Button/Button'
+import {Button} from '@material-ui/core'
 import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
 import { connect } from "react-redux";
@@ -362,7 +362,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <input type="button" className="btn btn-primary" style={{ background: "#00ADEE", marginRight: "2rem" }} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} />
+                <Button type="button" style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", marginRight:"1rem"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} >Add Another</Button>
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
@@ -443,7 +443,7 @@ class NewClaim extends Component {
 
 
             <div>
-              <button className="btn btn-primary" style={{ width: "100%", background: "#00ADEE", margin: "2rem", width: "90%" }} onClick={this.mySubmitHandler} >Submit</button>
+              <Button  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", margin:"2rem", width:"90%"}} onClick={this.mySubmitHandler} >Submit</Button>
             </div>
 
           </form>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./CustomerClaims.module.css";
 import SideBar from "../../Sidebar/SideBar";
-import Button from "../../Button/Button";
+import {Button} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -160,17 +160,11 @@ const CustomerClaims = (props) => {
             >
               {/* <div className={style.btn}> */}
               <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
-                <button
-                  style={{
-                    // transform: "translateX(3.5rem)
-                    background: "#00ADEE",
-                    marginTop: "3%",
-
-                  }}
-                  className={`btn btn-primary `}
+                <Button
+                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                 >
                   New Claim
-                </button>{" "}
+                </Button>{" "}
               </Link>
             </div>
             <div className="col-2" >
@@ -206,7 +200,7 @@ const CustomerClaims = (props) => {
                 {data.docs &&
                   data.docs.map((x, i) => {
                     return (
-                      <div className="card">
+                      <div>
                         <div
                           style={{
                             height: "4rem",
@@ -222,7 +216,7 @@ const CustomerClaims = (props) => {
                           data-target={`#collapse${i}`}
                           aria-controls="collapse"
                           id="headingOne"
-                          onClick={() => toggleCollapse(i)}
+                          // onClick={() => toggleCollapse(i)}
                         >
                           <div className="col-3">
                             <h6 className={`${style.jobId}`}>
@@ -353,22 +347,24 @@ const CustomerClaims = (props) => {
                                 <div className="col-8"></div>
                                 <div
                                   className="col-2"
-                                  style={{ transform: "translateX(2.5rem)" }}
+                                  style={{ transform: "translateX(5rem)" }}
                                 >
                                   {x.status == "open" ? (
                                     <Button
-                                      name="Add Update"
+                                      // name="Add Update"
+                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                                       onClick={() => handleShow(i)}
-                                    ></Button>
+                                    >Add Update</Button>
                                   ) : null}
                                 </div>
 
-                                <div className="col-2">
+                                <div className="col-2" style={{ transform: "translateX(2rem)" }} >
                                   {x.status == "open" ? (
                                     <Button
-                                      name="Close Claim"
+                                      // name="Close Claim"
+                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
                                       onClick={() => handleCloseJob(i)}
-                                    ></Button>
+                                    >Close Claim</Button>
                                   ) : null}
                                 </div>
                               </div>
@@ -401,8 +397,8 @@ const CustomerClaims = (props) => {
               ></textarea>
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={handleClose} name="Close"></Button>
-              <Button onClick={updateClaimData} name="Add"></Button>
+              <Button onClick={handleClose} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",margin:"0 0.4rem"}} >Close</Button>
+              <Button onClick={updateClaimData} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Add</Button>
             </Modal.Footer>
           </Modal>
           <div className = {style.jumbotron}>

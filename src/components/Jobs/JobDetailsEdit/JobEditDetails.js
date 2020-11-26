@@ -12,7 +12,7 @@ import {
   getServices,
 } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { clone, cloneDeep, uniqBy } from "lodash";
@@ -36,6 +36,7 @@ import {
   Select,
   TextareaAutosize,
   TextField,
+  Button
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
@@ -884,43 +885,42 @@ class JobEditDetails extends Component {
                   display: "flex",
                 }}
               >
-                <button
+                <Button
                   onClick={this.handleShow}
                   type="submit"
-                  className={`btn btn-primary ${style.btnCustom}`}
-                  style={{
-                    width: "90%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+                  
+                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", width:"90%"}}
                 >
                   Add Notes
-                </button>
+                </Button>
               </div>
             </div>
           </div>
           <div className="row">
             <div className={`col-6 ${style.btnalign}`}>
-              <button
+              <Button
                 type="submit"
-                className={`btn btn-primary ${style.btnCustom}`}
+               
                 onClick={this.handleJobUpdate}
-                style={{ width: "90%", transform: "translateX(2rem)" }}
+                
+                style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", width: "90%", transform: "translate3d(2rem, 1rem ,0rem)"}}
               >
                 Update
-              </button>
+              </Button>
             </div>
             <div className={`col-6 ${style.btnalign}`}>
-              <button
+              <Button
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
-                  width: "90%",
+                  width: "80%",
+                  background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",
+                  transform: "translate3d(2rem, 1rem ,0rem)"
                   // transform:"translateX(-1.5rem)"
                 }}
               >
                 Reset
-              </button>
+              </Button>
             </div>
           </div>
           <Modal

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import style from "./AccountUpdate.module.css";
-import Button from "../../Button/Button";
+import {Button} from "@material-ui/core";
 import API from "../../../utils/api";
 import { getUserData, updateUser } from "../../../Redux/User/userActions";
 import { connect } from "react-redux";
@@ -235,13 +235,13 @@ class AccountUpdate extends Component {
            
           </form>
           <div className={style.btn} style={{ margin: "1rem 2rem" }}>
-            <button
+            <Button
               className={`btn btn-primary`}
-              style={{ width: "100% ", background: "#00ADEE" }}
+              style={{ width: "100% ",background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", }}
               onClick={this.mySubmitHandler}
             >
               Update
-            </button>
+            </Button>
           </div>
         </div>
       </div>

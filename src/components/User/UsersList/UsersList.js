@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./UsersList.module.css";
-import Button from "../../Button/Button";
+import {Button} from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { Pagination } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -105,7 +105,8 @@ const UsersList = (props) => {
             <div className={` ${style.create}`}>
               <Link style={{ textDecoration: "none" }} to="/user/create">
                 {" "}
-                <Button name="Create New" />{" "}
+                {/* <Button name="Create New" />{" "} */}
+                <Button style={{ background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Cteate New</Button>
               </Link>
             </div>
             {/* <Button name="Delete" /> */}

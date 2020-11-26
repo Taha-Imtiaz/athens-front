@@ -201,6 +201,14 @@
 .styledCard {
   width: 70%;
 }
+
+
+.cardHeader:hover {
+background-color: #00ADEE;
+color: #fff;
+/* height: 4rem; */
+}
+
 .btn{
   float: right;
   margin-right: 3%;

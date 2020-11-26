@@ -189,6 +189,7 @@ class CalendarApp extends Component {
                 onNavigate={this.changeDate}
                 onSelectEvent={this.getJobDetails}
                 onSelectSlot={this.getJobDetailsOnSlotClick}
+                selected = {true}
               />
             </div>
           </div>

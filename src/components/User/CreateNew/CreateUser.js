@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import style from "./CreateUser.module.css";
-import Button from "../../Button/Button";
+import {Button} from "@material-ui/core";
 import { Multiselect } from "multiselect-react-dropdown";
 import { createUser } from "../../../Redux/User/userActions";
 import 'react-toastify/dist/ReactToastify.css';
@@ -260,7 +260,7 @@ class CreateUser extends Component {
 
             
               <div className={style.mb}>
-                <button className="btn btn-primary" onClick={this.mySubmitHandler} >Create</button>
+                <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",}} onClick={this.mySubmitHandler} >Create</Button>
               </div>
             </form>
           </div>

@@ -34,6 +34,12 @@ color: #00ADEE;
    font-size: 0.9rem;
  }
 }
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: #00ADEE;
+}
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: #00ADEE;
+}
 
 .rbc-event {
   border: none;

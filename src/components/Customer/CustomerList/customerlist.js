@@ -22,34 +22,95 @@ const CustomerList = (props) => {
   var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
+  var [recentlyUpdated, setRecentlyUpdated] = useState(false)
+  var [recentlyUpdated, setRecentlyUpdated] = useState(false)
+  var [recentlyAdded, setRecentlyAdded] = useState(false)
+  var [sortByName, setSortByName] = useState(false)
   var { getAllCustomers } = props;
   var [show, setShow] = useState(false)
   useEffect(() => {
     var fetchCustomersObj = {
       query: "",
       sort: {
-        plainName: null,
-        createdAt: null,
-        updatedAt: -1
+        plainName: "",
+        createdAt: -1,
+        updatedAt: null
 
       },
       page: 1,
     };
     getAllCustomers(fetchCustomersObj);
-  }, [getAllCustomers]);
+  }, []);
 
   var handlePageChange = (page) => {
+   
+    if(recentlyUpdated === true) {
+      var fetchCustomersOnPageChange = {
+        query: "",
+        sort: {
+          plainName: "",
+          createdAt: null,
+          updatedAt: -1
+        },
+        page: page,
+      };
+      setCurrentPage(page);
+    }
+    else if(recentlyAdded === true) {
+      var fetchCustomersOnPageChange = {
+        query: "",
+        sort: {
+          plainName: "",
+          createdAt: -1,
+          updatedAt: null
+        },
+        page: page,
+      };
+      setCurrentPage(page);
+    }
+
+    
+    else if(sortByName === true) {
+      if (order == 1) {
+        setOrder(1);
+        var fetchCustomersOnPageChange = {
+          query: "",
+          sort: {
+            plainName: 1,
+            createdAt: null,
+            updatedAt: null
+          },
+         page: page
+        };
+        setCurrentPage(page);
+      } else if (order == -1) {
+        setOrder(-1);
+        var fetchCustomersOnPageChange = {
+          query: "",
+          sort: {
+            plainName: -1,
+            createdAt: null,
+            updatedAt: null
+          },
+         page: page
+        };
+        setCurrentPage(page);
+      }
+    }
+   else {
     var fetchCustomersOnPageChange = {
       query: "",
       sort: {
-        plainName: null,
-        createdAt: null,
-        updatedAt: -1
+        plainName: "",
+        createdAt: -1,
+        updatedAt: null
       },
       page: page,
     };
-    getAllCustomers(fetchCustomersOnPageChange);
     setCurrentPage(page);
+   }
+    getAllCustomers(fetchCustomersOnPageChange);
+    
   };
 
   const width = window.innerWidth;
@@ -70,6 +131,7 @@ const CustomerList = (props) => {
 
 
   var handleSort = () => {
+    setSortByName(true)
     if (order == 1) {
       setOrder(-1);
       var sortCustomersObj = {
@@ -79,8 +141,10 @@ const CustomerList = (props) => {
           createdAt: null,
           updatedAt: null
         },
-        page: 1,
+       page: 1
       };
+      setCurrentPage(1)
+
     } else if (order == -1) {
       setOrder(1);
       var sortCustomersObj = {
@@ -90,9 +154,11 @@ const CustomerList = (props) => {
           createdAt: null,
           updatedAt: null
         },
-        page: 1,
+       page: 1
       };
-    } else {
+      setCurrentPage(1)
+    } 
+    else {
       setOrder(1);
       var sortCustomersObj = {
         query: "",
@@ -109,29 +175,34 @@ const CustomerList = (props) => {
 
   var handleDateFilter = () => {
     setOrder(null);
+    setRecentlyAdded(true)
+    console.log(currentPage)
     var sortCustomersObj = {
       query: "",
       sort: {
-        plainName: null,
+        plainName: "",
         createdAt: -1,
         updatedAt: null
       },
       page: 1,
     };
+    setCurrentPage(1)
     getAllCustomers(sortCustomersObj);
   };
 
   var handleUpdtedAtFilter = () => {
     setOrder(null);
+    setRecentlyUpdated(true)
     var sortCustomersObj = {
       query: "",
       sort: {
-        plainName: null,
+        plainName: "",
         createdAt: null,
         updatedAt: -1
       },
       page: 1,
     };
+    setCurrentPage(1)
     getAllCustomers(sortCustomersObj);
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './CustomerDeposit.module.css'
 import SideBar from '../../Sidebar/SideBar'
-import Button from '../../Button/Button'
+import {Button} from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { getDeposits, updateDeposit } from '../../../Redux/Claims/claimsActions'
 import { clone, cloneDeep } from "lodash"
@@ -78,7 +78,7 @@ const CustomerDeposit = (props) => {
           </div>
           <div className="col-6">
             <div className={style.btn}>
-              <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button name="Deposit" /> </Link>
+              <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Deposit</Button> </Link>
             </div>
           </div>
         </div>

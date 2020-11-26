@@ -933,14 +933,13 @@ const DailySchedule = (props) => {
           </div>
           <div className="col-1"></div>
           <div className="col-2">
-            <button
-              className="btn btn-primary"
-              style={{ background: "#00ADEE" }}
+            <Button
+            style={{ background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",}}
               onClick={printAllJobs}
             >
               <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
               Print All
-            </button>
+            </Button>
           </div>
         </div>
         <hr></hr>

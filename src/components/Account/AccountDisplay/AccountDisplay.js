@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import style from './AccountDisplay.module.css'
 import { Switch, Link } from 'react-router-dom'
 import AccountUpdate from '../AccountUpdate/AccountUpdate'
-import Button from '../../Button/Button'
+import {Button} from '@material-ui/core'
 import { getUserData } from '../../../Redux/User/userActions'
 import { useState } from 'react'
 import { getLoginUser } from '../../../Redux/User/userActions'
@@ -33,7 +33,7 @@ const AccountDisplay = (props) => {
                     <Link style={{ textDecoration: "none" }} to={{
                         pathname: '/account/update',
                         userId: loggedInUser._id
-                    }}> <button className = {`btn btn-primary`} style = {{width:"100%", background:"#00ADEE"}}>Edit</button> </Link>
+                    }}> <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",width:"100%"}}>Edit</Button> </Link>
                 </div>
             </div>
         }

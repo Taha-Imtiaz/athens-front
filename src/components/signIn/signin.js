@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 // import { login } from '../../Redux/User/userAction
 import API from '../../utils/api'
 import { connect } from "react-redux";
-import { login } from '../../Redux/user/userActions';
+import { login } from '../../Redux/User/userActions';
 
 
 

@@ -68,7 +68,7 @@ const CustomerDeposit = (props) => {
   return <div>
     <div className="row">
       <div className="col-2">
-        <SideBar routes={routes} />
+        {/* <SideBar routes={routes} /> */}
       </div>
       <div className="col-10">
         <div className="row">

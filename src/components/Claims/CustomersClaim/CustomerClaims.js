@@ -142,7 +142,7 @@ const CustomerClaims = (props) => {
         <div>
           <div className="row">
             <div className="col-2">
-              <SideBar routes={routes} />
+              {/* <SideBar routes={routes} /> */}
             </div>
             <div className="col-5" style={{margin:" 1rem"}}>
               <h3 className={style.head}>Claims</h3>

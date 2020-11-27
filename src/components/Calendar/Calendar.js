@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Children } from "react";
 import style from "./Calendar.module.css";
 import Chip from '@material-ui/core/Chip';
 // import Calendar from 'react-calendar';
@@ -66,7 +66,6 @@ class CalendarApp extends Component {
   handleSelect = (x) => console.log(x);
 
   toggleCollapse = (i) => {
-    console.log("toggle" + i)
     if (i == this.state.showIndex) {
       this.setState({
         showIndex: null,
@@ -79,11 +78,7 @@ class CalendarApp extends Component {
   };
 
   changeDate = (x) => {
-      console.log(x);
-      var date = x;
-      console.log(date.toString());
-
-
+    var date = x;
     getJobsByDate(date).then((res) => {
       let jobs = [];
       res.data.jobs.map((x) => {
@@ -104,8 +99,6 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
-        console.log(date)
-        console.log(res);
         this.setState({
           currentDayJobs: res.data.jobs,
           date: date,
@@ -117,15 +110,12 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
-    console.log(e.start);
     getJob(e.id)
       .then((res) => {
-        console.log(res.data);
         this.setState({
           currentDayJobs: res.data.job,
           date: e.start,
         });
-        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -133,9 +123,7 @@ class CalendarApp extends Component {
   };
 
   getJobDetailsOnSlotClick = (e) => {
-    console.log(e)
     let date = e.end;
-    console.log(date)
     getJobsByDate(date).then((res) => {
       let jobs = [];
       res.data.jobs.map((x) => {
@@ -156,8 +144,6 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
-        console.log(date)
-        console.log(res);
         this.setState({
           currentDayJobs: res.data.jobs,
           date: date,
@@ -168,15 +154,25 @@ class CalendarApp extends Component {
       });
   }
 
+  coloredDateCellWrapper = ({ children, value }) => {
+    let date = new Date(this.state.date)
+    return React.cloneElement(Children.only(children), {
+      style: {
+        ...children.style,
+        backgroundColor: value.toDateString() == date.toDateString() ? '#eaf6fe' : 'white',
+        border: value.toDateString() == date.toDateString() ? '1px solid #00adee' : ''
+      },
+    })
+  };
+
   render() {
-    console.log(this.state.currentDayJobs);
     return (
       <div>
         <div className={`row ${style.toprow}`}>
-          <div className="col-9" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+          <div className="col-9" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
             <div className={style.cal} >
               <Calendar
-                selectable
+                selectable={true}
                 localizer={localizer}
                 events={this.state.myEventsList}
                 startAccessor="start"
@@ -189,7 +185,16 @@ class CalendarApp extends Component {
                 onNavigate={this.changeDate}
                 onSelectEvent={this.getJobDetails}
                 onSelectSlot={this.getJobDetailsOnSlotClick}
-                selected = {true}
+                // selected = {true}
+                // slotPropGetter={(date) => {
+                //   return { style: { backgroundColor: '#3174ad', borderTop: '1px solid #3174ad' } }
+                // }
+                // }
+                components={{
+                  // you have to pass your custom wrapper here
+                  // so that it actually gets used
+                  dateCellWrapper: this.coloredDateCellWrapper,
+                }}
               />
             </div>
           </div>
@@ -198,185 +203,185 @@ class CalendarApp extends Component {
             <div>
               {this.state.currentDayJobs.length ? (
                 <div>
-                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>
+                  <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>
                     {this.state.date.toDateString()}</h5>
                   {this.state.currentDayJobs.map((job, i) => (
-                    <div id = "accordion" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                    <div
-                      className={`card ${style.card}`}
-                      style={
-                        {
-                          marginBottom: "1.5rem",
-                          // boxShadow: "0px 2px lightgrey"
+                    <div id="accordion" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                      <div
+                        className={`card ${style.card}`}
+                        style={
+                          {
+                            marginBottom: "1.5rem",
+                            // boxShadow: "0px 2px lightgrey"
+                          }
                         }
-                      }
-                    >
+                      >
                         {/* data-toggle="collapse"
                             data-target="#collapseOne"
                             aria-expanded="true"
                             aria-controls="collapseOne" */}
-                      <div
-                        className={`card-header ${style.cardHeader}`}
-                        id="headingOne"
-                        onClick={() => this.toggleCollapse(i)}
-                        aria-expanded="true"
-                        data-toggle="collapse"
-                        // data-target={`#collapse${i}`}
-                        aria-controls="collapse"
-                      >
-                        <div>
-                        <Link
+                        <div
+                          className={`card-header ${style.cardHeader}`}
+                          id="headingOne"
+                          onClick={() => this.toggleCollapse(i)}
+                          aria-expanded="true"
+                          data-toggle="collapse"
+                          // data-target={`#collapse${i}`}
+                          aria-controls="collapse"
+                        >
+                          <div>
+                            <Link
                               style={{ textDecoration: "none" }}
                               to={`/job/details/${job._id}`}
                             >
                               &nbsp;
                               {job.title}
                             </Link>
-                          {/* <h6>{job.title}</h6> */}
+                            {/* <h6>{job.title}</h6> */}
+                          </div>
+                          <div>
+                            {/* <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label> */}
+
+                            {job.startTime && <Chip
+                              label={job.startTime}
+                              clickable
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                              style={{ margin: " 0 0.2rem" }}
+                            />}
+                            <Chip
+                              label={job.status}
+                              clickable
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                              style={{ margin: " 0 0.2rem" }}
+                            />
+                          </div>
                         </div>
-                        <div>
-                          {/* <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label> */}
 
-                          {job.startTime && <Chip
-                            label={job.startTime}
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                            style={{ margin: " 0 0.2rem" }}
-                          /> }
-                          <Chip
-                            label={job.status}
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                            style={{ margin: " 0 0.2rem" }}
-                          />
-                        </div>
-                      </div>
+                        <div
+                          id={`collapse${i}`}
+                          // className={
+                          //   // this.state.showIndex === i ? "show" : "collapse"
+                          // }
+                          class="collapse show"
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion"
+                        >
+                          <div className="card-body">
 
-                      <div
-                        id={`collapse${i}`}
-                        // className={
-                        //   // this.state.showIndex === i ? "show" : "collapse"
-                        // }
-                        class="collapse show"
-                        aria-labelledby="headingOne"
-                        data-parent="#accordion"
-                      >
-                        <div className="card-body">
-
-                          <p
-                            className="card-text"
-                          // style={{ whiteSpace: "pre" }}
-                          >
-                            {`${job.description}`}
-                          </p>
-                          <p className="card-text">
-                            Customer:
-                            <Link
-                              style={{ textDecoration: "none" }}
-                              to={`/customer/detail/${job.customer._id}`}
+                            <p
+                              className="card-text"
+                            // style={{ whiteSpace: "pre" }}
                             >
-                              &nbsp;
+                              {`${job.description}`}
+                            </p>
+                            <p className="card-text">
+                              Customer:
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                to={`/customer/detail/${job.customer._id}`}
+                              >
+                                &nbsp;
                               {job.customer.email}
-                            </Link>
-                          </p>
+                              </Link>
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     </div>
                   ))}
                 </div>
               ) : (
                   <div>
-                   
+
                     {this.state.currentDayJobs.length !== 0 ? (
-                      
+
                       //  currentDayJobs is a object
-                     
+
                       <div>
-                         <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toString()}</h5>
-                      <div id="accordion" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                        <div className={`card ${style.card}`}>
-                          <div
-                            class={`card-header ${style.cardHeader}`}
-                            id="headingOne"
-                            data-toggle="collapse"
-                            data-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
-                          >
-                            <div>
-                              {/* <h6>
+                        <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>{this.state.date.toString()}</h5>
+                        <div id="accordion" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                          <div className={`card ${style.card}`}>
+                            <div
+                              class={`card-header ${style.cardHeader}`}
+                              id="headingOne"
+                              data-toggle="collapse"
+                              data-target="#collapseOne"
+                              aria-expanded="true"
+                              aria-controls="collapseOne"
+                            >
+                              <div>
+                                {/* <h6>
 
                                 {this.state.currentDayJobs ?.title}
                               </h6> */}
-                              <Link
-                              style={{ textDecoration: "none" }}
-                              to={`/job/details/${this.state.currentDayJobs ?._id}`}
-                            >
-                              &nbsp;
-                              {this.state.currentDayJobs ?.title}
-                            </Link>
-                            </div>
-                            <div>
-                           { this.state.currentDayJobs ?.startTime &&
-                              <Chip
-                                label={ this.state.currentDayJobs ?.startTime }
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                                size="small"
-                                style={{ margin: " 0 0.2rem" }}
-                              />
-                              }
-                              <Chip
-                                label={this.state.currentDayJobs ?.status}
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                                size="small"
-                                style={{ margin: " 0 0.2rem" }}
-                              />
-                            </div>
-                          </div>
-                          <div
-                            id="collapseOne"
-                            class="collapse show"
-                            // className={this.state.showIndex === i ? "show" : "collapse"}
-                            aria-labelledby="headingOne"
-                            data-parent="#accordion"
-                          >
-                            <div className="card-body">
-
-                              <p
-                                className="card-text"
-
-                              >
-                                {this.state.currentDayJobs ?.description}
-                              </p>
-                              <p className="card-text">
-                                Customer:
-                              <Link
+                                <Link
                                   style={{ textDecoration: "none" }}
-                                  to={`/customer/detail/${this.state.currentDayJobs ?.customer ?._id}`}
+                                  to={`/job/details/${this.state.currentDayJobs ?._id}`}
                                 >
                                   &nbsp;
-                                {this.state.currentDayJobs ?.customer ?.email}
+                              {this.state.currentDayJobs ?.title}
                                 </Link>
-                              </p>
+                              </div>
+                              <div>
+                                {this.state.currentDayJobs ?.startTime &&
+                                  <Chip
+                                    label={this.state.currentDayJobs ?.startTime }
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    style={{ margin: " 0 0.2rem" }}
+                                  />
+                              }
+                                <Chip
+                                  label={this.state.currentDayJobs ?.status}
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                  size="small"
+                                  style={{ margin: " 0 0.2rem" }}
+                                />
+                              </div>
+                            </div>
+                            <div
+                              id="collapseOne"
+                              class="collapse show"
+                              // className={this.state.showIndex === i ? "show" : "collapse"}
+                              aria-labelledby="headingOne"
+                              data-parent="#accordion"
+                            >
+                              <div className="card-body">
+
+                                <p
+                                  className="card-text"
+
+                                >
+                                  {this.state.currentDayJobs ?.description}
+                                </p>
+                                <p className="card-text">
+                                  Customer:
+                              <Link
+                                    style={{ textDecoration: "none" }}
+                                    to={`/customer/detail/${this.state.currentDayJobs ?.customer ?._id}`}
+                                  >
+                                    &nbsp;
+                                {this.state.currentDayJobs ?.customer ?.email}
+                                  </Link>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      </div>
                     ) : (
-                        <div style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>{this.state.date.toDateString()}</h5>
+                        <div style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>{this.state.date.toDateString()}</h5>
                           <hr />
-                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center",fontFamily:"sans-serif" }}>No Jobs Available</h5>
+                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>No Jobs Available</h5>
                         </div>
                       )}
                   </div>

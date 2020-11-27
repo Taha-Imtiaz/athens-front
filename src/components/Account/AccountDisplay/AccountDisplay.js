@@ -67,6 +67,7 @@ const AccountDisplay = (props) => {
                   color: "#FFF",
                   fontFamily: "sans-serif",
                   width: "100%",
+                  
                 }}
               >
                 Edit

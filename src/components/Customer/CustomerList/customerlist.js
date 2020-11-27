@@ -71,19 +71,8 @@ const CustomerList = (props) => {
 
     
     else if(sortByName === true) {
-      if (order == 1) {
-        setOrder(1);
-        var fetchCustomersOnPageChange = {
-          query: "",
-          sort: {
-            plainName: 1,
-            createdAt: null,
-            updatedAt: null
-          },
-         page: page
-        };
-        setCurrentPage(page);
-      } else if (order == -1) {
+      if (order === 1) {
+        console.log(order)
         setOrder(-1);
         var fetchCustomersOnPageChange = {
           query: "",
@@ -95,9 +84,23 @@ const CustomerList = (props) => {
          page: page
         };
         setCurrentPage(page);
+      } else if (order == -1) {
+        console.log(order)
+        setOrder(1);
+        var fetchCustomersOnPageChange = {
+          query: "",
+          sort: {
+            plainName: 1,
+            createdAt: null,
+            updatedAt: null
+          },
+         page: page
+        };
+        setCurrentPage(page);
       }
     }
    else {
+    console.log(order)
     var fetchCustomersOnPageChange = {
       query: "",
       sort: {
@@ -133,6 +136,7 @@ const CustomerList = (props) => {
   var handleSort = () => {
     setSortByName(true)
     if (order == 1) {
+      console.log(order)
       setOrder(-1);
       var sortCustomersObj = {
         query: "",
@@ -146,6 +150,7 @@ const CustomerList = (props) => {
       setCurrentPage(1)
 
     } else if (order == -1) {
+      console.log(order)
       setOrder(1);
       var sortCustomersObj = {
         query: "",
@@ -159,6 +164,7 @@ const CustomerList = (props) => {
       setCurrentPage(1)
     } 
     else {
+      console.log(order)
       setOrder(1);
       var sortCustomersObj = {
         query: "",

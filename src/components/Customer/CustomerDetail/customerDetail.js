@@ -571,7 +571,7 @@ const CustomerDetail = (props) => {
 
                               <div
                                 id={`collapse${i}`}
-                                class="collapse show"
+                                class="collapse "
                                 aria-labelledby="headingOne"
                                 data-parent="#accordion"
                               >

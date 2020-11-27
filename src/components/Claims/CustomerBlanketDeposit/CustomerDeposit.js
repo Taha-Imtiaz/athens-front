@@ -70,7 +70,7 @@ const CustomerDeposit = (props) => {
       <div className="col-2">
         {/* <SideBar routes={routes} /> */}
       </div>
-      <div className="col-10">
+      <div className="col-12">
         <div className="row">
 
           <div className="col-6">
@@ -89,7 +89,7 @@ const CustomerDeposit = (props) => {
               <div className={`col-4 ${style.flex}`} style={{fontWeight:"bold"}}>
                 <h6>Customer</h6>
               </div>
-              <div className={`col-3 ${style.flex}`} style={{fontWeight:"bold"}}>
+              <div className={`col-3`} style={{fontWeight:"bold"}}>
                 <h6>Quantity</h6>
               </div>
               <div className={`col-3 ${style.flex}`} style={{fontWeight:"bold"}}>
@@ -100,7 +100,7 @@ const CustomerDeposit = (props) => {
               </div>
             </div>
 
-            <div className={style.jumbotron}>
+            <div className={`${style.jumbotron}`}>
               <ul className="list-group" style = {{margin:"1rem 0"}}>
                 {blankets.map((x, i) => {
                   // x.edit = true;
@@ -113,14 +113,14 @@ const CustomerDeposit = (props) => {
                         {/* <div className="col-3">
                     <input type="number" value={x.quantity} onChange = {(e) => x.quantity == e.target.value}/>
                   </div> */}
-                        <div class="col-3">
-                          <div class="input-group">
+                        <div class={`col-3 `}>
+                          <div class={`input-group`}>
                             {!x.edit ? <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" onClick={() => decrement(x, i)}>
                                 <span class="fa fa-minus" style = {{transform: "translateY(-0.25rem)"}}></span>
                               </button>
                             </span> : null}
-                            <input disabled={x.edit} type="text" class="form-control input-number" value={x.quantity} style = {{margin: "-0.25rem 0"}} min="1" onChange={() => console.log('Changed')}></input>
+                            <input disabled={x.edit} type="text" class={`form-control input-number ${style.flex}`} value={x.quantity} min="1" onChange={() => console.log('Changed')}></input>
                             {!x.edit ? <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" onClick={() => increment(x, i)}>
                                 <span class="fa fa-plus" style = {{transform: "translateY(-0.25rem)"}}></span>

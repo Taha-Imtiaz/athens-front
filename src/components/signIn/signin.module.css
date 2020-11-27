@@ -7,18 +7,18 @@
   grid-template-areas: "Username"
                         "password";*/
 
-  margin:  0 20vw;
+  /* margin:  0 20vw; */
   /* background-color:#e9f2eb; */
-  width: 70vw;
+  /* width: 70vw; */
 } 
 
 .heading{
-    margin-top: 5%;
+    /* margin-top: 5%; */
     /* margin-left: 15%; */
   
 }
 
-.input_fields{
+/* .input_fields{
     padding-top: 1%;
     width: 50%;
     margin-top: 1%;
@@ -27,8 +27,7 @@
     border : 1px solid #a8a8a8
 }
 
-.btnStyle{
-  /* margin-left: 17%; */
+
 }
 .button {
     background-color: #00ADEE;
@@ -41,7 +40,7 @@
     border-radius: 5px;
     width: 50%;
     margin-top:3% ;
-    /* margin-left: 8%; */
+    margin-left: 8%;
   }
 
   .button:hover {
@@ -63,9 +62,9 @@
     color: white;
     padding: 12px 16px;
     font-size: 16px;
-    /* border-radius: 25px; */
-    /* margin-left: 20px; */
-    /* padding-bottom: 2%; */
+    border-radius: 25px; 
+    margin-left: 20px;
+     padding-bottom: 2%;
   }
 
   .btn:hover {
@@ -94,7 +93,7 @@
 
 .userInput{
   grid-area: Username;
-  /* background-color: red; */
+  background-color: red;
 }
 
 
@@ -102,7 +101,7 @@
   margin-top: 10%;
     margin-bottom: 2%;
     font-size:2rem;
-    /* margin-left: 18%; */
+    margin-left: 18%;
     padding-top: 2%;
 }
 
@@ -144,17 +143,17 @@ margin-top: 20px;
   color: dodgerblue;
   border: 1px solid;
 
-}
+} */
 
-.bttn {
+/* .bttn {
   background-color: white;
   border: 1 px ;
   color:dodgerblue;
   padding: 5px 6px;
   font-size: 16px;
-  /* border-radius: 25px; */
+  border-radius: 25px;
   margin-left: 20px;
-  /* padding-bottom: 2%; */
+  padding-bottom: 2%;
 }
 
  .jumbotron{
@@ -162,9 +161,74 @@ margin-top: 20px;
   
 
   margin: 0 15vw;
-  /* background-color:#e9f2eb; */
+  background-color:#e9f2eb;
   width: 70vw;
 } 
+ */
 
 
+/* my styling */
+
+.signInContainer {
+  /* background-color: red; */
+  /* height: minmax(90vh, min-content); */
+  height: 86.6vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "image form";
+
+}
+.image {
+  grid-area: image;
+  background-color: lawngreen;
+  background-image: url("https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/121562793_1266066880419586_2665667662501797577_o.jpg?_nc_cat=100&ccb=2&_nc_sid=8bfeb9&_nc_eui2=AeFwJH65RWpVrOn1K4jSlGcUhcw6-aBOl3-FzDr5oE6Xf5eA60wn_a8vjaGrWfR2jgqeVZkMCcr162pbsP0nZGCE&_nc_ohc=99-El9MWnUEAX8q19v0&_nc_ht=scontent.fkhi10-1.fna&oh=37a9307b681deaea9d900fc9e64df71d&oe=5FE74342");
+  background-size: 100% 100%, cover;
+}
+.form {
+  grid-area: form;
+  /* background-color: lightcoral; */
+  display: grid;
+  grid-template-rows: 20.3vh 42vh 24.3vh;
+  grid-template-areas: "."
+                        "signIn"
+                        ".";
+}
+.signIn {
+  grid-area: signIn;
+  /* background-color: lightsalmon; */
+  display: grid;
+  grid-template-rows: 10vh repeat(2, 11vh) 10vh;
+  grid-template-areas: "head"
+                        "email"
+                        "password"
+                        "signinBtn";
+
+}
+.head {
+  grid-area: head;
+  /* background-color: lightseagreen; */
+  /* height: 10vh; */
+  /* display: grid; */
+}
+.email {
+  grid-area: email;
+  /* background-color: lightslategrey; */
+ height: 11vh;
+}
+.password {
+  /* display: grid; */
+  grid-area: password;
+  /* background-color: lime; */
+  height: 11vh;
+
+}
+.signinBtn {
+  grid-area: signinBtn;
+  /* background-color: magenta; */
+  height: 10vh;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  
 }

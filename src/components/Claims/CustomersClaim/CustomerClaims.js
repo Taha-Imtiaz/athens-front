@@ -140,11 +140,11 @@ const CustomerClaims = (props) => {
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
         <div>
-          <div className="row">
-            <div className="col-2">
-              {/* <SideBar routes={routes} /> */}
-            </div>
-            <div className="col-5" style={{margin:" 1rem"}}>
+          <div className="row" >
+            {/* <div className="col-2">
+              <SideBar routes={routes} />
+            </div> */}
+            <div className="col-7" style={{margin:" 1rem"}}>
               <h3 className={style.head}>Claims</h3>
             </div>
             <div
@@ -180,37 +180,38 @@ const CustomerClaims = (props) => {
             </div>
           </div>
           {data.docs && data.docs.length > 0 ? (
-            <div>
+            <div className = {style.head}>
               <div
-                className={`row ${style.jumbotron}`}
+                className={`row `}
                 style={{
-                  display: "flex",
+                  
                   marginTop: "1rem",
-                  marginBottom: "-1.5rem",
+                 
                   fontWeight: "bold",
-                  fontFamily:"sans-serif"
+                  fontFamily:"sans-serif",
+                 
                 }}
               >
                 <div className="col-3"> Job Id</div>
                 <div className="col-3">Name</div>
-                <div className="col-3">Status</div>
-                <div className="col-3">Last Update</div>
+                <div className="col-2" style={{transform:"translateX(-1rem)"}}>Status</div>
+                <div className="col-3" style={{transform:"translateX(-1.5rem)"}}>Last Update</div>
               </div>
-              <div id="accordion" className={style.jumbotron}>
+              <div id="accordion">
                 {data.docs &&
                   data.docs.map((x, i) => {
                     return (
                       <div>
-                        <div
+                        <div 
                           style={{
                             height: "4rem",
-                            overflow: "hidden",
+                            overflowX: "hidden",
                             width: "100%",
-                            cursor: "pointer",
+                            
                             fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
                             
                           }}
-                          className={`card-header ${style.card}`}
+                          className={`card-header row ${style.card} `}
                           aria-expanded="true"
                           data-toggle="collapse"
                           data-target={`#collapse${i}`}
@@ -219,33 +220,33 @@ const CustomerClaims = (props) => {
                           // onClick={() => toggleCollapse(i)}
                         >
                           <div className="col-3">
-                            <h6 className={`${style.jobId}`}>
+                            <h6>
                               {x?.job?.jobId}
                             </h6>
                           </div>
 
                           <div className="col-3">
                             <h6
-                              style={{
-                                transform: "translate3d(13rem, -1.8rem, 0)",
-                              }}
+                              // style={{
+                              //   transform: "translate3d(13rem, -1.8rem, 0)",
+                              // }}
                             >
                               {x.customer.firstName} {x.customer.lastName}
                             </h6>
                           </div>
                           <div
-                            className="col-4"
-                            style={{
-                              transform: "translate3d(30rem, -3.5rem, 0)",
-                            }}
+                            className="col-2"
+                            // style={{
+                            //   transform: "translate3d(30rem, -3.5rem, 0)",
+                            // }}
                           >
                             {x.status.toLocaleUpperCase()}
                           </div>
                           <div
-                            className="col-"
-                            style={{
-                              transform: "translate3d(45rem, -5rem, 0)",
-                            }}
+                            className="col-3"
+                            // style={{
+                            //   transform: "translate3d(45rem, -5rem, 0)",
+                            // }}
                           >
                             {x.updates.length > 0 ? (
                               <div>
@@ -273,7 +274,7 @@ const CustomerClaims = (props) => {
                         <div
                             id={`collapse${i}`}
                            
-                            class="collapse show"
+                            class="collapse"
                             aria-labelledby="headingOne"
                             data-parent="#accordion"
                         >
@@ -284,13 +285,13 @@ const CustomerClaims = (props) => {
                               {x.claims.map((y, j) => {
                                 return (
                                   <div key={j}>
-                                    <h6 className={style.sub}>
+                                    <h6>
                                       Claim Type : {y.claimType}
                                     </h6>
                                     <div className="row">
                                       <div className="col-10">
                             
-                                        <p className={style.para} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                                        <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                                           Description : {y.description}
                                         </p>
                                       </div>
@@ -328,10 +329,10 @@ const CustomerClaims = (props) => {
                                       <h3>Updates</h3>
                                       {x.updates.map((x, i) => (
                                         <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                          <div className="col-8">
+                                          <div className="col-9">
                                             <li> {x.value}</li>
                                           </div>
-                                          <div className="col-4">
+                                          <div className="col-3">
                                             <li>
                                               {" "}
                                               {x.timestamp.split("T")[0]}
@@ -358,7 +359,7 @@ const CustomerClaims = (props) => {
                                   ) : null}
                                 </div>
 
-                                <div className="col-2" style={{ transform: "translateX(2rem)" }} >
+                                <div className="col-2"  >
                                   {x.status == "open" ? (
                                     <Button
                                       // name="Close Claim"

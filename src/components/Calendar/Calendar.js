@@ -223,10 +223,10 @@ class CalendarApp extends Component {
                         <div
                           className={`card-header ${style.cardHeader}`}
                           id="headingOne"
-                          onClick={() => this.toggleCollapse(i)}
+                          // onClick={() => this.toggleCollapse(i)}
                           aria-expanded="true"
                           data-toggle="collapse"
-                          // data-target={`#collapse${i}`}
+                          data-target={`#collapse${i}`}
                           aria-controls="collapse"
                         >
                           <div>
@@ -266,7 +266,7 @@ class CalendarApp extends Component {
                           // className={
                           //   // this.state.showIndex === i ? "show" : "collapse"
                           // }
-                          class="collapse show"
+                          class="collapse "
                           aria-labelledby="headingOne"
                           data-parent="#accordion"
                         >

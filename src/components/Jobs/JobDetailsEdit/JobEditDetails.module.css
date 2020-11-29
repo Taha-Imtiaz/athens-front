@@ -23,7 +23,7 @@
     grid-area: form;
     
     background-color:  #e9ecef;
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
     border-radius: 0.4rem;
 }
 
@@ -49,9 +49,9 @@
 }
 .btnalign{
     /* width: 25%; */
-    /* margin-top: 5%;
-    margin-bottom: 5%;
-    margin-left: 6%; */
+     /* margin-top: 5%; */
+   margin-bottom: 5%;
+    /* margin-left: 6%;  */
 }
 
 .assigneehead{

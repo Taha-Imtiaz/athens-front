@@ -45,6 +45,7 @@ const CustomerList = (props) => {
   var handlePageChange = (page) => {
    
     if(recentlyUpdated === true) {
+      console.log(recentlyUpdated)
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -57,6 +58,7 @@ const CustomerList = (props) => {
       setCurrentPage(page);
     }
     else if(recentlyAdded === true) {
+     console.log(recentlyAdded)
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -73,11 +75,11 @@ const CustomerList = (props) => {
     else if(sortByName === true) {
       if (order === 1) {
         console.log(order)
-        setOrder(-1);
+        setOrder(1);
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
-            plainName: -1,
+            plainName: 1,
             createdAt: null,
             updatedAt: null
           },
@@ -86,11 +88,11 @@ const CustomerList = (props) => {
         setCurrentPage(page);
       } else if (order == -1) {
         console.log(order)
-        setOrder(1);
+        setOrder(-1);
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
-            plainName: 1,
+            plainName: -1,
             createdAt: null,
             updatedAt: null
           },
@@ -163,24 +165,24 @@ const CustomerList = (props) => {
       };
       setCurrentPage(1)
     } 
-    else {
-      console.log(order)
-      setOrder(1);
-      var sortCustomersObj = {
-        query: "",
-        sort: {
-          plainName: 1,
-          createdAt: null,
-          updatedAt: null
-        },
-        page: 1,
-      };
-    }
+    // else {
+    //   console.log(order)
+    //   setOrder(1);
+    //   var sortCustomersObj = {
+    //     query: "",
+    //     sort: {
+    //       plainName: 1,
+    //       createdAt: null,
+    //       updatedAt: null
+    //     },
+    //     page: 1,
+    //   };
+    // }
     getAllCustomers(sortCustomersObj);
   };
 
   var handleDateFilter = () => {
-    setOrder(null);
+  
     setRecentlyAdded(true)
     console.log(currentPage)
     var sortCustomersObj = {
@@ -197,7 +199,7 @@ const CustomerList = (props) => {
   };
 
   var handleUpdtedAtFilter = () => {
-    setOrder(null);
+   
     setRecentlyUpdated(true)
     var sortCustomersObj = {
       query: "",

@@ -923,7 +923,7 @@ const DailySchedule = (props) => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Total movers :`}{" "}
+              {`Movers Available :`}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {" "}
                 {props.movers?.length}
@@ -939,7 +939,7 @@ const DailySchedule = (props) => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
-              Total Assignee Req.:
+              Movers Required:
               {props.jobs?.data?.jobs.length > 0 ? (
                 props.jobs.data.jobs.reduce(
                   (sum, currentValue) => sum + currentValue.assigneeRequired,
@@ -981,7 +981,7 @@ const DailySchedule = (props) => {
             }}
           >
             <div className="col-3">Title</div>
-            <div className="col-2">Ass. Req.</div>
+            <div className="col-2">Movers Req.</div>
             <div
               className="col-2"
               // style={{ display: "flex", transform: "translateX(0.75rem)" }}

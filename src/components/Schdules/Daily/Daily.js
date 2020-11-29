@@ -1235,7 +1235,7 @@ const DailySchedule = (props) => {
                 </div>
                 <div
                   id={`collapse${i}`}
-                  class="collapse show"
+                  class="collapse"
                   aria-labelledby="headingOne"
                   data-parent="#accordion"
                 >

@@ -178,6 +178,7 @@ class SignInForm extends React.Component {
                   value={this.state.password}
                   onChange={this.handleFormInput}
                   error={this.state.passwordError}
+                  type="password"
                 />
 
                 {/* <label >Password</label><br />

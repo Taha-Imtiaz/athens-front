@@ -602,6 +602,7 @@ class JobEditDetails extends Component {
                     multiple
                     noOptionsText={`Add '${this.state.newService}' to Services`}
                     value={this.state.services}
+                    size = "small"
                     onChange={(event, newValue) => {
                       this.servicesChanged(newValue);
                     }}
@@ -619,6 +620,8 @@ class JobEditDetails extends Component {
                         onKeyUp={(e) => this.addCustomService(e)}
                         {...params}
                         variant="outlined"
+                        
+                        margin="normal"
                         label="Services"
                         placeholder="Services"
                       />
@@ -632,12 +635,13 @@ class JobEditDetails extends Component {
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid>
                       <div
-                        className="col-12"
+                        
                         style={{ transform: "translateX(3rem)", width: "100%" }}
                       >
                         <KeyboardDatePicker
                           inputVariant="outlined"
                           margin="normal"
+                          size = "small"
                           fullWidth
                           id="date-picker-dialog"
                           // style={{ zIndex: "-1" }}
@@ -655,10 +659,10 @@ class JobEditDetails extends Component {
               })}
               <div className="row">
                 <div className="col-11"></div>
-                <div
+                <div className="col-1"
                   onClick={this.addDate}
-                  className="col-1"
-                  style={{ transform: "translateX(3rem)" }}
+                  
+                  style={{ transform: "translateX(5rem)", float:"right" }}
                 >
                   <i className="fa fa-plus"></i>
                 </div>
@@ -666,7 +670,7 @@ class JobEditDetails extends Component {
 
               <div
                 className="row"
-                style={{ transform: "translateX(3rem)", width: "100%" }}
+                style={{ transform: "translateX(3rem)"}}
               >
                 <div className="col-4" style={{ marginTop: "1rem" }}>
                   <TextField
@@ -690,7 +694,7 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                <div className={`form-group col-4`}>
+                <div className={` col-4`}>
                   <TextField
                     type="number"
                     variant="outlined"
@@ -708,18 +712,15 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                <div className={`col-4`}>
-                  <div
-                    class="form-group"
-                    style={{
-                      transform: "translateX(3rem)",
+                <div className={`col-4`}  style={{
+                     
                       marginTop: "0.4rem",
                       width: "100%",
-                    }}
-                  >
+                    }}>
+                
                     <FormControl
                       variant="outlined"
-                      style={{ width: "90%" }}
+                      style={{ width: "100%" }}
                       margin="dense"
                     >
                       <InputLabel id="demo-simple-select-outlined-label">
@@ -747,7 +748,7 @@ class JobEditDetails extends Component {
                     </FormControl>
                   </div>
                 </div>
-              </div>
+              
 
               <div className="row">
                 <div className="col-12">
@@ -805,7 +806,7 @@ class JobEditDetails extends Component {
                     </div>
                   );
                 })}
-              <div>
+              <div className = "row">
                 <div className="col-11"></div>
                 <div
                   className="col-1"

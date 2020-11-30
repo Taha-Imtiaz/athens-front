@@ -58,15 +58,15 @@ const UsersList = (props) => {
     <div style={{ marginTop: "10px" }}>
       {usersDocs && (
         <div>
-          <div className="row">
-            <div className="col-3 col-md-3">
-              <h3 className={style.head}>Users List</h3>
+          <div className={`row `}>
+            <div className={`col-2 col-md-2 ${style.head}`}>
+              <h3>Users List</h3>
             </div>
-            <div className={`col-4 col-md-6 ${style.search}`}>
+            <div className={`col-5 col-md-6 ${style.search}`}>
               <SearchBar type="user" title="Type name or email" />
             </div>
 
-            <div className={`col-2 col-md-2 d-flex ${style.filter}`}>
+            <div className={`col-1 col-md-1 d-flex ${style.filter}`}>
               <i
                 className="fa fa-filter dropdown-toggle"
                 href="#"
@@ -92,25 +92,17 @@ const UsersList = (props) => {
                 </a>
               </div>
             </div>
-            {/* <div className="col-md-6">
-              <div className={style.btndel}>
-                <Link style={{ textDecoration: "none" }} to="/user/create">
-                  {" "}
-                  <Button name="Create New" />{" "}
-                </Link>
-              </div>
-            </div> */}
-          </div>
-          <div className={`d-flex justify-content-end ${style.buttons}`}>
-            <div className={` ${style.create}`}>
+           
+            <div className={`col-2`}>
               <Link style={{ textDecoration: "none" }} to="/user/create">
                 {" "}
                 {/* <Button name="Create New" />{" "} */}
-                <Button style={{ background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Cteate New</Button>
+                <Button style={{ background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Create New</Button>
               </Link>
             </div>
-            {/* <Button name="Delete" /> */}
           </div>
+
+          
           <div className={style.jumbotron}>
             <div className="row" style={{ margin: "0.75rem 0", fontFamily:"sans-serif" }}>
               <div

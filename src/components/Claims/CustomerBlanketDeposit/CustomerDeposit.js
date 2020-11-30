@@ -85,28 +85,28 @@ const CustomerDeposit = (props) => {
 
         {blankets && blankets.length > 0 ?
           <div className = "col-12">
-            <div className={`row ${style.myrow} `}  >
-              <div className={`col-4 ${style.flex}`} style={{fontWeight:"bold"}}>
+            <div className={`row ${style.myrow}`}  >
+              <div className={`col-4`} style={{fontWeight:"bold"}}>
                 <h6>Customer</h6>
               </div>
               <div className={`col-3`} style={{fontWeight:"bold"}}>
                 <h6>Quantity</h6>
               </div>
-              <div className={`col-3 ${style.flex}`} style={{fontWeight:"bold"}}>
+              <div className={`col-3 `} style={{fontWeight:"bold"}}>
                 <h6>Deposit</h6>
               </div>
-              <div className={`col-2 ${style.flex}`} style={{fontWeight:"bold"}}>
+              <div className={`col-2 `} style={{fontWeight:"bold"}}>
                 <h6>Actions</h6>
               </div>
             </div>
 
-            <div className={`${style.jumbotron}`}>
-              <ul className="list-group" style = {{margin:"1rem 0"}}>
+            <div className={`${style.jumbotron}`} >
+              <ul className="list-group">
                 {blankets.map((x, i) => {
                   // x.edit = true;
                   return (
-                    <li key={i} className="list-group-item" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                      <div className="row">
+                    <li key={i} className={`list-group-item ${style.list}`} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                      <div className={`row `}>
                         <div className="col-4">
                           <label>{x?.customer?.firstName} {x?.customer?.lastName}</label>
                         </div>
@@ -120,7 +120,7 @@ const CustomerDeposit = (props) => {
                                 <span class="fa fa-minus" style = {{transform: "translateY(-0.25rem)"}}></span>
                               </button>
                             </span> : null}
-                            <input disabled={x.edit} type="text" class={`form-control input-number ${style.flex}`} value={x.quantity} min="1" onChange={() => console.log('Changed')}></input>
+                            <input disabled={x.edit} type="text" class={`form-control input-number `} value={x.quantity} min="1" onChange={() => console.log('Changed')}></input>
                             {!x.edit ? <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" onClick={() => increment(x, i)}>
                                 <span class="fa fa-plus" style = {{transform: "translateY(-0.25rem)"}}></span>

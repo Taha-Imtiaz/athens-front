@@ -193,7 +193,7 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
@@ -209,15 +209,13 @@ class CreateJobs extends Component {
 
   showLocation = (i) => {
     return (
-      <div className="row">
-        <div className="col-1"></div>
-        <div className="col-5">
+      <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+        <div className="col-6">
           <div className="form-group">
             <TextField
               variant="outlined"
               margin="normal"
               required
-              style={{ width: "90%", margin: "0 1rem" }}
               fullWidth
               size="small"
               id="from"
@@ -230,13 +228,13 @@ class CreateJobs extends Component {
           </div>
         </div>
 
-        <div className="col-5">
+        <div className="col-6">
           <TextField
             fullWidth
             variant="outlined"
             margin="normal"
             required
-            style={{ width: "90%", margin: "0 1rem" }}
+            // style={{ width: "90%", margin: "0 1rem" }}
             size="small"
             id="to"
             label="Drop Off"
@@ -246,7 +244,6 @@ class CreateJobs extends Component {
             error={this.state.locationtoError}
           />
         </div>
-        <div className="col-1"></div>
       </div>
     );
   };
@@ -469,7 +466,7 @@ class CreateJobs extends Component {
       var { history } = this.props;
       createJob(createJobObj, (job) => {
         history.push("/job/details/" + job.data.data._id);
-      })
+      });
       // .then((res) => {
       //   console.log(res.data);
       //   // history.push("/job/details/" + res.data._id);
@@ -551,16 +548,14 @@ class CreateJobs extends Component {
               <div>
                 {this.state.dates.map((x, i) => {
                   return (
-                    <div
-                      className="col-12"
-                      style={{ margin: "1rem 2rem", width: "90%" }}
-                    >
+                    <div style={{ margin: "0rem 2rem", width: "90%" }}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid>
                           <KeyboardDatePicker
                             inputVariant="outlined"
                             margin="normal"
                             fullWidth
+                            size="small"
                             id="date-picker-dialog"
                             format="MM/dd/yyyy"
                             value={this.state.dates[i]}
@@ -590,7 +585,7 @@ class CreateJobs extends Component {
                 <TextField
                   variant="outlined"
                   required
-                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  style={{ margin: "0rem 2rem", width: "90%" }}
                   size="small"
                   id="title"
                   label="Job Title"
@@ -642,6 +637,7 @@ class CreateJobs extends Component {
                       onKeyUp={(e) => this.addCustomService(e)}
                       {...params}
                       variant="outlined"
+                      size="small"
                       label="Services"
                       placeholder="Services"
                     />
@@ -649,7 +645,7 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="row" style={{ margin: "0 2rem" }}>
+              <div className="row" style={{ margin: "0 1.5rem" }}>
                 <div className="form-group col-4" style={{ marginTop: "1rem" }}>
                   <TextField
                     id="time"
@@ -693,7 +689,7 @@ class CreateJobs extends Component {
                 <div className="col-4">
                   <FormControl
                     variant="outlined"
-                    style={{ marginTop: "1rem", width: "90%" }}
+                    style={{ marginTop: "1rem", width: "96%" }}
                     margin="dense"
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -736,13 +732,8 @@ class CreateJobs extends Component {
               </div>
             ) : null} */}
 
-              <div className="row">
-                <div
-                  className="col-3"
-                  style={{ margin: " 1rem", width: "90%" }}
-                >
-                  <h5>Location:</h5>
-                </div>
+              <div className="row" style={{ margin: " 0rem 2.5rem" }}>
+                <h4>Location:</h4>
               </div>
 
               {this.state.locations.map((ll, i) => {
@@ -750,22 +741,25 @@ class CreateJobs extends Component {
               })}
               <div className="row">
                 <div className="col-11"></div>
-                <div className="col-1">
-                  <div className="form-group">
-                    <div>
-                      <i className="fa fa-plus" onClick={this.addLocation}></i>
-                    </div>
-                  </div>
+                <div className=" form-group col-1">
+                  <i
+                    className="fa fa-plus"
+                    onClick={this.addLocation}
+                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                  ></i>
                 </div>
               </div>
 
-              <br />
-
               <div className="form-group">
-                <div className={style.btnsubmit}>
+                <div className={style.btnsubmit} style={{ margin: "0 2.5rem" }}>
                   <Button
                     type="button"
-                    style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                    style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                    }}
                     onClick={this.mySubmitHandler}
                   >
                     Submit

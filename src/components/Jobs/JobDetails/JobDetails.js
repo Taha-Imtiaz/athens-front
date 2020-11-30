@@ -84,13 +84,14 @@ const JobDetails = (props) => {
                 </div>
                 <div
                   className="row"
-                  style={{ marginTop: "2rem", marginRight: "0.25rem" }}
+                  style={{ marginTop: "2rem"}}
                 >
+                  <div className="col-11 col-md-11">
                   <div
                     className={`card ${style.cardCustom}`}
                     style={{
-                      margin: "1rem",
-                      width: "100%",
+                      // margin: "1rem",
+                      // width: "100%",
                       transform: "translateY(-1rem)",
                     }}
                   >
@@ -116,6 +117,7 @@ const JobDetails = (props) => {
                        
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
                 <div className="row">

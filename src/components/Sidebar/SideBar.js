@@ -1,31 +1,29 @@
-import React, { useEffect } from 'react'
-import style from './SideBar.module.css'
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+import style from "./SideBar.module.css";
+import { Link, withRouter } from "react-router-dom";
 
 const SideBar = (props) => {
-  
-  const width = window.innerWidth
-  return <div className={style.sidebar}>
+  const width = window.innerWidth;
+  var [active, setActiveLink] = useState(0);
 
-    {
-      props.routes.map((x, i) => {
-        return <Link key = {i} to={x.path}>
-          <div className="row">
-            <div className="col-2">
-              {x.icon}
+  return (
+    <div className={style.sidebar}>
+      {props.routes.map((x, i) => {
+        return (
+          <Link
+            key={i}
+            to={x.path}
+            className={props.location.pathname === x.path ? `${style.active}` : null}
+          >
+            <div className="row">
+              <div className="col-2">{x.icon}</div>
+              <div className="col-10">{width < 576 ? "" : x.title}</div>
             </div>
-            <div className="col-10">
-              {width < 576 ? "" : x.title}
-            </div>
-          </div>
-        </Link>
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
 
-      })
-    }
-
-  </div>
-}
-
-
-
-export default SideBar
+export default withRouter(SideBar);

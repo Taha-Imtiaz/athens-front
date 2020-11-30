@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import style from "./Daily.module.css";
 import SideBar from "../../Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
-
 import {
   getalljobs,
   getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
-// import Button from "../../Button/Button";
 import { Multiselect } from "multiselect-react-dropdown";
 import { getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
 import { clone, cloneDeep } from "lodash";
-// import { getJob, getAllMovers,  } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -42,7 +38,7 @@ var moverAssignedDate;
 
 const DailySchedule = (props) => {
   const [show, setShow] = useState(false);
-  var [newAssignee, setAssignee] = useState("");
+  const [newAssignee, setAssignee] = useState("");
   const [jobToUpdate, setJobToUpdate] = useState([]);
   const [allMovers, setAllMovers] = useState();
   const [showIndex, setShowIndex] = useState(null);
@@ -50,32 +46,28 @@ const DailySchedule = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [day, setDay] = useState(new Date().getDay());
   const [weekNames, setWeekNames] = useState();
-  const [tomorrow, setTomorrow] = useState(today.getDay() + 2);
-  const [tomorrowDate, setTomorrowDate] = useState(new Date(today));
-  // const [date, setDate] = useState(today.toString().split(' ')[0])
   const [date, setDate] = useState(today.toString());
-
-  const [nextDate, setNextDate] = useState(new Date());
   const [indexDate, setIndexDate] = useState(0);
-  var [getCurrentDay, setCurrentDay] = useState(day);
+  const [getCurrentDay, setCurrentDay] = useState(day);
   const [modalShow, setModalShow] = useState(false);
-  var [mover, setMover] = useState("");
-  // const [state, updateState] = React.useState(1);
-  // const forceUpdate = React.useCallback(() => updateState({}), []);
+  const [mover, setMover] = useState("");
+  const [test, setTest] = useState(0);
   const { getalljobs, getalljobsfiveday, jobs, movers } = props;
 
   useEffect(() => {
     // get-all-jobs-on-date
-    // var currentDate = sessionStorage.getItem("currentDate");
-    // console.log(currentDate.toDateString())
-    // console.log(today.toDateString())
-    // if (currentDate) {
-      // setToday(new Date(currentDate))
-      // sessionStorage.removeItem("currentDate");
-    // }
-    getalljobs({
-      date: today.toString(),
-    });
+    var currentDate = sessionStorage.getItem("currentDate");
+    if (currentDate) {
+      setToday(new Date(currentDate))
+      sessionStorage.removeItem("currentDate");
+      getalljobs({
+        date: new Date(currentDate).toString(),
+      });
+    } else {
+      getalljobs({
+        date: today.toString(),
+      });
+    }
   }, [today]);
 
   useEffect(() => {
@@ -89,6 +81,7 @@ const DailySchedule = (props) => {
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
+    // e.preventDefault();
     let dates = job.dates.join(" | ");
     let services = job.services.map((e) => e.name).join(" | ");
     // var doc = new jsPDF();
@@ -335,11 +328,7 @@ const DailySchedule = (props) => {
 
     let date = new Date();
     let itemDate = new Date(startDate); // starting today
-    console.log(itemDate);
     date.setDate(itemDate.getDate() + i);
-
-    console.log(date);
-    // setStartDate(date);
     setToday(date);
     sessionStorage.setItem("currentDate", date);
     setOpenedPopoverId(null);
@@ -452,41 +441,25 @@ const DailySchedule = (props) => {
   };
 
   const onDrag = (e, p) => {
-    // console.log('Grags', e.clientX, e.clientY)
     // let el = document.elementsFromPoint(e.clientX, e.clientY);
-    // console.log('drag',el.parentElement, p)
-    // console.log(document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]?.children[0]?.innerHTML)
-    // console.log(document.elementsFromPoint(e.pageX, e.pageY)[3])
   };
 
   const onControlledDragStop = (e, position) => {
     // this.onControlledDrag(e, position);
     // this.onStop();
-    console.log(position);
-    // console.log(document.elementsFromPoint(e.pageX, e.pageY))
     // var assigneeId = document.querySelector(".assigneeId")
     // assigneeId.style.display = "block"
     // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
     //   ?.children[0]?.innerHTML;
-    console.log(
-      parseInt(
-        document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
-          ?.children[1]?.innerHTML
-      )
-    );
-    console.log(
-      document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]?.children[1]
-        ?.innerHTML
-    );
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
-      ?.children[1]?.innerHTML
-      ? parseInt(
-          document.elementsFromPoint(e.pageX, e.pageY)[7]?.children[1]
-            ?.children[1]?.innerHTML
+    var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
+      ?.children[1] ?.innerHTML
+        ? parseInt(
+          document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
+            ?.children[1] ?.innerHTML
         )
-      : parseInt(
-          document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[1]
-            ?.children[1]?.innerHTML
+        : parseInt(
+          document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1]
+            ?.children[1] ?.innerHTML
         );
 
     let jobIndex = props.jobs.data.jobs.findIndex(
@@ -505,6 +478,7 @@ const DailySchedule = (props) => {
         // Already Assigned
         var { showMessage } = props;
         showMessage("Already Assigned");
+        setTest(test + 1)
         props.history.push("/schedule/daiily");
         // getalljobs({
         //   date: nextDate.toString(),
@@ -516,34 +490,22 @@ const DailySchedule = (props) => {
         // window.location.reload();
       } else {
         let index = movers.findIndex((x) => x.mover._id == moverId);
-        console.log(moverId);
-
         moverAssignedDate = movers[index].mover.jobs.filter((job) =>
           job.dates.some((date) => date === today.toDateString())
         );
-        console.log(moverAssignedDate);
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
 
         if (moverJobs) {
-          // {today.toDateString()}{" "}
-          console.log(moverId);
           setModalShow(true);
 
           var mover = movers.find((x) => x.mover._id == moverId);
           if (mover !== -1) {
-            console.log(mover);
-
             setMover(mover);
-
-            //  assigneesId.push(moverId);
-            //  requiredJob[0].assigneesId = assigneesId;
-
             var newAssigneeObj = {
               moverId,
               assigneesId: assigneesId,
               requiredJob: requiredJob[0],
             };
-            console.log(newAssigneeObj);
             setAssignee(newAssigneeObj);
           }
         } else {
@@ -564,8 +526,6 @@ const DailySchedule = (props) => {
 
   var updateJobAssigneeList = (e, moverObj) => {
     e.stopPropagation();
-    console.log(moverObj);
-
     moverObj.assigneesId.push(moverObj.moverId);
     moverObj.requiredJob.assigneesId = moverObj.assigneesId;
     let job = cloneDeep(moverObj.requiredJob);
@@ -787,22 +747,19 @@ const DailySchedule = (props) => {
     setIndexDate(indexDate - 1);
     setDay(newDay);
   };
-  console.log(props.jobs?.data?.jobs);
 
   const printAllJobs = (e) => {
-    for (var job of props.jobs?.data?.jobs) {
+    for (var job of props.jobs ?.data ?.jobs) {
       generatePDF(e, job);
     }
   };
   const Navigate = (e) => {
-    // console.log(e);
     // e.stopPropagation();
     // setModalShow(false);
     props.history.push("/schedule/daiily");
     // <Link to = "/schedule/daiily"/>
   };
   const open = Boolean(anchorEl);
-  console.log(mover);
   return (
     <div className={`row `}>
       <div className="col-2" style={{}}>
@@ -871,19 +828,19 @@ const DailySchedule = (props) => {
                     </a>
                     {indexDate === i ? (
                       <span
-                        class="badge badge-primary"
+                        className="badge badge-primary"
                         style={{ background: "#00ADEE" }}
                       >
                         {today.toDateString()}{" "}
                       </span>
                     ) : (
-                      <span class="badge badge-secondary">
-                        {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
-                        {new Date(
-                          new Date().setDate(startDate.getDate() + i)
-                        ).toDateString()}
-                      </span>
-                    )}
+                        <span className="badge badge-secondary">
+                          {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
+                          {new Date(
+                            new Date().setDate(startDate.getDate() + i)
+                          ).toDateString()}
+                        </span>
+                      )}
                   </li>
                 );
               })}
@@ -914,7 +871,7 @@ const DailySchedule = (props) => {
             <h6 style={{ fontFamily: "sans-serif" }}>
               {`Total Jobs : `}{" "}
               <span style={{ fontWeight: "normal" }}>
-                {props.jobs?.data?.jobs.length}
+                {props.jobs ?.data ?.jobs.length}
               </span>{" "}
             </h6>
           </div>
@@ -926,7 +883,7 @@ const DailySchedule = (props) => {
               {`Movers Available :`}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {" "}
-                {props.movers?.length}
+                {props.movers ?.length}
               </span>{" "}
             </h6>
           </div>
@@ -940,16 +897,16 @@ const DailySchedule = (props) => {
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
               Movers Required:
-              {props.jobs?.data?.jobs.length > 0 ? (
+              {props.jobs ?.data ?.jobs.length > 0 ? (
                 props.jobs.data.jobs.reduce(
                   (sum, currentValue) => sum + currentValue.assigneeRequired,
                   0
                 )
               ) : (
-                <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                  0
+                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                    0
                 </span>
-              )}
+                )}
             </h6>
           </div>
           <div className="col-1"></div>
@@ -969,7 +926,7 @@ const DailySchedule = (props) => {
           </div>
         </div>
         <hr></hr>
-        {props.jobs?.data.jobs.length > 0 && (
+        {props.jobs ?.data.jobs.length > 0 && (
           <div
             className={`row card-header`}
             style={{
@@ -984,7 +941,7 @@ const DailySchedule = (props) => {
             <div className="col-2">Movers Req.</div>
             <div
               className="col-2"
-              // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
             >
               Time
             </div>
@@ -999,15 +956,11 @@ const DailySchedule = (props) => {
         {props.jobs && props.jobs.data.jobs.length > 0 ? (
           props.jobs.data.jobs.map((list, i) => {
             return (
-              <div id="accordion">
+              <div id="accordion" key={i}>
                 <div
-                  style={{}}
-                  key={i}
                   className="row"
                   style={{
-                    // height: "4rem",
                     overflow: "hidden",
-                    // backgroundColor: "red",
                     width: "100%",
                     display: "flex",
                     fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
@@ -1023,7 +976,7 @@ const DailySchedule = (props) => {
                 >
                   <div
                     className="col-3"
-                    // style={{ transform: "translateX(-1.2rem)" }}
+                  // style={{ transform: "translateX(-1.2rem)" }}
                   >
                     {list.title}
                   </div>
@@ -1035,7 +988,7 @@ const DailySchedule = (props) => {
 
                   <div
                     className="col-2"
-                    //  style={{ marginLeft: "0.2rem" }}
+                  //  style={{ marginLeft: "0.2rem" }}
                   >
                     {/* {list.services.map((ser, j) => {
                                             return (
@@ -1090,7 +1043,7 @@ const DailySchedule = (props) => {
                           onClose={handlePopoverClose}
                         // disableRestoreFocus
                         > */}
-                        {list.assignee.map((assignee) => (
+                        {list.assignee.map((assignee, i) => (
                           // <div style={{ display: "flex" }}>
                           //   {assignee.name}
                           //   <FontAwesomeIcon
@@ -1105,6 +1058,7 @@ const DailySchedule = (props) => {
                           // </div>
 
                           <ListItem
+                            key={i}
                             style={{
                               width: "100%",
                               position: "relative",
@@ -1116,7 +1070,7 @@ const DailySchedule = (props) => {
                             <ListItemText
                               style={{ width: "90%" }}
                               primary={assignee.name}
-                              // secondary="Jan 9, 2014"
+                            // secondary="Jan 9, 2014"
                             />
 
                             <FontAwesomeIcon
@@ -1136,8 +1090,8 @@ const DailySchedule = (props) => {
                         {/* </Popover> */}
                       </div>
                     ) : (
-                      " N/A"
-                    )}
+                        " N/A"
+                      )}
                   </div>
                   {/* Modal */}
 
@@ -1167,22 +1121,24 @@ const DailySchedule = (props) => {
                       <div>
                         {mover && (
                           <div style={{ margin: "1.5rem 1rem" }}>
-                            {moverAssignedDate.map((job) => (
-                              <div className="row">
-                                <p className="col-8">
-                                  <Link
+                            {moverAssignedDate.map((job, i) => (
+                              <div className="row" key={i}>
+                                <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
+                                style={{ textDecoration: "none", cursor: 'pointer' }}>
+                                  {/* <Link
                                     to={`/job/details/${job._id}`}
                                     style={{ textDecoration: "none" }}
                                   >
                                     <span style={{ margin: "0.2rem 0.4rem" }}>
-                                      &#42;
                                     </span>
                                     {job.title}
-                                  </Link>
-                                </p>{" "}
+                                  </Link> */}
+                                  &#42; 
+                                  {job.title}
+                                </a>{" "}
                                 <Chip
                                   className="col-2"
-                                  label={job.startTime}
+                                  label={job.startTime ? job.startTime : 'N/A'}
                                   clickable
                                   color="primary"
                                   // size="small"
@@ -1196,13 +1152,13 @@ const DailySchedule = (props) => {
                     </Modal.Body>
                     <Modal.Footer>
                       <Button
-                        variant="primary"
+                        // variant="primary"
                         onClick={(e) => updateJobAssigneeList(e, newAssignee)}
                       >
                         Confirm
                       </Button>
                       <Button
-                        variant="primary"
+                        // variant="primary"
                         onClick={(e) => {
                           Navigate(e);
                         }}
@@ -1222,11 +1178,11 @@ const DailySchedule = (props) => {
                     >
                       <button
                         onClick={(e) => generatePDF(e, list)}
-                        // onClick = {(e) => handlePropagation(e)}
+                      // onClick = {(e) => handlePropagation(e)}
                       >
                         <i
                           className="fa fa-print"
-                          // onClick={(e) => handlePropagation(e)}
+                        // onClick={(e) => handlePropagation(e)}
                         ></i>
                         Print
                       </button>
@@ -1235,7 +1191,7 @@ const DailySchedule = (props) => {
                 </div>
                 <div
                   id={`collapse${i}`}
-                  class="collapse"
+                  className="collapse"
                   aria-labelledby="headingOne"
                   data-parent="#accordion"
                 >
@@ -1332,10 +1288,10 @@ const DailySchedule = (props) => {
             );
           })
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
 
       <div className={`col-2 ${style.mov}`} id="mov">
@@ -1344,7 +1300,7 @@ const DailySchedule = (props) => {
           {movers &&
             movers.map((list, i) => {
               return (
-                <div>
+                <div key={i}>
                   <div
                     className="row"
                     style={{
@@ -1437,7 +1393,7 @@ const DailySchedule = (props) => {
             {/* {assignee?.map((assign) => assign.name)} */}
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate?.assignee}
+                selectedValues={jobToUpdate ?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

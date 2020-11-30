@@ -49,6 +49,7 @@ class CalendarApp extends Component {
         myEventsList: jobs,
       });
     });
+
     getAllJobsOnDate(date)
       .then((res) => {
         this.setState({
@@ -110,6 +111,7 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
+    console.log(e)
     getJob(e.id)
       .then((res) => {
         this.setState({
@@ -389,6 +391,7 @@ class CalendarApp extends Component {
             </div>
           </div>
         </div>
+      
       </div>
     );
   }

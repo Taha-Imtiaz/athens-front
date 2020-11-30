@@ -168,7 +168,9 @@ class CalendarApp extends Component {
   render() {
     return (
       <div>
+        <h2 className = {style.toprow}>Calender </h2>
         <div className={`row ${style.toprow}`}>
+          
           <div className="col-9" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
             <div className={style.cal} >
               <Calendar

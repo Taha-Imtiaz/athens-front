@@ -17,7 +17,7 @@ const MoversSchedule = (props) => {
     {
         title: "Daily Schedule",
         path: "daily",
-        icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
+        icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon" color = "white"></img>
 
     },
     
@@ -29,7 +29,7 @@ const MoversSchedule = (props) => {
     {
         title: "Movers",
         path: "/schedule/Movers",
-        icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
+        icon: <img src='/images/truck.png' width="20px" alt="icon" color = "white"></img>
 
     }
     ]

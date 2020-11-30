@@ -17,7 +17,7 @@
     text-decoration: none;
   }
 
-  .sidebar a:active{
+  .sidebar .active{
     background-color:#00ADEE;
   }
    

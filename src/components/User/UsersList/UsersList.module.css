@@ -25,10 +25,10 @@
 }
 
 .head{
-    margin-top: 2%;
+    /* margin-top: 2%; */
     float: left;
-    margin-left: 10%;
-    margin-bottom: 2%;
+    margin-left: 5%;
+    /* margin-bottom: 2%; */
 }
 
 .btndel{

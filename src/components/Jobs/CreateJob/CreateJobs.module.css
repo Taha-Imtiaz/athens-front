@@ -24,8 +24,8 @@
 }
 
 .btnsubmit button{
-   width: 90%;
-   margin: 1rem 2rem;
+   width: 100%;
+   /* margin: 0rem 3rem; */
    background-color:  #00ADEE ;
 }
 

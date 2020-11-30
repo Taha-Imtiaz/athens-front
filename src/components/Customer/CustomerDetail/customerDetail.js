@@ -239,11 +239,11 @@ const CustomerDetail = (props) => {
                         <div className="col-4" style={{ padding: "0.5rem 0" }}>
                           <b>
                             {" "}
-                            <label className={style.l1}>Email</label>
+                            <label>Email</label>
                           </b>
                           <p
                             style={{
-                              transform: "translate3d(0.5rem, -0.5rem,0)",
+                              transform: "translate3d(0rem, -0.5rem,0)",
                             }}
                           >
                             {customer.email}

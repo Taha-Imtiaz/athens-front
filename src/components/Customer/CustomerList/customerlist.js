@@ -46,6 +46,8 @@ const CustomerList = (props) => {
    
     if(recentlyUpdated === true) {
       console.log(recentlyUpdated)
+     
+      console.log(order)
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -59,6 +61,8 @@ const CustomerList = (props) => {
     }
     else if(recentlyAdded === true) {
      console.log(recentlyAdded)
+    
+     console.log(order)
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -75,7 +79,8 @@ const CustomerList = (props) => {
     else if(sortByName === true) {
       if (order === 1) {
         console.log(order)
-        setOrder(1);
+        // setOrder(1);
+       
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
@@ -88,7 +93,8 @@ const CustomerList = (props) => {
         setCurrentPage(page);
       } else if (order == -1) {
         console.log(order)
-        setOrder(-1);
+        // setOrder(-1);
+       
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
@@ -110,7 +116,7 @@ const CustomerList = (props) => {
         createdAt: -1,
         updatedAt: null
       },
-      page: page,
+      page: page
     };
     setCurrentPage(page);
    }

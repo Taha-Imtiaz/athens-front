@@ -248,7 +248,7 @@ class CustomerAdd extends Component {
 
                             </div>) : null} */}
                         </form>
-                        <h4 style={{ margin: "0 2rem" }}>Alternate Contact</h4>
+                        <h5 style={{ margin: "0 2rem" }}>Alternate Contact</h5>
                         {this.state.subContacts.map((x, i) => {
                             return (
                                 <div key={i}>
@@ -261,7 +261,7 @@ class CustomerAdd extends Component {
                                             variant="outlined"
                                             required
 
-                                            style={{ margin: "1rem 1.5rem", width: "92%" }}
+                                            style={{ margin: "1rem 2rem", width: "92%" }}
                                             size="small"
                                             // required
 
@@ -284,7 +284,7 @@ class CustomerAdd extends Component {
 
                                             required
 
-                                            style={{ margin: "1rem 1.5rem", width: "92%" }}
+                                            style={{ margin: "1rem 2rem", width: "92%" }}
                                             // required
 
                                             id="emailalt"
@@ -301,17 +301,17 @@ class CustomerAdd extends Component {
                             )
                         })}
                         < div className="form-group">
-                            <div style={{ float: 'right' }} className="row">
+                            <div style={{ float: 'right', marginRight:"2.2rem" }} className="row">
                                 {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
                                 <Button onClick={this.addContacts} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} >Add Another</Button>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className={`col`}>
-                                <Button onClick={this.mySubmitHandler} className={`${style.button}`} style={{background:"#00ADEE", margin:  "1rem 1.5rem", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Submit</Button>
+                        {/* <div className="row"> */}
+                            {/* <div className={`col-12`}> */}
+                                <Button onClick={this.mySubmitHandler} className={`${style.button}`} style={{background:"#00ADEE", margin:  "1rem",  marginRight:"0", width:"92%", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Submit</Button>
                                 {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-                            </div>
-                        </div>
+                            {/* </div> */}
+                        {/* </div> */}
                     </div>
                 </div >
             </div>

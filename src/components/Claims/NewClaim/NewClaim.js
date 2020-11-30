@@ -324,6 +324,7 @@ class NewClaim extends Component {
                           value={this.state.claims[i].claimType}
                           onChange={(e) => this.hanldeClaimsInput(e, i)}
                           label="Claim Type"
+                          // style= {{width:"90%"}}
                           name="claimType"
                         >
                       
@@ -337,11 +338,11 @@ class NewClaim extends Component {
                         <TextField
                           variant="outlined"
                           margin="normal"
-                          style={{ margin: "2rem", width: "90%" }}
+                          // style={{ width: "90%" }}
                           required
                           // error = {this.state.priceError}
                           size="small"
-                          id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem 0" }} />
+                          id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem -0.4rem" }} />
                       </div>
 
 
@@ -362,7 +363,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <Button type="button" style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", marginRight:"1rem"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} >Add Another</Button>
+                <Button type="button" style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", marginRight:"2.5rem"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} >Add Another</Button>
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>

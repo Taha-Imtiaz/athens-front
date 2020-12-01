@@ -592,6 +592,7 @@ class JobEditDetails extends Component {
                   Job Description
                 </h4>
                 <TextareaAutosize
+                className={style.textarea}
                   rowsMin={5}
                   required
                   style={{

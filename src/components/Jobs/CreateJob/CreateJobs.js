@@ -37,9 +37,6 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
-
-console.log(time);
-
 class CreateJobs extends Component {
   initialState = {
     title: "",

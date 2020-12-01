@@ -54,21 +54,20 @@ const DailySchedule = (props) => {
   const [test, setTest] = useState(0);
   const { getalljobs, getalljobsfiveday, jobs, movers } = props;
 
-  useEffect(() => {
-    // get-all-jobs-on-date
-    var currentDate = sessionStorage.getItem("currentDate");
-    if (currentDate) {
-      setToday(new Date(currentDate))
-      sessionStorage.removeItem("currentDate");
-      getalljobs({
-        date: new Date(currentDate).toString(),
-      });
-    } else {
-      getalljobs({
-        date: today.toString(),
-      });
-    }
-  }, [today]);
+  // useEffect(() => {
+  //   var currentDate = sessionStorage.getItem("currentDate");
+  //   if (currentDate) {
+  //     setToday(new Date(currentDate))
+  //     sessionStorage.removeItem("currentDate");
+  //     getalljobs({
+  //       date: new Date(currentDate).toString(),
+  //     });
+  //   } else {
+  //     getalljobs({
+  //       date: today.toString(),
+  //     });
+  //   }
+  // }, [today]);
 
   useEffect(() => {
     const { movers } = props;
@@ -77,7 +76,7 @@ const DailySchedule = (props) => {
     getalljobsfiveday({
       date: date,
     });
-  }, []);
+  }, [today]);
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
@@ -319,13 +318,6 @@ const DailySchedule = (props) => {
 
   const handleDateChange = (i) => {
     setIndexDate(i);
-    // let newToday = startDate;
-    // const yesterday = new Date(newToday);
-    // yesterday.setDate(yesterday.getDate() + i);
-    // // newToday.toDateString();
-    // yesterday.toDateString();
-    // setStartDate(yesterday);
-
     let date = new Date();
     let itemDate = new Date(startDate); // starting today
     date.setDate(itemDate.getDate() + i);
@@ -333,9 +325,8 @@ const DailySchedule = (props) => {
     sessionStorage.setItem("currentDate", date);
     setOpenedPopoverId(null);
     setAnchorEl(null);
-    // let date = new Date() + (i + 1);
-    // let newDate = new Date(date)
   };
+
   const assigneeList = (list) => {
     var moversObj = {
       name: "",
@@ -409,6 +400,7 @@ const DailySchedule = (props) => {
     // job.assigneesId = selectedList.map(x => x._id);
     setJobToUpdate(job);
   };
+
   const onAssigneeRemove = (selectedList, removedItem) => {
     let job = cloneDeep(jobToUpdate);
     job.assignee = selectedList;
@@ -423,10 +415,7 @@ const DailySchedule = (props) => {
       setShowIndex(i);
     }
   };
-  // var handlePropagation = (e) => {
-  //     // e.preventDefault();
-  //   e.stopPropagation();
-  // };
+
   var jobDetailsNavigate = (jobId) => {
     var { history, movers } = props;
     history.push(`/job/details/${jobId}`);
@@ -522,6 +511,7 @@ const DailySchedule = (props) => {
       props.history.push("/schedule/daiily");
     }
   };
+
   const dragHandlers = { onStart, onStop: onControlledDragStop, onDrag };
 
   var updateJobAssigneeList = (e, moverObj) => {
@@ -557,17 +547,13 @@ const DailySchedule = (props) => {
   };
 
   const seePreviousWeekDays = () => {
+    console.log('Called')
     let newDay = day === 0 ? 6 : day - 1;
-
-    // setToday();
-    // {
-    //   new Date(new Date().setDate(new Date().getDate() + i)).toDateString();
-    // }
-    let newToday = startDate;
+    let newToday = cloneDeep(startDate);
     const yesterday = new Date(newToday);
     yesterday.setDate(yesterday.getDate() - 1);
-    // newToday.toDateString();
     yesterday.toDateString();
+    console.log(yesterday)
     setStartDate(yesterday);
     switch (newDay) {
       case 0:
@@ -652,17 +638,17 @@ const DailySchedule = (props) => {
     }
     setIndexDate(indexDate + 1);
     setDay(newDay);
+    console.log(today, yesterday, startDate, day)
   };
+
   const seeNextWeekDays = () => {
     let newDay = day === 6 ? 0 : day + 1;
-
-    let newToday = startDate;
+    let newToday = cloneDeep(startDate);
     const yesterday = new Date(newToday);
     yesterday.setDate(yesterday.getDate() + 1);
-    // newToday.toDateString();
     yesterday.toDateString();
+    console.log(yesterday)
     setStartDate(yesterday);
-
     switch (newDay) {
       case 0:
         setWeekNames([
@@ -753,13 +739,16 @@ const DailySchedule = (props) => {
       generatePDF(e, job);
     }
   };
+
   const Navigate = (e) => {
     // e.stopPropagation();
     // setModalShow(false);
     props.history.push("/schedule/daiily");
     // <Link to = "/schedule/daiily"/>
   };
+
   const open = Boolean(anchorEl);
+
   return (
     <div className={`row `}>
       <div className="col-2" style={{}}>
@@ -767,9 +756,9 @@ const DailySchedule = (props) => {
       </div>
 
       <div className={`col-8`}>
-        <h5 className={style.head} style={{}}>
+        {/* <h5 className={style.head} style={{}}>
           Daily Schedule
-        </h5>
+        </h5> */}
 
         <div className={`row ${style.lists}`} style={{}}>
           <div
@@ -835,7 +824,7 @@ const DailySchedule = (props) => {
                       </span>
                     ) : (
                         <span className="badge badge-secondary">
-                          {/* {tomorrowDate.setDate(tomorrowDate.getDate().toString() + i)} */}
+                          {console.log(startDate)}
                           {new Date(
                             new Date().setDate(startDate.getDate() + i)
                           ).toDateString()}

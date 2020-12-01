@@ -380,7 +380,7 @@ class CalendarApp extends Component {
                         <div style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                           <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>{this.state.date.toDateString()}</h5>
                           <hr />
-                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>No Jobs Available</h5>
+                          <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}><img src="/images/no-data-found.png" /></h5>
                         </div>
                       )}
                   </div>

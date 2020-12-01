@@ -174,7 +174,7 @@ class JobEditDetails extends Component {
       };
       getAllMovers(moversObj).then((moverRes) => {
         console.log(moverRes);
-        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
+        var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
         });
@@ -341,7 +341,7 @@ class JobEditDetails extends Component {
           showMessage(res.data.message);
           history.push("/job/details/" + jobId);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
   onSelect = (selectedList, selectedItem) => {
@@ -474,25 +474,36 @@ class JobEditDetails extends Component {
       });
       console.log(this.state.newService);
 
-      var serviceAdded = {
-        name: this.state.newService,
-      };
-      if (e.keyCode === 13 && e.target.value) {
-        addService({
-          service: {
-            name: this.state.newService,
-          },
-        }).then((res) => {
-          console.log(res.data);
-          let services = cloneDeep(this.state.services);
-          services.push(res.data.data);
 
-          let serviceOptions = cloneDeep(this.state.serviceOptions);
-          serviceOptions.push(res.data.data);
-          this.setState({
-            serviceOptions,
-            services,
-          });
+      if (e.keyCode === 13 && e.target.value) {
+        // addService({
+        //   service: {
+        //     name: this.state.newService,
+        //   },
+        // }).then((res) => {
+        //   console.log(res.data);
+        //   let services = cloneDeep(this.state.services);
+        //   services.push(res.data.data);
+
+        //   let serviceOptions = cloneDeep(this.state.serviceOptions);
+        //   serviceOptions.push(res.data.data);
+        //   this.setState({
+        //     serviceOptions,
+        //     services,
+        //   });
+        // });
+        var serviceAdded = {
+          name: this.state.newService,
+          id: Math.random() * 10
+        };
+        let services = cloneDeep(this.state.services);
+        services.push(serviceAdded);
+
+        let serviceOptions = cloneDeep(this.state.serviceOptions);
+        serviceOptions.push(serviceAdded);
+        this.setState({
+          serviceOptions,
+          services,
         });
       }
     } else {
@@ -602,7 +613,7 @@ class JobEditDetails extends Component {
                     multiple
                     noOptionsText={`Add '${this.state.newService}' to Services`}
                     value={this.state.services}
-                    size = "small"
+                    size="small"
                     onChange={(event, newValue) => {
                       this.servicesChanged(newValue);
                     }}
@@ -620,7 +631,7 @@ class JobEditDetails extends Component {
                         onKeyUp={(e) => this.addCustomService(e)}
                         {...params}
                         variant="outlined"
-                        
+
                         margin="normal"
                         label="Services"
                         placeholder="Services"
@@ -635,13 +646,13 @@ class JobEditDetails extends Component {
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid>
                       <div
-                        
+
                         style={{ transform: "translateX(3rem)", width: "100%" }}
                       >
                         <KeyboardDatePicker
                           inputVariant="outlined"
                           margin="normal"
-                          size = "small"
+                          size="small"
                           fullWidth
                           id="date-picker-dialog"
                           // style={{ zIndex: "-1" }}
@@ -661,8 +672,8 @@ class JobEditDetails extends Component {
                 <div className="col-11"></div>
                 <div className="col-1"
                   onClick={this.addDate}
-                  
-                  style={{ transform: "translateX(5rem)", float:"right" }}
+
+                  style={{ transform: "translateX(5rem)", float: "right" }}
                 >
                   <i className="fa fa-plus"></i>
                 </div>
@@ -670,7 +681,7 @@ class JobEditDetails extends Component {
 
               <div
                 className="row"
-                style={{ transform: "translateX(3rem)"}}
+                style={{ transform: "translateX(3rem)" }}
               >
                 <div className="col-4" style={{ marginTop: "1rem" }}>
                   <TextField
@@ -712,43 +723,43 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                <div className={`col-4`}  style={{
-                     
-                      marginTop: "0.4rem",
-                      width: "100%",
-                    }}>
-                
-                    <FormControl
-                      variant="outlined"
-                      style={{ width: "100%" }}
-                      margin="dense"
-                    >
-                      <InputLabel id="demo-simple-select-outlined-label">
-                        Job Type
+                <div className={`col-4`} style={{
+
+                  marginTop: "0.4rem",
+                  width: "100%",
+                }}>
+
+                  <FormControl
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    margin="dense"
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Job Type
                       </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={this.state.jobType}
-                        onChange={this.handleFormInput}
-                        label="Job Type"
-                        name="jobType"
-                      >
-                        <MenuItem value={this.state.jobType}>
-                          {this.state.jobType}
-                        </MenuItem>
-                        {this.state.jobType === "fixed" ? (
-                          <MenuItem value={"hourly based"}>
-                            hourly based
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={this.state.jobType}
+                      onChange={this.handleFormInput}
+                      label="Job Type"
+                      name="jobType"
+                    >
+                      <MenuItem value={this.state.jobType}>
+                        {this.state.jobType}
+                      </MenuItem>
+                      {this.state.jobType === "fixed" ? (
+                        <MenuItem value={"hourly based"}>
+                          hourly based
                           </MenuItem>
-                        ) : (
+                      ) : (
                           <MenuItem value={"fixed"}>fixed</MenuItem>
                         )}
-                      </Select>
-                    </FormControl>
-                  </div>
+                    </Select>
+                  </FormControl>
                 </div>
-              
+              </div>
+
 
               <div className="row">
                 <div className="col-12">
@@ -806,7 +817,7 @@ class JobEditDetails extends Component {
                     </div>
                   );
                 })}
-              <div className = "row">
+              <div className="row">
                 <div className="col-11"></div>
                 <div
                   className="col-1"
@@ -864,9 +875,9 @@ class JobEditDetails extends Component {
           </div>
         </div> */}
           <div className={`${style.tron2}`}>
-            {note?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
+            {note ?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
 
-            {note?.map((note) => (
+            {note ?.map((note) => (
               <div style={{ display: "flex" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
@@ -889,8 +900,8 @@ class JobEditDetails extends Component {
                 <Button
                   onClick={this.handleShow}
                   type="submit"
-                  
-                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", width:"90%"}}
+
+                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%" }}
                 >
                   Add Notes
                 </Button>
@@ -901,10 +912,10 @@ class JobEditDetails extends Component {
             <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
-               
+
                 onClick={this.handleJobUpdate}
-                
-                style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", width: "90%", transform: "translate3d(2rem, 1rem ,0rem)"}}
+
+                style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%", transform: "translate3d(2rem, 1rem ,0rem)" }}
               >
                 Update
               </Button>
@@ -915,7 +926,7 @@ class JobEditDetails extends Component {
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
                   width: "80%",
-                  background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",
+                  background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif",
                   transform: "translate3d(2rem, 1rem ,0rem)"
                   // transform:"translateX(-1.5rem)"
                 }}

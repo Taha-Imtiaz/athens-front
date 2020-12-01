@@ -28,7 +28,7 @@ const MoversSchedule = (props) => {
     },
     {
         title: "Movers",
-        path: "/schedule/Movers",
+        path: "/schedule/movers",
         icon: <img src='/images/truck.png' width="20px" alt="icon" color = "white"></img>
 
     }

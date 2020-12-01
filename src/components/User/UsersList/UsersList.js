@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./UsersList.module.css";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { Pagination } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -41,8 +41,8 @@ const UsersList = (props) => {
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-  var totalCount = users?.users?.total;
-  var usersDocs = users?.users?.docs;
+  var totalCount = users ?.users ?.total;
+  var usersDocs = users ?.users ?.docs;
 
   var handleFilter = (name) => {
     var sortUserObj = {
@@ -92,96 +92,101 @@ const UsersList = (props) => {
                 </a>
               </div>
             </div>
-           
+
             <div className={`col-2`}>
               <Link style={{ textDecoration: "none" }} to="/user/create">
                 {" "}
                 {/* <Button name="Create New" />{" "} */}
-                <Button style={{ background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Create New</Button>
+                <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Create New</Button>
               </Link>
             </div>
           </div>
 
-          
-          <div className={style.jumbotron}>
-            <div className="row" style={{ margin: "0.75rem 0", fontFamily:"sans-serif" }}>
-              <div
-                className="col-4"
-                style={{ transform: "translateX(3rem)", fontWeight: "bold" }}
-              >
-                Name
+          {/* (
+                    <div className="text-center">
+                      <img src="/images/no-data-found.png" />
+                    </div>
+                  ) */}
+          {usersDocs.length > 0 ? <div>
+            <div className={style.jumbotron}>
+              <div className="row" style={{ margin: "0.75rem 0", fontFamily: "sans-serif" }}>
+                <div
+                  className="col-4"
+                  style={{ transform: "translateX(3rem)", fontWeight: "bold" }}
+                >
+                  Name
               </div>
-              <div
-                className="col-5"
-                style={{ transform: "translateX(5rem)", fontWeight: "bold" }}
-              >
-                Attribute
+                <div
+                  className="col-5"
+                  style={{ transform: "translateX(5rem)", fontWeight: "bold" }}
+                >
+                  Attribute
               </div>
-              <div
-                className="col-3"
-                style={{ transform: "translateX(4rem)", fontWeight: "bold" }}
-              >
-                Address
+                <div
+                  className="col-3"
+                  style={{ transform: "translateX(4rem)", fontWeight: "bold" }}
+                >
+                  Address
               </div>
+              </div>
+              <ul className="list-group">
+                <div className={style.li}>
+                  {usersDocs && usersDocs.length > 0 ? (
+                    usersDocs.map((usersDoc, i) => {
+                      return (
+                        <li
+                          key={i}
+                          className={`checkbox list-group-item ${style.list}`}
+                          style={{
+
+
+                            // color: "#fff",
+                          }}
+                        >
+                          <div className="row justify-content-around">
+                            <div className="col-3 col-md-4 text-left">
+                              <b>
+                                <span>
+                                  {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
+                                  <label
+                                    className={`checkbox-inline ${style.input}`}
+                                    htmlFor="defaultCheck1"
+                                  >
+                                    {usersDoc.name}
+                                  </label>
+                                </span>
+                              </b>
+                            </div>
+                            <div className="col-5 col-md-4">
+                              <label>
+                                {usersDoc.attributes.map(
+                                  (attribute) => attribute.name
+                                )}
+                              </label>
+                            </div>
+                            <div className="col-2">
+                              <label htmlFor="">{usersDoc.address}</label>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })
+                  ) : null}
+                </div>
+              </ul>
             </div>
-            <ul className="list-group">
-              <div className={style.li}>
-                {usersDocs && usersDocs.length > 0 ? (
-                  usersDocs.map((usersDoc, i) => {
-                    return (
-                      <li 
-                        key={i}
-                        className={`checkbox list-group-item ${style.list}`}
-                        style={{
-                         
-                         
-                          // color: "#fff",
-                        }}
-                      >
-                        <div className="row justify-content-around">
-                          <div className="col-3 col-md-4 text-left">
-                            <b>
-                              <span>
-                                {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
-                                <label
-                                  className={`checkbox-inline ${style.input}`}
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {usersDoc.name}
-                                </label>
-                              </span>
-                            </b>
-                          </div>
-                          <div className="col-5 col-md-4">
-                            <label>
-                              {usersDoc.attributes.map(
-                                (attribute) => attribute.name
-                              )}
-                            </label>
-                          </div>
-                          <div className="col-2">
-                            <label htmlFor="">{usersDoc.address}</label>
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })
-                ) : (
-                  <div className="text-center">
-                    <img src="/images/no-data-found.png" />
-                  </div>
-                )}
-              </div>
-            </ul>
-          </div>
-          <div className={style.jumbotron}>
-            <Pagination
-              itemCount={totalCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
-          </div>
+            <div className={style.jumbotron}>
+              <Pagination
+                itemCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
+
+          </div> : <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>}
         </div>
       )}
     </div>

@@ -14,7 +14,7 @@ import {
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { clone, cloneDeep, uniqBy } from "lodash";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
@@ -779,7 +779,7 @@ class JobEditDetails extends Component {
                           fullWidth
                           size="small"
                           id="from"
-                          label="From"
+                          label="Pickup"
                           name="from"
                           autoComplete="from"
                           error={this.state.locationFromError}
@@ -849,7 +849,7 @@ class JobEditDetails extends Component {
               </div>
             </div> */}
           </div>
-          <div></div>
+         
 
           {/* <h4 style={{margin:"0.8rem 0"}}>Assignees</h4>
         <div className="form-group col-10">
@@ -863,15 +863,16 @@ class JobEditDetails extends Component {
             />
           </div>
         </div> */}
-          <div className={`${style.tron2}`}>
-            {note?.length !== 0 && <h3 className={style.jobtag}>Notes</h3>}
+          <div>
+            {note?.length !== 0 && <h3 style={{transform:"translateX(2.5rem)"}}>Notes</h3>}
 
             {note?.map((note) => (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", transform:"translateX(2.5rem)" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
-                  icon={faTrash}
-                  style={{ transform: "translateY(0.2rem)" }}
+                  icon={faTrashAlt}
+                   size = "1x"
+                  style={{ transform: "translateY(0.2rem)",  }}
                   onClick={() => this.handleDelete(note)}
                 />
               </div>

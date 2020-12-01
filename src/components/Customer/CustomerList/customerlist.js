@@ -11,6 +11,7 @@ import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
 import Button from '@material-ui/core/Button';
+import { setRef } from "@material-ui/core";
 
 
 
@@ -18,7 +19,7 @@ import Button from '@material-ui/core/Button';
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
-  var [order, setOrder] = useState(1);
+  var [order, setOrder] = useState(-1);
   var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
@@ -143,6 +144,8 @@ const CustomerList = (props) => {
 
   var handleSort = () => {
     setSortByName(true)
+    setRecentlyAdded(false)
+    setRecentlyUpdated(false)
     if (order == 1) {
       console.log(order)
       setOrder(-1);
@@ -190,6 +193,8 @@ const CustomerList = (props) => {
   var handleDateFilter = () => {
   
     setRecentlyAdded(true)
+    setRecentlyUpdated(false)
+    setSortByName(null)
     console.log(currentPage)
     var sortCustomersObj = {
       query: "",
@@ -207,6 +212,8 @@ const CustomerList = (props) => {
   var handleUpdtedAtFilter = () => {
    
     setRecentlyUpdated(true)
+    setRecentlyAdded(false)
+    setSortByName(null)
     var sortCustomersObj = {
       query: "",
       sort: {

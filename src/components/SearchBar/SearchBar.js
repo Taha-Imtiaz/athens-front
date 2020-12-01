@@ -93,6 +93,16 @@ const SearchBar = (props) => {
 
     }
 
+  var handleKeyPress = (e) => {
+        console.log(e.key)
+        console.log("Enter")
+        e.preventDefault()
+        if(e.which === 13) {
+            handleSearch()
+        }
+
+    }
+
     return <div className={style.width}>
         {/* <div className="input-group">
             <input className="form-control py-2 rounded-pill mr-1 pr-5" type="search" placeholder="Type name or email" onChange={(e) => setSearchValue(e.target.value)} />
@@ -103,9 +113,9 @@ const SearchBar = (props) => {
             </span>
         </div> */}
         <div className="input-group">
-            <input type="text" className="form-control" placeholder={title} style={{ outline: "transparent" }} onChange={(e) => setSearchValue(e.target.value)} />
+            <input type="text" className="form-control" placeholder={title} style={{ outline: "transparent" }} onChange={(e) => setSearchValue(e.target.value)} onKeyUp = {(e) => handleKeyPress(e)} />
             <div className="input-group-append">
-                <button onClick={handleSearch} className="btn btn-secondary" style={{ width: "3rem" }} type="button">
+                <button onClick={handleSearch}  className="btn btn-secondary" style={{ width: "3rem" }} type="button">
                     <i className="fa fa-search"></i>
                 </button>
             </div>

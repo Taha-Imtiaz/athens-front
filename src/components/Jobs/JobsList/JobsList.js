@@ -204,7 +204,10 @@ class JobsList extends Component {
   handleSort = () => {
     var { getAllJobs } = this.props;
     this.setState({
-      sortByName: true
+      sortByName: true,
+      assigneeRequired:false,
+      recentlyAdded:false
+      
     })
     var fetchJobsOnPageChange = {
       query: "",
@@ -253,7 +256,9 @@ this.setState({
   handleDateFilter = () => {
     var { getAllJobs } = this.props;
     this.setState({
-      recentlyAdded:true
+      recentlyAdded:true,
+      sortByName:false,
+      assigneeRequired:false
     })
     var fetchJobsOnPageChange = {
       query: "",
@@ -272,7 +277,9 @@ this.setState({
 handleAssigneeRequired = () => {
   var { getAllJobs } = this.props;
   this.setState({
-    assigneeRequired:true
+    assigneeRequired:true,
+    sortByName:false,
+    recentlyAdded:false
   })
 
   var fetchJobsOnPageChange = {

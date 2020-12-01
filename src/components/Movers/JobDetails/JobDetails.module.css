@@ -1,8 +1,8 @@
 .main {
   text-align: left;
   /* width: 70%; */
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 .topbtn {
@@ -15,6 +15,9 @@
   float: left;
 }
 
+.cardCustom{
+  width: 18rem
+}
 .toprow {
   margin-top: 10px;
   margin-bottom: 30px;
@@ -29,8 +32,11 @@
 
 .head {
   margin-top: 30px;
+  margin-left:20px;
 }
-
+.jumbotron {
+  padding-top: 1rem;
+}
 .badges2 {
   padding: 15px 10px;
   margin-left: 5px;

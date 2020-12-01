@@ -100,7 +100,7 @@ function Example(props) {
         className={style.position}
 
       />
-      <Modal show={show} onHide={handleClose} animation={false} centered>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Reason</Modal.Title>
         </Modal.Header>

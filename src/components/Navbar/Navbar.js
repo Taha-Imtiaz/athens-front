@@ -104,45 +104,53 @@ const Navbar = (props) => {
                   >
                     Log Out
                   </Button>
-                  {/* <Link className={`nav-link ${style.logOut}`} to="/">
-                                        Log Out
-                        </Link> */}
                 </li>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                <li className={getNavLinkClass("/mover")}>
-                  <Link className="nav-link" to="/mover">
-                    Jobs
+                <React.Fragment>
+                  <li className={getNavLinkClass("/mover")}>
+                    <Link className="nav-link" to="/mover">
+                      Jobs
                   </Link>
-                </li>
-                <li className={getNavLinkClass("/mover/calendar")}>
-                  <Link className="nav-link" to="/mover/calendar">
-                    Calendar
+                  </li>
+                  <li className={getNavLinkClass("/mover/calendar")}>
+                    <Link className="nav-link" to="/mover/calendar">
+                      Calendar
                   </Link>
-                </li>
-                <li>
-                  {/* <Link className="nav-link" to="/"> */}
-                  <Button variant="contained" color="primary" onClick={logOut}>
+                  </li>
+                  <li>
+                    {/* <Button variant="contained" color="primary" onClick={logOut}>
                     Log Out
+                  </Button> */}
+                    <Button
+                      style={{
+                        background: "#00ADEE",
+                        border: "transparent",
+                        color: "#ffffff",
+                        padding: "0.5rem",
+                        borderRadius: "0.25rem",
+                        fontFamily: "sans-serif",
+                        textTransform: "none",
+                      }}
+                      onClick={logOut}
+                    >
+                      Log Out
                   </Button>
-
-                  {/* </Link> */}
-                </li>
-              </React.Fragment>
-            )}
+                  </li>
+                </React.Fragment>
+              )}
           </ul>
         ) : (
-          <ul className="navbar-nav ml-auto">
-            <React.Fragment>
-              <li className={getNavLinkClass("/")}>
-                <Link className={`nav-link`} to="/">
-                  Sign In
+            <ul className="navbar-nav ml-auto">
+              <React.Fragment>
+                <li className={getNavLinkClass("/")}>
+                  <Link className={`nav-link`} to="/">
+                    Sign In
                 </Link>
-              </li>
-            </React.Fragment>
-          </ul>
-        )}
+                </li>
+              </React.Fragment>
+            </ul>
+          )}
       </div>
     </nav>
   );

@@ -94,7 +94,7 @@ class SignInForm extends React.Component {
       // })
       login(obj).then((res) => {
         console.log(res);
-        if (res) {
+        if (res?.data.status == 200) {
           res.data.data.role == "mover"
             ? this.props.history.push("/mover")
             : this.props.history.push("/customer");

@@ -170,9 +170,9 @@ class CalendarApp extends Component {
   render() {
     return (
       <div>
-        <h2 className = {style.toprow}>Calender </h2>
+        <h2 className={style.toprow}>Calender </h2>
         <div className={`row ${style.toprow}`}>
-          
+
           <div className="col-9" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
             <div className={style.cal} >
               <Calendar
@@ -215,15 +215,10 @@ class CalendarApp extends Component {
                         className={`card ${style.card}`}
                         style={
                           {
-                            marginBottom: "1.5rem",
-                            // boxShadow: "0px 2px lightgrey"
+                            marginBottom: "1.5rem"
                           }
                         }
                       >
-                        {/* data-toggle="collapse"
-                            data-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne" */}
                         <div
                           className={`card-header ${style.cardHeader}`}
                           id="headingOne"
@@ -278,7 +273,7 @@ class CalendarApp extends Component {
 
                             <p
                               className="card-text"
-                            // style={{ whiteSpace: "pre" }}
+                              style={{ whiteSpace: "pre" }}
                             >
                               {`${job.description}`}
                             </p>
@@ -362,7 +357,7 @@ class CalendarApp extends Component {
 
                                 <p
                                   className="card-text"
-
+                                  style={{ whiteSpace: "pre" }}
                                 >
                                   {this.state.currentDayJobs ?.description}
                                 </p>
@@ -393,7 +388,7 @@ class CalendarApp extends Component {
             </div>
           </div>
         </div>
-      
+
       </div>
     );
   }

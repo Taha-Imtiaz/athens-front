@@ -862,8 +862,8 @@ const DailySchedule = (props) => {
           </div>
         </div>
         <hr />
-        <div className="row">
-          <div className="col-1"></div>
+        <div className="row justify-content-md-center">
+          {/* <div className="col-1"></div> */}
           <div
             className="col-2"
             style={{ display: "flex", alignItems: "center" }}
@@ -876,7 +876,7 @@ const DailySchedule = (props) => {
             </h6>
           </div>
           <div
-            className="col-2"
+            className="col-3"
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
@@ -888,11 +888,7 @@ const DailySchedule = (props) => {
             </h6>
           </div>
           <div
-            className="col-1"
-            style={{ display: "flex", alignItems: "center" }}
-          ></div>
-          <div
-            className="col-2"
+            className="col-3"
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
@@ -909,7 +905,6 @@ const DailySchedule = (props) => {
                 )}
             </h6>
           </div>
-          <div className="col-1"></div>
           <div className="col-2">
             <Button
               style={{
@@ -1124,7 +1119,7 @@ const DailySchedule = (props) => {
                             {moverAssignedDate.map((job, i) => (
                               <div className="row" key={i}>
                                 <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
-                                style={{ textDecoration: "none", cursor: 'pointer' }}>
+                                  style={{ textDecoration: "none", cursor: 'pointer' }}>
                                   {/* <Link
                                     to={`/job/details/${job._id}`}
                                     style={{ textDecoration: "none" }}
@@ -1133,7 +1128,7 @@ const DailySchedule = (props) => {
                                     </span>
                                     {job.title}
                                   </Link> */}
-                                  &#42; 
+                                  &#42;
                                   {job.title}
                                 </a>{" "}
                                 <Chip

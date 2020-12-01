@@ -48,13 +48,17 @@
     background: rgba(0,0,0,.03);
     
 }
+.list:hover {
+    background-color: #00ADEE;
+    color: #fff;
+}
 
 .color{
     background-color: #00ADEE !important;
 }
 
 .li{
-    margin:0  3%  !important;
+    margin:0  3%  
     /* border: 1px solid lightgrey; */
     /* box-shadow: 0px 2px lightgrey; */
 }

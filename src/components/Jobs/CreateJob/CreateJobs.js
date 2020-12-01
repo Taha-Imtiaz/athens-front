@@ -193,7 +193,7 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
@@ -493,24 +493,34 @@ class CreateJobs extends Component {
 
       var serviceAdded = {
         name: this.state.newService,
+        id: Math.random() * 10
       };
       if (e.keyCode === 13 && e.target.value) {
-        addService({
-          service: {
-            name: this.state.newService,
-          },
-        }).then((res) => {
-          console.log(res.data);
-          let services = cloneDeep(this.state.services);
-          services.push(res.data.data);
+        let services = cloneDeep(this.state.services);
+        services.push(serviceAdded);
 
-          let serviceOptions = cloneDeep(this.state.serviceOptions);
-          serviceOptions.push(res.data.data);
-          this.setState({
-            serviceOptions,
-            services,
-          });
+        let serviceOptions = cloneDeep(this.state.serviceOptions);
+        serviceOptions.push(serviceAdded);
+        this.setState({
+          serviceOptions,
+          services,
         });
+        // addService({
+        //   service: {
+        //     name: this.state.newService,
+        //   },
+        // }).then((res) => {
+        //   console.log(res.data);
+        //   let services = cloneDeep(this.state.services);
+        //   services.push(res.data.data);
+
+        //   let serviceOptions = cloneDeep(this.state.serviceOptions);
+        //   serviceOptions.push(res.data.data);
+        //   this.setState({
+        //     serviceOptions,
+        //     services,
+        //   });
+        // });
       }
     } else {
       this.setState({

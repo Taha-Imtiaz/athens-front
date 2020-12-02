@@ -10,7 +10,15 @@ import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Popover, Typography } from "@material-ui/core";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Popover,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 import SearchBar from "../../SearchBar/SearchBar";
@@ -36,23 +44,27 @@ class MoversJobsList extends Component {
     openedDatePopoverId: null,
     openedAssigneePopoverId: null,
     pageSize: 10,
+    dates: "",
+    value: "",
     currentPage: 1,
-    recentlyAdded:false
+    recentlyAdded: false,
+    sortByStatus: false,
   };
 
   componentDidMount = () => {
     var { getMover } = this.props;
 
     var moversObj = {
-      filters:{
-          jobStatus:"",
-          dates:""
+      filters: {
+        jobStatus: "",
+        dates: "",
+        nearestDate: "",
       },
-      sort:{
-       createdAt:null   
+      sort: {
+        createdAt: null,
       },
-      page:1   
-      }
+      page: 1,
+    };
     getMover(moversObj);
     // if (user) {
     //     getMover(user._id)
@@ -70,6 +82,15 @@ class MoversJobsList extends Component {
   handleJobUpdate = (id) => {
     updateJob(id, { status: this.state.status });
   };
+
+  handleChange = (event) => {
+    console.log(event.target.value)
+    this.setState({
+      value:  event.target.value
+    });
+    this.filterJobByStatus(event.target.value)
+  };
+
 
   markComplete = (list) => {
     updateJob(list._id, { status: "completed" }).then((res) => {
@@ -117,30 +138,79 @@ class MoversJobsList extends Component {
       recentlyAdded: true,
       // sortByName: false,
       // assigneeRequired: false
-    })
+    });
     var fetchMoverJobs = {
-      filters:{
-        jobStatus:"",
-        dates:""
-    },
-    sort:{
-     createdAt:-1   
-    },
-    page:1   
-    }
-    this.setState({
-      currentPage: 1
-    })
-    getMover(fetchMoverJobs);
+      filters: {
+        jobStatus: "",
+        dates: "",
+        nearestDate: "",
+      },
+      sort: {
+        createdAt: -1,
+      },
+      page: 1,
     };
-   
-  
+    this.setState({
+      currentPage: 1,
+    });
+    getMover(fetchMoverJobs);
+  };
 
+  filterJobByStatus = (value) => {
+    var { getMover } = this.props;
+    this.setState({
+      recentlyAdded: false,
+      sortByStatus: true,
+      // assigneeRequired: false
+    });
+
+    var fetchMoverJobs = {
+      filters: {
+        jobStatus: value,
+        dates: "",
+        nearestDate: "",
+      },
+      sort: {
+        createdAt: null,
+      },
+      page: 1,
+    };
+    this.setState({
+      currentPage: 1,
+    });
+    getMover(fetchMoverJobs);
+  };
+
+  filterJobByDate = (e) => {
+    var { getMover } = this.props;
+    this.setState({
+      dates: e.target.value,
+    });
+    var { dates } = this.state;
+    let date = new Date(e.target.value);
+    // console.log(date)
+    var DateFilters = {
+      filters: {
+        dates: date.toDateString(),
+        jobStatus: "",
+        nearestDate: "",
+      },
+      sort: {
+        createdAt: null,
+      },
+      page: 1,
+    };
+    this.setState({
+      currentPage: 1,
+    });
+    console.log(DateFilters);
+    getMover(DateFilters);
+  };
   render() {
     const { moverJobs, user } = this.props;
     var { pageSize, currentPage } = this.state;
     var totalCount = moverJobs?.total;
-    console.log(moverJobs)
+    console.log(moverJobs);
     console.log(totalCount);
     const open = Boolean(this.state.anchorEl);
     var { classes } = this.props;
@@ -157,10 +227,8 @@ class MoversJobsList extends Component {
           <div className={`col-6 `}>
             <SearchBar type="job" title="Type title or services" />
           </div>
-        
-          <div
-            className={`col-2`}
-          >
+
+          <div className={`col-2`}>
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"
@@ -176,16 +244,22 @@ class MoversJobsList extends Component {
               aria-labelledby="dropdownMenuLink"
               style={{ width: "15rem", cursor: "pointer" }}
             >
-           
-              <a className="dropdown-item" onClick={this.handleRecentlyAdded} style={{}}>
+              <a
+                className="dropdown-item"
+                onClick={this.handleRecentlyAdded}
+                style={{}}
+              >
                 Sort By Recently Added
               </a>
 
-
-
-            
               <hr />
-              <h5 style={{ fontFamily: "sans-serif" }} className="dropdown-item">Filters</h5><hr />
+              <h5
+                style={{ fontFamily: "sans-serif" }}
+                className="dropdown-item"
+              >
+                Filters
+              </h5>
+              <hr />
               <input
                 type="date"
                 name="dates"
@@ -194,11 +268,41 @@ class MoversJobsList extends Component {
                 style={{ width: "11rem", margin: " 1rem 2rem" }}
                 onChange={(e) => this.filterJobByDate(e)}
               />
-               <a className="dropdown-item"  style={{}}>
-               Filter by Status
-              </a>
-        </div>
-        </div>
+              {/* <a
+                className="dropdown-item"
+                onClick={this.filterJobByStatus}
+                style={{}}
+              >
+                Filter by Status
+              </a> */}
+              <FormControl component="fieldset">
+                <FormLabel component="legend" className="dropdown-item">
+                Filter by Status
+                  </FormLabel>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  <FormControlLabel
+                    value="completed"
+                    className="dropdown-item"
+                    control={<Radio />}
+                    label="completed"
+                  />
+                  <FormControlLabel
+                    value="booked"
+                    className="dropdown-item"
+                    control={<Radio />}
+                    label="booked"
+                  />
+                  
+                
+                </RadioGroup>
+              </FormControl>
+            </div>
+          </div>
         </div>
 
         {moverJobs?.docs?.length > 0 ? (
@@ -400,7 +504,7 @@ class MoversJobsList extends Component {
                     </div>
                   </ul>
                 </div>
-                <div >
+                <div>
                   <Pagination
                     itemCount={totalCount}
                     pageSize={pageSize}

@@ -13,10 +13,6 @@ import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
 import Button from '@material-ui/core/Button';
 import { setRef } from "@material-ui/core";
 
-
-
-
-
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
   var [order, setOrder] = useState(-1);
@@ -44,11 +40,8 @@ const CustomerList = (props) => {
   }, []);
 
   var handlePageChange = (page) => {
-   
-    if(recentlyUpdated === true) {
-      console.log(recentlyUpdated)
-     
-      console.log(order)
+
+    if (recentlyUpdated === true) {
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -60,10 +53,7 @@ const CustomerList = (props) => {
       };
       setCurrentPage(page);
     }
-    else if(recentlyAdded === true) {
-     console.log(recentlyAdded)
-    
-     console.log(order)
+    else if (recentlyAdded === true) {
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -76,12 +66,9 @@ const CustomerList = (props) => {
       setCurrentPage(page);
     }
 
-    
-    else if(sortByName === true) {
+
+    else if (sortByName === true) {
       if (order === 1) {
-        console.log(order)
-        // setOrder(1);
-       
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
@@ -89,13 +76,10 @@ const CustomerList = (props) => {
             createdAt: null,
             updatedAt: null
           },
-         page: page
+          page: page
         };
         setCurrentPage(page);
       } else if (order == -1) {
-        console.log(order)
-        // setOrder(-1);
-       
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
@@ -103,26 +87,25 @@ const CustomerList = (props) => {
             createdAt: null,
             updatedAt: null
           },
-         page: page
+          page: page
         };
         setCurrentPage(page);
       }
     }
-   else {
-    console.log(order)
-    var fetchCustomersOnPageChange = {
-      query: "",
-      sort: {
-        plainName: "",
-        createdAt: -1,
-        updatedAt: null
-      },
-      page: page
-    };
-    setCurrentPage(page);
-   }
+    else {
+      var fetchCustomersOnPageChange = {
+        query: "",
+        sort: {
+          plainName: "",
+          createdAt: -1,
+          updatedAt: null
+        },
+        page: page
+      };
+      setCurrentPage(page);
+    }
     getAllCustomers(fetchCustomersOnPageChange);
-    
+
   };
 
   const width = window.innerWidth;
@@ -140,14 +123,11 @@ const CustomerList = (props) => {
     var customerId = docs.map((doc) => doc._id);
   }
 
-
-
   var handleSort = () => {
     setSortByName(true)
     setRecentlyAdded(false)
     setRecentlyUpdated(false)
     if (order == 1) {
-      console.log(order)
       setOrder(-1);
       var sortCustomersObj = {
         query: "",
@@ -156,12 +136,11 @@ const CustomerList = (props) => {
           createdAt: null,
           updatedAt: null
         },
-       page: 1
+        page: 1
       };
       setCurrentPage(1)
 
     } else if (order == -1) {
-      console.log(order)
       setOrder(1);
       var sortCustomersObj = {
         query: "",
@@ -170,10 +149,10 @@ const CustomerList = (props) => {
           createdAt: null,
           updatedAt: null
         },
-       page: 1
+        page: 1
       };
       setCurrentPage(1)
-    } 
+    }
     // else {
     //   console.log(order)
     //   setOrder(1);
@@ -191,11 +170,10 @@ const CustomerList = (props) => {
   };
 
   var handleDateFilter = () => {
-  
+
     setRecentlyAdded(true)
     setRecentlyUpdated(false)
     setSortByName(null)
-    console.log(currentPage)
     var sortCustomersObj = {
       query: "",
       sort: {
@@ -210,7 +188,7 @@ const CustomerList = (props) => {
   };
 
   var handleUpdtedAtFilter = () => {
-   
+
     setRecentlyUpdated(true)
     setRecentlyAdded(false)
     setSortByName(null)
@@ -276,21 +254,18 @@ const CustomerList = (props) => {
             <div style={{ margin: '-0.5rem' }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
-                <Button style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Create New</Button>
+                <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Create New</Button>
               </Link>
             </div>
           </div>
 
         </div>
-
-        {/* <div className={`d-flex justify-content-end ${style.buttons}`}>
-        </div> */}
         {docs && docs.length > 0 ? (
           <div>
             <div className={style.jumbotron}>
               <div
                 className="row"
-                style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily:"sans-serif" }}
+                style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
               >
                 <div className="col-md-4">Name</div>
                 <div className="col-md-6">Email</div>
@@ -299,31 +274,21 @@ const CustomerList = (props) => {
               <div>
                 <ul className="list-group">
                   <div className={`${style.li}`}>
-                    {docs.map((doc) => {
+                    {docs.map((doc, i) => {
                       return (
                         <Link
+                          key={i}
                           style={{ textDecoration: "none", color: "black" }}
                           to={`/customer/detail/${doc._id}`}>
                           <li
                             className={`checkbox list-group-item ${style.list}`}
                             key={doc._id}
-                            style={{
-                             
-                              // color:"#fff"
-                            }}
                           >
                             <div className="row justify-content-around">
                               <div
                                 className={`col-8 col-md-4 text-left ${style.flex}`}
                               >
                                 <span>
-                                  {/* <input type="checkbox" id="defaultCheck1" value="" />
-                            <label
-                              className={`checkbox-inline ${style.input}`}
-                              htmlFor="defaultCheck1"
-                            >
-                              {doc.name}
-                            </label> */}
                                   {doc.firstName} {doc.lastName}
                                 </span>
                               </div>
@@ -336,20 +301,6 @@ const CustomerList = (props) => {
                                 className={`col-12 col-md-2 d-flex justify-content-start ${style.fr}`}
                               >
                                 <div>
-                                  {/* <Link
-                                  style={{ textDecoration: "none" }}
-                                  to={`/customer/detail/${doc._id}`}>
-                                  <FontAwesomeIcon
-                                    icon={faInfoCircle}
-                                    style={{
-                                      transform: "translate3d(-1rem, 0.5rem, 0)",
-                                      color: "#000",
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center"
-                                    }}
-                                  />
-                                </Link> */}
                                   {doc.jobs.length}
                                 </div>
                               </div>
@@ -362,18 +313,18 @@ const CustomerList = (props) => {
                 </ul>
               </div>
 
-              <div className = {style.jumbotron}>
-          <Pagination
-              itemCount={totalCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-              
-            />
-          </div>
+              <div className={style.jumbotron}>
+                <Pagination
+                  itemCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+
+                />
+              </div>
             </div>
 
-        
+
           </div>
         ) : (
             <div className="text-center">

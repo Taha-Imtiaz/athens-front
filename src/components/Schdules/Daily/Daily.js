@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import style from "./Daily.module.css";
 import SideBar from "../../Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import { Modal } from "react-bootstrap";
 import { Multiselect } from "multiselect-react-dropdown";
 import { getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
 import { clone, cloneDeep } from "lodash";
-import { showMessage } from "../../../Redux/Common/commonActions";
+import { showMessage, changeDate } from "../../../Redux/Common/commonActions";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Link } from "react-router-dom";
@@ -33,8 +33,21 @@ import {
   faCaretRight,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+// import moment from 'moment';
+import ReactHorizontalDatePicker from "react-horizontal-strip-datepicker";
+import 'react-horizontal-strip-datepicker/dist/ReactHorizontalDatePicker.css'
+import DatePicker from "react-horizontal-datepicker";
+
 
 var moverAssignedDate;
+
+function useForceUpdate() {
+  const [, setTick] = useState(0);
+  const update = useCallback(() => {
+    setTick(tick => tick + 1);
+  }, [])
+  return update;
+}
 
 const DailySchedule = (props) => {
   const [show, setShow] = useState(false);
@@ -46,55 +59,36 @@ const DailySchedule = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [day, setDay] = useState(new Date().getDay());
   const [weekNames, setWeekNames] = useState();
-  const [date, setDate] = useState(today.toString());
+  const [date, setDate] = useState(new Date().toString());
   const [indexDate, setIndexDate] = useState(0);
-  const [getCurrentDay, setCurrentDay] = useState(day);
   const [modalShow, setModalShow] = useState(false);
   const [mover, setMover] = useState("");
   const [test, setTest] = useState(0);
-  const { getalljobs, getalljobsfiveday, jobs, movers } = props;
-
-  // useEffect(() => {
-  //   var currentDate = sessionStorage.getItem("currentDate");
-  //   if (currentDate) {
-  //     setToday(new Date(currentDate))
-  //     sessionStorage.removeItem("currentDate");
-  //     getalljobs({
-  //       date: new Date(currentDate).toString(),
-  //     });
-  //   } else {
-  //     getalljobs({
-  //       date: today.toString(),
-  //     });
-  //   }
-  // }, [today]);
+  const { getalljobs, getalljobsfiveday, jobs, movers, newDate } = props;
 
   useEffect(() => {
-    const { movers } = props;
-    if (movers) {
-    }
-    getalljobsfiveday({
+    setToday(newDate)
+    getalljobs({
+      date: new Date(newDate).toString(),
+    });
+  }, []);
+
+  useEffect(() => {
+    getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
       date: date,
     });
-  }, [today]);
+  }, []);
+
+  // useEffect(() => {
+  //   getalljobs({
+  //     date: today.toString(),
+  //   });
+  // }, [today]);
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
-    // e.preventDefault();
     let dates = job.dates.join(" | ");
     let services = job.services.map((e) => e.name).join(" | ");
-    // var doc = new jsPDF();
-
-    // doc.text(20, 20, 'Information of job: ' + job.jobId)
-
-    // doc.setFont('helvetica')
-    // doc.text(20, 50, job.title)
-
-    // doc.setFont('helvetica')
-    // doc.text(20, 80, dates)
-    // doc.text(20, 110, job.description)
-    // doc.text(20, 140, 'Movers Required: ' + job.assigneeRequired)
-    // doc.text(20, 170, 'Services: ' + services)
 
     const doc = new jsPDF("p", "pt");
     const date = new Date();
@@ -127,72 +121,17 @@ const DailySchedule = (props) => {
       .text(490, 100, `${job.assigneeRequired}`);
     doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
     doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(390, 130, "SALES REP:");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(490, 130, "123456789");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(330, 145, "OVERALL DISCOUNT %:");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(490, 145, "123456789");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(412, 160, "PAGES:");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(490, 160, "123456789");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(11)
-    //     .text(50, 230, "FROM:");
-    // // doc
-    // //     .setFont("times")
-    // //     .setFontSize(11)
-    // //     .text(300, 230, "TO:");
+
     doc.setFont("times").setFontSize(18).text(50, 200, job.title);
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(18)
-    //     .text(300, 250, "COMPANY Inc.");
+
     doc.setFont("times").setFontSize(11).text(50, 235, dates);
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(11)
-    //     .text(300, 280, "CUSTOMER VAT NO:");
+
     doc.setFont("times").setFontSize(11).text(50, 260, services);
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(300, 290, "1355 Market Street, Suite 900");
+
     doc
       .setFont("times")
       .setFontSize(11)
       .text(50, 285, job.startTime ? job.startTime : "No Time Added");
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(300, 300, "San Francisco, CA 94103");
-    // doc.autoTable({
-    //     head: [['Name', 'Email', 'Phone']],
-    //     body: [
-    //         [job.customer.firstName + job.customer.lastName, job.customer.email, job.customer.phone]
-    //     ],
-    // }, { margin: { top: 350 } })
-
-    // doc
-    //     .setFont("times")
-    //     .setFontSize(10)
-    //     .text(300, 310, "P: (123) 456-7890");
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
 
@@ -202,9 +141,6 @@ const DailySchedule = (props) => {
     doc.line(560, 725, 40, 725);
 
     doc.save(`${job.title}.pdf`);
-    // doc.autoPrint();
-    //This is a key for printing
-    // doc.output('dataurlnewwindow');
   };
 
   const routes = [
@@ -232,6 +168,7 @@ const DailySchedule = (props) => {
       icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
     },
   ];
+
   useEffect(() => {
     switch (day) {
       case 0:
@@ -322,7 +259,6 @@ const DailySchedule = (props) => {
     let itemDate = new Date(startDate); // starting today
     date.setDate(itemDate.getDate() + i);
     setToday(date);
-    sessionStorage.setItem("currentDate", date);
     setOpenedPopoverId(null);
     setAnchorEl(null);
   };
@@ -350,7 +286,7 @@ const DailySchedule = (props) => {
 
   const updateJobAssignee = (e, job) => {
     e.stopPropagation();
-    var { loggedinUser, showMessage } = props;
+    var { loggedinUser, showMessage, changeDate } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
@@ -386,7 +322,15 @@ const DailySchedule = (props) => {
       .then((res) => {
         if (res.data.status == 200) {
           showMessage(res.data.message);
-          props.history.push("/schedule/daiily");
+          // props.history.push("/schedule/daiily");
+          getalljobs({
+            date: today.toString(),
+          });
+          getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
+            date: today,
+          });
+          // setOpenedPopoverId(null);
+          // setAnchorEl(null);
         }
       })
       .catch((error) => {
@@ -397,14 +341,12 @@ const DailySchedule = (props) => {
   const onAssigneeSelect = (selectedList, selectedItem) => {
     let job = cloneDeep(jobToUpdate);
     job.assignee = selectedList;
-    // job.assigneesId = selectedList.map(x => x._id);
     setJobToUpdate(job);
   };
 
   const onAssigneeRemove = (selectedList, removedItem) => {
     let job = cloneDeep(jobToUpdate);
     job.assignee = selectedList;
-    // job.assigneesId = selectedList.map(x => x._id);;
     setJobToUpdate(job);
   };
 
@@ -421,7 +363,7 @@ const DailySchedule = (props) => {
     history.push(`/job/details/${jobId}`);
   };
 
-  const onStart = () => {
+  const onStart = (e, p) => {
     // this.setState({ activeDrags: ++this.state.activeDrags });
   };
 
@@ -434,12 +376,6 @@ const DailySchedule = (props) => {
   };
 
   const onControlledDragStop = (e, position) => {
-    // this.onControlledDrag(e, position);
-    // this.onStop();
-    // var assigneeId = document.querySelector(".assigneeId")
-    // assigneeId.style.display = "block"
-    // var id = document.elementsFromPoint(e.pageX, e.pageY)[3]?.children[0]
-    //   ?.children[0]?.innerHTML;
     var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
       ?.children[1] ?.innerHTML
         ? parseInt(
@@ -465,18 +401,10 @@ const DailySchedule = (props) => {
       let index = requiredJob[0].assignee.findIndex((x) => x._id == moverId);
       if (index != -1) {
         // Already Assigned
-        var { showMessage } = props;
+        var { showMessage, changeDate } = props;
         showMessage("Already Assigned");
-        setTest(test + 1)
+        changeDate(today)
         props.history.push("/schedule/daiily");
-        // getalljobs({
-        //   date: nextDate.toString(),
-        // });
-        // getalljobsfiveday({
-        //   date: date,
-        // });
-
-        // window.location.reload();
       } else {
         let index = movers.findIndex((x) => x.mover._id == moverId);
         moverAssignedDate = movers[index].mover.jobs.filter((job) =>
@@ -485,8 +413,9 @@ const DailySchedule = (props) => {
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
 
         if (moverJobs) {
+          var { changeDate } = props;
+          changeDate(today)
           setModalShow(true);
-
           var mover = movers.find((x) => x.mover._id == moverId);
           if (mover !== -1) {
             setMover(mover);
@@ -506,11 +435,21 @@ const DailySchedule = (props) => {
       }
     } else {
       // window.location.reload();
-      var { showMessage } = props;
+      var { showMessage, changeDate } = props;
+      changeDate(today)
       showMessage("Please drop on assignee list.");
       props.history.push("/schedule/daiily");
     }
   };
+
+  const forceUpdate = useForceUpdate();
+  // const reRender = function () {
+  //   const [, setTick] = useState(0);
+  //   const update = useCallback(() => {
+  //     setTick(tick => tick + 1);
+  //   }, [])
+  //   return update;
+  // }
 
   const dragHandlers = { onStart, onStop: onControlledDragStop, onDrag };
 
@@ -525,10 +464,7 @@ const DailySchedule = (props) => {
   const useStyles = makeStyles((theme) => ({
     popover: {
       pointerEvents: "none",
-    },
-    // paper: {
-    //   padding: theme.spacing(1),
-    // },
+    }
   }));
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -547,13 +483,11 @@ const DailySchedule = (props) => {
   };
 
   const seePreviousWeekDays = () => {
-    console.log('Called')
     let newDay = day === 0 ? 6 : day - 1;
     let newToday = cloneDeep(startDate);
     const yesterday = new Date(newToday);
     yesterday.setDate(yesterday.getDate() - 1);
     yesterday.toDateString();
-    console.log(yesterday)
     setStartDate(yesterday);
     switch (newDay) {
       case 0:
@@ -638,7 +572,6 @@ const DailySchedule = (props) => {
     }
     setIndexDate(indexDate + 1);
     setDay(newDay);
-    console.log(today, yesterday, startDate, day)
   };
 
   const seeNextWeekDays = () => {
@@ -647,7 +580,6 @@ const DailySchedule = (props) => {
     const yesterday = new Date(newToday);
     yesterday.setDate(yesterday.getDate() + 1);
     yesterday.toDateString();
-    console.log(yesterday)
     setStartDate(yesterday);
     switch (newDay) {
       case 0:
@@ -741,13 +673,28 @@ const DailySchedule = (props) => {
   };
 
   const Navigate = (e) => {
-    // e.stopPropagation();
-    // setModalShow(false);
+    changeDate(newDate)
     props.history.push("/schedule/daiily");
-    // <Link to = "/schedule/daiily"/>
   };
 
   const open = Boolean(anchorEl);
+
+  const onSelectedDay = (d) => {
+
+    // console.log(i)
+    // let date = new Date();
+    // let itemDate = new Date(startDate); // starting today
+    // date.setDate(itemDate.getDate() + i);
+    // if (newDate.toDateString() != d.toDateString()) {
+    getalljobs({
+      date: d.toString(),
+    });
+    // }
+    setToday(d);
+    changeDate(d)
+    setOpenedPopoverId(null);
+    setAnchorEl(null);
+  }
 
   return (
     <div className={`row `}>
@@ -755,12 +702,22 @@ const DailySchedule = (props) => {
         <SideBar routes={routes} />
       </div>
 
-      <div className={`col-8`}>
-        {/* <h5 className={style.head} style={{}}>
-          Daily Schedule
-        </h5> */}
 
-        <div className={`row ${style.lists}`} style={{}}>
+
+      <div className={`col-8`}>
+        {/* <ReactHorizontalDatePicker
+        selectedDay={onSelectedDay}
+        enableScroll={true}
+        enableDays={180}
+      /> */}
+        <DatePicker
+          endDate={365}
+          getSelectedDay={(e) => { onSelectedDay(e) }}
+          labelFormat={"MMMM yyyy"}
+          color={"#374e8c"} // #00ADEE
+          selectDate={newDate}
+        />
+        {/* <div className={`row ${style.lists}`} style={{}}>
           <div
             className="col-1"
             style={{
@@ -770,7 +727,6 @@ const DailySchedule = (props) => {
             }}
           >
             <FontAwesomeIcon
-              // className="col-1"
               icon={faCaretLeft}
               size="2x"
               onClick={() => seePreviousWeekDays()}
@@ -804,7 +760,6 @@ const DailySchedule = (props) => {
                         background: indexDate == i ? "#00ADEE" : "#6c757d",
                         height: "2.3rem",
                         width: "100%",
-                        // fontSize:"0.7rem"
                       }}
                       id="pills-home-tab"
                       data-toggle="pill"
@@ -824,10 +779,10 @@ const DailySchedule = (props) => {
                       </span>
                     ) : (
                         <span className="badge badge-secondary">
-                          {console.log(startDate)}
                           {new Date(
                             new Date().setDate(startDate.getDate() + i)
                           ).toDateString()}
+                          {new Date(moment(startDate).add(i, 'days')).toDateString()}
                         </span>
                       )}
                   </li>
@@ -845,20 +800,19 @@ const DailySchedule = (props) => {
             <FontAwesomeIcon
               icon={faCaretRight}
               size="2x"
-              // style={{ float:"right" }}
               onClick={() => seeNextWeekDays()}
             />
           </div>
         </div>
+         */}
         <hr />
         <div className="row justify-content-md-center">
-          {/* <div className="col-1"></div> */}
           <div
             className="col-2"
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Total Jobs : `}{" "}
+              {`Total Jobs: `}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {props.jobs ?.data ?.jobs.length}
               </span>{" "}
@@ -869,7 +823,7 @@ const DailySchedule = (props) => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Movers Available :`}{" "}
+              {`Movers Available:`}{" "}
               <span style={{ fontWeight: "normal" }}>
                 {" "}
                 {props.movers ?.length}
@@ -1081,7 +1035,7 @@ const DailySchedule = (props) => {
 
                   <Modal
                     show={modalShow}
-                    {...props}
+                    // {...props}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -1109,14 +1063,6 @@ const DailySchedule = (props) => {
                               <div className="row" key={i}>
                                 <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
                                   style={{ textDecoration: "none", cursor: 'pointer' }}>
-                                  {/* <Link
-                                    to={`/job/details/${job._id}`}
-                                    style={{ textDecoration: "none" }}
-                                  >
-                                    <span style={{ margin: "0.2rem 0.4rem" }}>
-                                    </span>
-                                    {job.title}
-                                  </Link> */}
                                   &#42;
                                   {job.title}
                                 </a>{" "}
@@ -1398,11 +1344,13 @@ var mapStateToProps = (state) => ({
   jobs: state.schedule.jobList,
   movers: state.schedule.moverList,
   loggedinUser: state.users.user,
+  newDate: state.common.scheduleDate
 });
 
 var actions = {
   getalljobs,
   getalljobsfiveday,
   showMessage,
+  changeDate
 };
 export default connect(mapStateToProps, actions)(DailySchedule);

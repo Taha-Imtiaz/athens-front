@@ -1,4 +1,4 @@
-import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE } from "./commonConstants"
+import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE, SCHEDULE_DATE } from "./commonConstants"
 
 export var showLoader = () => (dispatch) => {
     dispatch({
@@ -26,5 +26,12 @@ export var showMessage = (message) => async (dispatch) => {
         payload: {
             message
         }
+    })
+}
+
+export var changeDate = (date) => (dispatch) => {
+    dispatch({
+        type: SCHEDULE_DATE,
+        payload: date
     })
 }

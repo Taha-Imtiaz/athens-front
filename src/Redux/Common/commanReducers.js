@@ -1,8 +1,9 @@
-import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE } from "./commonConstants"
+import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE,SCHEDULE_DATE } from "./commonConstants"
 
 var initialState = {
     loading: false,
-    displayMessage: ''
+    displayMessage: '',
+    scheduleDate: new Date()
 }
 var commonReducer = (state = initialState, action) => {
     var { type, payload } = action
@@ -14,6 +15,8 @@ var commonReducer = (state = initialState, action) => {
             return { ...state, loading: false }
         case SHOW_MESSAGE:
             return { ...state, displayMessage: payload }
+        case SCHEDULE_DATE:
+            return { ...state, scheduleDate: payload }
         default:
             return state
     }

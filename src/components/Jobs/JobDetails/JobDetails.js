@@ -283,7 +283,7 @@ const JobDetails = (props) => {
       <Modal dialogClassName={`${style.modal}`}
         show={showBooking}
         onHide={() => setShowBooking(false)}
-        animation={false}
+        // animation={false}
         centered
       // backdrop={false}
       >

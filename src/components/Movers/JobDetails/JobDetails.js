@@ -88,17 +88,14 @@ const MoversJobDetails = (props) => {
               <div className="row">
                 <h3 className="col-10">{job.title}</h3>
                 <div className={`col-2`}>
-                  <Button
-                    type="button"
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                      float: "right",
-                      margin: "0 0.4rem",
-                    }}>
-                  {job.status}</Button>
+                <Chip
+                      variant="outlined"
+                      size="small"
+                      label={job.status}
+                      clickable
+                      color="primary"
+                      style={{ margin: "0.2rem" }}
+                    />
 
                   {/* <Button name={`${job.status}`} /> */}
                 </div>
@@ -196,11 +193,13 @@ const MoversJobDetails = (props) => {
                       </div>
                     );
                   })}
-                {job.status == "booked" || job.status == "completed" ? (
+               <div className="col-12">
+               {job.status == "booked" || job.status == "completed" ? (
                   <div className={`row`}>
+                    <div className="col-8"></div>
                     <div
-                      className="col-3"
-                      style={{ transform: "translateY(1rem)" }}
+                      className="col-2"
+                      style={{ transform: "translateX(3rem)" }}
                       
                     >
                        <Button
@@ -211,14 +210,14 @@ const MoversJobDetails = (props) => {
                       color: "#FFF",
                       fontFamily: "sans-serif",
                       float: "right",
-                      margin: "0 0.4rem",
+                      margin: "1rem 0rem",
                     }}
                     onClick={paidInCash} 
                   >Pay in Cash</Button>
                     </div>
                     <div
-                      className={`col-3 `}
-                      style={{ transform: "translate3d(-4rem,1rem, 0)" }}
+                      className={`col-2 `}
+                      style={{ transform: "translate3d(0rem,1rem, 0)" }}
                     >
                       <Link
                         to={{
@@ -236,14 +235,15 @@ const MoversJobDetails = (props) => {
                       color: "#FFF",
                       fontFamily: "sans-serif",
                       float: "right",
-                      margin: "0 0.4rem",
+                      // margin: "0 0.4rem",
                     }}
-                  >Pay OInline</Button>
+                  >Pay Online</Button>
                         {/* <Button name="Pay Online" /> */}
                       </Link>
                     </div>
                   </div>
                 ) : null}
+               </div>
               </div>
             </div>
           </div>

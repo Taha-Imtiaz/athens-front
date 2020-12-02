@@ -5,7 +5,7 @@ import Axios from '../../utils/api'
 // var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 // var baseUrl = 'http://localhost:3000/api/'
 
-export var getMover = () => {
+export var getMover = (moversObj) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem('athens-token')
@@ -13,11 +13,11 @@ export var getMover = () => {
         headers: { Authorization: token }
       };
       // var mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
-      var mover = await Axios.get(`user/get-all-jobs-by-mover`, config)
+    var mover = await Axios.post(`user/get-all-jobs-by-mover`, moversObj,  config)
       dispatch({
         type: GET_MOVER,
         payload: {
-          mover
+          mover:mover.data.jobs
         }
       })
     } catch (error) {

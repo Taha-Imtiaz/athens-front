@@ -13,6 +13,8 @@ import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Popover, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
+import SearchBar from "../../SearchBar/SearchBar";
+import Pagination from "../../Pagination/Pagination";
 
 const width = window.innerWidth;
 
@@ -32,12 +34,26 @@ class MoversJobsList extends Component {
     status: "completed",
     anchorEl: null,
     openedDatePopoverId: null,
-    openedAssigneePopoverId: null
+    openedAssigneePopoverId: null,
+    pageSize: 10,
+    currentPage: 1,
+    recentlyAdded:false
   };
 
   componentDidMount = () => {
     var { getMover } = this.props;
-    getMover();
+
+    var moversObj = {
+      filters:{
+          jobStatus:"",
+          dates:""
+      },
+      sort:{
+       createdAt:null   
+      },
+      page:1   
+      }
+    getMover(moversObj);
     // if (user) {
     //     getMover(user._id)
     // }
@@ -80,7 +96,6 @@ class MoversJobsList extends Component {
     });
   };
 
-
   handleAssigneePopoverOpen = (event, id) => {
     console.log(id);
     this.setState({
@@ -95,8 +110,38 @@ class MoversJobsList extends Component {
       openedAssigneePopoverId: null,
     });
   };
+
+  handleRecentlyAdded = () => {
+    var { getMover } = this.props;
+    this.setState({
+      recentlyAdded: true,
+      // sortByName: false,
+      // assigneeRequired: false
+    })
+    var fetchMoverJobs = {
+      filters:{
+        jobStatus:"",
+        dates:""
+    },
+    sort:{
+     createdAt:-1   
+    },
+    page:1   
+    }
+    this.setState({
+      currentPage: 1
+    })
+    getMover(fetchMoverJobs);
+    };
+   
+  
+
   render() {
     const { moverJobs, user } = this.props;
+    var { pageSize, currentPage } = this.state;
+    var totalCount = moverJobs?.total;
+    console.log(moverJobs)
+    console.log(totalCount);
     const open = Boolean(this.state.anchorEl);
     var { classes } = this.props;
     if (user) {
@@ -106,22 +151,57 @@ class MoversJobsList extends Component {
     return (
       <div className={style.toprow}>
         <div className="row">
-          <div className="col-6">
+          <div className="col-3">
             <h3 className={style.head}>Jobs List Page</h3>
           </div>
-
-          <div className="col-6">
-            <div className={`d-flex justify-content-end ${style.buttons}`}>
-              {/* <div className={` ${style.create}`}>
-                                <Link style={{ textDecoration: "none" }} to='/job/create'> <Button name="Create New" /></Link>
-                            </div>
-                            <div className={style.btndel}>
-                                <Button name="Delete" />
-                            </div> */}
-            </div>
+          <div className={`col-6 `}>
+            <SearchBar type="job" title="Type title or services" />
           </div>
+        
+          <div
+            className={`col-2`}
+          >
+            <i
+              className="fa fa-filter dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              // style={{ transform: "translateY(-0.3rem)" }}
+            ></i>
+            <div
+              className="dropdown-menu"
+              aria-labelledby="dropdownMenuLink"
+              style={{ width: "15rem", cursor: "pointer" }}
+            >
+           
+              <a className="dropdown-item" onClick={this.handleRecentlyAdded} style={{}}>
+                Sort By Recently Added
+              </a>
+
+
+
+            
+              <hr />
+              <h5 style={{ fontFamily: "sans-serif" }} className="dropdown-item">Filters</h5><hr />
+              <input
+                type="date"
+                name="dates"
+                // value={dates}
+                id=""
+                style={{ width: "11rem", margin: " 1rem 2rem" }}
+                onChange={(e) => this.filterJobByDate(e)}
+              />
+               <a className="dropdown-item"  style={{}}>
+               Filter by Status
+              </a>
         </div>
-        {moverJobs?.data?.jobs.length > 0 ? (
+        </div>
+        </div>
+
+        {moverJobs?.docs?.length > 0 ? (
           <div
             className={`row  ${style.li}`}
             style={{
@@ -139,8 +219,8 @@ class MoversJobsList extends Component {
                 </div> */}
           </div>
         ) : null}
-        {moverJobs?.data?.jobs.length > 0 ? (
-          moverJobs.data.jobs.map((list) => {
+        {moverJobs?.docs?.length > 0 ? (
+          moverJobs.docs.map((list) => {
             return (
               <>
                 <div>
@@ -215,14 +295,14 @@ class MoversJobsList extends Component {
                               )}
                             </div>
 
-                            <div className="col-3" style={{display:"flex"}}>
-                              <span style={{display:"flex"}}>
-                              <FontAwesomeIcon
-                                icon={faUser}
-                                style={{ margin: "0.2rem 0.5rem" }}
-                              />{" "}
+                            <div className="col-3" style={{ display: "flex" }}>
+                              <span style={{ display: "flex" }}>
+                                <FontAwesomeIcon
+                                  icon={faUser}
+                                  style={{ margin: "0.2rem 0.5rem" }}
+                                />{" "}
                                 {list.assignee.length > 0 ? (
-                                  <div style={{display:"flex"}}>
+                                  <div style={{ display: "flex" }}>
                                     <label
                                       className={`checkbox-inline ${style.assignee}`}
                                       htmlFor="defaultCheck1"
@@ -230,50 +310,58 @@ class MoversJobsList extends Component {
                                       {list.assignee[0].name}
                                     </label>
                                     {list.assignee.length > 1 && (
-                                <div style={{display:"flex"}}>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleAssigneePopoverOpen(e, list._id)
-                                    }
-                                    onMouseLeave={
-                                      this.handleAssigneePopoverClose
-                                    }
-                                  >
-                                    ...
-                                  </Typography>
+                                      <div style={{ display: "flex" }}>
+                                        <Typography
+                                          aria-owns={
+                                            open
+                                              ? "mouse-over-popover"
+                                              : undefined
+                                          }
+                                          aria-haspopup="true"
+                                          onMouseEnter={(e) =>
+                                            this.handleAssigneePopoverOpen(
+                                              e,
+                                              list._id
+                                            )
+                                          }
+                                          onMouseLeave={
+                                            this.handleAssigneePopoverClose
+                                          }
+                                        >
+                                          ...
+                                        </Typography>
 
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedAssigneePopoverId ==
-                                      list._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    onClose={this.handlePopoverClose}
-                                    disableRestoreFocus
-                                  >
-                                    {list.assignee.map((assignee) => (
-                                      <Typography>{assignee.name}</Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
+                                        <Popover
+                                          id="mouse-over-popover"
+                                          className={classes.popover}
+                                          classes={{
+                                            paper: classes.paper,
+                                          }}
+                                          open={
+                                            this.state
+                                              .openedAssigneePopoverId ==
+                                            list._id
+                                          }
+                                          anchorEl={this.state.anchorEl}
+                                          anchorOrigin={{
+                                            vertical: "bottom",
+                                            horizontal: "left",
+                                          }}
+                                          transformOrigin={{
+                                            vertical: "top",
+                                            horizontal: "left",
+                                          }}
+                                          onClose={this.handlePopoverClose}
+                                          disableRestoreFocus
+                                        >
+                                          {list.assignee.map((assignee) => (
+                                            <Typography>
+                                              {assignee.name}
+                                            </Typography>
+                                          ))}
+                                        </Popover>
+                                      </div>
+                                    )}
                                   </div>
                                 ) : (
                                   "No Assignees"
@@ -311,6 +399,14 @@ class MoversJobsList extends Component {
                       </Link>
                     </div>
                   </ul>
+                </div>
+                <div >
+                  <Pagination
+                    itemCount={totalCount}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={this.handlePageChange}
+                  />
                 </div>
               </>
             );

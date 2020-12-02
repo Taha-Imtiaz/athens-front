@@ -234,7 +234,7 @@ const JobDetails = (props) => {
 
                 {job.note.length !== 0 && (
                   <div>
-                    <h3 className={style.jobHead}>Notes</h3>
+                    <h5 className={style.jobHead}>Notes</h5>
                     {job.note.map((x) => (
                       <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }} className={style.para}>{x.text}</p>
                     ))}

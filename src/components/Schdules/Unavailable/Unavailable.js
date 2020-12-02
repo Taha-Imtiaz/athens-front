@@ -6,32 +6,79 @@ import { getAllData, approveRequest } from "../../../Redux/Unavailable/unavailab
 import { cloneDeep } from '@babel/types';
 import { connect } from 'react-redux';
 import { showMessage } from '../../../Redux/Common/commonActions'
+import {
+    faInfoCircle,
+    faBook,
+    faCalendarAlt,
+    faUser,
+    faClock,
+    faBan
+  } from "@fortawesome/free-solid-svg-icons";
+  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnavailableSchedule = (props) => {
     const [data, setData] = useState()
     const [isLoading, setIsLoading] = useState(true)
     const [dates, setDates] = useState([])
 
+    // const routes = [
+    //     {
+    //         title: "Daily Schedule",
+    //         path: "/schedule/daily",
+    //         icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
+
+    //     },
+
+    //     {
+    //         title: "Unavailable",
+    //         path: "/schedule",
+    //         icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+    //     },
+
+    //     {
+    //         title: "Movers",
+    //         path: "/schedule/movers",
+    //         icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
+    //     }
+    // ]
+
     const routes = [
         {
             title: "Daily Schedule",
             path: "/schedule/daily",
-            icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon"></img>
-
+            icon: (
+                // <img
+                //   src="/images/Icon material-schedule.png"
+                //   width="20px"
+                //   alt="icon"
+                // ></img>
+                <FontAwesomeIcon
+                    icon={faClock}
+                    style={{ margin: "0.2rem 0.5rem" }}
+                />
+            ),
         },
 
         {
             title: "Unavailable",
             path: "/schedule",
-            icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+            // icon: <img src="/images/pin.png" width="20px" alt="icon"></img>,
+            icon: <FontAwesomeIcon
+                icon={faBan}
+                style={{ margin: "0.2rem 0.5rem" }}
+            />
         },
-
+        ,
         {
             title: "Movers",
             path: "/schedule/movers",
-            icon: <img src='/images/truck.png' width="20px" alt="icon"></img>
-        }
-    ]
+            // icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
+            icon: <FontAwesomeIcon
+                icon={faUser}
+                style={{ margin: "0.2rem 0.5rem" }}
+            />,
+        },
+    ];
 
     useEffect(() => {
         // const { getAllData } = props;

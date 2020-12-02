@@ -33,9 +33,19 @@ import {
   faCaretRight,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+  faInfoCircle,
+  faBook,
+  faCalendarAlt,
+  faUser,
+  faClock,
+  faBan
+} from "@fortawesome/free-solid-svg-icons";
+
 // import moment from 'moment';
-import ReactHorizontalDatePicker from "react-horizontal-strip-datepicker";
-import 'react-horizontal-strip-datepicker/dist/ReactHorizontalDatePicker.css'
+// import ReactHorizontalDatePicker from "react-horizontal-strip-datepicker";
+// import 'react-horizontal-strip-datepicker/dist/ReactHorizontalDatePicker.css'
 import DatePicker from "react-horizontal-datepicker";
 
 
@@ -148,24 +158,36 @@ const DailySchedule = (props) => {
       title: "Daily Schedule",
       path: "/schedule/daily",
       icon: (
-        <img
-          src="/images/Icon material-schedule.png"
-          width="20px"
-          alt="icon"
-        ></img>
+        // <img
+        //   src="/images/Icon material-schedule.png"
+        //   width="20px"
+        //   alt="icon"
+        // ></img>
+        <FontAwesomeIcon
+          icon={faClock}
+          style={{ margin: "0.2rem 0.5rem" }}
+        />
       ),
     },
 
     {
       title: "Unavailable",
       path: "/schedule",
-      icon: <img src="/images/pin.png" width="20px" alt="icon"></img>,
+      // icon: <img src="/images/pin.png" width="20px" alt="icon"></img>,
+      icon: <FontAwesomeIcon
+        icon={faBan}
+        style={{ margin: "0.2rem 0.5rem" }}
+      />
     },
     ,
     {
       title: "Movers",
       path: "/schedule/movers",
-      icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
+      // icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
+      icon: <FontAwesomeIcon
+        icon={faUser}
+        style={{ margin: "0.2rem 0.5rem" }}
+      />,
     },
   ];
 
@@ -710,14 +732,14 @@ const DailySchedule = (props) => {
         enableScroll={true}
         enableDays={180}
       /> */}
-        <DatePicker
+      <DatePicker
           endDate={365}
           getSelectedDay={(e) => { onSelectedDay(e) }}
           labelFormat={"MMMM yyyy"}
-          color={"#374e8c"} // #00ADEE
+          color={"#181F47"} // #00ADEE
           selectDate={newDate}
         />
-        {/* <div className={`row ${style.lists}`} style={{}}>
+      {/* <div className={`row ${style.lists}`} style={{}}>
           <div
             className="col-1"
             style={{
@@ -805,130 +827,130 @@ const DailySchedule = (props) => {
           </div>
         </div>
          */}
-        <hr />
-        <div className="row justify-content-md-center">
-          <div
-            className="col-2"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Total Jobs: `}{" "}
-              <span style={{ fontWeight: "normal" }}>
-                {props.jobs ?.data ?.jobs.length}
-              </span>{" "}
-            </h6>
-          </div>
-          <div
-            className="col-3"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Movers Available:`}{" "}
-              <span style={{ fontWeight: "normal" }}>
-                {" "}
-                {props.movers ?.length}
-              </span>{" "}
-            </h6>
-          </div>
-          <div
-            className="col-3"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              Movers Required:
-              {props.jobs ?.data ?.jobs.length > 0 ? (
-                props.jobs.data.jobs.reduce(
-                  (sum, currentValue) => sum + currentValue.assigneeRequired,
-                  0
-                )
-              ) : (
-                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                    0
-                </span>
-                )}
-            </h6>
-          </div>
-          <div className="col-2">
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-              }}
-              onClick={printAllJobs}
-            >
-              <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
-              Print All
-            </Button>
-          </div>
+      <hr />
+      <div className="row justify-content-md-center">
+        <div
+          className="col-2"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <h6 style={{ fontFamily: "sans-serif" }}>
+            {`Total Jobs: `}{" "}
+            <span style={{ fontWeight: "normal" }}>
+              {props.jobs ?.data ?.jobs.length}
+            </span>{" "}
+          </h6>
         </div>
-        <hr></hr>
-        {props.jobs ?.data.jobs.length > 0 && (
-          <div
-            className={`row card-header`}
+        <div
+          className="col-3"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <h6 style={{ fontFamily: "sans-serif" }}>
+            {`Movers Available:`}{" "}
+            <span style={{ fontWeight: "normal" }}>
+              {" "}
+              {props.movers ?.length}
+            </span>{" "}
+          </h6>
+        </div>
+        <div
+          className="col-3"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <h6 style={{ fontFamily: "sans-serif" }}>
+            Movers Required:
+              {props.jobs ?.data ?.jobs.length > 0 ? (
+              props.jobs.data.jobs.reduce(
+                (sum, currentValue) => sum + currentValue.assigneeRequired,
+                0
+              )
+            ) : (
+                <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                  0
+                </span>
+              )}
+          </h6>
+        </div>
+        <div className="col-2">
+          <Button
             style={{
-              fontWeight: "bold",
-              margin: "1rem 0",
-              backgroundColor: "transparent",
-              borderBottom: "none",
+              background: "#00ADEE",
+              textTransform: "none",
+              color: "#FFF",
               fontFamily: "sans-serif",
             }}
+            onClick={printAllJobs}
           >
-            <div className="col-3">Title</div>
-            <div className="col-2">Movers Req.</div>
-            <div
-              className="col-2"
-            // style={{ display: "flex", transform: "translateX(0.75rem)" }}
-            >
-              Time
+            <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
+            Print All
+            </Button>
+        </div>
+      </div>
+      <hr></hr>
+      {props.jobs ?.data.jobs.length > 0 && (
+        <div
+          className={`row card-header`}
+          style={{
+            fontWeight: "bold",
+            margin: "1rem 0",
+            backgroundColor: "transparent",
+            borderBottom: "none",
+            fontFamily: "sans-serif",
+          }}
+        >
+          <div className="col-3">Title</div>
+          <div className="col-2">Movers Req.</div>
+          <div
+            className="col-2"
+          // style={{ display: "flex", transform: "translateX(0.75rem)" }}
+          >
+            Time
             </div>
-            <div className="col-3">Assignee</div>
+          <div className="col-3">Assignee</div>
 
-            <div className="col-2">
-              <span style={{ float: "right" }}>Action</span>
-            </div>
+          <div className="col-2">
+            <span style={{ float: "right" }}>Action</span>
           </div>
-        )}
+        </div>
+      )}
 
-        {props.jobs && props.jobs.data.jobs.length > 0 ? (
-          props.jobs.data.jobs.map((list, i) => {
-            return (
-              <div id="accordion" key={i}>
+      {props.jobs && props.jobs.data.jobs.length > 0 ? (
+        props.jobs.data.jobs.map((list, i) => {
+          return (
+            <div id="accordion" key={i}>
+              <div
+                className="row"
+                style={{
+                  overflow: "hidden",
+                  width: "100%",
+                  display: "flex",
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                }}
+                className="card-header"
+                aria-expanded="true"
+                data-toggle="collapse"
+                data-target={`#collapse${i}`}
+                aria-controls="collapse"
+                id="headingOne"
+                onClick={() => toggleCollapse(i)}
+                onDoubleClick={() => jobDetailsNavigate(list._id)}
+              >
                 <div
-                  className="row"
-                  style={{
-                    overflow: "hidden",
-                    width: "100%",
-                    display: "flex",
-                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                  }}
-                  className="card-header"
-                  aria-expanded="true"
-                  data-toggle="collapse"
-                  data-target={`#collapse${i}`}
-                  aria-controls="collapse"
-                  id="headingOne"
-                  onClick={() => toggleCollapse(i)}
-                  onDoubleClick={() => jobDetailsNavigate(list._id)}
+                  className="col-3"
+                // style={{ transform: "translateX(-1.2rem)" }}
                 >
-                  <div
-                    className="col-3"
-                  // style={{ transform: "translateX(-1.2rem)" }}
-                  >
-                    {list.title}
-                  </div>
+                  {list.title}
+                </div>
 
-                  <div className="col-2">
-                    <span> {list.assigneeRequired}</span>{" "}
-                    <span style={{ display: "none" }}>{list.jobId}</span>
-                  </div>
+                <div className="col-2">
+                  <span> {list.assigneeRequired}</span>{" "}
+                  <span style={{ display: "none" }}>{list.jobId}</span>
+                </div>
 
-                  <div
-                    className="col-2"
-                  //  style={{ marginLeft: "0.2rem" }}
-                  >
-                    {/* {list.services.map((ser, j) => {
+                <div
+                  className="col-2"
+                //  style={{ marginLeft: "0.2rem" }}
+                >
+                  {/* {list.services.map((ser, j) => {
                                             return (
                                                 <Chip
                                                     label={ser.name}
@@ -939,15 +961,15 @@ const DailySchedule = (props) => {
                                                 ></Chip>
                                             );
                                         })} */}
-                    {list.startTime ? list.startTime : "N/A"}
-                  </div>
-                  <div className="col-3" style={{}}>
-                    {/* <i className="fa fa-user"></i> */}
-                    {list.assignee.length > 0 ? (
-                      <div style={{ width: "100%" }}>
-                        {/* {`${list.assignee[0].name}   `} */}
+                  {list.startTime ? list.startTime : "N/A"}
+                </div>
+                <div className="col-3" style={{}}>
+                  {/* <i className="fa fa-user"></i> */}
+                  {list.assignee.length > 0 ? (
+                    <div style={{ width: "100%" }}>
+                      {/* {`${list.assignee[0].name}   `} */}
 
-                        {/* <Typography
+                      {/* <Typography
                           aria-owns={open ? "mouse-over-popover" : undefined}
                           aria-haspopup="true"
                           onMouseEnter={(e) => handlePopoverOpen(e, list.jobId)}
@@ -957,7 +979,7 @@ const DailySchedule = (props) => {
                           ....
                         </Typography> */}
 
-                        {/* <Popover
+                      {/* <Popover
                           id="mouse-over-popover"
                           // className={classes.popover}
                           // classes={{
@@ -981,289 +1003,289 @@ const DailySchedule = (props) => {
                           onClose={handlePopoverClose}
                         // disableRestoreFocus
                         > */}
-                        {list.assignee.map((assignee, i) => (
-                          // <div style={{ display: "flex" }}>
-                          //   {assignee.name}
-                          //   <FontAwesomeIcon
-                          //     style={{
-                          //       color: "#a8a8a8",
-                          //       transform: "translateY(0.2rem)",
-                          //     }}
-                          //     onClick={(e) => removeAssignee(e, list, assignee._id)}
-                          //     icon={faTimes}
-                          //     size="1x"
-                          //   />
-                          // </div>
+                      {list.assignee.map((assignee, i) => (
+                        // <div style={{ display: "flex" }}>
+                        //   {assignee.name}
+                        //   <FontAwesomeIcon
+                        //     style={{
+                        //       color: "#a8a8a8",
+                        //       transform: "translateY(0.2rem)",
+                        //     }}
+                        //     onClick={(e) => removeAssignee(e, list, assignee._id)}
+                        //     icon={faTimes}
+                        //     size="1x"
+                        //   />
+                        // </div>
 
-                          <ListItem
-                            key={i}
+                        <ListItem
+                          key={i}
+                          style={{
+                            width: "100%",
+                            position: "relative",
+                            margin: "0",
+                            padding: "0",
+                          }}
+                        >
+                          <span style={{ padding: "0 0.4rem" }}> &#42;</span>
+                          <ListItemText
+                            style={{ width: "90%" }}
+                            primary={assignee.name}
+                          // secondary="Jan 9, 2014"
+                          />
+
+                          <FontAwesomeIcon
                             style={{
-                              width: "100%",
-                              position: "relative",
-                              margin: "0",
-                              padding: "0",
+                              color: "#a8a8a8",
+                              // float:"right",
+                              width: "10%",
                             }}
-                          >
-                            <span style={{ padding: "0 0.4rem" }}> &#42;</span>
-                            <ListItemText
-                              style={{ width: "90%" }}
-                              primary={assignee.name}
-                            // secondary="Jan 9, 2014"
-                            />
-
-                            <FontAwesomeIcon
-                              style={{
-                                color: "#a8a8a8",
-                                // float:"right",
-                                width: "10%",
-                              }}
-                              onClick={(e) =>
-                                removeAssignee(e, list, assignee._id)
-                              }
-                              icon={faTimes}
-                              size="1x"
-                            />
-                          </ListItem>
-                        ))}
-                        {/* </Popover> */}
-                      </div>
-                    ) : (
-                        " N/A"
-                      )}
-                  </div>
-                  {/* Modal */}
-
-                  <Modal
-                    show={modalShow}
-                    // {...props}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    onHide={(e) => Navigate(e)}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Confirmation
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {mover && (
-                        <h5>
-                          {" "}
-                          {mover.mover.name}{" "}
-                          <span style={{ fontWeight: "normal" }}>
-                            has been assigned to these jobs:
-                          </span>{" "}
-                        </h5>
-                      )}
-                      <div>
-                        {mover && (
-                          <div style={{ margin: "1.5rem 1rem" }}>
-                            {moverAssignedDate.map((job, i) => (
-                              <div className="row" key={i}>
-                                <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
-                                  style={{ textDecoration: "none", cursor: 'pointer' }}>
-                                  &#42;
-                                  {job.title}
-                                </a>{" "}
-                                <Chip
-                                  className="col-2"
-                                  label={job.startTime ? job.startTime : 'N/A'}
-                                  clickable
-                                  color="primary"
-                                  // size="small"
-                                  variant="outlined"
-                                ></Chip>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        // variant="primary"
-                        onClick={(e) => updateJobAssigneeList(e, newAssignee)}
-                      >
-                        Confirm
-                      </Button>
-                      <Button
-                        // variant="primary"
-                        onClick={(e) => {
-                          Navigate(e);
-                        }}
-                      >
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                  <div className="col-2">
-                    <small
-                      style={{
-                        // display: "flex",
-                        // justifyContent: "end",
-                        float: "right",
-                        // alignItems: "end",
-                      }}
-                    >
-                      <button
-                        onClick={(e) => generatePDF(e, list)}
-                      // onClick = {(e) => handlePropagation(e)}
-                      >
-                        <i
-                          className="fa fa-print"
-                        // onClick={(e) => handlePropagation(e)}
-                        ></i>
-                        Print
-                      </button>
-                    </small>
-                  </div>
+                            onClick={(e) =>
+                              removeAssignee(e, list, assignee._id)
+                            }
+                            icon={faTimes}
+                            size="1x"
+                          />
+                        </ListItem>
+                      ))}
+                      {/* </Popover> */}
+                    </div>
+                  ) : (
+                      " N/A"
+                    )}
                 </div>
-                <div
-                  id={`collapse${i}`}
-                  className="collapse"
-                  aria-labelledby="headingOne"
-                  data-parent="#accordion"
+                {/* Modal */}
+
+                <Modal
+                  show={modalShow}
+                  // {...props}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  onHide={(e) => Navigate(e)}
                 >
-                  <div className="card-body">
-                    <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
-                    <div className="row">
-                      <div className="col-3">
-                        <h6>Job Id</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Title</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Type</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Status</h6>
-                      </div>
-                    </div>
-
-                    <div
-                      className="row"
-                      style={{
-                        fontSize: "0.92rem",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      <div className="col-3">{list.jobId}</div>
-                      <div className="col-3">{list.title}</div>
-                      <div className="col-3">{list.jobType}</div>
-                      <div className="col-3">
-                        <Chip
-                          label={list.status}
-                          clickable
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        ></Chip>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <h5
-                        style={{
-                          margin: "1rem 0",
-                          transform: "translateX(1rem)",
-                        }}
-                      >
-                        Job Description
+                  <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                      Confirmation
+                      </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    {mover && (
+                      <h5>
+                        {" "}
+                        {mover.mover.name}{" "}
+                        <span style={{ fontWeight: "normal" }}>
+                          has been assigned to these jobs:
+                          </span>{" "}
                       </h5>
+                    )}
+                    <div>
+                      {mover && (
+                        <div style={{ margin: "1.5rem 1rem" }}>
+                          {moverAssignedDate.map((job, i) => (
+                            <div className="row" key={i}>
+                              <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
+                                style={{ textDecoration: "none", cursor: 'pointer' }}>
+                                &#42;
+                                  {job.title}
+                              </a>{" "}
+                              <Chip
+                                className="col-2"
+                                label={job.startTime ? job.startTime : 'N/A'}
+                                clickable
+                                color="primary"
+                                // size="small"
+                                variant="outlined"
+                              ></Chip>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div
-                      className="row"
-                      style={{
-                        margin: "0.4rem 0",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      // variant="primary"
+                      onClick={(e) => updateJobAssigneeList(e, newAssignee)}
+                    >
+                      Confirm
+                      </Button>
+                    <Button
+                      // variant="primary"
+                      onClick={(e) => {
+                        Navigate(e);
                       }}
                     >
-                      <p>{list.description}</p>
-                    </div>
-                    <hr />
-                    <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
-                    <div className="row">
-                      <div className="col-4">
-                        <h6>Name</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Email</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Phone</h6>
-                      </div>
-                    </div>
-
-                    {/* key={x._id} */}
-                    <div
-                      className="row "
-                      style={{
-                        fontSize: "0.92rem",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
+                      Close
+                      </Button>
+                  </Modal.Footer>
+                </Modal>
+                <div className="col-2">
+                  <small
+                    style={{
+                      // display: "flex",
+                      // justifyContent: "end",
+                      float: "right",
+                      // alignItems: "end",
+                    }}
+                  >
+                    <button
+                      onClick={(e) => generatePDF(e, list)}
+                    // onClick = {(e) => handlePropagation(e)}
                     >
-                      <div className="col-4">
-                        {list.customer.firstName} {list.customer.lastName}
-                      </div>
-                      <div className="col-4">{list.customer.email}</div>
-                      <div className="col-4">{list.customer.phone}</div>
-                    </div>
-                  </div>
+                      <i
+                        className="fa fa-print"
+                      // onClick={(e) => handlePropagation(e)}
+                      ></i>
+                      Print
+                      </button>
+                  </small>
                 </div>
               </div>
-            );
-          })
-        ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
-      </div>
+              <div
+                id={`collapse${i}`}
+                className="collapse"
+                aria-labelledby="headingOne"
+                data-parent="#accordion"
+              >
+                <div className="card-body">
+                  <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
+                  <div className="row">
+                    <div className="col-3">
+                      <h6>Job Id</h6>
+                    </div>
+                    <div className="col-3">
+                      <h6>Job Title</h6>
+                    </div>
+                    <div className="col-3">
+                      <h6>Job Type</h6>
+                    </div>
+                    <div className="col-3">
+                      <h6>Status</h6>
+                    </div>
+                  </div>
 
-      <div className={`col-2 ${style.mov}`} id="mov">
-        <div className={style.scroll}>
-          <h4 className={style.movehead}>Movers</h4>
-          {movers &&
-            movers.map((list, i) => {
-              return (
-                <div key={i}>
                   <div
                     className="row"
                     style={{
+                      fontSize: "0.92rem",
                       fontFamily:
                         "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                     }}
                   >
-                    <Draggable
-                      {...dragHandlers}
-                      defaultPosition={{ x: 0, y: 0 }}
-                    >
-                      <div className="col-12">
-                        {" "}
-                        <h6
-                          style={{ cursor: "pointer" }}
-                          key={i}
-                          className={style.movname}
-                        >
-                          <label style={{ fontWeight: "normal" }}>
-                            {i + 1}.
-                          </label>{" "}
-                          {list.mover.name}{" "}
-                          <span
-                            className="assigneeId"
-                            style={{ display: "none" }}
-                          >
-                            {list.mover._id}
-                          </span>
-                        </h6>
-                      </div>
-                    </Draggable>
+                    <div className="col-3">{list.jobId}</div>
+                    <div className="col-3">{list.title}</div>
+                    <div className="col-3">{list.jobType}</div>
+                    <div className="col-3">
+                      <Chip
+                        label={list.status}
+                        clickable
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                      ></Chip>
+                    </div>
                   </div>
-                  {/* <div>
+                  <div className="row">
+                    <h5
+                      style={{
+                        margin: "1rem 0",
+                        transform: "translateX(1rem)",
+                      }}
+                    >
+                      Job Description
+                      </h5>
+                  </div>
+                  <div
+                    className="row"
+                    style={{
+                      margin: "0.4rem 0",
+                      fontFamily:
+                        "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                    }}
+                  >
+                    <p>{list.description}</p>
+                  </div>
+                  <hr />
+                  <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
+                  <div className="row">
+                    <div className="col-4">
+                      <h6>Name</h6>
+                    </div>
+                    <div className="col-4">
+                      <h6>Email</h6>
+                    </div>
+                    <div className="col-4">
+                      <h6>Phone</h6>
+                    </div>
+                  </div>
+
+                  {/* key={x._id} */}
+                  <div
+                    className="row "
+                    style={{
+                      fontSize: "0.92rem",
+                      fontFamily:
+                        "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                    }}
+                  >
+                    <div className="col-4">
+                      {list.customer.firstName} {list.customer.lastName}
+                    </div>
+                    <div className="col-4">{list.customer.email}</div>
+                    <div className="col-4">{list.customer.phone}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      ) : (
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
+    </div>
+
+    <div className={`col-2 ${style.mov}`} id="mov">
+      <div className={style.scroll}>
+        <h4 className={style.movehead}>Movers</h4>
+        {movers &&
+          movers.map((list, i) => {
+            return (
+              <div key={i}>
+                <div
+                  className="row"
+                  style={{
+                    fontFamily:
+                      "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  }}
+                >
+                  <Draggable
+                    {...dragHandlers}
+                    defaultPosition={{ x: 0, y: 0 }}
+                  >
+                    <div className="col-12">
+                      {" "}
+                      <h6
+                        style={{ cursor: "pointer" }}
+                        key={i}
+                        className={style.movname}
+                      >
+                        <label style={{ fontWeight: "normal" }}>
+                          {i + 1}.
+                          </label>{" "}
+                        {list.mover.name}{" "}
+                        <span
+                          className="assigneeId"
+                          style={{ display: "none" }}
+                        >
+                          {list.mover._id}
+                        </span>
+                      </h6>
+                    </div>
+                  </Draggable>
+                </div>
+                {/* <div>
                   {list.mover.jobs.length > 0 ? (
                     <div>
                       {list.mover.jobs.map((job) => (
@@ -1297,20 +1319,20 @@ const DailySchedule = (props) => {
                   <hr />
                 </div> */}
 
-                  {/* {list.availabilityStatus.map((status, j) => {
+                {/* {list.availabilityStatus.map((status, j) => {
                         return <span key={j} className={status ? `badge badge-primary mr-2 ${style.color}` : `badge badge-secondary mr-2 ${style.color}`}>{status ? 'Avaiable' : 'Unavaiable'}</span>
                     })} */}
-                </div>
-              );
-            })}
-        </div>
+              </div>
+            );
+          })}
       </div>
-      <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Assignees</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* <textarea
+    </div>
+    <Modal show={show} onHide={handleClose} animation={false} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Assignees</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {/* <textarea
                     name=""
                     id=""
                     cols="65"
@@ -1319,25 +1341,25 @@ const DailySchedule = (props) => {
                     value={update}
                     onChange={handleAddUpdate}
                 ></textarea> */}
-          <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
-            {/* {assignee?.map((assign) => assign.name)} */}
-            <div className="col-12">
-              <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
-                options={allMovers} // Options to display in the dropdown
-                onSelect={onAssigneeSelect} // Function will trigger on select event
-                onRemove={onAssigneeRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-              />
-            </div>
+        <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
+          {/* {assignee?.map((assign) => assign.name)} */}
+          <div className="col-12">
+            <Multiselect
+              selectedValues={jobToUpdate ?.assignee}
+              options={allMovers} // Options to display in the dropdown
+              onSelect={onAssigneeSelect} // Function will trigger on select event
+              onRemove={onAssigneeRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose} name="Close"></Button>
-          {/* <Button onClick={updateJobAssignee} name="Update"></Button> */}
-        </Modal.Footer>
-      </Modal>
-    </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={handleClose} name="Close"></Button>
+        {/* <Button onClick={updateJobAssignee} name="Update"></Button> */}
+      </Modal.Footer>
+    </Modal>
+    </div >
   );
 };
 var mapStateToProps = (state) => ({

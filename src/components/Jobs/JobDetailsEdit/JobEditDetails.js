@@ -42,7 +42,7 @@ import { Autocomplete } from "@material-ui/lab";
 
 class JobEditDetails extends Component {
   servicesOptions = [
-    { id: 1, name: "Pakaging" },
+    { id: 1, name: "Packaging" },
     { id: 2, name: "Loading" },
     { id: 3, name: "Unloading" },
     { id: 4, name: "Grand Piano" },

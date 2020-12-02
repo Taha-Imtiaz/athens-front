@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react'
 import style from './Movers.module.css'
 import SideBar from '../../Sidebar/SideBar'
 import { getAllMover } from '../../../Redux/Schedule/scheduleAction'
+import {
+    faInfoCircle,
+    faBook,
+    faCalendarAlt,
+    faUser,
+    faClock,
+    faBan
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MoversSchedule = (props) => {
     const [allMovers, setAllMovers] = useState()
@@ -13,26 +22,63 @@ const MoversSchedule = (props) => {
             console.log(error)
         })
     }, [])
+    // const routes = [
+    // {
+    //     title: "Daily Schedule",
+    //     path: "daily",
+    //     icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon" color = "white"></img>
+
+    // },
+
+    // {
+    //     title: "Unavailable",
+    //     path: "/schedule",
+    //     icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
+    // },
+    // {
+    //     title: "Movers",
+    //     path: "/schedule/movers",
+    //     icon: <img src='/images/truck.png' width="20px" alt="icon" color = "white"></img>
+
+    // }
+    // ]
     const routes = [
-    {
-        title: "Daily Schedule",
-        path: "daily",
-        icon: <img src='/images/Icon material-schedule.png' width="20px" alt="icon" color = "white"></img>
+        {
+            title: "Daily Schedule",
+            path: "/schedule/daily",
+            icon: (
+                // <img
+                //   src="/images/Icon material-schedule.png"
+                //   width="20px"
+                //   alt="icon"
+                // ></img>
+                <FontAwesomeIcon
+                    icon={faClock}
+                    style={{ margin: "0.2rem 0.5rem" }}
+                />
+            ),
+        },
 
-    },
-    
-    {
-        title: "Unavailable",
-        path: "/schedule",
-        icon: <img src='/images/pin.png' width="20px" alt="icon"></img>
-    },
-    {
-        title: "Movers",
-        path: "/schedule/movers",
-        icon: <img src='/images/truck.png' width="20px" alt="icon" color = "white"></img>
-
-    }
-    ]
+        {
+            title: "Unavailable",
+            path: "/schedule",
+            // icon: <img src="/images/pin.png" width="20px" alt="icon"></img>,
+            icon: <FontAwesomeIcon
+                icon={faBan}
+                style={{ margin: "0.2rem 0.5rem" }}
+            />
+        },
+        ,
+        {
+            title: "Movers",
+            path: "/schedule/movers",
+            // icon: <img src="/images/truck.png" width="20px" alt="icon"></img>,
+            icon: <FontAwesomeIcon
+                icon={faUser}
+                style={{ margin: "0.2rem 0.5rem" }}
+            />,
+        },
+    ];
 
     return <div className={`row`}>
         <div className="col-2 col-md-2">

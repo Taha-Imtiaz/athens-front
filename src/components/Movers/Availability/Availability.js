@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Button from '../../Button/Button';
+// import Button from '../../Button/Button';
 import style from './Availability.module.css'
 import { setAvailability } from '../../../Redux/Mover/moverActions'
 import { clone, cloneDeep } from "lodash"
 import { connect } from "react-redux";
 import { showMessage } from '../../../Redux/Common/commonActions'
-
+import {Button} from "@material-ui/core"
 class Availability extends Component {
 
     state = {
@@ -102,7 +102,16 @@ class Availability extends Component {
                     })}
                 </div>
                 <div className={style.btn}>
-                    <Button name="Save" onClick={this.handleSubmit} />
+                    <Button
+            type="button"
+            style={{
+              background: "#00ADEE",
+              textTransform: "none",
+              color: "#FFF",
+              fontFamily: "sans-serif",
+              marginLeft:"0.5rem",
+              float: "right",
+            }} onClick={this.handleSubmit}>Save</Button>
                 </div>
             </div>
         );

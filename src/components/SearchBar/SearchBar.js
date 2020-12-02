@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getAllCustomers } from "../../Redux/Customer/customerActions"
 import { getAllJobs } from "../../Redux/Job/jobActions"
 import { getUsers } from "../../Redux/User/userActions";
-
+import { getMover } from '../../Redux/Mover/moverActions';
 
 const SearchBar = (props) => {
     var { getAllCustomers, getAllJobs, getUsers } = props;
@@ -56,6 +56,43 @@ const SearchBar = (props) => {
                 getUsers(usersObj);
             }
         }
+
+        else if (props.type === "mover") {
+            if (searchValue) {
+                var fetchJobsOnPageChange = {
+                    query: searchValue,
+                    filters: {
+                        startDate: "",
+                        endDate: "",
+                        movedDate: "",
+                        tag: "",
+                        startYearMonth: ""
+                    },
+                    sort: {
+                        createdAt: -1
+                    },
+                    page: 1
+                }
+            } else {
+                var fetchJobsOnPageChange = {
+                    query: '',
+                    filters: {
+                        startDate: "",
+                        endDate: "",
+                        movedDate: "",
+                        tag: "",
+                        startYearMonth: ""
+                    },
+                    sort: {
+                        createdAt: -1
+                    },
+                    page: 1
+                }
+            }
+           getMover()
+        }
+
+
         else {
             if (searchValue) {
                 var fetchJobsOnPageChange = {

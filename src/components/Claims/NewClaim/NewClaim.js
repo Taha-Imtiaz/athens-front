@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import style from './NewClaim.module.css'
 import DatePicker from "react-datepicker";
 
-import {Button} from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import "react-datepicker/dist/react-datepicker.css";
 import API from '../../../utils/api'
 import { connect } from "react-redux";
@@ -315,7 +315,7 @@ class NewClaim extends Component {
                   {i == 0 ? null : <hr></hr>}
                   < div className="row">
                     <div className="col-8">
-                      
+
                       <FormControl variant="outlined" style={{ margin: "0 2rem", width: "90%" }} margin='dense'>
                         <InputLabel id="demo-simple-select-outlined-label">Claim Type</InputLabel>
                         <Select
@@ -327,7 +327,7 @@ class NewClaim extends Component {
                           // style= {{width:"90%"}}
                           name="claimType"
                         >
-                      
+
                           <MenuItem value={'Damage To House'}>Damage To House</MenuItem>
                           <MenuItem value={'Damage To Item'}>Damage To Item</MenuItem>
                         </Select>
@@ -344,9 +344,6 @@ class NewClaim extends Component {
                           size="small"
                           id="price" label="$$$" name="price" value={this.state.claims[i].price} onChange={(e) => this.hanldeClaimsInput(e, i)} style={{ margin: "-0.04rem -0.4rem" }} />
                       </div>
-
-
-
                     </div>
 
                   </div>
@@ -354,7 +351,7 @@ class NewClaim extends Component {
                     <TextareaAutosize
                       rowsMax={4}
                       id="description"
-                      style={{ margin: "1rem 2rem", width: "90%" }}
+                      style={{ margin: "1rem 2rem", width: "90%", backgroundColor: '#e9ecef' }}
                       placeholder="Item Description" name="description" value={this.state.claims[i].description} onChange={(e) => this.hanldeClaimsInput(e, i)} rows="3" />
                   </div>
                 </div>
@@ -363,7 +360,7 @@ class NewClaim extends Component {
             }
             <div className="form-group">
               <div style={{ float: 'right' }}>
-                <Button type="button" style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", marginRight:"2.5rem"}} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} >Add Another</Button>
+                <Button type="button" style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", marginRight: "2.5rem" }} name="Add Another" value="Add Another" onClick={this.addAnotherClaim} >Add Another</Button>
                 {/* <Button onClick={this.addAnotherClaim} name="Add Another"></Button> */}
               </div>
             </div>
@@ -444,7 +441,7 @@ class NewClaim extends Component {
 
 
             <div>
-              <Button  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", margin:"2rem", width:"90%"}} onClick={this.mySubmitHandler} >Submit</Button>
+              <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", margin: "2rem", width: "90%" }} onClick={this.mySubmitHandler} >Submit</Button>
             </div>
 
           </form>

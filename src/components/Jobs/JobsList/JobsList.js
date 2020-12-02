@@ -45,9 +45,9 @@ class JobsList extends Component {
     pageSize: 10,
     currentPage: 1,
     popoverOpen: false,
-    sortByName:false,
-    recentlyAdded:false,
-    assigneeRequired:false,
+    sortByName: false,
+    recentlyAdded: false,
+    assigneeRequired: false,
     show: false,
     dates: "",
     jobToConfirm: "",
@@ -102,7 +102,7 @@ class JobsList extends Component {
       query: "",
       sort: {
         assigneeRequired: null,
-        plainTitle:"",
+        plainTitle: "",
         createdAt: -1,
       },
       page: 1,
@@ -118,7 +118,7 @@ class JobsList extends Component {
 
   handlePageChange = (page) => {
     var { getAllJobs } = this.props;
-    if(this.state.sortByName === true) {
+    if (this.state.sortByName === true) {
       var fetchJobsOnPageChange = {
         query: "",
         sort: {
@@ -128,8 +128,8 @@ class JobsList extends Component {
           movedDate: null,
           tag: null,
           startYearMonth: null,
-          assigneeRequired:null,
-          createdAt:null
+          assigneeRequired: null,
+          createdAt: null
         },
         page: page,
       };
@@ -137,12 +137,12 @@ class JobsList extends Component {
         currentPage: page,
       });
     }
-    else if(this.state.recentlyAdded === true) {
+    else if (this.state.recentlyAdded === true) {
       var fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: null,
-          plainTitle:"",
+          plainTitle: "",
           createdAt: -1,
         },
         page: page,
@@ -151,12 +151,12 @@ class JobsList extends Component {
         currentPage: page,
       });
     }
-    else if(this.state.assigneeRequired === true) {
+    else if (this.state.assigneeRequired === true) {
       var fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: -1,
-          plainTitle:"",
+          plainTitle: "",
           createdAt: null,
         },
         page: page,
@@ -170,7 +170,7 @@ class JobsList extends Component {
         query: "",
         sort: {
           assigneeRequired: null,
-          plainTitle:"",
+          plainTitle: "",
           createdAt: -1,
         },
         page: page,
@@ -180,7 +180,7 @@ class JobsList extends Component {
       });
     }
     getAllJobs(fetchJobsOnPageChange);
-   
+
   };
 
   handleChangeTo2 = (date) => {
@@ -205,9 +205,9 @@ class JobsList extends Component {
     var { getAllJobs } = this.props;
     this.setState({
       sortByName: true,
-      assigneeRequired:false,
-      recentlyAdded:false
-      
+      assigneeRequired: false,
+      recentlyAdded: false
+
     })
     var fetchJobsOnPageChange = {
       query: "",
@@ -218,15 +218,15 @@ class JobsList extends Component {
         movedDate: null,
         tag: null,
         startYearMonth: null,
-        assigneeRequired:null, 
+        assigneeRequired: null,
         createdAt: null
       },
       page: 1,
 
     };
-this.setState({
-  currentPage:1
-})
+    this.setState({
+      currentPage: 1
+    })
     getAllJobs(fetchJobsOnPageChange);
   };
 
@@ -242,13 +242,13 @@ this.setState({
         dates: date.toString(),
         movedDate: "",
         startYearMonth: "",
-        nearestDate:"",
-        sortLast:null
+        nearestDate: "",
+        sortLast: null
       },
       page: 1,
     };
     this.setState({
-      currentPage:1
+      currentPage: 1
     })
     filterJobsByDate(DateFilters);
   };
@@ -256,46 +256,46 @@ this.setState({
   handleDateFilter = () => {
     var { getAllJobs } = this.props;
     this.setState({
-      recentlyAdded:true,
-      sortByName:false,
-      assigneeRequired:false
+      recentlyAdded: true,
+      sortByName: false,
+      assigneeRequired: false
     })
     var fetchJobsOnPageChange = {
       query: "",
       sort: {
         assigneeRequired: null,
-        plainTitle:"",
+        plainTitle: "",
         createdAt: -1,
       },
       page: 1,
     };
     this.setState({
-      currentPage:1
+      currentPage: 1
     })
     getAllJobs(fetchJobsOnPageChange);
   };
-handleAssigneeRequired = () => {
-  var { getAllJobs } = this.props;
-  this.setState({
-    assigneeRequired:true,
-    sortByName:false,
-    recentlyAdded:false
-  })
+  handleAssigneeRequired = () => {
+    var { getAllJobs } = this.props;
+    this.setState({
+      assigneeRequired: true,
+      sortByName: false,
+      recentlyAdded: false
+    })
 
-  var fetchJobsOnPageChange = {
-    query: "",
-    sort: {
-      assigneeRequired: -1,
-      plainTitle:"",
-      createdAt: null,
-    },
-    page: 1,
-  };
-  this.setState({
-    currentPage:1
-  })
-  getAllJobs(fetchJobsOnPageChange);
-}
+    var fetchJobsOnPageChange = {
+      query: "",
+      sort: {
+        assigneeRequired: -1,
+        plainTitle: "",
+        createdAt: null,
+      },
+      page: 1,
+    };
+    this.setState({
+      currentPage: 1
+    })
+    getAllJobs(fetchJobsOnPageChange);
+  }
   handlePopoverOpen = (event, id) => {
     console.log(id);
     this.setState({
@@ -346,7 +346,7 @@ handleAssigneeRequired = () => {
     var { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
 
-    var totalCount = jobs[0]?.data?.jobs.total;
+    var totalCount = jobs[0] ?.data ?.jobs.total;
     var { popoverOpen } = this.state;
     var { show, dates } = this.state;
     return (
@@ -377,23 +377,23 @@ handleAssigneeRequired = () => {
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
-              style={{width: "15rem", cursor: "pointer" }}
+              style={{ width: "15rem", cursor: "pointer" }}
             >
-              <h5 className="dropdown-item" style={{fontFamily:"sans-serif"}}>Sort</h5><hr/>
+              <h5 className="dropdown-item" style={{ fontFamily: "sans-serif" }}>Sort</h5><hr />
               <a className="dropdown-item" onClick={this.handleSort} style={{}}>
                 Sort By Title
               </a>
               <a className="dropdown-item" onClick={this.handleDateFilter} style={{}}>
-              Sort By Recently Added
+                Sort By Recently Added
               </a>
 
 
 
               <a className="dropdown-item" onClick={this.handleAssigneeRequired} style={{}}>
-               Sort By Assignee Required
+                Sort By Assignee Required
               </a>
-              <hr/>
-              <h5 style={{fontFamily:"sans-serif"}} className="dropdown-item">Filters</h5><hr/>
+              <hr />
+              <h5 style={{ fontFamily: "sans-serif" }} className="dropdown-item">Filters</h5><hr />
               <input
                 type="date"
                 name="dates"
@@ -447,6 +447,7 @@ handleAssigneeRequired = () => {
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
                     <Link
+                      key={i}
                       style={{ textDecoration: "none", color: "black" }}
                       to={{
                         pathname: `/job/details/${job._id}`,
@@ -632,8 +633,8 @@ handleAssigneeRequired = () => {
                                     onClose={this.handlePopoverClose}
                                     disableRestoreFocus
                                   >
-                                    {job.services.map((service) => (
-                                      <Typography>{service.name}</Typography>
+                                    {job.services.map((service, i) => (
+                                      <Typography key={i}>{service.name}</Typography>
                                     ))}
                                   </Popover>
                                 </div>
@@ -683,7 +684,7 @@ handleAssigneeRequired = () => {
               onHide={this.handleClose}
               animation={false}
               centered
-              // backdrop={false}
+            // backdrop={false}
             >
               <Modal.Header closeButton>
                 <Modal.Title>Booking Confirmation</Modal.Title>
@@ -711,10 +712,10 @@ handleAssigneeRequired = () => {
             </Modal>
           </div>
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
     );
   }

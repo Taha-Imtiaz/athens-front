@@ -41,6 +41,39 @@ color: #00ADEE;
   color: #00ADEE;
 }
 
+
+.MuiFormGroup-root {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0 1.4rem;
+  flex-direction: row;
+
+
+}
+.MuiRadio-root {
+  display: flex;
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+  color: #00AAEE;
+}
+
+.MuiIconButton-colorSecondary {
+  color: #00AAEE;
+}
+
+.MuiFormControlLabel-root {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-left: -11px;
+  margin-right: 16px;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
 .rbc-event {
   border: none;
   box-sizing: border-box;

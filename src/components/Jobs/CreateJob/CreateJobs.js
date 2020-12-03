@@ -180,7 +180,7 @@ class CreateJobs extends Component {
       this.state.locations[0].to.length > 0
     ) {
       this.setState({
-        locations: [...this.state.locations, { from: null, to: null }],
+        locations: [...this.state.locations, { to: null }],
       });
     }
   };
@@ -190,7 +190,7 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = this.state.locations.slice();
@@ -205,10 +205,10 @@ class CreateJobs extends Component {
   };
 
   showLocation = (i) => {
-    return (
-      <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-        <div className="col-6">
-          <div className="form-group">
+    if (i === 0) {
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
             <TextField
               variant="outlined"
               margin="normal"
@@ -223,26 +223,64 @@ class CreateJobs extends Component {
               error={this.state.locationfromError}
             />
           </div>
+          <div className="col-12">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={this.state.locations[i].to}
+              onChange={(e) => this.hanldeLocationInputTo(i, e)}
+              error={this.state.locationtoError}
+            />
+          </div>
         </div>
+      );
+    } else {
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-11">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={this.state.locations[i].to}
+              onChange={(e) => this.hanldeLocationInputTo(i, e)}
+              error={this.state.locationtoError}
+            />
+            
+          </div>
+          <div className="col-1">
+            <div className=" form-group col-1">
+              <i
+                className="fa fa-minus"
+                onClick={() => this.removeLocation(i) }
+                style={{ transform: "translateY(1.5rem)" }}
+              ></i>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
 
-        <div className="col-6">
-          <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            required
-            // style={{ width: "90%", margin: "0 1rem" }}
-            size="small"
-            id="to"
-            label="Drop Off"
-            name="to"
-            value={this.state.locations[i].to}
-            onChange={(e) => this.hanldeLocationInputTo(i, e)}
-            error={this.state.locationtoError}
-          />
-        </div>
-      </div>
-    );
+  removeLocation = (i) => {
+   
+      this.setState({
+        locations: [...this.state.locations],
+      });
+    
   };
 
   handleFormInput = (event) => {
@@ -490,7 +528,7 @@ class CreateJobs extends Component {
 
       var serviceAdded = {
         name: this.state.newService,
-        id: Math.random() * 10
+        id: Math.random() * 10,
       };
       if (e.keyCode === 13 && e.target.value) {
         let services = cloneDeep(this.state.services);
@@ -746,13 +784,18 @@ class CreateJobs extends Component {
               {this.state.locations.map((ll, i) => {
                 return this.showLocation(i);
               })}
+              {/* <i
+                    className="fa fa-plus"
+                    onClick={this.addLocation}
+                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                  ></i> */}
               <div className="row">
                 <div className="col-11"></div>
                 <div className=" form-group col-1">
                   <i
                     className="fa fa-plus"
                     onClick={this.addLocation}
-                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                    style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
                   ></i>
                 </div>
               </div>

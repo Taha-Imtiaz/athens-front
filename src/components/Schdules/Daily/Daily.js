@@ -827,7 +827,7 @@ const DailySchedule = (props) => {
           </div>
         </div>
          */}
-      <hr />
+      <hr style = {{borderTop: '4px solid rgba(0,0,0,.1)'}}></hr>
       <div className="row justify-content-md-center">
         <div
           className="col-2"
@@ -857,8 +857,7 @@ const DailySchedule = (props) => {
           style={{ display: "flex", alignItems: "center" }}
         >
           <h6 style={{ fontFamily: "sans-serif" }}>
-            Movers Required:
-              {props.jobs ?.data ?.jobs.length > 0 ? (
+            Movers Required: {props.jobs ?.data ?.jobs.length > 0 ? (
               props.jobs.data.jobs.reduce(
                 (sum, currentValue) => sum + currentValue.assigneeRequired,
                 0
@@ -885,7 +884,7 @@ const DailySchedule = (props) => {
             </Button>
         </div>
       </div>
-      <hr></hr>
+      <hr style = {{borderTop: '4px solid rgba(0,0,0,.1)'}}></hr>
       {props.jobs ?.data.jobs.length > 0 && (
         <div
           className={`row card-header`}

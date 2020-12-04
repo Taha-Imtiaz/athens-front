@@ -114,13 +114,13 @@ class JobEditDetails extends Component {
         assigneeError: "assignee should not be empty",
       });
     }
-    if (locations[0].from === "") {
+    if (locations.from === "") {
       this.setState({
         locationFromError: "from should not be empty",
       });
     }
 
-    if (locations[0].to === "") {
+    if (locations.to[0] === "") {
       this.setState({
         locationToError: "to should not be empty",
       });
@@ -196,6 +196,7 @@ class JobEditDetails extends Component {
       });
       let ids = res.data.job.assignee.map((x) => x._id);
       let parsedDates = res.data.job.dates.map((x) => Date.parse(x));
+      console.log(res.data.job)
       this.setState({
         job: res.data.job,
         title: res.data.job.title,
@@ -229,6 +230,22 @@ class JobEditDetails extends Component {
       show: true,
     });
   };
+
+removeLocation = (i) => {
+  var {locations} = this.state;
+  var locationToRemove = locations.to.findIndex((location,index) => index === i)
+ 
+  var newLocations = locations.to.filter((location, i) => i !== locationToRemove  )
+  console.log(newLocations, i)
+      this.setState({
+        locations:{
+          from: this.state.locations.from,
+          to: newLocations
+        }
+      });
+    
+}
+
 
   handleClose = (notes) => {
     var { note } = this.state;
@@ -386,22 +403,23 @@ class JobEditDetails extends Component {
     });
   };
 
-  hanldeLocationInput = (i, e) => {
-    let updateLocation = this.state.locations.slice();
-    updateLocation[i].from = e.target.value;
+  hanldeLocationInput = (e) => {
+    let updateLocation = { ...this.state.locations};
+    updateLocation.from = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
   hanldeLocationInputTo = (i, e) => {
-    let updateLocation = this.state.locations.slice();
-    updateLocation[i].to = e.target.value;
+    let updateLocation = { ...this.state.locations};
+    updateLocation.to[i] = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
   addLocation = () => {
+    var dropOffLocation = this.state.locations.to.push('') 
     this.setState({
-      locations: [...this.state.locations, { from: null, to: null }],
-    });
+      locations:{ ...this.state.locations }}
+    );
   };
 
   showLocation = (i) => {
@@ -416,7 +434,7 @@ class JobEditDetails extends Component {
               placeholder="Pickup"
               name="from"
               value={this.state.locations[i].from}
-              onChange={(e) => this.hanldeLocationInput(i, e)}
+              onChange={(e) => this.hanldeLocationInput(e)}
             />
           </div>
           {this.state.locationfromError ? (
@@ -775,31 +793,57 @@ class JobEditDetails extends Component {
                   </div>
                 </div>
               </div>
+
               {this.state.locations &&
-                this.state.locations.map((list, i) => {
+
+              <div>
+               
+               <div
+               className="row"
+               style={{ transform: "translateX(3rem)" }}
+             >
+               {/* <div className="col"></div> */}
+               <div className="col-12">
+                 <TextField
+                   variant="outlined"
+                   margin="normal"
+                   required
+                   fullWidth
+                   size="small"
+                   id="from"
+                   label="Pickup"
+                   name="from"
+                   autoComplete="from"
+                   error={this.state.locationFromError}
+                   value={this.state.locations.from}
+                   onChange={(e) => this.hanldeLocationInput(e)}
+                 />
+               </div>
+               </div>
+
+               
+              { this.state.locations.to.map((list, i) => {
                   return (
-                    <div
-                      className="row"
-                      style={{ transform: "translateX(3rem)" }}
-                    >
-                      {/* <div className="col"></div> */}
-                      <div className="col-6">
-                        <TextField
-                          variant="outlined"
-                          margin="normal"
-                          required
-                          fullWidth
-                          size="small"
-                          id="from"
-                          label="Pickup"
-                          name="from"
-                          autoComplete="from"
-                          error={this.state.locationFromError}
-                          value={list.from}
-                          onChange={(e) => this.hanldeLocationInput(i, e)}
-                        />
-                      </div>
-                      <div className="col-6">
+                    
+                   i===0 ?   <div className="row"   style={{ transform: "translateX(3rem)" }}>
+                   <div className="col-12"  >
+                   <TextField
+                     variant="outlined"
+                     margin="normal"
+                     required
+                     fullWidth
+                     size="small"
+                     id="to"
+                     error={this.state.locationToError}
+                     label="Drop Off"
+                     aria-describedby="emailHelp"
+                     name="to"
+                     value={list}
+                     onChange={(e) => this.hanldeLocationInputTo(i, e)}
+                   />
+                 </div>
+                </div> :   <div className="row"   style={{ transform: "translateX(3rem)" }}>
+                        <div className="col-11"  >
                         <TextField
                           variant="outlined"
                           margin="normal"
@@ -811,20 +855,34 @@ class JobEditDetails extends Component {
                           label="Drop Off"
                           aria-describedby="emailHelp"
                           name="to"
-                          value={list.to}
+                          value={list}
                           onChange={(e) => this.hanldeLocationInputTo(i, e)}
                         />
                       </div>
-                    </div>
+                      <div className="col-1">
+                      <i
+                    className="fa fa-minus"
+                    style={{ transform: "translate3d(1.5rem, 1.5rem, 0)" }}
+                    name="Add Location"
+                    value="Add Location"
+                    onClick={() => this.removeLocation(i)}
+                  />
+                      </div>
+                     </div>
+
+                      
+                    
                   );
                 })}
+                </div>
+                }
               <div className="row">
                 <div className="col-11"></div>
                 <div
-                  className="col-1"
+                  className=" form-group col-1"
                   style={{
                     float: "right",
-                    transform: "translate3d(5rem,0rem, 0)",
+                    transform: "translate3d(4.5rem,0rem, 0)"
                   }}
                 >
                   <i

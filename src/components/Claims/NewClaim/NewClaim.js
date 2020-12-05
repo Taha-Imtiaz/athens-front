@@ -19,23 +19,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 class NewClaim extends Component {
-
-  countries = [
-    { code: 'AD', label: 'Andorra', phone: '376' },
-    { code: 'AE', label: 'United Arab Emirates', phone: '971' },
-    { code: 'AF', label: 'Afghanistan', phone: '93' },
-    { code: 'AG', label: 'Antigua and Barbuda', phone: '1-268' },
-    { code: 'AI', label: 'Anguilla', phone: '1-264' },
-    { code: 'FO', label: 'Faroe Islands', phone: '298' },
-    { code: 'FR', label: 'France', phone: '33', suggested: true },
-    { code: 'GA', label: 'Gabon', phone: '241' },
-    { code: 'GB', label: 'United Kingdom', phone: '44' },
-    { code: 'GD', label: 'Grenada', phone: '1-473' },
-    { code: 'GE', label: 'Georgia', phone: '995' },
-    { code: 'GF', label: 'French Guiana', phone: '594' },
-    { code: 'GG', label: 'Guernsey', phone: '44' },
-    { code: 'GH', label: 'Ghana', phone: '233' }
-  ]
   initialState = {
     customerId: "",
     jobId: "",
@@ -102,19 +85,6 @@ class NewClaim extends Component {
     if (!this.state.selectedJob) {
       jobIdError = "Error! should not be empty"
     }
-
-    // if (!this.state.item) {
-    //   itemError = "Error! should not be empty"
-    // }
-
-    // if (!this.state.price) {
-    //   priceError = "Error! should not be empty"
-    // }
-
-    // if (!this.state.description) {
-    //   descriptionError = "Error! should not be empty"
-    // }
-
 
     if (customerIdError || jobIdError || itemError || priceError || descriptionError) {
       this.setState({ customerIdError, jobIdError, itemError, priceError, descriptionError })
@@ -196,6 +166,7 @@ class NewClaim extends Component {
       this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
     }
   }
+  
   render() {
     return (
       <div>

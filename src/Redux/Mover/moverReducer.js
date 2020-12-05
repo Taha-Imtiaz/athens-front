@@ -1,4 +1,4 @@
-import { GET_MOVER, UPDATE_MOVER } from "./moverConstants"
+import { GET_MOVER, SEARCH_FILTER, UPDATE_MOVER } from "./moverConstants"
 
 
 var initialState = {
@@ -13,7 +13,8 @@ var moverReducer = (state = initialState, action) => {
         case UPDATE_MOVER:
             return {...payload.updatedJob}
 
-           
+           case SEARCH_FILTER:
+               return { ...payload.searchItem}
         default:
             return state
     }

@@ -65,7 +65,7 @@ class CreateJobs extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: [{ from: "", to: "" }],
+    locations: { from: "", to: [''] },
     fromTo: [],
     assigneeRequiredError: "",
     selectedDate: new Date(),
@@ -175,12 +175,20 @@ class CreateJobs extends Component {
     //  })
   };
   addLocation = () => {
+   
+     
     if (
-      this.state.locations[0].from.length > 0 &&
-      this.state.locations[0].to.length > 0
+      this.state.locations.from &&
+      this.state.locations.to[0].length > 0
+      
     ) {
+      var dropOffLocation = this.state.locations.to.push('') 
+      console.log("add location called", this.state.locations )
+     console.log(dropOffLocation)
+      
+      
       this.setState({
-        locations: [...this.state.locations, { from: null, to: null }],
+        locations: {...this.state.locations } 
       });
     }
   };
@@ -190,26 +198,29 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
-  hanldeLocationInput = (i, e) => {
-    let updateLocation = this.state.locations.slice();
-    updateLocation[i].from = e.target.value;
+  hanldeLocationInput = (e) => {
+    let updateLocation ={ ...this.state.locations};
+    updateLocation.from = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
-  hanldeLocationInputTo = (i, e) => {
-    let updateLocation = this.state.locations.slice();
-    updateLocation[i].to = e.target.value;
+  hanldeLocationInputTo = (i,e) => {
+    let updateLocation = {...this.state.locations};
+    updateLocation.to[i] = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
   showLocation = (i) => {
-    return (
-      <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-        <div className="col-6">
-          <div className="form-group">
-            <TextField
+    console.log("show location called")
+    // console.log(this.state.locations.to)
+    if (i === 0) {
+     
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          {/* <div className="col-12">
+             <TextField
               variant="outlined"
               margin="normal"
               required
@@ -218,31 +229,80 @@ class CreateJobs extends Component {
               id="from"
               label="Pickup"
               name="from"
-              value={this.state.locations[i].from}
-              onChange={(e) => this.hanldeLocationInput(i, e)}
+              value={this.state.locations.from}
+              onChange={(e) => this.hanldeLocationInput(e)}
               error={this.state.locationfromError}
+            />
+       </div> */}
+          <div className="col-12">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={this.state.locations.to[i]}
+              onChange={(e) => this.hanldeLocationInputTo(i,e)}
+              error={this.state.locationtoError}
             />
           </div>
         </div>
-
-        <div className="col-6">
-          <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            required
-            // style={{ width: "90%", margin: "0 1rem" }}
-            size="small"
-            id="to"
-            label="Drop Off"
-            name="to"
-            value={this.state.locations[i].to}
-            onChange={(e) => this.hanldeLocationInputTo(i, e)}
-            error={this.state.locationtoError}
-          />
+      );
+    } 
+    else {
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-11">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={this.state.locations.to[i]}
+              onChange={(e) => this.hanldeLocationInputTo(i, e)}
+              error={this.state.locationtoError}
+            />
+            
+          </div>
+          <div className="col-1">
+            <div className=" form-group col-1">
+              <i
+                className="fa fa-minus"
+                onClick={() => this.removeLocation(i) }
+                style={{ transform: "translateY(1.5rem)" }}
+              ></i>
+            </div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+      
+    
+  };
+
+  removeLocation = (i) => {
+
+  var {locations} = this.state;
+  var locationToRemove = locations.to.findIndex((location,index) => index === i)
+ 
+  var newLocations = locations.to.filter((location, i) => i !== locationToRemove  )
+  console.log(newLocations, i)
+      this.setState({
+        locations:{
+          from: this.state.locations.from,
+          to: newLocations
+        }
+      });
+    
   };
 
   handleFormInput = (event) => {
@@ -302,11 +362,11 @@ class CreateJobs extends Component {
       assigneeRequiredError = "Required count should not be empty";
     }
 
-    if (!this.state.locations[0].from) {
+    if (!this.state.locations.from) {
       locationfromError = "Location should not be empty";
     }
 
-    if (!this.state.locations[0].to) {
+    if (!this.state.locations.to[0]) {
       locationtoError = "Location should not be empty";
     }
 
@@ -490,7 +550,7 @@ class CreateJobs extends Component {
 
       var serviceAdded = {
         name: this.state.newService,
-        id: Math.random() * 10
+        id: Math.random() * 10,
       };
       if (e.keyCode === 13 && e.target.value) {
         let services = cloneDeep(this.state.services);
@@ -743,16 +803,47 @@ class CreateJobs extends Component {
                 <h4>Location:</h4>
               </div>
 
-              {this.state.locations.map((ll, i) => {
-                return this.showLocation(i);
-              })}
+              {this.state.locations &&
+              <div>
+                <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+              <div className="col-12">
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  size="small"
+                  id="from"
+                  label="Pickup"
+                  name="from"
+                  value={this.state.locations.from}
+                  onChange={(e) => this.hanldeLocationInput(e)}
+                  error={this.state.locationfromError}
+                />
+              </div> 
+              </div>
+              
+               {this.state.locations.to.map((locationTo, i)=> this.showLocation(i))}
+              </div>
+              
+                  
+                
+             
+              
+                
+              }
+              {/* <i
+                    className="fa fa-plus"
+                    onClick={this.addLocation}
+                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                  ></i> */}
               <div className="row">
                 <div className="col-11"></div>
                 <div className=" form-group col-1">
                   <i
                     className="fa fa-plus"
                     onClick={this.addLocation}
-                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                    style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
                   ></i>
                 </div>
               </div>

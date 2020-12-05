@@ -14,8 +14,10 @@ import { payAmount } from "../../../Redux/Mover/moverActions";
 import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import { useState } from "react";
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -312,17 +314,42 @@ function JobConfirmation(props) {
                 data.dates.map((x, i) => {
                   return (
                     <div className="form-group col-3">
-                      <DatePicker
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid>
+                          <div
+                            style={{
+                              // transform: "translateX(3rem)",
+                              width: "100%",
+                            }}
+                          >
+                            <KeyboardDatePicker
+                              inputVariant="outlined"
+                              margin="normal"
+                              size="small"
+                              fullWidth
+                              id="date-picker-dialog"
+                              // style={{ zIndex: "-1" }}
+                              format="MM/dd/yyyy"
+                              value={data.dates[i]}
+                              onChange={(e) => handleStartDate(e, i)}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </div>
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+                      {/* <DatePicker
                         selected={data.dates[i]}
                         onChange={(e) => handleStartDate(e, i)}
                         placeholderText="Choose Dates"
                         className="form-control"
-                      />
+                      /> */}
                     </div>
                   );
                 })}
 
-              <div className="form-group col-2 my-0" onClick={addDate}>
+              <div className="form-group col-2 my-4" onClick={addDate}>
                 <i className="fa fa-plus">Add Date</i>
               </div>
             </div>
@@ -364,35 +391,47 @@ function JobConfirmation(props) {
             {data && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">First Name</label>
-                  <input
-                    type="input"
-                    className="form-control"
-                    id="firstName"
-                    name="firstName"
-                    value={data.customer.firstName}
-                    onChange={handleFormInput}
+                  {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
+                  <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="name"
+                label="First Name"
+               name="firstName"
+               value={data.customer.firstName}
+               onChange={handleFormInput}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Last Name</label>
-                  <input
-                    type="input"
-                    className="form-control"
-                    id="lastName"
-                    name="lastName"
-                    value={data.customer.lastName}
-                    onChange={handleFormInput}
+                  {/* <label htmlFor="exampleInputEmail1">Last Name</label> */}
+                  <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="name"
+                label="Last Name"
+                name="lastName"
+               value={data.customer.lastName}
+             onChange={handleFormInput}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Phone Number</label>
-                  <input
-                    type="input"
-                    className="form-control"
-                    id="phone_number"
+                  {/* <label htmlFor="exampleInputEmail1">Phone Number</label> */}
+                  <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="name"
+                label="Phone Number"
                     name="phone"
                     value={data.customer.phone}
                     onChange={handleFormInput}
@@ -400,10 +439,15 @@ function JobConfirmation(props) {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
+                  {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
+                  <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                id="name"
+                label="Email Address"
                     name="email"
                     value={data.customer.email}
                     onChange={handleFormInput}
@@ -494,11 +538,16 @@ function JobConfirmation(props) {
             </form>
             <Button
               onClick={handleSubmitWithoutPay}
-            //   style={{ float: "right" }}
-              style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",float:"right"}}
+              //   style={{ float: "right" }}
+              style={{
+                background: "#00ADEE",
+                textTransform: "none",
+                color: "#FFF",
+                fontFamily: "sans-serif",
+                float: "right",
+              }}
 
-            //   className={classes.button}
-
+              //   className={classes.button}
             >
               Skip And Submit
             </Button>

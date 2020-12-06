@@ -16,7 +16,10 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { Grid, TextField } from "@material-ui/core";
 import { useState } from "react";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
@@ -143,50 +146,119 @@ function JobConfirmation(props) {
     setData(updatedCustomer);
   };
 
-  const hanldeLocationInput = (i, e) => {
+  const hanldeLocationInput = (e) => {
     let job = cloneDeep(data);
-    job.locations[i].from = e.target.value;
+    job.locations.from = e.target.value;
     setData(job);
   };
 
   const hanldeLocationInputTo = (i, e) => {
     let job = cloneDeep(data);
-    job.locations[i].to = e.target.value;
+    job.locations.to[i] = e.target.value;
     setData(job);
   };
 
-  const showLocation = (i) => {
-    return (
-      <>
-        <div className="col-4">
-          <div className="form-group"></div>
-        </div>
-        <div className="col-4">
-          <div className="form-group">
-            <input
-              type="input"
-              className="form-control"
-              id="from"
-              placeholder="Pickup"
-              name="from"
-              value={data.locations[i].from}
-              onChange={(e) => hanldeLocationInput(i, e)}
+  var showLocation = (i) => {
+    console.log("show location called");
+    // console.log(this.state.locations.to)
+    if (i === 0) {
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={data.locations.to[i]}
+              onChange={(e) => hanldeLocationInputTo(i, e)}
+              // error={this.state.locationtoError}
             />
           </div>
         </div>
-        <div className="col-4">
-          <input
-            type="input"
-            className="form-control"
-            id="to"
-            placeholder="Drop Off"
-            name="to"
-            value={data.locations[i].to}
-            onChange={(e) => hanldeLocationInputTo(i, e)}
-          />
+      );
+    } else {
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-11">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              // style={{ width: "90%", margin: "0 1rem" }}
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="to"
+              value={data.locations.to[i]}
+              onChange={(e) => hanldeLocationInputTo(i, e)}
+              // error={this.state.locationtoError}
+            />
+          </div>
+          <div className="col-1">
+            <div className=" form-group col-1">
+              <i
+                className="fa fa-minus"
+                onClick={() => removeLocation(i)}
+                style={{ transform: "translateY(1.5rem)" }}
+              ></i>
+            </div>
+          </div>
         </div>
-      </>
+      );
+    }
+  };
+
+ var addLocation = () => {
+   
+     
+    if (
+      data.locations?.from &&
+      data.locations?.to[0].length > 0
+      
+    ) {
+      var dropOffLocation = data.locations.to.push('') 
+      console.log("add location called", data.locations )
+     console.log(dropOffLocation)
+     console.log(data.locations)
+      setData(data.locations)
+      // this.setState({
+      //   locations: {...this.state.locations } 
+      // });
+    }
+  };
+
+  var removeLocation = (i) => {
+    // var {locations} = this.state;
+    var locationToRemove = data.locations.to.findIndex(
+      (location, index) => index === i
     );
+
+    var newLocations = data.locations.to.filter(
+      (location, i) => i !== locationToRemove
+    );
+    console.log(newLocations, i);
+    
+    var {locations} = data
+    console.log(locations)
+    var locationObj = {
+     from : locations.from, 
+     to: newLocations
+    }
+    console.log(locationObj)
+    setData(locationObj)
+    // this.setState({
+    //   locations: {
+    //     from: this.state.locations.from,
+    //     to: newLocations,
+    //   },
+    // });
   };
 
   const loadStripe = () => {
@@ -371,7 +443,7 @@ function JobConfirmation(props) {
                     onChange={handleTimeSelect}
                     variant="outlined"
                     size="small"
-                    // defaultValue="07:30"
+                    defaultValue={data.startTime}
                     // className={classes.textField}
                     InputLabelProps={{
                       shrink: true,
@@ -393,47 +465,47 @@ function JobConfirmation(props) {
                 <div className="form-group">
                   {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
                   <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                id="name"
-                label="First Name"
-               name="firstName"
-               value={data.customer.firstName}
-               onChange={handleFormInput}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="name"
+                    label="First Name"
+                    name="firstName"
+                    value={data.customer?.firstName}
+                    onChange={handleFormInput}
                   />
                 </div>
 
                 <div className="form-group">
                   {/* <label htmlFor="exampleInputEmail1">Last Name</label> */}
                   <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                id="name"
-                label="Last Name"
-                name="lastName"
-               value={data.customer.lastName}
-             onChange={handleFormInput}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="name"
+                    label="Last Name"
+                    name="lastName"
+                    value={data.customer?.lastName}
+                    onChange={handleFormInput}
                   />
                 </div>
 
                 <div className="form-group">
                   {/* <label htmlFor="exampleInputEmail1">Phone Number</label> */}
                   <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                id="name"
-                label="Phone Number"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="name"
+                    label="Phone Number"
                     name="phone"
-                    value={data.customer.phone}
+                    value={data.customer?.phone}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -441,15 +513,15 @@ function JobConfirmation(props) {
                 <div className="form-group">
                   {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
                   <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                id="name"
-                label="Email Address"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    size="small"
+                    id="name"
+                    label="Email Address"
                     name="email"
-                    value={data.customer.email}
+                    value={data.customer?.email}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -460,9 +532,43 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data.locations.map((ll, i) => {
+            {data.locations && (
+              <div>
+                <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+                  <div className="col-12">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
+                      id="from"
+                      label="Pickup"
+                      name="from"
+                      value={data.locations.from}
+                      onChange={(e) => hanldeLocationInput(e)}
+                      // error={this.state.locationfromError}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* {data.locations.map((ll, i) => {
               return showLocation(i);
-            })}
+            })} */}
+            {data.locations?.to.map((locationTo, i) => showLocation(i))}
+
+            <div className="row">
+              <div className="col-11"></div>
+              <div className=" form-group col-1">
+                <i
+                  className="fa fa-plus"
+                  onClick={addLocation}
+                  style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
+                ></i>
+              </div>
+            </div>
           </div>
         );
       case 3:
@@ -476,11 +582,14 @@ function JobConfirmation(props) {
             </div>
             <form>
               <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
+                <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
                   id="cardno"
-                  placeholder="Card Number"
+                  label="Card Number"
                   name="number"
                   onChange={changeHandler}
                 />
@@ -489,11 +598,14 @@ function JobConfirmation(props) {
               <div className="row">
                 <div className="col-6">
                   <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
                       id="month"
-                      placeholder="Month"
+                      label="Month"
                       name="exp_month"
                       onChange={changeHandler}
                     />
@@ -502,11 +614,14 @@ function JobConfirmation(props) {
 
                 <div className="col-6">
                   <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
                       id="year"
-                      placeholder="Year"
+                      label="Year"
                       name="exp_year"
                       onChange={changeHandler}
                     />
@@ -514,21 +629,27 @@ function JobConfirmation(props) {
                 </div>
               </div>
               <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
+                <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
                   id="name"
-                  placeholder="CVC"
+                  label="CVC"
                   name="cvc"
                   onChange={changeHandler}
                 />
               </div>
               <div className="form-group">
-                <input
-                  type="number"
-                  className="form-control"
+                <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      size="small"
                   id="amount"
-                  placeholder="Amount"
+                  label="Amount"
                   name="amount"
                   onChange={changeHandler}
                 />

@@ -190,7 +190,10 @@ const DailySchedule = (props) => {
       />,
     },
   ];
-
+// var handlePropagation = (e, job) => {
+//   e.stopPropagation()
+//   generatePDF(e,job)
+// }
   useEffect(() => {
     switch (day) {
       case 0:
@@ -398,6 +401,7 @@ const DailySchedule = (props) => {
   };
 
   const onControlledDragStop = (e, position) => {
+    e.stopPropagation()
     var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
       ?.children[1] ?.innerHTML
         ? parseInt(
@@ -1129,7 +1133,7 @@ const DailySchedule = (props) => {
                   >
                     <button
                       onClick={(e) => generatePDF(e, list)}
-                    // onClick = {(e) => handlePropagation(e)}
+                    // onClick = {(e) => handlePropagation(e,list)}
                     >
                       <i
                         className="fa fa-print"

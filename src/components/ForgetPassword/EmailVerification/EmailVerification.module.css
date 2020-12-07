@@ -1,0 +1,44 @@
+.verificationContainer {
+    display: grid;
+    height: 86.6vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "image emailverification";
+}
+.image {
+    grid-area: image;
+    background-color: palevioletred;
+}
+.emailVerification {
+    grid-area: emailverification;
+   display: grid;
+   grid-template-rows: 15vh repeat(3, 12.2vh) 35vh ;
+   grid-template-areas: "."
+                        "verifyhead"
+                        "verifyinput"
+                        "sendcode"
+                        ".";
+/* background-color: teal; */
+
+}
+.verifyhead {
+    grid-area: verifyhead;
+    
+    /* background-color: violet; */
+}
+
+.verifyinput {
+    height: 12.2vh;
+    grid-area: verifyinput;
+    /* background-color: tomato; */
+}
+.sendcode {
+    grid-area: sendcode;
+    
+    /* background-color: thistle; */
+}
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

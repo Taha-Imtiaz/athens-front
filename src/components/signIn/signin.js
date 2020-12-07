@@ -178,8 +178,28 @@ class SignInForm extends React.Component {
                   type="password"
                 />
               </div>
+             <Link to = "/emailVerification" style={{}}>
+              <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width:"85%", justifyContent:"flex-end" }}>
+              
+               {/* <Button 
+                // type="button"
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                    margin: "0 2rem",
+                    width: "30%"
+
+                  }}
+                > */}
+                 Forget Password
+                {/* </Button> */}
+               
+                </div>
+                </Link>
               <div
-                className={`${style.signinBtn} ${style.flex}`} style={{ alignItems: "center" }}>
+                className={`${style.signinBtn} ${style.flex}`} style={{ alignItems:"flex-start" }}>
                 <Button type="submit"
                   style={{
                     background: "#00ADEE",

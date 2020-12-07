@@ -40,6 +40,9 @@ import { getLoginUser } from "./Redux/User/userActions";
 import PrivateRoutes from "./utils/private-routes";
 import PrivateRoute from "./utils/private-routes";
 import HeadingComponent from "./components/Headings/headings";
+import EmailVerification from "./components/ForgetPassword/EmailVerification/EmailVerification";
+import VerificationCode from "./components/ForgetPassword/VerificationCode/VerificationCode";
+import ResetPassword from "./components/ForgetPassword/ResetPassword/ResetPassword";
 
 function App(props) {
   const [show, setShow] = [false];
@@ -57,6 +60,12 @@ function App(props) {
       <Switch>
         <Route exact path="/schedule/daiily" component={HeadingComponent} />
         <Route exact path="/" component={SignInForm} />
+        <Route  path="/emailVerification" component={EmailVerification} />
+        <Route  path="/verifycode" component={VerificationCode} />
+        <Route  path="/restPassword" component={ResetPassword} />
+
+
+
         <PrivateRoute exact path="/customer" component={customerList} />
         <PrivateRoute
           path="/customer/detail/:customerId"

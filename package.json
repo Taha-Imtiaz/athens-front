@@ -36,6 +36,7 @@
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
     "react-horizontal-datepicker": "^2.0.3",
+    "react-input-verification-code": "^0.6.4",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",

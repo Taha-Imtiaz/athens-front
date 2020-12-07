@@ -85,21 +85,15 @@ function JobConfirmation(props) {
   useEffect(() => {
     let job = cloneDeep(props.data);
     loadStripe();
-    console.log(job.startTime);
     let parsedDates = job.dates.map((x) =>
       typeof x == "string" ? Date.parse(x) : x
     );
-    // let index = timeOptions.findIndex(x => x.value == job.startTime)
     job.dates = parsedDates;
-    // if (index != -1) {
-    //     job.startTime = timeOptions[index].name;
-    // }
     setData(job);
   }, []);
 
   var handleTimeSelect = (e) => {
     var { name, value } = e.target;
-    console.log(name, value);
     setStartTime(value);
   };
   const handleNext = () => {
@@ -139,7 +133,6 @@ function JobConfirmation(props) {
   };
 
   const handleFormInput = (event) => {
-    console.log();
     var { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
     updatedCustomer.customer[name] = value;
@@ -159,8 +152,6 @@ function JobConfirmation(props) {
   };
 
   var showLocation = (i) => {
-    console.log("show location called");
-    // console.log(this.state.locations.to)
     if (i === 0) {
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
@@ -205,7 +196,7 @@ function JobConfirmation(props) {
             <div className=" form-group col-1">
               <i
                 className="fa fa-minus"
-                onClick={() => removeLocation(i)}
+                onClick={(e) => removeLocation(e, i)}
                 style={{ transform: "translateY(1.5rem)" }}
               ></i>
             </div>
@@ -215,50 +206,31 @@ function JobConfirmation(props) {
     }
   };
 
- var addLocation = () => {
-   
-     
-    if (
-      data.locations?.from &&
-      data.locations?.to[0].length > 0
-      
-    ) {
-      var dropOffLocation = data.locations.to.push('') 
-      console.log("add location called", data.locations )
-     console.log(dropOffLocation)
-     console.log(data.locations)
-      setData(data.locations)
+  var addLocation = (e) => {
+    e.stopPropagation();
+
+    // if (this.state.locations.from && this.state.locations.to[0].length > 0) {
+    //   var dropOffLocation = this.state.locations.to.push('')
+    //   this.setState({
+    //     locations: {...this.state.locations }
+    //   });
+    // }
+
+    if (data.locations?.from && data.locations?.to[0].length > 0) {
+      var newData = { ...data };
+      newData.locations.to.push("");
+      setData(newData);
       // this.setState({
-      //   locations: {...this.state.locations } 
+      //   locations: {...this.state.locations }
       // });
     }
   };
 
-  var removeLocation = (i) => {
-    // var {locations} = this.state;
-    var locationToRemove = data.locations.to.findIndex(
-      (location, index) => index === i
-    );
-
-    var newLocations = data.locations.to.filter(
-      (location, i) => i !== locationToRemove
-    );
-    console.log(newLocations, i);
-    
-    var {locations} = data
-    console.log(locations)
-    var locationObj = {
-     from : locations.from, 
-     to: newLocations
-    }
-    console.log(locationObj)
-    setData(locationObj)
-    // this.setState({
-    //   locations: {
-    //     from: this.state.locations.from,
-    //     to: newLocations,
-    //   },
-    // });
+  var removeLocation = (e, i) => {
+    e.stopPropagation();
+    let newData = { ...data };
+    newData.locations.to.splice(i, 1);
+    setData(newData);
   };
 
   const loadStripe = () => {
@@ -313,16 +285,13 @@ function JobConfirmation(props) {
             email: data.customer.email,
             customerId: data.customer._id,
           };
-          console.log(obj);
           confirmJob(obj).then((res) => {
             let { showMessage } = props;
             if (res.data.status == 200) {
-              console.log(res);
               showMessage(res.data.message);
               // history.push('/job')
               props.close();
             }
-            console.log(res);
           });
           // this.setState({
           //     message: `Success! Card token ${response.card.id}.`,
@@ -356,16 +325,13 @@ function JobConfirmation(props) {
       email: data.customer.email,
       customerId: data.customer._id,
     };
-    console.log(obj);
     confirmJob(obj).then((res) => {
       let { showMessage } = props;
       if (res.data.status == 200) {
-        console.log(res);
         showMessage(res.data.message);
         // history.push('/job')
         props.close();
       }
-      console.log(res);
     });
     // this.setState({
     //     message: `Success! Card token ${response.card.id}.`,
@@ -374,8 +340,6 @@ function JobConfirmation(props) {
   };
 
   const getStepContent = (step) => {
-    console.log(data);
-
     switch (step) {
       case 0:
         return (
@@ -564,7 +528,7 @@ function JobConfirmation(props) {
               <div className=" form-group col-1">
                 <i
                   className="fa fa-plus"
-                  onClick={addLocation}
+                  onClick={(e) => addLocation(e)}
                   style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
                 ></i>
               </div>
@@ -583,11 +547,11 @@ function JobConfirmation(props) {
             <form>
               <div className="form-group">
                 <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  size="small"
                   id="cardno"
                   label="Card Number"
                   name="number"
@@ -630,11 +594,11 @@ function JobConfirmation(props) {
               </div>
               <div className="form-group">
                 <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  size="small"
                   id="name"
                   label="CVC"
                   name="cvc"
@@ -643,11 +607,11 @@ function JobConfirmation(props) {
               </div>
               <div className="form-group">
                 <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  size="small"
                   id="amount"
                   label="Amount"
                   name="amount"
@@ -678,7 +642,6 @@ function JobConfirmation(props) {
         return "Unknown step";
     }
   };
-
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>

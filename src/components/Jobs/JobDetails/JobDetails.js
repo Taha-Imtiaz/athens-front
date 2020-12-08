@@ -243,21 +243,20 @@ const JobDetails = (props) => {
 
                 {job.locations &&
 
+                  <div>
+                    <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {job.locations.from} <br></br>
 
-                    <div>
-                      <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {job.locations.from} <br></br>
-                
-                  {job.locations.to.map((list) => 
-                   <p
-                          // className={style.para}
-                          style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin:"0" }}
-                        >
-                         <LocationOffIcon color="primary"  />  {list}
-                        </p> ) }
-                  
-                    </div>
-}
-               
+                    {job.locations.to.map((list) =>
+                      <p
+                        // className={style.para}
+                        style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}
+                      >
+                        <LocationOffIcon color="primary" />  {list}
+                      </p>)}
+
+                  </div>
+                }
+
                 <div >
                   <Link
                     style={{ textDecoration: "none" }}

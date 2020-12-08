@@ -17,6 +17,7 @@ import { Input } from '@material-ui/core';
 class CustomerAdd extends Component {
     constructor(props) {
         super(props);
+        console.log(props)
         const initialState = {
             firtName: "",
             lastName: "",
@@ -121,8 +122,11 @@ class CustomerAdd extends Component {
             console.log(x)
             // if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
             addCustomer(addCustomerObj, (customer) => {
-                console.log(customer)
-                history.push('/customer/detail/' + customer.data.data._id)
+                if (this.props.isModal) {
+                    this.props.close(customer);
+                } else {
+                    history.push('/customer/detail/' + customer.data.data._id)
+                }
             })
             // }
         }
@@ -301,16 +305,16 @@ class CustomerAdd extends Component {
                             )
                         })}
                         < div className="form-group">
-                            <div style={{ float: 'right', marginRight:"2.2rem" }} className="row">
+                            <div style={{ float: 'right', marginRight: "2.2rem" }} className="row">
                                 {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
-                                <Button onClick={this.addContacts} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}} >Add Another</Button>
+                                <Button onClick={this.addContacts} style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }} >Add Another</Button>
                             </div>
                         </div>
                         {/* <div className="row"> */}
-                            {/* <div className={`col-12`}> */}
-                                <Button onClick={this.mySubmitHandler} className={`${style.button}`} style={{background:"#00ADEE", margin:  "1rem",  marginRight:"0", width:"92%", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Submit</Button>
-                                {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-                            {/* </div> */}
+                        {/* <div className={`col-12`}> */}
+                        <Button onClick={this.mySubmitHandler} className={`${style.button}`} style={{ background: "#00ADEE", margin: "1rem", marginRight: "0", width: "92%", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Submit</Button>
+                        {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
+                        {/* </div> */}
                         {/* </div> */}
                     </div>
                 </div >

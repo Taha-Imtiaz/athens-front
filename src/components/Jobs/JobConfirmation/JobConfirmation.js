@@ -168,7 +168,7 @@ function JobConfirmation(props) {
               name="to"
               value={data.locations.to[i]}
               onChange={(e) => hanldeLocationInputTo(i, e)}
-              // error={this.state.locationtoError}
+            // error={this.state.locationtoError}
             />
           </div>
         </div>
@@ -189,7 +189,7 @@ function JobConfirmation(props) {
               name="to"
               value={data.locations.to[i]}
               onChange={(e) => hanldeLocationInputTo(i, e)}
-              // error={this.state.locationtoError}
+            // error={this.state.locationtoError}
             />
           </div>
           <div className="col-1">
@@ -216,7 +216,7 @@ function JobConfirmation(props) {
     //   });
     // }
 
-    if (data.locations?.from && data.locations?.to[0].length > 0) {
+    if (data.locations ?.from && data.locations ?.to[0].length > 0) {
       var newData = { ...data };
       newData.locations.to.push("");
       setData(newData);
@@ -437,7 +437,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="First Name"
                     name="firstName"
-                    value={data.customer?.firstName}
+                    value={data.customer ?.firstName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -453,7 +453,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Last Name"
                     name="lastName"
-                    value={data.customer?.lastName}
+                    value={data.customer ?.lastName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -469,7 +469,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Phone Number"
                     name="phone"
-                    value={data.customer?.phone}
+                    value={data.customer ?.phone}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -485,7 +485,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Email Address"
                     name="email"
-                    value={data.customer?.email}
+                    value={data.customer ?.email}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -511,7 +511,7 @@ function JobConfirmation(props) {
                       name="from"
                       value={data.locations.from}
                       onChange={(e) => hanldeLocationInput(e)}
-                      // error={this.state.locationfromError}
+                    // error={this.state.locationfromError}
                     />
                   </div>
                 </div>
@@ -521,7 +521,7 @@ function JobConfirmation(props) {
             {/* {data.locations.map((ll, i) => {
               return showLocation(i);
             })} */}
-            {data.locations?.to.map((locationTo, i) => showLocation(i))}
+            {data.locations ?.to.map((locationTo, i) => showLocation(i))}
 
             <div className="row">
               <div className="col-11"></div>
@@ -538,12 +538,9 @@ function JobConfirmation(props) {
       case 3:
         return (
           <div>
-            <div className="text-center" style={{ margin: "26px" }}>
+            {/* <div className="text-center" style={{ margin: "26px" }}>
               <h5>Payment Information</h5>
-              {/* <span><i className="fa fa-cc-paypal" style={{ fontSize: "36px" }}></i></span>
-                        <span><i className="fa fa-cc-visa" style={{ fontSize: "36px", backgroundColor: "red" }}></i></span>
-                        <span><i className="fa fa-cc-mastercard" style={{ fontSize: "36px" }}></i></span> */}
-            </div>
+            </div> */}
             <form>
               <div className="form-group">
                 <TextField
@@ -632,7 +629,7 @@ function JobConfirmation(props) {
                 float: "right",
               }}
 
-              //   className={classes.button}
+            //   className={classes.button}
             >
               Skip And Submit
             </Button>
@@ -666,41 +663,41 @@ function JobConfirmation(props) {
             </Button>
           </div>
         ) : (
-          <div style={{ margin: "5px 30px" }}>
-            {
-              getStepContent(
-                activeStep
-              ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
-            }
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                Back
+            <div style={{ margin: "5px 30px" }}>
+              {
+                getStepContent(
+                  activeStep
+                ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
+              }
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  Back
               </Button>
-              <Button
-                onClick={handleNext}
-                className={classes.button}
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
+                <Button
+                  onClick={handleNext}
+                  className={classes.button}
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  {activeStep === steps.length - 1 ? "Submit" : "Next"}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

@@ -231,20 +231,20 @@ class JobEditDetails extends Component {
     });
   };
 
-removeLocation = (i) => {
-  var {locations} = this.state;
-  var locationToRemove = locations.to.findIndex((location,index) => index === i)
- 
-  var newLocations = locations.to.filter((location, i) => i !== locationToRemove  )
-  console.log(newLocations, i)
-      this.setState({
-        locations:{
-          from: this.state.locations.from,
-          to: newLocations
-        }
-      });
-    
-}
+  removeLocation = (i) => {
+    var { locations } = this.state;
+    var locationToRemove = locations.to.findIndex((location, index) => index === i)
+
+    var newLocations = locations.to.filter((location, i) => i !== locationToRemove)
+    console.log(newLocations, i)
+    this.setState({
+      locations: {
+        from: this.state.locations.from,
+        to: newLocations
+      }
+    });
+
+  }
 
 
   handleClose = (notes) => {
@@ -346,7 +346,7 @@ removeLocation = (i) => {
       // meetTime,
       locations,
       // assigneesId,
-      startTime,
+      // startTime,
       status,
       userId: loggedinUser._id,
       customerId,
@@ -404,21 +404,22 @@ removeLocation = (i) => {
   };
 
   hanldeLocationInput = (e) => {
-    let updateLocation = { ...this.state.locations};
+    let updateLocation = { ...this.state.locations };
     updateLocation.from = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
   hanldeLocationInputTo = (i, e) => {
-    let updateLocation = { ...this.state.locations};
+    let updateLocation = { ...this.state.locations };
     updateLocation.to[i] = e.target.value;
     this.setState({ locations: updateLocation });
   };
 
   addLocation = () => {
-    var dropOffLocation = this.state.locations.to.push('') 
+    var dropOffLocation = this.state.locations.to.push('')
     this.setState({
-      locations:{ ...this.state.locations }}
+      locations: { ...this.state.locations }
+    }
     );
   };
 
@@ -579,11 +580,12 @@ removeLocation = (i) => {
                   style={{ transform: "translateX(3rem)", width: "100%" }}
                   size="small"
                   id="customerId"
-                  label="Cutomer Id"
+                  label="Cutomer Email"
                   name="customerId"
                   autoComplete="customerId"
                   value={this.state.customerId}
                   onChange={this.handleFormInput}
+                  disabled
                 />
               </div>
 
@@ -610,7 +612,7 @@ removeLocation = (i) => {
                   Job Description
                 </h4>
                 <TextareaAutosize
-                className={style.textarea}
+                  className={style.textarea}
                   rowsMin={5}
                   required
                   style={{
@@ -702,7 +704,7 @@ removeLocation = (i) => {
                 className="row"
                 style={{ transform: "translateX(3rem)" }}
               >
-                <div className="col-4" style={{ marginTop: "1rem" }}>
+                {/* <div className="col-4" style={{ marginTop: "1rem" }}>
                   <TextField
                     id="time"
                     fullWidth
@@ -722,9 +724,9 @@ removeLocation = (i) => {
                       step: 300, // 5 min
                     }}
                   />
-                </div>
+                </div> */}
 
-                <div className={` col-4`}>
+                <div className={` col-6`}>
                   <TextField
                     type="number"
                     variant="outlined"
@@ -742,7 +744,7 @@ removeLocation = (i) => {
                   />
                 </div>
 
-                <div className={`col-4`} style={{
+                <div className={`col-6`} style={{
 
                   marginTop: "0.4rem",
                   width: "100%",
@@ -767,19 +769,17 @@ removeLocation = (i) => {
                       <MenuItem value={this.state.jobType}>
                         {this.state.jobType}
                       </MenuItem>
-                      {this.state.jobType === "fixed" ? (
-                        <MenuItem value={"hourly based"}>
-                          hourly based
+                      {this.state.jobType === "Fixed" ? (
+                        <MenuItem value={"Hourly based"}>
+                          Hourly based
                           </MenuItem>
                       ) : (
-                          <MenuItem value={"fixed"}>fixed</MenuItem>
+                          <MenuItem value={"Fixed"}>Fixed</MenuItem>
                         )}
                     </Select>
                   </FormControl>
                 </div>
               </div>
-
-
               <div className="row">
                 <div className="col-12">
                   <div
@@ -795,87 +795,85 @@ removeLocation = (i) => {
               </div>
 
               {this.state.locations &&
+                <div>
+                  <div
+                    className="row"
+                    style={{ transform: "translateX(3rem)" }}
+                  >
+                    {/* <div className="col"></div> */}
+                    <div className="col-12">
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        size="small"
+                        id="from"
+                        label="Pickup"
+                        name="from"
+                        autoComplete="from"
+                        error={this.state.locationFromError}
+                        value={this.state.locations.from}
+                        onChange={(e) => this.hanldeLocationInput(e)}
+                      />
+                    </div>
+                  </div>
 
-              <div>
-               
-               <div
-               className="row"
-               style={{ transform: "translateX(3rem)" }}
-             >
-               {/* <div className="col"></div> */}
-               <div className="col-12">
-                 <TextField
-                   variant="outlined"
-                   margin="normal"
-                   required
-                   fullWidth
-                   size="small"
-                   id="from"
-                   label="Pickup"
-                   name="from"
-                   autoComplete="from"
-                   error={this.state.locationFromError}
-                   value={this.state.locations.from}
-                   onChange={(e) => this.hanldeLocationInput(e)}
-                 />
-               </div>
-               </div>
 
-               
-              { this.state.locations.to.map((list, i) => {
-                  return (
-                    
-                   i===0 ?   <div className="row"   style={{ transform: "translateX(3rem)" }}>
-                   <div className="col-12"  >
-                   <TextField
-                     variant="outlined"
-                     margin="normal"
-                     required
-                     fullWidth
-                     size="small"
-                     id="to"
-                     error={this.state.locationToError}
-                     label="Drop Off"
-                     aria-describedby="emailHelp"
-                     name="to"
-                     value={list}
-                     onChange={(e) => this.hanldeLocationInputTo(i, e)}
-                   />
-                 </div>
-                </div> :   <div className="row"   style={{ transform: "translateX(3rem)" }}>
-                        <div className="col-11"  >
-                        <TextField
-                          variant="outlined"
-                          margin="normal"
-                          required
-                          fullWidth
-                          size="small"
-                          id="to"
-                          error={this.state.locationToError}
-                          label="Drop Off"
-                          aria-describedby="emailHelp"
-                          name="to"
-                          value={list}
-                          onChange={(e) => this.hanldeLocationInputTo(i, e)}
-                        />
-                      </div>
-                      <div className="col-1">
-                      <i
-                    className="fa fa-minus"
-                    style={{ transform: "translate3d(1.5rem, 1.5rem, 0)" }}
-                    name="Add Location"
-                    value="Add Location"
-                    onClick={() => this.removeLocation(i)}
-                  />
-                      </div>
-                     </div>
+                  {this.state.locations.to.map((list, i) => {
+                    return (
 
-                      
-                    
-                  );
-                })}
+                      i === 0 ? <div className="row" style={{ transform: "translateX(3rem)" }}>
+                        <div className="col-12"  >
+                          <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            size="small"
+                            id="to"
+                            error={this.state.locationToError}
+                            label="Drop Off"
+                            aria-describedby="emailHelp"
+                            name="to"
+                            value={list}
+                            onChange={(e) => this.hanldeLocationInputTo(i, e)}
+                          />
+                        </div>
+                      </div> : <div className="row" style={{ transform: "translateX(3rem)" }}>
+                          <div className="col-11"  >
+                            <TextField
+                              variant="outlined"
+                              margin="normal"
+                              required
+                              fullWidth
+                              size="small"
+                              id="to"
+                              error={this.state.locationToError}
+                              label="Drop Off"
+                              aria-describedby="emailHelp"
+                              name="to"
+                              value={list}
+                              onChange={(e) => this.hanldeLocationInputTo(i, e)}
+                            />
+                          </div>
+                          <div className="col-1">
+                            <i
+                              className="fa fa-minus"
+                              style={{ transform: "translate3d(1.5rem, 1.5rem, 0)" }}
+                              name="Add Location"
+                              value="Add Location"
+                              onClick={() => this.removeLocation(i)}
+                            />
+                          </div>
+                        </div>
+
+
+
+                    );
+                  })}
                 </div>
-                }
+              }
               <div className="row">
                 <div className="col-11"></div>
                 <div
@@ -919,7 +917,7 @@ removeLocation = (i) => {
               </div>
             </div> */}
           </div>
-         
+
 
           {/* <h4 style={{margin:"0.8rem 0"}}>Assignees</h4>
         <div className="form-group col-10">
@@ -934,15 +932,15 @@ removeLocation = (i) => {
           </div>
         </div> */}
           <div>
-            {note?.length !== 0 && <h3 style={{transform:"translateX(2.5rem)"}}>Notes</h3>}
+            {note ?.length !== 0 && <h3 style={{ transform: "translateX(2.5rem)" }}>Notes</h3>}
 
-            {note?.map((note) => (
-              <div style={{ display: "flex", transform:"translateX(2.5rem)" }}>
+            {note ?.map((note) => (
+              <div style={{ display: "flex", transform: "translateX(2.5rem)" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
                   icon={faTrashAlt}
-                   size = "1x"
-                  style={{ transform: "translateY(0.2rem)",  }}
+                  size="1x"
+                  style={{ transform: "translateY(0.2rem)", }}
                   onClick={() => this.handleDelete(note)}
                 />
               </div>

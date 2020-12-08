@@ -1,5 +1,6 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
+import { resetPassword } from "../../../Redux/User/userActions";
 import style from "./ResetPassword.module.css";
 
 const ResetPassword = (props) => {
@@ -11,6 +12,11 @@ const ResetPassword = (props) => {
     password: "",
     cpassword: "",
   });
+  var userToken = localStorage.getItem("athens-token");
+  if(!userToken) {
+    var {history} = props
+    history.push("/")
+  }
 
   var handleFormInput = (e) => {
     var { name, value } = e.target;
@@ -23,24 +29,29 @@ const ResetPassword = (props) => {
   var navigateToCustomer = () => {
     var { history } = props;
     if (password !== "") {
-      setPasswordError("")
-     
-      if(password !== cpassword) {
-        setcPasswordError("Passwords do not match")
-          }
-      else {
-        setPasswordError("")
-        history.push("/customer");
-      }
-      
+      setPasswordError("");
 
-    } else  {
+      if (password !== cpassword) {
+        setcPasswordError("Passwords do not match");
+      } else {
+        setPasswordError("");
+        var passwordObj = {
+          password: password,
+          token:userToken
+        };
+        resetPassword(passwordObj).then((res) => {
+          console.log(res);
+          if (res.data.status === 200) {
+            history.push("/customer");
+          }
+        });
+      }
+    } else {
       setPasswordError("Password should not be empty");
     }
- 
   };
   var { password, cpassword } = resetForm;
-  console.log( password, cpassword)
+  console.log(password, cpassword);
   return (
     <div className={style.resetContainer}>
       <div className={style.image}></div>

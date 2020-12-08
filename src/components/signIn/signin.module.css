@@ -188,7 +188,7 @@ margin-top: 20px;
   grid-area: form;
   /* background-color: lightcoral; */
   display: grid;
-  grid-template-rows: 16.6vh 50vh 20vh;
+  grid-template-rows: 20vh 46.6vh 20vh;
   grid-template-areas: "."
                         "signIn"
                         ".";
@@ -197,7 +197,7 @@ margin-top: 20px;
   grid-area: signIn;
   /* background-color: lightsalmon; */
   display: grid;
-  grid-template-rows:  repeat(5, 10vh) ;
+  grid-template-rows:  repeat(3, 10vh) 6.6vh 10vh;
   grid-template-areas: "head"
                         "email"
                         "password"
@@ -225,7 +225,7 @@ margin-top: 20px;
 }
 .forgetPs {
   grid-area: forgetPs;
-  height: 10vh;
+  height: 6.6vh;
   /* background-color: aqua; */
 }
 .signinBtn {

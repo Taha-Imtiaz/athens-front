@@ -28,9 +28,10 @@ const CustomerDetail = (props) => {
 
   const [blankets, setBlankets] = useState([]);
   const [updateIndex, setUpdateIndex] = useState(0);
+  // var [claimCount, setClaimCount] = useState(0)
   const handleShow = (deposit) => {
-    setDepositValue(deposit)
-    setShow(true)
+    setDepositValue(deposit);
+    setShow(true);
   };
   var [note, setNote] = useState("");
   var [addClaim, setAddClaim] = useState(false);
@@ -39,8 +40,9 @@ const CustomerDetail = (props) => {
   var [blanketValue, setBlanketValue] = useState([]);
   var [depositValue, setDepositValue] = useState("");
 
-
   var { customer, getCustomer } = props;
+  var [claimCount, setClaimCount] = useState(0);
+  // var [blanketCount, setBlanketCount] = useState(0);
   var {
     match: {
       params: { customerId },
@@ -48,7 +50,7 @@ const CustomerDetail = (props) => {
   } = props;
 
   var data = [];
-  if (customer ?.claim) {
+  if (customer?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
     data = customer.claim;
   }
@@ -75,13 +77,29 @@ const CustomerDetail = (props) => {
   const handleAddUpdate = (e) => {
     setUpdate(e.target.value);
   };
+
   useEffect(() => {
+    if (customer) {
+      console.log(customer);
+    }
+
     getCustomer(customerId);
-    console.log(customer)
+    console.log(customer);
   }, []);
 
   useEffect(() => {
-    setBlanketValue(customer ?.blanketDeposit);
+    //calculate blanket and claims Count
+    var customerClaims = customer?.claim;
+    var customerBlanket = customer?.blanketDeposit;
+
+    console.log(customerClaims);
+
+    var claimsCount = customerClaims?.map(
+      (claim) => claim.status === "open" && setClaimCount((count) => count + 1)
+    );
+
+    // var blanketsCount = customerBlanket?.map((blanket) => setBlanketCount((count) => count + 1 ))
+    setBlanketValue(customer?.blanketDeposit);
   }, [customer]);
 
   const routes = [
@@ -100,7 +118,7 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => { };
+  var AddNote = () => {};
 
   var [value, setValue] = useState(0);
 
@@ -186,11 +204,10 @@ const CustomerDetail = (props) => {
   };
   // var { children, value, index, ...other } = props;
 
-
   const editDeposit = (i) => {
     setDepositToEdit(i);
     setEdit(true);
-  }
+  };
 
   return (
     <div>
@@ -211,8 +228,10 @@ const CustomerDetail = (props) => {
                       aria-label="simple tabs example"
                     >
                       <Tab label="Customer Information" className={`col-4 `} />
-                      <Tab label="Claims" className="col-4" />
-                      <Tab label="Blanket" className="col-4" />
+
+                      <Tab label={`Claims: ${claimCount}`} className="col-4" />
+
+                      <Tab label={`Blanket: ${customer?.blanketDeposit.reduce((sum, currentValue) => sum + parseInt(currentValue.quantity), 0)}`} className="col-4" />
                     </Tabs>
                   </AppBar>
                   <TabPanel value={value} index={0}>
@@ -223,16 +242,30 @@ const CustomerDetail = (props) => {
                       }}
                     >
                       <div className="row">
-
                         <div className="col-6">
                           <h3 className={style.head}>Customer Information</h3>
                         </div>
                         <div className="col-6">
                           <div className={style.btn}>
-                            <Link style={{ textDecoration: "none" }} to={{
-                              pathname: "/job/create",
-                              customerId: customer.email,
-                            }}> <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Create Job</Button> </Link>
+                            <Link
+                              style={{ textDecoration: "none" }}
+                              to={{
+                                pathname: "/job/create",
+                                customerId: customer.email,
+                              }}
+                            >
+                              {" "}
+                              <Button
+                                style={{
+                                  background: "#00ADEE",
+                                  textTransform: "none",
+                                  color: "#FFF",
+                                  fontFamily: "sans-serif",
+                                }}
+                              >
+                                Create Job
+                              </Button>{" "}
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -337,7 +370,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
 
-                          {customer ?.jobs ?.map((job, i) => {
+                          {customer?.jobs?.map((job, i) => {
                             return (
                               <div key={i} className={style.jumbotron}>
                                 <div
@@ -360,13 +393,13 @@ const CustomerDetail = (props) => {
                                       i === 0 ? (
                                         <label key={i}>{x}</label>
                                       ) : (
-                                          <label>
-                                            <span style={{ padding: "0.5rem" }}>
-                                              |
+                                        <label>
+                                          <span style={{ padding: "0.5rem" }}>
+                                            |
                                           </span>
-                                            {x}
-                                          </label>
-                                        )
+                                          {x}
+                                        </label>
+                                      )
                                     )}
                                     <div>
                                       {job.services.map((service, i) => (
@@ -399,20 +432,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                              <p>
-                                                <span
-                                                  style={{ padding: "0.5rem" }}
-                                                >
-                                                  |
+                                            <p>
+                                              <span
+                                                style={{ padding: "0.5rem" }}
+                                              >
+                                                |
                                               </span>
-                                                {assignee.name}
-                                              </p>
-                                            )
+                                              {assignee.name}
+                                            </p>
+                                          )
                                         )}
                                       </div>
                                     ) : (
-                                        <p>No Assignee</p>
-                                      )}
+                                      <p>No Assignee</p>
+                                    )}
                                   </div>
                                   <div className="col-2">
                                     <span>
@@ -431,22 +464,28 @@ const CustomerDetail = (props) => {
                                       {job.description}
                                     </p>
                                   </div>
-                                  {job.locations &&
-
-
+                                  {job.locations && (
                                     <div>
-                                      <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {job.locations.from} <br></br>
-
-                                      {job.locations.to.map((list) =>
+                                      <MyLocationOutlinedIcon
+                                        color="primary"
+                                        style={{ marginRight: "0.4rem" }}
+                                      />{" "}
+                                      {job.locations.from} <br></br>
+                                      {job.locations.to.map((list) => (
                                         <p
                                           // className={style.para}
-                                          style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}
+                                          style={{
+                                            fontFamily:
+                                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                            margin: "0",
+                                          }}
                                         >
-                                          <LocationOffIcon color="primary" />  {list}
-                                        </p>)}
-
+                                          <LocationOffIcon color="primary" />{" "}
+                                          {list}
+                                        </p>
+                                      ))}
                                     </div>
-                                  }
+                                  )}
                                   {/* {job.locations.map((list, i) => (
                                     <div className="col-12" key={i}>
                                       <span>
@@ -543,33 +582,47 @@ const CustomerDetail = (props) => {
                           })}
                         </div>
                       ) : (
-                          <h4
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              margin: "2rem 0",
-                            }}
-                          >
-                            No job added yet
+                        <h4
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "2rem 0",
+                          }}
+                        >
+                          No job added yet
                         </h4>
-                        )}
+                      )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
                     <div className="row">
-
                       <div className="col-6">
                         <h3 className={style.head}>Claims</h3>
                       </div>
                       <div className="col-6">
                         <div className={style.btn}>
-                          <Link style={{ textDecoration: "none" }} to='/claim/newclaim'> <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>New Claim</Button> </Link>
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to="/claim/newclaim"
+                          >
+                            {" "}
+                            <Button
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              New Claim
+                            </Button>{" "}
+                          </Link>
                         </div>
                       </div>
                     </div>
                     <hr />
-                    {customer ?.claim.length > 0 && (
+                    {customer?.claim.length > 0 && (
                       <div
                         className="row"
                         style={{
@@ -584,7 +637,7 @@ const CustomerDetail = (props) => {
                       </div>
                     )}
                     <div id="accordion">
-                      {customer ?.claim.length > 0 ? (
+                      {customer?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
                           return (
                             <div
@@ -616,9 +669,9 @@ const CustomerDetail = (props) => {
                                 <div className="col-4">{claim.status}</div>
                                 <div className="col-4">
                                   {/* {claim ?.updatedAt.toDateString()} */}
-                                  {claim ?.updatedAt.split("T")[0]}{" "}
+                                  {claim?.updatedAt.split("T")[0]}{" "}
                                   <span>|</span>{" "}
-                                  {claim ?.updatedAt.split("T")[1].split(".")[0]}
+                                  {claim?.updatedAt.split("T")[1].split(".")[0]}
                                 </div>
                               </div>
 
@@ -672,7 +725,7 @@ const CustomerDetail = (props) => {
                                             ) {
                                               return a + b["price"];
                                             },
-                                              0)}
+                                            0)}
                                           </p>
                                         </div>
                                       </div>
@@ -747,10 +800,10 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                          <div className="text-center">
-                            <img src="/images/no-data-found.png" />
-                          </div>
-                        )}
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
                       <Modal
                         show={show}
                         onHide={handleClose}
@@ -796,13 +849,27 @@ const CustomerDetail = (props) => {
                     style={{ border: "transparent" }}
                   >
                     <div className="row">
-
                       <div className="col-6">
                         <h3 className={style.head}>Blanket Deposit</h3>
                       </div>
                       <div className="col-6">
                         <div className={style.btn}>
-                          <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Deposit</Button> </Link>
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to="/claim/customerdeposit/deposit"
+                          >
+                            {" "}
+                            <Button
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Deposit
+                            </Button>{" "}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -847,125 +914,126 @@ const CustomerDetail = (props) => {
                           }}
                         >
                           <ul className="list-group">
-
                             {blanketValue.map((deposit, i) => {
-
-                              return <li className="checkbox list-group-item">
-                                {/* key={i} */}
-                                <div className="row">
-                                  {/* <div className="col-3">
+                              return (
+                                <li className="checkbox list-group-item">
+                                  {/* key={i} */}
+                                  <div className="row">
+                                    {/* <div className="col-3">
                                     <label>
                                       {deposit.customer ?.firstName} {deposit.customer ?.lastName}
                                     </label>
                                   </div> */}
 
-                                  <div className="col-4">
-                                    <div className="input-group">
-                                      {edit && depositToEdit == i ? (
-                                        <span className="input-group-btn">
-                                          <button
-                                            type="button"
-                                            className="btn btn-default btn-number"
-                                            onClick={() => {
-                                              // let data = cloneDeep(blanketValue);
-                                              deposit.quantity = deposit.quantity - 1;
-                                              deposit.cost = deposit.quantity * 15;
-                                              setDepositValue(deposit);
-                                              customer.blanketDeposit.quantity =
-                                                customer.blanketDeposit.quantity -
-                                                1;
-                                            }}
-                                          >
-                                            <span
-                                              className="fa fa-minus"
-                                              style={{
-                                                transform: "translateY(-0.25rem)",
+                                    <div className="col-4">
+                                      <div className="input-group">
+                                        {edit && depositToEdit == i ? (
+                                          <span className="input-group-btn">
+                                            <button
+                                              type="button"
+                                              className="btn btn-default btn-number"
+                                              onClick={() => {
+                                                // let data = cloneDeep(blanketValue);
+                                                deposit.quantity =
+                                                  deposit.quantity - 1;
+                                                deposit.cost =
+                                                  deposit.quantity * 15;
+                                                setDepositValue(deposit);
+                                                customer.blanketDeposit.quantity =
+                                                  customer.blanketDeposit
+                                                    .quantity - 1;
                                               }}
-                                            ></span>
-                                          </button>
-                                        </span>
-                                      ) : null}
-                                      <input
-                                        disabled={!edit}
-                                        type="text"
-                                        className="form-control input-number"
-                                        value={deposit.quantity}
-                                        style={{ margin: "-0.25rem 0" }}
-                                        min="1"
-                                      ></input>
-                                      {edit && depositToEdit == i ? (
-                                        <span className="input-group-btn">
-                                          <button
-                                            type="button"
-                                            className="btn btn-default btn-number"
-                                            onClick={() => {
-                                              // let deposit = cloneDeep(blanketValue);
-                                              deposit.quantity = deposit.quantity + 1;
-                                              deposit.cost = deposit.quantity * 15;
-                                              setDepositValue(deposit);
-                                              customer.blanketDeposit.quantity =
-                                                customer.blanketDeposit.quantity +
-                                                1;
-                                            }}
-                                          >
-                                            <span
-                                              className="fa fa-plus"
-                                              style={{
-                                                transform: "translateY(-0.25rem)",
+                                            >
+                                              <span
+                                                className="fa fa-minus"
+                                                style={{
+                                                  transform:
+                                                    "translateY(-0.25rem)",
+                                                }}
+                                              ></span>
+                                            </button>
+                                          </span>
+                                        ) : null}
+                                        <input
+                                          disabled={!edit}
+                                          type="text"
+                                          className="form-control input-number"
+                                          value={deposit.quantity}
+                                          style={{ margin: "-0.25rem 0" }}
+                                          min="1"
+                                        ></input>
+                                        {edit && depositToEdit == i ? (
+                                          <span className="input-group-btn">
+                                            <button
+                                              type="button"
+                                              className="btn btn-default btn-number"
+                                              onClick={() => {
+                                                // let deposit = cloneDeep(blanketValue);
+                                                deposit.quantity =
+                                                  deposit.quantity + 1;
+                                                deposit.cost =
+                                                  deposit.quantity * 15;
+                                                setDepositValue(deposit);
+                                                customer.blanketDeposit.quantity =
+                                                  customer.blanketDeposit
+                                                    .quantity + 1;
                                               }}
-                                            ></span>
-                                          </button>
-                                        </span>
-                                      ) : null}
+                                            >
+                                              <span
+                                                className="fa fa-plus"
+                                                style={{
+                                                  transform:
+                                                    "translateY(-0.25rem)",
+                                                }}
+                                              ></span>
+                                            </button>
+                                          </span>
+                                        ) : null}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="col-4">
-                                    <label>{deposit.quantity * 15}$</label>
-                                  </div>
-                                  <div className="col-3">
-
-                                    {!edit || depositToEdit != i ? (
-                                      <label
-                                        className="fa fa-edit"
-                                        onClick={() => editDeposit(i)}
-                                      >
-                                        {" "}
-                                        Edit
-                                    </label>
-                                    ) : (
+                                    <div className="col-4">
+                                      <label>{deposit.quantity * 15}$</label>
+                                    </div>
+                                    <div className="col-3">
+                                      {!edit || depositToEdit != i ? (
+                                        <label
+                                          className="fa fa-edit"
+                                          onClick={() => editDeposit(i)}
+                                        >
+                                          {" "}
+                                          Edit
+                                        </label>
+                                      ) : (
                                         <label
                                           className="fa fa-save"
                                           onClick={() => closeEdit("save")}
                                         >
                                           {" "}
                                           Save
-                                    </label>
+                                        </label>
                                       )}
-                                    <Button
-                                      onClick={() => handleShow(deposit)}
-                                      style={{
-                                        background: "#00ADEE",
-                                        textTransform: "none",
-                                        color: "#FFF",
-                                        fontFamily: "sans-serif",
-                                      }}
-                                    >
-                                      Activities
-                          </Button>
-
+                                      <Button
+                                        onClick={() => handleShow(deposit)}
+                                        style={{
+                                          background: "#00ADEE",
+                                          textTransform: "none",
+                                          color: "#FFF",
+                                          fontFamily: "sans-serif",
+                                        }}
+                                      >
+                                        Activities
+                                      </Button>
+                                    </div>
                                   </div>
-                                </div>
-                              </li>
-
+                                </li>
+                              );
                             })}
                           </ul>
                         </div>
                         <div
                           className={`row ${style.flex}`}
                           style={{ margin: "2rem 0" }}
-                        >
-
-                        </div>
+                        ></div>
                         <Modal
                           dialogClassName={`${style.modal}`}
                           show={show}
@@ -991,7 +1059,7 @@ const CustomerDetail = (props) => {
                             </div>
 
                             {depositValue &&
-                              depositValue ?.activities.map((activity, i) => (
+                              depositValue?.activities.map((activity, i) => (
                                 <div
                                   key={i}
                                   className="row"
@@ -1032,10 +1100,10 @@ const CustomerDetail = (props) => {
                         </Modal>
                       </div>
                     ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
+                      <div className="text-center">
+                        <img src="/images/no-data-found.png" />
+                      </div>
+                    )}
                   </TabPanel>
                 </div>
               </div>

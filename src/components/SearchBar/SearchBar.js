@@ -4,19 +4,20 @@ import { connect } from "react-redux";
 import { getAllCustomers } from "../../Redux/Customer/customerActions";
 import { getAllJobs } from "../../Redux/Job/jobActions";
 import { getUsers } from "../../Redux/User/userActions";
-import { getMover,moverSearchFilter } from "../../Redux/Mover/moverActions";
+import { getMover, moverSearchFilter } from "../../Redux/Mover/moverActions";
 
 const SearchBar = (props) => {
-  var { getAllCustomers, getAllJobs, getUsers  , moverSearchFilter} = props;
+  var { getAllCustomers, getAllJobs, getUsers, moverSearchFilter } = props;
 
   var title = props.title;
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
+    console.log(e.target.value);
     if (props.type == "customer") {
       if (searchValue) {
         var fetchCustomersObj = {
-          query: searchValue,
+          query: e.target.value,
           sort: {
             plainname: null,
             createdAt: null,
@@ -38,7 +39,7 @@ const SearchBar = (props) => {
     } else if (props.type == "user") {
       if (searchValue) {
         var usersObj = {
-          query: searchValue,
+          query: e.target.value,
           filter: {
             type: "",
           },
@@ -55,9 +56,9 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "mover") {
       if (searchValue) {
-          console.log(searchValue)
+        console.log(searchValue);
         var fetchJobsOnPageChange = {
-          query: searchValue,
+          query: e.target.value,
 
           page: 1,
         };
@@ -70,8 +71,9 @@ const SearchBar = (props) => {
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
       if (searchValue) {
+        console.log(searchValue);
         var fetchJobsOnPageChange = {
-          query: searchValue,
+          query: e.target.value,
           filters: {
             startDate: "",
             endDate: "",
@@ -109,7 +111,7 @@ const SearchBar = (props) => {
     console.log("Enter");
     e.preventDefault();
     if (e.which === 13) {
-      handleSearch();
+      handleSearch(e);
     }
   };
 
@@ -129,12 +131,15 @@ const SearchBar = (props) => {
           className="form-control"
           placeholder={title}
           style={{ outline: "transparent" }}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            handleSearch(e);
+          }}
           onKeyUp={(e) => handleKeyPress(e)}
         />
         <div className="input-group-append">
           <button
-            onClick={handleSearch}
+            // onClick={handleSearch}
             className="btn btn-secondary"
             style={{ width: "3rem" }}
             type="button"
@@ -157,6 +162,6 @@ var actions = {
   getAllCustomers,
   getAllJobs,
   getUsers,
-  moverSearchFilter
+  moverSearchFilter,
 };
 export default connect(mapStateToProps, actions)(SearchBar);

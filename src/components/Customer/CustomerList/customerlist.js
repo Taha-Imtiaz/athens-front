@@ -268,7 +268,9 @@ const CustomerList = (props) => {
                 style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
               >
                 <div className="col-md-4">Name</div>
-                <div className="col-md-6">Email</div>
+                <div className="col-md-3">Phone</div>
+
+                <div className="col-md-3">Email</div>
                 <div className="col-md-2">Jobs</div>
               </div>
               <div>
@@ -292,8 +294,14 @@ const CustomerList = (props) => {
                                   {doc.firstName} {doc.lastName}
                                 </span>
                               </div>
+
                               <div
-                                className={`col-4 col-md-6 d-flex justify-content-start ${style.flex} ${style.fr}`}
+                                className={`col-4 col-md-3 d-flex justify-content-start ${style.flex} ${style.fr}`}
+                              >
+                                <p>{doc.phone}</p>
+                              </div>
+                              <div
+                                className={`col-4 col-md-3 d-flex justify-content-start ${style.flex} ${style.fr}`}
                               >
                                 <p>{doc.email}</p>
                               </div>

@@ -217,7 +217,7 @@ const CustomerDetail = (props) => {
             <div className="col-1">
               {/* <SideBar routes={routes} key={customerId} /> */}
             </div>
-            <div className="col-8" style={{ margin: "1rem" }}>
+            <div className="col-10" style={{ margin: "1rem" }}>
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
@@ -231,7 +231,14 @@ const CustomerDetail = (props) => {
 
                       <Tab label={`Claims: ${claimCount}`} className="col-4" />
 
-                      <Tab label={`Blanket: ${customer?.blanketDeposit.reduce((sum, currentValue) => sum + parseInt(currentValue.quantity), 0)}`} className="col-4" />
+                      <Tab
+                        label={`Blanket: ${customer?.blanketDeposit.reduce(
+                          (sum, currentValue) =>
+                            sum + parseInt(currentValue.quantity),
+                          0
+                        )}`}
+                        className="col-4"
+                      />
                     </Tabs>
                   </AppBar>
                   <TabPanel value={value} index={0}>
@@ -887,19 +894,25 @@ const CustomerDetail = (props) => {
                             <h6>Customer</h6>
                           </div> */}
                           <div
-                            className={`col-4`}
+                            className={`col-3`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            <h6>Job Id</h6>
+                          </div>
+                          <div
+                            className={`col-3`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Quantity</h6>
                           </div>
                           <div
-                            className={`col-4`}
+                            className={`col-3`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Deposit</h6>
                           </div>
                           <div
-                            className={`col-4`}
+                            className={`col-3`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Actions</h6>
@@ -924,8 +937,8 @@ const CustomerDetail = (props) => {
                                       {deposit.customer ?.firstName} {deposit.customer ?.lastName}
                                     </label>
                                   </div> */}
-
-                                    <div className="col-4">
+                                    <div className="col-3">{deposit?.job?.jobId}</div>
+                                    <div className="col-3">
                                       <div className="input-group">
                                         {edit && depositToEdit == i ? (
                                           <span className="input-group-btn">
@@ -991,7 +1004,7 @@ const CustomerDetail = (props) => {
                                         ) : null}
                                       </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                       <label>{deposit.quantity * 15}$</label>
                                     </div>
                                     <div className="col-3">
@@ -1017,6 +1030,7 @@ const CustomerDetail = (props) => {
                                         style={{
                                           background: "#00ADEE",
                                           textTransform: "none",
+                                          margin:"0 1rem",
                                           color: "#FFF",
                                           fontFamily: "sans-serif",
                                         }}

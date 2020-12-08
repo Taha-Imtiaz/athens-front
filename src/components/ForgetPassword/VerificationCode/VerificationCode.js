@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./VerificationCode.module.css";
 import ReactInputVerificationCode from "react-input-verification-code";
 import { Button } from "@material-ui/core";
+import { verifyCode } from "../../../Redux/User/userActions";
+
+
 
 const VerificationCode = (props) => {
+  var [code, setCode] = useState("");
+
   var [verificationCode, setVerificationCode] = useState("");
+var [userToken, setUserToken] = useState('')
+
+
+ useEffect(() => {
+ var {history} = props
+var getToken = sessionStorage.getItem("token");
+
+console.log(getToken)
+setUserToken(getToken)
+if(getToken) {
+//remove email from sessionStorage
+sessionStorage.removeItem("token")
+}
+else {
+  history.push("/emailVerification")
+}
+
+ },[])
   var navigateResetPassword = () => {
     var { history } = props;
     if (verificationCode !== "") {
@@ -12,14 +35,30 @@ const VerificationCode = (props) => {
       // history.push("/verifyCode")
     } 
     else {
+      console.log(userToken)
+      var verifyCodeObj  = {
+        code:code,
+        token:userToken
+      }
+      verifyCode(verifyCodeObj).then((res) => {
+        console.log(res)
+        
+        if(res.data.status === 200){
+          console.log(res.data.token)
+          localStorage.setItem("athens-token", res.data.token)
+          history.push("/restPassword")
+        }
+      
 
-      history.push("/restPassword");
+      })
+
     }
   };
 
   var handleVerificationCode = (e) => {
     
     var codeInString = e.toString();
+    setCode(e)
     console.log(codeInString.length);
     if (codeInString.length != 4) {
       setVerificationCode("You must enter correct verification code");

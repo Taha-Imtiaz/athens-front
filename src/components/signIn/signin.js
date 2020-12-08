@@ -179,7 +179,7 @@ class SignInForm extends React.Component {
                 />
               </div>
              <Link to = "/emailVerification" style={{}}>
-              <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width:"85%", justifyContent:"flex-end" }}>
+              <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width:"80%", justifyContent:"flex-end" }}>
               
                {/* <Button 
                 // type="button"
@@ -193,7 +193,7 @@ class SignInForm extends React.Component {
 
                   }}
                 > */}
-                 Forget Password
+                 Forgot Password?
                 {/* </Button> */}
                
                 </div>

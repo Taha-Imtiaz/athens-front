@@ -62,7 +62,7 @@ function App(props) {
         <Route exact path="/" component={SignInForm} />
         <Route  path="/emailVerification" component={EmailVerification} />
         <Route  path="/verifycode" component={VerificationCode} />
-        <Route  path="/restPassword" component={ResetPassword} />
+        <PrivateRoute  path="/restPassword" component={ResetPassword} />
 
 
 

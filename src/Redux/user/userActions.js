@@ -126,3 +126,36 @@ export var updateUser = (data, userId) => {
         }
     }
 }
+export var sendCode = async (email) =>   {
+try {
+    var verifyEmail = await Axios.post("user/forgot-password", email)
+return verifyEmail
+} catch (error) {
+    console.log(error)
+}
+}
+export var verifyCode = async (verifyCodeObj) => {
+try {
+    const config = {
+      headers: { Authorization: verifyCodeObj.token },
+    };
+
+    var verifyCode = await Axios.post("user/code-verification", verifyCodeObj, config)
+    return verifyCode
+} catch (error) {
+    console.log(error)
+}
+}
+export var resetPassword = async (passwordObj) => {
+try {
+    
+    const config = {
+      headers: { Authorization:passwordObj.token },
+    };
+    var newPassword = await Axios.post("user/reset-password", passwordObj, config)
+    return newPassword
+   
+} catch (error) {
+    console.log(error)
+}
+}

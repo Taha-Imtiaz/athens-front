@@ -455,6 +455,7 @@ class CreateJobs extends Component {
 
   addNewCustomer = (e) => {
     e.preventDefault();
+    console.log(e.target.value)
     if (e.target.value) {
       this.setState({
         newCustomer: e.target.value,
@@ -806,7 +807,7 @@ class CreateJobs extends Component {
         // backdrop={false}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Booking Confirmation</Modal.Title>
+            <Modal.Title>Create New Customer</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {/* <JobConfirmation data={job} close={handleCloseAndRefresh} /> */}

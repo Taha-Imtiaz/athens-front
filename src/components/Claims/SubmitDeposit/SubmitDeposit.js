@@ -111,7 +111,7 @@ class SubmitDeposit extends Component {
                 this.getCustomerJobs(newValue); // Get the customer and get job
               }}
               id="country-select-demoq"
-              style={{ width: "100%", margin: "1rem 0" }}
+              style={{ width: "100%" }}
               size="small"
               options={this.state.customers}
               autoHighlight
@@ -125,7 +125,7 @@ class SubmitDeposit extends Component {
                 <TextField
                   {...params}
                   label="Choose a customer"
-                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  style={{ margin: "1rem 0" }}
                   variant="outlined"
                   error={this.state.customerIdError}
                   inputProps={{
@@ -142,7 +142,7 @@ class SubmitDeposit extends Component {
                 this.setState({ selectedJob: newValue ? newValue : '', jobIdError: '' }); // Get the customer and get job
               }}
               id="country-select-demo"
-              style={{ width: "100%", margin: "1rem 0" }}
+              style={{ width: "100%" }}
               size="small"
               options={this.state.jobs}
               autoHighlight
@@ -156,7 +156,7 @@ class SubmitDeposit extends Component {
                 <TextField
                   {...params}
                   label="Choose a job"
-                  style={{ margin: "1rem 2rem", width: "90%" }}
+                  style={{ margin: "1rem 0" }}
                   variant="outlined"
                   error={this.state.jobIdError}
                   inputProps={{

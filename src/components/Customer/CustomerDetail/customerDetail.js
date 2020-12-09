@@ -93,7 +93,7 @@ const CustomerDetail = (props) => {
     var customerBlanket = customer?.blanketDeposit;
 
     console.log(customerClaims);
-
+    console.log(claimCount)
     var claimsCount = customerClaims?.map(
       (claim) => claim.status === "open" && setClaimCount((count) => count + 1)
     );
@@ -221,13 +221,16 @@ const CustomerDetail = (props) => {
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
-                    <Tabs
+                    
+                    <div className="row">
+                    <Tabs className="col-12"
                       style={{ background: "#00ADEE", border: "none" }}
                       onChange={handleChange}
                       value={value}
                       aria-label="simple tabs example"
                     >
-                      <Tab label="Customer Information" className={`col-4 `} />
+                     
+                      <Tab label="Customer Information" className="col-4" />
 
                       <Tab label={`Claims: ${claimCount}`} className="col-4" />
 
@@ -239,7 +242,10 @@ const CustomerDetail = (props) => {
                         )}`}
                         className="col-4"
                       />
+                         
                     </Tabs>
+                    </div>
+                 
                   </AppBar>
                   <TabPanel value={value} index={0}>
                     <div
@@ -253,7 +259,14 @@ const CustomerDetail = (props) => {
                           <h3 className={style.head}>Customer Information</h3>
                         </div>
                         <div className="col-6">
-                          <div className={style.btn}>
+                          <div
+                            className={style.btn}
+                            style={{
+                              display: "flex",
+                              justifyContent: "flex-end",
+                              alignItems: "flex-end",
+                            }}
+                          >
                             <Link
                               style={{ textDecoration: "none" }}
                               to={{
@@ -347,6 +360,14 @@ const CustomerDetail = (props) => {
                                   >
                                     <div className="card-body">
                                       <div className="row">
+                                      <div className="col-3">
+                                          {x.length !== 0 && (
+                                            <h6 className={style.l1}>Name</h6>
+                                          )}
+                                          <label className={style.l1}>
+                                            {x.name}
+                                          </label>
+                                        </div>
                                         <div className="col-3">
                                           {x.length !== 0 && (
                                             <h6 className={style.l1}>Email</h6>
@@ -608,7 +629,14 @@ const CustomerDetail = (props) => {
                         <h3 className={style.head}>Claims</h3>
                       </div>
                       <div className="col-6">
-                        <div className={style.btn}>
+                        <div
+                          className={style.btn}
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                          }}
+                        >
                           <Link
                             style={{ textDecoration: "none" }}
                             to="/claim/newclaim"
@@ -698,35 +726,41 @@ const CustomerDetail = (props) => {
                           <p className={style.comp}>from {x.from} - to {x.to}</p>
                       </div>
                   </div> */}
-                                    {claim.claims.map((y, j) => {
-                                      return (
-                                        <div key={j}>
-                                          <h6>Claim Type : {y.claimType}</h6>
+                                    {/* {claim.claims.map((y, j) => {
+                                      return ( */}
+                                        <div key={i}>
+                                          <h6>Protection Type : {claim.claimType}</h6>
                                           <div className="row">
-                                            <div className="col-11">
+                                            <div className="col-12">
                                               <p className={style.para}>
-                                                Description : {y.description}
+                                                Description : {claim.description}
                                               </p>
                                             </div>
-                                            <div className="col-1">
-                                              <p>${y.price}</p>
-                                            </div>
+                                           
                                           </div>
                                           <hr />
                                         </div>
-                                      );
-                                    })}
+                                        <div className="row">
+                                          <div className="col-10"></div>
+                                          <div className="col-2">
+                                          
+                                              <p>{`Total: $${claim.price}`}</p>
+                                           
+                                          </div>
+                                        </div>
+                                      {/* );
+                                    })} */}
 
-                                    {claim.claims.length > 0 ? (
+                                    {/* {claim.length > 0 ? (
                                       <div className="row">
                                         <div className="col-10">
-                                          {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                         
                                         </div>
                                         <div className="col-2">
                                           <p>
                                             {" "}
                                             Total: $
-                                            {claim.claims.reduce(function (
+                                            {claim.reduce(function (
                                               a,
                                               b
                                             ) {
@@ -736,7 +770,7 @@ const CustomerDetail = (props) => {
                                           </p>
                                         </div>
                                       </div>
-                                    ) : null}
+                                    ) : null} */}
                                     <hr />
                                     <div className="row">
                                       <div className="col-10">
@@ -860,7 +894,14 @@ const CustomerDetail = (props) => {
                         <h3 className={style.head}>Blanket Deposit</h3>
                       </div>
                       <div className="col-6">
-                        <div className={style.btn}>
+                        <div
+                          className={style.btn}
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                          }}
+                        >
                           <Link
                             style={{ textDecoration: "none" }}
                             to="/claim/customerdeposit/deposit"
@@ -870,6 +911,7 @@ const CustomerDetail = (props) => {
                               style={{
                                 background: "#00ADEE",
                                 textTransform: "none",
+
                                 color: "#FFF",
                                 fontFamily: "sans-serif",
                               }}
@@ -894,7 +936,7 @@ const CustomerDetail = (props) => {
                             <h6>Customer</h6>
                           </div> */}
                           <div
-                            className={`col-3`}
+                            className={`col-1`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Job Id</h6>
@@ -906,11 +948,19 @@ const CustomerDetail = (props) => {
                             <h6>Quantity</h6>
                           </div>
                           <div
-                            className={`col-3`}
+                            className={`col-2`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Deposit</h6>
                           </div>
+
+                          <div
+                            className={`col-3`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            <h6>Last Updated</h6>
+                          </div>
+
                           <div
                             className={`col-3`}
                             style={{ fontWeight: "bold" }}
@@ -937,7 +987,13 @@ const CustomerDetail = (props) => {
                                       {deposit.customer ?.firstName} {deposit.customer ?.lastName}
                                     </label>
                                   </div> */}
-                                    <div className="col-3">{deposit?.job?.jobId}</div>
+                                    <div className="col-1">
+                                      <Link
+                                        to={`/job/details/${deposit?.job._id}`}
+                                      >
+                                        {deposit?.job?.jobId}
+                                      </Link>
+                                    </div>
                                     <div className="col-3">
                                       <div className="input-group">
                                         {edit && depositToEdit == i ? (
@@ -1004,33 +1060,68 @@ const CustomerDetail = (props) => {
                                         ) : null}
                                       </div>
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-2">
                                       <label>{deposit.quantity * 15}$</label>
                                     </div>
                                     <div className="col-3">
+                                      {deposit?.updatedAt.split("T")[0]}{" "}
+                                      <span> | </span>{" "}
+                                      {
+                                        deposit?.updatedAt
+                                          .split("T")[1]
+                                          .split(".")[0]
+                                      }{" "}
+                                    </div>
+                                    <div className="col-3">
                                       {!edit || depositToEdit != i ? (
-                                        <label
-                                          className="fa fa-edit"
+                                        <Button
                                           onClick={() => editDeposit(i)}
+                                          style={{
+                                            background: "#00ADEE",
+                                            textTransform: "none",
+                                            margin: "0 1rem",
+                                            color: "#FFF",
+                                            fontFamily: "sans-serif",
+                                          }}
                                         >
                                           {" "}
-                                          Edit
-                                        </label>
+                                          <i
+                                            className="fa fa-edit"
+                                            style={{ margin: "0.2rem" }}
+                                          ></i>{" "}
+                                          Edit{" "}
+                                        </Button>
                                       ) : (
-                                        <label
-                                          className="fa fa-save"
+                                        // <label
+
+                                        // >
+                                        //   {" "}
+
+                                        // </label>
+                                        <Button
                                           onClick={() => closeEdit("save")}
+                                          style={{
+                                            background: "#00ADEE",
+                                            textTransform: "none",
+                                            margin: "0 1rem",
+                                            color: "#FFF",
+                                            fontFamily: "sans-serif",
+                                          }}
                                         >
                                           {" "}
+                                          <i
+                                            className="fa fa-save"
+                                            style={{ margin: "0.2rem" }}
+                                          ></i>{" "}
                                           Save
-                                        </label>
+                                        </Button>
                                       )}
                                       <Button
                                         onClick={() => handleShow(deposit)}
                                         style={{
                                           background: "#00ADEE",
                                           textTransform: "none",
-                                          margin:"0 1rem",
+                                          margin: "0 1rem",
                                           color: "#FFF",
                                           fontFamily: "sans-serif",
                                         }}

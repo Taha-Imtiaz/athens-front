@@ -282,45 +282,51 @@ const CustomerClaims = (props) => {
                             <div key={x._id}>
                               <div className="row justify-content-between"></div>
 
-                              {x.claims.map((y, j) => {
-                                return (
-                                  <div key={j}>
+                              {/* {x.claims.map((y, j) => {
+                                return ( */}
+                                  <div key={i}>
                                     <h6>
-                                      Claim Type : {y.claimType}
+                                      Protection Type : {x.claimType}
                                     </h6>
                                     <div className="row">
-                                      <div className="col-10">
+                                      <div className="col-12">
                             
                                         <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                          Description : {y.description}
+                                          Description : {x.description}
                                         </p>
                                       </div>
 
-                                      <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                        <p className={style.p2}>${y.price}</p>
-                                      </div>
+                                      
                                     </div>
-                                    <hr />
+                                  
                                   </div>
-                                );
-                              })}
+                                  <hr/>
+                                  <div className="row">
+                                    <div className="col-10"></div>
+                                    <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                                        <p className={style.p2}>{`Total: $${x.price}`}</p>
+                                      </div>
+                                  </div>
 
-                              {x.claims.length > 0 ? (
+                                {/* );
+                              })} */}
+
+                              {/* {x.length > 0 ? (
                                 <div className="row">
                                   <div className="col-10">
-                                    {/* <Button name="Add Update" onClick={() => handleShow(i)}></Button> */}
+                                  
                                   </div>
                                   <div className="col-2">
                                     <p>
                                       {" "}
                                       Total: $
-                                      {x.claims.reduce(function (a, b) {
+                                      {x.reduce(function (a, b) {
                                         return a + b["price"];
                                       }, 0)}
                                     </p>
                                   </div>
                                 </div>
-                              ) : null}
+                              ) : null} */}
                               <hr />
                               <div className="row">
                                 <div className="col-12">
@@ -348,7 +354,7 @@ const CustomerClaims = (props) => {
                                 <div className="col-8"></div>
                                 <div
                                   className="col-2"
-                                  style={{ transform: "translateX(5rem)" }}
+                                  style={{ transform: "translateX(10rem)" }}
                                 >
                                   {x.status == "open" ? (
                                     <Button
@@ -363,7 +369,7 @@ const CustomerClaims = (props) => {
                                   {x.status == "open" ? (
                                     <Button
                                       // name="Close Claim"
-                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(4rem)" }}
                                       onClick={() => handleCloseJob(i)}
                                     >Close Claim</Button>
                                   ) : null}

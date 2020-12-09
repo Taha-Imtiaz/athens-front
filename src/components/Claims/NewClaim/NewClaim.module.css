@@ -16,7 +16,9 @@
     background-color:  #e9ecef;
     border-radius: 0.4rem;
 }
-
+.modal {
+    max-width: 70vw;
+}
 .l1{
     margin-top: 2%;
 }

@@ -43,6 +43,7 @@ import HeadingComponent from "./components/Headings/headings";
 import EmailVerification from "./components/ForgetPassword/EmailVerification/EmailVerification";
 import VerificationCode from "./components/ForgetPassword/VerificationCode/VerificationCode";
 import ResetPassword from "./components/ForgetPassword/ResetPassword/ResetPassword";
+import ClaimsDetails from "./components/ClaimsDetails/ClaimsDetails";
 
 function App(props) {
   const [show, setShow] = [false];
@@ -99,6 +100,8 @@ function App(props) {
         <PrivateRoute path="/mover/payment" component={Payment} />
         <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
         <PrivateRoute path="/mover/availability" component={Availability} />
+        <PrivateRoute path="/claimsDetail/:claimsId" component={ClaimsDetails} />
+
         <PrivateRoute
           path="/mover/jobdetails/:jobId"
           component={MoversJobDetails}

@@ -154,6 +154,10 @@
 .notesh{
     margin-left: 15%;
 }
+.button:hover {
+background-color: red;
+
+}
 .style-button {
   width: 10vw !important;
   padding: 1rem !important;

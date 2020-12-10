@@ -32,6 +32,10 @@
 background-color: #00ADEE;
 color: #fff;
 }
+.modal {
+    max-width: 70vw;
+    
+  }
 .sub{
     margin-left: 1%;
 }

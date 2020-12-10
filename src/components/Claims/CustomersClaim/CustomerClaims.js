@@ -18,6 +18,7 @@ import { clone, cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../Pagination/Pagination";
 import moment from "moment";
+import SearchBar from "../../SearchBar/SearchBar";
 
 const CustomerClaims = (props) => {
   var { claims } = props;
@@ -25,6 +26,8 @@ const CustomerClaims = (props) => {
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
   const [showIndex, setShowIndex] = useState(null);
+  // const [showClaimsDetail, setShowClaimsDetail] = useState(false)
+
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var totalCount = claims.claims?.data?.claims?.total;
@@ -34,7 +37,9 @@ const CustomerClaims = (props) => {
     var claimsObj = {
       status: "all",
       page: currentPage,
+      query:""
     };
+    console.log(claimsObj)
     getAllClaims(claimsObj);
   }, []);
   var { claims } = props;
@@ -62,62 +67,63 @@ const CustomerClaims = (props) => {
     var claimsObj = {
       status: "all",
       page: page,
+      query:""
     };
     getAllClaims(claimsObj);
     setCurrentPage(page);
   };
 
-  const handleShow = (i) => {
-    setShow(true);
-    setUpdateIndex(i);
-  };
+  // const handleShow = (i) => {
+  //   setShow(true);
+  //   setUpdateIndex(i);
+  // };
 
-  const handleClose = (notes) => {
-    // var { note } = this.state;
-    setShow(false);
-    // this.setState({
-    //     show: false,
-    //     note: notes,
-    // });
-  };
-  const updateClaimData = () => {
-    if (update.length > 0) {
-      let ob = {
-        timestamp: new Date(),
-        value: update,
-      };
-      let newData = cloneDeep(data.docs);
-      console.log(newData, updateIndex);
-      newData[updateIndex].updates.push(ob);
-      var { showMessage, history } = props;
-      updateClaim(newData[updateIndex])
-        .then((res) => {
-          if (res.data.status == 200) {
-            data.docs[updateIndex].updates = res.data.claim.updates;
-            setShow(false);
-            setUpdate("");
-            showMessage(res.data.message);
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-  const handleAddUpdate = (e) => {
-    setUpdate(e.target.value);
-  };
+  // const handleClose = (notes) => {
+  //   // var { note } = this.state;
+  //   setShow(false);
+  //   // this.setState({
+  //   //     show: false,
+  //   //     note: notes,
+  //   // });
+  // };
+  // const updateClaimData = () => {
+  //   if (update.length > 0) {
+  //     let ob = {
+  //       timestamp: new Date(),
+  //       value: update,
+  //     };
+  //     let newData = cloneDeep(data.docs);
+  //     console.log(newData, updateIndex);
+  //     newData[updateIndex].updates.push(ob);
+  //     var { showMessage, history } = props;
+  //     updateClaim(newData[updateIndex])
+  //       .then((res) => {
+  //         if (res.data.status == 200) {
+  //           data.docs[updateIndex].updates = res.data.claim.updates;
+  //           setShow(false);
+  //           setUpdate("");
+  //           showMessage(res.data.message);
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
+  // const handleAddUpdate = (e) => {
+  //   setUpdate(e.target.value);
+  // };
 
-  const handleCloseJob = (i) => {
-    var { showMessage } = props;
+  // const handleCloseJob = (i) => {
+  //   var { showMessage } = props;
 
-    data.docs[i].status = "closed";
-    updateClaim(data.docs[i])
-      .then((res) => {
-        if (res.data.status == 200) {
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+  //   data.docs[i].status = "closed";
+  //   updateClaim(data.docs[i])
+  //     .then((res) => {
+  //       if (res.data.status == 200) {
+  //         showMessage(res.data.message);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const getClaimsByStatus = (e) => {
     console.log(e.target.value);
@@ -140,20 +146,23 @@ const CustomerClaims = (props) => {
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
         <div>
-          <div className="row" >
+          <div className="row" style={{marginTop:" 1rem"}} >
             {/* <div className="col-2">
               <SideBar routes={routes} />
             </div> */}
-            <div className="col-7" style={{margin:" 1rem"}}>
-              <h3 className={style.head}>Claims</h3>
+            <div className="col-2" >
+              <h3 className = {style.head} >Claims</h3>
+            </div>
+            <div className="col-6"  >
+            <SearchBar type="mover" title="Type first name or email" />
             </div>
             <div
-              className={`col-2 ${style.btn}`}
+              className={`col-2`}
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
                 alignItems: "flex-start",
-               margin:" 1rem"
+               
                 // margin:"0 1rem"
                 // background:"red"
               }}
@@ -167,9 +176,9 @@ const CustomerClaims = (props) => {
                 </Button>{" "}
               </Link>
             </div>
-            <div className="col-2" >
+            <div className="col-2"  >
               
-                <div className="form-group"style={{marginTop:"2%", margin:" 1rem"}}>
+                <div className="form-group"style={{ marginRight:"1.3rem"}}>
                   <select className="form-control" onChange={getClaimsByStatus}>
                     <option value="all">All</option>
                     <option value="open">Open</option>
@@ -180,51 +189,50 @@ const CustomerClaims = (props) => {
             </div>
           </div>
           {data.docs && data.docs.length > 0 ? (
-            <div className = {style.head}>
+            <div >
               <div
                 className={`row `}
                 style={{
                   
-                  marginTop: "1rem",
+                  margin:"0.6rem 0.5rem",
                  
                   fontWeight: "bold",
                   fontFamily:"sans-serif",
                  
                 }}
               >
-                <div className="col-3"> Job Id</div>
+               
                 <div className="col-3">Name</div>
-                <div className="col-2" style={{transform:"translateX(-1rem)"}}>Status</div>
-                <div className="col-3" style={{transform:"translateX(-1.5rem)"}}>Last Update</div>
+                <div className="col-2">Status</div>
+                <div className="col-3"> Waiting To</div>
+                <div className="col-3">Last Update</div>
               </div>
-              <div id="accordion">
+              <div >
                 {data.docs &&
                   data.docs.map((x, i) => {
                     return (
                       <div>
+                        <Link to = {{pathname: `/claimsDetail/${x._id}`, claimsId: x._id}} style={{textDecoration: "none", color:"black"}}>
                         <div 
                           style={{
                             height: "4rem",
                             overflowX: "hidden",
                             width: "100%",
-                            
+                            marginLeft:"0.5rem",
+                            marginRight:"0.5rem",
                             fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
                             
                           }}
                           className={`card-header row ${style.card} `}
-                          aria-expanded="true"
-                          data-toggle="collapse"
-                          data-target={`#collapse${i}`}
-                          aria-controls="collapse"
-                          id="headingOne"
+                       
+                          // aria-expanded="true"
+                          // data-toggle="collapse"
+                          // data-target={`#collapse${i}`}
+                          // aria-controls="collapse"
+                          // id="headingOne"
                           // onClick={() => toggleCollapse(i)}
                         >
-                          <div className="col-3">
-                            <h6>
-                              {x?.job?.jobId}
-                            </h6>
-                          </div>
-
+                        
                           <div className="col-3">
                             <h6
                               // style={{
@@ -242,6 +250,13 @@ const CustomerClaims = (props) => {
                           >
                             {x.status.toLocaleUpperCase()}
                           </div>
+                          <div className="col-3">
+                            <h6>
+                              {x.waitTo}
+                            </h6>
+                          </div>
+
+
                           <div
                             className="col-3"
                             // style={{
@@ -270,8 +285,8 @@ const CustomerClaims = (props) => {
                             )}
                           </div>
                         </div>
-
-                        <div
+                        </Link>   
+                        {/* <div
                             id={`collapse${i}`}
                            
                             class="collapse"
@@ -282,8 +297,8 @@ const CustomerClaims = (props) => {
                             <div key={x._id}>
                               <div className="row justify-content-between"></div>
 
-                              {/* {x.claims.map((y, j) => {
-                                return ( */}
+                               {x.claims.map((y, j) => {
+                                return ( 
                                   <div key={i}>
                                     <h6>
                                       Protection Type : {x.claimType}
@@ -308,10 +323,10 @@ const CustomerClaims = (props) => {
                                       </div>
                                   </div>
 
-                                {/* );
-                              })} */}
+                                 );
+                              })} 
 
-                              {/* {x.length > 0 ? (
+                               {x.length > 0 ? (
                                 <div className="row">
                                   <div className="col-10">
                                   
@@ -326,7 +341,7 @@ const CustomerClaims = (props) => {
                                     </p>
                                   </div>
                                 </div>
-                              ) : null} */}
+                              ) : null} 
                               <hr />
                               <div className="row">
                                 <div className="col-12">
@@ -377,7 +392,7 @@ const CustomerClaims = (props) => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     );
                   })}
@@ -388,7 +403,7 @@ const CustomerClaims = (props) => {
               <img src="/images/no-data-found.png" />
             </div>
           )}
-          <Modal show={show} onHide={handleClose} animation={false} centered>
+          {/* <Modal show={show} onHide={handleClose} dialogClassName = {style.modal} scrollable centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>
             </Modal.Header>
@@ -407,7 +422,7 @@ const CustomerClaims = (props) => {
               <Button onClick={handleClose} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",margin:"0 0.4rem"}} >Close</Button>
               <Button onClick={updateClaimData} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Add</Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
           <div className = {style.jumbotron}>
             <Pagination 
               itemCount={totalCount}

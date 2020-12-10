@@ -339,21 +339,21 @@ const CustomerDetail = (props) => {
                               {customer.subContacts.map((x, i) => (
                                 <div key={i} className={`card`}>
                                   <div className="card-header" id="headingOne">
-                                    <h5 className="mb-0">
-                                      <button
-                                        className="btn btn-link"
+                                    <h5 className="mb-0" style={{background:"white"}}>
+                                      <div style={{outline:"none",background:"white"}}
+                                        className={`btn-link ${style.button}`}
                                         type="button"
                                         data-toggle="collapse"
-                                        data-target="#collapseOne"
+                                        data-target={`#collapse${i}`}
                                         aria-expanded="true"
-                                        aria-controls="collapseOne"
+                                        aria-controls="collapse"
                                       >
                                         {`Contact # ${i + 1}`}
-                                      </button>
+                                      </div>
                                     </h5>
                                   </div>
                                   <div
-                                    id="collapseOne"
+                                    id={`collapse${i}`}
                                     className="collapse show"
                                     aria-labelledby="headingOne"
                                     data-parent="#accordionExample"
@@ -365,7 +365,7 @@ const CustomerDetail = (props) => {
                                             <h6 className={style.l1}>Name</h6>
                                           )}
                                           <label className={style.l1}>
-                                            {x.name}
+                                      {  x.name !== "" ?   x.name:"N/A"}
                                           </label>
                                         </div>
                                         <div className="col-3">
@@ -373,7 +373,7 @@ const CustomerDetail = (props) => {
                                             <h6 className={style.l1}>Email</h6>
                                           )}
                                           <label className={style.l1}>
-                                            {x.email}
+                                            {x.email !== "" ? x.email:"N/A"}
                                           </label>
                                         </div>
                                         <div className="col-3">
@@ -381,7 +381,7 @@ const CustomerDetail = (props) => {
                                             <h6 className={style.l1}>Phone</h6>
                                           )}
                                           <label className={style.l2}>
-                                            {x.phone}
+                                            {x.phone !==""? x.phone : "N/A"}
                                           </label>
                                         </div>
                                       </div>

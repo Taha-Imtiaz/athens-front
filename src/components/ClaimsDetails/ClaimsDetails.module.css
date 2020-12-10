@@ -1,0 +1,9 @@
+.p2{
+    margin-left: 30%;
+}
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}

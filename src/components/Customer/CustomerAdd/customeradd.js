@@ -23,7 +23,7 @@ class CustomerAdd extends Component {
       email: "",
       subContacts: [
         {
-        name:'',
+          name: "",
           phone: "",
           email: "",
         },
@@ -103,11 +103,21 @@ class CustomerAdd extends Component {
   mySubmitHandler = (event) => {
     var { addCustomer, history } = this.props;
     event.preventDefault();
-    var {subContacts} = this.state
-    console.log(subContacts[0].name)
+    var { subContacts } = this.state;
+    
+
+
+    
+
     const isValid = this.validate();
     if (isValid) {
       var { firstName, lastName, email, phone, subContacts } = this.state;
+      if (this.state.subContacts[0].name === "" && this.state.subContacts[0].phone === "" && this.state.subContacts[0].email === "") {
+        subContacts = []
+        console.log(subContacts);
+      }
+      console.log(subContacts);
+
       var addCustomerObj = {
         firstName,
         lastName,
@@ -115,9 +125,7 @@ class CustomerAdd extends Component {
         email,
         subContacts,
       };
-      console.log(subContacts);
-      var x = subContacts[0].phone.length;
-      console.log(x);
+console.log(addCustomerObj)
       // if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
       addCustomer(addCustomerObj, (customer) => {
         if (this.props.isModal) {
@@ -127,17 +135,18 @@ class CustomerAdd extends Component {
           history.push("/customer/detail/" + customer.data.data._id);
         }
       });
-      // }
+    
     }
   };
 
   addContacts = () => {
     console.log("add");
-    if (this.state.subContacts[0].phone && this.state.subContacts[0].email) {
+    if (this.state.subContacts[0].name && this.state.subContacts[0].phone && this.state.subContacts[0].email) {
       this.setState({
         subContacts: [
           ...this.state.subContacts,
           {
+            name:"",
             phone: "",
             email: "",
           },
@@ -152,7 +161,9 @@ class CustomerAdd extends Component {
         className={this.props.isModal !== true ? `${style.formStyle}` : null}
       >
         <div className={this.props.isModal !== true ? `${style.form}` : null}>
-          {this.props.isModal !== true && <h3 className={style.head}>Create New Customer</h3>}
+          {this.props.isModal !== true && (
+            <h3 className={style.head}>Create New Customer</h3>
+          )}
           <div>
             <form onSubmit={this.mySubmitHandler}>
               <TextField
@@ -250,8 +261,7 @@ class CustomerAdd extends Component {
                     {/* <InputLabel htmlFor ="phone_number">Phone Number</InputLabel>
                                         <Input  id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
 
-
-<TextField
+                    <TextField
                       variant="outlined"
                       required
                       style={{ margin: "1rem 2rem", width: "92%" }}
@@ -262,7 +272,7 @@ class CustomerAdd extends Component {
                       label="Name"
                       name="name"
                       autoComplete="name"
-                    //   error={this.state.subContactPhoneError}
+                      //   error={this.state.subContactPhoneError}
                       value={this.state.subContacts[i].name}
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
@@ -328,7 +338,11 @@ class CustomerAdd extends Component {
             {/* <div className={`col-12`}> */}
             <Button
               onClick={this.mySubmitHandler}
-              className={this.props.isModal !== true ? `${style.button}` : `${style.modalButton}`}
+              className={
+                this.props.isModal !== true
+                  ? `${style.button}`
+                  : `${style.modalButton}`
+              }
               style={{
                 background: "#00ADEE",
                 marginBottom: "1rem",

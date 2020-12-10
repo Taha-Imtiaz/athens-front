@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants";
+import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM } from "./claimsConstants";
 import Axios from "../../utils/api";
 
 // var baseUrl = "";
@@ -8,6 +8,7 @@ export var getAllClaims = (data) => {
   console.log(data)
   let body = {
     page: data.page,
+    query:data.query
   };
   return async (dispatch) => {
     var claims = await Axios.post("user/get-all-claims/" + data.status,
@@ -111,3 +112,24 @@ export var getCustomersAndJobs = async () => {
     console.log(error);
   }
 };
+
+export var getClaim = (claimId) => {
+  
+  return async (dispatch) => {
+   try {
+    
+
+    console.log(claimId)
+    var claim = await Axios.get(`user/get-claim/${claimId}`)
+    console.log(claim)
+    dispatch({
+      type:GET_CLAIM,
+      payload:{
+        claim:claim
+      }
+    })
+   } catch (error) {
+     console.log(error)
+   }
+  }
+}

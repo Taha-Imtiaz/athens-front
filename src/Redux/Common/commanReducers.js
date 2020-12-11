@@ -16,6 +16,7 @@ var commonReducer = (state = initialState, action) => {
         case SHOW_MESSAGE:
             return { ...state, displayMessage: payload }
         case SCHEDULE_DATE:
+            console.log(payload)
             return { ...state, scheduleDate: payload }
         default:
             return state

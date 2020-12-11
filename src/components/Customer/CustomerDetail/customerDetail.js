@@ -50,7 +50,7 @@ const CustomerDetail = (props) => {
   } = props;
 
   var data = [];
-  if (customer?.claim) {
+  if (customer ?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
     data = customer.claim;
   }
@@ -89,17 +89,17 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     //calculate blanket and claims Count
-    var customerClaims = customer?.claim;
-    var customerBlanket = customer?.blanketDeposit;
+    var customerClaims = customer ?.claim;
+    var customerBlanket = customer ?.blanketDeposit;
 
     console.log(customerClaims);
     console.log(claimCount)
-    var claimsCount = customerClaims?.map(
+    var claimsCount = customerClaims ?.map(
       (claim) => claim.status === "open" && setClaimCount((count) => count + 1)
     );
 
     // var blanketsCount = customerBlanket?.map((blanket) => setBlanketCount((count) => count + 1 ))
-    setBlanketValue(customer?.blanketDeposit);
+    setBlanketValue(customer ?.blanketDeposit);
   }, [customer]);
 
   const routes = [
@@ -118,7 +118,7 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => {};
+  var AddNote = () => { };
 
   var [value, setValue] = useState(0);
 
@@ -221,31 +221,31 @@ const CustomerDetail = (props) => {
               <div className="row">
                 <div className="col-12">
                   <AppBar position="static">
-                    
+
                     <div className="row">
-                    <Tabs className="col-12"
-                      style={{ background: "#00ADEE", border: "none" }}
-                      onChange={handleChange}
-                      value={value}
-                      aria-label="simple tabs example"
-                    >
-                     
-                      <Tab label="Customer Information" className="col-4" />
+                      <Tabs className="col-12"
+                        style={{ background: "#00ADEE", border: "none" }}
+                        onChange={handleChange}
+                        value={value}
+                        aria-label="simple tabs example"
+                      >
 
-                      <Tab label={`Claims: ${claimCount}`} className="col-4" />
+                        <Tab label="Customer Information" className="col-4" />
 
-                      <Tab
-                        label={`Blanket: ${customer?.blanketDeposit.reduce(
-                          (sum, currentValue) =>
-                            sum + parseInt(currentValue.quantity),
-                          0
-                        )}`}
-                        className="col-4"
-                      />
-                         
-                    </Tabs>
+                        <Tab label={`Claims: ${claimCount}`} className="col-4" />
+
+                        <Tab
+                          label={`Blanket: ${customer ?.blanketDeposit.reduce(
+                            (sum, currentValue) =>
+                              sum + parseInt(currentValue.quantity),
+                            0
+                          )}`}
+                          className="col-4"
+                        />
+
+                      </Tabs>
                     </div>
-                 
+
                   </AppBar>
                   <TabPanel value={value} index={0}>
                     <div
@@ -339,8 +339,8 @@ const CustomerDetail = (props) => {
                               {customer.subContacts.map((x, i) => (
                                 <div key={i} className={`card`}>
                                   <div className="card-header" id="headingOne">
-                                    <h5 className="mb-0" style={{background:"white"}}>
-                                      <div style={{outline:"none",background:"white"}}
+                                    <h5 className="mb-0" style={{ background: "white" }}>
+                                      <div style={{ outline: "none", background: "white" }}
                                         className={`btn-link ${style.button}`}
                                         type="button"
                                         data-toggle="collapse"
@@ -360,12 +360,12 @@ const CustomerDetail = (props) => {
                                   >
                                     <div className="card-body">
                                       <div className="row">
-                                      <div className="col-3">
+                                        <div className="col-3">
                                           {x.length !== 0 && (
                                             <h6 className={style.l1}>Name</h6>
                                           )}
                                           <label className={style.l1}>
-                                      {  x.name !== "" ?   x.name:"N/A"}
+                                            {x.name !== "" ? x.name : "N/A"}
                                           </label>
                                         </div>
                                         <div className="col-3">
@@ -373,7 +373,7 @@ const CustomerDetail = (props) => {
                                             <h6 className={style.l1}>Email</h6>
                                           )}
                                           <label className={style.l1}>
-                                            {x.email !== "" ? x.email:"N/A"}
+                                            {x.email !== "" ? x.email : "N/A"}
                                           </label>
                                         </div>
                                         <div className="col-3">
@@ -381,7 +381,7 @@ const CustomerDetail = (props) => {
                                             <h6 className={style.l1}>Phone</h6>
                                           )}
                                           <label className={style.l2}>
-                                            {x.phone !==""? x.phone : "N/A"}
+                                            {x.phone !== "" ? x.phone : "N/A"}
                                           </label>
                                         </div>
                                       </div>
@@ -398,7 +398,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
 
-                          {customer?.jobs?.map((job, i) => {
+                          {customer ?.jobs ?.map((job, i) => {
                             return (
                               <div key={i} className={style.jumbotron}>
                                 <div
@@ -421,13 +421,13 @@ const CustomerDetail = (props) => {
                                       i === 0 ? (
                                         <label key={i}>{x}</label>
                                       ) : (
-                                        <label>
-                                          <span style={{ padding: "0.5rem" }}>
-                                            |
+                                          <label>
+                                            <span style={{ padding: "0.5rem" }}>
+                                              |
                                           </span>
-                                          {x}
-                                        </label>
-                                      )
+                                            {x}
+                                          </label>
+                                        )
                                     )}
                                     <div>
                                       {job.services.map((service, i) => (
@@ -460,20 +460,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                            <p>
-                                              <span
-                                                style={{ padding: "0.5rem" }}
-                                              >
-                                                |
+                                              <p>
+                                                <span
+                                                  style={{ padding: "0.5rem" }}
+                                                >
+                                                  |
                                               </span>
-                                              {assignee.name}
-                                            </p>
-                                          )
+                                                {assignee.name}
+                                              </p>
+                                            )
                                         )}
                                       </div>
                                     ) : (
-                                      <p>No Assignee</p>
-                                    )}
+                                        <p>No Assignee</p>
+                                      )}
                                   </div>
                                   <div className="col-2">
                                     <span>
@@ -610,17 +610,17 @@ const CustomerDetail = (props) => {
                           })}
                         </div>
                       ) : (
-                        <h4
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            margin: "2rem 0",
-                          }}
-                        >
-                          No job added yet
+                          <h4
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              margin: "2rem 0",
+                            }}
+                          >
+                            No job added yet
                         </h4>
-                      )}
+                        )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
@@ -657,7 +657,7 @@ const CustomerDetail = (props) => {
                       </div>
                     </div>
                     <hr />
-                    {customer?.claim.length > 0 && (
+                    {customer ?.claim.length > 0 && (
                       <div
                         className="row"
                         style={{
@@ -672,7 +672,7 @@ const CustomerDetail = (props) => {
                       </div>
                     )}
                     <div id="accordion">
-                      {customer?.claim.length > 0 ? (
+                      {customer ?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
                           return (
                             <div
@@ -704,9 +704,9 @@ const CustomerDetail = (props) => {
                                 <div className="col-4">{claim.status}</div>
                                 <div className="col-4">
                                   {/* {claim ?.updatedAt.toDateString()} */}
-                                  {claim?.updatedAt.split("T")[0]}{" "}
+                                  {claim ?.updatedAt.split("T")[0]}{" "}
                                   <span>|</span>{" "}
-                                  {claim?.updatedAt.split("T")[1].split(".")[0]}
+                                  {claim ?.updatedAt.split("T")[1].split(".")[0]}
                                 </div>
                               </div>
 
@@ -728,27 +728,27 @@ const CustomerDetail = (props) => {
                   </div> */}
                                     {/* {claim.claims.map((y, j) => {
                                       return ( */}
-                                        <div key={i}>
-                                          <h6>Protection Type : {claim.claimType}</h6>
-                                          <div className="row">
-                                            <div className="col-12">
-                                              <p className={style.para}>
-                                                Description : {claim.description}
-                                              </p>
-                                            </div>
-                                           
-                                          </div>
-                                          <hr />
+                                    <div key={i}>
+                                      <h6>Protection Type : {claim.claimType}</h6>
+                                      <div className="row">
+                                        <div className="col-12">
+                                          <p className={style.para} style={{ whiteSpace: "pre" }}>
+                                            Description : {claim.description}
+                                          </p>
                                         </div>
-                                        <div className="row">
-                                          <div className="col-10"></div>
-                                          <div className="col-2">
-                                          
-                                              <p>{`Total: $${claim.price}`}</p>
-                                           
-                                          </div>
-                                        </div>
-                                      {/* );
+
+                                      </div>
+                                      <hr />
+                                    </div>
+                                    <div className="row">
+                                      <div className="col-10"></div>
+                                      <div className="col-2">
+
+                                        <p>{`Total: $${claim.price}`}</p>
+
+                                      </div>
+                                    </div>
+                                    {/* );
                                     })} */}
 
                                     {/* {claim.length > 0 ? (
@@ -841,10 +841,10 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
+                          <div className="text-center">
+                            <img src="/images/no-data-found.png" />
+                          </div>
+                        )}
                       <Modal
                         show={show}
                         onHide={handleClose}
@@ -989,9 +989,9 @@ const CustomerDetail = (props) => {
                                   </div> */}
                                     <div className="col-1">
                                       <Link
-                                        to={`/job/details/${deposit?.job._id}`}
+                                        to={`/job/details/${deposit ?.job._id}`}
                                       >
-                                        {deposit?.job?.jobId}
+                                        {deposit ?.job ?.jobId}
                                       </Link>
                                     </div>
                                     <div className="col-3">
@@ -1064,10 +1064,10 @@ const CustomerDetail = (props) => {
                                       <label>{deposit.quantity * 15}$</label>
                                     </div>
                                     <div className="col-3">
-                                      {deposit?.updatedAt.split("T")[0]}{" "}
+                                      {deposit ?.updatedAt.split("T")[0]}{" "}
                                       <span> | </span>{" "}
                                       {
-                                        deposit?.updatedAt
+                                        deposit ?.updatedAt
                                           .split("T")[1]
                                           .split(".")[0]
                                       }{" "}
@@ -1092,30 +1092,30 @@ const CustomerDetail = (props) => {
                                           Edit{" "}
                                         </Button>
                                       ) : (
-                                        // <label
+                                          // <label
 
-                                        // >
-                                        //   {" "}
+                                          // >
+                                          //   {" "}
 
-                                        // </label>
-                                        <Button
-                                          onClick={() => closeEdit("save")}
-                                          style={{
-                                            background: "#00ADEE",
-                                            textTransform: "none",
-                                            margin: "0 1rem",
-                                            color: "#FFF",
-                                            fontFamily: "sans-serif",
-                                          }}
-                                        >
-                                          {" "}
-                                          <i
-                                            className="fa fa-save"
-                                            style={{ margin: "0.2rem" }}
-                                          ></i>{" "}
-                                          Save
+                                          // </label>
+                                          <Button
+                                            onClick={() => closeEdit("save")}
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              margin: "0 1rem",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                            }}
+                                          >
+                                            {" "}
+                                            <i
+                                              className="fa fa-save"
+                                              style={{ margin: "0.2rem" }}
+                                            ></i>{" "}
+                                            Save
                                         </Button>
-                                      )}
+                                        )}
                                       <Button
                                         onClick={() => handleShow(deposit)}
                                         style={{
@@ -1164,7 +1164,7 @@ const CustomerDetail = (props) => {
                             </div>
 
                             {depositValue &&
-                              depositValue?.activities.map((activity, i) => (
+                              depositValue ?.activities.map((activity, i) => (
                                 <div
                                   key={i}
                                   className="row"
@@ -1205,10 +1205,10 @@ const CustomerDetail = (props) => {
                         </Modal>
                       </div>
                     ) : (
-                      <div className="text-center">
-                        <img src="/images/no-data-found.png" />
-                      </div>
-                    )}
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
                   </TabPanel>
                 </div>
               </div>

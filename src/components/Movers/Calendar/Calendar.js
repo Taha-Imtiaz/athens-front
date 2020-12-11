@@ -303,7 +303,7 @@ class MoversCalendar extends Component {
                           <div className="card-body">
                             <p
                               className="card-text"
-                              // style={{ whiteSpace: "pre" }}
+                              style={{whiteSpace:"pre-line" }}
                             >
                               {`${job.description}`}
                             </p>
@@ -526,7 +526,7 @@ class MoversCalendar extends Component {
 
                                         <div className="card-body">
                                             <h5 className="card-title">{this.state.job.title}</h5>
-                                            <p className="card-text" style={{ whiteSpace: "pre" }}>{this.state.job.description}</p>
+                                            <p className="card-text" style={{ whiteSpace:"pre-line"}}>{this.state.job.description}</p>
                                             <p className="card-text">Customer:
                                                         <Link
                                                     style={{ textDecoration: "none" }}

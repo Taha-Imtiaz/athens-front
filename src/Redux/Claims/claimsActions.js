@@ -10,6 +10,7 @@ export var getAllClaims = (data) => {
     page: data.page,
     query:data.query
   };
+  console.log(body)
   return async (dispatch) => {
     var claims = await Axios.post("user/get-all-claims/" + data.status,
       body

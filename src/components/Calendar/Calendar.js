@@ -273,7 +273,7 @@ class CalendarApp extends Component {
 
                             <p
                               className="card-text"
-                              style={{ whiteSpace: "pre" }}
+                              style={{ whiteSpace:"pre-line" }}
                             >
                               {`${job.description}`}
                             </p>
@@ -357,7 +357,7 @@ class CalendarApp extends Component {
 
                                 <p
                                   className="card-text"
-                                  style={{ whiteSpace: "pre" }}
+                                  style={{whiteSpace:"pre-line" }}
                                 >
                                   {this.state.currentDayJobs ?.description}
                                 </p>

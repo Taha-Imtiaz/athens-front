@@ -135,6 +135,7 @@ class NewClaim extends Component {
     } = this.state;
     if (this.validate()) {
       var { history, showMessage } = this.props;
+      // var {history:{match}}
       let data = {
         jobId: selectedJob.jobId,
         claimType,
@@ -146,8 +147,9 @@ class NewClaim extends Component {
       console.log(data);
       addClaim(data)
         .then((res) => {
+          console.log(res)
           showMessage(res.data.message);
-          history.push("/claim/customer");
+          history.push(`/claimsDetail/${res.data.claim}`);
         })
         .catch((error) => {
           console.log(error);

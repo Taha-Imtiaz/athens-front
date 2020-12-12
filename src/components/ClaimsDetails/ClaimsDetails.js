@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import { Modal } from "react-bootstrap";
 import {Link} from 'react-router-dom'
@@ -129,16 +129,33 @@ var {claims} = props
                           className={style.assigneehead}
                           style={{ flexWrap: "nowrap", fontFamily: "sans-serif" }}
                         >
-                          Assignees
+                          Jobs
                       </h5>
-                        {claims?.assignee?.length > 0 ? claims?.assignee?.map((assignee) => (
+                        {claims?.job ?  
                           <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}
                             className={style.assigneehead}
                             style={{ flexWrap: "nowrap" }}
                           >
-                            <li> {assignee.name}</li>
+                            <Link to = {`/job/details/${claims?.job?._id}`}> {claims?.job?.title}</Link>
+                            <div>
+                  {claims?.job?.assignee.length > 0 ?claims?.job?.assignee.map((assignee)=>  <Chip
+                              label={assignee.name}
+                              clickable
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                              style={{ margin: " 0.2rem 0rem" }}
+                            /> ):<Chip
+                            label="Not Added"
+                            clickable
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            style={{ margin: " 0 0.2rem" }}
+                          /> }
+                </div>
                           </p>
-                        )) : <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>Not Added</p>}
+                     : <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>Not Added</p>}
                         <div>
 
                         </div>
@@ -146,6 +163,8 @@ var {claims} = props
                     </div>
                   </div>
                 </div>
+                {/* <h5 style={{fontFamily:"sans-serif", margin: " 0 0.2rem" , padding:"1rem"}} >Assignees</h5> */}
+              
         </div>
       <div className={`card-body col-8 jumbotron `} style={{margin:"1rem 0"}} >
         <div>
@@ -154,11 +173,22 @@ var {claims} = props
           {/* {x.claims.map((y, j) => {
             return ( */}
           <div>
+         
             <h6>Protection Type : {claims?.claimType}</h6>
             <div className="row">
+            <div className="col-12">
+                <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                      Title : {claims?.title}
+                    </p>
+              </div>
+              <div className="col-12">
+                <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif", whiteSpace:"pre-line" }}>
+                      Description : {claims?.description}
+                    </p>
+              </div>
               <div className="col-12">
                 <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                      Description : {claims?.description}
+                     Waiting : {claims?.waitTo}
                     </p>
               </div>
             </div>
@@ -172,7 +202,7 @@ var {claims} = props
                 fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
               }}
             >
-              <p className={style.p2}>{`Total: $${claims?.price}`}</p>
+              <p>{`Total: $${claims?.price}`}</p>
             </div>
           </div>
 
@@ -220,7 +250,7 @@ var {claims} = props
           </div>
           <div className="row" style={{ margin: "1rem 0" }}>
             <div className="col-8"></div>
-            <div className="col-2" style={{ transform: "translateX(10rem)" }}>
+            <div className="col-2" style={{ transform:"translateX(5rem)" }}>
               {claims?.status == "open" ? (
                 <Button
                   // name="Add Update"
@@ -234,7 +264,7 @@ var {claims} = props
               {claims?.status == "open" ? (
                 <Button
                   // name="Close Claim"
-                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(4rem)" }}
+                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(2.5rem)" }}
                   onClick={() => handleCloseJob()}
                 >Close Claim</Button>
               ) : null}
@@ -245,6 +275,7 @@ var {claims} = props
 
       <Modal 
       show={show} onHide={handleClose}
+      dialogClassName = {style.modal}
        scrollable centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Update</Modal.Title>

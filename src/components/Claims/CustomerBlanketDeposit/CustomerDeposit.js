@@ -24,10 +24,16 @@ const CustomerDeposit = (props) => {
   }
   ]
   const [blankets, setBlankets] = useState([])
+  const [formFields, setFormFields] = useState({
+    quantity:'',
+    cost:''
+  })
   const [edit, setEdit] = useState(true)
+  var [quantityValue, setQuantityValue] = useState('')
 
   useEffect(() => {
     getDeposits().then(res => {
+      console.log(res.data.blanketDeposit)
       setBlankets(res.data.blanketDeposit)
     })
   }, []);
@@ -47,6 +53,7 @@ const CustomerDeposit = (props) => {
   const closeEdit = (i, type) => {
     let newData = cloneDeep(blankets);
     newData[i].edit = !newData[i].edit;
+    console.log(newData[i].edit)
     setBlankets(newData)
     // Call Api
     if (type == 'save') {
@@ -64,7 +71,26 @@ const CustomerDeposit = (props) => {
       }).catch(err => console.log(err))
     }
   }
- 
+ var makeInputFieldEditible = (e, i) => {
+   console.log("function called")
+  let newData = cloneDeep(blankets);
+  newData[i].edit = !newData[i].edit;
+  
+  console.log(newData[i].edit)
+  setBlankets(newData)
+ }
+ var handleInput = (e, i) => {
+var {name, value} = e.target;
+let newData = cloneDeep(blankets);
+newData[i].quantity = value
+console.log(name, value, newData[i].quantity)
+setBlankets(newData)
+// setFormFields({
+//   ...formFields,
+//   [name]: value
+// })
+ }
+ var {quantity, deposit} = formFields
   return <div>
     <div className="row">
       <div className="col-2">
@@ -86,7 +112,7 @@ const CustomerDeposit = (props) => {
         {blankets && blankets.length > 0 ?
           <div className = "col-12">
             <div className={`row ${style.myrow}`}  >
-              <div className={`col-4`} style={{fontWeight:"bold"}}>
+              <div className={`col-2`} style={{fontWeight:"bold"}}>
                 <h6>Customer</h6>
               </div>
               <div className={`col-3`} style={{fontWeight:"bold"}}>
@@ -95,6 +121,7 @@ const CustomerDeposit = (props) => {
               <div className={`col-3 `} style={{fontWeight:"bold"}}>
                 <h6>Deposit</h6>
               </div>
+              <div className="col-2" style={{fontWeight:"bold"}}>Last Updated</div>
               <div className={`col-2 `} style={{fontWeight:"bold"}}>
                 <h6>Actions</h6>
               </div>
@@ -107,29 +134,63 @@ const CustomerDeposit = (props) => {
                   return (
                     <li key={i} className={`list-group-item ${style.list}`} style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
                       <div className={`row `}>
-                        <div className="col-4">
+                        <div className="col-2">
                           <label>{x?.customer?.firstName} {x?.customer?.lastName}</label>
                         </div>
                         {/* <div className="col-3">
                     <input type="number" value={x.quantity} onChange = {(e) => x.quantity == e.target.value}/>
                   </div> */}
                         <div class={`col-3 `}>
-                          <div class={`input-group`}>
-                            {!x.edit ? <span class="input-group-btn">
+                          <div >
+                            {/* {!x.edit ? <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" onClick={() => decrement(x, i)}>
                                 <span class="fa fa-minus" style = {{transform: "translateY(-0.25rem)"}}></span>
                               </button>
-                            </span> : null}
-                            <input disabled={x.edit} type="text" class={`form-control input-number `} value={x.quantity} min="1" onChange={() => console.log('Changed')}></input>
-                            {!x.edit ? <span class="input-group-btn">
+                            </span> : null} */}
+                            <span 
+                             onDoubleClick={(e) =>{
+                              //  setEdit(!edit)
+                              makeInputFieldEditible(e, i) 
+                             }
+                            }
+                             >
+                            <input  onChange = {(e) => handleInput(e,i)}
+                             disabled={x.edit} 
+                             type="text" class={`form-control input-number `}
+                             name = "quantity"
+                             value={x.quantity} 
+                            //  min="1" 
+                            
+                             >
+                              
+                             </input>
+                             </span>
+                            {/* {!x.edit ? <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" onClick={() => increment(x, i)}>
                                 <span class="fa fa-plus" style = {{transform: "translateY(-0.25rem)"}}></span>
                               </button>
-                            </span> : null}
+                            </span> : null} */}
                           </div>
                         </div>
-                        <div className="col-3">
-                          <label>{x.quantity * 15}$</label>
+                        <div className="col-3" >
+                          <span  onDoubleClick={(e) =>{
+                            // setEdit(!edit)
+                            makeInputFieldEditible(e, i)
+                          } }>
+                          <input onChange = {(e) => handleInput(e,i)}
+                          disabled = {x.edit}
+                          type="text"
+                          name = "cost"
+                           class={`form-control input-number `} value={x.quantity * 15}$
+                          // min="1"
+                         
+                          
+                          >
+                            </input>
+                            </span>
+                        </div>
+                        <div className="col-2">
+                <label htmlFor="">{x.updatedAt.split("T")[0]} <span> | </span>{x.updatedAt.split("T")[1].split(".")[0]}</label>
                         </div>
                         <div className="col-2">
                           {x.edit ? <div>

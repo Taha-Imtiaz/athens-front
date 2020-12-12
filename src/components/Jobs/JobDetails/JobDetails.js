@@ -228,7 +228,7 @@ const JobDetails = (props) => {
                 </div>
                 <div className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                   <div className="col-12" >
-                    <p className={style.para} style={{ whiteSpace: "pre" }}> {job.description}</p>
+                    <p className={style.para} style={{whiteSpace:"pre-line"}}> {job.description}</p>
                   </div>
                 </div>
 

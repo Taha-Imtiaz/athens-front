@@ -5,11 +5,19 @@ import { getAllCustomers } from "../../Redux/Customer/customerActions";
 import { getAllJobs } from "../../Redux/Job/jobActions";
 import { getUsers } from "../../Redux/User/userActions";
 import { getMover, moverSearchFilter } from "../../Redux/Mover/moverActions";
+import { getAllClaims } from "../../Redux/Claims/claimsActions";
 
 const SearchBar = (props) => {
-  var { getAllCustomers, getAllJobs, getUsers, moverSearchFilter } = props;
+  var {
+    getAllCustomers,
+    getAllJobs,
+    getUsers,
+    moverSearchFilter,
+    getAllClaims,
+  } = props;
 
   var title = props.title;
+  console.log(props.claimStatus)
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
@@ -53,6 +61,25 @@ const SearchBar = (props) => {
           },
         };
         getUsers(usersObj);
+      }
+    } else if (props.type === "claims") {
+      console.log(props.type, searchValue);
+      if (searchValue) {
+        console.log(e.target.value);
+        console.log(props.claimStatus)
+        var usersObj = {
+          query: e.target.value,
+          status: props.claimStatus,
+          page: 1,
+        };
+        getAllClaims(usersObj);
+      } else {
+        var usersObj = {
+          query: "",
+          status: props.claimStatus,
+          page: 1,
+        };
+        getAllClaims(usersObj);
       }
     } else if (props.type === "mover") {
       if (searchValue) {
@@ -163,5 +190,6 @@ var actions = {
   getAllJobs,
   getUsers,
   moverSearchFilter,
+  getAllClaims,
 };
 export default connect(mapStateToProps, actions)(SearchBar);

@@ -16,7 +16,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
+// import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 import { parse } from "date-fns";
 import {
   Avatar,
@@ -43,6 +43,9 @@ import {
   faBan
 } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-horizontal-datepicker";
+
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+
 var moverAssignedDate;
 
 const DailySchedule = (props) => {
@@ -51,7 +54,7 @@ const DailySchedule = (props) => {
   const [jobToUpdate, setJobToUpdate] = useState([]);
   const [allMovers, setAllMovers] = useState();
   const [showIndex, setShowIndex] = useState(null);
-  const [today, setToday] = useState(new Date());
+  const [today, setToday] = useState(new Date().toString());
   const [startDate, setStartDate] = useState(new Date());
   const [day, setDay] = useState(new Date().getDay());
   const [weekNames, setWeekNames] = useState();
@@ -63,23 +66,12 @@ const DailySchedule = (props) => {
   const { getalljobs, getalljobsfiveday, jobs, movers, newDate } = props;
 
   useEffect(() => {
-    let isMounted = true;
-    console.log('Use effect 1' , newDate)
-    setToday(newDate)
     getalljobs({
-      date: new Date(newDate).toString(),
+      date: today,
     });
-    return () => { isMounted = false };
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-    console.log('Use effect 2')
     getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
-      date: date,
+      date: today,
     });
-    return () => { isMounted = false };
-
   }, []);
 
   const generatePDF = (e, job) => {
@@ -170,123 +162,15 @@ const DailySchedule = (props) => {
       />,
     },
   ];
-  useEffect(() => {
-    let isMounted = true;
-    console.log('Use effect 3')
-    switch (day) {
-      case 0:
-        setWeekNames([
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ]);
-        break;
-      case 1:
-        setWeekNames([
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ]);
-        break;
-      case 2:
-        setWeekNames([
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-          "Monday",
-        ]);
-        break;
-      case 3:
-        setWeekNames([
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-        ]);
-        break;
-      case 4:
-        setWeekNames([
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-        ]);
-        break;
-      case 5:
-        setWeekNames([
-          "Friday",
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-        ]);
-        break;
-      case 6:
-        setWeekNames([
-          "Saturday",
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-        ]);
-        break;
-      default:
-        setWeekNames([]);
-    }
-    return () => { isMounted = false };
-  }, []);
-
-  const handleDateChange = (i) => {
-    setIndexDate(i);
-    let date = new Date();
-    let itemDate = new Date(startDate); // starting today
-    date.setDate(itemDate.getDate() + i);
-    setToday(date);
-    setOpenedPopoverId(null);
-    setAnchorEl(null);
-  };
-
-  const assigneeList = (list) => {
-    var moversObj = {
-      name: "",
-      address: "",
-      attributes: "",
-    };
-    getAllMovers(moversObj).then((moverRes) => {
-      var mover = moverRes.data.movers.map((mover) => mover);
-      setAllMovers(mover);
-    });
-    setJobToUpdate(list);
-    setShow(true);
-  };
 
   const handleClose = () => {
     setShow(false);
   };
 
   const updateJobAssignee = (e, job) => {
-    e.stopPropagation();
+    if (e) {
+      e.stopPropagation();
+    }
     var { loggedinUser, showMessage, changeDate } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
@@ -297,7 +181,12 @@ const DailySchedule = (props) => {
       .then((res) => {
         if (res.data.status == 200) {
           showMessage(res.data.message);
-          props.history.push("/schedule/daiily");
+          getalljobs({
+            date: today,
+          });
+          getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
+            date: today,
+          });
         }
       })
       .catch((error) => {
@@ -307,6 +196,7 @@ const DailySchedule = (props) => {
 
   const removeAssignee = (e, job, assignee) => {
     e.stopPropagation();
+    e.preventDefault();
     var { loggedinUser, showMessage } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
@@ -324,7 +214,7 @@ const DailySchedule = (props) => {
         if (res.data.status == 200) {
           showMessage(res.data.message);
           getalljobs({
-            date: today.toString(),
+            date: today,
           });
           getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
             date: today,
@@ -361,93 +251,12 @@ const DailySchedule = (props) => {
     history.push(`/job/details/${jobId}`);
   };
 
-  const onStart = (e, p) => {
-    // this.setState({ activeDrags: ++this.state.activeDrags });
-  };
-
-  const onStop = () => {
-    // this.setState({ activeDrags: --this.state.activeDrags });
-  };
-
-  const onDrag = (e, p) => {
-    // let el = document.elementsFromPoint(e.clientX, e.clientY);
-  };
-
-  const onControlledDragStop = (e, position) => {
-    e.stopPropagation()
-    var id = document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
-      ?.children[1] ?.innerHTML
-        ? parseInt(
-          document.elementsFromPoint(e.pageX, e.pageY)[7] ?.children[1]
-            ?.children[1] ?.innerHTML
-        )
-        : parseInt(
-          document.elementsFromPoint(e.pageX, e.pageY)[3] ?.children[1]
-            ?.children[1] ?.innerHTML
-        );
-
-    let jobIndex = props.jobs.data.jobs.findIndex(
-      (x) => x.jobId == parseInt(id)
-    );
-    if (jobIndex != -1) {
-      var moverId = document.elementsFromPoint(e.pageX, e.pageY)[0].children[1]
-        .innerHTML;
-      var requiredJob = props.jobs.data.jobs.filter(
-        (job) => job.jobId === parseInt(id)
-      );
-      let assigneesId = requiredJob[0].assignee.map((x) => x._id);
-
-      let index = requiredJob[0].assignee.findIndex((x) => x._id == moverId);
-      if (index != -1) {
-        // Already Assigned
-        var { showMessage, changeDate } = props;
-        showMessage("Already Assigned");
-        changeDate(today)
-        props.history.push("/schedule/daiily");
-      } else {
-        let index = movers.findIndex((x) => x.mover._id == moverId);
-        moverAssignedDate = movers[index].mover.jobs.filter((job) =>
-          job.dates.some((date) => date === today.toDateString())
-        );
-        let moverJobs = moverAssignedDate.length > 0 ? true : false;
-
-        if (moverJobs) {
-          var { changeDate } = props;
-          changeDate(today)
-          setModalShow(true);
-          var mover = movers.find((x) => x.mover._id == moverId);
-          if (mover !== -1) {
-            setMover(mover);
-            var newAssigneeObj = {
-              moverId,
-              assigneesId: assigneesId,
-              requiredJob: requiredJob[0],
-            };
-            setAssignee(newAssigneeObj);
-          }
-        } else {
-          assigneesId.push(moverId);
-          requiredJob[0].assigneesId = assigneesId;
-          let job = cloneDeep(requiredJob[0]);
-          updateJobAssignee(e, job);
-        }
-      }
-    } else {
-      var { showMessage, changeDate } = props;
-      changeDate(today)
-      console.log(today)
-      showMessage("Please drop on assignee list.");
-      props.history.push("/schedule/daiily");
-    }
-  };
-
-  const dragHandlers = { onStart, onStop: onControlledDragStop, onDrag };
-
   var updateJobAssigneeList = (e, moverObj) => {
     e.stopPropagation();
+    setModalShow(false);
     moverObj.assigneesId.push(moverObj.moverId);
-    moverObj.requiredJob.assigneesId = moverObj.assigneesId;
-    let job = cloneDeep(moverObj.requiredJob);
+    moverObj.jobToUpdate.assigneesId = moverObj.assigneesId;
+    let job = cloneDeep(moverObj.jobToUpdate);
     updateJobAssignee(e, job);
   };
 
@@ -479,419 +288,511 @@ const DailySchedule = (props) => {
   };
 
   const Navigate = (e) => {
-    changeDate(newDate)
-    props.history.push("/schedule/daiily");
+    setModalShow(false);
+    // props.history.push("/schedule/daiily");
   };
 
   const open = Boolean(anchorEl);
 
   const onSelectedDay = (d) => {
-    console.log(d, new Date())
     getalljobs({
       date: d.toString(),
     });
-    setToday(d);
-    changeDate(d)
+    getalljobsfiveday({
+      date: d.toString(),
+    });
+    setToday(new Date(d).toString())
     setOpenedPopoverId(null);
     setAnchorEl(null);
   }
+
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result
+    let moverId = source.droppableId;
+    if (!destination) {
+      var { showMessage } = props;
+      showMessage("Please drop on job item.");
+      return
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      var { showMessage } = props;
+      showMessage("Please drop on job item.");
+      return
+    }
+
+
+    var jobToUpdate = props.jobs.data.jobs.filter(
+      (job) => job.jobId === parseInt(destination.droppableId)
+    );
+
+    if (jobToUpdate.length > 0) {
+
+      let index = jobToUpdate[0].assignee.findIndex((x) => x._id == source.droppableId);
+      if (index != -1) {
+        // Already Assigned
+        var { showMessage } = props;
+        showMessage("Already Assigned");
+      } else {
+        let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
+
+        let index = movers.findIndex((x) => x.mover._id == moverId);
+        moverAssignedDate = movers[index].mover.jobs.filter((job) =>
+          job.dates.some((date) => date === new Date(today).toDateString())
+        );
+        let moverJobs = moverAssignedDate.length > 0 ? true : false;
+
+        if (moverJobs) {
+          var { changeDate } = props;
+          setModalShow(true);
+          var mover = movers.find((x) => x.mover._id == moverId);
+          setMover(mover);
+          var newAssigneeObj = {
+            moverId,
+            assigneesId: assigneesId,
+            jobToUpdate: jobToUpdate[0],
+          };
+          setAssignee(newAssigneeObj);
+        } else {
+          assigneesId.push(moverId);
+          jobToUpdate[0].assigneesId = assigneesId;
+          let job = cloneDeep(jobToUpdate[0]);
+          updateJobAssignee(null, job);
+        }
+      }
+    }
+  }
+
 
   return (
     <div className={`row `}>
       <div className="col-2" style={{}}>
         <SideBar routes={routes} />
       </div>
-
-      <div className={`col-8`}>
-        <DatePicker
-          endDate={365}
-          getSelectedDay={(e) => { onSelectedDay(e) }}
-          labelFormat={"MMMM yyyy"}
-          color={"#181F47"} // #00ADEE
-          selectDate={newDate}
-        />
-        <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
-        <div className="row justify-content-md-center">
-          <div
-            className="col-2"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Total Jobs: `}{" "}
-              <span style={{ fontWeight: "normal" }}>
-                {props.jobs ?.data ?.jobs.length}
-              </span>{" "}
-            </h6>
-          </div>
-          <div
-            className="col-3"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              {`Movers Available:`}{" "}
-              <span style={{ fontWeight: "normal" }}>
-                {" "}
-                {props.movers ?.length}
-              </span>{" "}
-            </h6>
-          </div>
-          <div
-            className="col-3"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <h6 style={{ fontFamily: "sans-serif" }}>
-              Movers Required: {props.jobs ?.data ?.jobs.length > 0 ? (
-                props.jobs.data.jobs.reduce(
-                  (sum, currentValue) => sum + currentValue.assigneeRequired,
-                  0
-                )
-              ) : (
-                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                    0
-                </span>
-                )}
-            </h6>
-          </div>
-          <div className="col-2">
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-              }}
-              onClick={printAllJobs}
-            >
-              <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
-              Print All
-            </Button>
-          </div>
-        </div>
-        <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
-        {props.jobs ?.data.jobs.length > 0 && (
-          <div
-            className={`row card-header`}
-            style={{
-              fontWeight: "bold",
-              margin: "1rem 0",
-              backgroundColor: "transparent",
-              borderBottom: "none",
-              fontFamily: "sans-serif",
-            }}
-          >
-            <div className="col-3">Title</div>
-            <div className="col-2">Movers Req.</div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className={`col-8`}>
+          <DatePicker
+            endDate={365}
+            getSelectedDay={(e) => { onSelectedDay(e) }}
+            labelFormat={"MMMM yyyy"}
+            color={"#181F47"} // #00ADEE
+            selectDate={newDate}
+          />
+          <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
+          <div className="row justify-content-md-center">
             <div
               className="col-2"
+              style={{ display: "flex", alignItems: "center" }}
             >
-              Time
+              <h6 style={{ fontFamily: "sans-serif" }}>
+                {`Total Jobs: `}{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  {props.jobs ?.data ?.jobs.length}
+                </span>{" "}
+              </h6>
             </div>
-            <div className="col-3">Assignee</div>
-
+            <div
+              className="col-3"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <h6 style={{ fontFamily: "sans-serif" }}>
+                {`Movers Available:`}{" "}
+                <span style={{ fontWeight: "normal" }}>
+                  {" "}
+                  {props.movers ?.length}
+                </span>{" "}
+              </h6>
+            </div>
+            <div
+              className="col-3"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <h6 style={{ fontFamily: "sans-serif" }}>
+                Movers Required: {props.jobs ?.data ?.jobs.length > 0 ? (
+                  props.jobs.data.jobs.reduce(
+                    (sum, currentValue) => sum + currentValue.assigneeRequired,
+                    0
+                  )
+                ) : (
+                    <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                      0
+                </span>
+                  )}
+              </h6>
+            </div>
             <div className="col-2">
-              <span style={{ float: "right" }}>Action</span>
+              <Button
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                }}
+                onClick={printAllJobs}
+              >
+                <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
+                Print All
+            </Button>
             </div>
           </div>
-        )}
+          <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
+          {props.jobs ?.data.jobs.length > 0 && (
+            <div
+              className={`row card-header`}
+              style={{
+                fontWeight: "bold",
+                margin: "1rem 0",
+                backgroundColor: "transparent",
+                borderBottom: "none",
+                fontFamily: "sans-serif",
+              }}
+            >
+              <div className="col-3">Title</div>
+              <div className="col-2">Movers Req.</div>
+              <div
+                className="col-2"
+              >
+                Time
+            </div>
+              <div className="col-3">Assignee</div>
 
-        {props.jobs && props.jobs.data.jobs.length > 0 ? (
-          props.jobs.data.jobs.map((list, i) => {
-            return (
-              <div id="accordion" key={i}>
-                <div
-                  className="row"
-                  style={{
-                    overflow: "hidden",
-                    width: "100%",
-                    display: "flex",
-                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                  }}
-                  className="card-header"
-                  aria-expanded="true"
-                  data-toggle="collapse"
-                  data-target={`#collapse${i}`}
-                  aria-controls="collapse"
-                  id="headingOne"
-                  onClick={() => toggleCollapse(i)}
-                  onDoubleClick={() => jobDetailsNavigate(list._id)}
-                >
-                  <div
-                    className="col-3"
-                  >
-                    {list.title}
-                  </div>
-
-                  <div className="col-2">
-                    <span> {list.assigneeRequired}</span>{" "}
-                    <span style={{ display: "none" }}>{list.jobId}</span>
-                  </div>
-
-                  <div
-                    className="col-2"
-                  >
-                    {list.startTime ? list.startTime : "N/A"}
-                  </div>
-                  <div className="col-3" style={{}}>
-                    {list.assignee.length > 0 ? (
-                      <div style={{ width: "100%" }}>
-                        {list.assignee.map((assignee, i) => (
-                          <ListItem
-                            key={i}
-                            style={{
-                              width: "100%",
-                              position: "relative",
-                              margin: "0",
-                              padding: "0",
-                            }}
-                          >
-                            <span style={{ padding: "0 0.4rem" }}> &#42;</span>
-                            <ListItemText
-                              style={{ width: "90%" }}
-                              primary={assignee.name}
-                            />
-
-                            <FontAwesomeIcon
-                              style={{
-                                color: "#a8a8a8",
-                                width: "10%",
-                              }}
-                              onClick={(e) =>
-                                removeAssignee(e, list, assignee._id)
-                              }
-                              icon={faTimes}
-                              size="1x"
-                            />
-                          </ListItem>
-                        ))}
-                      </div>
-                    ) : (
-                        " N/A"
-                      )}
-                  </div>
-                  <Modal
-                    show={modalShow}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    onHide={(e) => Navigate(e)}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title id="contained-modal-title-vcenter">
-                        Confirmation
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      {mover && (
-                        <h5>
-                          {" "}
-                          {mover.mover.name}{" "}
-                          <span style={{ fontWeight: "normal" }}>
-                            has been assigned to these jobs:
-                          </span>{" "}
-                        </h5>
-                      )}
-                      <div>
-                        {mover && (
-                          <div style={{ margin: "1.5rem 1rem" }}>
-                            {moverAssignedDate.map((job, i) => (
-                              <div className="row" key={i}>
-                                <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
-                                  style={{ textDecoration: "none", cursor: 'pointer' }}>
-                                  &#42;
-                                  {job.title}
-                                </a>{" "}
-                                <Chip
-                                  className="col-2"
-                                  label={job.startTime ? job.startTime : 'N/A'}
-                                  clickable
-                                  color="primary"
-                                  variant="outlined"
-                                ></Chip>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        onClick={(e) => updateJobAssigneeList(e, newAssignee)}
-                      >
-                        Confirm
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          Navigate(e);
-                        }}
-                      >
-                        Close
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                  <div className="col-2">
-                    <small
-                      style={{
-                        float: "right",
-                      }}
-                    >
-                      <button
-                        onClick={(e) => generatePDF(e, list)}
-                      >
-                        <i
-                          className="fa fa-print"
-                        ></i>
-                        Print
-                      </button>
-                    </small>
-                  </div>
-                </div>
-                <div
-                  id={`collapse${i}`}
-                  className="collapse"
-                  aria-labelledby="headingOne"
-                  data-parent="#accordion"
-                >
-                  <div className="card-body">
-                    <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
-                    <div className="row">
-                      <div className="col-3">
-                        <h6>Job Id</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Title</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Job Type</h6>
-                      </div>
-                      <div className="col-3">
-                        <h6>Status</h6>
-                      </div>
-                    </div>
-
-                    <div
-                      className="row"
-                      style={{
-                        fontSize: "0.92rem",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      <div className="col-3">{list.jobId}</div>
-                      <div className="col-3">{list.title}</div>
-                      <div className="col-3">{list.jobType}</div>
-                      <div className="col-3">
-                        <Chip
-                          label={list.status}
-                          clickable
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        ></Chip>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <h5
-                        style={{
-                          margin: "1rem 0",
-                          transform: "translateX(1rem)",
-                        }}
-                      >
-                        Job Description
-                      </h5>
-                    </div>
-                    <div
-                      className="row"
-                      style={{
-                        margin: "0.4rem 0",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      <p style={{ whiteSpace: "pre" }}>{list.description}</p>
-                    </div>
-                    <hr />
-                    <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
-                    <div className="row">
-                      <div className="col-4">
-                        <h6>Name</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Email</h6>
-                      </div>
-                      <div className="col-4">
-                        <h6>Phone</h6>
-                      </div>
-                    </div>
-                    <div
-                      className="row "
-                      style={{
-                        fontSize: "0.92rem",
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      <div className="col-4">
-                        {list.customer.firstName} {list.customer.lastName}
-                      </div>
-                      <div className="col-4">{list.customer.email}</div>
-                      <div className="col-4">{list.customer.phone}</div>
-                    </div>
-                  </div>
-                </div>
+              <div className="col-2">
+                <span style={{ float: "right" }}>Action</span>
               </div>
-            );
-          })
-        ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
             </div>
           )}
-      </div>
-
-      <div className={`col-2 ${style.mov}`} id="mov">
-        <div className={style.scroll}>
-          <h4 className={style.movehead}>Movers</h4>
-          {movers &&
-            movers.map((list, i) => {
+          {props.jobs && props.jobs.data.jobs.length > 0 ? (
+            props.jobs.data.jobs.map((list, i) => {
               return (
-                <div key={i}>
-                  <div
-                    className="row"
-                    style={{
-                      fontFamily:
-                        "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                    }}
-                  >
-                    <Draggable
-                      {...dragHandlers}
-                      defaultPosition={{ x: 0, y: 0 }}
-                    >
-                      <div className="col-12">
-                        {" "}
-                        <h6
-                          style={{ cursor: "pointer" }}
-                          key={i}
-                          className={style.movname}
+                <Droppable droppableId={list.jobId.toString()} type="TASK" key={i}>
+                  {(provided, snapshot) => (
+                    <div id="accordion" key={i}
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}>
+                      <div
+                        className="row"
+                        style={{
+                          overflow: "hidden",
+                          width: "100%",
+                          display: "flex",
+                          fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                        className="card-header"
+                        aria-expanded="true"
+                        data-toggle="collapse"
+                        data-target={`#collapse${i}`}
+                        aria-controls="collapse"
+                        id="headingOne"
+                        onClick={() => toggleCollapse(i)}
+                        onDoubleClick={() => jobDetailsNavigate(list._id)}
+                      >
+                        <div
+                          className="col-3"
                         >
-                          <label style={{ fontWeight: "normal" }}>
-                            {i + 1}.
-                          </label>{" "}
-                          {list.mover.name}{" "}
-                          <span
-                            className="assigneeId"
-                            style={{ display: "none" }}
+                          {list.title}
+                        </div>
+
+                        <div className="col-2">
+                          <span> {list.assigneeRequired}</span>{" "}
+                          <span style={{ display: "none" }}>{list.jobId}</span>
+                        </div>
+
+                        <div
+                          className="col-2"
+                        >
+                          {list.startTime ? list.startTime : "N/A"}
+                        </div>
+                        <div className="col-3" style={{}}>
+                          {list.assignee.length > 0 ? (
+                            <div style={{ width: "100%" }}>
+                              {list.assignee.map((assignee, i) => (
+                                <ListItem
+                                  key={i}
+                                  style={{
+                                    width: "100%",
+                                    position: "relative",
+                                    margin: "0",
+                                    padding: "0",
+                                  }}
+                                >
+                                  <span style={{ padding: "0 0.4rem" }}> &#42;</span>
+                                  <ListItemText
+                                    style={{ width: "90%" }}
+                                    primary={assignee.name}
+                                  />
+                                  <FontAwesomeIcon
+                                    style={{
+                                      color: "#a8a8a8",
+                                      width: "10%",
+                                    }}
+                                    onClick={(e) =>
+                                      removeAssignee(e, list, assignee._id)
+                                    }
+                                    icon={faTimes}
+                                    size="1x"
+                                  />
+                                </ListItem>
+                              ))}
+                            </div>
+                          ) : (
+                              " N/A"
+                            )}
+                        </div>
+                        <Modal
+                          show={modalShow}
+                          size="lg"
+                          aria-labelledby="contained-modal-title-vcenter"
+                          centered
+                          onHide={(e) => Navigate(e)}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                              Confirmation
+                        </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {mover && (
+                              <h5>
+                                {" "}
+                                {mover.mover.name}{" "}
+                                <span style={{ fontWeight: "normal" }}>
+                                  has been assigned to these jobs:
+                            </span>{" "}
+                              </h5>
+                            )}
+                            <div>
+                              {mover && (
+                                <div style={{ margin: "1.5rem 1rem" }}>
+                                  {moverAssignedDate.map((job, i) => (
+                                    <div className="row" key={i}>
+                                      <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
+                                        style={{ textDecoration: "none", cursor: 'pointer' }}>
+                                        &#42;
+                                    {job.title}
+                                      </a>{" "}
+                                      <Chip
+                                        className="col-2"
+                                        label={job.startTime ? job.startTime : 'N/A'}
+                                        clickable
+                                        color="primary"
+                                        variant="outlined"
+                                      ></Chip>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              onClick={(e) => updateJobAssigneeList(e, newAssignee)}
+                            >
+                              Confirm
+                        </Button>
+                            <Button
+                              onClick={(e) => {
+                                Navigate(e);
+                              }}
+                            >
+                              Close
+                        </Button>
+                          </Modal.Footer>
+                        </Modal>
+                        <div className="col-2">
+                          <small
+                            style={{
+                              float: "right",
+                            }}
                           >
-                            {list.mover._id}
-                          </span>
-                        </h6>
+                            <button
+                              onClick={(e) => generatePDF(e, list)}
+                            >
+                              <i
+                                className="fa fa-print"
+                              ></i>
+                              Print
+                        </button>
+                          </small>
+                        </div>
                       </div>
-                    </Draggable>
-                  </div>
-                </div>
+                      <div
+                        id={`collapse${i}`}
+                        className="collapse"
+                        aria-labelledby="headingOne"
+                        data-parent="#accordion"
+                      >
+                        <div className="card-body">
+                          <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
+                          <div className="row">
+                            <div className="col-3">
+                              <h6>Job Id</h6>
+                            </div>
+                            <div className="col-3">
+                              <h6>Job Title</h6>
+                            </div>
+                            <div className="col-3">
+                              <h6>Job Type</h6>
+                            </div>
+                            <div className="col-3">
+                              <h6>Status</h6>
+                            </div>
+                          </div>
+
+                          <div
+                            className="row"
+                            style={{
+                              fontSize: "0.92rem",
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
+                          >
+                            <div className="col-3">{list.jobId}</div>
+                            <div className="col-3">{list.title}</div>
+                            <div className="col-3">{list.jobType}</div>
+                            <div className="col-3">
+                              <Chip
+                                label={list.status}
+                                clickable
+                                size="small"
+                                color="primary"
+                                variant="outlined"
+                              ></Chip>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <h5
+                              style={{
+                                margin: "1rem 0",
+                                transform: "translateX(1rem)",
+                              }}
+                            >
+                              Job Description
+                        </h5>
+                          </div>
+                          <div
+                            className="row"
+                            style={{
+                              margin: "0.4rem 0",
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
+                          >
+                            <p style={{ whiteSpace: "pre" }}>{list.description}</p>
+                          </div>
+                          <hr />
+                          <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
+                          <div className="row">
+                            <div className="col-4">
+                              <h6>Name</h6>
+                            </div>
+                            <div className="col-4">
+                              <h6>Email</h6>
+                            </div>
+                            <div className="col-4">
+                              <h6>Phone</h6>
+                            </div>
+                          </div>
+                          <div
+                            className="row "
+                            style={{
+                              fontSize: "0.92rem",
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
+                          >
+                            <div className="col-4">
+                              {list.customer.firstName} {list.customer.lastName}
+                            </div>
+                            <div className="col-4">{list.customer.email}</div>
+                            <div className="col-4">{list.customer.phone}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </Droppable>
               );
-            })}
+            })
+          ) : (
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
         </div>
-      </div>
+
+        <div className={`col-2 ${style.mov}`} id="mov">
+          <div className={style.scroll}>
+            <h4 className={style.movehead}>Movers</h4>
+            {movers &&
+              movers.map((list, i) => {
+
+                return (
+                  <div key={i}>
+                    <div
+                      className="row"
+                      style={{
+                        fontFamily:
+                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                      }}
+                    >
+                      {/* <Draggable
+                        {...dragHandlers}
+                        defaultPosition={{ x: 0, y: 0 }}
+                      > */}
+
+                      <Droppable droppableId={list.mover._id.toString()} type="TASK">
+                        {(provided, snapshot) => (
+                          <div ref={provided.innerRef}
+                            {...provided.droppableProps}>
+                            <Draggable
+                              draggableId={list.mover._id.toString()}
+                              index={i}
+                            >
+                              {(provided, snapshot) => (
+                                <div className="col-12"
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  ref={provided.innerRef}
+                                >
+                                  {" "}
+                                  <h6
+                                    style={{ cursor: "pointer" }}
+                                    key={i}
+                                    className={style.movname}
+                                  >
+                                    <label style={{ fontWeight: "normal" }}>
+                                      {i + 1}.
+                            </label>{" "}
+                                    {list.mover.name}{" "}
+                                    <span
+                                      className="assigneeId"
+                                      style={{ display: "none" }}
+                                    >
+                                      {list.mover._id}
+                                    </span>
+                                  </h6>
+                                </div>
+                              )}
+                            </Draggable>
+                          </div>
+
+                        )}
+                      </Droppable>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+
+      </DragDropContext>
+
+
+
+
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Assignees</Modal.Title>

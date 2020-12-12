@@ -26,6 +26,7 @@ const CustomerClaims = (props) => {
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
   const [showIndex, setShowIndex] = useState(null);
+  const [status, setStatus] = useState("all")
   // const [showClaimsDetail, setShowClaimsDetail] = useState(false)
 
   var [pageSize, setPageSize] = useState(10);
@@ -35,7 +36,7 @@ const CustomerClaims = (props) => {
   useEffect(() => {
     var { getAllClaims } = props;
     var claimsObj = {
-      status: "all",
+      status: status,
       page: currentPage,
       query:""
     };
@@ -128,9 +129,12 @@ const CustomerClaims = (props) => {
   const getClaimsByStatus = (e) => {
     console.log(e.target.value);
     var { getAllClaims } = props;
+    setStatus(e.target.value)
+    
     var claimsObj = {
       status: e.target.value,
       page: currentPage,
+      query:""
     };
     getAllClaims(claimsObj);
   };
@@ -142,6 +146,7 @@ const CustomerClaims = (props) => {
       setShowIndex(i);
     }
   };
+  console.log(status)
   return (
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
@@ -154,7 +159,7 @@ const CustomerClaims = (props) => {
               <h3 className = {style.head} >Claims</h3>
             </div>
             <div className="col-6"  >
-            <SearchBar type="mover" title="Type first name or email" />
+            <SearchBar type="claims" title="Type first name or email" claimStatus = {status} />
             </div>
             <div
               className={`col-2`}

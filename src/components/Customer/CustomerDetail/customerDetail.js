@@ -488,7 +488,7 @@ const CustomerDetail = (props) => {
                                   </div>
 
                                   <div className="col-12">
-                                    <p style={{ whiteSpace: "pre" }}>
+                                    <p style={{whiteSpace:"pre-line"}}>
                                       {job.description}
                                     </p>
                                   </div>
@@ -841,11 +841,11 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                          <div className="text-center">
-                            <img src="/images/no-data-found.png" />
-                          </div>
-                        )}
-                      <Modal
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
+                      <Modal dialogClassName = {style.modal}
                         show={show}
                         onHide={handleClose}
                         animation={false}

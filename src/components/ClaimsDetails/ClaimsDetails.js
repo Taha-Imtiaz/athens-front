@@ -188,7 +188,7 @@ var {claims} = props
               </div>
               <div className="col-12">
                 <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                     Waiting : {claims?.waitTo}
+                     Waiting To : {claims?.waitTo}
                     </p>
               </div>
             </div>

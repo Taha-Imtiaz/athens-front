@@ -936,13 +936,13 @@ const CustomerDetail = (props) => {
                             <h6>Customer</h6>
                           </div> */}
                           <div
-                            className={`col-1`}
+                            className={`col-2`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Job Id</h6>
                           </div>
                           <div
-                            className={`col-3`}
+                            className={`col-2`}
                             style={{ fontWeight: "bold" }}
                           >
                             <h6>Quantity</h6>
@@ -987,16 +987,16 @@ const CustomerDetail = (props) => {
                                       {deposit.customer ?.firstName} {deposit.customer ?.lastName}
                                     </label>
                                   </div> */}
-                                    <div className="col-1">
+                                    <div className="col-2">
                                       <Link
                                         to={`/job/details/${deposit ?.job._id}`}
                                       >
                                         {deposit ?.job ?.jobId}
                                       </Link>
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-2">
                                       <div className="input-group">
-                                        {edit && depositToEdit == i ? (
+                                        {/* {edit && depositToEdit == i ? (
                                           <span className="input-group-btn">
                                             <button
                                               type="button"
@@ -1022,7 +1022,7 @@ const CustomerDetail = (props) => {
                                               ></span>
                                             </button>
                                           </span>
-                                        ) : null}
+                                        ) : null} */}
                                         <input
                                           disabled={!edit}
                                           type="text"
@@ -1031,7 +1031,7 @@ const CustomerDetail = (props) => {
                                           style={{ margin: "-0.25rem 0" }}
                                           min="1"
                                         ></input>
-                                        {edit && depositToEdit == i ? (
+                                        {/* {edit && depositToEdit == i ? (
                                           <span className="input-group-btn">
                                             <button
                                               type="button"
@@ -1057,11 +1057,18 @@ const CustomerDetail = (props) => {
                                               ></span>
                                             </button>
                                           </span>
-                                        ) : null}
+                                        ) : null} */}
                                       </div>
                                     </div>
                                     <div className="col-2">
-                                      <label>{deposit.quantity * 15}$</label>
+                                    <input
+                                          disabled={!edit}
+                                          type="text"
+                                          className="form-control input-number"
+                                          value={deposit.quantity * 15}
+                                          style={{ margin: "-0.25rem 0" }}
+                                          min="1"
+                                        ></input>
                                     </div>
                                     <div className="col-3">
                                       {deposit ?.updatedAt.split("T")[0]}{" "}
@@ -1139,7 +1146,7 @@ const CustomerDetail = (props) => {
                           className={`row ${style.flex}`}
                           style={{ margin: "2rem 0" }}
                         ></div>
-                        <Modal
+                        {/* <Modal
                           dialogClassName={`${style.modal}`}
                           show={show}
                           onHide={handleClose}
@@ -1200,9 +1207,9 @@ const CustomerDetail = (props) => {
                             >
                               Close
                             </Button>
-                            {/* <Button variant="primary">Add Activity</Button> */}
+                            <Button variant="primary">Add Activity</Button> 
                           </Modal.Footer>
-                        </Modal>
+                        </Modal> */}
                       </div>
                     ) : (
                         <div className="text-center">

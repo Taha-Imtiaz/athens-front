@@ -24,12 +24,10 @@ const CustomerDeposit = (props) => {
   }
   ]
   const [blankets, setBlankets] = useState([])
-  const [formFields, setFormFields] = useState({
-    quantity:'',
-    cost:''
-  })
+  
   const [edit, setEdit] = useState(true)
-  var [quantityValue, setQuantityValue] = useState('')
+  var [quantityValue, setQuantityValue] = useState(false)
+  // var [cost, setCost] = useState('')
 
   useEffect(() => {
     getDeposits().then(res => {
@@ -83,14 +81,21 @@ const CustomerDeposit = (props) => {
 var {name, value} = e.target;
 let newData = cloneDeep(blankets);
 newData[i].quantity = value
+setQuantityValue(true)
 console.log(name, value, newData[i].quantity)
 setBlankets(newData)
-// setFormFields({
-//   ...formFields,
-//   [name]: value
-// })
+
  }
- var {quantity, deposit} = formFields
+ var changeCost = (e,i) => {
+  var {name, value} = e.target;
+  let newData = cloneDeep(blankets);
+  setQuantityValue(false)
+  newData[i].cost = value
+  console.log(newData[i].cost)
+  // setCost(value)
+  console.log(newData[i].cost)
+  setBlankets(newData)
+ }
   return <div>
     <div className="row">
       <div className="col-2">
@@ -177,11 +182,12 @@ setBlankets(newData)
                             // setEdit(!edit)
                             makeInputFieldEditible(e, i)
                           } }>
-                          <input onChange = {(e) => handleInput(e,i)}
+                          <input
+                           onChange = {(e) => changeCost(e,i)}
                           disabled = {x.edit}
                           type="text"
                           name = "cost"
-                           class={`form-control input-number `} value={x.quantity * 15}$
+                           class={`form-control input-number `} value={quantityValue === true ? x.quantity *15 : x.cost}
                           // min="1"
                          
                           

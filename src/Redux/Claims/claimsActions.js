@@ -95,6 +95,7 @@ export var addDeposit = async (data) => {
 };
 
 export var updateDeposit = async (data) => {
+  console.log(data)
   try {
     var blanket = await Axios.post(
       `user/update-blanket-deposit`,

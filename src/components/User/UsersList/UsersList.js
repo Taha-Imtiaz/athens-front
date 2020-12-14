@@ -55,14 +55,14 @@ const UsersList = (props) => {
   };
 
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div>
       {usersDocs && (
         <div>
-          <div className={`row `}>
-            <div className={`col-2 col-md-2 ${style.head}`}>
-              <h3>Users List</h3>
+          <div className={`row ${style.toprow}`}>
+            <div className="col-3">
+              <h3 className = {style.head}>Users List</h3>
             </div>
-            <div className={`col-5 col-md-6 ${style.search}`}>
+            <div className={`col-6 ${style.search}`}>
               <SearchBar type="user" title="Type name or email" />
             </div>
 
@@ -111,20 +111,20 @@ const UsersList = (props) => {
             <div className={style.jumbotron}>
               <div className="row" style={{ margin: "0.75rem 0", fontFamily: "sans-serif" }}>
                 <div
-                  className="col-4"
-                  style={{ transform: "translateX(3rem)", fontWeight: "bold" }}
+                  className="col-3"
+                  style={{  fontWeight: "bold" }}
                 >
                   Name
               </div>
                 <div
-                  className="col-5"
-                  style={{ transform: "translateX(5rem)", fontWeight: "bold" }}
+                  className="col-3"
+                  style={{  fontWeight: "bold" }}
                 >
                   Attribute
               </div>
                 <div
-                  className="col-3"
-                  style={{ transform: "translateX(4rem)", fontWeight: "bold" }}
+                  className="col-6"
+                  style={{ fontWeight: "bold" }}
                 >
                   Address
               </div>
@@ -144,7 +144,7 @@ const UsersList = (props) => {
                           }}
                         >
                           <div className="row justify-content-around">
-                            <div className="col-3 col-md-4 text-left">
+                            <div className="col-3 text-left">
                               <b>
                                 <span>
                                   {/* <input type="checkbox" id="defaultCheck1" value="" /> */}
@@ -157,14 +157,14 @@ const UsersList = (props) => {
                                 </span>
                               </b>
                             </div>
-                            <div className="col-5 col-md-4">
+                            <div className="col-3">
                               <label>
                                 {usersDoc.attributes.map(
                                   (attribute) => attribute.name
                                 )}
                               </label>
                             </div>
-                            <div className="col-2">
+                            <div className="col-6">
                               <label htmlFor="">{usersDoc.address}</label>
                             </div>
                           </div>

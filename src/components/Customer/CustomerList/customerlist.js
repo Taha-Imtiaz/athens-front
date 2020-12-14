@@ -219,17 +219,17 @@ const CustomerList = (props) => {
   return (
     <div>
       <div>
-        <div className={`row justify-content-center ${style.toprow}`}>
-          <div className="col-5 col-md-3">
+        <div className={`row  ${style.toprow}`}>
+          <div className="col-3">
             <b>
               <h3 className={style.head}>Customer List</h3>
             </b>
           </div>
 
-          <div className={`col-5 col-md-6 ${style.search}`}>
+          <div className={`col-6 ${style.search}`}>
             <SearchBar type="customer" title="Type first name or email" />
           </div>
-          <div className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}>
+          <div className={`col-2  d-flex justify-content-between ${style.filter}`}>
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"

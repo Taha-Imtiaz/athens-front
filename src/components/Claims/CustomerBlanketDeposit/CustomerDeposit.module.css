@@ -23,18 +23,27 @@
 border: 1px solid rgba(0,0,0,0.125);
 }
 .btn{
-    float: right;
-    margin: 1rem 2rem
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
-
+.list:hover {
+    background-color:  #00ADEE;
+    color: #FFF;
+}
 .head{
-    margin-top: 2%;
+    /* margin-top: 2%; */
     /* background-color: aqua; */
     /* margin-right: 10%; */
-    margin-left: 20%;
-    padding-left: 1rem;
+    /* margin-left: 20%;
+    padding-left: 1rem; */
 }
-
+.toprow{
+    margin-top: 1% !important;
+    margin-bottom: 1% !important;
+    margin-left: 50px !important;
+    /* overflow: hidden; */
+}
 @media only screen and (max-width: 576px) {
     .myrow{
         margin-top: 5%;

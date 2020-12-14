@@ -19,7 +19,7 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../Pagination/Pagination";
 import moment from "moment";
 import SearchBar from "../../SearchBar/SearchBar";
-import TimeAgo from 'react-timeago'
+import TimeAgo from "react-timeago";
 
 const CustomerClaims = (props) => {
   var { claims } = props;
@@ -27,21 +27,21 @@ const CustomerClaims = (props) => {
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
   const [showIndex, setShowIndex] = useState(null);
-  const [status, setStatus] = useState("all")
+  const [status, setStatus] = useState("all");
   // const [showClaimsDetail, setShowClaimsDetail] = useState(false)
 
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims ?.data ?.claims ?.total;
+  var totalCount = claims.claims?.data?.claims?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
     var claimsObj = {
       status: status,
       page: currentPage,
-      query: ""
+      query: "",
     };
-    console.log(claimsObj)
+    console.log(claimsObj);
     getAllClaims(claimsObj);
   }, []);
   var { claims } = props;
@@ -69,7 +69,7 @@ const CustomerClaims = (props) => {
     var claimsObj = {
       status: "all",
       page: page,
-      query: ""
+      query: "",
     };
     getAllClaims(claimsObj);
     setCurrentPage(page);
@@ -127,15 +127,15 @@ const CustomerClaims = (props) => {
   //     .catch((err) => console.log(err));
   // };
 
-  const getClaimsByStatus = (e) => {
-    console.log(e.target.value);
+  const getClaimsByStatus = (e,value) => {
+    console.log(value);
     var { getAllClaims } = props;
-    setStatus(e.target.value)
+    setStatus(value);
 
     var claimsObj = {
-      status: e.target.value,
+      status: value,
       page: currentPage,
-      query: ""
+      query: "",
     };
     getAllClaims(claimsObj);
   };
@@ -147,99 +147,106 @@ const CustomerClaims = (props) => {
       setShowIndex(i);
     }
   };
-  console.log(status)
+  console.log(status);
   return (
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
         <div>
-          <div className="row" style={{ marginTop: " 1rem" }} >
+          <div className={`row ${style.toprow}`}>
             {/* <div className="col-2">
               <SideBar routes={routes} />
             </div> */}
-            <div className="col-2" >
-              <h3 className={style.head} >Claims</h3>
+
+            <div className="col-3">
+              <h3 className={style.head}>Claims</h3>
             </div>
-            <div className="col-6"  >
-              <SearchBar type="claims" title="Type first name or email" claimStatus={status} />
+            <div className="col-6">
+              <SearchBar
+                type="claims"
+                title="Type first name or email"
+                claimStatus={status}
+              />
             </div>
+
             <div
-              className={`col-2`}
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-
-                // margin:"0 1rem"
-                // background:"red"
-              }}
+              className={`col-2  d-flex justify-content-between ${style.filter}`}
             >
-              {/* <div className={style.btn}> */}
-              <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
-                <Button
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
-                >
-                  New Claim
-                </Button>{" "}
-              </Link>
-            </div>
-            <div className="col-2"  >
+              <i
+                className="fa fa-filter dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style={{ transform: "translateY(-.3rem)" }}
+              
+              ></i>
 
-              <div className="form-group" style={{ marginRight: "1.3rem" }}>
+              <div   
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuLink"
+                style={{ margin: "-0.5rem" }}
+              >
+                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e,"all")}>All</a>
+                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e,"open")}>Open</a>
+                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e, "closed")}>Closed</a>
+              </div>
+              {/* <div className="form-group" style={{ marginRight: "1.3rem" }}>
                 <select className="form-control" onChange={getClaimsByStatus}>
                   <option value="all">All</option>
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
                 </select>
-              </div>
+              </div> */}
 
+              <div
+               
+               style={{ margin: '-0.5rem' }}
+               >
+                <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
+                <Button
+                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
+                >
+                  New Claim
+                </Button>{" "}
+              </Link> 
+              
+               
+              </div>
             </div>
           </div>
           {data.docs && data.docs.length > 0 ? (
-            <div >
+            <div className={style.jumbotron}>
               <div
-                className={`row `}
-                style={{
-
-                  margin: "0.6rem 0.5rem",
-
-                  fontWeight: "bold",
-                  fontFamily: "sans-serif",
-
-                }}
+                className={`row`}
+                style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
               >
-
                 <div className="col-3">Name</div>
                 <div className="col-2">Status</div>
-                <div className="col-3"> Waiting To</div>
-                <div className="col-3">Last Update</div>
+                <div className="col-4"> Waiting To</div>
+                <div className="col-2">Last Update</div>
               </div>
-              <div >
+              <ul  className="list-group">
+              <div className={`${style.li}`}>
                 {data.docs &&
                   data.docs.map((x, i) => {
                     return (
-                      <div>
-                        <Link to={{ pathname: `/claimsDetail/${x._id}`, claimsId: x._id }} style={{ textDecoration: "none", color: "black" }}>
-                          <div
-                            style={{
-                              height: "4rem",
-                              overflowX: "hidden",
-                              width: "100%",
-                              marginLeft: "0.5rem",
-                              marginRight: "0.5rem",
-                              fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
-
-                            }}
-                            className={`card-header row ${style.card} `}
-
-                          // aria-expanded="true"
-                          // data-toggle="collapse"
-                          // data-target={`#collapse${i}`}
-                          // aria-controls="collapse"
-                          // id="headingOne"
-                          // onClick={() => toggleCollapse(i)}
+                      
+                        <Link
+                          to={{
+                            pathname: `/claimsDetail/${x._id}`,
+                            claimsId: x._id,
+                          }}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                           <div>
+                           <li
+                            className={`checkbox list-group-item ${style.list} ${style.flex}`}
+                            key={x._id}
                           >
-
-                            <div className="col-3">
+                        
+                            <div className={`col-3 d-flex  text-left ${style.flex}` }>
                               <h6
                               // style={{
                               //   transform: "translate3d(13rem, -1.8rem, 0)",
@@ -249,157 +256,155 @@ const CustomerClaims = (props) => {
                               </h6>
                             </div>
                             <div
-                              className="col-2"
-                            // style={{
-                            //   transform: "translate3d(30rem, -3.5rem, 0)",
-                            // }}
+                              className={`col-2 d-flex text-left ${style.flex}`}
+                              // style={{
+                              //   transform: "translate3d(30rem, -3.5rem, 0)",
+                              // }}
                             >
                               {x.status.toLocaleUpperCase()}
                             </div>
-                            <div className="col-3">
-                              <h6>
-                                {x.waitTo}
-                              </h6>
+                            <div className={`col-4 d-flex text-left ${style.flex}`}>
+                              <h6>{x.waitTo}</h6>
                             </div>
 
-
                             <div
-                              className="col-3"
-                            // style={{
-                            //   transform: "translate3d(45rem, -5rem, 0)",
-                            // }}
+                              className={`col-2 d-flex text-left ${style.flex}`}
+                              // style={{
+                              //   transform: "translate3d(45rem, -5rem, 0)",
+                              // }}
                             >
                               {x.updates.length > 0 ? (
                                 <div>
-                                  {
-                                    <TimeAgo date={x.updates[0].timestamp} />
-                                  }
+                                  {<TimeAgo date={x.updates[0].timestamp} />}
                                 </div>
                               ) : (
-                                  <div>
-                                    <TimeAgo date={x.createdAt} />
-                                  </div>
-                                )}
+                                <div>
+                                  <TimeAgo date={x.createdAt} />
+                                </div>
+                              )}
                             </div>
+                          
+                          </li>
                           </div>
                         </Link>
-                        {/* <div
-                            id={`collapse${i}`}
+                        // <div
+                        //     id={`collapse${i}`}
                            
-                            class="collapse"
-                            aria-labelledby="headingOne"
-                            data-parent="#accordion"
-                        >
-                          <div className="card-body">
-                            <div key={x._id}>
-                              <div className="row justify-content-between"></div>
+                        //     class="collapse"
+                        //     aria-labelledby="headingOne"
+                        //     data-parent="#accordion"
+                        // >
+                        //   <div className="card-body">
+                        //     <div key={x._id}>
+                        //       <div className="row justify-content-between"></div>
 
-                               {x.claims.map((y, j) => {
-                                return ( 
-                                  <div key={i}>
-                                    <h6>
-                                      Protection Type : {x.claimType}
-                                    </h6>
-                                    <div className="row">
-                                      <div className="col-12">
+                        //        {x.claims.map((y, j) => {
+                        //         return ( 
+                        //           <div key={i}>
+                        //             <h6>
+                        //               Protection Type : {x.claimType}
+                        //             </h6>
+                        //             <div className="row">
+                        //               <div className="col-12">
                             
-                                        <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                          Description : {x.description}
-                                        </p>
-                                      </div>
+                        //                 <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                        //                   Description : {x.description}
+                        //                 </p>
+                        //               </div>
 
                                       
-                                    </div>
+                        //             </div>
                                   
-                                  </div>
-                                  <hr/>
-                                  <div className="row">
-                                    <div className="col-10"></div>
-                                    <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                        <p className={style.p2}>{`Total: $${x.price}`}</p>
-                                      </div>
-                                  </div>
+                        //           </div>
+                        //           <hr/>
+                        //           <div className="row">
+                        //             <div className="col-10"></div>
+                        //             <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                        //                 <p className={style.p2}>{`Total: $${x.price}`}</p>
+                        //               </div>
+                        //           </div>
 
-                                 );
-                              })} 
+                        //          );
+                        //       })} 
 
-                               {x.length > 0 ? (
-                                <div className="row">
-                                  <div className="col-10">
+                        //        {x.length > 0 ? (
+                        //         <div className="row">
+                        //           <div className="col-10">
                                   
-                                  </div>
-                                  <div className="col-2">
-                                    <p>
-                                      {" "}
-                                      Total: $
-                                      {x.reduce(function (a, b) {
-                                        return a + b["price"];
-                                      }, 0)}
-                                    </p>
-                                  </div>
-                                </div>
-                              ) : null} 
-                              <hr />
-                              <div className="row">
-                                <div className="col-12">
-                                  {x.updates.length > 0 ? (
-                                    <div>
-                                      <h3>Updates</h3>
-                                      {x.updates.map((x, i) => (
-                                        <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                                          <div className="col-9">
-                                            <li> {x.value}</li>
-                                          </div>
-                                          <div className="col-3">
-                                            <li>
-                                              {" "}
-                                              {x.timestamp.split("T")[0]}
-                                            </li>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  ) : null}
-                                </div>
-                              </div>
-                              <div className="row" style={{ margin: "1rem 0" }}>
-                                <div className="col-8"></div>
-                                <div
-                                  className="col-2"
-                                  style={{ transform: "translateX(10rem)" }}
-                                >
-                                  {x.status == "open" ? (
-                                    <Button
-                                      // name="Add Update"
-                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
-                                      onClick={() => handleShow(i)}
-                                    >Add Update</Button>
-                                  ) : null}
-                                </div>
+                        //           </div>
+                        //           <div className="col-2">
+                        //             <p>
+                        //               {" "}
+                        //               Total: $
+                        //               {x.reduce(function (a, b) {
+                        //                 return a + b["price"];
+                        //               }, 0)}
+                        //             </p>
+                        //           </div>
+                        //         </div>
+                        //       ) : null} 
+                        //       <hr />
+                        //       <div className="row">
+                        //         <div className="col-12">
+                        //           {x.updates.length > 0 ? (
+                        //             <div>
+                        //               <h3>Updates</h3>
+                        //               {x.updates.map((x, i) => (
+                        //                 <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
+                        //                   <div className="col-9">
+                        //                     <li> {x.value}</li>
+                        //                   </div>
+                        //                   <div className="col-3">
+                        //                     <li>
+                        //                       {" "}
+                        //                       {x.timestamp.split("T")[0]}
+                        //                     </li>
+                        //                   </div>
+                        //                 </div>
+                        //               ))}
+                        //             </div>
+                        //           ) : null}
+                        //         </div>
+                        //       </div>
+                        //       <div className="row" style={{ margin: "1rem 0" }}>
+                        //         <div className="col-8"></div>
+                        //         <div
+                        //           className="col-2"
+                        //           style={{ transform: "translateX(10rem)" }}
+                        //         >
+                        //           {x.status == "open" ? (
+                        //             <Button
+                        //               // name="Add Update"
+                        //               style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                        //               onClick={() => handleShow(i)}
+                        //             >Add Update</Button>
+                        //           ) : null}
+                        //         </div>
 
-                                <div className="col-2"  >
-                                  {x.status == "open" ? (
-                                    <Button
-                                      // name="Close Claim"
-                                      style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(4rem)" }}
-                                      onClick={() => handleCloseJob(i)}
-                                    >Close Claim</Button>
-                                  ) : null}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
-                      </div>
+                        //         <div className="col-2"  >
+                        //           {x.status == "open" ? (
+                        //             <Button
+                        //               // name="Close Claim"
+                        //               style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(4rem)" }}
+                        //               onClick={() => handleCloseJob(i)}
+                        //             >Close Claim</Button>
+                        //           ) : null}
+                        //         </div>
+                        //       </div>
+                        //     </div>
+                        //   </div>
+                        // </div>
+                      
                     );
                   })}
               </div>
+           </ul>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
           {/* <Modal show={show} onHide={handleClose} dialogClassName = {style.modal} scrollable centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>
@@ -426,7 +431,6 @@ const CustomerClaims = (props) => {
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={handlePageChange}
-
             />
           </div>
         </div>

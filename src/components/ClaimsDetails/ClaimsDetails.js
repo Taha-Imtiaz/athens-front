@@ -89,7 +89,7 @@ const ClaimsDetails = (props) => {
   };
   var { claims } = props
   return (
-    <div className="row">
+    <div className={`row ${style.toprow}`}>
       <div className="col-3">
 
         <div className={`card ${style.cardCustom}`} style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "1rem 0" }}>
@@ -175,36 +175,73 @@ const ClaimsDetails = (props) => {
             return ( */}
           <div>
 
-            <h6>Protection Type : {claims ?.claimType}</h6>
+            
             <div className="row">
-              <div className="col-12">
-                <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                  Title : {claims ?.title}
-                </p>
+              <div className = {`col-5 ${style.protectionRow}` } >
+              <h5>Protection Type : </h5><span style={{fontWeight:"normal"}}>{claims ?.claimType}</span>  
               </div>
-              <div className="col-12">
-                <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", whiteSpace: "pre-line" }}>
-                  Description : {claims ?.description}
-                </p>
-              </div>
-              <div className="col-12">
-                <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                  Waiting To : {claims ?.waitTo}
-                </p>
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="row">
-            <div className="col-10"></div>
-            <div
-              className="col-2"
+              
+              <div
+              className={`col-3 ${style.protectionRow}`}
               style={{
                 fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
               }}
             >
-              <p>{`Total: $${claims ?.price}`}</p>
+              <h5>{`Total: `}</h5><span>{`$${claims ?.price}`}</span> 
             </div>
+
+              <div className="col-2" style={{ transform: "translateX(5rem)" }}>
+              {claims ?.status == "open" ? (
+                <Button
+                  // name="Add Update"
+                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
+                  onClick={() => handleShow()}
+                >Add Update</Button>
+              ) : null}
+            </div>
+
+            <div className="col-2">
+              {claims ?.status == "open" ? (
+                <Button
+                  // name="Close Claim"
+                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", transform: "translateX(2.5rem)" }}
+                  onClick={() => handleCloseJob()}
+                >Close Claim</Button>
+              ) : <Chip
+              label="Closed"
+              clickable
+              color="primary"
+              variant="outlined"
+              size="small"
+              style={{ margin: " 0 0.2rem" }}
+            /> }
+            </div>
+            </div>
+             <hr/>
+
+              <div className={`col-12 ${style.styleClaims}` } >
+                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                Title :</h5> <span style={{fontWeight:"normal"}}>{claims ?.title}</span>  
+                
+              </div>
+              <hr/>
+              <div className={`col-12 ${style.styleClaims}` }>
+                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", whiteSpace: "pre-line" }}>
+                  Description :</h5> <span style={{fontWeight:"normal", whiteSpace:"pre-line"}}>{claims ?.description}</span>  
+                
+              </div>
+              <hr/>
+              <div className={`col-12 ${style.styleClaims}` }>
+                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                  Waiting To : </h5><span style={{fontWeight:"normal"}}> {claims ?.waitTo}</span> 
+                
+              </div>
+           
+          </div>
+        
+          <div className="row">
+            <div className="col-10"></div>
+       
           </div>
           <hr />
           <div className="row">
@@ -213,26 +250,35 @@ const ClaimsDetails = (props) => {
                 <div>
                   <h3>Updates</h3>
                   {claims ?.updates.map((x, i) => (
-                    <div key={i} className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                      <div className="col-9">
-                        <li> {x.value}</li>
+                 
+                 <div>
+                 <div key={i} className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                      <div className="col-12">
+                        <li style={{listStyle:"none"}}>{`${i+ 1}.  ${x.value}`}</li>
                       </div>
-                      <div className="col-3">
-                        <li>
 
-                          {/* {x.timestamp.split("T")[0]} */}
-
-                          <TimeAgo date={x.timestamp} />
-                          {/* {" " + new Date(x.timestamp).toDateString()} {new Date(x.timestamp).toLocaleTimeString()} */}
-                        </li>
                       </div>
+                     <div className="row">
+                       <div className="col-10"></div>
+                       <div className="col-2">
+                     <li style={{listStyle:"none", color:"#a8a8a8"}}>
+
+                       {/* {x.timestamp.split("T")[0]} */}
+
+                       <TimeAgo date={x.timestamp} />
+                       {/* {" " + new Date(x.timestamp).toDateString()} {new Date(x.timestamp).toLocaleTimeString()} */}
+                     </li>
+                   </div>
+                     </div>
+                     <hr/>
                     </div>
+                    
                   ))}
                 </div>
               ) : null}
             </div>
           </div>
-          <div className="row" style={{ margin: "1rem 0" }}>
+          {/* <div className="row" style={{ margin: "1rem 0" }}>
             <div className="col-8"></div>
             <div className="col-2" style={{ transform: "translateX(5rem)" }}>
               {claims ?.status == "open" ? (
@@ -253,7 +299,7 @@ const ClaimsDetails = (props) => {
                 >Close Claim</Button>
               ) : null}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

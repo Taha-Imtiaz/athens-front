@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import style from "./JobsList.module.css";
 import DatePicker from "react-datepicker";
-import Button from "../../Button/Button";
+// import Button from "../../Button/Button";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -19,7 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 
@@ -350,19 +350,19 @@ class JobsList extends Component {
     var { popoverOpen } = this.state;
     var { show, dates } = this.state;
     return (
-      <div className={style.toprow}>
-        <div className={`row justify-content-center ${style.toprow}`}>
-          <div className="col-5 col-md-3">
+      <div>
+        <div className={`row ${style.toprow}`}>
+          <div className="col-3">
             <b>
               <h3 className={style.head}>Jobs List</h3>
             </b>
           </div>
 
-          <div className={`col-5 col-md-6 ${style.search}`}>
+          <div className={`col-6 ${style.search}`}>
             <SearchBar type="job" title="Type title or services" />
           </div>
           <div
-            className={`col-2 col-md-2 d-flex justify-content-between ${style.filter}`}
+            className={`col-2  d-flex justify-content-between ${style.filter}`}
           >
             <i
               className="fa fa-filter dropdown-toggle"
@@ -406,16 +406,16 @@ class JobsList extends Component {
             <div style={{ margin: "-0.5rem" }}>
               <Link style={{ textDecoration: "none" }} to="/job/create">
                 <Button
-                  name="Create New"
+                 
                   className=" btn btn-primary"
                   style={{
-                    background: "#00ADEE",
-                    transform:
-                      navigator.userAgent.indexOf("Firefox") !== -1
-                        ? "translateY(-3rem)"
-                        : "translateY(-4.3rem)",
+                    background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" ,
+                    // transform:
+                    //   navigator.userAgent.indexOf("Firefox") !== -1
+                    //     ? "translateY(-3rem)"
+                    //     : "translateY(-4.3rem)",
                   }}
-                ></Button>
+                >Create New</Button>
               </Link>
             </div>
           </div>

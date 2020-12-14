@@ -14,3 +14,15 @@
     max-width: 70vw;
     
   }
+  .toprow{
+    margin-top: 2%;
+    margin-left: 1%;
+} 
+.protectionRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.styleClaims {
+  display: grid;
+  grid-template-columns: 20fr 80fr;
+}

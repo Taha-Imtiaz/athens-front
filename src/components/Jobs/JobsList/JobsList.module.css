@@ -1,5 +1,7 @@
 .toprow{
-    margin-top: 1%;
+    margin-top: 1% !important;
+    margin-bottom: 1% !important;
+    margin-left: 50px !important;
 }
 
 .jumbotron{
@@ -20,7 +22,8 @@
     
 }
 .header {
-    font-family: sans-serif;
+    /* font-family: sans-serif; */
+    /* font-size:18px; */
 }
 .list:hover {
     background-color:  #00ADEE;
@@ -33,13 +36,14 @@
 }
 .filter {
     margin-top: 10px !important;
-cursor: pointer;
+    cursor: pointer;
 }
 
 .head{
-    margin-top: 2%;
+    /* margin-top: 2%;
     text-align: left;
-    margin-left: 10%;
+    margin-left: 10%; */
+    /* font-size: 18px; */
 }
 
 .btn2{

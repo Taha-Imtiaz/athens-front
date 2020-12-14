@@ -1,7 +1,7 @@
 .toprow{
     margin-top: 1% !important;
     margin-bottom: 1% !important;
-    margin-left: 2px !important;
+    margin-left: 50px !important;
     /* overflow: hidden; */
 }
 
@@ -103,7 +103,7 @@ margin-right: 2px !important;
 }
 
 .search{
-    width: 10%;
+    /* width: 10%; */
 }
 
 .filter{
@@ -128,7 +128,8 @@ margin-right: 2px !important;
 
     .head{
         font-size: 18px;
-        margin-left: 5px !important  }
+        /* margin-left: 5px !important*/
+      } 
 
     .toprow{
         margin-top: 3% !important  }

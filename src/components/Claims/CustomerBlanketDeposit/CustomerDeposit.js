@@ -89,15 +89,14 @@ const CustomerDeposit = (props) => {
   }
   return <div>
     <div className="row">
-      <div className="col-2">
-      </div>
+      
       <div className="col-12">
-        <div className="row">
+        <div className={`row  ${style.toprow}`}>
 
           <div className="col-6">
             <h3 className={style.head}>Blanket Deposit</h3>
           </div>
-          <div className="col-6">
+          <div className="col-5">
             <div className={style.btn}>
               <Link style={{ textDecoration: "none" }} to='/claim/customerdeposit/deposit'> <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Deposit</Button> </Link>
             </div>
@@ -106,7 +105,10 @@ const CustomerDeposit = (props) => {
 
         {blankets && blankets.length > 0 ?
           <div className="col-12">
-            <div className={`row ${style.myrow}`}  >
+            <div className={`row ${style.myrow}`} 
+            style={{ marginTop: "2rem", marginBottom:"0.6rem"}}
+            
+            >
               <div className={`col-2`} style={{ fontWeight: "bold" }}>
                 <h6>Customer</h6>
               </div>

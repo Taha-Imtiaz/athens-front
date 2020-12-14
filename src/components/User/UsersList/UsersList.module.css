@@ -8,6 +8,12 @@
     /* margin-top: 2%; */
 }
 
+.toprow{
+    margin-top: 1% !important;
+    margin-bottom: 1% !important;
+    margin-left: 50px !important;
+}
+
 .but{
     align-items: center;
 }
@@ -26,8 +32,8 @@
 
 .head{
     /* margin-top: 2%; */
-    float: left;
-    margin-left: 5%;
+    /* float: left;
+    margin-left: 5%; */
     /* margin-bottom: 2%; */
 }
 

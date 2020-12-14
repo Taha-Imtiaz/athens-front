@@ -156,7 +156,8 @@ const SearchBar = (props) => {
         <input
           type="text"
           className="form-control"
-          placeholder={title}
+          // placeholder={title}
+          placeholder="Search"
           style={{ outline: "transparent" }}
           onChange={(e) => {
             setSearchValue(e.target.value);

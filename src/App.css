@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
 .form_style{
   font-family: 'Roboto', sans-serif;
@@ -107,4 +108,12 @@ color: #00ADEE;
   width: 100%;
   text-align: left;
   font-size: 0.8rem;
+}
+
+.MuiBadge-anchorOriginTopRightRectangle {
+  right: -12px !important;
+ }
+
+ .DatePicker_dateLabel__GO7dX {
+  font-size: 14px !important;
 }

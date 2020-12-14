@@ -19,7 +19,9 @@ class SubmitDeposit extends Component {
     selectedJob: '',
     customerIdError: '',
     jobIdError: '',
-    quantityError: ""
+    quantityError: "",
+    costError: "",
+    disabled: true
   }
 
   componentDidMount = () => {
@@ -29,10 +31,13 @@ class SubmitDeposit extends Component {
   }
 
   handleValidate = () => {
-    var { selectedCustomer, selectedJob, quantity } = this.state
+    var { selectedCustomer, selectedJob, quantity, cost } = this.state
+    console.log(selectedCustomer, selectedJob, quantity, cost)
     let customerIdError = '';
     let jobIdError = '';
     let quantityError = '';
+    let costError = '';
+
 
     if (selectedCustomer === "") {
       customerIdError = "Customer Id should not be empty";
@@ -46,8 +51,12 @@ class SubmitDeposit extends Component {
       quantityError = "Quantity should not be empty"
     }
 
-    if (customerIdError || jobIdError || quantityError) {
-      this.setState({ customerIdError, jobIdError, quantityError })
+    if (cost === "") {
+      costError = "Cost should not be empty"
+    }
+
+    if (customerIdError || jobIdError || quantityError || costError) {
+      this.setState({ customerIdError, jobIdError, quantityError, costError })
       return false
     }
 
@@ -77,17 +86,27 @@ class SubmitDeposit extends Component {
     }
   };
 
-  handleFormInput = (e) => {
-    var { name, value } = e.target;
+  handleQuantityFormInput = (e) => {
+    var { value } = e.target;
     if (value == '') {
-      this.setState({ [name + "Error"]: "Should not be empty" })
+      this.setState({ quantityError: "Should not be empty", quantity: '' })
     } else {
-      this.setState({ [name + "Error"]: "" })
+      this.setState({
+        quantity: value,
+        cost: value * 15,
+        costError: "",
+        quantityError: ""
+      })
     }
-    this.setState({
-      [name]: value,
-      cost: value * 15
-    })
+  }
+
+  handleCostFormInput = (e) => {
+    var { value } = e.target;
+    if (value == '') {
+      this.setState({ costError: "Should not be empty", cost: '' })
+    } else {
+      this.setState({ cost: value, costError: "" })
+    }
   }
 
   getCustomerJobs = customer => {
@@ -170,13 +189,13 @@ class SubmitDeposit extends Component {
               <TextField
                 variant="outlined"
                 margin="normal"
-
+                type="number"
                 fullWidth
                 size="small"
                 name="quantity"
                 value={quantity}
                 label="Blanket Quantity"
-                onChange={this.handleFormInput}
+                onChange={this.handleQuantityFormInput}
                 error={this.state.quantityError}
                 style={{ margin: "1rem 0" }}
               />
@@ -186,14 +205,14 @@ class SubmitDeposit extends Component {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 size="small"
                 name="cost"
+                type="number"
                 value={cost}
-                disabled
                 label="Cost in $"
-                onChange={this.handleFormInput}
+                onChange={this.handleCostFormInput}
+                error={this.state.costError}
                 style={{ margin: "1rem 0" }}
               />
             </div>

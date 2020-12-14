@@ -76,6 +76,7 @@ const DailySchedule = (props) => {
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     let dates = job.dates.join(" | ");
     let services = job.services.map((e) => e.name).join(" | ");
 
@@ -196,6 +197,7 @@ const DailySchedule = (props) => {
 
   const removeAssignee = (e, job, assignee) => {
     e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     var { loggedinUser, showMessage } = props;
     let jobToUpdate = cloneDeep(job);
@@ -680,7 +682,7 @@ const DailySchedule = (props) => {
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                             }}
                           >
-                            <p style={{ whiteSpace: "pre" }}>{list.description}</p>
+                            <p style={{ whiteSpace: "pre-line" }}>{list.description}</p>
                           </div>
                           <hr />
                           <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>

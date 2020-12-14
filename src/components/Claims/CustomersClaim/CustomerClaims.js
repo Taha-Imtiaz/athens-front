@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./CustomerClaims.module.css";
 import SideBar from "../../Sidebar/SideBar";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -19,6 +19,7 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../Pagination/Pagination";
 import moment from "moment";
 import SearchBar from "../../SearchBar/SearchBar";
+import TimeAgo from 'react-timeago'
 
 const CustomerClaims = (props) => {
   var { claims } = props;
@@ -31,14 +32,14 @@ const CustomerClaims = (props) => {
 
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims?.data?.claims?.total;
+  var totalCount = claims.claims ?.data ?.claims ?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
     var claimsObj = {
       status: status,
       page: currentPage,
-      query:""
+      query: ""
     };
     console.log(claimsObj)
     getAllClaims(claimsObj);
@@ -68,7 +69,7 @@ const CustomerClaims = (props) => {
     var claimsObj = {
       status: "all",
       page: page,
-      query:""
+      query: ""
     };
     getAllClaims(claimsObj);
     setCurrentPage(page);
@@ -130,11 +131,11 @@ const CustomerClaims = (props) => {
     console.log(e.target.value);
     var { getAllClaims } = props;
     setStatus(e.target.value)
-    
+
     var claimsObj = {
       status: e.target.value,
       page: currentPage,
-      query:""
+      query: ""
     };
     getAllClaims(claimsObj);
   };
@@ -151,15 +152,15 @@ const CustomerClaims = (props) => {
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
         <div>
-          <div className="row" style={{marginTop:" 1rem"}} >
+          <div className="row" style={{ marginTop: " 1rem" }} >
             {/* <div className="col-2">
               <SideBar routes={routes} />
             </div> */}
             <div className="col-2" >
-              <h3 className = {style.head} >Claims</h3>
+              <h3 className={style.head} >Claims</h3>
             </div>
             <div className="col-6"  >
-            <SearchBar type="claims" title="Type first name or email" claimStatus = {status} />
+              <SearchBar type="claims" title="Type first name or email" claimStatus={status} />
             </div>
             <div
               className={`col-2`}
@@ -167,7 +168,7 @@ const CustomerClaims = (props) => {
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
-               
+
                 // margin:"0 1rem"
                 // background:"red"
               }}
@@ -175,22 +176,22 @@ const CustomerClaims = (props) => {
               {/* <div className={style.btn}> */}
               <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
                 <Button
-                  style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
+                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
                 >
                   New Claim
                 </Button>{" "}
               </Link>
             </div>
             <div className="col-2"  >
-              
-                <div className="form-group"style={{ marginRight:"1.3rem"}}>
-                  <select className="form-control" onChange={getClaimsByStatus}>
-                    <option value="all">All</option>
-                    <option value="open">Open</option>
-                    <option value="closed">Closed</option>
-                  </select>
-                </div>
-              
+
+              <div className="form-group" style={{ marginRight: "1.3rem" }}>
+                <select className="form-control" onChange={getClaimsByStatus}>
+                  <option value="all">All</option>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+
             </div>
           </div>
           {data.docs && data.docs.length > 0 ? (
@@ -198,15 +199,15 @@ const CustomerClaims = (props) => {
               <div
                 className={`row `}
                 style={{
-                  
-                  margin:"0.6rem 0.5rem",
-                 
+
+                  margin: "0.6rem 0.5rem",
+
                   fontWeight: "bold",
-                  fontFamily:"sans-serif",
-                 
+                  fontFamily: "sans-serif",
+
                 }}
               >
-               
+
                 <div className="col-3">Name</div>
                 <div className="col-2">Status</div>
                 <div className="col-3"> Waiting To</div>
@@ -217,80 +218,71 @@ const CustomerClaims = (props) => {
                   data.docs.map((x, i) => {
                     return (
                       <div>
-                        <Link to = {{pathname: `/claimsDetail/${x._id}`, claimsId: x._id}} style={{textDecoration: "none", color:"black"}}>
-                        <div 
-                          style={{
-                            height: "4rem",
-                            overflowX: "hidden",
-                            width: "100%",
-                            marginLeft:"0.5rem",
-                            marginRight:"0.5rem",
-                            fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
-                            
-                          }}
-                          className={`card-header row ${style.card} `}
-                       
+                        <Link to={{ pathname: `/claimsDetail/${x._id}`, claimsId: x._id }} style={{ textDecoration: "none", color: "black" }}>
+                          <div
+                            style={{
+                              height: "4rem",
+                              overflowX: "hidden",
+                              width: "100%",
+                              marginLeft: "0.5rem",
+                              marginRight: "0.5rem",
+                              fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
+
+                            }}
+                            className={`card-header row ${style.card} `}
+
                           // aria-expanded="true"
                           // data-toggle="collapse"
                           // data-target={`#collapse${i}`}
                           // aria-controls="collapse"
                           // id="headingOne"
                           // onClick={() => toggleCollapse(i)}
-                        >
-                        
-                          <div className="col-3">
-                            <h6
+                          >
+
+                            <div className="col-3">
+                              <h6
                               // style={{
                               //   transform: "translate3d(13rem, -1.8rem, 0)",
                               // }}
-                            >
-                              {x.customer.firstName} {x.customer.lastName}
-                            </h6>
-                          </div>
-                          <div
-                            className="col-2"
+                              >
+                                {x.customer.firstName} {x.customer.lastName}
+                              </h6>
+                            </div>
+                            <div
+                              className="col-2"
                             // style={{
                             //   transform: "translate3d(30rem, -3.5rem, 0)",
                             // }}
-                          >
-                            {x.status.toLocaleUpperCase()}
-                          </div>
-                          <div className="col-3">
-                            <h6>
-                              {x.waitTo}
-                            </h6>
-                          </div>
+                            >
+                              {x.status.toLocaleUpperCase()}
+                            </div>
+                            <div className="col-3">
+                              <h6>
+                                {x.waitTo}
+                              </h6>
+                            </div>
 
 
-                          <div
-                            className="col-3"
+                            <div
+                              className="col-3"
                             // style={{
                             //   transform: "translate3d(45rem, -5rem, 0)",
                             // }}
-                          >
-                            {x.updates.length > 0 ? (
-                              <div>
-                                {
-                                  x.updates[
-                                    x.updates.length - 1
-                                  ].timestamp.split("T")[0]
-                                }
-                                <span> | </span>{" "}
-                                {
-                                  x.updates[x.updates.length - 1].timestamp
-                                    .split("T")[1]
-                                    .split(".")[0]
-                                }
-                              </div>
-                            ) : (
-                              <div>
-                                {x.createdAt.split("T")[0]} <span> | </span>{" "}
-                                {x.createdAt.split("T")[1].split(".")[0]}
-                              </div>
-                            )}
+                            >
+                              {x.updates.length > 0 ? (
+                                <div>
+                                  {
+                                    <TimeAgo date={x.updates[0].timestamp} />
+                                  }
+                                </div>
+                              ) : (
+                                  <div>
+                                    <TimeAgo date={x.createdAt} />
+                                  </div>
+                                )}
+                            </div>
                           </div>
-                        </div>
-                        </Link>   
+                        </Link>
                         {/* <div
                             id={`collapse${i}`}
                            
@@ -404,10 +396,10 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
           {/* <Modal show={show} onHide={handleClose} dialogClassName = {style.modal} scrollable centered>
             <Modal.Header closeButton>
               <Modal.Title>Add Update</Modal.Title>
@@ -428,13 +420,13 @@ const CustomerClaims = (props) => {
               <Button onClick={updateClaimData} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Add</Button>
             </Modal.Footer>
           </Modal> */}
-          <div className = {style.jumbotron}>
-            <Pagination 
+          <div className={style.jumbotron}>
+            <Pagination
               itemCount={totalCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={handlePageChange}
-              
+
             />
           </div>
         </div>

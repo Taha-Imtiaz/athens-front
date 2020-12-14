@@ -56,7 +56,7 @@
 .list {
     background: rgba(0,0,0,.03);
     border: 1px solid rgba(0,0,0,0.125);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 .list:hover {
     background-color:  #00ADEE;

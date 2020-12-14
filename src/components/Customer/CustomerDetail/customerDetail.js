@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import style from "./customerdetail.module.css";
-// import Button from "../../Button/Button";
 import SideBar from "../../Sidebar/SideBar";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
 import { Modal, Alert } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
-
 import Chip from "@material-ui/core/Chip";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
@@ -18,6 +16,8 @@ import {
   updateClaim,
   updateDeposit,
 } from "../../../Redux/Claims/claimsActions";
+import Badge from '@material-ui/core/Badge';
+import TimeAgo from 'react-timeago'
 
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
@@ -94,9 +94,13 @@ const CustomerDetail = (props) => {
 
     console.log(customerClaims);
     console.log(claimCount)
-    var claimsCount = customerClaims ?.map(
-      (claim) => claim.status === "open" && setClaimCount((count) => count + 1)
-    );
+    if (customerClaims ?.length > 0) {
+      let count = customerClaims ?.map(
+        (claim) => claim.status === "open" && setClaimCount((count) => count + 1)
+      );
+    } else {
+      setClaimCount(0)
+    }
 
     // var blanketsCount = customerBlanket?.map((blanket) => setBlanketCount((count) => count + 1 ))
     setBlanketValue(customer ?.blanketDeposit);
@@ -197,6 +201,8 @@ const CustomerDetail = (props) => {
     updateClaim(data[i])
       .then((res) => {
         if (res.data.status == 200) {
+          let newCount = --claimCount;
+          setClaimCount(newCount)
           showMessage(res.data.message);
         }
       })
@@ -232,14 +238,19 @@ const CustomerDetail = (props) => {
 
                         <Tab label="Customer Information" className="col-4" />
 
-                        <Tab label={`Claims: ${claimCount}`} className="col-4" />
+                        <Tab label={<Badge badgeContent={claimCount} color="primary">Claims</Badge>} className="col-4" />
 
                         <Tab
-                          label={`Blanket: ${customer ?.blanketDeposit.reduce(
+                          // label={`Blanket: ${customer ?.blanketDeposit.reduce(
+                          //   (sum, currentValue) =>
+                          //     sum + parseInt(currentValue.quantity),
+                          //   0
+                          // )}`}
+                          label={<Badge badgeContent={customer ?.blanketDeposit.reduce(
                             (sum, currentValue) =>
                               sum + parseInt(currentValue.quantity),
                             0
-                          )}`}
+                          )} color="primary">Blankets</Badge>}
                           className="col-4"
                         />
 
@@ -406,8 +417,6 @@ const CustomerDetail = (props) => {
                                   key={i}
                                   style={{ padding: "2rem" }}
                                 >
-                                  {/* <div className="collapse multi-collapse col-6" id="multiCollapseExample1"> */}
-
                                   <div className="col-7">
                                     <Link
                                       style={{ textDecoration: "none" }}
@@ -448,10 +457,6 @@ const CustomerDetail = (props) => {
                                         </label>
                                       ))}
                                     </div>
-                                    {/* <label style={{ transform: "translateY(-1rem)" }}>
-                          {" "}
-                          {job.startTime}
-                        </label> */}
                                   </div>
                                   <div className="col-3">
                                     {job.assignee.length > 0 ? (
@@ -488,7 +493,7 @@ const CustomerDetail = (props) => {
                                   </div>
 
                                   <div className="col-12">
-                                    <p style={{whiteSpace:"pre-line"}}>
+                                    <p style={{ whiteSpace: "pre-line" }}>
                                       {job.description}
                                     </p>
                                   </div>
@@ -704,9 +709,11 @@ const CustomerDetail = (props) => {
                                 <div className="col-4">{claim.status}</div>
                                 <div className="col-4">
                                   {/* {claim ?.updatedAt.toDateString()} */}
-                                  {claim ?.updatedAt.split("T")[0]}{" "}
+                                  {/* {claim ?.updatedAt.split("T")[0]}{" "}
                                   <span>|</span>{" "}
-                                  {claim ?.updatedAt.split("T")[1].split(".")[0]}
+                                  {claim ?.updatedAt.split("T")[1].split(".")[0]} */}
+                                  <TimeAgo date={claim ?.updatedAt} />
+
                                 </div>
                               </div>
 
@@ -732,7 +739,7 @@ const CustomerDetail = (props) => {
                                       <h6>Protection Type : {claim.claimType}</h6>
                                       <div className="row">
                                         <div className="col-12">
-                                          <p className={style.para} style={{ whiteSpace: "pre" }}>
+                                          <p className={style.para} style={{ whiteSpace: "pre-line" }}>
                                             Description : {claim.description}
                                           </p>
                                         </div>
@@ -841,11 +848,11 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
-                      <Modal dialogClassName = {style.modal}
+                          <div className="text-center">
+                            <img src="/images/no-data-found.png" />
+                          </div>
+                        )}
+                      <Modal dialogClassName={style.modal}
                         show={show}
                         onHide={handleClose}
                         animation={false}
@@ -883,7 +890,6 @@ const CustomerDetail = (props) => {
                       </Modal>
                     </div>
                   </TabPanel>
-
                   <TabPanel
                     value={value}
                     index={2}
@@ -1061,23 +1067,24 @@ const CustomerDetail = (props) => {
                                       </div>
                                     </div>
                                     <div className="col-2">
-                                    <input
-                                          disabled={!edit}
-                                          type="text"
-                                          className="form-control input-number"
-                                          value={deposit.quantity * 15}
-                                          style={{ margin: "-0.25rem 0" }}
-                                          min="1"
-                                        ></input>
+                                      <input
+                                        disabled={!edit}
+                                        type="text"
+                                        className="form-control input-number"
+                                        value={deposit.quantity * 15}
+                                        style={{ margin: "-0.25rem 0" }}
+                                        min="1"
+                                      ></input>
                                     </div>
                                     <div className="col-3">
-                                      {deposit ?.updatedAt.split("T")[0]}{" "}
+                                      {/* {deposit ?.updatedAt.split("T")[0]}{" "}
                                       <span> | </span>{" "}
                                       {
                                         deposit ?.updatedAt
                                           .split("T")[1]
                                           .split(".")[0]
-                                      }{" "}
+                                      }{" "} */}
+                                      <TimeAgo date={deposit ?.updatedAt} />
                                     </div>
                                     <div className="col-3">
                                       {!edit || depositToEdit != i ? (
@@ -1220,38 +1227,10 @@ const CustomerDetail = (props) => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="col-2" style={{ transform: "translateY(1rem)" }}>
-              <div>
-                <Link
-                  style={{ textDecoration: "none" }}
-                  to={{
-                    pathname: "/job/create",
-                    customerId: customer.email,
-                  }}
-                >
-                  {" "}
-                  <Button
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                    }}
-                  >
-                    Create Job
-                  </Button>
-                </Link>
-              </div>
-            </div> */}
           </div>
-
           <br />
         </div>
       )}
-      {/* //  : (
-      //    <Redirect to="/customer"/>
-      //  )} */}
     </div>
   );
 };

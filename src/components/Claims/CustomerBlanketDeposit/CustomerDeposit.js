@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./CustomerDeposit.module.css";
 import SideBar from "../../Sidebar/SideBar";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import {
   getDeposits,
@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
+import {Modal} from "react-bootstrap"
 
 const CustomerDeposit = (props) => {
   const routes = [
@@ -28,9 +29,13 @@ const CustomerDeposit = (props) => {
     },
   ];
   const [blankets, setBlankets] = useState([]);
+  const [show, setShow] = useState(false);
+
 
   const [edit, setEdit] = useState(true);
   var [quantityValue, setQuantityValue] = useState(false);
+  var [depositValue, setDepositValue] = useState("");
+
   // var [cost, setCost] = useState('')
 
   useEffect(() => {
@@ -74,9 +79,9 @@ const CustomerDeposit = (props) => {
   };
   var makeInputFieldEditible = (e, i) => {
     let newData = cloneDeep(blankets);
-    newData.map((data) => data.edit = true)
+    newData.map((data) => (data.edit = true));
     console.log(newData);
-  
+
     newData[i].edit = !newData[i].edit;
     setBlankets(newData);
   };
@@ -95,6 +100,10 @@ const CustomerDeposit = (props) => {
     setQuantityValue(false);
     newData[i].cost = value;
     setBlankets(newData);
+  };
+  const handleShow = (deposit) => {
+    setDepositValue(deposit);
+    setShow(true);
   };
   return (
     <div>
@@ -135,16 +144,16 @@ const CustomerDeposit = (props) => {
                 <div className={`col-2`} style={{ fontWeight: "bold" }}>
                   <h6>Customer</h6>
                 </div>
-                <div className={`col-3`} style={{ fontWeight: "bold" }}>
+                <div className={`col-2`} style={{ fontWeight: "bold" }}>
                   <h6>Quantity</h6>
                 </div>
-                <div className={`col-3 `} style={{ fontWeight: "bold" }}>
+                <div className={`col-2 `} style={{ fontWeight: "bold" }}>
                   <h6>Deposit</h6>
                 </div>
-                <div className="col-2" style={{ fontWeight: "bold" }}>
+                <div className="col-3" style={{ fontWeight: "bold" }}>
                   Last Updated
                 </div>
-                <div className={`col-2 `} style={{ fontWeight: "bold" }}>
+                <div className={`col-3 `} style={{ fontWeight: "bold" }}>
                   <h6>Actions</h6>
                 </div>
               </div>
@@ -167,62 +176,117 @@ const CustomerDeposit = (props) => {
                               {x?.customer?.firstName} {x?.customer?.lastName}
                             </label>
                           </div>
-                          <div class={`col-3 `}>
+                          <div class={`col-2 `}>
                             <div>
                               <span
                                 onDoubleClick={(e) => {
                                   makeInputFieldEditible(e, i);
                                 }}
                               >
-                                <input
+                                <TextField
+                                  variant="outlined"
+                                  // margin="normal"
+                                  // required
+                                  fullWidth
+                                  size="small"
                                   onChange={(e) => handleInput(e, i)}
                                   disabled={x.edit}
-                                  type="text"
-                                  class={`form-control input-number `}
+                                  type="number"
+                                  className="form-control input-number"
                                   name="quantity"
                                   value={x.quantity}
-                                ></input>
+                                ></TextField>
                               </span>
                             </div>
                           </div>
-                          <div className="col-3">
+                          <div className="col-2">
                             <span
                               onDoubleClick={(e) => {
                                 makeInputFieldEditible(e, i);
                               }}
                             >
-                              <input
+                              <TextField
+                                variant="outlined"
+                                // margin="normal"
+                                // required
+                                fullWidth
+                                size="small"
                                 onChange={(e) => changeCost(e, i)}
                                 disabled={x.edit}
-                                type="text"
+                                type="number"
+                                className="form-control input-number"
                                 name="cost"
-                                class={`form-control input-number `}
                                 value={
-                                 quantityValue === true ? x.quantity * 15 : x.cost
+                                  quantityValue === true
+                                    ? x.quantity * 15
+                                    : x.cost
                                 }
-                              ></input>
+                              ></TextField>
                             </span>
                           </div>
-                          <div className="col-2">
+                          <div className="col-3">
                             {/* <label htmlFor="">{x.updatedAt.split("T")[0]} <span> | </span>{x.updatedAt.split("T")[1].split(".")[0]}</label> */}
                             <TimeAgo date={x.updatedAt} />
                           </div>
-                          <div className="col-2">
-                            {x.edit ? (
-                              <div onClick={() => closeEdit(i, "edit")}>
-                                <FontAwesomeIcon icon={faEdit}>
-                                  {" "}
-                                </FontAwesomeIcon>{" "}
-                                <label htmlFor=""> Edit</label>
+
+                          <div className="col-3">
+                            <div style={{ display: "flex" }}>
+                              {x.edit ? (
+                                <div
+                                  onClick={() => closeEdit(i, "edit")}
+                                  style={{ margin: "0 0.6rem" }}
+                                >
+                                  <Button
+                                    style={{
+                                      background: "#00ADEE",
+                                      textTransform: "none",
+                                      color: "#FFF",
+                                      fontFamily: "sans-serif",
+                                      width: "100%",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faEdit}>
+                                      {" "}
+                                    </FontAwesomeIcon>{" "}
+                                    Edit
+                                  </Button>
+                                </div>
+                              ) : (
+                                <div
+                                  onClick={() => closeEdit(i, "save")}
+                                  style={{ margin: "0 0.6rem" }}
+                                >
+                                  <Button
+                                    style={{
+                                      background: "#00ADEE",
+                                      textTransform: "none",
+                                      color: "#FFF",
+                                      fontFamily: "sans-serif",
+                                      width: "100%",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faSave}>
+                                      {" "}
+                                    </FontAwesomeIcon>{" "}
+                                    Save
+                                  </Button>
+                                </div>
+                              )}
+                              <div>
+                                <Button
+                                onClick={() => handleShow(x)}
+                                  style={{
+                                    background: "#00ADEE",
+                                    textTransform: "none",
+                                    color: "#FFF",
+                                    fontFamily: "sans-serif",
+                                    width: "100%",
+                                  }}
+                                >
+                                  Activities
+                                </Button>
                               </div>
-                            ) : (
-                              <div onClick={() => closeEdit(i, "save")}>
-                                <FontAwesomeIcon icon={faSave}>
-                                  {" "}
-                                </FontAwesomeIcon>{" "}
-                                <label htmlFor=""> Save</label>
-                              </div>
-                            )}
+                            </div>
                           </div>
                         </div>
                       </li>
@@ -238,6 +302,71 @@ const CustomerDeposit = (props) => {
           )}
         </div>
       </div>
+      <Modal
+        dialogClassName={`${style.modal}`}
+        show={show}
+        onHide={() => setShow(false)}
+        
+        centered
+        scrollable
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Activities</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            className="row"
+            style={{
+              fontWeight: "bold",
+              fontFamily: "sans-serif",
+            }}
+          >
+            <div className={`col-2`}>Performer</div>
+            <div className={`col-6`}>Message</div>
+            <div className={`col-4`}>Timestamp</div>
+          </div>
+
+          {depositValue &&
+            depositValue ?.activities.map((activity, i) => (
+              <div
+                key={i}
+                className="row"
+                style={{
+                  fontFamily:
+                    "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                }}
+              >
+                <div className={`col-2 `}>
+                  {" "}
+                  <p>{activity.performer.name}</p>
+                </div>
+                <div className={`col-6`}>
+                  {activity.messageLogs.map((x, i) => (
+                    <p key={i}>* {x}</p>
+                  ))}
+                </div>
+                <div className={`col-4 `}>
+                  {/* <p> {activity.timeStamp.split("G")[0]}</p> */}
+                  <TimeAgo date={activity.timeStamp} />
+                </div>
+              </div>
+            ))}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            style={{
+              background: "#00ADEE",
+              textTransform: "none",
+              color: "#FFF",
+              fontFamily: "sans-serif",
+            }}
+            onClick={() => setShow(false)}
+          >
+            Close
+                            </Button>
+          {/* <Button variant="primary">Add Activity</Button> */}
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

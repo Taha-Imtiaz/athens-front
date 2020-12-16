@@ -267,11 +267,13 @@ const CustomerList = (props) => {
                 className="row"
                 style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
               >
-                <div className="col-md-4">Name</div>
-                <div className="col-md-3">Phone</div>
+                <div className="col-md-3">Name</div>
+                <div className="col-md-2">Phone</div>
 
                 <div className="col-md-3">Email</div>
+              
                 <div className="col-md-2">Jobs</div>
+                <div className="col-md-2">Active Claims</div>
               </div>
               <div>
                 <ul className="list-group">
@@ -288,7 +290,7 @@ const CustomerList = (props) => {
                           >
                             <div className="row justify-content-around">
                               <div
-                                className={`col-8 col-md-4 text-left ${style.flex}`}
+                                className={`col-md-3`}
                               >
                                 <span>
                                   {doc.firstName} {doc.lastName}
@@ -296,20 +298,29 @@ const CustomerList = (props) => {
                               </div>
 
                               <div
-                                className={`col-4 col-md-3 d-flex justify-content-start ${style.flex} ${style.fr}`}
+                                className={`col-md-2 `}
                               >
                                 <p>{doc.phone}</p>
                               </div>
                               <div
-                                className={`col-4 col-md-3 d-flex justify-content-start ${style.flex} ${style.fr}`}
+                                className={`col-md-3`}
                               >
                                 <p>{doc.email}</p>
                               </div>
                               <div
-                                className={`col-12 col-md-2 d-flex justify-content-start ${style.fr}`}
+                                className={`col-md-2`}
                               >
                                 <div>
                                   {doc.jobs.length}
+                                </div>
+                              </div>
+                              <div
+                                className={`col-md-2`}
+                              >
+                                <div>
+                                  {doc.claim?.length > 0 ? <div>
+                                    {doc.claim?.filter((claim) => claim.status === "open").length}
+                                  </div> : 0 }
                                 </div>
                               </div>
                             </div>

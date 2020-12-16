@@ -231,7 +231,7 @@ const BlanketList = (props) => {
                         </Button>
                         )}
                       <Button
-                        // onClick={() => handleShow(deposit)}
+                        onClick={() => handleShow(deposit)}
                         style={{
                           background: "#00ADEE",
                           textTransform: "none",
@@ -255,7 +255,7 @@ const BlanketList = (props) => {
         dialogClassName={`${style.modal}`}
         show={show}
         onHide={() => setShow(false)}
-        // animation={false}
+        
         centered
         scrollable
       >

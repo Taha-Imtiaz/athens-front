@@ -21,9 +21,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { TabPanel } from "@material-ui/lab";
-import {
-  updateClaim
-} from "../../../Redux/Claims/claimsActions";
+import { updateClaim } from "../../../Redux/Claims/claimsActions";
 import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
@@ -35,7 +33,6 @@ const CustomerDetail = (props) => {
   const handleClose = () => setShow(false);
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
-
 
   const [blankets, setBlankets] = useState([]);
   var [note, setNote] = useState("");
@@ -55,7 +52,7 @@ const CustomerDetail = (props) => {
   } = props;
 
   var data = [];
-  if (customer ?.claim) {
+  if (customer?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
     data = customer.claim;
   }
@@ -85,8 +82,6 @@ const CustomerDetail = (props) => {
     setUpdate(e.target.value);
   };
 
-
-
   useEffect(() => {
     if (customer) {
       console.log(customer);
@@ -98,24 +93,25 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     //calculate blanket and claims Count
-    var customerClaims = customer ?.claim;
-    var customerBlanket = customer ?.blanketDeposit;
+    var customerClaims = customer?.claim;
+    var customerBlanket = customer?.blanketDeposit;
 
     console.log(customerClaims);
     console.log(claimCount);
-    if (customerClaims ?.length > 0) {
+    if (customerClaims?.length > 0) {
       // let count = customerClaims ?.map(
       //   (claim) =>
       //     claim.status === "open" && setClaimCount((count) => count + 1)
       // );
-      let openClaims = customerClaims.filter((claim) => claim.status === "open").length;
-      setClaimCount(openClaims)
+      let openClaims = customerClaims.filter((claim) => claim.status === "open")
+        .length;
+      setClaimCount(openClaims);
     } else {
       setClaimCount(0);
     }
 
     // var blanketsCount = customerBlanket?.map((blanket) => setBlanketCount((count) => count + 1 ))
-    setBlanketValue(customer ?.blanketDeposit);
+    setBlanketValue(customer?.blanketDeposit);
     console.log(blanketValue);
   }, [customer]);
 
@@ -135,7 +131,7 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => { };
+  var AddNote = () => {};
 
   var [value, setValue] = useState(0);
 
@@ -186,7 +182,6 @@ const CustomerDetail = (props) => {
     customer.blanketDeposit.quantity = customer.blanketDeposit.quantity + 1;
   };
 
-
   const handleCloseJob = (i) => {
     var { showMessage } = props;
 
@@ -202,11 +197,11 @@ const CustomerDetail = (props) => {
       .catch((err) => console.log(err));
   };
   // var { children, value, index, ...other } = props;
-  console.log(blanketValue)
+  console.log(blanketValue);
 
   const updateBlanket = (data) => {
     setBlanketValue(data);
-  }
+  };
   return (
     <div>
       {customer && (
@@ -241,7 +236,7 @@ const CustomerDetail = (props) => {
                         <Tab
                           label={
                             <Badge
-                              badgeContent={customer ?.blanketDeposit.reduce(
+                              badgeContent={customer?.blanketDeposit.reduce(
                                 (sum, currentValue) =>
                                   sum + parseInt(currentValue.quantity),
                                 0
@@ -264,38 +259,57 @@ const CustomerDetail = (props) => {
                       }}
                     >
                       <div className="row">
-                        <div className="col-6">
+                        <div className="col-8">
                           <h3 className={style.head}>Customer Information</h3>
                         </div>
-                        <div className="col-6">
-                          <div
-                            className={style.btn}
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                              alignItems: "flex-end",
+                        <div
+                          className="col-2"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to={{
+                              pathname: "/job/create",
+                              customerId: customer.email,
                             }}
                           >
-                            <Link
-                              style={{ textDecoration: "none" }}
-                              to={{
-                                pathname: "/job/create",
-                                customerId: customer.email,
+                            {" "}
+                            <Button
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
                               }}
                             >
-                              {" "}
-                              <Button
-                                style={{
-                                  background: "#00ADEE",
-                                  textTransform: "none",
-                                  color: "#FFF",
-                                  fontFamily: "sans-serif",
-                                }}
-                              >
-                                Create Job
-                              </Button>{" "}
-                            </Link>
-                          </div>
+                              Create Job
+                            </Button>{" "}
+                          </Link>
+                        </div>
+                        <div className="col-2">
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            to={{
+                              pathname: `/customerUpdate/${customerId}`,
+                              customerId: customer.email,
+                            }}
+                          >
+                            {" "}
+                            <Button
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Edit
+                            </Button>{" "}
+                          </Link>
                         </div>
                       </div>
                       <hr />
@@ -414,7 +428,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
 
-                          {customer ?.jobs ?.map((job, i) => {
+                          {customer?.jobs?.map((job, i) => {
                             return (
                               <div key={i} className={style.jumbotron}>
                                 <div
@@ -435,13 +449,13 @@ const CustomerDetail = (props) => {
                                       i === 0 ? (
                                         <label key={i}>{x}</label>
                                       ) : (
-                                          <label>
-                                            <span style={{ padding: "0.5rem" }}>
-                                              |
+                                        <label>
+                                          <span style={{ padding: "0.5rem" }}>
+                                            |
                                           </span>
-                                            {x}
-                                          </label>
-                                        )
+                                          {x}
+                                        </label>
+                                      )
                                     )}
                                     <div>
                                       {job.services.map((service, i) => (
@@ -470,20 +484,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                              <p>
-                                                <span
-                                                  style={{ padding: "0.5rem" }}
-                                                >
-                                                  |
+                                            <p>
+                                              <span
+                                                style={{ padding: "0.5rem" }}
+                                              >
+                                                |
                                               </span>
-                                                {assignee.name}
-                                              </p>
-                                            )
+                                              {assignee.name}
+                                            </p>
+                                          )
                                         )}
                                       </div>
                                     ) : (
-                                        <p>No Assignee</p>
-                                      )}
+                                      <p>No Assignee</p>
+                                    )}
                                   </div>
                                   <div className="col-2">
                                     <span>
@@ -620,17 +634,17 @@ const CustomerDetail = (props) => {
                           })}
                         </div>
                       ) : (
-                          <h4
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              margin: "2rem 0",
-                            }}
-                          >
-                            No job added yet
+                        <h4
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "2rem 0",
+                          }}
+                        >
+                          No job added yet
                         </h4>
-                        )}
+                      )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
@@ -667,7 +681,7 @@ const CustomerDetail = (props) => {
                       </div>
                     </div>
                     <hr />
-                    {customer ?.claim.length > 0 && (
+                    {customer?.claim.length > 0 && (
                       <div
                         className="row"
                         style={{
@@ -677,12 +691,23 @@ const CustomerDetail = (props) => {
                         }}
                       >
                         <div className="col-4">JobId</div>
-                        <div className="col-4">Status</div>
-                        <div className="col-4"> Last Update</div>
+                        <div
+                          className="col-4"
+                          style={{ transform: "translateX(-1rem)" }}
+                        >
+                          Status
+                        </div>
+                        <div
+                          className="col-4"
+                          style={{ transform: "translateX(-1.5rem)" }}
+                        >
+                          {" "}
+                          Last Update
+                        </div>
                       </div>
                     )}
                     <div id="accordion">
-                      {customer ?.claim.length > 0 ? (
+                      {customer?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
                           return (
                             <div
@@ -717,7 +742,7 @@ const CustomerDetail = (props) => {
                                   {/* {claim ?.updatedAt.split("T")[0]}{" "}
                                   <span>|</span>{" "}
                                   {claim ?.updatedAt.split("T")[1].split(".")[0]} */}
-                                  <TimeAgo date={claim ?.updatedAt} />
+                                  <TimeAgo date={claim?.updatedAt} />
                                 </div>
                               </div>
 
@@ -737,13 +762,17 @@ const CustomerDetail = (props) => {
                                           className={`col-6 ${style.protectionRow}`}
                                         >
                                           <h6>Protection Type : </h6>
-                                          <span>{claim.claimType}</span>
+                                          <h6 style={{ fontWeight: "normal" }}>
+                                            {claim.claimType}
+                                          </h6>
                                         </div>
                                         <div
                                           className={`col-2 ${style.protectionRow}`}
                                         >
                                           <h6>Total: $</h6>
-                                          <span>{`${claim.price}`}</span>
+                                          <h6
+                                            style={{ fontWeight: "normal" }}
+                                          >{`${claim.price}`}</h6>
                                         </div>
                                         <div className="col-2">
                                           {claim.status == "open" ? (
@@ -777,14 +806,14 @@ const CustomerDetail = (props) => {
                                               Close Claim
                                             </Button>
                                           ) : (
-                                              <Chip
-                                                variant="outlined"
-                                                size="small"
-                                                label="Closed"
-                                                clickable
-                                                color="primary"
-                                              />
-                                            )}
+                                            <Chip
+                                              variant="outlined"
+                                              size="small"
+                                              label="Closed"
+                                              clickable
+                                              color="primary"
+                                            />
+                                          )}
                                         </div>
                                       </div>
                                       <hr />
@@ -844,13 +873,23 @@ const CustomerDetail = (props) => {
                                       <div>
                                         {claim.updates.length > 0 ? (
                                           <div>
-                                            <h3>Updates</h3>
+                                            <h4>Updates</h4>
                                             {claim.updates.map((x, i) => (
                                               <div>
                                                 <div className="row">
-                                                  <div className="col-12">
+                                                  <div
+                                                    className="col-12"
+                                                    style={{ display: "flex" }}
+                                                  >
                                                     {" "}
-                                                    {`${i + 1}.${x.value}`}
+                                                    {`${i + 1}.`}{" "}
+                                                    <div
+                                                      style={{
+                                                        margin: "0 0.5rem",
+                                                      }}
+                                                    >
+                                                      {x.value}
+                                                    </div>
                                                   </div>
                                                 </div>
                                                 <div className="row">
@@ -878,10 +917,10 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                          <div className="text-center">
-                            <img src="/images/no-data-found.png" />
-                          </div>
-                        )}
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
 
                       {/* <Modal
                         dialogClassName={style.modal}
@@ -962,12 +1001,15 @@ const CustomerDetail = (props) => {
                     </div>
                     <hr />
                     {blanketValue && blanketValue.length > 0 ? (
-                      <BlanketList blanketValue={blanketValue} updateBlanket={updateBlanket} />
+                      <BlanketList
+                        blanketValue={blanketValue}
+                        updateBlanket={updateBlanket}
+                      />
                     ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
+                      <div className="text-center">
+                        <img src="/images/no-data-found.png" />
+                      </div>
+                    )}
                   </TabPanel>
                 </div>
               </div>
@@ -1024,8 +1066,6 @@ const CustomerDetail = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-
-
     </div>
   );
 };

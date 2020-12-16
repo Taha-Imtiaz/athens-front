@@ -44,6 +44,7 @@ import EmailVerification from "./components/ForgetPassword/EmailVerification/Ema
 import VerificationCode from "./components/ForgetPassword/VerificationCode/VerificationCode";
 import ResetPassword from "./components/ForgetPassword/ResetPassword/ResetPassword";
 import ClaimsDetails from "./components/ClaimsDetails/ClaimsDetails";
+import CustomerUpdate from "./components/Customer/CustomerUpdate/CustomerUpdate";
 
 function App(props) {
   const [show, setShow] = [false];
@@ -73,6 +74,8 @@ function App(props) {
           component={customerDetail}
         />
         <PrivateRoute path="/customer/add" component={CustomerAdd} />
+        <PrivateRoute path="/customerUpdate/:id" component={CustomerUpdate} />
+
         <PrivateRoute path="/claim/customer" component={CustomerClaims} />
         <PrivateRoute
           exact

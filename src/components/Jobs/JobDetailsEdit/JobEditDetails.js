@@ -36,7 +36,10 @@ import {
   Select,
   TextareaAutosize,
   TextField,
-  Button
+  Button,
+  FormControlLabel,
+  RadioGroup,
+  Radio
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
@@ -114,13 +117,13 @@ class JobEditDetails extends Component {
         assigneeError: "assignee should not be empty",
       });
     }
-    if (locations.from === "") {
+    if (locations[0].value === "") {
       this.setState({
         locationFromError: "from should not be empty",
       });
     }
 
-    if (locations.to[0] === "") {
+    if (locations[1].value === "") {
       this.setState({
         locationToError: "to should not be empty",
       });
@@ -232,20 +235,14 @@ class JobEditDetails extends Component {
   };
 
   removeLocation = (i) => {
-    var { locations } = this.state;
-    var locationToRemove = locations.to.findIndex((location, index) => index === i)
-
-    var newLocations = locations.to.filter((location, i) => i !== locationToRemove)
-    console.log(newLocations, i)
+    var location = cloneDeep(this.state.locations)
+    console.log(location)
+    location.splice(i, 1)
+    console.log(location)
     this.setState({
-      locations: {
-        from: this.state.locations.from,
-        to: newLocations
-      }
-    });
-
+      locations:location
+    })
   }
-
 
   handleClose = (notes) => {
     var { note } = this.state;
@@ -352,6 +349,7 @@ class JobEditDetails extends Component {
       customerId,
       note,
     };
+    console.log(updatedObj)
     if (this.handleValidation()) {
       updateJob(jobId, updatedObj)
         .then((res) => {
@@ -403,71 +401,170 @@ class JobEditDetails extends Component {
     });
   };
 
-  hanldeLocationInput = (e) => {
-    let updateLocation = { ...this.state.locations };
-    updateLocation.from = e.target.value;
+  hanldeLocationInput = (i, e) => {
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].value = e.target.value;
+    console.log(updateLocation[i].value);
     this.setState({ locations: updateLocation });
+    if (e.target.value) {
+      this.setState({ locationfromError: "" });
+    }
   };
 
   hanldeLocationInputTo = (i, e) => {
-    let updateLocation = { ...this.state.locations };
-    updateLocation.to[i] = e.target.value;
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].value = e.target.value;
     this.setState({ locations: updateLocation });
-  };
-
-  addLocation = () => {
-    var dropOffLocation = this.state.locations.to.push('')
-    this.setState({
-      locations: { ...this.state.locations }
+    if (i == 0 && e.target.value) {
+      this.setState({ locationtoError: "" });
     }
-    );
   };
+  addLocation = () => {
+    var location = cloneDeep(this.state.locations)
+
+  var locationAdded = location.push({ type: "", value: "" });
+      console.log(location);
+      this.setState({
+        locations: location,
+      });
+    }
+    handleInputChange = (e, i) => {
+      let { name, value } = e.target;
+      console.log(name, value);
+      let updateLocation = cloneDeep(this.state.locations);
+      updateLocation[i].type = value;
+      // this.setState({
+      //   [name]: value
+      // })
+      this.setState({
+        locations: updateLocation,
+      });
+    };
 
   showLocation = (i) => {
-    return (
-      <>
-        <div className="col-4">
-          <div>
-            <input
-              type="input"
-              className="form-control"
+    if (i === 0) {
+      console.log(i);
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              size="small"
               id="from"
-              placeholder="Pickup"
-              name="from"
-              value={this.state.locations[i].from}
-              onChange={(e) => this.hanldeLocationInput(e)}
+              label="Pickup"
+              name="pickup"
+              value={this.state.locations[0].value}
+              onChange={(e) => this.hanldeLocationInput(i, e)}
+              error={this.state.locationfromError ? true : false}
             />
           </div>
-          {this.state.locationfromError ? (
-            <div
-              className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-              role="alert"
-            >
-              {this.state.locationfromError}
-            </div>
-          ) : null}
         </div>
-        <div className="col-4">
-          <input
-            type="input"
-            className="form-control"
-            id="to"
-            placeholder="Drop Off"
-            name="to"
-            value={this.state.locations[i].to}
-            onChange={(e) => this.hanldeLocationInputTo(i, e)}
-          />
-          {this.state.locationtoError ? (
-            <div
-              className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-              role="alert"
-            >
-              {this.state.locationtoError}
-            </div>
-          ) : null}
+      );
+    } else if (i == 1) {
+      console.log(i);
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
+            <TextField
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              required
+              size="small"
+              id="to"
+              label="Drop Off"
+              name="dropoff"
+              value={this.state.locations[i].value}
+              onChange={(e) => this.hanldeLocationInputTo(i, e)}
+              error={this.state.locationtoError ? true : false}
+            />
+          </div>
         </div>
-      </>
-    );
+      );
+    } else {
+      console.log(this.state.locations[i].type, this.state.locations[i].value);
+      return (
+        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+          <div className="col-4" style={{ display: "flex" }}>
+            <RadioGroup
+              className={style.rowFlex}
+              value={this.state.locations[i].type}
+              onChange={(e) => this.handleInputChange(e, i)}
+            >
+              <FormControlLabel
+                value="pickup"
+                name="pickup"
+                control={<Radio />}
+                label="Pickup"
+              />
+              <FormControlLabel
+                value="dropoff"
+                name="dropoff"
+                control={<Radio />}
+                label="Dropoff"
+              />
+            </RadioGroup>
+          </div>
+          <div className="col-6">
+            <TextField
+              fullWidth
+              variant="outlined"
+              style={{margin: "1rem 2rem" }}
+              margin="normal"
+              required
+              size="small"
+              id="to"
+              label={this.state.locations[i].type}
+              name={this.state.locations[i].type}
+              value={this.state.locations[i].value}
+              onChange={(e) => this.hanldeLocationInput(i, e)}
+              // error={this.state.locationtoError ? true : false}
+            />
+          </div>
+          <div className="col-2" style={{transform: "translate3d(4.5rem,0rem, 0)"}}>
+            <i
+              className="fa fa-minus"
+              
+
+              onClick={() => this.removeLocation(i)}
+              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+            ></i>
+          </div>
+        </div>
+      );
+
+      // return (
+      //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+      //     <div className="col-11">
+      //       <TextField
+      //         fullWidth
+      //         variant="outlined"
+      //         margin="normal"
+      //         required
+      //         size="small"
+      //         id="to"
+      //         label="Drop Off"
+      //         name="to"
+      //         value={this.state.locations.to[i]}
+      //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
+      //         error={this.state.locationtoError ? true : false}
+      //       />
+      //     </div>
+      //     <div className="col-1">
+      //       <div className=" form-group col-1">
+      //         <i
+      //           className="fa fa-minus"
+      //           onClick={() => this.removeLocation(i)}
+      //           style={{ transform: "translateY(1.5rem)" }}
+      //         ></i>
+      //       </div>
+      //     </div>
+      //   </div>
+      // );
+    }
   };
 
   addDate = () => {
@@ -794,13 +891,24 @@ class JobEditDetails extends Component {
                 </div>
               </div>
 
-              {this.state.locations &&
+
+
+
+
+              {this.state.locations && (
                 <div>
-                  <div
+                  {this.state?.locations?.map((location, i) =>
+                    this.showLocation(i)
+                  )}
+                </div>
+              )}
+              {/* {this.state.locations &&
+                <div> */}
+                  {/* <div
                     className="row"
                     style={{ transform: "translateX(3rem)" }}
                   >
-                    {/* <div className="col"></div> */}
+                  
                     <div className="col-12">
                       <TextField
                         variant="outlined"
@@ -817,10 +925,10 @@ class JobEditDetails extends Component {
                         onChange={(e) => this.hanldeLocationInput(e)}
                       />
                     </div>
-                  </div>
+                  </div> */}
 
 
-                  {this.state.locations.to.map((list, i) => {
+                  {/* {this.state.locations.map((list, i) => {
                     return (
 
                       i === 0 ? <div className="row" style={{ transform: "translateX(3rem)" }}>
@@ -873,14 +981,14 @@ class JobEditDetails extends Component {
                     );
                   })}
                 </div>
-              }
+              } */}
               <div className="row">
                 <div className="col-11"></div>
                 <div
                   className=" form-group col-1"
                   style={{
-                    float: "right",
-                    transform: "translate3d(4.5rem,0rem, 0)"
+                    // float: "right",
+                    transform: "translate3d(3.7rem,0rem, 0)"
                   }}
                 >
                   <i

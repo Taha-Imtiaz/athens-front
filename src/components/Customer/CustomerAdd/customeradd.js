@@ -43,7 +43,7 @@ class CustomerAdd extends Component {
     let emailError = "";
     let firstNameError = "";
     let lastNameError = "";
-    let phoneNumberError = "";
+    let phoneError = "";
 
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -60,7 +60,7 @@ class CustomerAdd extends Component {
     }
 
     if (!this.state.phone) {
-      phoneNumberError = "Phone Number should not be empty";
+      phoneError = "Phone Number should not be empty";
     }
 
     // if (!this.state.emailContacts.match(mailformat)) {
@@ -71,12 +71,12 @@ class CustomerAdd extends Component {
     //     altnumberError = "Phone Number should not be empty"
     // }
 
-    if (emailError || firstNameError || lastNameError || phoneNumberError) {
+    if (emailError || firstNameError || lastNameError || phoneError) {
       this.setState({
         firstNameError,
         lastNameError,
         emailError,
-        phoneNumberError,
+        phoneError,
       });
       return false;
     }
@@ -219,7 +219,7 @@ console.log(addCustomerObj)
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneNumberError}
+                error={this.state.phoneError}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />

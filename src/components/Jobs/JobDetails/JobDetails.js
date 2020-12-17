@@ -244,14 +244,17 @@ const JobDetails = (props) => {
                 {job.locations &&
 
                   <div>
-                    <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {job.locations.from} <br></br>
+                    
 
-                    {job.locations.to.map((list) =>
-                      <p
-                        // className={style.para}
-                        style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}
-                      >
-                        <LocationOffIcon color="primary" />  {list}
+                    {job.locations.map((list) =>
+                      list.type === "pickup" ?
+                       
+                       <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                          <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
+                       </p> 
+                      :
+                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                        <LocationOffIcon color="primary" />  {list.value}
                       </p>)}
 
                   </div>

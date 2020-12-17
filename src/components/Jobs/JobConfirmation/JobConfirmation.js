@@ -14,8 +14,9 @@ import { payAmount } from "../../../Redux/Mover/moverActions";
 import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { Grid, TextField } from "@material-ui/core";
+import { FormControlLabel, Grid, Radio, RadioGroup, TextField } from "@material-ui/core";
 import { useState } from "react";
+import style from "./JobConfirmation.module.css"
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -139,20 +140,42 @@ function JobConfirmation(props) {
     setData(updatedCustomer);
   };
 
-  const hanldeLocationInput = (e) => {
+  const hanldeLocationInput = (i,e) => {
     let job = cloneDeep(data);
-    job.locations.from = e.target.value;
+    job.locations[i].value = e.target.value;
     setData(job);
   };
 
   const hanldeLocationInputTo = (i, e) => {
     let job = cloneDeep(data);
-    job.locations.to[i] = e.target.value;
+    job.locations[i].value = e.target.value;
     setData(job);
   };
 
-  var showLocation = (i) => {
+const showLocation = (i) => {
     if (i === 0) {
+      console.log(i);
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              size="small"
+              id="from"
+              label="Pickup"
+              name="pickup"
+              value={data.locations[0].value}
+              onChange={(e) => hanldeLocationInput(i, e)}
+              error={data.locationfromError ? true : false}
+            />
+          </div>
+        </div>
+      );
+    } else if (i == 1) {
+      console.log(i);
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
@@ -161,51 +184,96 @@ function JobConfirmation(props) {
               variant="outlined"
               margin="normal"
               required
-              // style={{ width: "90%", margin: "0 1rem" }}
               size="small"
               id="to"
               label="Drop Off"
-              name="to"
-              value={data.locations.to[i]}
+              name="dropoff"
+              value={data.locations[i].value}
               onChange={(e) => hanldeLocationInputTo(i, e)}
-            // error={this.state.locationtoError}
+              error={data.locationtoError ? true : false}
             />
           </div>
         </div>
       );
     } else {
+      console.log(data.locations[i].type, data.locations[i].value);
       return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-          <div className="col-11">
+        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+          <div className="col-4" style={{ display: "flex" }}>
+            <RadioGroup
+              className={style.rowFlex}
+              value={data.locations[i].type}
+              onChange={(e) => handleInputChange(e, i)}
+            >
+              <FormControlLabel
+                value="pickup"
+                name="pickup"
+                control={<Radio />}
+                label="Pickup"
+              />
+              <FormControlLabel
+                value="dropoff"
+                name="dropoff"
+                control={<Radio />}
+                label="Dropoff"
+              />
+            </RadioGroup>
+          </div>
+          <div className="col-6">
             <TextField
               fullWidth
               variant="outlined"
               margin="normal"
               required
-              // style={{ width: "90%", margin: "0 1rem" }}
               size="small"
               id="to"
-              label="Drop Off"
-              name="to"
-              value={data.locations.to[i]}
-              onChange={(e) => hanldeLocationInputTo(i, e)}
-            // error={this.state.locationtoError}
+              label={data.locations[i].type}
+              name={data.locations[i].type}
+              value={data.locations[i].value}
+              onChange={(e) => hanldeLocationInput(i, e)}
+              // error={this.state.locationtoError ? true : false}
             />
           </div>
-          <div className="col-1">
-            <div className=" form-group col-1">
-              <i
-                className="fa fa-minus"
-                onClick={(e) => removeLocation(e, i)}
-                style={{ transform: "translateY(1.5rem)" }}
-              ></i>
-            </div>
+          <div className="col-2">
+            <i
+              className="fa fa-minus"
+              onClick={() => removeLocation(i)}
+              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+            ></i>
           </div>
         </div>
       );
+
+      // return (
+      //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+      //     <div className="col-11">
+      //       <TextField
+      //         fullWidth
+      //         variant="outlined"
+      //         margin="normal"
+      //         required
+      //         size="small"
+      //         id="to"
+      //         label="Drop Off"
+      //         name="to"
+      //         value={this.state.locations.to[i]}
+      //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
+      //         error={this.state.locationtoError ? true : false}
+      //       />
+      //     </div>
+      //     <div className="col-1">
+      //       <div className=" form-group col-1">
+      //         <i
+      //           className="fa fa-minus"
+      //           onClick={() => this.removeLocation(i)}
+      //           style={{ transform: "translateY(1.5rem)" }}
+      //         ></i>
+      //       </div>
+      //     </div>
+      //   </div>
+      // );
     }
   };
-
   var addLocation = (e) => {
     e.stopPropagation();
 
@@ -216,9 +284,9 @@ function JobConfirmation(props) {
     //   });
     // }
 
-    if (data.locations ?.from && data.locations ?.to[0].length > 0) {
+    if (data.locations[0].value !== "" && data.locations[1].value !== "") {
       var newData = { ...data };
-      newData.locations.to.push("");
+      newData.locations.push({ type: "", value: "" });
       setData(newData);
       // this.setState({
       //   locations: {...this.state.locations }
@@ -226,13 +294,30 @@ function JobConfirmation(props) {
     }
   };
 
-  var removeLocation = (e, i) => {
-    e.stopPropagation();
-    let newData = { ...data };
-    newData.locations.to.splice(i, 1);
-    setData(newData);
-  };
-
+  // var removeLocation = (e, i) => {
+  //   e.stopPropagation();
+  //   let newData = { ...data };
+  //   newData.locations.to.splice(i, 1);
+  //   setData(newData);
+  // };
+  var removeLocation = (i) => {
+    var newData = {...data}
+    console.log(newData)
+    newData.locations.splice(i, 1)
+    console.log(newData)
+    setData(newData)
+  
+    };
+  
+   var handleInputChange = (e, i) => {
+      let { name, value } = e.target;
+      console.log(name, value);
+      let updateLocation = {...data};
+      
+      updateLocation.locations[i].type = value;
+     setData(updateLocation)
+    };
+  
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
       var s = window.document.createElement("script");
@@ -496,7 +581,7 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data.locations && (
+            {/* {data.locations && (
               <div>
                 <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
                   <div className="col-12">
@@ -516,12 +601,12 @@ function JobConfirmation(props) {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* {data.locations.map((ll, i) => {
               return showLocation(i);
             })} */}
-            {data.locations ?.to.map((locationTo, i) => showLocation(i))}
+            {data.locations?.map((locationTo, i) => showLocation(i))}
 
             <div className="row">
               <div className="col-11"></div>
@@ -529,7 +614,7 @@ function JobConfirmation(props) {
                 <i
                   className="fa fa-plus"
                   onClick={(e) => addLocation(e)}
-                  style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
+                  style={{ transform: "translate3d(0rem,0rem, 0)" }}
                 ></i>
               </div>
             </div>

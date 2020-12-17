@@ -4,6 +4,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import FormControl from "@material-ui/core/FormControl";
+
 import API from "../../../utils/api";
 import {
   getAllMovers,
@@ -23,18 +24,23 @@ import {
   Select,
   TextareaAutosize,
   TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
-  MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { Autocomplete } from "@material-ui/lab";
-import { getCustomersAndJobs } from '../../../Redux/Claims/claimsActions'
+import { getCustomersAndJobs } from "../../../Redux/Claims/claimsActions";
 import { Modal } from "react-bootstrap";
-import CustomerAdd from "../../Customer/CustomerAdd/customeradd"
+import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
@@ -45,13 +51,13 @@ class CreateJobs extends Component {
     customerId: "",
     startDate: "",
     dates: [new Date()],
-    startTime: '',
+    startTime: "",
     anchorEl: "",
     meetTime: "",
     assigneeRequired: "",
     from: "",
     to: "",
-    customerIdError: '',
+    customerIdError: "",
     titleError: "",
     descriptionError: "",
     multiError: "",
@@ -66,15 +72,18 @@ class CreateJobs extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: { from: "", to: [''] },
+    locations: [
+      { type: "pickup", value: "" },
+      { type: "dropoff", value: "" },
+    ],
     fromTo: [],
     assigneeRequiredError: "",
     selectedDate: new Date(),
     newService: "",
     customers: [],
-    selectedCustomer: '',
+    selectedCustomer: "",
     newCustomer: "",
-    showAddCustomer: false
+    showAddCustomer: false,
   };
 
   servicesOptions = [
@@ -89,12 +98,12 @@ class CreateJobs extends Component {
   state = this.initialState;
 
   componentDidMount = () => {
-    if(this.props.location.customerId) {
-      console.log(this.props.location.customerId)
+    if (this.props.location.customerId) {
+      console.log(this.props.location.customerId);
     }
     getCustomersAndJobs().then((res) => {
       if (res && res.status == 201) {
-        this.setState({ customers: res.data.customers })
+        this.setState({ customers: res.data.customers });
       }
     });
 
@@ -122,7 +131,18 @@ class CreateJobs extends Component {
       jobTypeOptions: event.target.value,
     });
   };
-
+  handleInputChange = (e, i) => {
+    let { name, value } = e.target;
+    console.log(name, value);
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].type = value;
+    // this.setState({
+    //   [name]: value
+    // })
+    this.setState({
+      locations: updateLocation,
+    });
+  };
   handleClick = (event) => {
     this.setState({
       anchorEl: event.currentTarget,
@@ -134,19 +154,22 @@ class CreateJobs extends Component {
       anchorEl: null,
     });
   };
-  handleDateChange = (date) => {
-  };
+  handleDateChange = (date) => {};
 
   addLocation = () => {
     if (
-      this.state.locations.from &&
-      this.state.locations.to[0].length > 0
+      this.state.locations[0].value !== "" &&
+      this.state.locations[1].value !== ""
     ) {
-      var dropOffLocation = this.state.locations.to.push('')
+      var location = cloneDeep(this.state.locations);
+      console.log(location);
+      var locationAdded = location.push({ type: "", value: "" });
+      console.log(location);
       this.setState({
-        locations: { ...this.state.locations }
+        locations: location,
       });
     }
+    console.log("add location");
   };
 
   addDate = () => {
@@ -155,29 +178,51 @@ class CreateJobs extends Component {
     }
   };
 
-  hanldeLocationInput = (e) => {
-    let updateLocation = { ...this.state.locations };
-    updateLocation.from = e.target.value;
+  hanldeLocationInput = (i, e) => {
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].value = e.target.value;
+    console.log(updateLocation[i].value);
     this.setState({ locations: updateLocation });
     if (e.target.value) {
-      this.setState({ locationfromError: '' });
+      this.setState({ locationfromError: "" });
     }
   };
 
   hanldeLocationInputTo = (i, e) => {
-    let updateLocation = { ...this.state.locations };
-    updateLocation.to[i] = e.target.value;
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].value = e.target.value;
     this.setState({ locations: updateLocation });
     if (i == 0 && e.target.value) {
-      this.setState({ locationtoError: '' });
+      this.setState({ locationtoError: "" });
     }
   };
 
   showLocation = (i) => {
     if (i === 0) {
-
+      console.log(i);
       return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+          <div className="col-12">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              size="small"
+              id="from"
+              label="Pickup"
+              name="pickup"
+              value={this.state.locations[0].value}
+              onChange={(e) => this.hanldeLocationInput(i, e)}
+              error={this.state.locationfromError ? true : false}
+            />
+          </div>
+        </div>
+      );
+    } else if (i == 1) {
+      console.log(i);
+      return (
+        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
             <TextField
               fullWidth
@@ -187,19 +232,39 @@ class CreateJobs extends Component {
               size="small"
               id="to"
               label="Drop Off"
-              name="to"
-              value={this.state.locations.to[i]}
+              name="dropoff"
+              value={this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInputTo(i, e)}
               error={this.state.locationtoError ? true : false}
             />
           </div>
         </div>
       );
-    }
-    else {
+    } else {
+      console.log(this.state.locations[i].type, this.state.locations[i].value);
       return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
-          <div className="col-11">
+        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+          <div className="col-4" style={{ display: "flex" }}>
+            <RadioGroup
+              className={style.rowFlex}
+              value={this.state.locations[i].type}
+              onChange={(e) => this.handleInputChange(e, i)}
+            >
+              <FormControlLabel
+                value="pickup"
+                name="pickup"
+                control={<Radio />}
+                label="Pickup"
+              />
+              <FormControlLabel
+                value="dropoff"
+                name="dropoff"
+                control={<Radio />}
+                label="Dropoff"
+              />
+            </RadioGroup>
+          </div>
+          <div className="col-6">
             <TextField
               fullWidth
               variant="outlined"
@@ -207,37 +272,63 @@ class CreateJobs extends Component {
               required
               size="small"
               id="to"
-              label="Drop Off"
-              name="to"
-              value={this.state.locations.to[i]}
-              onChange={(e) => this.hanldeLocationInputTo(i, e)}
-              error={this.state.locationtoError ? true : false}
+              label={this.state.locations[i].type}
+              name={this.state.locations[i].type}
+              value={this.state.locations[i].value}
+              onChange={(e) => this.hanldeLocationInput(i, e)}
+              // error={this.state.locationtoError ? true : false}
             />
           </div>
-          <div className="col-1">
-            <div className=" form-group col-1">
-              <i
-                className="fa fa-minus"
-                onClick={() => this.removeLocation(i)}
-                style={{ transform: "translateY(1.5rem)" }}
-              ></i>
-            </div>
+          <div className="col-2">
+            <i
+              className="fa fa-minus"
+              onClick={() => this.removeLocation(i)}
+              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+            ></i>
           </div>
         </div>
       );
+
+      // return (
+      //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+      //     <div className="col-11">
+      //       <TextField
+      //         fullWidth
+      //         variant="outlined"
+      //         margin="normal"
+      //         required
+      //         size="small"
+      //         id="to"
+      //         label="Drop Off"
+      //         name="to"
+      //         value={this.state.locations.to[i]}
+      //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
+      //         error={this.state.locationtoError ? true : false}
+      //       />
+      //     </div>
+      //     <div className="col-1">
+      //       <div className=" form-group col-1">
+      //         <i
+      //           className="fa fa-minus"
+      //           onClick={() => this.removeLocation(i)}
+      //           style={{ transform: "translateY(1.5rem)" }}
+      //         ></i>
+      //       </div>
+      //     </div>
+      //   </div>
+      // );
     }
   };
 
   removeLocation = (i) => {
-    var { locations } = this.state;
-    var locationToRemove = locations.to.findIndex((location, index) => index === i)
-    var newLocations = locations.to.filter((location, i) => i !== locationToRemove)
-    this.setState({
-      locations: {
-        from: this.state.locations.from,
-        to: newLocations
-      }
-    });
+  var location = cloneDeep(this.state.locations)
+  console.log(location)
+  location.splice(i, 1)
+  console.log(location)
+  this.setState({
+    locations:location
+  })
+
   };
 
   handleFormInput = (event) => {
@@ -284,11 +375,11 @@ class CreateJobs extends Component {
       jobTypeError = "Job type is required.";
     }
 
-    if (!this.state.locations.from) {
+    if (!this.state.locations[0].value) {
       locationfromError = "Location should not be empty";
     }
 
-    if (!this.state.locations.to[0]) {
+    if (!this.state.locations[1].value) {
       locationtoError = "Location should not be empty";
     }
 
@@ -310,7 +401,7 @@ class CreateJobs extends Component {
         locationfromError,
         locationtoError,
         assigneeRequiredError,
-        jobTypeError
+        jobTypeError,
       });
       return false;
     }
@@ -394,8 +485,10 @@ class CreateJobs extends Component {
         jobType,
       } = this.state;
 
-      let stringDates = dates.map((x) => x != ('' || null) ? x.toDateString() : null);
-      stringDates = stringDates.filter(Boolean)
+      let stringDates = dates.map((x) =>
+        x != ("" || null) ? x.toDateString() : null
+      );
+      stringDates = stringDates.filter(Boolean);
       var createJobObj = {
         title,
         description,
@@ -412,6 +505,7 @@ class CreateJobs extends Component {
         jobType,
       };
       var { history } = this.props;
+      console.log(createJobObj)
       createJob(createJobObj, (job) => {
         history.push("/job/details/" + job.data.data._id);
       });
@@ -422,7 +516,7 @@ class CreateJobs extends Component {
     let arr = uniqBy(newValue, "_id");
     this.setState({ services: arr });
     if (arr.length > 0) {
-      this.setState({ multiError: '' });
+      this.setState({ multiError: "" });
     }
   };
   addCustomService = (e) => {
@@ -443,7 +537,7 @@ class CreateJobs extends Component {
         serviceOptions.push(serviceAdded);
         this.setState({
           serviceOptions,
-          services
+          services,
         });
       }
     } else {
@@ -455,13 +549,13 @@ class CreateJobs extends Component {
 
   addNewCustomer = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
+    console.log(e.target.value);
     if (e.target.value) {
       this.setState({
         newCustomer: e.target.value,
       });
       if (e.keyCode === 13 && e.target.value) {
-        this.setState({ showAddCustomer: true })
+        this.setState({ showAddCustomer: true });
       }
     } else {
       this.setState({
@@ -470,25 +564,35 @@ class CreateJobs extends Component {
     }
   };
 
-  getCustomerJobs = customer => {
+  getCustomerJobs = (customer) => {
     if (customer) {
-      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName, customerId: customer.email, customerIdError: '' })
+      this.setState({
+        jobs: customer.jobs,
+        selectedCustomer: customer.firstName,
+        customerId: customer.email,
+        customerIdError: "",
+      });
     } else {
-      this.setState({ jobs: [], selectedCustomer: '', customerId: '' })
+      this.setState({ jobs: [], selectedCustomer: "", customerId: "" });
     }
-  }
+  };
 
   populateNewCustomer = (e) => {
     let newCustomer = {
       email: e.data.data.email,
       firstName: e.data.data.firstName,
       jobs: [],
-      _id: e.data.data._id
-    }
-    let customers = cloneDeep(this.state.customers)
-    customers.unshift(newCustomer)
-    this.setState({ showAddCustomer: false, customers, selectedCustomer: newCustomer.firstName, customerId: newCustomer.email, })
-  }
+      _id: e.data.data._id,
+    };
+    let customers = cloneDeep(this.state.customers);
+    customers.unshift(newCustomer);
+    this.setState({
+      showAddCustomer: false,
+      customers,
+      selectedCustomer: newCustomer.firstName,
+      customerId: newCustomer.email,
+    });
+  };
 
   render() {
     return (
@@ -513,47 +617,51 @@ class CreateJobs extends Component {
                   onChange={this.handleFormInput}
                 />
               </div> */}
-              {this.state.customers.length > 0 ? <Autocomplete
-                noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
-                value={this.state.selectedCustomer}
-                onChange={(event, newValue) => {
-                  this.getCustomerJobs(newValue); // Get the customer and get job
-                }}
-                // inputValue={this.state.selectedCustomer}
-                // onInputChange={(event, newInputValue) => {
-                // }}
-                // id="country-select-demo1"
-                style={{ width: "100%", margin: "1rem 0" }}
-                size="small"
-                options={this.state.customers}
-                // classes={{
-                //   option: classes.option,
-                // }}
-                // freeSolo
-                autoHighlight
-                getOptionLabel={(option) => option.firstName ? option.firstName : option}
-                renderOption={(option) => (
-                  <React.Fragment>
-                    {option.firstName} ({option.email})
-            </React.Fragment>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    required
-                    autoFocus
-                    {...params}
-                    onKeyUp={(e) => this.addNewCustomer(e)}
-                    label="Choose a customer"
-                    style={{ margin: "1rem 2rem", width: "90%" }}
-                    variant="outlined"
-                    error={this.state.customerIdError ? true : false}
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: 'new-password', // disable autocomplete and autofill
-                    }}
-                  />
-                )}
-              /> : null}
+              {this.state.customers.length > 0 ? (
+                <Autocomplete
+                  noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
+                  value={this.state.selectedCustomer}
+                  onChange={(event, newValue) => {
+                    this.getCustomerJobs(newValue); // Get the customer and get job
+                  }}
+                  // inputValue={this.state.selectedCustomer}
+                  // onInputChange={(event, newInputValue) => {
+                  // }}
+                  // id="country-select-demo1"
+                  style={{ width: "100%", margin: "1rem 0" }}
+                  size="small"
+                  options={this.state.customers}
+                  // classes={{
+                  //   option: classes.option,
+                  // }}
+                  // freeSolo
+                  autoHighlight
+                  getOptionLabel={(option) =>
+                    option.firstName ? option.firstName : option
+                  }
+                  renderOption={(option) => (
+                    <React.Fragment>
+                      {option.firstName} ({option.email})
+                    </React.Fragment>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      autoFocus
+                      {...params}
+                      onKeyUp={(e) => this.addNewCustomer(e)}
+                      label="Choose a customer"
+                      style={{ margin: "1rem 2rem", width: "90%" }}
+                      variant="outlined"
+                      error={this.state.customerIdError ? true : false}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                    />
+                  )}
+                />
+              ) : null}
 
               <div>
                 {this.state.dates.map((x, i) => {
@@ -746,36 +854,20 @@ class CreateJobs extends Component {
                 <h4>Location:</h4>
               </div>
 
-              {this.state.locations &&
+              {this.state.locations && (
                 <div>
-                  <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-                    <div className="col-12">
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        size="small"
-                        id="from"
-                        label="Pickup"
-                        name="from"
-                        value={this.state.locations.from}
-                        onChange={(e) => this.hanldeLocationInput(e)}
-                        error={this.state.locationfromError ? true : false}
-                      />
-                    </div>
-                  </div>
-
-                  {this.state.locations.to.map((locationTo, i) => this.showLocation(i))}
+                  {this.state?.locations?.map((location, i) =>
+                    this.showLocation(i)
+                  )}
                 </div>
-              }
+              )}
               <div className="row">
                 <div className="col-11"></div>
                 <div className=" form-group col-1">
                   <i
                     className="fa fa-plus"
                     onClick={this.addLocation}
-                    style={{ transform: "translate3d(-1.5rem,-0.4rem, 0)" }}
+                    style={{ transform: "translate3d(0rem,0rem, 0)" }}
                   ></i>
                 </div>
               </div>
@@ -799,12 +891,13 @@ class CreateJobs extends Component {
             </form>
           </div>
         </div>
-        <Modal dialogClassName={`${style.modal}`}
+        <Modal
+          dialogClassName={`${style.modal}`}
           show={this.state.showAddCustomer}
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-        // backdrop={false}
+          // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>
@@ -814,7 +907,6 @@ class CreateJobs extends Component {
             <CustomerAdd isModal={true} close={this.populateNewCustomer} />
           </Modal.Body>
         </Modal>
-
       </div>
     );
   }

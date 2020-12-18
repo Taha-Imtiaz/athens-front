@@ -150,3 +150,11 @@
   flex-wrap: nowrap !important;
   
 }
+.circle {
+  width: 2.5rem;
+  padding: 0 0.1rem;
+  height: 2rem;
+  /* background-color: #fff; */
+  border-radius: 50%;
+  /* border: 1px solid #495057; */
+}

@@ -1,17 +1,19 @@
-import { Button, Chip } from "@material-ui/core";
+import { Button, Chip, TextField } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import { Modal } from "react-bootstrap";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { updateClaim, getClaim } from "../../Redux/Claims/claimsActions";
 import style from "./ClaimsDetails.module.css";
 import { showMessage } from "../../Redux/Common/commonActions";
-import TimeAgo from 'react-timeago'
+import TimeAgo from "react-timeago";
 
 const ClaimsDetails = (props) => {
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
+  const [waitTo, setWaitTo] = useState(true);
+  const [claimInput, setClaimInput] = useState('')
   //   var [claimsId, setClaimsId] = useState(props.location.claimsId);
   //   const [updateIndex, setUpdateIndex] = useState(0);
   //   console.log(props.location.claimsId);
@@ -21,16 +23,21 @@ const ClaimsDetails = (props) => {
       params: { claimsId },
     },
   } = props;
-
+  var { claims } = props;
   useEffect(() => {
     var { getClaim, claims } = props;
-    console.log(claimsId);
+    console.log(claims);
     if (claims) {
-      console.log(claims)
+      console.log(claims);
+      
     }
     getClaim(claimsId);
   }, []);
 
+useEffect(() => {
+console.log(claims)
+setClaimInput(claims?.waitTo)
+},[claims])
   //     var { claims } = props;
   //   var data = [];
   //   if (claims.claims) {
@@ -61,9 +68,7 @@ const ClaimsDetails = (props) => {
   };
 
   const handleClose = () => {
-
     setShow(false);
-
   };
   const updateClaimData = () => {
     if (update.length > 0) {
@@ -87,32 +92,61 @@ const ClaimsDetails = (props) => {
         .catch((err) => console.log(err));
     }
   };
-  var { claims } = props
+
+  var editInput = () => {
+    setWaitTo(false)
+  }
+  var handleClaimInput = (e) => {
+    console.log(e.target.value)
+    setClaimInput(e.target.value)
+  }
+
+  var disableInput = () => {
+     var { showMessage, claims } = props;
+     console.log(claimInput)
+     claims.waitTo = claimInput;
+    //  console.log(e.target.value)
+     setWaitTo(true)
+     updateClaim(claims)
+     .then((res) => {
+       if (res.data.status == 200) {
+         showMessage(res.data.message);
+       }
+     })
+     .catch((err) => console.log(err));
+  }
+  var { claims } = props;
+  
+  
+
   return (
     <div className={`row ${style.toprow}`}>
       <div className="col-3">
-
-        <div className={`card ${style.cardCustom}`} style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "1rem 0" }}>
+        <div
+          className={`card ${style.cardCustom}`}
+          style={{
+            fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+            margin: "1rem 0",
+          }}
+        >
           <div className="card-body">
-            <h5 className="card-title" style={{ fontFamily: "sans-serif" }}>Customer</h5>
+            <h5 className="card-title" style={{ fontFamily: "sans-serif" }}>
+              Customer
+            </h5>
             <h6 className="card-subtitle mb-2 text-muted">
               <Link
                 style={{ textDecoration: "none" }}
-                to={`/customer/detail/${claims ?.customer._id}`}
+                to={`/customer/detail/${claims?.customer._id}`}
               >
-                {claims ?.customer.firstName} {claims ?.customer.lastName}
+                {claims?.customer.firstName} {claims?.customer.lastName}
               </Link>
-
             </h6>
-            <p className="card-text">{claims ?.customer.phone}</p>
-            <p className="card-text">{claims ?.customer.email}</p>
+            <p className="card-text">{claims?.customer.phone}</p>
+            <p className="card-text">{claims?.customer.email}</p>
           </div>
         </div>
 
-        <div
-          className="row"
-          style={{ marginTop: "2rem" }}
-        >
+        <div className="row" style={{ marginTop: "2rem" }}>
           <div className="col-11 col-md-11">
             <div
               className={`card ${style.cardCustom}`}
@@ -131,148 +165,234 @@ const ClaimsDetails = (props) => {
                   style={{ flexWrap: "nowrap", fontFamily: "sans-serif" }}
                 >
                   Jobs
-                      </h5>
-                {claims ?.job ?
-                  <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}
+                </h5>
+                {claims?.job ? (
+                  <p
+                    style={{
+                      fontFamily:
+                        "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                    }}
                     className={style.assigneehead}
                     style={{ flexWrap: "nowrap" }}
                   >
-                    <Link to={`/job/details/${claims ?.job ?._id}`}> {claims ?.job ?.title}</Link>
+                    <Link to={`/job/details/${claims?.job?._id}`}>
+                      {" "}
+                      {claims?.job?.title}
+                    </Link>
                     <div>
-                      {claims ?.job ?.assignee.length > 0 ? claims ?.job ?.assignee.map((assignee) => <Chip
-                        label={assignee.name}
-                        clickable
-                        color="primary"
-                        variant="outlined"
-                        size="small"
-                        style={{ margin: " 0.2rem 0rem" }}
-                      />) : <Chip
+                      {claims?.job?.assignee.length > 0 ? (
+                        claims?.job?.assignee.map((assignee) => (
+                          <Chip
+                            label={assignee.name}
+                            clickable
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            style={{ margin: " 0.2rem 0rem" }}
+                          />
+                        ))
+                      ) : (
+                        <Chip
                           label="Not Added"
                           clickable
                           color="primary"
                           variant="outlined"
                           size="small"
                           style={{ margin: " 0 0.2rem" }}
-                        /> }
+                        />
+                      )}
                     </div>
                   </p>
-                  : <p>Not Added</p>}
-                <div>
-
-                </div>
+                ) : (
+                  <p>Not Added</p>
+                )}
+                <div></div>
               </div>
             </div>
           </div>
         </div>
         {/* <h5 style={{fontFamily:"sans-serif", margin: " 0 0.2rem" , padding:"1rem"}} >Assignees</h5> */}
-
       </div>
-      <div className={`card-body col-8 jumbotron `} style={{ margin: "1rem 0" }} >
+      <div
+        className={`card-body col-8 jumbotron `}
+        style={{ margin: "1rem 0" }}
+      >
         <div>
           <div className="row justify-content-between"></div>
 
           {/* {x.claims.map((y, j) => {
             return ( */}
           <div>
-
-            
             <div className="row">
-              <div className = {`col-5 ${style.protectionRow}` } >
-              <h5>Protection Type : </h5><span style={{fontWeight:"normal"}}>{claims ?.claimType}</span>  
+              <div className={`col-5 ${style.protectionRow}`}>
+                <h5>Protection Type : </h5>
+                <span style={{ fontWeight: "normal" }}>
+                  {claims?.claimType}
+                </span>
               </div>
-              
+
               <div
-              className={`col-3 ${style.protectionRow}`}
-              style={{
-                fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-              }}
-            >
-              <h5>{`Total: `}</h5><span>{`$${claims ?.price}`}</span> 
-            </div>
+                className={`col-3 ${style.protectionRow}`}
+                style={{
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                }}
+              >
+                <h5>{`Total: `}</h5>
+                <span>{`$${claims?.price}`}</span>
+              </div>
 
               <div className="col-2" style={{ transform: "translateX(5rem)" }}>
-              {claims ?.status == "open" ? (
-                <Button
-                  // name="Add Update"
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
-                  onClick={() => handleShow()}
-                >Add Update</Button>
-              ) : null}
-            </div>
+                {claims?.status == "open" ? (
+                  <Button
+                    // name="Add Update"
+                    style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                    }}
+                    onClick={() => handleShow()}
+                  >
+                    Add Update
+                  </Button>
+                ) : null}
+              </div>
 
-            <div className="col-2">
-              {claims ?.status == "open" ? (
-                <Button
-                  // name="Close Claim"
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", transform: "translateX(2.5rem)" }}
-                  onClick={() => handleCloseJob()}
-                >Close Claim</Button>
-              ) : <Chip
-              label="Closed"
-              clickable
-              color="primary"
-              variant="outlined"
-              size="small"
-              style={{ margin: " 0 0.2rem" }}
-            /> }
+              <div className="col-2">
+                {claims?.status == "open" ? (
+                  <Button
+                    // name="Close Claim"
+                    style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                      transform: "translateX(2.5rem)",
+                    }}
+                    onClick={() => handleCloseJob()}
+                  >
+                    Close Claim
+                  </Button>
+                ) : (
+                  <Chip
+                    label="Closed"
+                    clickable
+                    color="primary"
+                    variant="outlined"
+                    size="small"
+                    style={{ margin: " 0 0.2rem" }}
+                  />
+                )}
+              </div>
             </div>
-            </div>
-             <hr/>
+            <hr />
 
-              <div className={`col-12 ${style.styleClaims}` } >
-                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                Title :</h5> <span style={{fontWeight:"normal"}}>{claims ?.title}</span>  
-                
+            <div className={`col-12 ${style.styleClaims}`}>
+              <h5
+                style={{
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                }}
+              >
+                Title :
+              </h5>{" "}
+              <span style={{ fontWeight: "normal" }}>{claims?.title}</span>
+            </div>
+            <hr />
+            <div className={`col-12 ${style.styleClaims}`}>
+              <h5
+                style={{
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  whiteSpace: "pre-line",
+                }}
+              >
+                Description :
+              </h5>{" "}
+              <span style={{ fontWeight: "normal", whiteSpace: "pre-line" }}>
+                {claims?.description}
+              </span>
+            </div>
+            <hr />
+            <div className={`row`}>
+              <div className="col-3">
+              <h5
+                style={{
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                }}
+              >
+                Waiting To :{" "}
+              </h5>
               </div>
-              <hr/>
-              <div className={`col-12 ${style.styleClaims}` }>
-                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", whiteSpace: "pre-line" }}>
-                  Description :</h5> <span style={{fontWeight:"normal", whiteSpace:"pre-line"}}>{claims ?.description}</span>  
+              <div className="col-6" onDoubleClick = {editInput}>
+              <TextField
+                variant="outlined"
+                // margin="normal"
+                required
+                fullWidth
+                size="small"
+                name= "claimInput"
+                value = {claimInput}
+                onChange = {(e) => handleClaimInput(e)}
+                disabled={waitTo}
+                style={{ fontWeight: "normal" }}
+              >
+                {" "}
                 
+              </TextField>
+              
               </div>
-              <hr/>
-              <div className={`col-12 ${style.styleClaims}` }>
-                <h5 style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                  Waiting To : </h5><span style={{fontWeight:"normal"}}> {claims ?.waitTo}</span> 
+              <div className="col-3">
+              {waitTo === false && <Button onClick = {disableInput}
+              
+              style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                    }}>
+                       Save
+
                 
+                </Button>
+                }
               </div>
-           
+            </div>
           </div>
-        
-          <div className="row">
-            <div className="col-10"></div>
-       
-          </div>
+
           <hr />
           <div className="row">
             <div className="col-12">
-              {claims ?.updates.length > 0 ? (
+              {claims?.updates.length > 0 ? (
                 <div>
                   <h3>Updates</h3>
-                  {claims ?.updates.map((x, i) => (
-                 
-                 <div>
-                 <div key={i} className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                      <div className="col-12">
-                        <li style={{listStyle:"none"}}>{`${i+ 1}.  ${x.value}`}</li>
+                  {claims?.updates.map((x, i) => (
+                    <div>
+                      <div
+                        key={i}
+                        className="row"
+                        style={{
+                          fontFamily:
+                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                      >
+                        <div className="col-12">
+                          <li style={{ listStyle: "none" }}>{`${i + 1}.  ${
+                            x.value
+                          }`}</li>
+                        </div>
                       </div>
+                      <div className="row">
+                        <div className="col-10"></div>
+                        <div className="col-2">
+                          <li style={{ listStyle: "none", color: "#a8a8a8" }}>
+                            {/* {x.timestamp.split("T")[0]} */}
 
+                            <TimeAgo date={x.timestamp} />
+                            {/* {" " + new Date(x.timestamp).toDateString()} {new Date(x.timestamp).toLocaleTimeString()} */}
+                          </li>
+                        </div>
                       </div>
-                     <div className="row">
-                       <div className="col-10"></div>
-                       <div className="col-2">
-                     <li style={{listStyle:"none", color:"#a8a8a8"}}>
-
-                       {/* {x.timestamp.split("T")[0]} */}
-
-                       <TimeAgo date={x.timestamp} />
-                       {/* {" " + new Date(x.timestamp).toDateString()} {new Date(x.timestamp).toLocaleTimeString()} */}
-                     </li>
-                   </div>
-                     </div>
-                     <hr/>
+                      <hr />
                     </div>
-                    
                   ))}
                 </div>
               ) : null}
@@ -304,9 +424,12 @@ const ClaimsDetails = (props) => {
       </div>
 
       <Modal
-        show={show} onHide={handleClose}
+        show={show}
+        onHide={handleClose}
         dialogClassName={style.modal}
-        scrollable centered>
+        scrollable
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Add Update</Modal.Title>
         </Modal.Header>
@@ -347,12 +470,11 @@ const ClaimsDetails = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims ?.data ?.claim,
+  claims: state.claims?.data?.claim,
 });
 var actions = {
   showMessage,

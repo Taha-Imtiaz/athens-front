@@ -14,14 +14,22 @@ import { payAmount } from "../../../Redux/Mover/moverActions";
 import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { FormControlLabel, Grid, Radio, RadioGroup, TextField } from "@material-ui/core";
+import {
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@material-ui/core";
 import { useState } from "react";
-import style from "./JobConfirmation.module.css"
+import style from "./JobConfirmation.module.css";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,7 +148,7 @@ function JobConfirmation(props) {
     setData(updatedCustomer);
   };
 
-  const hanldeLocationInput = (i,e) => {
+  const hanldeLocationInput = (i, e) => {
     let job = cloneDeep(data);
     job.locations[i].value = e.target.value;
     setData(job);
@@ -152,7 +160,7 @@ function JobConfirmation(props) {
     setData(job);
   };
 
-const showLocation = (i) => {
+  const showLocation = (i) => {
     if (i === 0) {
       console.log(i);
       return (
@@ -199,7 +207,7 @@ const showLocation = (i) => {
       console.log(data.locations[i].type, data.locations[i].value);
       return (
         <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-          <div className="col-4" style={{ display: "flex" }}>
+          <div className="col-4">
             <RadioGroup
               className={style.rowFlex}
               value={data.locations[i].type}
@@ -208,18 +216,18 @@ const showLocation = (i) => {
               <FormControlLabel
                 value="pickup"
                 name="pickup"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}}/>}
                 label="Pickup"
               />
               <FormControlLabel
                 value="dropoff"
                 name="dropoff"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}}/>}
                 label="Dropoff"
               />
             </RadioGroup>
           </div>
-          <div className="col-6">
+          <div className="col-7">
             <TextField
               fullWidth
               variant="outlined"
@@ -234,12 +242,17 @@ const showLocation = (i) => {
               // error={this.state.locationtoError ? true : false}
             />
           </div>
-          <div className="col-2">
-            <i
-              className="fa fa-minus"
+          <div className="col-1">
+            <FontAwesomeIcon
+              icon = {faTrash}
               onClick={() => removeLocation(i)}
-              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
-            ></i>
+              style={{
+                transform: "translateY(1.5rem)",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            ></FontAwesomeIcon>
           </div>
         </div>
       );
@@ -301,23 +314,22 @@ const showLocation = (i) => {
   //   setData(newData);
   // };
   var removeLocation = (i) => {
-    var newData = {...data}
-    console.log(newData)
-    newData.locations.splice(i, 1)
-    console.log(newData)
-    setData(newData)
-  
-    };
-  
-   var handleInputChange = (e, i) => {
-      let { name, value } = e.target;
-      console.log(name, value);
-      let updateLocation = {...data};
-      
-      updateLocation.locations[i].type = value;
-     setData(updateLocation)
-    };
-  
+    var newData = { ...data };
+    console.log(newData);
+    newData.locations.splice(i, 1);
+    console.log(newData);
+    setData(newData);
+  };
+
+  var handleInputChange = (e, i) => {
+    let { name, value } = e.target;
+    console.log(name, value);
+    let updateLocation = { ...data };
+
+    updateLocation.locations[i].type = value;
+    setData(updateLocation);
+  };
+
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
       var s = window.document.createElement("script");
@@ -366,7 +378,7 @@ const showLocation = (i) => {
             dates: stringDates,
             startTime: data.startTime,
             phone: data.customer.phone,
-            locations: data.locations,
+            locations: data.locations.filter(x => x.value != '' && x.type != ''),
             email: data.customer.email,
             customerId: data.customer._id,
           };
@@ -406,7 +418,7 @@ const showLocation = (i) => {
       dates: stringDates,
       startTime: data.startTime,
       phone: data.customer.phone,
-      locations: data.locations,
+      locations: data.locations.filter(x => x.value != '' && x.type != ''),
       email: data.customer.email,
       customerId: data.customer._id,
     };
@@ -522,7 +534,7 @@ const showLocation = (i) => {
                     id="name"
                     label="First Name"
                     name="firstName"
-                    value={data.customer ?.firstName}
+                    value={data.customer?.firstName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -538,7 +550,7 @@ const showLocation = (i) => {
                     id="name"
                     label="Last Name"
                     name="lastName"
-                    value={data.customer ?.lastName}
+                    value={data.customer?.lastName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -554,7 +566,7 @@ const showLocation = (i) => {
                     id="name"
                     label="Phone Number"
                     name="phone"
-                    value={data.customer ?.phone}
+                    value={data.customer?.phone}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -570,7 +582,7 @@ const showLocation = (i) => {
                     id="name"
                     label="Email Address"
                     name="email"
-                    value={data.customer ?.email}
+                    value={data.customer?.email}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -610,11 +622,11 @@ const showLocation = (i) => {
 
             <div className="row">
               <div className="col-11"></div>
-              <div className=" form-group col-1">
+              <div className="col-1">
                 <i
                   className="fa fa-plus"
                   onClick={(e) => addLocation(e)}
-                  style={{ transform: "translate3d(0rem,0rem, 0)" }}
+                  style={{ transform: "translate3d(-1.3rem,0rem, 0)" }}
                 ></i>
               </div>
             </div>
@@ -714,7 +726,7 @@ const showLocation = (i) => {
                 float: "right",
               }}
 
-            //   className={classes.button}
+              //   className={classes.button}
             >
               Skip And Submit
             </Button>
@@ -732,7 +744,7 @@ const showLocation = (i) => {
           const labelProps = {};
           return (
             <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+              <StepLabel  style = {{color:"#00ADEE"}} {...labelProps}>{label}</StepLabel>
             </Step>
           );
         })}
@@ -748,41 +760,41 @@ const showLocation = (i) => {
             </Button>
           </div>
         ) : (
-            <div style={{ margin: "5px 30px" }}>
-              {
-                getStepContent(
-                  activeStep
-                ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
-              }
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  Back
+          <div style={{ margin: "5px 30px" }}>
+            {
+              getStepContent(
+                activeStep
+              ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
+            }
+            <div>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.button}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                Back
               </Button>
-                <Button
-                  onClick={handleNext}
-                  className={classes.button}
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  {activeStep === steps.length - 1 ? "Submit" : "Next"}
-                </Button>
-              </div>
+              <Button
+                onClick={handleNext}
+                className={classes.button}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );

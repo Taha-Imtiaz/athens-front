@@ -245,7 +245,6 @@ const JobDetails = (props) => {
 
                   <div>
                     
-
                     {job.locations.map((list) =>
                       list.type === "pickup" ?
                        

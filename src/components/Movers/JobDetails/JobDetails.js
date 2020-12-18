@@ -88,14 +88,14 @@ const MoversJobDetails = (props) => {
               <div className="row">
                 <h3 className="col-10">{job.title}</h3>
                 <div className={`col-2`}>
-                <Chip
-                      variant="outlined"
-                      size="small"
-                      label={job.status}
-                      clickable
-                      color="primary"
-                      style={{ margin: "0.2rem" }}
-                    />
+                  <Chip
+                    variant="outlined"
+                    size="small"
+                    label={job.status}
+                    clickable
+                    color="primary"
+                    style={{ margin: "0.2rem" }}
+                  />
 
                   {/* <Button name={`${job.status}`} /> */}
                 </div>
@@ -139,7 +139,7 @@ const MoversJobDetails = (props) => {
                 </h5>
                 <div
                   className={`col-12`}
-                  //   style={{ border: "2px solid rgba(0,0,0,0.125)" }}
+                //   style={{ border: "2px solid rgba(0,0,0,0.125)" }}
                 >
                   <div className="" style={{ fontFamily: "Roboto" }}>
                     <p className="card-text">{job.description}</p>
@@ -165,7 +165,7 @@ const MoversJobDetails = (props) => {
                     </div>
                   ))}
                 </div>
-                {job.locations &&
+                {/* {job.locations &&
                   job.locations.map((list) => {
                     return (
                       <div
@@ -173,7 +173,6 @@ const MoversJobDetails = (props) => {
                         style={{ transform: "translateY(1rem)" }}
                       >
                         <p
-                          //   className={style.para}
                           style={{
                             fontFamily:
                               "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
@@ -193,57 +192,68 @@ const MoversJobDetails = (props) => {
                       </div>
                     );
                   })}
-               <div className="col-12">
-               {job.status == "booked" || job.status == "completed" ? (
-                  <div className={`row`}>
-                    <div className="col-8"></div>
-                    <div
-                      className="col-2"
-                      style={{ transform: "translateX(3rem)" }}
-                      
-                    >
-                       <Button
-                    type="button"
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                      float: "right",
-                      margin: "1rem 0rem",
-                    }}
-                    onClick={paidInCash} 
-                  >Pay in Cash</Button>
-                    </div>
-                    <div
-                      className={`col-2 `}
-                      style={{ transform: "translate3d(0rem,1rem, 0)" }}
-                    >
-                      <Link
-                        to={{
-                          pathname: "/mover/payment",
-                          jobId: job._id,
-                        }}
-                        style={{ textDecoration: "none" }}
+                   */}
+                {job.locations.map((list) =>
+                  list.type === "pickup" ?
+
+                    <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                      <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
+                    </p>
+                    :
+                    <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                      <LocationOffIcon color="primary" />  {list.value}
+                    </p>)}
+                <div className="col-12">
+                  {job.status == "booked" || job.status == "completed" ? (
+                    <div className={`row`}>
+                      <div className="col-8"></div>
+                      <div
+                        className="col-2"
+                        style={{ transform: "translateX(3rem)" }}
+
                       >
-                        {" "}
                         <Button
-                    type="button"
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                      float: "right",
-                      // margin: "0 0.4rem",
-                    }}
-                  >Pay Online</Button>
-                        {/* <Button name="Pay Online" /> */}
-                      </Link>
+                          type="button"
+                          style={{
+                            background: "#00ADEE",
+                            textTransform: "none",
+                            color: "#FFF",
+                            fontFamily: "sans-serif",
+                            float: "right",
+                            margin: "1rem 0rem",
+                          }}
+                          onClick={paidInCash}
+                        >Pay in Cash</Button>
+                      </div>
+                      <div
+                        className={`col-2 `}
+                        style={{ transform: "translate3d(0rem,1rem, 0)" }}
+                      >
+                        <Link
+                          to={{
+                            pathname: "/mover/payment",
+                            jobId: job._id,
+                          }}
+                          style={{ textDecoration: "none" }}
+                        >
+                          {" "}
+                          <Button
+                            type="button"
+                            style={{
+                              background: "#00ADEE",
+                              textTransform: "none",
+                              color: "#FFF",
+                              fontFamily: "sans-serif",
+                              float: "right",
+                              // margin: "0 0.4rem",
+                            }}
+                          >Pay Online</Button>
+                          {/* <Button name="Pay Online" /> */}
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ) : null}
-               </div>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

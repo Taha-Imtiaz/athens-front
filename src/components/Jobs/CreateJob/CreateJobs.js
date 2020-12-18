@@ -154,7 +154,7 @@ class CreateJobs extends Component {
       anchorEl: null,
     });
   };
-  handleDateChange = (date) => {};
+  handleDateChange = (date) => { };
 
   addLocation = () => {
     if (
@@ -260,7 +260,7 @@ class CreateJobs extends Component {
                 value="dropoff"
                 name="dropoff"
                 control={<Radio />}
-                label="Dropoff"
+                label="DropOff"
               />
             </RadioGroup>
           </div>
@@ -272,18 +272,20 @@ class CreateJobs extends Component {
               required
               size="small"
               id="to"
-              label={this.state.locations[i].type}
+              label={this.state.locations[i].type == 'pickup' ? 'Enter Pickup Point' : (this.state.locations[i].type == 'dropoff' ? 'Enter DropOff Point' : 'Choose Type')}
+              disabled={this.state.locations[i].type ? false : true}
+              // label={'Pickup / dropoff point'}
               name={this.state.locations[i].type}
               value={this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
-              // error={this.state.locationtoError ? true : false}
+            // error={this.state.locationtoError ? true : false}
             />
           </div>
           <div className="col-2">
             <i
               className="fa fa-minus"
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+              style={{ transform: "translateY(1.5rem)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
             ></i>
           </div>
         </div>
@@ -321,13 +323,13 @@ class CreateJobs extends Component {
   };
 
   removeLocation = (i) => {
-  var location = cloneDeep(this.state.locations)
-  console.log(location)
-  location.splice(i, 1)
-  console.log(location)
-  this.setState({
-    locations:location
-  })
+    var location = cloneDeep(this.state.locations)
+    console.log(location)
+    location.splice(i, 1)
+    console.log(location)
+    this.setState({
+      locations: location
+    })
 
   };
 
@@ -495,7 +497,7 @@ class CreateJobs extends Component {
         services,
         dates: stringDates,
         startTime,
-        locations,
+        locations: locations.filter(x => x.value != '' && x.type != ''),
         status,
         note,
         assigneesId,
@@ -856,7 +858,7 @@ class CreateJobs extends Component {
 
               {this.state.locations && (
                 <div>
-                  {this.state?.locations?.map((location, i) =>
+                  {this.state ?.locations ?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
@@ -897,7 +899,7 @@ class CreateJobs extends Component {
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-          // backdrop={false}
+        // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>

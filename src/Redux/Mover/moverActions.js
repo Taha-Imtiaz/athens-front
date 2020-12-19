@@ -111,7 +111,7 @@ export var getJob = async (jobId) => {
   }
 };
 
-export var moverSearchFilter =  (searchObj) => {
+export var moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
     const token = localStorage.getItem("athens-token");
     const config = {
@@ -121,15 +121,15 @@ export var moverSearchFilter =  (searchObj) => {
       console.log(searchObj)
       var searchItem = await Axios.post(`user/search-all-jobs-by-mover`, searchObj, config);
       dispatch({
-        type:SEARCH_FILTER,
-        payload:{
-          searchItem:searchItem.data.jobs
+        type: SEARCH_FILTER,
+        payload: {
+          searchItem: searchItem.data.jobs
         }
       })
-     
+
     } catch (error) {
       console.log(error);
     }
   }
-  
+
 };

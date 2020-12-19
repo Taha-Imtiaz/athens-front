@@ -5,41 +5,16 @@ import { setAvailability } from '../../../Redux/Mover/moverActions'
 import { clone, cloneDeep } from "lodash"
 import { connect } from "react-redux";
 import { showMessage } from '../../../Redux/Common/commonActions'
-import {Button} from "@material-ui/core"
+import { Button } from "@material-ui/core"
 class Availability extends Component {
 
     state = {
         days: "",
-        // weeklySchedule: [{
-        //     "day": "Monday",
-        //     "status": true
-        // }, {
-        //     "day": "Tuesday",
-        //     "status": true
-        // }, {
-        //     "day": "Wednesday",
-        //     "status": true
-        // }, {
-        //     "day": "Thursday",
-        //     "status": false
-        // }, {
-        //     "day": "Friday",
-        //     "status": false
-        // }, {
-        //     "day": "Saturday",
-        //     "status": true
-        // }, {
-        //     "day": "Sunday",
-        //     "status": false
-        // }],
         user: '',
         weeklySchedule: [],
         update: true
 
     }
-    // constructor(props) {
-    //     super(props)
-    // }
 
     handleChange = (e) => {
         let newData = cloneDeep(this.state);
@@ -55,18 +30,12 @@ class Availability extends Component {
             weeklySchedule: this.state.weeklySchedule
         }
         setAvailability(obj, this.state.user._id).then(res => {
-            console.log(res)
             showMessage(res.data.message)
         })
-        // setAvailability(obj, this.state.user._id).then(res => {
-        //     if (res.data.status == 200) {
-        //         showMessage(res.data.message)
-        //         this.setState({ weeklySchedule: res.data.assignee.weeklySchedule })
-        //     }
-        // })
     }
 
     componentDidMount() {
+        console.log('Component Did Mount!', this.props.loggedinUser)
         if (this.props.loggedinUser) {
             this.setState({
                 user: this.props.loggedinUser,
@@ -75,16 +44,24 @@ class Availability extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.state.update) {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.loggedinUser != prevProps.loggedinUser) {
+            console.log(this.props.loggedinUser)
             this.setState({
-                user: nextProps.loggedinUser,
-                weeklySchedule: nextProps.loggedinUser.weeklySchedule,
-                update: false
+                user: this.props.loggedinUser,
+                weeklySchedule: this.props.loggedinUser.weeklySchedule
             });
         }
-
     }
+    // componentWillReceiveProps(nextProps) {
+    //     if (this.state.update) {
+    //         this.setState({
+    //             user: nextProps.loggedinUser,
+    //             weeklySchedule: nextProps.loggedinUser.weeklySchedule,
+    //             update: false
+    //         });
+    //     }
+    // }
 
     render() {
         return (
@@ -103,22 +80,20 @@ class Availability extends Component {
                 </div>
                 <div className={style.btn}>
                     <Button
-            type="button"
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-              marginLeft:"0.5rem",
-              float: "right",
-            }} onClick={this.handleSubmit}>Save</Button>
+                        type="button"
+                        style={{
+                            background: "#00ADEE",
+                            textTransform: "none",
+                            color: "#FFF",
+                            fontFamily: "sans-serif",
+                            marginLeft: "0.5rem",
+                            float: "right",
+                        }} onClick={this.handleSubmit}>Save</Button>
                 </div>
             </div>
         );
     }
 }
-
-// export default Availability;
 
 var actions = {
     showMessage

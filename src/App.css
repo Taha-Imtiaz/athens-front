@@ -117,3 +117,6 @@ color: #00ADEE;
  .DatePicker_dateLabel__GO7dX {
   font-size: 14px !important;
 }
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: #00ADEE;
+}

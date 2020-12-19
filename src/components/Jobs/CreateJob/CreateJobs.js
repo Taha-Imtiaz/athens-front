@@ -41,6 +41,8 @@ import { Autocomplete } from "@material-ui/lab";
 import { getCustomersAndJobs } from "../../../Redux/Claims/claimsActions";
 import { Modal } from "react-bootstrap";
 import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
@@ -253,18 +255,18 @@ class CreateJobs extends Component {
               <FormControlLabel
                 value="pickup"
                 name="pickup"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}} />}
                 label="Pickup"
               />
               <FormControlLabel
                 value="dropoff"
                 name="dropoff"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}} />}
                 label="DropOff"
               />
             </RadioGroup>
           </div>
-          <div className="col-6">
+          <div className="col-7">
             <TextField
               fullWidth
               variant="outlined"
@@ -281,12 +283,13 @@ class CreateJobs extends Component {
             // error={this.state.locationtoError ? true : false}
             />
           </div>
-          <div className="col-2">
-            <i
-              className="fa fa-minus"
+          <div className="col-1">
+            <FontAwesomeIcon
+              icon = {faTrash}
+              // className = {style.circle}
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translateY(1.5rem)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
-            ></i>
+              style={{ transform: "translate3d(1.2rem,1.5rem, 0)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
+            ></FontAwesomeIcon>
           </div>
         </div>
       );
@@ -866,11 +869,11 @@ class CreateJobs extends Component {
               <div className="row">
                 <div className="col-11"></div>
                 <div className=" form-group col-1">
-                  <i
-                    className="fa fa-plus"
+                  <FontAwesomeIcon
+                    icon = {faPlus}
                     onClick={this.addLocation}
                     style={{ transform: "translate3d(0rem,0rem, 0)" }}
-                  ></i>
+                  ></FontAwesomeIcon>
                 </div>
               </div>
 

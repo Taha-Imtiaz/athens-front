@@ -341,7 +341,7 @@ class JobEditDetails extends Component {
       assigneeRequired,
       jobType,
       // meetTime,
-      locations,
+      locations: locations.filter(x => x.value != '' && x.type != ''),
       // assigneesId,
       // startTime,
       status,
@@ -445,10 +445,11 @@ class JobEditDetails extends Component {
     if (i === 0) {
       console.log(i);
       return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+        <div className="row" >
           <div className="col-12">
             <TextField
               variant="outlined"
+              style={{ transform: "translateX(3rem)", width: "100%" }}
               margin="normal"
               required
               fullWidth
@@ -466,7 +467,7 @@ class JobEditDetails extends Component {
     } else if (i == 1) {
       console.log(i);
       return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+        <div className="row">
           <div className="col-12">
             <TextField
               fullWidth
@@ -474,7 +475,8 @@ class JobEditDetails extends Component {
               margin="normal"
               required
               size="small"
-              id="to"
+              id="to" 
+              style={{ transform: "translateX(3rem)", width: "100%" }}
               label="Drop Off"
               name="dropoff"
               value={this.state.locations[i].value}
@@ -487,9 +489,9 @@ class JobEditDetails extends Component {
     } else {
       console.log(this.state.locations[i].type, this.state.locations[i].value);
       return (
-        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-          <div className="col-4" style={{ display: "flex" }}>
-            <RadioGroup
+        <div className="row">
+          <div className="col-4" style={{ transform: "translate3d(2rem, 0.75rem, 0)", width: "100%" }}>
+            <RadioGroup 
               className={style.rowFlex}
               value={this.state.locations[i].type}
               onChange={(e) => this.handleInputChange(e, i)}
@@ -497,41 +499,41 @@ class JobEditDetails extends Component {
               <FormControlLabel
                 value="pickup"
                 name="pickup"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}} />}
                 label="Pickup"
               />
               <FormControlLabel
                 value="dropoff"
                 name="dropoff"
-                control={<Radio />}
+                control={<Radio style = {{color:"#00ADEE"}} />}
                 label="Dropoff"
               />
             </RadioGroup>
           </div>
-          <div className="col-6">
+          <div className="col-7" >
             <TextField
               fullWidth
               variant="outlined"
-              style={{margin: "1rem 2rem" }}
+              style={{ transform: "translateX(3rem)", width: "100%" }}
               margin="normal"
               required
               size="small"
               id="to"
-              label={this.state.locations[i].type}
+              label={this.state.locations[i].type ===  "pickup" ? "PickUp Location": this.state.locations[i].type ===  "dropoff"? "Drop Off Location":"Choose Location" }
               name={this.state.locations[i].type}
               value={this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
               // error={this.state.locationtoError ? true : false}
             />
           </div>
-          <div className="col-2" style={{transform: "translate3d(4.5rem,0rem, 0)"}}>
-            <i
-              className="fa fa-minus"
+          <div className="col-1">
+            <FontAwesomeIcon
+             icon = {faTrash}
               
 
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translateY(1.5rem)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
-            ></i>
+              style={{ transform: "translate3d(3.5rem,1.5rem, 0)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+            ></FontAwesomeIcon>
           </div>
         </div>
       );
@@ -668,7 +670,7 @@ class JobEditDetails extends Component {
             Job Details Edit
           </h3>
           <div className="row">
-            <form style={{ width: "85%" }}>
+            <form style={{ width: "88%" }}>
               <div>
                 <TextField
                   variant="outlined"
@@ -1075,18 +1077,7 @@ class JobEditDetails extends Component {
             </div>
           </div>
           <div className="row">
-            <div className={`col-6 ${style.btnalign}`}>
-              <Button
-                type="submit"
-
-                onClick={this.handleJobUpdate}
-
-                style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%", transform: "translate3d(2rem, 1rem ,0rem)" }}
-              >
-                Update
-              </Button>
-            </div>
-            <div className={`col-6 ${style.btnalign}`}>
+          <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
@@ -1100,6 +1091,19 @@ class JobEditDetails extends Component {
                 Reset
               </Button>
             </div>
+           
+            <div className={`col-6 ${style.btnalign}`}>
+              <Button
+                type="submit"
+
+                onClick={this.handleJobUpdate}
+
+                style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%", transform: "translate3d(0rem, 1rem ,0rem)" }}
+              >
+                Update
+              </Button>
+            </div>
+            
           </div>
           <Modal
             show={show}

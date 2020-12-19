@@ -34,6 +34,10 @@ const CustomerDetail = (props) => {
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
 
+  const [waitTo, setWaitTo] = useState(true);
+  const [claimInput, setClaimInput] = useState("");
+  const [claimIndex, setClaimIndex]  = useState("")
+
   const [blankets, setBlankets] = useState([]);
   var [note, setNote] = useState("");
 
@@ -52,7 +56,7 @@ const CustomerDetail = (props) => {
   } = props;
 
   var data = [];
-  if (customer ?.claim) {
+  if (customer?.claim) {
     // setBlanketValue(customer.blanketDeposit.cost)
     data = customer.claim;
   }
@@ -93,12 +97,12 @@ const CustomerDetail = (props) => {
 
   useEffect(() => {
     //calculate blanket and claims Count
-    var customerClaims = customer ?.claim;
-    var customerBlanket = customer ?.blanketDeposit;
+    var customerClaims = customer?.claim;
+    var customerBlanket = customer?.blanketDeposit;
 
     console.log(customerClaims);
     console.log(claimCount);
-    if (customerClaims ?.length > 0) {
+    if (customerClaims?.length > 0) {
       // let count = customerClaims ?.map(
       //   (claim) =>
       //     claim.status === "open" && setClaimCount((count) => count + 1)
@@ -106,12 +110,15 @@ const CustomerDetail = (props) => {
       let openClaims = customerClaims.filter((claim) => claim.status === "open")
         .length;
       setClaimCount(openClaims);
+      // var fetchClaims = customerClaims.filter((claim) =>
+      //   setClaimInput(claim.waitTo)
+      // );
     } else {
       setClaimCount(0);
     }
 
     // var blanketsCount = customerBlanket?.map((blanket) => setBlanketCount((count) => count + 1 ))
-    setBlanketValue(customer ?.blanketDeposit);
+    setBlanketValue(customer?.blanketDeposit);
     console.log(blanketValue);
   }, [customer]);
 
@@ -131,7 +138,7 @@ const CustomerDetail = (props) => {
     var { name, value } = e.target;
     setNote(value);
   };
-  var AddNote = () => { };
+  var AddNote = () => {};
 
   var [value, setValue] = useState(0);
 
@@ -202,6 +209,51 @@ const CustomerDetail = (props) => {
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
+
+  var editInput = (e,i) => {
+    // e.stopPropagation()
+    // e.stopPropagation()
+    // e.nativeEvent.stopImmediatePropagation();
+    setClaimIndex(i)
+    if(claimIndex === i) {
+      setWaitTo(false)
+    }
+    else {
+      setWaitTo(true)
+    }
+  };
+  var handleClaimInput = (e,i, claim) => {
+    // e.stopPropagation()
+    // e.nativeEvent.stopImmediatePropagation();
+    if(claimIndex === i) {
+      console.log(claim)
+      console.log(e.target.value);
+      claim.waitTo = e.target.value
+      setClaimInput(e.target.value)
+    }
+    
+  };
+
+  var disableInput = (e, claim,i) => {
+    // e.stopPropagation()
+    // e.nativeEvent.stopImmediatePropagation();
+    var { showMessage } = props;
+    if(claimIndex === i) {
+    setWaitTo(true);
+    claim.waitTo = claimInput
+
+
+
+    updateClaim(claim)
+      .then((res) => {
+        if (res.data.status == 200) {
+          showMessage(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
+    }
+   
+  };
   return (
     <div>
       {customer && (
@@ -236,7 +288,7 @@ const CustomerDetail = (props) => {
                         <Tab
                           label={
                             <Badge
-                              badgeContent={customer ?.blanketDeposit.reduce(
+                              badgeContent={customer?.blanketDeposit.reduce(
                                 (sum, currentValue) =>
                                   sum + parseInt(currentValue.quantity),
                                 0
@@ -427,13 +479,13 @@ const CustomerDetail = (props) => {
                       {customer.jobs && customer.jobs.length > 0 ? (
                         <div>
                           <h3 className={`${style.job}`}>Jobs</h3>
-                          {customer ?.jobs ?.map((job, i) => {
+                          {customer?.jobs?.map((job, i) => {
                             return (
-                              <div key={i} className={style.jumbotron}>
+                              <div key={i} className={style.jumbotron} style={{padding:"1rem 0"}}>
                                 <div
                                   className="row"
                                   key={i}
-                                  style={{ padding: "2rem" }}
+                                  style={{paddingLeft:"1rem"}}
                                 >
                                   <div className="col-7">
                                     <Link
@@ -444,37 +496,7 @@ const CustomerDetail = (props) => {
                                     >
                                       <h5>{job.title}</h5>
                                     </Link>
-                                    {job.dates.map((x, i) =>
-                                      i === 0 ? (
-                                        <label key={i}>{x}</label>
-                                      ) : (
-                                          <label>
-                                            <span style={{ padding: "0.5rem" }}>
-                                              |
-                                          </span>
-                                            {x}
-                                          </label>
-                                        )
-                                    )}
-                                    <div>
-                                      {job.services.map((service, i) => (
-                                        <label
-                                          key={i}
-                                          style={{
-                                            display: "inline",
-                                            padding: "0 0.2rem",
-                                          }}
-                                        >
-                                          <Chip
-                                            variant="outlined"
-                                            size="small"
-                                            label={service.name}
-                                            clickable
-                                            color="primary"
-                                          />
-                                        </label>
-                                      ))}
-                                    </div>
+                                   
                                   </div>
                                   <div className="col-3">
                                     {job.assignee.length > 0 ? (
@@ -483,20 +505,20 @@ const CustomerDetail = (props) => {
                                           i === 0 ? (
                                             <p>{assignee.name}</p>
                                           ) : (
-                                              <p>
-                                                <span
-                                                  style={{ padding: "0.5rem" }}
-                                                >
-                                                  |
+                                            <p>
+                                              <span
+                                                style={{ padding: "0.5rem" }}
+                                              >
+                                                |
                                               </span>
-                                                {assignee.name}
-                                              </p>
-                                            )
+                                              {assignee.name}
+                                            </p>
+                                          )
                                         )}
                                       </div>
                                     ) : (
-                                        <p>No Assignee</p>
-                                      )}
+                                      <p>No Assignee</p>
+                                    )}
                                   </div>
                                   <div className="col-2">
                                     <span>
@@ -509,8 +531,40 @@ const CustomerDetail = (props) => {
                                       />
                                     </span>
                                   </div>
+                                    </div>
 
-                                  <div className="col-12">
+                                     {job.dates.map((x, i) =>
+                                      i === 0 ? (
+                                        <label key={i} style={{paddingLeft:"1rem"}}>{x}</label>
+                                      ) : (
+                                        <label style={{paddingLeft:"1rem"}}>
+                                          <span style={{ padding: "0.5rem" }}>
+                                            |
+                                          </span>
+                                          {x}
+                                        </label>
+                                      )
+                                    )}
+                                    <div>
+                                      {job.services.map((service, i) => (
+                                        <label
+                                          key={i}
+                                          style={{
+                                            display: "inline",
+                                            paddingLeft:"1rem"
+                                          }}
+                                        >
+                                          <Chip
+                                            variant="outlined"
+                                            size="small"
+                                            label={service.name}
+                                            clickable
+                                            color="primary"
+                                          />
+                                        </label>
+                                      ))}
+                                    </div>
+                                  <div className="col-12" style={{paddingLeft:"1rem"}}>
                                     <p style={{ whiteSpace: "pre-line" }}>
                                       {job.description}
                                     </p>
@@ -543,15 +597,35 @@ const CustomerDetail = (props) => {
                                       );
                                     })} */}
                                   {job.locations.map((list) =>
-                                    list.type === "pickup" ?
-
-                                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                                        <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
+                                    list.type === "pickup" ? (
+                                      <p
+                                        style={{
+                                          fontFamily:
+                                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                          margin: "0",
+                                          paddingLeft:"1rem"
+                                        }}
+                                      >
+                                        <MyLocationOutlinedIcon
+                                          color="primary"
+                                          style={{ marginRight: "0.4rem" }}
+                                        />{" "}
+                                        {list.value} <br></br>
                                       </p>
-                                      :
-                                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                                        <LocationOffIcon color="primary" />  {list.value}
-                                      </p>)}
+                                    ) : (
+                                      <p
+                                        style={{
+                                          fontFamily:
+                                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                          margin: "0",
+                                          paddingLeft:"1rem"
+                                        }}
+                                      >
+                                        <LocationOffIcon color="primary"  />{" "}
+                                        {list.value}
+                                      </p>
+                                    )
+                                  )}
                                   {/* {job.locations && (
                                     <div>
                                       <MyLocationOutlinedIcon
@@ -664,22 +738,22 @@ const CustomerDetail = (props) => {
                                     </Modal> */}
                                   </div>
                                 </div>
-                              </div>
+                             
                             );
                           })}
                         </div>
                       ) : (
-                          <h4
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              margin: "2rem 0",
-                            }}
-                          >
-                            No job added yet
+                        <h4
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            margin: "2rem 0",
+                          }}
+                        >
+                          No job added yet
                         </h4>
-                        )}
+                      )}
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
@@ -716,7 +790,7 @@ const CustomerDetail = (props) => {
                       </div>
                     </div>
                     <hr />
-                    {customer ?.claim.length > 0 && (
+                    {customer?.claim.length > 0 && (
                       <div
                         className="row"
                         style={{
@@ -742,7 +816,7 @@ const CustomerDetail = (props) => {
                       </div>
                     )}
                     <div id="accordion">
-                      {customer ?.claim.length > 0 ? (
+                      {customer?.claim.length > 0 ? (
                         customer.claim.map((claim, i) => {
                           return (
                             <div
@@ -777,7 +851,7 @@ const CustomerDetail = (props) => {
                                   {/* {claim ?.updatedAt.split("T")[0]}{" "}
                                   <span>|</span>{" "}
                                   {claim ?.updatedAt.split("T")[1].split(".")[0]} */}
-                                  <TimeAgo date={claim ?.updatedAt} />
+                                  <TimeAgo date={claim?.updatedAt} />
                                 </div>
                               </div>
 
@@ -841,14 +915,14 @@ const CustomerDetail = (props) => {
                                               Close Claim
                                             </Button>
                                           ) : (
-                                              <Chip
-                                                variant="outlined"
-                                                size="small"
-                                                label="Closed"
-                                                clickable
-                                                color="primary"
-                                              />
-                                            )}
+                                            <Chip
+                                              variant="outlined"
+                                              size="small"
+                                              label="Closed"
+                                              clickable
+                                              color="primary"
+                                            />
+                                          )}
                                         </div>
                                       </div>
                                       <hr />
@@ -889,19 +963,62 @@ const CustomerDetail = (props) => {
                                     <hr />
 
                                     <div className="row">
-                                      <div className={`col-12`}>
+                                      <div className={`col-12`} >
                                         <h6
-                                          className={`${style.para} ${style.styleClaims}`}
+                                        className={`${style.styleClaims}`}
                                         >
                                           Waiting To :{" "}
-                                          <span
-                                            style={{ fontWeight: "normal" }}
-                                          >
-                                            {claim.waitTo}
-                                          </span>
+                                        
+                                        <span style={{fontWeight:"normal"}}> {claim.waitTo}</span>
                                         </h6>
                                       </div>
+                                      {/* <div
+                                        className="col-6"
+                                        onDoubleClick={(e) => { 
+                                          e.stopPropagation()
+                                          editInput(e,i)
+                                        }}
+                                      >
+                                        <span style={{ fontWeight: "normal" }}>
+                                          <TextField
+                                            variant="outlined"
+                                            // margin="normal"
+                                            required
+                                            fullWidth
+                                            size="small"
+                                            name="claimInput"
+                                            value={claim.waitTo}
+                                            onChange={(e) =>{ e.stopPropagation()
+                                              handleClaimInput(e,i,claim)
+                                            }
+                                            }
+                                            disabled={waitTo}
+                                            style={{ fontWeight: "normal" }}
+                                          >
+                                            {" "}
+                                          </TextField>
+                                        </span>
+                                      </div>
+                                      <div className="col-3">
+                                        {waitTo === false && (
+                                          <Button
+                                            onClick={(e) => {
+                                              e.stopPropagation()
+                                              disableInput(e,claim,i)
+                                            }}
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                            }}
+                                          >
+                                            Save
+                                          </Button>
+                                        )}
+                                      </div> */}
                                     </div>
+
                                     <hr />
 
                                     <div>
@@ -952,10 +1069,10 @@ const CustomerDetail = (props) => {
                           );
                         })
                       ) : (
-                          <div className="text-center">
-                            <img src="/images/no-data-found.png" />
-                          </div>
-                        )}
+                        <div className="text-center">
+                          <img src="/images/no-data-found.png" />
+                        </div>
+                      )}
 
                       {/* <Modal
                         dialogClassName={style.modal}
@@ -1041,10 +1158,10 @@ const CustomerDetail = (props) => {
                         updateBlanket={updateBlanket}
                       />
                     ) : (
-                        <div className="text-center">
-                          <img src="/images/no-data-found.png" />
-                        </div>
-                      )}
+                      <div className="text-center">
+                        <img src="/images/no-data-found.png" />
+                      </div>
+                    )}
                   </TabPanel>
                 </div>
               </div>

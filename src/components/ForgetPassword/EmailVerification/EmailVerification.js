@@ -8,20 +8,17 @@ const EmailVerification = (props) => {
   var [emailError, setEmailError] = useState("");
   var handleFormInput = (e) => {
     var { name, value } = e.target;
-    console.log(value);
     setEmail(value);
   };
 
   var navigateToCode = () => {
     var { history } = props;
     if (email !== "") {
-    console.log(email)
       var emailObj = {
         email: email,
       };
      
       sendCode(emailObj).then((res) => {
-          console.log(res)
         if (res.data.status === 200) {
         var token = sessionStorage.setItem("token", res.data.token)
           history.push("/verifycode");

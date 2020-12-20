@@ -80,8 +80,6 @@ const CustomerDeposit = (props) => {
   var makeInputFieldEditible = (e, i) => {
     let newData = cloneDeep(blankets);
     newData.map((data) => (data.edit = true));
-    console.log(newData);
-
     newData[i].edit = !newData[i].edit;
     setBlankets(newData);
   };

@@ -1,0 +1,14 @@
+export const GET_CUSTOMER_FORM = "GET_CUSTOMER_FORM"
+export const SET_CUSTOMER_FORM = "SET_CUSTOMER_FORM"
+
+export const GET_JOB_FORM = "GET_JOB_FORM"
+export const SET_JOB_FORM = "SET_JOB_FORM"
+
+export const GET_CLAIM_FORM = "GET_CLAIM_FORM"
+export const SET_CLAIM_FORM = "SET_CLAIM_FORM"
+
+export const SET_DEPOSIT_FORM = "SET_DEPOSIT_FORM"
+export const GET_DEPOSIT_FORM = "GET_DEPOSIT_FORM"
+
+
+

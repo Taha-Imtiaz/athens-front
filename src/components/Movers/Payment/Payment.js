@@ -66,7 +66,6 @@ class Payment extends Component {
               showMessage(res.data.message);
               history.push("/mover");
             }
-            console.log(res);
           });
           // this.setState({
           //     message: `Success! Card token ${response.card.id}.`,

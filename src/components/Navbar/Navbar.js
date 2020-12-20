@@ -11,7 +11,6 @@ const Navbar = (props) => {
   useEffect(() => {
     const token = localStorage.getItem("athens-token");
     if (token) {
-      // console.log('Inside')
       var { getLoginUser } = props;
       getLoginUser();
     }

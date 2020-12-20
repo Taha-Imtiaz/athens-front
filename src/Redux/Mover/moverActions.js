@@ -76,21 +76,6 @@ export var setAvailability = async (obj, _id) => {
   var days = await Axios.post(`user/set-availability/${_id}`, obj);
   return days;
 };
-// export var updateJob = (jobObj, jobId) => {
-//     return async (disptch) => {
-//        try {
-//         var updatedJob = await Axios.post(`user/get-customer/${jobId}`, jobObj)
-//         disptch({
-//             type: UPDATE_JOB,
-//             payload: {
-//                 updatedJob: updatedJob
-//             }
-//         })
-//        } catch (error) {
-//            console.log(error)
-//        }
-//     }
-//     }
 
 export var payAmount = async (obj) => {
   var payment = await Axios.post(`user/payment`, obj);
@@ -118,7 +103,6 @@ export var moverSearchFilter = (searchObj) => {
       headers: { Authorization: token },
     };
     try {
-      console.log(searchObj)
       var searchItem = await Axios.post(`user/search-all-jobs-by-mover`, searchObj, config);
       dispatch({
         type: SEARCH_FILTER,

@@ -35,7 +35,6 @@ class Availability extends Component {
     }
 
     componentDidMount() {
-        console.log('Component Did Mount!', this.props.loggedinUser)
         if (this.props.loggedinUser) {
             this.setState({
                 user: this.props.loggedinUser,
@@ -46,7 +45,6 @@ class Availability extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.loggedinUser != prevProps.loggedinUser) {
-            console.log(this.props.loggedinUser)
             this.setState({
                 user: this.props.loggedinUser,
                 weeklySchedule: this.props.loggedinUser.weeklySchedule

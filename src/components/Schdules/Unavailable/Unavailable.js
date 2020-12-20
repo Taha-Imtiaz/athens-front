@@ -97,7 +97,6 @@ const UnavailableSchedule = (props) => {
             dates.push(list._id);
             setDates(dates);
         }
-        console.log(dates)
     }
     const approveRequests = () => {
         let data = {

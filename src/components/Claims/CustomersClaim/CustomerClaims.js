@@ -32,7 +32,7 @@ const CustomerClaims = (props) => {
 
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims?.data?.claims?.total;
+  var totalCount = claims.claims ?.data ?.claims ?.total;
 
   useEffect(() => {
     var { getAllClaims } = props;
@@ -41,14 +41,12 @@ const CustomerClaims = (props) => {
       page: currentPage,
       query: "",
     };
-    console.log(claimsObj);
     getAllClaims(claimsObj);
   }, []);
   var { claims } = props;
   var data = [];
   if (claims.claims) {
     data = claims.claims.data.claims;
-    console.log(data.docs);
   }
 
   const routes = [
@@ -75,60 +73,7 @@ const CustomerClaims = (props) => {
     setCurrentPage(page);
   };
 
-  // const handleShow = (i) => {
-  //   setShow(true);
-  //   setUpdateIndex(i);
-  // };
-
-  // const handleClose = (notes) => {
-  //   // var { note } = this.state;
-  //   setShow(false);
-  //   // this.setState({
-  //   //     show: false,
-  //   //     note: notes,
-  //   // });
-  // };
-  // const updateClaimData = () => {
-  //   if (update.length > 0) {
-  //     let ob = {
-  //       timestamp: new Date(),
-  //       value: update,
-  //     };
-  //     let newData = cloneDeep(data.docs);
-  //     console.log(newData, updateIndex);
-  //     newData[updateIndex].updates.push(ob);
-  //     var { showMessage, history } = props;
-  //     updateClaim(newData[updateIndex])
-  //       .then((res) => {
-  //         if (res.data.status == 200) {
-  //           data.docs[updateIndex].updates = res.data.claim.updates;
-  //           setShow(false);
-  //           setUpdate("");
-  //           showMessage(res.data.message);
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
-  // const handleAddUpdate = (e) => {
-  //   setUpdate(e.target.value);
-  // };
-
-  // const handleCloseJob = (i) => {
-  //   var { showMessage } = props;
-
-  //   data.docs[i].status = "closed";
-  //   updateClaim(data.docs[i])
-  //     .then((res) => {
-  //       if (res.data.status == 200) {
-  //         showMessage(res.data.message);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  const getClaimsByStatus = (e,value) => {
-    console.log(value);
+  const getClaimsByStatus = (e, value) => {
     var { getAllClaims } = props;
     setStatus(value);
 
@@ -147,16 +92,11 @@ const CustomerClaims = (props) => {
       setShowIndex(i);
     }
   };
-  console.log(status);
   return (
     <div style={{ overflowX: "hidden" }}>
       {data.docs && (
         <div>
           <div className={`row ${style.toprow}`}>
-            {/* <div className="col-2">
-              <SideBar routes={routes} />
-            </div> */}
-
             <div className="col-3">
               <h3 className={style.head}>Claims</h3>
             </div>
@@ -167,7 +107,6 @@ const CustomerClaims = (props) => {
                 claimStatus={status}
               />
             </div>
-
             <div
               className={`col-2  d-flex justify-content-between ${style.filter}`}
             >
@@ -180,39 +119,31 @@ const CustomerClaims = (props) => {
                 aria-haspopup="true"
                 aria-expanded="false"
                 style={{ transform: "translateY(-.3rem)" }}
-              
+
               ></i>
 
-              <div   
+              <div
                 className="dropdown-menu"
                 aria-labelledby="dropdownMenuLink"
                 style={{ margin: "-0.5rem" }}
               >
-                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e,"all")}>All</a>
-                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e,"open")}>Open</a>
-                <a className="dropdown-item" onClick={(e) =>getClaimsByStatus(e, "closed")}>Closed</a>
+                <a className="dropdown-item" onClick={(e) => getClaimsByStatus(e, "all")}>All</a>
+                <a className="dropdown-item" onClick={(e) => getClaimsByStatus(e, "open")}>Open</a>
+                <a className="dropdown-item" onClick={(e) => getClaimsByStatus(e, "closed")}>Closed</a>
               </div>
-              {/* <div className="form-group" style={{ marginRight: "1.3rem" }}>
-                <select className="form-control" onChange={getClaimsByStatus}>
-                  <option value="all">All</option>
-                  <option value="open">Open</option>
-                  <option value="closed">Closed</option>
-                </select>
-              </div> */}
-
               <div
-               
-               style={{ margin: '-0.5rem' }}
-               >
+
+                style={{ margin: '-0.5rem' }}
+              >
                 <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
-                <Button
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
-                >
-                  New Claim
+                  <Button
+                    style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
+                  >
+                    New Claim
                 </Button>{" "}
-              </Link> 
-              
-               
+                </Link>
+
+
               </div>
             </div>
           </div>
@@ -227,12 +158,12 @@ const CustomerClaims = (props) => {
                 <div className="col-4"> Waiting To</div>
                 <div className="col-2">Last Update</div>
               </div>
-              <ul  className="list-group">
-              <div className={`${style.li}`}>
-                {data.docs &&
-                  data.docs.map((x, i) => {
-                    return (
-                      
+              <ul className="list-group">
+                <div className={`${style.li}`}>
+                  {data.docs &&
+                    data.docs.map((x, i) => {
+                      return (
+
                         <Link
                           to={{
                             pathname: `/claimsDetail/${x._id}`,
@@ -240,191 +171,63 @@ const CustomerClaims = (props) => {
                           }}
                           style={{ textDecoration: "none", color: "black" }}
                         >
-                           <div>
-                           <li
-                            className={`checkbox list-group-item ${style.list} ${style.flex}`}
-                            key={x._id}
-                          >
-                        
-                            <div className={`col-3 d-flex  text-left ${style.flex}` }>
-                              <h6
-                              // style={{
-                              //   transform: "translate3d(13rem, -1.8rem, 0)",
-                              // }}
-                              >
-                                {x.customer.firstName} {x.customer.lastName}
-                              </h6>
-                            </div>
-                            <div
-                              className={`col-2 d-flex text-left ${style.flex}`}
+                          <div>
+                            <li
+                              className={`checkbox list-group-item ${style.list} ${style.flex}`}
+                              key={x._id}
+                            >
+
+                              <div className={`col-3 d-flex  text-left ${style.flex}`}>
+                                <h6
+                                // style={{
+                                //   transform: "translate3d(13rem, -1.8rem, 0)",
+                                // }}
+                                >
+                                  {x.customer.firstName} {x.customer.lastName}
+                                </h6>
+                              </div>
+                              <div
+                                className={`col-2 d-flex text-left ${style.flex}`}
                               // style={{
                               //   transform: "translate3d(30rem, -3.5rem, 0)",
                               // }}
-                            >
-                              {x.status.toLocaleUpperCase()}
-                            </div>
-                            <div className={`col-4 d-flex text-left ${style.flex}`}>
-                              <h6>{x.waitTo}</h6>
-                            </div>
+                              >
+                                {x.status.toLocaleUpperCase()}
+                              </div>
+                              <div className={`col-4 d-flex text-left ${style.flex}`}>
+                                <h6>{x.waitTo}</h6>
+                              </div>
 
-                            <div
-                              className={`col-2 d-flex text-left ${style.flex}`}
+                              <div
+                                className={`col-2 d-flex text-left ${style.flex}`}
                               // style={{
                               //   transform: "translate3d(45rem, -5rem, 0)",
                               // }}
-                            >
-                              {x.updates.length > 0 ? (
-                                <div>
-                                  {<TimeAgo date={x.updates[0].timestamp} />}
-                                </div>
-                              ) : (
-                                <div>
-                                  <TimeAgo date={x.createdAt} />
-                                </div>
-                              )}
-                            </div>
-                          
-                          </li>
+                              >
+                                {x.updates.length > 0 ? (
+                                  <div>
+                                    {<TimeAgo date={x.updates[0].timestamp} />}
+                                  </div>
+                                ) : (
+                                    <div>
+                                      <TimeAgo date={x.createdAt} />
+                                    </div>
+                                  )}
+                              </div>
+
+                            </li>
                           </div>
                         </Link>
-                        // <div
-                        //     id={`collapse${i}`}
-                           
-                        //     class="collapse"
-                        //     aria-labelledby="headingOne"
-                        //     data-parent="#accordion"
-                        // >
-                        //   <div className="card-body">
-                        //     <div key={x._id}>
-                        //       <div className="row justify-content-between"></div>
-
-                        //        {x.claims.map((y, j) => {
-                        //         return ( 
-                        //           <div key={i}>
-                        //             <h6>
-                        //               Protection Type : {x.claimType}
-                        //             </h6>
-                        //             <div className="row">
-                        //               <div className="col-12">
-                            
-                        //                 <p  style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                        //                   Description : {x.description}
-                        //                 </p>
-                        //               </div>
-
-                                      
-                        //             </div>
-                                  
-                        //           </div>
-                        //           <hr/>
-                        //           <div className="row">
-                        //             <div className="col-10"></div>
-                        //             <div className="col-2" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                        //                 <p className={style.p2}>{`Total: $${x.price}`}</p>
-                        //               </div>
-                        //           </div>
-
-                        //          );
-                        //       })} 
-
-                        //        {x.length > 0 ? (
-                        //         <div className="row">
-                        //           <div className="col-10">
-                                  
-                        //           </div>
-                        //           <div className="col-2">
-                        //             <p>
-                        //               {" "}
-                        //               Total: $
-                        //               {x.reduce(function (a, b) {
-                        //                 return a + b["price"];
-                        //               }, 0)}
-                        //             </p>
-                        //           </div>
-                        //         </div>
-                        //       ) : null} 
-                        //       <hr />
-                        //       <div className="row">
-                        //         <div className="col-12">
-                        //           {x.updates.length > 0 ? (
-                        //             <div>
-                        //               <h3>Updates</h3>
-                        //               {x.updates.map((x, i) => (
-                        //                 <div key={i} className="row" style={{fontFamily:"Segoe UI, Tahoma, Geneva, Verdana, sans-serif"}}>
-                        //                   <div className="col-9">
-                        //                     <li> {x.value}</li>
-                        //                   </div>
-                        //                   <div className="col-3">
-                        //                     <li>
-                        //                       {" "}
-                        //                       {x.timestamp.split("T")[0]}
-                        //                     </li>
-                        //                   </div>
-                        //                 </div>
-                        //               ))}
-                        //             </div>
-                        //           ) : null}
-                        //         </div>
-                        //       </div>
-                        //       <div className="row" style={{ margin: "1rem 0" }}>
-                        //         <div className="col-8"></div>
-                        //         <div
-                        //           className="col-2"
-                        //           style={{ transform: "translateX(10rem)" }}
-                        //         >
-                        //           {x.status == "open" ? (
-                        //             <Button
-                        //               // name="Add Update"
-                        //               style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}
-                        //               onClick={() => handleShow(i)}
-                        //             >Add Update</Button>
-                        //           ) : null}
-                        //         </div>
-
-                        //         <div className="col-2"  >
-                        //           {x.status == "open" ? (
-                        //             <Button
-                        //               // name="Close Claim"
-                        //               style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif", transform: "translateX(4rem)" }}
-                        //               onClick={() => handleCloseJob(i)}
-                        //             >Close Claim</Button>
-                        //           ) : null}
-                        //         </div>
-                        //       </div>
-                        //     </div>
-                        //   </div>
-                        // </div>
-                      
-                    );
-                  })}
-              </div>
-           </ul>
+                      );
+                    })}
+                </div>
+              </ul>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
-          {/* <Modal show={show} onHide={handleClose} dialogClassName = {style.modal} scrollable centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Add Update</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <textarea
-                name=""
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={update}
-                onChange={handleAddUpdate}
-              ></textarea>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={handleClose} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif",margin:"0 0.4rem"}} >Close</Button>
-              <Button onClick={updateClaimData} style={{background:"#00ADEE", textTransform:"none", color:"#FFF", fontFamily:"sans-serif"}}>Add</Button>
-            </Modal.Footer>
-          </Modal> */}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
           <div className={style.jumbotron}>
             <Pagination
               itemCount={totalCount}

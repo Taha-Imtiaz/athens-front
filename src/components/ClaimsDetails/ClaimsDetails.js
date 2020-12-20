@@ -14,9 +14,6 @@ const ClaimsDetails = (props) => {
   const [update, setUpdate] = useState("");
   const [waitTo, setWaitTo] = useState(true);
   const [claimInput, setClaimInput] = useState('')
-  //   var [claimsId, setClaimsId] = useState(props.location.claimsId);
-  //   const [updateIndex, setUpdateIndex] = useState(0);
-  //   console.log(props.location.claimsId);
 
   var {
     match: {
@@ -26,24 +23,14 @@ const ClaimsDetails = (props) => {
   var { claims } = props;
   useEffect(() => {
     var { getClaim, claims } = props;
-    console.log(claims);
     if (claims) {
-      console.log(claims);
-      
     }
     getClaim(claimsId);
   }, []);
 
 useEffect(() => {
-console.log(claims)
 setClaimInput(claims?.waitTo)
 },[claims])
-  //     var { claims } = props;
-  //   var data = [];
-  //   if (claims.claims) {
-  //     data = claims.claims.data.claims;
-  //     console.log(data.docs);
-  //   }
 
   const handleAddUpdate = (e) => {
     setUpdate(e.target.value);
@@ -77,7 +64,6 @@ setClaimInput(claims?.waitTo)
         value: update,
       };
       let newData = cloneDeep(claims);
-      console.log(newData);
       newData.updates.unshift(ob);
       var { showMessage, history } = props;
       updateClaim(newData)
@@ -97,15 +83,12 @@ setClaimInput(claims?.waitTo)
     setWaitTo(false)
   }
   var handleClaimInput = (e) => {
-    console.log(e.target.value)
     setClaimInput(e.target.value)
   }
 
   var disableInput = () => {
      var { showMessage, claims } = props;
-     console.log(claimInput)
      claims.waitTo = claimInput;
-    //  console.log(e.target.value)
      setWaitTo(true)
      updateClaim(claims)
      .then((res) => {

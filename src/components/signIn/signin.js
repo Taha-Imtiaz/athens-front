@@ -78,8 +78,6 @@ class SignInForm extends React.Component {
   };
 
   formSubmit = (e) => {
-    // history.push('/customers')
-    console.log("submit called")
     e.preventDefault();
 
     const isValid = this.validate();
@@ -89,11 +87,7 @@ class SignInForm extends React.Component {
         email: this.state.email,
         password: this.state.password,
       };
-      // login(obj, () => {
-      //   this.props.history.push('/customer')
-      // })
       login(obj).then((res) => {
-        console.log(res);
         if (res?.data.status == 200) {
           res.data.data.role == "mover"
             ? this.props.history.push("/mover")

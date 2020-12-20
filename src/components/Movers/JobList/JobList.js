@@ -84,7 +84,6 @@ class MoversJobsList extends Component {
   };
 
   handleChange = (event) => {
-    console.log(event.target.value);
     this.setState({
       value: event.target.value,
     });
@@ -102,7 +101,6 @@ class MoversJobsList extends Component {
   };
 
   handleDatePopoverOpen = (event, id) => {
-    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
       openedDatePopoverId: id,
@@ -117,7 +115,6 @@ class MoversJobsList extends Component {
   };
 
   handleAssigneePopoverOpen = (event, id) => {
-    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
       openedAssigneePopoverId: id,
@@ -187,7 +184,6 @@ class MoversJobsList extends Component {
     });
     var { dates } = this.state;
     let date = new Date(e.target.value);
-    // console.log(date)
     var DateFilters = {
       filters: {
         dates: date.toDateString(),
@@ -202,7 +198,6 @@ class MoversJobsList extends Component {
     this.setState({
       currentPage: 1,
     });
-    console.log(DateFilters);
     getMover(DateFilters);
   };
 
@@ -274,8 +269,6 @@ class MoversJobsList extends Component {
     const { moverJobs, user } = this.props;
     var { pageSize, currentPage } = this.state;
     var totalCount = moverJobs?.total;
-    console.log(moverJobs);
-    console.log(totalCount);
     const open = Boolean(this.state.anchorEl);
     var { classes } = this.props;
     if (user) {

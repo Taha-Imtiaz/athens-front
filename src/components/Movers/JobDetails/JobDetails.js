@@ -31,7 +31,6 @@ const MoversJobDetails = (props) => {
   const paidInCash = () => {
     let { history, showMessage } = props;
     updateJob(job._id, { status: "Paid Cash" }).then((res) => {
-      console.log(res);
       if (res.data.status == 200) {
         showMessage(res.data.message);
         history.push("/mover");

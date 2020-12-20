@@ -44,7 +44,6 @@ const BlanketList = (props) => {
       };
       updateDeposit(obj)
         .then((res) => {
-          console.log(res);
           let newData = cloneDeep(blanketValue);
           newData[i] = res.data.data;
           // setBlanketValue(newData);

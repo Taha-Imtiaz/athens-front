@@ -43,9 +43,16 @@ import { Modal } from "react-bootstrap";
 import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { setJobForm } from "../../../Redux/PersistForms/formActions";
+
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { ...props.jobForm };
+
+  }
   initialState = {
     title: "",
     description: "",
@@ -97,11 +104,9 @@ class CreateJobs extends Component {
     { id: 6, name: "Hot Tub" },
   ];
 
-  state = this.initialState;
 
   componentDidMount = () => {
     if (this.props.location.customerId) {
-      console.log(this.props.location.customerId);
     }
     getCustomersAndJobs().then((res) => {
       if (res && res.status == 201) {
@@ -135,12 +140,8 @@ class CreateJobs extends Component {
   };
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    console.log(name, value);
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
-    // this.setState({
-    //   [name]: value
-    // })
     this.setState({
       locations: updateLocation,
     });
@@ -164,14 +165,11 @@ class CreateJobs extends Component {
       this.state.locations[1].value !== ""
     ) {
       var location = cloneDeep(this.state.locations);
-      console.log(location);
       var locationAdded = location.push({ type: "", value: "" });
-      console.log(location);
       this.setState({
         locations: location,
       });
     }
-    console.log("add location");
   };
 
   addDate = () => {
@@ -183,7 +181,6 @@ class CreateJobs extends Component {
   hanldeLocationInput = (i, e) => {
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].value = e.target.value;
-    console.log(updateLocation[i].value);
     this.setState({ locations: updateLocation });
     if (e.target.value) {
       this.setState({ locationfromError: "" });
@@ -201,7 +198,6 @@ class CreateJobs extends Component {
 
   showLocation = (i) => {
     if (i === 0) {
-      console.log(i);
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
@@ -222,7 +218,6 @@ class CreateJobs extends Component {
         </div>
       );
     } else if (i == 1) {
-      console.log(i);
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
@@ -243,7 +238,6 @@ class CreateJobs extends Component {
         </div>
       );
     } else {
-      console.log(this.state.locations[i].type, this.state.locations[i].value);
       return (
         <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
           <div className="col-4" style={{ display: "flex" }}>
@@ -255,13 +249,13 @@ class CreateJobs extends Component {
               <FormControlLabel
                 value="pickup"
                 name="pickup"
-                control={<Radio style = {{color:"#00ADEE"}} />}
+                control={<Radio style={{ color: "#00ADEE" }} />}
                 label="Pickup"
               />
               <FormControlLabel
                 value="dropoff"
                 name="dropoff"
-                control={<Radio style = {{color:"#00ADEE"}} />}
+                control={<Radio style={{ color: "#00ADEE" }} />}
                 label="DropOff"
               />
             </RadioGroup>
@@ -285,7 +279,7 @@ class CreateJobs extends Component {
           </div>
           <div className="col-1">
             <FontAwesomeIcon
-              icon = {faTrash}
+              icon={faTrash}
               // className = {style.circle}
               onClick={() => this.removeLocation(i)}
               style={{ transform: "translate3d(1.2rem,1.5rem, 0)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
@@ -327,9 +321,7 @@ class CreateJobs extends Component {
 
   removeLocation = (i) => {
     var location = cloneDeep(this.state.locations)
-    console.log(location)
     location.splice(i, 1)
-    console.log(location)
     this.setState({
       locations: location
     })
@@ -510,7 +502,6 @@ class CreateJobs extends Component {
         jobType,
       };
       var { history } = this.props;
-      console.log(createJobObj)
       createJob(createJobObj, (job) => {
         history.push("/job/details/" + job.data.data._id);
       });
@@ -554,7 +545,6 @@ class CreateJobs extends Component {
 
   addNewCustomer = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     if (e.target.value) {
       this.setState({
         newCustomer: e.target.value,
@@ -598,6 +588,11 @@ class CreateJobs extends Component {
       customerId: newCustomer.email,
     });
   };
+
+  componentWillUnmount() {
+    var { setJobForm } = this.props;
+    setJobForm({ ...this.state })
+  }
 
   render() {
     return (
@@ -870,7 +865,7 @@ class CreateJobs extends Component {
                 <div className="col-11"></div>
                 <div className=" form-group col-1">
                   <FontAwesomeIcon
-                    icon = {faPlus}
+                    icon={faPlus}
                     onClick={this.addLocation}
                     style={{ transform: "translate3d(0rem,0rem, 0)" }}
                   ></FontAwesomeIcon>
@@ -919,10 +914,12 @@ class CreateJobs extends Component {
 
 var actions = {
   createJob,
+  setJobForm
 };
 
 var mapStateToProps = (state) => ({
   loggedInUser: state.users.user,
+  jobForm: state.forms.addJobForm
 });
 
 export default connect(mapStateToProps, actions)(CreateJobs);

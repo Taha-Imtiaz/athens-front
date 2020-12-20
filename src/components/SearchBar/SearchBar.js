@@ -17,11 +17,9 @@ const SearchBar = (props) => {
   } = props;
 
   var title = props.title;
-  console.log(props.claimStatus)
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
-    console.log(e.target.value);
     if (props.type == "customer") {
       if (searchValue) {
         var fetchCustomersObj = {
@@ -63,10 +61,7 @@ const SearchBar = (props) => {
         getUsers(usersObj);
       }
     } else if (props.type === "claims") {
-      console.log(props.type, searchValue);
       if (searchValue) {
-        console.log(e.target.value);
-        console.log(props.claimStatus)
         var usersObj = {
           query: e.target.value,
           status: props.claimStatus,
@@ -83,7 +78,6 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "mover") {
       if (searchValue) {
-        console.log(searchValue);
         var fetchJobsOnPageChange = {
           query: e.target.value,
 
@@ -98,7 +92,6 @@ const SearchBar = (props) => {
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
       if (searchValue) {
-        console.log(searchValue);
         var fetchJobsOnPageChange = {
           query: e.target.value,
           filters: {
@@ -134,8 +127,6 @@ const SearchBar = (props) => {
   }
 
   var handleKeyPress = (e) => {
-    console.log(e.key);
-    console.log("Enter");
     e.preventDefault();
     if (e.which === 13) {
       handleSearch(e);

@@ -11,10 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-
-// function handleDayClick(e) {
-//   console.log(e.toString())
-// }
 import { clone, cloneDeep } from "lodash";
 
 function renderDay(day) {

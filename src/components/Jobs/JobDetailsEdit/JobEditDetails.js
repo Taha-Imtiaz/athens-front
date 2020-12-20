@@ -96,7 +96,6 @@ class JobEditDetails extends Component {
       assigneeRequired,
       locations,
     } = this.state;
-    console.log(locations);
     if (title === "") {
       this.setState({
         titleError: "Title should not be empty",
@@ -165,7 +164,6 @@ class JobEditDetails extends Component {
     var { title, job } = this.state;
 
     getJob(jobId).then((res) => {
-      console.log(res);
       this.setState({
         services: res.data.job.services,
         assignee: res.data.job.assignee,
@@ -176,7 +174,6 @@ class JobEditDetails extends Component {
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
-        console.log(moverRes);
         var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
@@ -184,8 +181,6 @@ class JobEditDetails extends Component {
       });
       getServices()
         .then((res) => {
-          console.log(res);
-          console.log(this.state.services);
           this.setState({
             serviceOptions: res.data.data,
           });
@@ -199,7 +194,6 @@ class JobEditDetails extends Component {
       });
       let ids = res.data.job.assignee.map((x) => x._id);
       let parsedDates = res.data.job.dates.map((x) => Date.parse(x));
-      console.log(res.data.job)
       this.setState({
         job: res.data.job,
         title: res.data.job.title,
@@ -236,11 +230,9 @@ class JobEditDetails extends Component {
 
   removeLocation = (i) => {
     var location = cloneDeep(this.state.locations)
-    console.log(location)
     location.splice(i, 1)
-    console.log(location)
     this.setState({
-      locations:location
+      locations: location
     })
   }
 
@@ -349,7 +341,6 @@ class JobEditDetails extends Component {
       customerId,
       note,
     };
-    console.log(updatedObj)
     if (this.handleValidation()) {
       updateJob(jobId, updatedObj)
         .then((res) => {
@@ -404,7 +395,6 @@ class JobEditDetails extends Component {
   hanldeLocationInput = (i, e) => {
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].value = e.target.value;
-    console.log(updateLocation[i].value);
     this.setState({ locations: updateLocation });
     if (e.target.value) {
       this.setState({ locationfromError: "" });
@@ -422,28 +412,22 @@ class JobEditDetails extends Component {
   addLocation = () => {
     var location = cloneDeep(this.state.locations)
 
-  var locationAdded = location.push({ type: "", value: "" });
-      console.log(location);
-      this.setState({
-        locations: location,
-      });
-    }
-    handleInputChange = (e, i) => {
-      let { name, value } = e.target;
-      console.log(name, value);
-      let updateLocation = cloneDeep(this.state.locations);
-      updateLocation[i].type = value;
-      // this.setState({
-      //   [name]: value
-      // })
-      this.setState({
-        locations: updateLocation,
-      });
-    };
+    var locationAdded = location.push({ type: "", value: "" });
+    this.setState({
+      locations: location,
+    });
+  }
+  handleInputChange = (e, i) => {
+    let { name, value } = e.target;
+    let updateLocation = cloneDeep(this.state.locations);
+    updateLocation[i].type = value;
+    this.setState({
+      locations: updateLocation,
+    });
+  };
 
   showLocation = (i) => {
     if (i === 0) {
-      console.log(i);
       return (
         <div className="row" >
           <div className="col-12">
@@ -465,7 +449,6 @@ class JobEditDetails extends Component {
         </div>
       );
     } else if (i == 1) {
-      console.log(i);
       return (
         <div className="row">
           <div className="col-12">
@@ -475,7 +458,7 @@ class JobEditDetails extends Component {
               margin="normal"
               required
               size="small"
-              id="to" 
+              id="to"
               style={{ transform: "translateX(3rem)", width: "100%" }}
               label="Drop Off"
               name="dropoff"
@@ -487,11 +470,10 @@ class JobEditDetails extends Component {
         </div>
       );
     } else {
-      console.log(this.state.locations[i].type, this.state.locations[i].value);
       return (
         <div className="row">
           <div className="col-4" style={{ transform: "translate3d(2rem, 0.75rem, 0)", width: "100%" }}>
-            <RadioGroup 
+            <RadioGroup
               className={style.rowFlex}
               value={this.state.locations[i].type}
               onChange={(e) => this.handleInputChange(e, i)}
@@ -499,13 +481,13 @@ class JobEditDetails extends Component {
               <FormControlLabel
                 value="pickup"
                 name="pickup"
-                control={<Radio style = {{color:"#00ADEE"}} />}
+                control={<Radio style={{ color: "#00ADEE" }} />}
                 label="Pickup"
               />
               <FormControlLabel
                 value="dropoff"
                 name="dropoff"
-                control={<Radio style = {{color:"#00ADEE"}} />}
+                control={<Radio style={{ color: "#00ADEE" }} />}
                 label="Dropoff"
               />
             </RadioGroup>
@@ -519,20 +501,20 @@ class JobEditDetails extends Component {
               required
               size="small"
               id="to"
-              label={this.state.locations[i].type ===  "pickup" ? "PickUp Location": this.state.locations[i].type ===  "dropoff"? "Drop Off Location":"Choose Location" }
+              label={this.state.locations[i].type === "pickup" ? "PickUp Location" : this.state.locations[i].type === "dropoff" ? "Drop Off Location" : "Choose Location"}
               name={this.state.locations[i].type}
               value={this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
-              // error={this.state.locationtoError ? true : false}
+            // error={this.state.locationtoError ? true : false}
             />
           </div>
           <div className="col-1">
             <FontAwesomeIcon
-             icon = {faTrash}
-              
+              icon={faTrash}
+
 
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translate3d(3.5rem,1.5rem, 0)" , display:"flex", justifyContent:"flex-end", alignItems:"flex-end"}}
+              style={{ transform: "translate3d(3.5rem,1.5rem, 0)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
             ></FontAwesomeIcon>
           </div>
         </div>
@@ -581,35 +563,12 @@ class JobEditDetails extends Component {
   };
 
   addCustomService = (e) => {
-    // console.log(this.state.serviceOptions)
     e.preventDefault();
-
-    console.log(e.target.value);
-
     if (e.target.value) {
       this.setState({
         newService: e.target.value,
       });
-      console.log(this.state.newService);
-
-
       if (e.keyCode === 13 && e.target.value) {
-        // addService({
-        //   service: {
-        //     name: this.state.newService,
-        //   },
-        // }).then((res) => {
-        //   console.log(res.data);
-        //   let services = cloneDeep(this.state.services);
-        //   services.push(res.data.data);
-
-        //   let serviceOptions = cloneDeep(this.state.serviceOptions);
-        //   serviceOptions.push(res.data.data);
-        //   this.setState({
-        //     serviceOptions,
-        //     services,
-        //   });
-        // });
         var serviceAdded = {
           name: this.state.newService,
           id: Math.random() * 10
@@ -899,14 +858,14 @@ class JobEditDetails extends Component {
 
               {this.state.locations && (
                 <div>
-                  {this.state?.locations?.map((location, i) =>
+                  {this.state ?.locations ?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
               )}
               {/* {this.state.locations &&
                 <div> */}
-                  {/* <div
+              {/* <div
                     className="row"
                     style={{ transform: "translateX(3rem)" }}
                   >
@@ -930,7 +889,7 @@ class JobEditDetails extends Component {
                   </div> */}
 
 
-                  {/* {this.state.locations.map((list, i) => {
+              {/* {this.state.locations.map((list, i) => {
                     return (
 
                       i === 0 ? <div className="row" style={{ transform: "translateX(3rem)" }}>
@@ -1077,7 +1036,7 @@ class JobEditDetails extends Component {
             </div>
           </div>
           <div className="row">
-          <div className={`col-6 ${style.btnalign}`}>
+            <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
@@ -1091,7 +1050,7 @@ class JobEditDetails extends Component {
                 Reset
               </Button>
             </div>
-           
+
             <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
@@ -1103,7 +1062,7 @@ class JobEditDetails extends Component {
                 Update
               </Button>
             </div>
-            
+
           </div>
           <Modal
             show={show}

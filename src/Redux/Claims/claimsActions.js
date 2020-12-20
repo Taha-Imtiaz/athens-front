@@ -5,12 +5,10 @@ import Axios from "../../utils/api";
 // var baseUrl = "";
 
 export var getAllClaims = (data) => {
-  console.log(data)
   let body = {
     page: data.page,
     query:data.query
   };
-  console.log(body)
   return async (dispatch) => {
     var claims = await Axios.post("user/get-all-claims/" + data.status,
       body
@@ -95,7 +93,6 @@ export var addDeposit = async (data) => {
 };
 
 export var updateDeposit = async (data) => {
-  console.log(data)
   try {
     var blanket = await Axios.post(
       `user/update-blanket-deposit`,
@@ -121,9 +118,7 @@ export var getClaim = (claimId) => {
    try {
     
 
-    console.log(claimId)
     var claim = await Axios.get(`user/get-claim/${claimId}`)
-    console.log(claim)
     dispatch({
       type:GET_CLAIM,
       payload:{

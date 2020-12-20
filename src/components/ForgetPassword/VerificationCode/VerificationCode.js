@@ -17,7 +17,6 @@ var [userToken, setUserToken] = useState('')
  var {history} = props
 var getToken = sessionStorage.getItem("token");
 
-console.log(getToken)
 setUserToken(getToken)
 if(getToken) {
 //remove email from sessionStorage
@@ -35,16 +34,12 @@ else {
       // history.push("/verifyCode")
     } 
     else {
-      console.log(userToken)
       var verifyCodeObj  = {
         code:code,
         token:userToken
       }
       verifyCode(verifyCodeObj).then((res) => {
-        console.log(res)
-        
         if(res.data.status === 200){
-          console.log(res.data.token)
           localStorage.setItem("athens-token", res.data.token)
           history.push("/restPassword")
         }
@@ -59,7 +54,6 @@ else {
     
     var codeInString = e.toString();
     setCode(e)
-    console.log(codeInString.length);
     if (codeInString.length != 4) {
       setVerificationCode("You must enter correct verification code");
     }

@@ -40,7 +40,6 @@ const ResetPassword = (props) => {
           token:userToken
         };
         resetPassword(passwordObj).then((res) => {
-          console.log(res);
           if (res.data.status === 200) {
             history.push("/customer");
           }
@@ -51,7 +50,6 @@ const ResetPassword = (props) => {
     }
   };
   var { password, cpassword } = resetForm;
-  console.log(password, cpassword);
   return (
     <div className={style.resetContainer}>
       <div className={style.image}></div>

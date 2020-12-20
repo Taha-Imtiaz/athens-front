@@ -8,21 +8,27 @@ import { connect } from "react-redux";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from '../../../Redux/Claims/claimsActions'
+import { setDepositForm } from "../../../Redux/PersistForms/formActions"
 
 class SubmitDeposit extends Component {
-  state = {
-    quantity: '',
-    cost: '',
-    customers: [],
-    jobs: [],
-    selectedCustomer: '',
-    selectedJob: '',
-    customerIdError: '',
-    jobIdError: '',
-    quantityError: "",
-    costError: "",
-    disabled: true
+
+  constructor(props) {
+    super(props);
+    this.state = { ...props.addForm }
   }
+  // state = {
+  //   quantity: '',
+  //   cost: '',
+  //   customers: [],
+  //   jobs: [],
+  //   selectedCustomer: '',
+  //   selectedJob: '',
+  //   customerIdError: '',
+  //   jobIdError: '',
+  //   quantityError: "",
+  //   costError: "",
+  //   disabled: true
+  // }
 
   componentDidMount = () => {
     getCustomersAndJobs().then((res) => {
@@ -32,12 +38,10 @@ class SubmitDeposit extends Component {
 
   handleValidate = () => {
     var { selectedCustomer, selectedJob, quantity, cost } = this.state
-    console.log(selectedCustomer, selectedJob, quantity, cost)
     let customerIdError = '';
     let jobIdError = '';
     let quantityError = '';
     let costError = '';
-
 
     if (selectedCustomer === "") {
       customerIdError = "Customer Id should not be empty";
@@ -115,6 +119,11 @@ class SubmitDeposit extends Component {
     } else {
       this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
     }
+  }
+
+  componentWillUnmount() {
+    var { setDepositForm } = this.props;
+    setDepositForm({ ...this.state })
   }
 
   render() {
@@ -227,8 +236,14 @@ class SubmitDeposit extends Component {
   }
 }
 
+
+var mapStateToProps = (state) => ({
+  addForm: state.forms.addDepositForm
+});
+
 var actions = {
-  showMessage
+  showMessage,
+  setDepositForm
 };
 
-export default connect(null, actions)(SubmitDeposit);
+export default connect(mapStateToProps, actions)(SubmitDeposit);

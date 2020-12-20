@@ -53,22 +53,6 @@ export var fetchCustomerById = async (customerId) => {
   }
 };
 
-// export var updateJob = (jobObj, jobId) => {
-//     return async (disptch) => {
-//        try {
-//         var updatedJob = await Axios.post(baseUrl + `user/get-customer/${jobId}`, jobObj)
-//         disptch({
-//             type: UPDATE_JOB,
-//             payload: {
-//                 updatedJob: updatedJob
-//             }
-//         })
-//        } catch (error) {
-//            console.log(error)
-//        }
-//     }
-//     }
-
 export var addCustomer = (customerObj, callback) => {
   return async (dispatch) => {
     try {

@@ -297,7 +297,6 @@ class JobsList extends Component {
     getAllJobs(fetchJobsOnPageChange);
   }
   handlePopoverOpen = (event, id) => {
-    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
       openedPopoverId: id,
@@ -312,7 +311,6 @@ class JobsList extends Component {
   };
 
   handleDatePopoverOpen = (event, id) => {
-    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
       openedDatePopoverId: id,
@@ -327,7 +325,6 @@ class JobsList extends Component {
   };
 
   handleAssigneePopoverOpen = (event, id) => {
-    console.log(id);
     this.setState({
       anchorEl: event.currentTarget,
       openedAssigneePopoverId: id,

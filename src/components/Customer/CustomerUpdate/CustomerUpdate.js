@@ -12,11 +12,8 @@ class CustomerUpdate extends Component {
         params: { id },
       },
     } = this.props;
-    console.log("cdm");
-    console.log(id);
     fetchCustomerById(id)
       .then((res) => {
-        console.log(res);
         this.setState({
           customer:res.data?.customer,
           firstName: res.data.customer?.firstName,
@@ -47,7 +44,6 @@ class CustomerUpdate extends Component {
     this.setState({ subContacts: updatedContacts });
   };
   addContacts = () => {
-    console.log("add");
     if (
       this.state.subContacts[0].name &&
       this.state.subContacts[0].phone &&
@@ -90,7 +86,6 @@ class CustomerUpdate extends Component {
     }
 
     if (!this.state.phone) {
-      console.log(this.state.phone)
       phoneError = "Phone Number should not be empty";
     }
 
@@ -126,10 +121,7 @@ class CustomerUpdate extends Component {
       var { firstName, lastName, email, phone, subContacts } = this.state;
       if (this.state.subContacts[0].name === "" && this.state.subContacts[0].phone === "" && this.state.subContacts[0].email === "") {
         subContacts = []
-        console.log(subContacts);
       }
-      console.log(subContacts);
-
       var updateCustomerObj = {
         firstName,
         lastName,
@@ -137,7 +129,6 @@ class CustomerUpdate extends Component {
         email,
         subContacts,
       };
-console.log(updateCustomerObj)
    
       updateCustomer(updateCustomerObj,id, () => {
       
@@ -157,8 +148,6 @@ console.log(updateCustomerObj)
       
     } = this.props;
 
-    // console.log(id, customer);
-    console.log("outside cdm", this.state?.phone);
     return this.state?.customer ? (
       <div className={style.formStyle}>
         <div className={style.form}>

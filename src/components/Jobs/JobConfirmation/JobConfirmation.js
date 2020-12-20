@@ -162,7 +162,6 @@ function JobConfirmation(props) {
 
   const showLocation = (i) => {
     if (i === 0) {
-      console.log(i);
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
@@ -183,7 +182,6 @@ function JobConfirmation(props) {
         </div>
       );
     } else if (i == 1) {
-      console.log(i);
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
           <div className="col-12">
@@ -204,7 +202,6 @@ function JobConfirmation(props) {
         </div>
       );
     } else {
-      console.log(data.locations[i].type, data.locations[i].value);
       return (
         <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
           <div className="col-4">
@@ -315,15 +312,12 @@ function JobConfirmation(props) {
   // };
   var removeLocation = (i) => {
     var newData = { ...data };
-    console.log(newData);
     newData.locations.splice(i, 1);
-    console.log(newData);
     setData(newData);
   };
 
   var handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    console.log(name, value);
     let updateLocation = { ...data };
 
     updateLocation.locations[i].type = value;

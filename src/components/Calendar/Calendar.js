@@ -111,7 +111,6 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
-    console.log(e)
     getJob(e.id)
       .then((res) => {
         this.setState({

@@ -154,7 +154,6 @@ const CustomerList = (props) => {
       setCurrentPage(1)
     }
     // else {
-    //   console.log(order)
     //   setOrder(1);
     //   var sortCustomersObj = {
     //     query: "",

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addCustomer } from "../../../Redux/Customer/customerActions";
+import { setCustomerForm } from "../../../Redux/PersistForms/formActions"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FormControl, TextField } from "@material-ui/core";
@@ -15,9 +16,8 @@ import { Input } from "@material-ui/core";
 class CustomerAdd extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     const initialState = {
-      firtName: "",
+      firstName: "",
       lastName: "",
       phone: "",
       email: "",
@@ -35,7 +35,8 @@ class CustomerAdd extends Component {
       subContactPhoneError: "",
       subContactEmailError: "",
     };
-    this.state = { ...initialState };
+
+    this.state = { ...props.addForm };
   }
 
   validate = () => {
@@ -104,19 +105,17 @@ class CustomerAdd extends Component {
     var { addCustomer, history } = this.props;
     event.preventDefault();
     var { subContacts } = this.state;
-    
 
 
-    
+
+
 
     const isValid = this.validate();
     if (isValid) {
       var { firstName, lastName, email, phone, subContacts } = this.state;
       if (this.state.subContacts[0].name === "" && this.state.subContacts[0].phone === "" && this.state.subContacts[0].email === "") {
         subContacts = []
-        console.log(subContacts);
       }
-      console.log(subContacts);
 
       var addCustomerObj = {
         firstName,
@@ -125,28 +124,25 @@ class CustomerAdd extends Component {
         email,
         subContacts,
       };
-console.log(addCustomerObj)
       // if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
       addCustomer(addCustomerObj, (customer) => {
         if (this.props.isModal) {
-          console.log(this.props.isModal);
           this.props.close(customer);
         } else {
           history.push("/customer/detail/" + customer.data.data._id);
         }
       });
-    
+
     }
   };
 
   addContacts = () => {
-    console.log("add");
     if (this.state.subContacts[0].name && this.state.subContacts[0].phone && this.state.subContacts[0].email) {
       this.setState({
         subContacts: [
           ...this.state.subContacts,
           {
-            name:"",
+            name: "",
             phone: "",
             email: "",
           },
@@ -154,6 +150,12 @@ console.log(addCustomerObj)
       });
     }
   };
+
+  componentWillUnmount() {
+    var { setCustomerForm } = this.props;
+    setCustomerForm({ ...this.state })
+  }
+
 
   render() {
     return (
@@ -365,8 +367,15 @@ console.log(addCustomerObj)
     );
   }
 }
+
+var mapStateToProps = (state) => ({
+  addForm: state.forms.addCustomerForm
+});
+
+
 var actions = {
   addCustomer,
+  setCustomerForm
 };
 
-export default connect(null, actions)(CustomerAdd);
+export default connect(mapStateToProps, actions)(CustomerAdd);

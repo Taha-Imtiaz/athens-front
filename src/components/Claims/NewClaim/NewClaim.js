@@ -20,8 +20,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import { setClaimForm } from "../../../Redux/PersistForms/formActions"
 
 class NewClaim extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { ...props.addForm }
+  }
   initialState = {
     customerId: "",
     jobId: "",
@@ -30,10 +35,8 @@ class NewClaim extends Component {
       price: "",
       description: "",
     },
-
     item: "",
     price: "",
-
     fromDate: "",
     toDate: "",
     locationfrom: "",
@@ -59,8 +62,6 @@ class NewClaim extends Component {
     waitTo: "",
     customerClaims: false,
   };
-
-  state = { ...this.initialState };
 
   componentDidMount = () => {
     getCustomersAndJobs().then((res) => {
@@ -144,10 +145,8 @@ class NewClaim extends Component {
         title,
         waitTo,
       };
-      console.log(data);
       addClaim(data)
         .then((res) => {
-          console.log(res)
           showMessage(res.data.message);
           history.push(`/claimsDetail/${res.data.claim}`);
         })
@@ -178,7 +177,6 @@ class NewClaim extends Component {
 
   hanldeClaimsInput = (e) => {
     let updatedClaims = { ...this.state.claims };
-    console.log(updatedClaims[e.target.name]);
     updatedClaims[e.target.name] = e.target.value;
     this.setState({ claims: updatedClaims });
   };
@@ -205,19 +203,14 @@ class NewClaim extends Component {
       toDate: date,
     });
   };
-  // componentWillUnmount() {
-  //   this.state = this.initialState
-  //   // this.componentCleanup();
-  //   // window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
-  // }
+  
   getCustomerJobs = (customer) => {
     if (customer) {
-      console.log(customer, customer.claim);
       if (customer.claim.length > 0) {
         this.setState({
           customerClaims: true,
           showClaimsDetails: customer.claim,
-          customerName:customer.firstName
+          customerName: customer.firstName
         });
       }
       this.setState({
@@ -236,6 +229,11 @@ class NewClaim extends Component {
     });
   };
 
+  componentWillUnmount() {
+    var { setClaimForm } = this.props;
+    setClaimForm({ ...this.state })
+  }
+
   render() {
     var { showClaimsDetails, customerName } = this.state;
     return (
@@ -249,25 +247,16 @@ class NewClaim extends Component {
                 onChange={(event, newValue) => {
                   this.getCustomerJobs(newValue); // Get the customer and get job
                 }}
-                // inputValue={this.state.selectedCustomer}
-                // onInputChange={(event, newInputValue) => {
-                //   console.log(newInputValue);
-                // }}
                 id="country-select-demo"
                 style={{ width: "100%", margin: "1rem 0" }}
                 size="small"
                 options={this.state.customers}
-                // classes={{
-                //   option: classes.option,
-                // }}
                 autoHighlight
                 getOptionLabel={(option) =>
                   option.firstName ? option.firstName : option
                 }
                 renderOption={(option) => (
                   <React.Fragment>
-                    {/* <span>{countryToFlag(option.code)}</span> */}
-                    {/* <span>Hello</span> */}
                     {option.firstName} ({option.email})
                   </React.Fragment>
                 )}
@@ -310,7 +299,7 @@ class NewClaim extends Component {
                     </div>
 
                     {showClaimsDetails.map((claim) => (
-                      <div 
+                      <div
                         className="row"
                         style={{
                           fontFamily:
@@ -324,9 +313,9 @@ class NewClaim extends Component {
                         <div className={`col-4 `}>
                           <p>  {claim.updatedAt}</p>
                         </div>
-                        
+
                       </div>
-                     
+
                     ))}
                   </Modal.Body>
                   <Modal.Footer>
@@ -355,25 +344,16 @@ class NewClaim extends Component {
                   jobIdError: "",
                 }); // Get the customer and get job
               }}
-              // inputValue={this.state.selectedCustomer}
-              // onInputChange={(event, newInputValue) => {
-              //   console.log(newInputValue);
-              // }}
               id="country-select-demo"
               style={{ width: "100%", margin: "1rem 0" }}
               size="small"
               options={this.state.jobs}
-              // classes={{
-              //   option: classes.option,
-              // }}
               autoHighlight
               getOptionLabel={(option) =>
                 option.title ? option.title : option
               }
               renderOption={(option) => (
                 <React.Fragment>
-                  {/* <span>{countryToFlag(option.code)}</span> */}
-                  {/* <span>Hello</span> */}
                   {option.title} ({option.status})
                 </React.Fragment>
               )}
@@ -383,7 +363,6 @@ class NewClaim extends Component {
                   label="Choose a job"
                   style={{ margin: "0rem 2rem", width: "90%" }}
                   variant="outlined"
-                  // disabled={!this.state.selectedCustomer}
                   error={this.state.jobIdError}
                   inputProps={{
                     ...params.inputProps,
@@ -638,8 +617,14 @@ class NewClaim extends Component {
     );
   }
 }
+
+var mapStateToProps = (state) => ({
+  addForm: state.forms.addClaimForm
+});
+
 var actions = {
   addClaim,
   showMessage,
+  setClaimForm
 };
-export default connect(null, actions)(NewClaim);
+export default connect(mapStateToProps, actions)(NewClaim);

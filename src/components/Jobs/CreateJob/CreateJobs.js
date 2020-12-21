@@ -27,6 +27,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Checkbox,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "date-fns";
@@ -44,6 +45,7 @@ import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { setJobForm } from "../../../Redux/PersistForms/formActions";
+import { data } from "jquery";
 
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
@@ -51,7 +53,6 @@ class CreateJobs extends Component {
   constructor(props) {
     super(props);
     this.state = { ...props.jobForm };
-
   }
   initialState = {
     title: "",
@@ -82,8 +83,8 @@ class CreateJobs extends Component {
     assigneesId: [],
     add: 1,
     locations: [
-      { type: "pickup", value: "" },
-      { type: "dropoff", value: "" },
+      { type: "pickup", value: "", default: false },
+      { type: "dropoff", value: "", default: false },
     ],
     fromTo: [],
     assigneeRequiredError: "",
@@ -103,7 +104,6 @@ class CreateJobs extends Component {
     { id: 5, name: "Baby" },
     { id: 6, name: "Hot Tub" },
   ];
-
 
   componentDidMount = () => {
     if (this.props.location.customerId) {
@@ -140,10 +140,14 @@ class CreateJobs extends Component {
   };
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    let updateLocation = cloneDeep(this.state.locations);
+    console.log(name, value)
+    let updateLocation = cloneDeep(this.state.locations)
     updateLocation[i].type = value;
+    updateLocation[i].value = '';
+    updateLocation[i].default = false
     this.setState({
       locations: updateLocation,
+
     });
   };
   handleClick = (event) => {
@@ -157,7 +161,7 @@ class CreateJobs extends Component {
       anchorEl: null,
     });
   };
-  handleDateChange = (date) => { };
+  handleDateChange = (date) => {};
 
   addLocation = () => {
     if (
@@ -165,7 +169,7 @@ class CreateJobs extends Component {
       this.state.locations[1].value !== ""
     ) {
       var location = cloneDeep(this.state.locations);
-      var locationAdded = location.push({ type: "", value: "" });
+      location.push({ type: "", value: "", default: false });
       this.setState({
         locations: location,
       });
@@ -194,6 +198,34 @@ class CreateJobs extends Component {
     if (i == 0 && e.target.value) {
       this.setState({ locationtoError: "" });
     }
+  };
+
+  handleCheckBox = (e, i) => {
+    var { name, value } = e.target;
+    console.log(name, value)
+    e.stopPropagation()
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(this.state)
+  };
+  changeCheckBoxState = (e,i) => {
+    console.log(this.state.locations, i);
+    e.stopPropagation()
+    var prevState = cloneDeep(this.state.locations);
+    prevState[i].default = !prevState[i].default;
+    console.log(prevState[i].type)
+    if(prevState[i].default) {
+      // console.log(prevState[i].type)
+      prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
+    } else {
+      prevState[i].value = ''
+    }
+    console.log(prevState[i]);
+    this.setState({
+      locations: prevState,
+    });
   };
 
   showLocation = (i) => {
@@ -260,7 +292,7 @@ class CreateJobs extends Component {
               />
             </RadioGroup>
           </div>
-          <div className="col-7">
+          <div className="col-4">
             <TextField
               fullWidth
               variant="outlined"
@@ -268,21 +300,87 @@ class CreateJobs extends Component {
               required
               size="small"
               id="to"
-              label={this.state.locations[i].type == 'pickup' ? 'Enter Pickup Point' : (this.state.locations[i].type == 'dropoff' ? 'Enter DropOff Point' : 'Choose Type')}
-              disabled={this.state.locations[i].type ? false : true}
+              label={
+                this.state.locations[i].type == "pickup"
+                  ? "Enter Pickup Point"
+                  : this.state.locations[i].type == "dropoff"
+                  ? "Enter DropOff Point"
+                  : "Choose Type"
+              }
+              disabled={(this.state.locations[i].type ? false : true) || this.state.locations[i].default}
               // label={'Pickup / dropoff point'}
               name={this.state.locations[i].type}
-              value={this.state.locations[i].value}
+              value={this.state.locations[i].type === "pickup"  && this.state.locations[i].default ? "Unload only" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Load only/IA": this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
-            // error={this.state.locationtoError ? true : false}
+              // error={this.state.locationtoError ? true : false}
             />
           </div>
+          {this.state.locations[i].type == "pickup" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.locations[i].default}
+                    onChange={(e) => this.handleCheckBox(e, i)}
+                    onClick={(e) => this.changeCheckBoxState(e,i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Unload Only"
+              />
+            </div>
+          ) : this.state.locations[i].type == "dropoff" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+             
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.locations[i].default}
+                    onChange={(e) => this.handleCheckBox(e, i)}
+                    onClick={(e) => this.changeCheckBoxState(e,i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Load only/IA"
+              />
+            </div>
+          ) : (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexWrap: "no-wrap",
+              }}
+            ></div>
+          )}
           <div className="col-1">
             <FontAwesomeIcon
               icon={faTrash}
               // className = {style.circle}
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translate3d(1.2rem,1.5rem, 0)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
+              style={{
+                transform: "translate3d(1.2rem,1.5rem, 0)",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
             ></FontAwesomeIcon>
           </div>
         </div>
@@ -320,12 +418,11 @@ class CreateJobs extends Component {
   };
 
   removeLocation = (i) => {
-    var location = cloneDeep(this.state.locations)
-    location.splice(i, 1)
+    var location = cloneDeep(this.state.locations);
+    location.splice(i, 1);
     this.setState({
-      locations: location
-    })
-
+      locations: location,
+    });
   };
 
   handleFormInput = (event) => {
@@ -492,7 +589,7 @@ class CreateJobs extends Component {
         services,
         dates: stringDates,
         startTime,
-        locations: locations.filter(x => x.value != '' && x.type != ''),
+        locations: locations.filter((x) => x.value != "" && x.type != ""),
         status,
         note,
         assigneesId,
@@ -591,7 +688,7 @@ class CreateJobs extends Component {
 
   componentWillUnmount() {
     var { setJobForm } = this.props;
-    setJobForm({ ...this.state })
+    setJobForm({ ...this.state });
   }
 
   render() {
@@ -856,7 +953,7 @@ class CreateJobs extends Component {
 
               {this.state.locations && (
                 <div>
-                  {this.state ?.locations ?.map((location, i) =>
+                  {this.state?.locations?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
@@ -897,7 +994,7 @@ class CreateJobs extends Component {
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-        // backdrop={false}
+          // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>
@@ -914,12 +1011,12 @@ class CreateJobs extends Component {
 
 var actions = {
   createJob,
-  setJobForm
+  setJobForm,
 };
 
 var mapStateToProps = (state) => ({
   loggedInUser: state.users.user,
-  jobForm: state.forms.addJobForm
+  jobForm: state.forms.addJobForm,
 });
 
 export default connect(mapStateToProps, actions)(CreateJobs);

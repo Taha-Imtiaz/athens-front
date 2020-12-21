@@ -39,7 +39,8 @@ import {
   Button,
   FormControlLabel,
   RadioGroup,
-  Radio
+  Radio,
+  Checkbox
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
@@ -419,12 +420,40 @@ class JobEditDetails extends Component {
   }
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
+    console.log(name, value)
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
+    updateLocation[i].value = '';
+    updateLocation[i].default = false
     this.setState({
       locations: updateLocation,
     });
   };
+
+  handleCheckBox = (e, i) => {
+    var { name, value } = e.target;
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  changeCheckBoxState = (i) => {
+    console.log(this.state.locations, i);
+    var prevState = cloneDeep(this.state.locations);
+    prevState[i].default = !prevState[i].default;
+    console.log(prevState[i].type)
+    if(prevState[i].default) {
+      // console.log(prevState[i].type)
+      prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
+    } else {
+      prevState[i].value = ''
+    }
+    console.log(prevState[i]);
+    this.setState({
+      locations: prevState,
+    });
+  };
+
 
   showLocation = (i) => {
     if (i === 0) {
@@ -492,7 +521,7 @@ class JobEditDetails extends Component {
               />
             </RadioGroup>
           </div>
-          <div className="col-7" >
+          <div className="col-4" >
             <TextField
               fullWidth
               variant="outlined"
@@ -502,12 +531,69 @@ class JobEditDetails extends Component {
               size="small"
               id="to"
               label={this.state.locations[i].type === "pickup" ? "PickUp Location" : this.state.locations[i].type === "dropoff" ? "Drop Off Location" : "Choose Location"}
+              disabled={(this.state.locations[i].type ? false : true) || this.state.locations[i].default}
               name={this.state.locations[i].type}
-              value={this.state.locations[i].value}
+              value={this.state.locations[i].type === "pickup"  && this.state.locations[i].default ? "Unload only" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Load only/IA": this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
             // error={this.state.locationtoError ? true : false}
             />
           </div>
+          {this.state.locations[i].type == "pickup" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                transform:"translateX(3rem)"
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.locations[i].default}
+                    onChange={(e) => this.handleCheckBox(e, i)}
+                    onClick={() => this.changeCheckBoxState(i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Unload Only"
+              />
+            </div>
+          ) : this.state.locations[i].type == "dropoff" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                transform:"translateX(3rem)"
+             
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.locations[i].default}
+                    onChange={(e) => this.handleCheckBox(e, i)}
+                    onClick={() => this.changeCheckBoxState(i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Load only/IA"
+              />
+            </div>
+          ) : (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexWrap: "no-wrap",
+              }}
+            ></div>
+          )}
           <div className="col-1">
             <FontAwesomeIcon
               icon={faTrash}
@@ -592,6 +678,7 @@ class JobEditDetails extends Component {
 
   render() {
     var { job } = this.state;
+    console.log(this.state.locations)
     var {
       match: {
         params: { jobId },

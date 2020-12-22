@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes();
+var time = today.getHours() + ":" + today.getMinutes() ;
 
 function getSteps() {
   return [
@@ -100,12 +100,17 @@ function JobConfirmation(props) {
       typeof x == "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
+    job.startTime = today
     setData(job);
   }, []);
 
   var handleTimeSelect = (date) => {
-    console.log(date)
-    setStartTime(date);
+    var newData = {...data}
+    console.log(newData)
+    console.log(date.toTimeString())
+    setStartTime(date.toTimeString());
+    newData.startTime = date
+    setData(newData)
   };
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -534,6 +539,7 @@ console.log(name, value)
   };
 
   const getStepContent = (step) => {
+   console.log(data)
     switch (step) {
       case 0:
         return (

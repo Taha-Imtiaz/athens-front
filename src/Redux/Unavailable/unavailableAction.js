@@ -4,7 +4,7 @@ import Axios from '../../utils/api'
 export var getAllData = async () => {
 
   try {
-    var unavailableList = await Axios.get("user/get-requested-holidays");
+    var unavailableList = await Axios.get("schedule");
     return unavailableList;
     //    dispatch({
     //        type: GET_JOB,
@@ -19,7 +19,7 @@ export var getAllData = async () => {
 export var approveRequest = async (data) => {
 
   try {
-    var approved = await Axios.post("user/approve-holidays", data);
+    var approved = await Axios.put("schedule", data);
     return approved;
     //    dispatch({
     //        type: GET_JOB,

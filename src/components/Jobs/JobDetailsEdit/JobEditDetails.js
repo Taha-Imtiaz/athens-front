@@ -9,7 +9,7 @@ import {
   getAllMovers,
   updateJob,
   addService,
-  getServices,
+  // getServices,
 } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { Modal } from "react-bootstrap";
@@ -155,7 +155,6 @@ class JobEditDetails extends Component {
     });
   };
   componentDidMount = () => {
-    // var {getJob} = this.props
     var {
       match: {
         params: { jobId },
@@ -179,15 +178,15 @@ class JobEditDetails extends Component {
           assigneeList: mover,
         });
       });
-      getServices()
-        .then((res) => {
-          this.setState({
-            serviceOptions: res.data.data,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getServices()
+      //   .then((res) => {
+      //     this.setState({
+      //       serviceOptions: res.data.data,
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
       var services = res.data.job.services.map((service, index) => {
         return { id: index + 1, name: service };

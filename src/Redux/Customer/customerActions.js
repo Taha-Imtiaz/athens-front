@@ -11,7 +11,7 @@ export var getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
       var getCustomersList = await Axios.post(
-        "user/get-all-customer",
+        "customer/get-all-customer",
         customersObj
       );
       //update app's state
@@ -29,7 +29,7 @@ export var getAllCustomers = (customersObj) => {
 export var getCustomer = (customerId) => {
   return async (dispatch) => {
     try {
-      var customer = await Axios.get(`user/get-customer/${customerId}`);
+      var customer = await Axios.get(`customer/details/${customerId}`);
       dispatch({
         type: GET_CUSTOMER,
         payload: {
@@ -46,7 +46,7 @@ export var getCustomer = (customerId) => {
 
 export var fetchCustomerById = async (customerId) => {
   try {
-    var customer = await Axios.get(`user/get-customer/${customerId}`);
+    var customer = await Axios.get(`customer/details/${customerId}`);
     return customer;
   } catch (error) {
     console.log(error);
@@ -57,7 +57,7 @@ export var addCustomer = (customerObj, callback) => {
   return async (dispatch) => {
     try {
       var addedCustomer = await Axios.post(
-        "user/customer-Registration",
+        "customer",
         customerObj
       );
       if (addedCustomer.data.status == 200) {
@@ -83,8 +83,8 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
   console.log(body);
   return async (dispatch) => {
     try {
-      var customerUpdated = await Axios.post(
-        "user/update-customer/" + id,
+      var customerUpdated = await Axios.put(
+        "customer/" + id,
         body
       );
       console.log(customerUpdated);
@@ -102,17 +102,9 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
 
 export var getCustomerList = async () => {
   try {
-    var customerList = await Axios.get("user/get-customer-list");
+    var customerList = await Axios.get("customer");
     return customerList;
   } catch (error) {
     console.log(error);
   }
 };
-// export var searchCustomer = async (search) => {
-//     try {
-//         var searedCustomer = await Axios.post("user/get-all-customer")
-//         return searedCustomer
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }

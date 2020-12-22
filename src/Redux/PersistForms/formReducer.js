@@ -1,4 +1,5 @@
 import { GET_CUSTOMER_FORM, SET_CUSTOMER_FORM, GET_JOB_FORM, SET_JOB_FORM, GET_CLAIM_FORM, SET_CLAIM_FORM, SET_DEPOSIT_FORM, GET_DEPOSIT_FORM } from "./formConstants"
+import { EditorState } from 'draft-js';
 
 
 var initialState = {
@@ -22,6 +23,7 @@ var initialState = {
         subContactEmailError: ""
     },
     addJobForm: {
+        editorState: EditorState.createEmpty(),
         title: "",
         description: "",
         services: [],

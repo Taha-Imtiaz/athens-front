@@ -7,10 +7,10 @@ import Axios from "../../utils/api";
 export var getAllClaims = (data) => {
   let body = {
     page: data.page,
-    query:data.query
+    query: data.query
   };
   return async (dispatch) => {
-    var claims = await Axios.post("user/get-all-claims/" + data.status,
+    var claims = await Axios.post("claim/" + data.status,
       body
     );
     //update app's state
@@ -25,7 +25,7 @@ export var getAllClaims = (data) => {
 
 export var getClaimsByID = (customerId) => {
   return async (dispatch) => {
-    var claims = await Axios.get(`user/get-customer/${customerId}`);
+    var claims = await Axios.get(`customer/details/${customerId}`);
     dispatch({
       type: GET_CLAIMS_BY_ID,
       payload: {
@@ -38,7 +38,7 @@ export var getClaimsByID = (customerId) => {
 export var addClaim = async (data) => {
   // return async (dispatch) => {
   try {
-    var claim = await Axios.post(`user/add-claim`, data);
+    var claim = await Axios.post(`claim`, data);
     return claim;
   } catch (error) {
     console.log(error);
@@ -56,7 +56,7 @@ export var addClaim = async (data) => {
 export var getDeposits = async (data) => {
   // return async (dispatch) => {
   try {
-    var deposits = await Axios.get(`user/get-all-blanket-deposit`);
+    var deposits = await Axios.get(`deposit`);
     return deposits;
   } catch (error) {
     console.log(error);
@@ -73,7 +73,7 @@ export var getDeposits = async (data) => {
 
 export var updateClaim = async (data) => {
   try {
-    var claim = await Axios.post(`user/update-claim/${data._id}`, data);
+    var claim = await Axios.put(`claim/${data._id}`, data);
     return claim;
   } catch (error) {
     console.log(error);
@@ -83,7 +83,7 @@ export var updateClaim = async (data) => {
 export var addDeposit = async (data) => {
   try {
     var blanket = await Axios.post(
-      `user/add-blanket-deposit`,
+      `deposit`,
       data
     );
     return blanket;
@@ -94,8 +94,8 @@ export var addDeposit = async (data) => {
 
 export var updateDeposit = async (data) => {
   try {
-    var blanket = await Axios.post(
-      `user/update-blanket-deposit`,
+    var blanket = await Axios.put(
+      `deposit`,
       data
     );
     return blanket;
@@ -105,7 +105,7 @@ export var updateDeposit = async (data) => {
 
 export var getCustomersAndJobs = async () => {
   try {
-    var customers = await Axios.get(`user/get-all-customers-jobs`);
+    var customers = await Axios.get(`customer/jobs`);
     return customers;
   } catch (error) {
     console.log(error);
@@ -113,20 +113,17 @@ export var getCustomersAndJobs = async () => {
 };
 
 export var getClaim = (claimId) => {
-  
   return async (dispatch) => {
-   try {
-    
-
-    var claim = await Axios.get(`user/get-claim/${claimId}`)
-    dispatch({
-      type:GET_CLAIM,
-      payload:{
-        claim:claim
-      }
-    })
-   } catch (error) {
-     console.log(error)
-   }
+    try {
+      var claim = await Axios.get(`claim/${claimId}`)
+      dispatch({
+        type: GET_CLAIM,
+        payload: {
+          claim: claim
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

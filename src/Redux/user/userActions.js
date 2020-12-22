@@ -39,15 +39,8 @@ export var getLoginUser = (credentials) => {
                 headers: { Authorization: token }
             };
 
-            var user = await Axios.get("user/get-user-by-token", config)
-            // diaspatch(showMessage(user.data.message))
+            var user = await Axios.get("user", config)
             if (user.data.status == 200) {
-                // diaspatch({
-                //     type: GET_LOGGEDIN_USER,
-                //     payload: {
-                //         user: user.data.user
-                //     }
-                // })
                 diaspatch({
                     type: LOGGEDIN_USER,
                     payload: {
@@ -68,7 +61,7 @@ export var getLoginUser = (credentials) => {
 export var getUsers = (UsersObj) => {
     return async (diaspatch) => {
         try {
-            var getUsersList = await Axios.post("user/get-all-users", UsersObj)
+            var getUsersList = await Axios.post("user/all", UsersObj)
             diaspatch({
                 type: GET_USERS,
                 payload: {
@@ -85,7 +78,7 @@ export var getUsers = (UsersObj) => {
 export var createUser = async (newUserObj) => {
     // return async (dispatch) => {
     try {
-        var createdUser = await Axios.post("user/create-user", newUserObj)
+        var createdUser = await Axios.post("user", newUserObj)
         // dispatch(showMessage(createdUser.data.message))
         return createdUser
     } catch (error) {
@@ -95,7 +88,7 @@ export var createUser = async (newUserObj) => {
 
 export var getUserData = async (userId) => {
     try {
-        var getUser = await Axios.get(`user/get-user/${userId}`)
+        var getUser = await Axios.get(`user/${userId}`)
         return getUser
     } catch (error) {
         console.log(error)
@@ -104,7 +97,7 @@ export var getUserData = async (userId) => {
 export var updateUser = (data, userId) => {
     return async (dispatch) => {
         try {
-            var updatedUser = await Axios.post(`user/update-user/${userId}`, data)
+            var updatedUser = await Axios.put(`user/${userId}`, data)
 
             if (updatedUser.data.status == 200) {
                 // diaspatch({
@@ -126,36 +119,34 @@ export var updateUser = (data, userId) => {
         }
     }
 }
-export var sendCode = async (email) =>   {
-try {
-    var verifyEmail = await Axios.post("user/forgot-password", email)
-return verifyEmail
-} catch (error) {
-    console.log(error)
-}
+export var sendCode = async (email) => {
+    try {
+        var verifyEmail = await Axios.post("user/forgot-password", email)
+        return verifyEmail
+    } catch (error) {
+        console.log(error)
+    }
 }
 export var verifyCode = async (verifyCodeObj) => {
-try {
-    const config = {
-      headers: { Authorization: verifyCodeObj.token },
-    };
+    try {
+        const config = {
+            headers: { Authorization: verifyCodeObj.token },
+        };
 
-    var verifyCode = await Axios.post("user/code-verification", verifyCodeObj, config)
-    return verifyCode
-} catch (error) {
-    console.log(error)
-}
+        var verifyCode = await Axios.post("user/verify", verifyCodeObj, config)
+        return verifyCode
+    } catch (error) {
+        console.log(error)
+    }
 }
 export var resetPassword = async (passwordObj) => {
-try {
-    
-    const config = {
-      headers: { Authorization:passwordObj.token },
-    };
-    var newPassword = await Axios.post("user/reset-password", passwordObj, config)
-    return newPassword
-   
-} catch (error) {
-    console.log(error)
-}
+    try {
+        const config = {
+            headers: { Authorization: passwordObj.token },
+        };
+        var newPassword = await Axios.put("user", passwordObj, config)
+        return newPassword
+    } catch (error) {
+        console.log(error)
+    }
 }

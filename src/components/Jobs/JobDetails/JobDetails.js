@@ -14,6 +14,7 @@ import { Chip } from "@material-ui/core";
 import MyLocationOutlinedIcon from '@material-ui/icons/MyLocationOutlined';
 import LocationOffIcon from '@material-ui/icons/LocationOff';
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
+import parse from 'html-react-parser';
 
 const JobDetails = (props) => {
   const width = window.innerWidth;
@@ -228,7 +229,8 @@ const JobDetails = (props) => {
                 </div>
                 <div className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
                   <div className="col-12" >
-                    <p className={style.para} style={{whiteSpace:"pre-line"}}> {job.description}</p>
+                    {/* <p className={style.para} style={{whiteSpace:"pre-line"}}> {job.description}</p> */}
+                    {parse(job.description)}
                   </div>
                 </div>
 
@@ -244,17 +246,17 @@ const JobDetails = (props) => {
                 {job.locations &&
 
                   <div>
-                    
+
                     {job.locations.map((list) =>
                       list.type === "pickup" ?
-                       
-                       <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+
+                        <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
                           <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
-                       </p> 
-                      :
-                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                        <LocationOffIcon color="primary" />  {list.value}
-                      </p>)}
+                        </p>
+                        :
+                        <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                          <LocationOffIcon color="primary" />  {list.value}
+                        </p>)}
 
                   </div>
                 }

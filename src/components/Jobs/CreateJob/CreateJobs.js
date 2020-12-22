@@ -9,7 +9,6 @@ import API from "../../../utils/api";
 import {
   getAllMovers,
   createJob,
-  getServices,
   addService,
 } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from "react-toastify";
@@ -44,6 +43,10 @@ import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { setJobForm } from "../../../Redux/PersistForms/formActions";
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
 
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
@@ -54,6 +57,7 @@ class CreateJobs extends Component {
 
   }
   initialState = {
+    editorState: EditorState.createEmpty(),
     title: "",
     description: "",
     services: [],
@@ -122,15 +126,15 @@ class CreateJobs extends Component {
     //   });
     // });
 
-    getServices()
-      .then((res) => {
-        this.setState({
-          serviceOptions: res.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // getServices()
+    //   .then((res) => {
+    //     this.setState({
+    //       serviceOptions: res.data.data,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   handleChange = (event) => {
@@ -594,6 +598,14 @@ class CreateJobs extends Component {
     setJobForm({ ...this.state })
   }
 
+  onEditorStateChange = (e) => {
+    this.setState({
+      editorState: e,
+      description: draftToHtml(convertToRaw(e.getCurrentContent()))
+    });
+    // console.log(draftToHtml(convertToRaw(e.getCurrentContent())))
+  }
+
   render() {
     return (
       <div style={{ background: "#e9ecef" }}>
@@ -717,17 +729,22 @@ class CreateJobs extends Component {
               </div>
 
               <div className="form-group">
-                <TextareaAutosize
-                  // required
+                {/* <TextareaAutosize
                   className={style.textarea}
                   style={{ margin: "1rem 2rem", width: "90%" }}
                   rowsMin={4}
                   placeholder="Job Description"
                   name="description"
                   value={this.state.description}
-                  // error={this.state.descriptionError}
                   onChange={this.handleFormInput}
-                ></TextareaAutosize>
+                ></TextareaAutosize> */}
+                <Editor
+                  editorState={this.state.editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={this.onEditorStateChange}
+                />
               </div>
 
               <div

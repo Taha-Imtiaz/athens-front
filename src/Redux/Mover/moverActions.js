@@ -14,7 +14,7 @@ export var getMover = (moversObj) => {
       };
       // var mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
       var mover = await Axios.post(
-        `user/get-all-jobs-by-mover`,
+        `mover/jobs`,
         moversObj,
         config
       );
@@ -32,8 +32,8 @@ export var getMover = (moversObj) => {
 
 export var updateJob = async (jobId, status) => {
   try {
-    var updatedJob = await Axios.post(
-      `user/update-job-status/${jobId}`,
+    var updatedJob = await Axios.put(
+      `job/status/${jobId}`,
       status
     );
     return updatedJob;
@@ -53,7 +53,7 @@ export var getMoverJobs = async (date) => {
       date: date.toString(),
     };
     var jobs = await Axios.post(
-      `user/get-all-jobs-by-mover-on-date`,
+      `mover`,
       data,
       config
     );
@@ -68,24 +68,24 @@ export var holidayCalender = async (obj) => {
   const config = {
     headers: { Authorization: token },
   };
-  var days = await Axios.post(`user/request-holidays`, obj, config);
+  var days = await Axios.post(`schedule`, obj, config);
   return days;
 };
 
 export var setAvailability = async (obj, _id) => {
-  var days = await Axios.post(`user/set-availability/${_id}`, obj);
+  var days = await Axios.put(`mover/${_id}`, obj);
   return days;
 };
 
 export var payAmount = async (obj) => {
-  var payment = await Axios.post(`user/payment`, obj);
+  var payment = await Axios.post(`job/payment`, obj);
   return payment;
 };
 
 export var getJob = async (jobId) => {
   // return async (dispatch) => {
   try {
-    var getJob = await Axios.get(`user/get-job/${jobId}`);
+    var getJob = await Axios.get(`job/${jobId}`);
     return getJob;
     //    dispatch({
     //        type: GET_JOB,
@@ -103,7 +103,7 @@ export var moverSearchFilter = (searchObj) => {
       headers: { Authorization: token },
     };
     try {
-      var searchItem = await Axios.post(`user/search-all-jobs-by-mover`, searchObj, config);
+      var searchItem = await Axios.post(`mover/search`, searchObj, config);
       dispatch({
         type: SEARCH_FILTER,
         payload: {

@@ -43,6 +43,15 @@ class CustomerUpdate extends Component {
     updatedContacts[i][e.target.name] = e.target.value;
     this.setState({ subContacts: updatedContacts });
   };
+  addAlternateContact = () => {
+    this.setState({
+      subContacts:[{
+        name: "",
+        phone: "",
+        email: "",
+      }]
+    })
+  }
   addContacts = () => {
     if (
       this.state.subContacts[0].name &&
@@ -219,7 +228,7 @@ class CustomerUpdate extends Component {
               />
             </form>
             <h5 style={{ margin: "0 2rem" }}>Alternate Contact</h5>
-            {this.state.subContacts?.map((x, i) => {
+            { this.state.subContacts.length > 0 ? this.state.subContacts?.map((x, i) => {
               return (
                 <div key={i}>
                   <form>
@@ -278,8 +287,27 @@ class CustomerUpdate extends Component {
                   </form>
                 </div>
               );
-            })}
-            <div className="form-group">
+            }): <div className="form-group">
+                 <div
+                style={{ float: "right", marginRight: "2.2rem" }}
+                className="row"
+              >
+               
+                <Button
+                  onClick={this.addAlternateContact}
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  Add Alternate Contact
+                </Button>
+              </div>
+            </div> 
+            }
+            { this.state.subContacts.length > 0 && <div className="form-group">
               <div
                 style={{ float: "right", marginRight: "2.2rem" }}
                 className="row"
@@ -297,7 +325,7 @@ class CustomerUpdate extends Component {
                   Add Another
                 </Button>
               </div>
-            </div>
+            </div>}
 
             <Button
               onClick={this.mySubmitHandler}
@@ -313,7 +341,7 @@ class CustomerUpdate extends Component {
                 fontFamily: "sans-serif",
               }}
             >
-              Submit
+              Update
             </Button>
            
           </div>

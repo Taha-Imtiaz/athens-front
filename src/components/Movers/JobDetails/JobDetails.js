@@ -10,6 +10,8 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import { Chip } from "@material-ui/core";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
+import parse from 'html-react-parser';
+
 
 const MoversJobDetails = (props) => {
   var [job, setJob] = useState(null);
@@ -141,7 +143,7 @@ const MoversJobDetails = (props) => {
                 //   style={{ border: "2px solid rgba(0,0,0,0.125)" }}
                 >
                   <div className="" style={{ fontFamily: "Roboto" }}>
-                    <p className="card-text">{job.description}</p>
+                    <p className="card-text">{parse(job.description)}</p>
                   </div>
                 </div>
 

@@ -50,6 +50,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { data } from "jquery";
 
+
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
@@ -98,16 +99,18 @@ class CreateJobs extends Component {
     selectedCustomer: "",
     newCustomer: "",
     showAddCustomer: false,
+    serviceOptions : [
+      { id: 1, name: "Packaging" },
+      { id: 2, name: "Loading" },
+      { id: 3, name: "Unloading" },
+      { id: 4, name: "Grand Piano" },
+      { id: 5, name: "Baby" },
+      { id: 6, name: "Hot Tub" },
+    ]
+
   };
 
-  servicesOptions = [
-    { id: 1, name: "Packaging" },
-    { id: 2, name: "Loading" },
-    { id: 3, name: "Unloading" },
-    { id: 4, name: "Grand Piano" },
-    { id: 5, name: "Baby" },
-    { id: 6, name: "Hot Tub" },
-  ];
+ 
 
   componentDidMount = () => {
     if (this.props.location.customerId) {
@@ -711,21 +714,7 @@ class CreateJobs extends Component {
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
-              {/* <div>
-                <TextField
-                  variant="outlined"
-                  style={{ margin: "1rem 2rem", width: "90%" }}
-                  required
-                  size="small"
-                  id="customerId"
-                  label="Cutomer Email"
-                  name="customerId"
-                  autoComplete="customerId"
-                  autoFocus
-                  value={this.state.customerId}
-                  onChange={this.handleFormInput}
-                />
-              </div> */}
+             
               {this.state.customers.length > 0 ? (
                 <Autocomplete
                   noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
@@ -825,7 +814,7 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group"  style={{ margin: "1rem 2rem", width: "90%",borderRadius: "4px",border:"1px solid rgba(0, 0, 0, 0.3)"}}>
                 {/* <TextareaAutosize
                   className={style.textarea}
                   style={{ margin: "1rem 2rem", width: "90%" }}
@@ -837,10 +826,12 @@ class CreateJobs extends Component {
                 ></TextareaAutosize> */}
                 <Editor
                   editorState={this.state.editorState}
+                
                   toolbarClassName="toolbarClassName"
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
+               style={{}}
                 />
               </div>
 
@@ -858,7 +849,7 @@ class CreateJobs extends Component {
                   limitTags={10}
                   id="multiple-limit-tags"
                   options={
-                    this.state.serviceOptions ? this.state.serviceOptions : []
+                    this.state.serviceOptions && this.state.serviceOptions 
                   }
                   getOptionLabel={(option) =>
                     option.name ? option.name : option

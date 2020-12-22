@@ -26,6 +26,7 @@ import { useState } from "react";
 import style from "./JobConfirmation.module.css";
 import {
   KeyboardDatePicker,
+  KeyboardTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -102,9 +103,9 @@ function JobConfirmation(props) {
     setData(job);
   }, []);
 
-  var handleTimeSelect = (e) => {
-    var { name, value } = e.target;
-    setStartTime(value);
+  var handleTimeSelect = (date) => {
+    console.log(date)
+    setStartTime(date);
   };
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -195,6 +196,13 @@ function JobConfirmation(props) {
     //   locations: prevState,
     // });
   };
+  var removeDate = (i) => {
+    console.log(i)
+    var newData = cloneDeep(data)
+    newData.dates.splice(i,1)
+    setData(newData)
+  }
+
 
   const showLocation = (i) => {
     console.log(data.locations)
@@ -535,7 +543,8 @@ console.log(name, value)
               {data &&
                 data.dates?.map((x, i) => {
                   return (
-                    <div className="form-group col-3">
+                    <div className="row">
+                    <div className="col-9">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid>
                           <div
@@ -561,12 +570,11 @@ console.log(name, value)
                           </div>
                         </Grid>
                       </MuiPickersUtilsProvider>
-                      {/* <DatePicker
-                        selected={data.dates[i]}
-                        onChange={(e) => handleStartDate(e, i)}
-                        placeholderText="Choose Dates"
-                        className="form-control"
-                      /> */}
+                     
+                    </div>
+                    <div className="col-2" style={{display:"flex", alignItems:"center"}}>
+                      <FontAwesomeIcon icon = {faTrash} onClick = {() => removeDate(i)}/>
+                    </div>
                     </div>
                   );
                 })}
@@ -583,7 +591,21 @@ console.log(name, value)
                   className="form-group col-12"
                   style={{ marginTop: "1rem" }}
                 >
-                  <TextField
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Grid>
+      <KeyboardTimePicker
+          margin="normal"
+          id="time-picker"
+          label="Time picker"
+          value={data.startTime}
+          onChange={handleTimeSelect}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}
+        />
+      </Grid>
+      </MuiPickersUtilsProvider>
+                  {/* <TextField
                     id="time"
                     fullWidth
                     label="Start Time"
@@ -601,7 +623,7 @@ console.log(name, value)
                     inputProps={{
                       step: 300, // 5 min
                     }}
-                  />
+                  /> */}
                 </div>
               )}
             </div>

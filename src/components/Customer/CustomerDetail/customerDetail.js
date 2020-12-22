@@ -10,6 +10,8 @@ import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
+import parse from 'html-react-parser';
+
 import {
   AppBar,
   Box,
@@ -542,7 +544,7 @@ const CustomerDetail = (props) => {
                                 </div>
                                 <div className="col-12" style={{ paddingLeft: "1rem" }}>
                                   <p style={{ whiteSpace: "pre-line" }}>
-                                    {job.description}
+                                    {parse(job.description)}
                                   </p>
                                 </div>
                                 {/* {job.locations &&

@@ -62,7 +62,15 @@ var initialState = {
         customers: [],
         selectedCustomer: "",
         newCustomer: "",
-        showAddCustomer: false
+        showAddCustomer: false,
+        serviceOptions : [
+            { id: 1, name: "Packaging" },
+            { id: 2, name: "Loading" },
+            { id: 3, name: "Unloading" },
+            { id: 4, name: "Grand Piano" },
+            { id: 5, name: "Baby" },
+            { id: 6, name: "Hot Tub" },
+          ]
     },
     addClaimForm: {
         customerId: "",
@@ -97,6 +105,7 @@ var initialState = {
         title: "",
         waitToError: "",
         waitTo: "",
+        
         customerClaims: false,
     },
     addDepositForm: {

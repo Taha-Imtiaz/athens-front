@@ -11,7 +11,7 @@ var baseUrl = "https://athens-backend.herokuapp.com/api/";
 export var getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      var getJobs = await Axios.post("job/get-all-jobs", jobObj);
+      var getJobs = await Axios.post("job/all", jobObj);
       //update app's state
       // dispatch(showLoader());
       dispatch({

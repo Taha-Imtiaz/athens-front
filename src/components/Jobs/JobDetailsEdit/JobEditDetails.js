@@ -40,24 +40,20 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio,
-  Checkbox
+  Checkbox,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
+import { ContentState, convertToRaw,EditorState } from "draft-js";
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 class JobEditDetails extends Component {
-  servicesOptions = [
-    { id: 1, name: "Packaging" },
-    { id: 2, name: "Loading" },
-    { id: 3, name: "Unloading" },
-    { id: 4, name: "Grand Piano" },
-    { id: 5, name: "Baby" },
-    { id: 6, name: "Hot Tub" },
-  ];
-
   state = {
     services: [],
     assignee: [],
     assigneeList: [],
+    // editorState: EditorState.createEmpty(),
     startDate: "",
     dates: [""],
     endDate: "",
@@ -79,6 +75,14 @@ class JobEditDetails extends Component {
     status: "",
     assigneeRequired: "",
     newService: "",
+    serviceOptions: [
+      { id: 1, name: "Packaging" },
+      { id: 2, name: "Loading" },
+      { id: 3, name: "Unloading" },
+      { id: 4, name: "Grand Piano" },
+      { id: 5, name: "Baby" },
+      { id: 6, name: "Hot Tub" },
+    ],
   };
 
   handleStartDate = (date, i) => {
@@ -174,11 +178,24 @@ class JobEditDetails extends Component {
         attributes: "",
       };
       getAllMovers(moversObj).then((moverRes) => {
-        var mover = moverRes ?.data.movers.docs ?.map((mover) => mover);
+        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
         this.setState({
           assigneeList: mover,
         });
       });
+
+      console.log(res.data.job.description)
+      const contentBlock = htmlToDraft(res.data.job.description);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        const editorState = EditorState.createWithContent(contentState);
+        this.setState({
+          editorState,
+        });
+        console.log(editorState)
+      }
       // getServices()
       //   .then((res) => {
       //     this.setState({
@@ -229,12 +246,12 @@ class JobEditDetails extends Component {
   };
 
   removeLocation = (i) => {
-    var location = cloneDeep(this.state.locations)
-    location.splice(i, 1)
+    var location = cloneDeep(this.state.locations);
+    location.splice(i, 1);
     this.setState({
-      locations: location
-    })
-  }
+      locations: location,
+    });
+  };
 
   handleClose = (notes) => {
     var { note } = this.state;
@@ -333,7 +350,7 @@ class JobEditDetails extends Component {
       assigneeRequired,
       jobType,
       // meetTime,
-      locations: locations.filter(x => x.value != '' && x.type != ''),
+      locations: locations.filter((x) => x.value != "" && x.type != ""),
       // assigneesId,
       // startTime,
       status,
@@ -347,7 +364,7 @@ class JobEditDetails extends Component {
           showMessage(res.data.message);
           history.push("/job/details/" + jobId);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     }
   };
   onSelect = (selectedList, selectedItem) => {
@@ -410,20 +427,20 @@ class JobEditDetails extends Component {
     }
   };
   addLocation = () => {
-    var location = cloneDeep(this.state.locations)
+    var location = cloneDeep(this.state.locations);
 
     var locationAdded = location.push({ type: "", value: "" });
     this.setState({
       locations: location,
     });
-  }
+  };
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
-    updateLocation[i].value = '';
-    updateLocation[i].default = false
+    updateLocation[i].value = "";
+    updateLocation[i].default = false;
     this.setState({
       locations: updateLocation,
     });
@@ -440,12 +457,13 @@ class JobEditDetails extends Component {
     console.log(this.state.locations, i);
     var prevState = cloneDeep(this.state.locations);
     prevState[i].default = !prevState[i].default;
-    console.log(prevState[i].type)
-    if(prevState[i].default) {
+    console.log(prevState[i].type);
+    if (prevState[i].default) {
       // console.log(prevState[i].type)
-      prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
+      prevState[i].value =
+        prevState[i].type == "pickup" ? "Unload Only" : "Load Only / IA";
     } else {
-      prevState[i].value = ''
+      prevState[i].value = "";
     }
     console.log(prevState[i]);
     this.setState({
@@ -453,11 +471,10 @@ class JobEditDetails extends Component {
     });
   };
 
-
   showLocation = (i) => {
     if (i === 0) {
       return (
-        <div className="row" >
+        <div className="row">
           <div className="col-12">
             <TextField
               variant="outlined"
@@ -500,7 +517,13 @@ class JobEditDetails extends Component {
     } else {
       return (
         <div className="row">
-          <div className="col-4" style={{ transform: "translate3d(2rem, 0.75rem, 0)", width: "100%" }}>
+          <div
+            className="col-4"
+            style={{
+              transform: "translate3d(2rem, 0.75rem, 0)",
+              width: "100%",
+            }}
+          >
             <RadioGroup
               className={style.rowFlex}
               value={this.state.locations[i].type}
@@ -520,7 +543,7 @@ class JobEditDetails extends Component {
               />
             </RadioGroup>
           </div>
-          <div className="col-4" >
+          <div className="col-4">
             <TextField
               fullWidth
               variant="outlined"
@@ -529,12 +552,29 @@ class JobEditDetails extends Component {
               required
               size="small"
               id="to"
-              label={this.state.locations[i].type === "pickup" ? "PickUp Location" : this.state.locations[i].type === "dropoff" ? "Drop Off Location" : "Choose Location"}
-              disabled={(this.state.locations[i].type ? false : true) || this.state.locations[i].default}
+              label={
+                this.state.locations[i].type === "pickup"
+                  ? "PickUp Location"
+                  : this.state.locations[i].type === "dropoff"
+                  ? "Drop Off Location"
+                  : "Choose Location"
+              }
+              disabled={
+                (this.state.locations[i].type ? false : true) ||
+                this.state.locations[i].default
+              }
               name={this.state.locations[i].type}
-              value={this.state.locations[i].type === "pickup"  && this.state.locations[i].default ? "Unload only" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Load only/IA": this.state.locations[i].value}
+              value={
+                this.state.locations[i].type === "pickup" &&
+                this.state.locations[i].default
+                  ? "Unload only"
+                  : this.state.locations[i].type === "dropoff" &&
+                    this.state.locations[i].default
+                  ? "Load only/IA"
+                  : this.state.locations[i].value
+              }
               onChange={(e) => this.hanldeLocationInput(i, e)}
-            // error={this.state.locationtoError ? true : false}
+              // error={this.state.locationtoError ? true : false}
             />
           </div>
           {this.state.locations[i].type == "pickup" ? (
@@ -543,7 +583,7 @@ class JobEditDetails extends Component {
               style={{
                 display: "flex",
                 alignItems: "center",
-                transform:"translateX(3rem)"
+                transform: "translateX(3rem)",
               }}
             >
               <FormControlLabel
@@ -565,8 +605,7 @@ class JobEditDetails extends Component {
               style={{
                 display: "flex",
                 alignItems: "center",
-                transform:"translateX(3rem)"
-             
+                transform: "translateX(3rem)",
               }}
             >
               <FormControlLabel
@@ -596,10 +635,13 @@ class JobEditDetails extends Component {
           <div className="col-1">
             <FontAwesomeIcon
               icon={faTrash}
-
-
               onClick={() => this.removeLocation(i)}
-              style={{ transform: "translate3d(3.5rem,1.5rem, 0)", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}
+              style={{
+                transform: "translate3d(3.5rem,1.5rem, 0)",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
             ></FontAwesomeIcon>
           </div>
         </div>
@@ -656,7 +698,7 @@ class JobEditDetails extends Component {
       if (e.keyCode === 13 && e.target.value) {
         var serviceAdded = {
           name: this.state.newService,
-          id: Math.random() * 10
+          id: Math.random() * 10,
         };
         let services = cloneDeep(this.state.services);
         services.push(serviceAdded);
@@ -674,10 +716,16 @@ class JobEditDetails extends Component {
       });
     }
   };
-
+  onEditorStateChange = (e) => {
+    this.setState({
+      editorState: e,
+      description: draftToHtml(convertToRaw(e.getCurrentContent())),
+    });
+    // console.log(draftToHtml(convertToRaw(e.getCurrentContent())))
+  };
   render() {
     var { job } = this.state;
-    console.log(this.state.locations)
+    console.log(this.state.locations);
     var {
       match: {
         params: { jobId },
@@ -751,8 +799,17 @@ class JobEditDetails extends Component {
                   error={this.state.titleError}
                 />
               </div>
-              <div>
-                <h4 style={{ transform: "translateX(3rem)", width: "100%" }}>
+              <div
+                className="form-group"
+                style={{
+                  margin: "1rem 2rem",
+                  width: "100%",
+                  borderRadius: "4px",
+                  border: "1px solid rgba(0, 0, 0, 0.3)",
+                  transform: "translateX(1rem)"
+                }}
+              >
+                {/* <h4 style={{ transform: "translateX(3rem)", width: "100%" }}>
                   Job Description
                 </h4>
                 <TextareaAutosize
@@ -769,6 +826,14 @@ class JobEditDetails extends Component {
                   error={this.state.descriptionError}
                   value={description}
                   onChange={this.handleFormInput}
+                /> */}
+                <Editor
+                  editorState={this.state.editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={this.onEditorStateChange}
+                  // style={{}}
                 />
               </div>
 
@@ -785,7 +850,7 @@ class JobEditDetails extends Component {
                     limitTags={10}
                     id="multiple-limit-tags"
                     options={
-                      this.state.serviceOptions ? this.state.serviceOptions : []
+                      this.state.serviceOptions && this.state.serviceOptions
                     }
                     getOptionLabel={(option) =>
                       option.name ? option.name : option
@@ -796,7 +861,6 @@ class JobEditDetails extends Component {
                         onKeyUp={(e) => this.addCustomService(e)}
                         {...params}
                         variant="outlined"
-
                         margin="normal"
                         label="Services"
                         placeholder="Services"
@@ -811,7 +875,6 @@ class JobEditDetails extends Component {
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid>
                       <div
-
                         style={{ transform: "translateX(3rem)", width: "100%" }}
                       >
                         <KeyboardDatePicker
@@ -835,19 +898,16 @@ class JobEditDetails extends Component {
               })}
               <div className="row">
                 <div className="col-11"></div>
-                <div className="col-1"
+                <div
+                  className="col-1"
                   onClick={this.addDate}
-
                   style={{ transform: "translateX(5rem)", float: "right" }}
                 >
                   <i className="fa fa-plus"></i>
                 </div>
               </div>
 
-              <div
-                className="row"
-                style={{ transform: "translateX(3rem)" }}
-              >
+              <div className="row" style={{ transform: "translateX(3rem)" }}>
                 {/* <div className="col-4" style={{ marginTop: "1rem" }}>
                   <TextField
                     id="time"
@@ -888,12 +948,13 @@ class JobEditDetails extends Component {
                   />
                 </div>
 
-                <div className={`col-6`} style={{
-
-                  marginTop: "0.4rem",
-                  width: "100%",
-                }}>
-
+                <div
+                  className={`col-6`}
+                  style={{
+                    marginTop: "0.4rem",
+                    width: "100%",
+                  }}
+                >
                   <FormControl
                     variant="outlined"
                     style={{ width: "100%" }}
@@ -901,7 +962,7 @@ class JobEditDetails extends Component {
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
                       Job Type
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
@@ -914,12 +975,10 @@ class JobEditDetails extends Component {
                         {this.state.jobType}
                       </MenuItem>
                       {this.state.jobType === "Fixed" ? (
-                        <MenuItem value={"Hourly based"}>
-                          Hourly based
-                          </MenuItem>
+                        <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
                       ) : (
-                          <MenuItem value={"Fixed"}>Fixed</MenuItem>
-                        )}
+                        <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                      )}
                     </Select>
                   </FormControl>
                 </div>
@@ -938,13 +997,9 @@ class JobEditDetails extends Component {
                 </div>
               </div>
 
-
-
-
-
               {this.state.locations && (
                 <div>
-                  {this.state ?.locations ?.map((location, i) =>
+                  {this.state?.locations?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
@@ -973,7 +1028,6 @@ class JobEditDetails extends Component {
                       />
                     </div>
                   </div> */}
-
 
               {/* {this.state.locations.map((list, i) => {
                     return (
@@ -1035,7 +1089,7 @@ class JobEditDetails extends Component {
                   className=" form-group col-1"
                   style={{
                     // float: "right",
-                    transform: "translate3d(3.7rem,0rem, 0)"
+                    transform: "translate3d(3.7rem,0rem, 0)",
                   }}
                 >
                   <i
@@ -1073,7 +1127,6 @@ class JobEditDetails extends Component {
             </div> */}
           </div>
 
-
           {/* <h4 style={{margin:"0.8rem 0"}}>Assignees</h4>
         <div className="form-group col-10">
           <div  style={{transform:"translateX(-1.3rem)"}}>
@@ -1087,15 +1140,17 @@ class JobEditDetails extends Component {
           </div>
         </div> */}
           <div>
-            {note ?.length !== 0 && <h3 style={{ transform: "translateX(2.5rem)" }}>Notes</h3>}
+            {note?.length !== 0 && (
+              <h3 style={{ transform: "translateX(2.5rem)" }}>Notes</h3>
+            )}
 
-            {note ?.map((note) => (
+            {note?.map((note) => (
               <div style={{ display: "flex", transform: "translateX(2.5rem)" }}>
                 <p className={style.para}>{note.text} </p>
                 <FontAwesomeIcon
                   icon={faTrashAlt}
                   size="1x"
-                  style={{ transform: "translateY(0.2rem)", }}
+                  style={{ transform: "translateY(0.2rem)" }}
                   onClick={() => this.handleDelete(note)}
                 />
               </div>
@@ -1113,8 +1168,13 @@ class JobEditDetails extends Component {
                 <Button
                   onClick={this.handleShow}
                   type="submit"
-
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%" }}
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                    width: "90%",
+                  }}
                 >
                   Add Notes
                 </Button>
@@ -1128,8 +1188,11 @@ class JobEditDetails extends Component {
                 className={`btn btn-primary  ${style.btnCustom}`}
                 style={{
                   width: "80%",
-                  background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif",
-                  transform: "translate3d(2rem, 1rem ,0rem)"
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                  transform: "translate3d(2rem, 1rem ,0rem)",
                   // transform:"translateX(-1.5rem)"
                 }}
               >
@@ -1140,15 +1203,19 @@ class JobEditDetails extends Component {
             <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
-
                 onClick={this.handleJobUpdate}
-
-                style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", width: "90%", transform: "translate3d(0rem, 1rem ,0rem)" }}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                  width: "90%",
+                  transform: "translate3d(0rem, 1rem ,0rem)",
+                }}
               >
                 Update
               </Button>
             </div>
-
           </div>
           <Modal
             show={show}

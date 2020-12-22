@@ -11,7 +11,7 @@ export var getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
       var getCustomersList = await Axios.post(
-        "customer/get-all-customer",
+        "customer/all",
         customersObj
       );
       //update app's state

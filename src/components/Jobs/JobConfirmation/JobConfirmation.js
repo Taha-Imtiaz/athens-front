@@ -15,6 +15,7 @@ import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import {
+  Checkbox,
   FormControlLabel,
   Grid,
   Radio,
@@ -88,7 +89,7 @@ function JobConfirmation(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = React.useState("");
   const [payment, setPayment] = React.useState({});
-
+  var [state, setState] = useState("")
   const steps = getSteps();
 
   useEffect(() => {
@@ -141,6 +142,8 @@ function JobConfirmation(props) {
     setData(newState);
   };
 
+
+
   const handleFormInput = (event) => {
     var { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
@@ -160,7 +163,41 @@ function JobConfirmation(props) {
     setData(job);
   };
 
+  
+  
+ var handleCheckBox = (e, i) => {
+    var { name, value } = e.target;
+    e.stopPropagation()
+    console.log(name, value)
+     setState({...data,  [name]: value })
+     console.log(data)
+    // this.setState((prevState) => ({
+    //   ...prevState,
+    //   [name]: value,
+    // }));
+  };
+ var changeCheckBoxState = (i) => {
+    // console.log(this.state.locations, i);
+
+    var prevState = {...data.locations};
+    console.log(prevState[i])
+    prevState[i].default = !prevState[i].default;
+    console.log(prevState[i].type)
+    if(prevState[i].default) {
+      // console.log(prevState[i].type)
+      prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
+    } else {
+      prevState[i].value = ''
+    }
+    console.log(prevState[i]);
+    setData(prevState)
+    // this.setState({
+    //   locations: prevState,
+    // });
+  };
+
   const showLocation = (i) => {
+    console.log(data.locations)
     if (i === 0) {
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
@@ -224,7 +261,7 @@ function JobConfirmation(props) {
               />
             </RadioGroup>
           </div>
-          <div className="col-7">
+          <div className="col-4">
             <TextField
               fullWidth
               variant="outlined"
@@ -239,6 +276,61 @@ function JobConfirmation(props) {
               // error={this.state.locationtoError ? true : false}
             />
           </div>
+          {data.locations[i].type == "pickup" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={data.locations[i].default}
+                    onChange={(e) => handleCheckBox(e, i)}
+                    onClick={() => changeCheckBoxState(i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Unload Only"
+              />
+            </div>
+          ) : data.locations[i].type == "dropoff" ? (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                alignItems: "center",
+             
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={data.locations[i].default}
+                    onChange={(e) => handleCheckBox(e, i)}
+                    onClick={() => changeCheckBoxState(i)}
+                    name="checkboxStates"
+                    color="#00ADEE"
+                  />
+                }
+                label="Load only/IA"
+              />
+            </div>
+          ) : (
+            <div
+              className="col-3"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexWrap: "no-wrap",
+              }}
+            ></div>
+          )}
           <div className="col-1">
             <FontAwesomeIcon
               icon = {faTrash}
@@ -319,8 +411,11 @@ function JobConfirmation(props) {
   var handleInputChange = (e, i) => {
     let { name, value } = e.target;
     let updateLocation = { ...data };
-
+console.log(name, value)
     updateLocation.locations[i].type = value;
+    updateLocation.locations[i].value  = '';
+    updateLocation.locations[i].default = false;
+
     setData(updateLocation);
   };
 
@@ -438,7 +533,7 @@ function JobConfirmation(props) {
             <h6>Dates:</h6>
             <div className="row">
               {data &&
-                data.dates.map((x, i) => {
+                data.dates?.map((x, i) => {
                   return (
                     <div className="form-group col-3">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>

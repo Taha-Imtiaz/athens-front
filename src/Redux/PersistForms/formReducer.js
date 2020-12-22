@@ -12,8 +12,8 @@ var initialState = {
             {
                 name: "",
                 phone: "",
-                email: "",
-            },
+                email: ""
+            }
         ],
         firstNameError: "",
         lastNameError: "",
@@ -52,8 +52,8 @@ var initialState = {
         assigneesId: [],
         add: 1,
         locations: [
-            { type: "pickup", value: "" },
-            { type: "dropoff", value: "" },
+            { type: "pickup", value: "", default: false },
+            { type: "dropoff", value: "", default: false },
         ],
         fromTo: [],
         assigneeRequiredError: "",
@@ -62,7 +62,7 @@ var initialState = {
         customers: [],
         selectedCustomer: "",
         newCustomer: "",
-        showAddCustomer: false,
+        showAddCustomer: false
     },
     addClaimForm: {
         customerId: "",
@@ -70,7 +70,7 @@ var initialState = {
         claims: {
             claimType: "",
             price: "",
-            description: "",
+            description: ""
         },
         item: "",
         price: "",
@@ -100,52 +100,48 @@ var initialState = {
         customerClaims: false,
     },
     addDepositForm: {
-        quantity: '',
-        cost: '',
+        quantity: "",
+        cost: "",
         customers: [],
         jobs: [],
-        selectedCustomer: '',
-        selectedJob: '',
-        customerIdError: '',
-        jobIdError: '',
+        selectedCustomer: "",
+        selectedJob: "",
+        customerIdError: "",
+        jobIdError: "",
         quantityError: "",
         costError: "",
-        disabled: true
-    }
-
-}
+        disabled: true,
+    },
+};
 var formsReducer = (state = initialState, action) => {
-    var { type, payload } = action
+    var { type, payload } = action;
     switch (type) {
-
         // CUSTOMER
         case SET_CUSTOMER_FORM:
-            return { ...state, addCustomerForm: payload }
+            return { ...state, addCustomerForm: payload };
         case GET_CUSTOMER_FORM:
-            return { ...payload.addCustomerForm }
+            return { ...payload.addCustomerForm };
 
         // JOB
         case SET_JOB_FORM:
-            return { ...state, addJobForm: payload }
+            return { ...state, addJobForm: payload };
         case GET_JOB_FORM:
-            return { ...payload.addJobForm }
+            return { ...payload.addJobForm };
 
         // CLAIM
         case SET_CLAIM_FORM:
-            return { ...state, addClaimForm: payload }
+            return { ...state, addClaimForm: payload };
         case GET_CLAIM_FORM:
-            return { ...payload.addClaimForm }
+            return { ...payload.addClaimForm };
 
         // BLANKET
         case SET_DEPOSIT_FORM:
-            return { ...state, addDepositForm: payload }
+            return { ...state, addDepositForm: payload };
         case GET_DEPOSIT_FORM:
-            return { ...payload.addDepositForm }
+            return { ...payload.addDepositForm };
 
         default:
-            return state
+            return state;
     }
-
-
-}
-export default formsReducer
+};
+export default formsReducer;

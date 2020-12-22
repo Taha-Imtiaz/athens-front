@@ -33,7 +33,7 @@ const CustomerDeposit = (props) => {
 
 
   const [edit, setEdit] = useState(true);
-  var [quantityValue, setQuantityValue] = useState(false);
+  var [costValue, setCostValue] = useState("");
   var [depositValue, setDepositValue] = useState("");
 
   // var [cost, setCost] = useState('')
@@ -88,14 +88,14 @@ const CustomerDeposit = (props) => {
     let newData = cloneDeep(blankets);
     if (newData[i].edit === false) {
       newData[i].quantity = value;
-      setQuantityValue(true);
+      newData[i].cost = value * 15
       setBlankets(newData);
     }
   };
   var changeCost = (e, i) => {
     var { name, value } = e.target;
     let newData = cloneDeep(blankets);
-    setQuantityValue(false);
+   
     newData[i].cost = value;
     setBlankets(newData);
   };
@@ -214,11 +214,7 @@ const CustomerDeposit = (props) => {
                                 type="number"
                                 className="form-control input-number"
                                 name="cost"
-                                value={
-                                  quantityValue === true
-                                    ? x.quantity * 15
-                                    : x.cost
-                                }
+                                value={x.cost}
                               ></TextField>
                             </span>
                           </div>

@@ -4,6 +4,7 @@ import SideBar from "../../Sidebar/SideBar";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import {
+  deleteBlanketDeposit,
   getDeposits,
   updateDeposit,
 } from "../../../Redux/Claims/claimsActions";
@@ -11,9 +12,10 @@ import { clone, cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
 import {Modal} from "react-bootstrap"
+
 
 const CustomerDeposit = (props) => {
   const routes = [
@@ -42,6 +44,7 @@ const CustomerDeposit = (props) => {
     getDeposits().then((res) => {
       setBlankets(res.data.blanketDeposit);
     });
+    
   }, []);
 
   const decrement = (x, i) => {
@@ -103,6 +106,22 @@ const CustomerDeposit = (props) => {
     setDepositValue(deposit);
     setShow(true);
   };
+var removeBlanketDeposit = (i,id) => {
+  var {showMessage} = props
+
+deleteBlanketDeposit(id).then((res) => {
+ 
+  let newData = cloneDeep(blankets);
+  newData.splice(i,1)
+  setBlankets(newData)
+  showMessage(res.data.message)
+}).catch((error) => {
+  console.log(error)
+})
+
+
+}
+  var { user } = props;
   return (
     <div>
       <div className="row">
@@ -266,7 +285,7 @@ const CustomerDeposit = (props) => {
                                   </Button>
                                 </div>
                               )}
-                              <div>
+                              <div   style={{ margin: "0 0.6rem" }}>
                                 <Button
                                 onClick={() => handleShow(x)}
                                   style={{
@@ -275,11 +294,30 @@ const CustomerDeposit = (props) => {
                                     color: "#FFF",
                                     fontFamily: "sans-serif",
                                     width: "100%",
+                                 
                                   }}
                                 >
                                   Activities
                                 </Button>
                               </div>
+                              {user?.role === "admin" && <div>
+                              <Button
+                                onClick={() => removeBlanketDeposit(i,x._id)}
+                                  style={{
+                                    background: "#00ADEE",
+                                    textTransform: "none",
+                                    color: "#FFF",
+                                    fontFamily: "sans-serif",
+                                    width: "100%",
+                                  }}
+                                >
+                                
+                                 <div>
+                                 <FontAwesomeIcon icon = {faTrash} />
+                                 </div>
+
+                                </Button>
+                              </div>}
                             </div>
                           </div>
                         </div>
@@ -367,6 +405,7 @@ const CustomerDeposit = (props) => {
 
 var actions = {
   showMessage,
+  
 };
 
 var mapStateToProps = (state) => ({

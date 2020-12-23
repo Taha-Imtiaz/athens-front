@@ -101,6 +101,14 @@
   display: grid;
   grid-template-columns: 20fr 80fr;
 }
+.location {
+  display: grid;
+  grid-template-columns: 10fr 90fr;
+  grid-template-areas: ". locationValue";
+}
+.locationValue {
+  grid-area: locationValue;
+}
 .li
 {
   border: 1px solid lightgrey;

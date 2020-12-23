@@ -31,6 +31,14 @@ class SubmitDeposit extends Component {
   // }
 
   componentDidMount = () => {
+
+   if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+    this.setState({
+      customerId:this.props.location.customerId,
+      selectedCustomer:this.props.location.customerName,
+      jobs: this.props.location.jobs
+    })
+   }
     getCustomersAndJobs().then((res) => {
       this.setState({ customers: res.data.customers })
     })

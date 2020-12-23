@@ -29,6 +29,8 @@ import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import BlanketList from "../../BlanketList/BlanketList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 
 const CustomerDetail = (props) => {
   const [show, setShow] = useState(false);
@@ -305,6 +307,8 @@ const CustomerDetail = (props) => {
                             to={{
                               pathname: "/job/create",
                               customerId: customer.email,
+                              customerName: customer.firstName,
+                              jobs: customer.jobs
                             }}
                           >
                             {" "}
@@ -574,85 +578,61 @@ const CustomerDetail = (props) => {
                                         </div>
                                       );
                                     })} */}
-                                {job.locations.map((list) =>
-                                  list.type === "pickup" ? (
-                                    <p
-                                      style={{
-                                        fontFamily:
-                                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                        margin: "0",
-                                        paddingLeft: "1rem"
-                                      }}
-                                    >
-                                      <MyLocationOutlinedIcon
-                                        color="primary"
-                                        style={{ marginRight: "0.4rem" }}
-                                      />{" "}
-                                      {list.value} <br></br>
-                                    </p>
-                                  ) : (
-                                      <p
-                                        style={{
-                                          fontFamily:
-                                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                          margin: "0",
-                                          paddingLeft: "1rem"
-                                        }}
-                                      >
-                                        <LocationOffIcon color="primary" />{" "}
-                                        {list.value}
-                                      </p>
-                                    )
-                                )}
-                                {/* {job.locations && (
-                                    <div>
-                                      <MyLocationOutlinedIcon
-                                        color="primary"
-                                        style={{ marginRight: "0.4rem" }}
-                                      />{" "}
-                                      {job.locations.from} <br></br>
-                                      {job.locations.to.map((list) => (
-                                        <p
-                                          style={{
-                                            fontFamily:
-                                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                            margin: "0",
-                                          }}
-                                        >
-                                          <LocationOffIcon color="primary" />{" "}
-                                          {list}
-                                        </p>
-                                      ))}
-                                    </div>
-                                  )} */}
-                                {/* {job.locations.map((list, i) => (
-                                    <div className="col-12" key={i}>
-                                      <span>
-                                        {" "}
-                                        <label>
-                                          {" "}
-                                          <MyLocationOutlinedIcon
-                                            color="primary"
-                                            style={{ margin: "0 0.5rem" }}
-                                          />{" "}
-                                          {list.from}{" "}
-                                        </label>
-                                        <div>
-                                          {" "}
-                                          <b>
-                                            {" "}
-                                            <LocationOffIcon
-                                              color="primary"
-                                              style={{ margin: "0 0.5rem" }}
-                                            />
-                                          </b>{" "}
-                                          {list.to}
-                                        </div>
-                                        <hr />
-                                      </span>
-                                    </div>
-                                  ))} */}
 
+{job.locations && (
+                  <div style={{ display: "flex",  paddingLeft: "1rem"}} className="row">
+                    {job.locations.map((list) =>
+                      list.type === "pickup" ? (
+                        <span
+                          className="col-4"
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            margin: "0",
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faDotCircle}
+                            style={{
+                              margin: "0 0.4rem",
+                              color: "rgb(223, 71, 89)",
+                            }}
+                          />{" "}
+                          <span style={{ color: "#a8a8a8" }}>
+                            {`Pickup :`} </span>{" "}
+                            <div className = {style.location}>
+                            <p className = {style.locationValue}  style={{ color: "#a8a8a8" }}>{list.value}</p>
+                          </div>
+                        
+                        </span>
+                      ) : (
+                        <span
+                          className="col-4"
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            margin: "0",
+                          }}
+                        >
+                          
+                          <FontAwesomeIcon
+                            icon={faDotCircle}
+                            style={{
+                              margin: "0 0.4rem",
+                              color: "rgb(223, 71, 89)",
+                            }}
+                          />{" "}
+                          <span style={{ color: "#a8a8a8" }}>
+                            {`Dropoff :`}</span>
+                            <div className = {style.location} >
+                            <p className = {style.locationValue} style={{ color: "#a8a8a8" }} >{list.value}</p>
+                          </div>
+                        </span>
+                      )
+                    )}
+                  </div>
+                )}
+                              
                                 <div>
                                   {/* <p className={style.notesd} > */}
                                   {job.note.length > 0 && (
@@ -750,7 +730,15 @@ const CustomerDetail = (props) => {
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            to="/claim/newclaim"
+                            to={{
+                              pathname: "/claim/newclaim",
+                              customerId: customer.email,
+                              customerName: customer.firstName,
+                              jobs: customer.jobs
+                            }}
+                            
+                            
+                           
                           >
                             {" "}
                             <Button
@@ -1111,7 +1099,12 @@ const CustomerDetail = (props) => {
                         >
                           <Link
                             style={{ textDecoration: "none" }}
-                            to="/claim/customerdeposit/deposit"
+                            to={{
+                              pathname: "/claim/customerdeposit/deposit",
+                              customerId: customer.email,
+                              customerName: customer.firstName,
+                              jobs: customer.jobs
+                            }}
                           >
                             {" "}
                             <Button

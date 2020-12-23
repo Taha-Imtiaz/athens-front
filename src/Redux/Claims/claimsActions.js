@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM } from "./claimsConstants";
+import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_BLANKET_DEPOSIT } from "./claimsConstants";
 import Axios from "../../utils/api";
 
 // var baseUrl = "";
@@ -127,3 +127,25 @@ export var getClaim = (claimId) => {
     }
   }
 }
+export var deleteBlanketDeposit = async (id) => {
+  
+    try {
+      var blanketToDelete = await Axios.delete(`deposit/${id}`)
+      return blanketToDelete
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  export var deleteClaim = async (id) => {
+  
+    try {
+      var claimToDelete = await Axios.delete(`claim/${id}`)
+      return claimToDelete
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+// "/claim/id"(delete)

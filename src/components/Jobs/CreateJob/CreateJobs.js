@@ -113,7 +113,13 @@ class CreateJobs extends Component {
  
 
   componentDidMount = () => {
-    if (this.props.location.customerId) {
+    if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+      console.log(this.props.location.customerId,this.props.location.customerName)
+      this.setState({
+        customerId:this.props.location.customerId,
+        selectedCustomer:this.props.location.customerName,
+        jobs: this.props.location.jobs
+      })
     }
     getCustomersAndJobs().then((res) => {
       if (res && res.status == 201) {
@@ -649,6 +655,7 @@ class CreateJobs extends Component {
 
   addNewCustomer = (e) => {
     e.preventDefault();
+    console.log(e.target.value)
     if (e.target.value) {
       this.setState({
         newCustomer: e.target.value,
@@ -665,6 +672,7 @@ class CreateJobs extends Component {
 
   getCustomerJobs = (customer) => {
     if (customer) {
+      console.log(customer)
       this.setState({
         jobs: customer.jobs,
         selectedCustomer: customer.firstName,
@@ -707,6 +715,7 @@ class CreateJobs extends Component {
   }
 
   render() {
+    console.log(this.props.location.customerName)
     return (
       <div style={{ background: "#e9ecef" }}>
         <ToastContainer position="bottom-right" />
@@ -968,7 +977,7 @@ class CreateJobs extends Component {
               )}
               <div className="row">
                 <div className="col-11"></div>
-                <div className=" form-group col-1">
+                <div className="col-1">
                   <FontAwesomeIcon
                     icon={faPlus}
                     onClick={this.addLocation}

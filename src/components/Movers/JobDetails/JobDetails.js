@@ -11,6 +11,8 @@ import { Chip } from "@material-ui/core";
 import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
 import LocationOffIcon from "@material-ui/icons/LocationOff";
 import parse from 'html-react-parser';
+import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const MoversJobDetails = (props) => {
@@ -197,13 +199,13 @@ const MoversJobDetails = (props) => {
                 {job.locations.map((list) =>
                   list.type === "pickup" ?
 
-                    <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                      <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
-                    </p>
+                    <span style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                      <FontAwesomeIcon icon = {faDotCircle} style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
+                    </span>
                     :
-                    <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                      <LocationOffIcon color="primary" />  {list.value}
-                    </p>)}
+                    <span style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
+                      <FontAwesomeIcon icon = {faDotCircle} />  {list.value}
+                    </span>)}
                 <div className="col-12">
                   {job.status == "booked" || job.status == "completed" ? (
                     <div className={`row`}>

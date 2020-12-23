@@ -11,10 +11,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
 
-import MyLocationOutlinedIcon from '@material-ui/icons/MyLocationOutlined';
-import LocationOffIcon from '@material-ui/icons/LocationOff';
+import MyLocationOutlinedIcon from "@material-ui/icons/MyLocationOutlined";
+import LocationOffIcon from "@material-ui/icons/LocationOff";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faDotCircle,
+  faLocationArrow,
+  faWifi,
+} from "@fortawesome/free-solid-svg-icons";
 
 const JobDetails = (props) => {
   const width = window.innerWidth;
@@ -58,7 +64,7 @@ const JobDetails = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   return (
     <div>
       <div>
@@ -67,9 +73,19 @@ const JobDetails = (props) => {
             {" "}
             <div className={`row ${style.toprow}`}>
               <div className="col-3 col-md-3">
-                <div className={`card ${style.cardCustom}`} style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                <div
+                  className={`card ${style.cardCustom}`}
+                  style={{
+                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  }}
+                >
                   <div className="card-body">
-                    <h5 className="card-title" style={{ fontFamily: "sans-serif" }}>Customer</h5>
+                    <h5
+                      className="card-title"
+                      style={{ fontFamily: "sans-serif" }}
+                    >
+                      Customer
+                    </h5>
                     <h6 className="card-subtitle mb-2 text-muted">
                       <Link
                         style={{ textDecoration: "none" }}
@@ -77,16 +93,12 @@ const JobDetails = (props) => {
                       >
                         {job.customer.firstName} {job.customer.lastName}
                       </Link>
-
                     </h6>
                     <p className="card-text">{job.customer.phone}</p>
                     <p className="card-text">{job.customer.email}</p>
                   </div>
                 </div>
-                <div
-                  className="row"
-                  style={{ marginTop: "2rem" }}
-                >
+                <div className="row" style={{ marginTop: "2rem" }}>
                   <div className="col-11 col-md-11">
                     <div
                       className={`card ${style.cardCustom}`}
@@ -102,21 +114,37 @@ const JobDetails = (props) => {
                       >
                         <h5
                           className={style.assigneehead}
-                          style={{ flexWrap: "nowrap", fontFamily: "sans-serif" }}
+                          style={{
+                            flexWrap: "nowrap",
+                            fontFamily: "sans-serif",
+                          }}
                         >
                           Assignees
-                      </h5>
-                        {job.assignee.length > 0 ? job.assignee.map((assignee) => (
-                          <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}
-                            className={style.assigneehead}
-                            style={{ flexWrap: "nowrap" }}
+                        </h5>
+                        {job.assignee.length > 0 ? (
+                          job.assignee.map((assignee) => (
+                            <p
+                              style={{
+                                fontFamily:
+                                  "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                              }}
+                              className={style.assigneehead}
+                              style={{ flexWrap: "nowrap" }}
+                            >
+                              <li> {assignee.name}</li>
+                            </p>
+                          ))
+                        ) : (
+                          <p
+                            style={{
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
                           >
-                            <li> {assignee.name}</li>
+                            Not Added
                           </p>
-                        )) : <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>Not Added</p>}
-                        <div>
-
-                        </div>
+                        )}
+                        <div></div>
                       </div>
                     </div>
                   </div>
@@ -140,37 +168,65 @@ const JobDetails = (props) => {
                     >
                       Activities
                     </button>
-                    <Modal dialogClassName={`${style.modal}`}
+                    <Modal
+                      dialogClassName={`${style.modal}`}
                       show={show}
                       onHide={handleClose}
                       // animation={false}
                       centered
                       scrollable
-
                     >
                       <Modal.Header closeButton>
                         <Modal.Title>Activities</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-
-                        <div className="row" style={{ fontWeight: "bold", fontFamily: "sans-serif" }}>
+                        <div
+                          className="row"
+                          style={{
+                            fontWeight: "bold",
+                            fontFamily: "sans-serif",
+                          }}
+                        >
                           <div className={`col-2`}>Performer</div>
                           <div className={`col-6`}>Message</div>
                           <div className={`col-4`}>Timestamp</div>
                         </div>
 
-                        {job.activities.map((activitiy) => <div className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                          <div className={`col-2 `}> <p>{activitiy.performer.name}</p></div>
-                          <div className={`col-6`}>
-                            {activitiy.messageLogs.map(x => <p>* {x}</p>)}
+                        {job.activities.map((activitiy) => (
+                          <div
+                            className="row"
+                            style={{
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
+                          >
+                            <div className={`col-2 `}>
+                              {" "}
+                              <p>{activitiy.performer.name}</p>
+                            </div>
+                            <div className={`col-6`}>
+                              {activitiy.messageLogs.map((x) => (
+                                <p>* {x}</p>
+                              ))}
+                            </div>
+                            <div className={`col-4 `}>
+                              <p> {activitiy.timeStamp.split("G")[0]}</p>
+                            </div>
                           </div>
-                          <div className={`col-4 `}><p>  {activitiy.timeStamp.split("G")[0]}</p></div>
-                        </div>)}
+                        ))}
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }} onClick={handleClose}>
+                        <Button
+                          style={{
+                            background: "#00ADEE",
+                            textTransform: "none",
+                            color: "#FFF",
+                            fontFamily: "sans-serif",
+                          }}
+                          onClick={handleClose}
+                        >
                           Close
-                            </Button>
+                        </Button>
                         {/* <Button variant="primary">Add Activity</Button> */}
                       </Modal.Footer>
                     </Modal>
@@ -184,17 +240,24 @@ const JobDetails = (props) => {
                     <h3>{job.title}</h3>
 
                     <div>
-
-
-
-
-                      <label style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}
-                      // className={style.para}
-                      // style={{ transform: "translateY(-2rem)" }}
+                      <label
+                        style={{
+                          fontFamily:
+                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                        // className={style.para}
+                        // style={{ transform: "translateY(-2rem)" }}
                       >
-                        {job.dates.map((x, i) => i === 0 ? x : <span> | {x} </span>)}
+                        {job.dates.map((x, i) =>
+                          i === 0 ? x : <span> | {x} </span>
+                        )}
                       </label>
-                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+                      <p
+                        style={{
+                          fontFamily:
+                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                      >
                         {job.services.map((service) => (
                           <Chip
                             variant="outlined"
@@ -205,17 +268,16 @@ const JobDetails = (props) => {
                             style={{ margin: "0.2rem" }}
                           />
                         ))}
-
                       </p>
 
                       {/* <h3 className={style.jobHead}>Job Description</h3> */}
-
-
-
                     </div>
                   </div>
                   <div className="col-2">
-                    <h6 style={{ fontFamily: "sans-serif" }}> Job Id: {job.jobId}</h6>
+                    <h6 style={{ fontFamily: "sans-serif" }}>
+                      {" "}
+                      Job Id: {job.jobId}
+                    </h6>
                   </div>
                   <div className="col-2">
                     <Chip
@@ -227,8 +289,13 @@ const JobDetails = (props) => {
                     />
                   </div>
                 </div>
-                <div className="row" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-                  <div className="col-12" >
+                <div 
+                  className="row"
+                  style={{
+                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  }}
+                >
+                  <div className="col-12" style={{margin:"1rem 0"}}>
                     {/* <p className={style.para} style={{whiteSpace:"pre-line"}}> {job.description}</p> */}
                     {parse(job.description)}
                   </div>
@@ -238,61 +305,120 @@ const JobDetails = (props) => {
                   <div>
                     <h5 className={style.jobHead}>Notes</h5>
                     {job.note.map((x) => (
-                      <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }} className={style.para}>{x.text}</p>
+                      <p
+                        style={{
+                          fontFamily:
+                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                        }}
+                        className={style.para}
+                      >
+                        {x.text}
+                      </p>
                     ))}
                   </div>
                 )}
 
-                {job.locations &&
-
-                  <div>
-
+                {job.locations && (
+                  <div style={{ display: "flex" }} className="row">
                     {job.locations.map((list) =>
-                      list.type === "pickup" ?
-
-                        <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                          <MyLocationOutlinedIcon color="primary" style={{ marginRight: "0.4rem" }} /> {list.value} <br></br>
-                        </p>
-                        :
-                        <p style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif", margin: "0" }}>
-                          <LocationOffIcon color="primary" />  {list.value}
-                        </p>)}
-
+                      list.type === "pickup" ? (
+                        <span
+                          className="col-4"
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            margin: "0",
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faDotCircle}
+                            style={{
+                              margin: "0 0.4rem",
+                              color: "rgb(223, 71, 89)",
+                            }}
+                          />{" "}
+                          <span style={{ color: "#a8a8a8" }}>
+                            {`Pickup :`} </span>{" "}
+                            <div className = {style.location}>
+                            <p className = {style.locationValue}  style={{ color: "#a8a8a8" }}>{list.value}</p>
+                          </div>
+                        
+                        </span>
+                      ) : (
+                        <span
+                          className="col-4"
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            margin: "0",
+                          }}
+                        >
+                          
+                          <FontAwesomeIcon
+                            icon={faDotCircle}
+                            style={{
+                              margin: "0 0.4rem",
+                              color: "rgb(223, 71, 89)",
+                            }}
+                          />{" "}
+                          <span style={{ color: "#a8a8a8" }}>
+                            {`Dropoff :`}</span>
+                            <div className = {style.location} >
+                            <p className = {style.locationValue} style={{ color: "#a8a8a8" }} >{list.value}</p>
+                          </div>
+                        </span>
+                      )
+                    )}
                   </div>
-                }
+                )}
 
-                <div >
+                <div>
                   <Link
                     style={{ textDecoration: "none" }}
                     to={`/job/edit/${jobId}`}
                   >
                     <Button
                       type="button"
-
-                      style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", float: "right", margin: "0 0.4rem" }}
+                      style={{
+                        background: "#00ADEE",
+                        textTransform: "none",
+                        color: "#FFF",
+                        fontFamily: "sans-serif",
+                        float: "right",
+                        margin: "0 0.4rem",
+                      }}
                     >
                       Edit
                     </Button>
                   </Link>
-                  {job.status != 'booked' ? <Button
-                    onClick={() => setShowBooking(true)}
-                    type="button"
-                    style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", float: "right" }}
-                  >
-                    Book
-                    </Button> : null}
+                  {job.status != "booked" ? (
+                    <Button
+                      onClick={() => setShowBooking(true)}
+                      type="button"
+                      style={{
+                        background: "#00ADEE",
+                        textTransform: "none",
+                        color: "#FFF",
+                        fontFamily: "sans-serif",
+                        float: "right",
+                      }}
+                    >
+                      Book
+                    </Button>
+                  ) : null}
                 </div>
               </div>
             </div>
           </>
         ) : null}
       </div>
-      <Modal dialogClassName={`${style.modal}`}
+      <Modal
+        dialogClassName={`${style.modal}`}
         show={showBooking}
         onHide={() => setShowBooking(false)}
         // animation={false}
         centered
-      // backdrop={false}
+        // backdrop={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Booking Confirmation</Modal.Title>

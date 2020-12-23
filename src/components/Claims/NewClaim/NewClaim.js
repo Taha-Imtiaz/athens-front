@@ -64,6 +64,14 @@ class NewClaim extends Component {
   };
 
   componentDidMount = () => {
+    if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+      // console.log(this.props.location.customerId,this.props.location.customerName)
+      this.setState({
+        customerId:this.props.location.customerId,
+        selectedCustomer:this.props.location.customerName,
+        jobs: this.props.location.jobs
+      })
+    }
     getCustomersAndJobs().then((res) => {
       this.setState({ customers: res.data.customers });
     });

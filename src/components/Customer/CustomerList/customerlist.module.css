@@ -56,11 +56,15 @@
 .list {
     background: rgba(0,0,0,.03);
     border: 1px solid rgba(0,0,0,0.125);
+    font-size: 0.88rem !important;
     /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 .list:hover {
     background-color:  #00ADEE;
     color: #FFF;
+}
+.list:hover .item {
+    color: #fff;
 }
 ul li:nth-child(even) {
     /* background-color: black;

@@ -4,14 +4,15 @@ import SearchBar from "../../SearchBar/SearchBar";
 // import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllCustomers } from "../../../Redux/Customer/customerActions";
+import { deleteCustomer, getAllCustomers } from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../Pagination/Pagination";
 import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faBook } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faBook, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from '@material-ui/core/Button';
-import { setRef } from "@material-ui/core";
+// import { setRef } from "@material-ui/core";
+
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
@@ -112,7 +113,7 @@ const CustomerList = (props) => {
 
   var { customers } = props;
 
-  var totalCount = customers ?.data.User.total;
+  var totalCount = customers?.data.User.total;
 
   if (customers) {
     var {
@@ -122,7 +123,10 @@ const CustomerList = (props) => {
     } = customers;
     var customerId = docs.map((doc) => doc._id);
   }
-
+var removeCustomer = (i, id) => {
+  var {deleteCustomer} = props
+  deleteCustomer(id, currentPage)
+}
   var handleSort = () => {
     setSortByName(true)
     setRecentlyAdded(false)
@@ -214,7 +218,7 @@ const CustomerList = (props) => {
 
 
   };
-
+console.log(props.customers)
   return (
     <div>
       <div>
@@ -266,65 +270,89 @@ const CustomerList = (props) => {
                 className="row"
                 style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
               >
-                <div className="col-md-3">Name</div>
-                <div className="col-md-2">Phone</div>
+               <div className="col-11">
+               <div className="row">
+               <div className="col-3">Name</div>
+                <div className="col-2">Phone</div>
 
-                <div className="col-md-3">Email</div>
+                <div className="col-3">Email</div>
               
-                <div className="col-md-2">Jobs</div>
-                <div className="col-md-2">Active Claims</div>
+                <div className="col-2">Jobs</div>
+                <div className="col-2">Active Claims</div>
+               </div>
+               </div>
+               {props.user?.role === "admin" && (
+                  <div className="col-1">Actions</div>
+                )}
               </div>
               <div>
                 <ul className="list-group">
                   <div className={`${style.li}`}>
                     {docs.map((doc, i) => {
                       return (
-                        <Link
-                          key={i}
-                          style={{ textDecoration: "none", color: "black" }}
-                          to={`/customer/detail/${doc._id}`}>
+                        
                           <li
                             className={`checkbox list-group-item ${style.list}`}
                             key={doc._id}
                           >
-                            <div className="row justify-content-around">
-                              <div
-                                className={`col-md-3`}
-                              >
+                            <div className="row">
+                              <div className="col-11">
+                                <Link
+                          key={i}
+                          style={{ textDecoration: "none", color: "black" }}
+                          to={`/customer/detail/${doc._id}`}>
+                                <div className="row">
+                                <div className={`col-3 ${style.item}`}>
                                 <span>
                                   {doc.firstName} {doc.lastName}
                                 </span>
                               </div>
 
-                              <div
-                                className={`col-md-2 `}
-                              >
+                              <div className={`col-2 ${style.item}`}>
                                 <p>{doc.phone}</p>
                               </div>
-                              <div
-                                className={`col-md-3`}
-                              >
+                              <div className={`col-3 ${style.item}`}>
                                 <p>{doc.email}</p>
                               </div>
-                              <div
-                                className={`col-md-2`}
-                              >
+                              <div className={`col-2 ${style.item}`}>
+                              
+                               
                                 <div>
                                   {doc.jobs.length}
                                 </div>
                               </div>
-                              <div
-                                className={`col-md-2`}
-                              >
-                                <div>
+                              <div className={`col-2 ${style.item}`} >
+                              <div>
                                   {doc.claim?.length > 0 ? <div>
                                     {doc.claim?.filter((claim) => claim.status === "open").length}
                                   </div> : 0 }
                                 </div>
+                                </div>
                               </div>
+                             
+                               </Link>
+                               
+                              </div>
+                              {props.user?.role === "admin" && (
+                                <div className="col-1">
+                                  <Button
+                                    onClick={() => removeCustomer(i, doc._id)}
+                                    style={{
+                                      background: "#00ADEE",
+                                      textTransform: "none",
+                                      color: "#FFF",
+                                      fontFamily: "sans-serif",
+                                      width: "100%",
+                                    }}
+                                  >
+                                   Delete
+                                  </Button>
+                                </div>
+                               
+                              )} 
                             </div>
                           </li>
-                        </Link>
+                        
                       );
                     })}
                   </div>
@@ -355,11 +383,15 @@ const CustomerList = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  customers: state.customers.getCustomers,
+ 
+  customers: state?.customers?.data,
+
+  user: state.users.user,
 });
 
 var actions = {
   getAllCustomers,
+  deleteCustomer
 };
 
 export default connect(mapStateToProps, actions)(CustomerList);

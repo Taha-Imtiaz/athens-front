@@ -1,6 +1,7 @@
 // import Axios from "axios"
-import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_BLANKET_DEPOSIT } from "./claimsConstants";
+import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_BLANKET_DEPOSIT, DELETE_CLAIM } from "./claimsConstants";
 import Axios from "../../utils/api";
+import { showMessage } from "../Common/commonActions";
 
 // var baseUrl = "";
 
@@ -17,7 +18,7 @@ export var getAllClaims = (data) => {
     dispatch({
       type: GET_CLAIMS,
       payload: {
-        claims,
+        claims:claims.data.claims
       },
     });
   };
@@ -137,14 +138,29 @@ export var deleteBlanketDeposit = async (id) => {
     }
   }
 
-  export var deleteClaim = async (id) => {
-  
-    try {
-      var claimToDelete = await Axios.delete(`claim/${id}`)
-      return claimToDelete
-    } catch (error) {
+  export var deleteClaim = (id, currentPage) => {
+    var body = {
+      page:currentPage
+    }
+  return async (dispatch) => {
+      try {
+      var getAllClaimsExceptDeleteOne = await Axios.delete(`claim/${id}`, body)
+      if (getAllClaimsExceptDeleteOne.data.status == 200) {
+        dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
+      dispatch({
+        type: DELETE_CLAIM,
+        payload:{
+          getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.claims
+        }
+      })
+    }
+      
+    } 
+    catch (error) {
       console.log(error)
     }
+  }
+  
   }
 
 

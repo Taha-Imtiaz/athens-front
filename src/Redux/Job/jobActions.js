@@ -1,5 +1,5 @@
 // import Axios from "axios";
-import { GET_JOBS, GET_JOB, FILTER_JOB } from "./jobConstants";
+import { GET_JOBS, GET_JOB, FILTER_JOB, DELETE_JOB } from "./jobConstants";
 import Axios from "../../utils/api";
 import {
   showLoader,
@@ -139,3 +139,28 @@ export var confirmJob = async (obj) => {
 //     console.log(error)
 //   }
 // }
+export var deleteJob =  (id, currentPage) => {
+  return async (dispatch) => {
+    var body = {
+      page:currentPage
+    }
+    console.log(`job/${id}`, body)
+    try {
+  var getAllJobsExceptDeleteOne = await Axios.delete(`job/${id}`, body)
+  console.log(getAllJobsExceptDeleteOne)
+  if (getAllJobsExceptDeleteOne.data.status == 200) {
+    dispatch(showMessage(getAllJobsExceptDeleteOne.data.message))
+    dispatch({
+    type: DELETE_JOB,
+    payload:{
+      getAllJobsExceptDeleteOne: getAllJobsExceptDeleteOne
+    }
+  })
+  }
+  
+ } catch (error) {
+   console.log(error)
+ }
+  }
+ 
+}

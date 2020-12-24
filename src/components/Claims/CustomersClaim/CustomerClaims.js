@@ -34,8 +34,8 @@ const CustomerClaims = (props) => {
 
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var totalCount = claims.claims?.data?.claims?.total;
-
+  var totalCount = claims.claims?.total;
+console.log(totalCount)
   useEffect(() => {
     var { getAllClaims, claims } = props;
     var claimsObj = {
@@ -47,17 +47,18 @@ const CustomerClaims = (props) => {
     
   
   }, []);
+  var data = [];
   useEffect(() => {
     var { claims } = props;
     if (claims.claims) {
       console.log(claims.claims)
-      data = claims.claims.data.claims;
+      data = claims.claims;
       console.log(data)
-      setClaimData(data.docs)
+      
     }
   },[claims])
   var { claims } = props;
-  var data = [];
+  
   
   const routes = [
     {
@@ -104,25 +105,26 @@ const CustomerClaims = (props) => {
   };
 
   var removeClaim = (i, id) => {
-    var { showMessage } = props;
-    console.log(claimData);
-    deleteClaim(id)
-      .then((res) => {
-        let newData = cloneDeep(claimData);
-        console.log(claimData);
-        newData.splice(i, 1);
-        setClaimData(newData);
-        showMessage(res.data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    var { deleteClaim } = props;
+   
+    // console.log(claimData);
+    deleteClaim(id, currentPage)
+      // .then((res) => {
+      //   let newData = cloneDeep(claimData);
+      //   console.log(claimData);
+      //   newData.splice(i, 1);
+      //   setClaimData(newData);
+      //   showMessage(res.data.message);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   };
-  var { users } = props;
+  var { users,claims } = props;
   
   return (
     <div style={{ overflowX: "hidden" }}>
-      {claimData && (
+      {claims && (
         <div>
           <div className={`row ${style.toprow}`}>
             <div className="col-3">
@@ -189,7 +191,7 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           </div>
-          {claimData && claimData.length > 0 ? (
+          {claims?.claims?.docs.length > 0? (
             <div className={style.jumbotron}>
               <div
                 className={`row`}
@@ -199,24 +201,28 @@ const CustomerClaims = (props) => {
                   fontFamily: "sans-serif",
                 }}
               >
-                <div className="col-3">Name</div>
-                <div className="col-2">Status</div>
+                <div className="col-11">
+                  <div className="row">
+                  <div className="col-3">Name</div>
+                <div className="col-3">Status</div>
                 <div className="col-4"> Waiting To</div>
                 <div className="col-2">Last Update</div>
+                  </div>
+                </div>
                 {users?.role === "admin" && (
                   <div className="col-1">Actions</div>
                 )}
               </div>
               <ul className="list-group">
                 <div className={`${style.li} `}>
-                  {claimData &&
-                    claimData.map((x, i) => {
+                  { claims?.claims?.docs &&
+                    claims?.claims?.docs.map((x, i) => {
                       return (
                        
                           
                             <div  >
                                <li 
-                            className={`checkbox list-group-item ${style.list} `}
+                            className={`checkbox list-group-item ${style.list}  `}
                             key={x._id}
                           > 
                           <div className="row">
@@ -232,30 +238,20 @@ const CustomerClaims = (props) => {
                                     color: "black",
                                   }}
                                 > <div className="row">
-                                  <div className={`col-3`}>
+                                  <div className={`col-3 ${style.item}`}>
                                     <h6>
                                       {x.customer.firstName}{" "}
                                       {x.customer.lastName}
                                     </h6>
                                   </div>
-                                  <div
-                                    className={`col-2 `}
-                                    // style={{
-                                    //   transform: "translate3d(30rem, -3.5rem, 0)",
-                                    // }}
-                                  >
+                                  <div  className={`col-3  ${style.item}`}>
                                     {x.status.toLocaleUpperCase()}
                                   </div>
-                                  <div className={`col-4 `}>
+                                  <div className={`col-4  ${style.item}`}>
                                     <h6>{x.waitTo}</h6>
                                   </div>
 
-                                  <div
-                                    className={`col-2 `}
-                                    // style={{
-                                    //   transform: "translate3d(45rem, -5rem, 0)",
-                                    // }}
-                                  >
+                                  <div className={`col-2  ${style.item}`}>
                                     {x.updates.length > 0 ? (
                                       <div>
                                         {
@@ -286,9 +282,7 @@ const CustomerClaims = (props) => {
                                       width: "100%",
                                     }}
                                   >
-                                    <div>
-                                      <FontAwesomeIcon icon={faTrash} />
-                                    </div>
+                                   Delete
                                   </Button>
                                 </div>
                                
@@ -329,6 +323,7 @@ var mapStateToProps = (state) => ({
 var actions = {
   getAllClaims,
   showMessage,
+  deleteClaim
 };
 
 export default connect(mapStateToProps, actions)(CustomerClaims);

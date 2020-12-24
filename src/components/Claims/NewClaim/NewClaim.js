@@ -67,8 +67,8 @@ class NewClaim extends Component {
     if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
       // console.log(this.props.location.customerId,this.props.location.customerName)
       this.setState({
-        customerId:this.props.location.customerId,
-        selectedCustomer:this.props.location.customerName,
+        customerId: this.props.location.customerId,
+        selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs
       })
     }
@@ -211,19 +211,19 @@ class NewClaim extends Component {
       toDate: date,
     });
   };
-  
+
   getCustomerJobs = (customer) => {
     if (customer) {
       if (customer.claim.length > 0) {
         this.setState({
           customerClaims: true,
           showClaimsDetails: customer.claim,
-          customerName: customer.firstName
+          customerName: customer.firstName + ' ' + customer.lastName
         });
       }
       this.setState({
         jobs: customer.jobs,
-        selectedCustomer: customer.firstName,
+        selectedCustomer: customer.firstName + ' ' + customer.lastName,
         selectedJob: "",
         customerIdError: "",
       });
@@ -261,11 +261,11 @@ class NewClaim extends Component {
                 options={this.state.customers}
                 autoHighlight
                 getOptionLabel={(option) =>
-                  option.firstName ? option.firstName : option
+                  option.firstName ? option.firstName + ' ' + option.lastName : option
                 }
                 renderOption={(option) => (
                   <React.Fragment>
-                    {option.firstName} ({option.email})
+                    {option.firstName} {option.lastName} ({option.email})
                   </React.Fragment>
                 )}
                 renderInput={(params) => (

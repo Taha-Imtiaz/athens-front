@@ -32,13 +32,13 @@ class SubmitDeposit extends Component {
 
   componentDidMount = () => {
 
-   if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
-    this.setState({
-      customerId:this.props.location.customerId,
-      selectedCustomer:this.props.location.customerName,
-      jobs: this.props.location.jobs
-    })
-   }
+    if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+      this.setState({
+        customerId: this.props.location.customerId,
+        selectedCustomer: this.props.location.customerName,
+        jobs: this.props.location.jobs
+      })
+    }
     getCustomersAndJobs().then((res) => {
       this.setState({ customers: res.data.customers })
     })
@@ -123,7 +123,7 @@ class SubmitDeposit extends Component {
 
   getCustomerJobs = customer => {
     if (customer) {
-      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName, selectedJob: '', customerIdError: '' })
+      this.setState({ jobs: customer.jobs, selectedCustomer: customer.firstName + ' ' + customer.lastName, selectedJob: '', customerIdError: '' })
     } else {
       this.setState({ jobs: [], selectedCustomer: '', selectedJob: '' })
     }
@@ -151,10 +151,10 @@ class SubmitDeposit extends Component {
               size="small"
               options={this.state.customers}
               autoHighlight
-              getOptionLabel={(option) => option.firstName ? option.firstName : option}
+              getOptionLabel={(option) => option.firstName ? option.firstName + ' ' + option.lastName : option}
               renderOption={(option) => (
                 <React.Fragment>
-                  {option.firstName} ({option.email})
+                  {option.firstName} {option.lastName} ({option.email})
             </React.Fragment>
               )}
               renderInput={(params) => (

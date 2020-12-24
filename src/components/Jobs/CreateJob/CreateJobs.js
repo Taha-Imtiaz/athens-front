@@ -99,7 +99,7 @@ class CreateJobs extends Component {
     selectedCustomer: "",
     newCustomer: "",
     showAddCustomer: false,
-    serviceOptions : [
+    serviceOptions: [
       { id: 1, name: "Packaging" },
       { id: 2, name: "Loading" },
       { id: 3, name: "Unloading" },
@@ -110,14 +110,14 @@ class CreateJobs extends Component {
 
   };
 
- 
+
 
   componentDidMount = () => {
     if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
-      console.log(this.props.location.customerId,this.props.location.customerName)
+      console.log(this.props.location.customerId, this.props.location.customerName)
       this.setState({
-        customerId:this.props.location.customerId,
-        selectedCustomer:this.props.location.customerName,
+        customerId: this.props.location.customerId,
+        selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs
       })
     }
@@ -174,7 +174,7 @@ class CreateJobs extends Component {
       anchorEl: null,
     });
   };
-  handleDateChange = (date) => {};
+  handleDateChange = (date) => { };
 
   addLocation = () => {
     if (
@@ -223,13 +223,13 @@ class CreateJobs extends Component {
     }));
     console.log(this.state)
   };
-  changeCheckBoxState = (e,i) => {
+  changeCheckBoxState = (e, i) => {
     console.log(this.state.locations, i);
     e.stopPropagation()
     var prevState = cloneDeep(this.state.locations);
     prevState[i].default = !prevState[i].default;
     console.log(prevState[i].type)
-    if(prevState[i].default) {
+    if (prevState[i].default) {
       // console.log(prevState[i].type)
       prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
     } else {
@@ -317,15 +317,15 @@ class CreateJobs extends Component {
                 this.state.locations[i].type == "pickup"
                   ? "Enter Pickup Point"
                   : this.state.locations[i].type == "dropoff"
-                  ? "Enter DropOff Point"
-                  : "Choose Type"
+                    ? "Enter DropOff Point"
+                    : "Choose Type"
               }
               disabled={(this.state.locations[i].type ? false : true) || this.state.locations[i].default}
               // label={'Pickup / dropoff point'}
               name={this.state.locations[i].type}
-              value={this.state.locations[i].type === "pickup"  && this.state.locations[i].default ? "Unload only" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Load only/IA": this.state.locations[i].value}
+              value={this.state.locations[i].type === "pickup" && this.state.locations[i].default ? "Unload only" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Load only/IA" : this.state.locations[i].value}
               onChange={(e) => this.hanldeLocationInput(i, e)}
-              // error={this.state.locationtoError ? true : false}
+            // error={this.state.locationtoError ? true : false}
             />
           </div>
           {this.state.locations[i].type == "pickup" ? (
@@ -334,7 +334,7 @@ class CreateJobs extends Component {
               style={{
                 display: "flex",
                 alignItems: "center",
-                
+
               }}
             >
               <FormControlLabel
@@ -342,7 +342,7 @@ class CreateJobs extends Component {
                   <Checkbox
                     checked={this.state.locations[i].default}
                     onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={(e) => this.changeCheckBoxState(e,i)}
+                    onClick={(e) => this.changeCheckBoxState(e, i)}
                     name="checkboxStates"
                     color="#00ADEE"
                   />
@@ -356,7 +356,7 @@ class CreateJobs extends Component {
               style={{
                 display: "flex",
                 alignItems: "center",
-             
+
               }}
             >
               <FormControlLabel
@@ -364,7 +364,7 @@ class CreateJobs extends Component {
                   <Checkbox
                     checked={this.state.locations[i].default}
                     onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={(e) => this.changeCheckBoxState(e,i)}
+                    onClick={(e) => this.changeCheckBoxState(e, i)}
                     name="checkboxStates"
                     color="#00ADEE"
                   />
@@ -373,16 +373,16 @@ class CreateJobs extends Component {
               />
             </div>
           ) : (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexWrap: "no-wrap",
-              }}
-            ></div>
-          )}
+                <div
+                  className="col-3"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexWrap: "no-wrap",
+                  }}
+                ></div>
+              )}
           <div className="col-1">
             <FontAwesomeIcon
               icon={faTrash}
@@ -675,7 +675,7 @@ class CreateJobs extends Component {
       console.log(customer)
       this.setState({
         jobs: customer.jobs,
-        selectedCustomer: customer.firstName,
+        selectedCustomer: customer.firstName + ' ' + customer.lastName,
         customerId: customer.email,
         customerIdError: "",
       });
@@ -688,6 +688,7 @@ class CreateJobs extends Component {
     let newCustomer = {
       email: e.data.data.email,
       firstName: e.data.data.firstName,
+      lastName: e.data.data.lastName,
       jobs: [],
       _id: e.data.data._id,
     };
@@ -696,7 +697,7 @@ class CreateJobs extends Component {
     this.setState({
       showAddCustomer: false,
       customers,
-      selectedCustomer: newCustomer.firstName,
+      selectedCustomer: newCustomer.firstName + ' ' + newCustomer.lastName,
       customerId: newCustomer.email,
     });
   };
@@ -723,7 +724,7 @@ class CreateJobs extends Component {
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
-             
+
               {this.state.customers.length > 0 ? (
                 <Autocomplete
                   noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
@@ -744,11 +745,11 @@ class CreateJobs extends Component {
                   // freeSolo
                   autoHighlight
                   getOptionLabel={(option) =>
-                    option.firstName ? option.firstName : option
+                    option.firstName ? option.firstName + " " + option.lastName : option
                   }
                   renderOption={(option) => (
                     <React.Fragment>
-                      {option.firstName} ({option.email})
+                      {option.firstName} {option.lastName} ({option.email})
                     </React.Fragment>
                   )}
                   renderInput={(params) => (
@@ -823,7 +824,7 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="form-group"  style={{ margin: "1rem 2rem", width: "90%",borderRadius: "4px",border:"1px solid rgba(0, 0, 0, 0.3)"}}>
+              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%", borderRadius: "4px", border: "1px solid rgba(0, 0, 0, 0.3)" }}>
                 {/* <TextareaAutosize
                   className={style.textarea}
                   style={{ margin: "1rem 2rem", width: "90%" }}
@@ -835,12 +836,12 @@ class CreateJobs extends Component {
                 ></TextareaAutosize> */}
                 <Editor
                   editorState={this.state.editorState}
-                
+
                   toolbarClassName="toolbarClassName"
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
-               style={{}}
+                  style={{}}
                 />
               </div>
 
@@ -858,7 +859,7 @@ class CreateJobs extends Component {
                   limitTags={10}
                   id="multiple-limit-tags"
                   options={
-                    this.state.serviceOptions && this.state.serviceOptions 
+                    this.state.serviceOptions && this.state.serviceOptions
                   }
                   getOptionLabel={(option) =>
                     option.name ? option.name : option
@@ -970,7 +971,7 @@ class CreateJobs extends Component {
 
               {this.state.locations && (
                 <div>
-                  {this.state?.locations?.map((location, i) =>
+                  {this.state ?.locations ?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
@@ -1011,7 +1012,7 @@ class CreateJobs extends Component {
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-          // backdrop={false}
+        // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>

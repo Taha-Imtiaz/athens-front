@@ -307,7 +307,7 @@ const CustomerDetail = (props) => {
                             to={{
                               pathname: "/job/create",
                               customerId: customer.email,
-                              customerName: customer.firstName,
+                              customerName: customer.firstName + ' ' + customer.lastName,
                               jobs: customer.jobs
                             }}
                           >
@@ -733,7 +733,7 @@ const CustomerDetail = (props) => {
                             to={{
                               pathname: "/claim/newclaim",
                               customerId: customer.email,
-                              customerName: customer.firstName,
+                              customerName: customer.firstName + ' ' + customer.lastName,
                               jobs: customer.jobs
                             }}
                             
@@ -1102,7 +1102,7 @@ const CustomerDetail = (props) => {
                             to={{
                               pathname: "/claim/customerdeposit/deposit",
                               customerId: customer.email,
-                              customerName: customer.firstName,
+                              customerName: customer.firstName + ' ' + customer.lastName,
                               jobs: customer.jobs
                             }}
                           >

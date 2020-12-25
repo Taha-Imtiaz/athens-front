@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_BLANKET_DEPOSIT, DELETE_CLAIM } from "./claimsConstants";
+import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_CLAIM } from "./claimsConstants";
 import Axios from "../../utils/api";
 import { showMessage } from "../Common/commonActions";
 
@@ -54,15 +54,15 @@ export var addClaim = async (data) => {
   // }
 };
 
-export var getDeposits = async (data) => {
-  // return async (dispatch) => {
-  try {
-    var deposits = await Axios.get(`deposit`);
-    return deposits;
-  } catch (error) {
-    console.log(error);
-  }
-
+// export var getDeposits = async (page) => {
+//   // return async (dispatch) => {
+//   try {
+//     var deposits = await Axios.post(`deposit/all`, page);
+//     return deposits;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
   // dispatch({
   //     type: GET_CLAIMS_BY_ID,
   //     payload: {
@@ -70,7 +70,7 @@ export var getDeposits = async (data) => {
   //     }
   // })
   // }
-};
+;
 
 export var updateClaim = async (data) => {
   try {
@@ -81,17 +81,6 @@ export var updateClaim = async (data) => {
   }
 };
 
-export var addDeposit = async (data) => {
-  try {
-    var blanket = await Axios.post(
-      `deposit`,
-      data
-    );
-    return blanket;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export var updateDeposit = async (data) => {
   try {
@@ -128,15 +117,15 @@ export var getClaim = (claimId) => {
     }
   }
 }
-export var deleteBlanketDeposit = async (id) => {
+// export var deleteBlanketDeposit = async (id) => {
   
-    try {
-      var blanketToDelete = await Axios.delete(`deposit/${id}`)
-      return blanketToDelete
-    } catch (error) {
-      console.log(error)
-    }
-  }
+//     try {
+//       var blanketToDelete = await Axios.delete(`deposit/${id}`)
+//       return blanketToDelete
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
 
   export var deleteClaim = (id, currentPage) => {
     var body = {

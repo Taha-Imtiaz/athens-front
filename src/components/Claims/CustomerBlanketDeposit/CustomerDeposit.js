@@ -3,19 +3,20 @@ import style from "./CustomerDeposit.module.css";
 import SideBar from "../../Sidebar/SideBar";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {
-  deleteBlanketDeposit,
-  getDeposits,
-  updateDeposit,
-} from "../../../Redux/Claims/claimsActions";
+// import { updateDeposit } from "../../../Redux/Claims/claimsActions";
 import { clone, cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
-import {Modal} from "react-bootstrap"
-
+import { Modal } from "react-bootstrap";
+import Pagination from "../../Pagination/Pagination";
+import {
+  deleteBlanketDeposit,
+  getDeposits,
+  updateDeposit,
+} from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDeposit = (props) => {
   const routes = [
@@ -30,22 +31,34 @@ const CustomerDeposit = (props) => {
       icon: <i className="fa fa-bed"></i>,
     },
   ];
-  const [blankets, setBlankets] = useState([]);
-  const [show, setShow] = useState(false);
+  var { blanketDeposit } = props;
 
+  const [show, setShow] = useState(false);
 
   const [edit, setEdit] = useState(true);
   var [costValue, setCostValue] = useState("");
   var [depositValue, setDepositValue] = useState("");
+  const [blankets, setBlankets] = useState("");
+  var [pageSize, setPageSize] = useState(10);
+  var [currentPage, setCurrentPage] = useState(1);
+  var [modalIndex, setModalIndex] = useState("");
+  var [deleteModal, setDeleteModal] = useState(false);
 
+  var totalCount = blanketDeposit?.data?.blanketDeposit?.total;
+  console.log(totalCount);
   // var [cost, setCost] = useState('')
 
   useEffect(() => {
-    getDeposits().then((res) => {
-      setBlankets(res.data.blanketDeposit);
-    });
-    
+    var { getDeposits } = props;
+    getDeposits(currentPage);
   }, []);
+
+  useEffect(() => {
+    var { blanketDeposit } = props;
+    if (blanketDeposit) {
+      setBlankets(blanketDeposit?.data?.blanketDeposit?.docs);
+    }
+  }, [blanketDeposit]);
 
   const decrement = (x, i) => {
     let newData = cloneDeep(blankets);
@@ -59,8 +72,10 @@ const CustomerDeposit = (props) => {
     setBlankets(newData);
   };
 
-  const closeEdit = (i, type) => {
+  const closeEdit = (id, i, type) => {
+    var { updateDeposit } = props;
     let newData = cloneDeep(blankets);
+    console.log(id);
     newData[i].edit = !newData[i].edit;
     setBlankets(newData);
     // Call Api
@@ -71,34 +86,42 @@ const CustomerDeposit = (props) => {
         userId: user._id,
         quantity: newData[i].quantity,
         cost: newData[i].cost,
+        page: currentPage,
       };
-      updateDeposit(obj)
-        .then((res) => {
-          var { showMessage } = props;
-          showMessage(res.data.message);
-        })
-        .catch((err) => console.log(err));
+      updateDeposit(obj);
+      // .then((res) => {
+      //   var { showMessage } = props;
+      //   showMessage(res.data.message);
+      // })
+      // .catch((err) => console.log(err));
     }
   };
-  var makeInputFieldEditible = (e, i) => {
+  var makeInputFieldEditible = (id, e, i) => {
+    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
+    console.log(newData, id);
     newData.map((data) => (data.edit = true));
     newData[i].edit = !newData[i].edit;
     setBlankets(newData);
   };
-  var handleInput = (e, i) => {
+  var handleInput = (id, e, i) => {
     var { name, value } = e.target;
+    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
+    console.log(newData, id);
+
     if (newData[i].edit === false) {
       newData[i].quantity = value;
-      newData[i].cost = value * 15
+      newData[i].cost = value * 15;
       setBlankets(newData);
     }
   };
-  var changeCost = (e, i) => {
+  var changeCost = (id, e, i) => {
     var { name, value } = e.target;
+    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
-   
+    console.log(newData, id);
+
     newData[i].cost = value;
     setBlankets(newData);
   };
@@ -106,22 +129,35 @@ const CustomerDeposit = (props) => {
     setDepositValue(deposit);
     setShow(true);
   };
-var removeBlanketDeposit = (i,id) => {
-  var {showMessage} = props
+  var removeBlanketDeposit = (i, id) => {
+    var { deleteBlanketDeposit } = props;
+    console.log(`Deleting deposit with ${id}`);
 
-deleteBlanketDeposit(id).then((res) => {
- 
-  let newData = cloneDeep(blankets);
-  newData.splice(i,1)
-  setBlankets(newData)
-  showMessage(res.data.message)
-}).catch((error) => {
-  console.log(error)
-})
+    deleteBlanketDeposit(id);
+    setDeleteModal(false);
+
+  };
+  var handlePageChange = (page) => {
+    getDeposits(page);
+    setCurrentPage(page);
+  };
 
 
-}
-  var { user } = props;
+  var openDeleteModal = (i) => {
+    setModalIndex(i)
+    console.log(i)
+    if(modalIndex === i)
+    setDeleteModal(true)
+    else 
+    setDeleteModal(false)
+  };
+
+  var closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+  var { user, blanketDeposit } = props;
+  console.log(blanketDeposit);
+  console.log(blankets);
   return (
     <div>
       <div className="row">
@@ -197,7 +233,7 @@ deleteBlanketDeposit(id).then((res) => {
                             <div>
                               <span
                                 onDoubleClick={(e) => {
-                                  makeInputFieldEditible(e, i);
+                                  makeInputFieldEditible(x._id, e, i);
                                 }}
                               >
                                 <TextField
@@ -206,7 +242,7 @@ deleteBlanketDeposit(id).then((res) => {
                                   // required
                                   fullWidth
                                   size="small"
-                                  onChange={(e) => handleInput(e, i)}
+                                  onChange={(e) => handleInput(x._id, e, i)}
                                   disabled={x.edit}
                                   type="number"
                                   className="form-control input-number"
@@ -219,7 +255,7 @@ deleteBlanketDeposit(id).then((res) => {
                           <div className="col-2">
                             <span
                               onDoubleClick={(e) => {
-                                makeInputFieldEditible(e, i);
+                                makeInputFieldEditible(x._id, e, i);
                               }}
                             >
                               <TextField
@@ -228,7 +264,7 @@ deleteBlanketDeposit(id).then((res) => {
                                 // required
                                 fullWidth
                                 size="small"
-                                onChange={(e) => changeCost(e, i)}
+                                onChange={(e) => changeCost(x._id, e, i)}
                                 disabled={x.edit}
                                 type="number"
                                 className="form-control input-number"
@@ -246,7 +282,7 @@ deleteBlanketDeposit(id).then((res) => {
                             <div style={{ display: "flex" }}>
                               {x.edit ? (
                                 <div
-                                  onClick={() => closeEdit(i, "edit")}
+                                  onClick={() => closeEdit(x._id, i, "edit")}
                                   style={{ margin: "0 0.6rem" }}
                                 >
                                   <Button
@@ -266,7 +302,7 @@ deleteBlanketDeposit(id).then((res) => {
                                 </div>
                               ) : (
                                 <div
-                                  onClick={() => closeEdit(i, "save")}
+                                  onClick={() => closeEdit(x._id, i, "save")}
                                   style={{ margin: "0 0.6rem" }}
                                 >
                                   <Button
@@ -285,39 +321,98 @@ deleteBlanketDeposit(id).then((res) => {
                                   </Button>
                                 </div>
                               )}
-                              <div   style={{ margin: "0 0.6rem" }}>
+                              <div style={{ margin: "0 0.6rem" }}>
                                 <Button
-                                onClick={() => handleShow(x)}
+                                  onClick={() => handleShow(x)}
                                   style={{
                                     background: "#00ADEE",
                                     textTransform: "none",
                                     color: "#FFF",
                                     fontFamily: "sans-serif",
                                     width: "100%",
-                                 
                                   }}
                                 >
                                   Activities
                                 </Button>
                               </div>
-                              {user?.role === "admin" && <div>
-                              <Button
-                                onClick={() => removeBlanketDeposit(i,x._id)}
-                                  style={{
-                                    background: "#00ADEE",
-                                    textTransform: "none",
-                                    color: "#FFF",
-                                    fontFamily: "sans-serif",
-                                    width: "100%",
-                                  }}
-                                >
-                                
-                                 <div>
-                                 <FontAwesomeIcon icon = {faTrash} />
-                                 </div>
-
-                                </Button>
-                              </div>}
+                              {user?.role === "admin" && (
+                                <div>
+                                  <Button
+                                    // onClick={() =>
+                                    //   removeBlanketDeposit(i, x._id)
+                                    // }
+                                    onClick={() => openDeleteModal(i)}
+                                    style={{
+                                      background: "#00ADEE",
+                                      textTransform: "none",
+                                      color: "#FFF",
+                                      fontFamily: "sans-serif",
+                                      width: "100%",
+                                    }}
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              )}
+                              {i === modalIndex && (
+                                <div>
+                                  <Modal
+                                    show={deleteModal}
+                                    onHide={closeDeleteModal}
+                                    dialogClassName={`${style.modal}`}
+                                    centered
+                                    scrollable
+                                    // backdrop = {false}
+                                  >
+                                    <Modal.Header closeButton>
+                                      <Modal.Title>
+                                        Delete Confirmation
+                                      </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                      Are You sure you want to delete Blanket
+                                      with id {x._id}
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "flex-end",
+                                          alignItems: "flex-end",
+                                        }}
+                                      >
+                                        <Button
+                                          style={{
+                                            background: "#00ADEE",
+                                            textTransform: "none",
+                                            color: "#FFF",
+                                            fontFamily: "sans-serif",
+                                            width: "100%",
+                                            margin: "0 0.6rem",
+                                          }}
+                                          onClick={() =>
+                                            removeBlanketDeposit(i, x._id)
+                                          }
+                                        >
+                                          Confirm
+                                        </Button>
+                                        <Button
+                                          style={{
+                                            background: "#00ADEE",
+                                            textTransform: "none",
+                                            color: "#FFF",
+                                            fontFamily: "sans-serif",
+                                            width: "100%",
+                                          }}
+                                          onClick={closeDeleteModal}
+                                        >
+                                          Cancel
+                                        </Button>
+                                      </div>
+                                    </Modal.Footer>
+                                  </Modal>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -333,12 +428,19 @@ deleteBlanketDeposit(id).then((res) => {
             </div>
           )}
         </div>
+        <div className={style.jumbotron}>
+          <Pagination
+            // itemCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
       <Modal
         dialogClassName={`${style.modal}`}
         show={show}
         onHide={() => setShow(false)}
-        
         centered
         scrollable
       >
@@ -359,13 +461,12 @@ deleteBlanketDeposit(id).then((res) => {
           </div>
 
           {depositValue &&
-            depositValue ?.activities.map((activity, i) => (
+            depositValue?.activities.map((activity, i) => (
               <div
                 key={i}
                 className="row"
                 style={{
-                  fontFamily:
-                    "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
                 <div className={`col-2 `}>
@@ -395,7 +496,7 @@ deleteBlanketDeposit(id).then((res) => {
             onClick={() => setShow(false)}
           >
             Close
-                            </Button>
+          </Button>
           {/* <Button variant="primary">Add Activity</Button> */}
         </Modal.Footer>
       </Modal>
@@ -405,11 +506,14 @@ deleteBlanketDeposit(id).then((res) => {
 
 var actions = {
   showMessage,
-  
+  getDeposits,
+  deleteBlanketDeposit,
+  updateDeposit,
 };
 
 var mapStateToProps = (state) => ({
   user: state.users.user,
+  blanketDeposit: state.blankets,
 });
 
 export default connect(mapStateToProps, actions)(CustomerDeposit);

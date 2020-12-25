@@ -8,6 +8,7 @@ import commonReducer from './Common/commanReducers'
 import unavailableReducer from './Unavailable/unavailableReducer';
 import scheduleReducer from './Schedule/scheduleReducer';
 import formsReducer from './PersistForms/formReducer';
+import blanketReducer from './BlanketDeposit/BlanketDepositReducer'
 
 var rootReducer = combineReducers({
     customers: customerReducer,
@@ -18,6 +19,8 @@ var rootReducer = combineReducers({
     common: commonReducer,
     unavailable: unavailableReducer,
     schedule: scheduleReducer,
-    forms: formsReducer
+    forms: formsReducer,
+    blankets:blanketReducer
+
 })
 export default rootReducer

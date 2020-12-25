@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import CustomerDeposit from "../CustomerBlanketDeposit/CustomerDeposit";
 import style from "./SubmitDeposit.module.css";
 import { Button } from "@material-ui/core";
-import { addDeposit } from '../../../Redux/Claims/claimsActions'
+// import { addDeposit } from '../../../Redux/Claims/claimsActions'
 import { showMessage } from '../../../Redux/Common/commonActions'
 import { connect } from "react-redux";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from '../../../Redux/Claims/claimsActions'
 import { setDepositForm } from "../../../Redux/PersistForms/formActions"
+import { addDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 class SubmitDeposit extends Component {
 

@@ -53,8 +53,12 @@ class JobsList extends Component {
     recentlyAdded: false,
     assigneeRequired: false,
     show: false,
+    showDeleteModal: false,
+    
     dates: "",
     jobToConfirm: "",
+      modalIndex: ""
+
   };
   handleToggle = () =>
     this.setState({
@@ -338,21 +342,40 @@ class JobsList extends Component {
    var {deleteJob} = this.props
    var {currentPage} = this.state
    console.log(currentPage)
-   console.log(i, id)
 
+   console.log(i, `The job with ${id} is removed`)
+  
    deleteJob(id,currentPage)
-    // deleteJob(id)
-    //   .then((res) => {
-    //     let newData = cloneDeep(jobs[0].data.jobs.docs);
-    //     console.log(jobs[0].data.jobs.docs);
-    //     newData.splice(i, 1);
-    //     // setClaimData(newData);
-    //     showMessage(res.data.message);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+  this.setState({
+    showDeleteModal: false
+  })
+   
   };
+
+   openDeleteModal = (i) => {
+   this.setState({
+     modalIndex:i 
+   })
+    console.log(i)
+    if(this.state.modalIndex === i) {
+      this.setState({
+        showDeleteModal: true
+      })
+    }
+  
+    else  {
+      this.setState({
+        showDeleteModal: false
+      })
+    }
+  };
+
+ closeDeleteModal = () => {
+  this.setState({
+    showDeleteModal: false
+  })
+  };
+
   render() {
     var { jobs } = this.props;
     var { pageSize, currentPage } = this.state;
@@ -361,7 +384,7 @@ class JobsList extends Component {
 
     var totalCount = jobs[0]?.data?.jobs.total;
     var { popoverOpen } = this.state;
-    var { show, dates } = this.state;
+    var { show, showDeleteModal,  dates } = this.state;
     return (
       <div>
         <div className={`row ${style.toprow}`}>
@@ -694,7 +717,9 @@ class JobsList extends Component {
                           {this.props.user?.role === "admin" && (
                             <div className="col-1">
                               <Button
-                                onClick={() => this.removeJob(i, job._id)}
+                                // onClick={() => this.removeJob(i, job._id)}
+                                onClick={() => this.openDeleteModal(i)}
+
                                 style={{
                                   background: "#00ADEE",
                                   textTransform: "none",
@@ -707,6 +732,62 @@ class JobsList extends Component {
                               </Button>
                             </div>
                           )}
+                            {i === this.state.modalIndex && (
+                                  <div>
+                                    <Modal
+                                      show={showDeleteModal}
+                                      onHide={this.closeDeleteModal}
+                                      dialogClassName={`${style.modal}`}
+                                      centered
+                                      scrollable
+                                      // backdrop = {false}
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>
+                                          Delete Confirmation
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>Are You sure you want to delete Job with id {job._id}</Modal.Body>
+                                      <Modal.Footer>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            alignItems: "flex-end",
+                                          
+                                          }}
+                                        >
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                              margin: "0 0.6rem",
+                                            }}
+                                            onClick={() => this.removeJob(i, job._id)}
+                                          >
+                                            Confirm
+                                          </Button>
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                            }}
+                                            onClick={this.closeDeleteModal}
+                                          >
+                                            Cancel
+                                          </Button>
+                                        </div>
+                                      </Modal.Footer>
+                                    </Modal>
+                                  </div>
+                                  
+                                )}
                         </div>
                       </li>
                   

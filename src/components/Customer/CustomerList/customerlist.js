@@ -4,15 +4,23 @@ import SearchBar from "../../SearchBar/SearchBar";
 // import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteCustomer, getAllCustomers } from "../../../Redux/Customer/customerActions";
+import {
+  deleteCustomer,
+  getAllCustomers,
+} from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../Pagination/Pagination";
 import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faBook, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Button from '@material-ui/core/Button';
+import {
+  faInfoCircle,
+  faBook,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import Button from "@material-ui/core/Button";
+import { Modal } from "react-bootstrap";
+// import DeleteConfirmation from "../../DeleteConfirmation/DeleteConfirmation";
 // import { setRef } from "@material-ui/core";
-
 
 const CustomerList = (props) => {
   var { getAllCustomers } = props;
@@ -20,20 +28,20 @@ const CustomerList = (props) => {
   var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var [recentlyUpdated, setRecentlyUpdated] = useState(false)
-  var [recentlyUpdated, setRecentlyUpdated] = useState(false)
-  var [recentlyAdded, setRecentlyAdded] = useState(false)
-  var [sortByName, setSortByName] = useState(false)
+  var [recentlyUpdated, setRecentlyUpdated] = useState(false);
+  var [recentlyUpdated, setRecentlyUpdated] = useState(false);
+  var [recentlyAdded, setRecentlyAdded] = useState(false);
+  var [sortByName, setSortByName] = useState(false);
   var { getAllCustomers } = props;
-  var [show, setShow] = useState(false)
+  var [show, setShow] = useState(false);
+  var [modalIndex , setModalIndex] = useState("")
   useEffect(() => {
     var fetchCustomersObj = {
       query: "",
       sort: {
         plainName: "",
         createdAt: -1,
-        updatedAt: null
-
+        updatedAt: null,
       },
       page: 1,
     };
@@ -41,43 +49,38 @@ const CustomerList = (props) => {
   }, []);
 
   var handlePageChange = (page) => {
-
     if (recentlyUpdated === true) {
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
           createdAt: null,
-          updatedAt: -1
+          updatedAt: -1,
         },
         page: page,
       };
       setCurrentPage(page);
-    }
-    else if (recentlyAdded === true) {
+    } else if (recentlyAdded === true) {
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
           createdAt: -1,
-          updatedAt: null
+          updatedAt: null,
         },
         page: page,
       };
       setCurrentPage(page);
-    }
-
-
-    else if (sortByName === true) {
+    } else if (sortByName === true) {
       if (order === 1) {
         var fetchCustomersOnPageChange = {
           query: "",
           sort: {
             plainName: 1,
             createdAt: null,
-            updatedAt: null
+            updatedAt: null,
           },
-          page: page
+          page: page,
         };
         setCurrentPage(page);
       } else if (order == -1) {
@@ -86,27 +89,25 @@ const CustomerList = (props) => {
           sort: {
             plainName: -1,
             createdAt: null,
-            updatedAt: null
+            updatedAt: null,
           },
-          page: page
+          page: page,
         };
         setCurrentPage(page);
       }
-    }
-    else {
+    } else {
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
           createdAt: -1,
-          updatedAt: null
+          updatedAt: null,
         },
-        page: page
+        page: page,
       };
       setCurrentPage(page);
     }
     getAllCustomers(fetchCustomersOnPageChange);
-
   };
 
   const width = window.innerWidth;
@@ -121,16 +122,18 @@ const CustomerList = (props) => {
         User: { docs },
       },
     } = customers;
-    var customerId = docs.map((doc) => doc._id);
+    // var customerId = docs.map((docs) => docs._id);
   }
-var removeCustomer = (i, id) => {
-  var {deleteCustomer} = props
-  deleteCustomer(id, currentPage)
-}
+  var removeCustomer = (i, id) => {
+    console.log(id)
+    var { deleteCustomer } = props;
+    deleteCustomer(id, currentPage);
+    setShow(false)
+  };
   var handleSort = () => {
-    setSortByName(true)
-    setRecentlyAdded(false)
-    setRecentlyUpdated(false)
+    setSortByName(true);
+    setRecentlyAdded(false);
+    setRecentlyUpdated(false);
     if (order == 1) {
       setOrder(-1);
       var sortCustomersObj = {
@@ -138,12 +141,11 @@ var removeCustomer = (i, id) => {
         sort: {
           plainName: -1,
           createdAt: null,
-          updatedAt: null
+          updatedAt: null,
         },
-        page: 1
+        page: 1,
       };
-      setCurrentPage(1)
-
+      setCurrentPage(1);
     } else if (order == -1) {
       setOrder(1);
       var sortCustomersObj = {
@@ -151,11 +153,11 @@ var removeCustomer = (i, id) => {
         sort: {
           plainName: 1,
           createdAt: null,
-          updatedAt: null
+          updatedAt: null,
         },
-        page: 1
+        page: 1,
       };
-      setCurrentPage(1)
+      setCurrentPage(1);
     }
     // else {
     //   setOrder(1);
@@ -173,52 +175,53 @@ var removeCustomer = (i, id) => {
   };
 
   var handleDateFilter = () => {
-
-    setRecentlyAdded(true)
-    setRecentlyUpdated(false)
-    setSortByName(null)
+    setRecentlyAdded(true);
+    setRecentlyUpdated(false);
+    setSortByName(null);
     var sortCustomersObj = {
       query: "",
       sort: {
         plainName: "",
         createdAt: -1,
-        updatedAt: null
+        updatedAt: null,
       },
       page: 1,
     };
-    setCurrentPage(1)
+    setCurrentPage(1);
     getAllCustomers(sortCustomersObj);
   };
 
   var handleUpdtedAtFilter = () => {
-
-    setRecentlyUpdated(true)
-    setRecentlyAdded(false)
-    setSortByName(null)
+    setRecentlyUpdated(true);
+    setRecentlyAdded(false);
+    setSortByName(null);
     var sortCustomersObj = {
       query: "",
       sort: {
         plainName: "",
         createdAt: null,
-        updatedAt: -1
+        updatedAt: -1,
       },
       page: 1,
     };
-    setCurrentPage(1)
+    setCurrentPage(1);
     getAllCustomers(sortCustomersObj);
   };
 
-  var handleShow = () => {
+  var handleShow = (i) => {
+    setModalIndex(i)
+    console.log(i)
+    if(modalIndex === i)
     setShow(true)
+    else 
+    setShow(false)
   };
 
   var handleClose = () => {
-
-    setShow(false)
-
-
+    setShow(false);
   };
-console.log(props.customers)
+  var { customers } = props;
+  console.log(customers);
   return (
     <div>
       <div>
@@ -232,7 +235,9 @@ console.log(props.customers)
           <div className={`col-6 ${style.search}`}>
             <SearchBar type="customer" title="Type first name or email" />
           </div>
-          <div className={`col-2  d-flex justify-content-between ${style.filter}`}>
+          <div
+            className={`col-2  d-flex justify-content-between ${style.filter}`}
+          >
             <i
               className="fa fa-filter dropdown-toggle"
               href="#"
@@ -243,7 +248,11 @@ console.log(props.customers)
               aria-expanded="false"
               style={{ transform: "translateY(-.3rem)" }}
             ></i>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{ margin: "-0.5rem" }}>
+            <div
+              className="dropdown-menu"
+              aria-labelledby="dropdownMenuLink"
+              style={{ margin: "-0.5rem" }}
+            >
               <a className="dropdown-item" onClick={handleUpdtedAtFilter}>
                 Recently Updated
               </a>
@@ -254,34 +263,46 @@ console.log(props.customers)
                 Sort By Name
               </a>
             </div>
-            <div style={{ margin: '-0.5rem' }}>
+            <div style={{ margin: "-0.5rem" }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
-                <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Create New</Button>
+                <Button
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  Create New
+                </Button>
               </Link>
             </div>
           </div>
-
         </div>
         {docs && docs.length > 0 ? (
           <div>
             <div className={style.jumbotron}>
               <div
                 className="row"
-                style={{ margin: "1rem 3rem", fontWeight: "bold", fontFamily: "sans-serif" }}
+                style={{
+                  margin: "1rem 3rem",
+                  fontWeight: "bold",
+                  fontFamily: "sans-serif",
+                }}
               >
-               <div className="col-11">
-               <div className="row">
-               <div className="col-3">Name</div>
-                <div className="col-2">Phone</div>
+                <div className="col-11">
+                  <div className="row">
+                    <div className="col-3">Name</div>
+                    <div className="col-2">Phone</div>
 
-                <div className="col-3">Email</div>
-              
-                <div className="col-2">Jobs</div>
-                <div className="col-2">Active Claims</div>
-               </div>
-               </div>
-               {props.user?.role === "admin" && (
+                    <div className="col-3">Email</div>
+
+                    <div className="col-2">Jobs</div>
+                    <div className="col-2">Active Claims</div>
+                  </div>
+                </div>
+                {props.user?.role === "admin" && (
                   <div className="col-1">Actions</div>
                 )}
               </div>
@@ -289,69 +310,134 @@ console.log(props.customers)
                 <ul className="list-group">
                   <div className={`${style.li}`}>
                     {docs.map((doc, i) => {
+                      console.log(doc._id)
                       return (
-                        
-                          <li
-                            className={`checkbox list-group-item ${style.list}`}
-                            key={doc._id}
-                          >
-                            <div className="row">
-                              <div className="col-11">
-                                <Link
-                          key={i}
-                          style={{ textDecoration: "none", color: "black" }}
-                          to={`/customer/detail/${doc._id}`}>
+                        <li
+                          className={`checkbox list-group-item ${style.list}`}
+                          key={doc._id}
+                        >
+                          <div className="row">
+                            <div className="col-11">
+                              <Link
+                                key={i}
+                                style={{
+                                  textDecoration: "none",
+                                  color: "black",
+                                }}
+                                to={`/customer/detail/${doc._id}`}
+                              >
                                 <div className="row">
-                                <div className={`col-3 ${style.item}`}>
-                                <span>
-                                  {doc.firstName} {doc.lastName}
-                                </span>
-                              </div>
+                                  <div className={`col-3 ${style.item}`}>
+                                    <span>
+                                      {doc.firstName} {doc.lastName}
+                                    </span>
+                                  </div>
 
-                              <div className={`col-2 ${style.item}`}>
-                                <p>{doc.phone}</p>
-                              </div>
-                              <div className={`col-3 ${style.item}`}>
-                                <p>{doc.email}</p>
-                              </div>
-                              <div className={`col-2 ${style.item}`}>
-                              
-                               
-                                <div>
-                                  {doc.jobs.length}
+                                  <div className={`col-2 ${style.item}`}>
+                                    <p>{doc.phone}</p>
+                                  </div>
+                                  <div className={`col-3 ${style.item}`}>
+                                    <p>{doc.email}</p>
+                                  </div>
+                                  <div className={`col-2 ${style.item}`}>
+                                    <div>{doc.jobs.length}</div>
+                                  </div>
+                                  <div className={`col-2 ${style.item}`}>
+                                    <div>
+                                      {doc.claim?.length > 0 ? (
+                                        <div>
+                                          {
+                                            doc.claim?.filter(
+                                              (claim) => claim.status === "open"
+                                            ).length
+                                          }
+                                        </div>
+                                      ) : (
+                                        0
+                                      )}
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className={`col-2 ${style.item}`} >
-                              <div>
-                                  {doc.claim?.length > 0 ? <div>
-                                    {doc.claim?.filter((claim) => claim.status === "open").length}
-                                  </div> : 0 }
-                                </div>
-                                </div>
-                              </div>
-                             
-                               </Link>
-                               
-                              </div>
-                              {props.user?.role === "admin" && (
-                                <div className="col-1">
-                                  <Button
-                                    onClick={() => removeCustomer(i, doc._id)}
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      width: "100%",
-                                    }}
-                                  >
-                                   Delete
-                                  </Button>
-                                </div>
-                               
-                              )} 
+                              </Link>
                             </div>
-                          </li>
+                            {props.user?.role === "admin" && (
+                              <div>
+                              <div className="col-1">
+                                <Button
+                                  onClick={() => handleShow(i)}
+                                  /*onClick={() => removeCustomer(i, doc._id)}*/
+                                  style={{
+                                    background: "#00ADEE",
+                                    textTransform: "none",
+                                    color: "#FFF",
+                                    fontFamily: "sans-serif",
+                                    width: "100%",
+                                  }}
+                                >
+                                  Delete
+                                </Button>
+                                </div>
+                                {i === modalIndex && (
+                                  <div>
+                                    <Modal
+                                      show={show}
+                                      onHide={handleClose}
+                                      dialogClassName={`${style.modal}`}
+                                      centered
+                                      scrollable
+                                      // backdrop = {false}
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>
+                                          Delete Confirmation
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>Are You sure you want to delete Customer with id {doc._id}</Modal.Body>
+                                      <Modal.Footer>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            alignItems: "flex-end",
+                                          
+                                          }}
+                                        >
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                              margin: "0 0.6rem",
+                                            }}
+                                            onClick={() => removeCustomer(i, doc._id)}
+                                          >
+                                            Confirm
+                                          </Button>
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                            }}
+                                            onClick={handleClose}
+                                          >
+                                            Cancel
+                                          </Button>
+                                        </div>
+                                      </Modal.Footer>
+                                    </Modal>
+                                  </div>
+                                  
+                                )}
+                            </div>
+                            )}
+                          </div>
+                         
+                        </li>
                         
                       );
                     })}
@@ -365,33 +451,29 @@ console.log(props.customers)
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageChange={handlePageChange}
-
                 />
               </div>
             </div>
-
-
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 var mapStateToProps = (state) => ({
- 
-  customers: state?.customers?.data,
+  customers: state?.customers.customers,
 
   user: state.users.user,
 });
 
 var actions = {
   getAllCustomers,
-  deleteCustomer
+  deleteCustomer,
 };
 
 export default connect(mapStateToProps, actions)(CustomerList);

@@ -81,7 +81,7 @@ const BlanketList = (props) => {
     newData[i].cost = value;
     setBlanketValue(newData);
   };
-
+console.log(blanketValue)
   return (
     <div>
       <div>

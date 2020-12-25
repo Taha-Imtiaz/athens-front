@@ -31,11 +31,13 @@ const CustomerClaims = (props) => {
   const [status, setStatus] = useState("all");
   var [claimData, setClaimData] = useState("");
   // const [showClaimsDetail, setShowClaimsDetail] = useState(false)
+  var [modalIndex, setModalIndex] = useState("");
 
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var totalCount = claims.claims?.total;
-console.log(totalCount)
+  console.log(totalCount);
+
   useEffect(() => {
     var { getAllClaims, claims } = props;
     var claimsObj = {
@@ -44,22 +46,18 @@ console.log(totalCount)
       query: "",
     };
     getAllClaims(claimsObj);
-    
-  
   }, []);
   var data = [];
   useEffect(() => {
     var { claims } = props;
     if (claims.claims) {
-      console.log(claims.claims)
+      console.log(claims.claims);
       data = claims.claims;
-      console.log(data)
-      
+      console.log(data);
     }
-  },[claims])
+  }, [claims]);
   var { claims } = props;
-  
-  
+
   const routes = [
     {
       title: "Claims",
@@ -106,22 +104,26 @@ console.log(totalCount)
 
   var removeClaim = (i, id) => {
     var { deleteClaim } = props;
-   
-    // console.log(claimData);
-    deleteClaim(id, currentPage)
-      // .then((res) => {
-      //   let newData = cloneDeep(claimData);
-      //   console.log(claimData);
-      //   newData.splice(i, 1);
-      //   setClaimData(newData);
-      //   showMessage(res.data.message);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+
+    console.log(`Deleting Claim with id ${id}`);
+    deleteClaim(id, currentPage);
+    setShow(false)
   };
-  var { users,claims } = props;
-  
+  var { users, claims } = props;
+
+  var handleShow = (i) => {
+    setModalIndex(i)
+    console.log(i)
+    if(modalIndex === i)
+    setShow(true)
+    else 
+    setShow(false)
+  };
+
+  var handleClose = () => {
+    setShow(false);
+  };
+
   return (
     <div style={{ overflowX: "hidden" }}>
       {claims && (
@@ -191,7 +193,7 @@ console.log(totalCount)
               </div>
             </div>
           </div>
-          {claims?.claims?.docs.length > 0? (
+          {claims?.claims?.docs.length > 0 ? (
             <div className={style.jumbotron}>
               <div
                 className={`row`}
@@ -203,10 +205,10 @@ console.log(totalCount)
               >
                 <div className="col-11">
                   <div className="row">
-                  <div className="col-3">Name</div>
-                <div className="col-3">Status</div>
-                <div className="col-4"> Waiting To</div>
-                <div className="col-2">Last Update</div>
+                    <div className="col-3">Name</div>
+                    <div className="col-3">Status</div>
+                    <div className="col-4"> Waiting To</div>
+                    <div className="col-2">Last Update</div>
                   </div>
                 </div>
                 {users?.role === "admin" && (
@@ -215,20 +217,17 @@ console.log(totalCount)
               </div>
               <ul className="list-group">
                 <div className={`${style.li} `}>
-                  { claims?.claims?.docs &&
+                  {claims?.claims?.docs &&
                     claims?.claims?.docs.map((x, i) => {
                       return (
-                       
-                          
-                            <div  >
-                               <li 
+                        <div>
+                          <li
                             className={`checkbox list-group-item ${style.list}  `}
                             key={x._id}
-                          > 
-                          <div className="row">
+                          >
+                            <div className="row">
                               <div className="col-11">
-                               
-                                <Link 
+                                <Link
                                   to={{
                                     pathname: `/claimsDetail/${x._id}`,
                                     claimsId: x._id,
@@ -237,43 +236,45 @@ console.log(totalCount)
                                     textDecoration: "none",
                                     color: "black",
                                   }}
-                                > <div className="row">
-                                  <div className={`col-3 ${style.item}`}>
-                                    <h6>
-                                      {x.customer.firstName}{" "}
-                                      {x.customer.lastName}
-                                    </h6>
-                                  </div>
-                                  <div  className={`col-3  ${style.item}`}>
-                                    {x.status.toLocaleUpperCase()}
-                                  </div>
-                                  <div className={`col-4  ${style.item}`}>
-                                    <h6>{x.waitTo}</h6>
-                                  </div>
+                                >
+                                  {" "}
+                                  <div className="row">
+                                    <div className={`col-3 ${style.item}`}>
+                                      <h6>
+                                        {x.customer.firstName}{" "}
+                                        {x.customer.lastName}
+                                      </h6>
+                                    </div>
+                                    <div className={`col-3  ${style.item}`}>
+                                      {x.status.toLocaleUpperCase()}
+                                    </div>
+                                    <div className={`col-4  ${style.item}`}>
+                                      <h6>{x.waitTo}</h6>
+                                    </div>
 
-                                  <div className={`col-2  ${style.item}`}>
-                                    {x.updates.length > 0 ? (
-                                      <div>
-                                        {
-                                          <TimeAgo
-                                            date={x.updates[0].timestamp}
-                                          />
-                                        }
-                                      </div>
-                                    ) : (
-                                      <div>
-                                        <TimeAgo date={x.createdAt} />
-                                      </div>
-                                    )}
+                                    <div className={`col-2  ${style.item}`}>
+                                      {x.updates.length > 0 ? (
+                                        <div>
+                                          {
+                                            <TimeAgo
+                                              date={x.updates[0].timestamp}
+                                            />
+                                          }
+                                        </div>
+                                      ) : (
+                                        <div>
+                                          <TimeAgo date={x.createdAt} />
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
-                                  </div>
-                                </Link> 
-                               
+                                </Link>
                               </div>
                               {users?.role === "admin" && (
                                 <div className="col-1">
                                   <Button
-                                    onClick={() => removeClaim(i, x._id)}
+                                    // onClick={() => removeClaim(i, x._id)}
+                                    onClick={() => handleShow(i)}
                                     style={{
                                       background: "#00ADEE",
                                       textTransform: "none",
@@ -282,16 +283,69 @@ console.log(totalCount)
                                       width: "100%",
                                     }}
                                   >
-                                   Delete
+                                    Delete
                                   </Button>
                                 </div>
-                               
-                              )} 
-                               </div>
-                              </li>
+                              )}
                             </div>
-                          
-                       
+                            {i === modalIndex && (
+                                  <div>
+                                    <Modal
+                                      show={show}
+                                      onHide={handleClose}
+                                      dialogClassName={`${style.modal}`}
+                                      centered
+                                      scrollable
+                                      // backdrop = {false}
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>
+                                          Delete Confirmation
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>Are You sure you want to delete Claims with id {x._id}</Modal.Body>
+                                      <Modal.Footer>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            alignItems: "flex-end",
+                                          
+                                          }}
+                                        >
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                              margin: "0 0.6rem",
+                                            }}
+                                            onClick={() => removeClaim(i, x._id)}
+                                          >
+                                            Confirm
+                                          </Button>
+                                          <Button
+                                            style={{
+                                              background: "#00ADEE",
+                                              textTransform: "none",
+                                              color: "#FFF",
+                                              fontFamily: "sans-serif",
+                                              width: "100%",
+                                            }}
+                                            onClick={handleClose}
+                                          >
+                                            Cancel
+                                          </Button>
+                                        </div>
+                                      </Modal.Footer>
+                                    </Modal>
+                                  </div>
+                                  
+                                )}
+                          </li>
+                        </div>
                       );
                     })}
                 </div>
@@ -323,7 +377,7 @@ var mapStateToProps = (state) => ({
 var actions = {
   getAllClaims,
   showMessage,
-  deleteClaim
+  deleteClaim,
 };
 
 export default connect(mapStateToProps, actions)(CustomerClaims);

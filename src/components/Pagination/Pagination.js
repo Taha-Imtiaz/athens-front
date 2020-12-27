@@ -7,9 +7,7 @@ import "./Pagination.css"
 const Pagination = (props) => {
     const { itemCount, pageSize, currentPage, onPageChange } = props
     const pageCount = Math.ceil(itemCount / pageSize)
-    console.log(pageCount, typeof pageCount == 'NaN', typeof pageCount == NaN)
     if (pageCount < 2 || isNaN(pageCount)) {
-      console.log(typeof pageCount == 'NaN')
       return null
     } 
     const pages = _.range(1, pageCount + 1)

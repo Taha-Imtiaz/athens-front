@@ -152,6 +152,7 @@ class CreateJobs extends Component {
   };
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
+    
     let updateLocation = cloneDeep(this.state.locations)
     updateLocation[i].type = value;
     updateLocation[i].value = '';
@@ -192,6 +193,15 @@ class CreateJobs extends Component {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
+  removeDate = (i) => {
+    var datesArr = cloneDeep(this.state.dates)
+  console.log(datesArr,i)
+    datesArr.splice(i, 1)
+    console.log(datesArr, i)
+    this.setState({
+      dates : datesArr
+    })
+  }
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = cloneDeep(this.state.locations);
@@ -211,17 +221,19 @@ class CreateJobs extends Component {
     }
   };
 
-  handleCheckBox = (e, i) => {
-    var { name, value } = e.target;
-    e.stopPropagation()
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // handleCheckBox = (e, i) => {
+  //   var { name, value } = e.target;
+  //   console.log(name, value)
+  //   e.stopPropagation()
+  //   this.setState((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
   changeCheckBoxState = (e, i) => {
     e.stopPropagation()
     var prevState = cloneDeep(this.state.locations);
+    console.log(prevState)
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value = prevState[i].type == 'pickup' ? 'Load Only / IA' : 'Unload Only'
@@ -333,7 +345,7 @@ class CreateJobs extends Component {
                 control={
                   <Checkbox
                     checked={this.state.locations[i].default}
-                    onChange={(e) => this.handleCheckBox(e, i)}
+                    // onChange={(e) => this.handleCheckBox(e, i)}
                     onClick={(e) => this.changeCheckBoxState(e, i)}
                     name="checkboxStates"
                     color="#00ADEE"
@@ -355,7 +367,7 @@ class CreateJobs extends Component {
                 control={
                   <Checkbox
                     checked={this.state.locations[i].default}
-                    onChange={(e) => this.handleCheckBox(e, i)}
+                    // onChange={(e) => this.handleCheckBox(e, i)}
                     onClick={(e) => this.changeCheckBoxState(e, i)}
                     name="checkboxStates"
                     color="#00ADEE"
@@ -731,36 +743,68 @@ class CreateJobs extends Component {
 
               <div>
                 {this.state.dates.map((x, i) => {
-                  return (
-                    <div style={{ margin: "0rem 2rem", width: "90%" }} key={i}>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid>
-                          <KeyboardDatePicker
-                            inputVariant="outlined"
-                            margin="normal"
-                            fullWidth
-                            size="small"
-                            id="date-picker-dialog"
-                            format="MM/dd/yyyy"
-                            value={this.state.dates[i]}
-                            onChange={(e) => this.handleStartDate(e, i)}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    </div>
-                  );
+                  if(i === 0) {
+                    return (
+                      <div style={{ margin: "0rem 2rem", width: "90%" }} key={i}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid>
+                            <KeyboardDatePicker
+                              inputVariant="outlined"
+                              margin="normal"
+                              fullWidth
+                              size="small"
+                              id="date-picker-dialog"
+                              format="MM/dd/yyyy"
+                              value={this.state.dates[i]}
+                              onChange={(e) => this.handleStartDate(e, i)}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
+                    );
+                  }
+                  else {
+                    return (
+                      <div className = "row" style={{ margin:"0 1rem"}}>
+                      <div  className = "col-11"style={{  width: "90%",}}  key={i}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <Grid>
+                            <KeyboardDatePicker
+                              inputVariant="outlined"
+                              margin="normal"
+                              fullWidth
+                              size="small"
+                              id="date-picker-dialog"
+                              format="MM/dd/yyyy"
+                              value={this.state.dates[i]}
+                              onChange={(e) => this.handleStartDate(e, i)}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                            />
+                          </Grid>
+                        </MuiPickersUtilsProvider>
+                      </div>
+                      <div className="col-1" style={{display:"flex", justifyContent:"center", alignItems:"center" }} onClick = {() => this.removeDate(i)}>
+                        <FontAwesomeIcon icon = {faTrash}/>
+                      </div>
+                      </div>
+                    );
+                  }
+                 
+                  
                 })}
               </div>
 
-              <div className="row">
+              <div className="row" style={{ margin:"0 0.3rem"}}>
                 <div className="col-11"></div>
-                <div className="form-group col-1" onClick={this.addDate}>
+                <div className="col-1" onClick={this.addDate}>
                   <i
                     className="fa fa-plus"
-                    style={{ transform: "translate3d(-1.2rem,-0.3rem, 0)" }}
+                    style={{ transform: "translate3d(0rem,-0.3rem, 0)" }}
                   ></i>
                 </div>
               </div>
@@ -931,7 +975,7 @@ class CreateJobs extends Component {
                   <FontAwesomeIcon
                     icon={faPlus}
                     onClick={this.addLocation}
-                    style={{ transform: "translate3d(0rem,0rem, 0)" }}
+                    // style={{ transform: "translate3d(0rem,0rem, 0)" }}
                   ></FontAwesomeIcon>
                 </div>
               </div>

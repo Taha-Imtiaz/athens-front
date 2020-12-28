@@ -169,19 +169,23 @@ function JobConfirmation(props) {
 
 
 
-  var handleCheckBox = (e, i) => {
-    var { name, value } = e.target;
+  // var handleCheckBox = (e, i) => {
+  //   var { name, value } = e.target;
+  //   console.log(name, value)
+  //   e.stopPropagation()
+  //   setState({ ...data, [name]: value })
+  // };
+  var changeCheckBoxState = (e,i) => {
+    console.log(e)
     e.stopPropagation()
-    setState({ ...data, [name]: value })
-  };
-  var changeCheckBoxState = (i) => {
+    var prevState = cloneDeep(data);
 
-    var prevState = { ...data.locations };
-    prevState[i].default = !prevState[i].default;
-    if (prevState[i].default) {
-      prevState[i].value = prevState[i].type == 'pickup' ? 'Unload Only' : 'Load Only / IA'
+    console.log(prevState, i)
+    prevState.locations[i].default = !prevState.locations[i].default;
+    if (prevState.locations[i].default) {
+      prevState.locations[i].value = prevState.locations[i].type == 'pickup' ? 'Load Only / IA' : 'Unload Only'
     } else {
-      prevState[i].value = ''
+      prevState.locations[i].value = ''
     }
     setData(prevState)
     // this.setState({
@@ -195,7 +199,8 @@ function JobConfirmation(props) {
   }
 
 
-  const showLocation = (i) => {
+  const showLocation = (e,i) => {
+    // e.stopPropagation()
     if (i === 0) {
       return (
         <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
@@ -237,6 +242,7 @@ function JobConfirmation(props) {
         </div>
       );
     } else {
+      console.log(data.locations[i])
       return (
         <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
           <div className="col-4">
@@ -267,9 +273,16 @@ function JobConfirmation(props) {
               required
               size="small"
               id="to"
-              label={data.locations[i].type}
+              label={   data.locations[i].type == "pickup"
+              ? "Enter Pickup Point"
+              : data.locations[i].type == "dropoff"
+                ? "Enter DropOff Point"
+                : "Choose Type"}
               name={data.locations[i].type}
-              value={data.locations[i].value}
+              disabled={(data.locations[i].type ? false : true) || data.locations[i].default}
+              value={data.locations[i].type === "pickup" && data.locations[i].default ? "Load only / IA" : data.locations[i].type === "dropoff" && data.locations[i].default ? "Unload only" : data.locations[i].value}
+
+              // value={data.locations[i].value}
               onChange={(e) => hanldeLocationInput(i, e)}
             // error={this.state.locationtoError ? true : false}
             />
@@ -287,13 +300,14 @@ function JobConfirmation(props) {
                 control={
                   <Checkbox
                     checked={data.locations[i].default}
-                    onChange={(e) => handleCheckBox(e, i)}
-                    onClick={() => changeCheckBoxState(i)}
+                    // onChange={(e) => handleCheckBox(e, i)}
+                    onClick={(e) =>{ console.log(i)
+                      changeCheckBoxState(e,i)}}
                     name="checkboxStates"
                     color="#00ADEE"
                   />
                 }
-                label="Unload Only"
+                label="Load only / IA"
               />
             </div>
           ) : data.locations[i].type == "dropoff" ? (
@@ -309,13 +323,15 @@ function JobConfirmation(props) {
                 control={
                   <Checkbox
                     checked={data.locations[i].default}
-                    onChange={(e) => handleCheckBox(e, i)}
-                    onClick={() => changeCheckBoxState(i)}
+                    // onChange={(e) => handleCheckBox(e, i)}
+                    onClick={(e) => {console.log(i)
+                      changeCheckBoxState(e,i)
+                    }}
                     name="checkboxStates"
                     color="#00ADEE"
                   />
                 }
-                label="Load only/IA"
+                label="Unload only" 
               />
             </div>
           ) : (
@@ -386,7 +402,8 @@ function JobConfirmation(props) {
 
     if (data.locations[0].value !== "" && data.locations[1].value !== "") {
       var newData = { ...data };
-      newData.locations.push({ type: "", value: "" });
+      console.log(data.locations)
+      newData.locations.push({ type: "", value: "",default:false });
       setData(newData);
       // this.setState({
       //   locations: {...this.state.locations }
@@ -408,6 +425,7 @@ function JobConfirmation(props) {
 
   var handleInputChange = (e, i) => {
     let { name, value } = e.target;
+    console.log(name, value)
     let updateLocation = { ...data };
     updateLocation.locations[i].type = value;
     updateLocation.locations[i].value = '';
@@ -718,7 +736,7 @@ function JobConfirmation(props) {
             {/* {data.locations.map((ll, i) => {
               return showLocation(i);
             })} */}
-            {data.locations ?.map((locationTo, i) => showLocation(i))}
+            {data.locations ?.map((e, i) => showLocation(e,i))}
 
             <div className="row">
               <div className="col-11"></div>

@@ -480,7 +480,7 @@ class JobsList extends Component {
           <div >
             <div
               className={`row ${style.header}`}
-              style={{ margin: "1rem 4%", fontWeight: "bold" }}
+              style={{ margin: "1rem 3%", fontWeight: "bold" }}
             >
               <div className="col-11">
                 <div className="row">
@@ -501,15 +501,7 @@ class JobsList extends Component {
                 {jobs[0].data.jobs.docs.map((job, i) => {
                   return (
 
-                    <li
-                      key={i}
-                      className={`checkbox list-group-item ${style.list}`}
-                      style={
-                        {
-                          // color: "#fff",
-                        }
-                      }
-                    >
+                   
                       <div className="row">
                         <div className="col-11">
                           <Link
@@ -520,6 +512,11 @@ class JobsList extends Component {
                               jobProps: job,
                             }}
                           >
+                             <li style={{height:"3.2rem"}}
+                      key={i}
+                      className={`checkbox list-group-item ${style.list}`}
+                     
+                    >
 
                             <div className="row">
                               <div className={`col-3 ${style.item}`} >
@@ -708,6 +705,7 @@ class JobsList extends Component {
                               </div>
 
                             </div>
+                            </li>
                           </Link>
                         </div>
 
@@ -722,7 +720,8 @@ class JobsList extends Component {
                                 textTransform: "none",
                                 color: "#FFF",
                                 fontFamily: "sans-serif",
-                                width: "100%",
+                                // width: "100%",
+                                padding:"0.5rem 1rem"
                               }}
                             >
                               Delete
@@ -730,7 +729,7 @@ class JobsList extends Component {
                           </div>
                         )}
                       </div>
-                    </li>
+                   
 
                   );
                 })}
@@ -786,11 +785,11 @@ class JobsList extends Component {
         <Modal
           show={showDeleteModal}
           onHide={this.closeDeleteModal}
-          dialogClassName={`${style.modal}`}
+          // dialogClassName={`${style.modal}`}
           centered
           scrollable>
           <Modal.Header closeButton>
-            <Modal.Title>Delete Confirmation</Modal.Title>
+            <Modal.Title> Confirmation</Modal.Title>
           </Modal.Header>
           {/* <Modal.Body>Are You sure you want to delete Job with id {job._id}</Modal.Body> */}
           <Modal.Body>Are you sure you want to delete Job?</Modal.Body>

@@ -434,13 +434,13 @@ const CustomerDeposit = (props) => {
       <Modal
         show={deleteModal}
         onHide={closeDeleteModal}
-        dialogClassName={`${style.modal}`}
+        // dialogClassName={`${style.modal}`}
         centered
         scrollable
       // backdrop = {false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Confirmation</Modal.Title>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to delete this Blanket Deposit?

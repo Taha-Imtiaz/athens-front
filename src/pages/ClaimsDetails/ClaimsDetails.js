@@ -206,9 +206,10 @@ setClaimInput(claims?.waitTo)
           {/* {x.claims.map((y, j) => {
             return ( */}
           <div>
-            <div className="row">
+            <div className="row col-12">
+            
               <div className={`col-5 ${style.protectionRow}`}>
-                <h5>Protection Type : </h5>
+                <h6>Protection Type : </h6>
                 <span style={{ fontWeight: "normal" }}>
                   {claims?.claimType}
                 </span>
@@ -220,7 +221,7 @@ setClaimInput(claims?.waitTo)
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
-                <h5>{`Total: `}</h5>
+                <h6>{`Total: `}</h6>
                 <span>{`$${claims?.price}`}</span>
               </div>
 
@@ -268,47 +269,49 @@ setClaimInput(claims?.waitTo)
                 )}
               </div>
             </div>
+              
+            
             <hr />
 
-            <div className={`col-12 ${style.styleClaims}`}>
-              <h5
+            <div className={`col-12 row ${style.styleClaims}`}>
+              <h6
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
                 Title :
-              </h5>{" "}
+              </h6>{" "}
               <span style={{ fontWeight: "normal" }}>{claims?.title}</span>
             </div>
             <hr />
-            <div className={`col-12 ${style.styleClaims}`}>
-              <h5
+            <div className={`col-12 row ${style.styleClaims}`}>
+              <h6 className = "col-3"
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                   whiteSpace: "pre-line",
                 }}
               >
-                Description :
-              </h5>{" "}
+                Description:
+              </h6>{" "}
               <span style={{ fontWeight: "normal", whiteSpace: "pre-line" }}>
                 {claims?.description}
               </span>
             </div>
             <hr />
-            <div className={`row`}>
-              <div className="col-3">
-              <h5
+            <div className={`col-12 ${style.styleWaiting}`}>
+              
+              <h6 
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
                 Waiting To :{" "}
-              </h5>
-              </div>
-              <div className="col-6" onDoubleClick = {editInput}>
+              </h6>
+             
+              <div onDoubleClick = {editInput} className = "col-9">
               <TextField
                 variant="outlined"
-                // margin="normal"
+                margin="0"
                 required
                 fullWidth
                 size="small"
@@ -316,14 +319,14 @@ setClaimInput(claims?.waitTo)
                 value = {claimInput}
                 onChange = {(e) => handleClaimInput(e)}
                 disabled={waitTo}
-                style={{ fontWeight: "normal" }}
+                style={{ fontWeight: "normal"}}
               >
                 {" "}
                 
               </TextField>
               
               </div>
-              <div className="col-3">
+              <div >
               {waitTo === false && <Button onClick = {disableInput}
               
               style={{

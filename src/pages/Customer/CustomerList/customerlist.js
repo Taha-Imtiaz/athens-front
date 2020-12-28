@@ -288,7 +288,7 @@ const CustomerList = (props) => {
               <div
                 className="row"
                 style={{
-                  margin: "1rem 3rem",
+                  margin: "1rem 2rem",
                   fontWeight: "bold",
                   fontFamily: "sans-serif",
                 }}
@@ -313,10 +313,7 @@ const CustomerList = (props) => {
                   <div className={`${style.li}`}>
                     {docs.map((doc, i) => {
                       return (
-                        <li
-                          className={`checkbox list-group-item ${style.list}`}
-                          key={doc._id}
-                        >
+                       
                           <div className="row">
                             <div className="col-11">
                               <Link
@@ -327,6 +324,10 @@ const CustomerList = (props) => {
                                 }}
                                 to={`/customer/detail/${doc._id}`}
                               >
+                                 <li style={{height:"3.25rem"}}
+                          className={`checkbox list-group-item ${style.list}`}
+                          key={doc._id}
+                        >
                                 <div className="row">
                                   <div className={`col-3 ${style.item}`}>
                                     <span>
@@ -359,6 +360,7 @@ const CustomerList = (props) => {
                                     </div>
                                   </div>
                                 </div>
+                                 </li>
                               </Link>
                             </div>
                             {props.user ?.role === "admin" && (
@@ -372,7 +374,8 @@ const CustomerList = (props) => {
                                       textTransform: "none",
                                       color: "#FFF",
                                       fontFamily: "sans-serif",
-                                      width: "100%",
+                                      // width: "100%",
+                                      padding:"0.66rem 1rem",
                                     }}
                                   >
                                     Delete
@@ -382,7 +385,7 @@ const CustomerList = (props) => {
                             )}
                           </div>
 
-                        </li>
+                       
 
                       );
                     })}
@@ -409,7 +412,7 @@ const CustomerList = (props) => {
       <Modal
         show={show}
         onHide={handleClose}
-        dialogClassName={`${style.modal}`}
+        // dialogClassName={`${style.modal}`}
         centered
         scrollable
       // backdrop = {false}

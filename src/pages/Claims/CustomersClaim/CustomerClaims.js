@@ -195,9 +195,9 @@ const CustomerClaims = (props) => {
           {claims ?.claims ?.docs.length > 0 ? (
             <div className={style.jumbotron}>
               <div
-                className={`row`}
+                className={`row `}
                 style={{
-                  margin: "1rem 3rem",
+                  margin: "1rem 2rem",
                   fontWeight: "bold",
                   fontFamily: "sans-serif",
                 }}
@@ -211,7 +211,7 @@ const CustomerClaims = (props) => {
                   </div>
                 </div>
                 {users ?.role === "admin" && (
-                  <div className="col-1">Actions</div>
+                  <div className="col-1" >Actions</div>
                 )}
               </div>
               <ul className="list-group">
@@ -220,10 +220,7 @@ const CustomerClaims = (props) => {
                     claims ?.claims ?.docs.map((x, i) => {
                       return (
                         <div>
-                          <li
-                            className={`checkbox list-group-item ${style.list}  `}
-                            key={x._id}
-                          >
+                         
                             <div className="row">
                               <div className="col-11">
                                 <Link
@@ -237,6 +234,10 @@ const CustomerClaims = (props) => {
                                   }}
                                 >
                                   {" "}
+                                  <li
+                            className={`checkbox list-group-item ${style.list}`}
+                            key={x._id}
+                          >
                                   <div className="row">
                                     <div className={`col-3 ${style.item}`}>
                                       <h6>
@@ -267,10 +268,11 @@ const CustomerClaims = (props) => {
                                         )}
                                     </div>
                                   </div>
+                                  </li>
                                 </Link>
                               </div>
                               {users ?.role === "admin" && (
-                                <div className="col-1">
+                                <div className="col-1" style={{}}>
                                   <Button
                                     // onClick={() => removeClaim(i, x._id)}
                                     onClick={() => handleShow(i, x._id)}
@@ -278,8 +280,9 @@ const CustomerClaims = (props) => {
                                       background: "#00ADEE",
                                       textTransform: "none",
                                       color: "#FFF",
+                                      padding:"0.66rem 2rem",
                                       fontFamily: "sans-serif",
-                                      width: "100%",
+                                      // width: "100%",
                                     }}
                                   >
                                     Delete
@@ -287,7 +290,7 @@ const CustomerClaims = (props) => {
                                 </div>
                               )}
                             </div>
-                          </li>
+                        
                         </div>
                       );
                     })}
@@ -312,14 +315,14 @@ const CustomerClaims = (props) => {
       <Modal
         show={show}
         onHide={handleClose}
-        dialogClassName={`${style.modal}`}
+        // dialogClassName={`${style.modal}`}
         centered
         scrollable
       // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Delete Confirmation
+             Confirmation
                                         </Modal.Title>
         </Modal.Header>
         {/* <Modal.Body>Are You sure you want to delete this Claim with id {x._id}</Modal.Body> */}
@@ -350,6 +353,7 @@ const CustomerClaims = (props) => {
                 color: "#FFF",
                 fontFamily: "sans-serif",
                 width: "100%",
+                margin:"0"
               }} onClick={handleClose}>Cancel</Button>
           </div>
         </Modal.Footer>

@@ -1,4 +1,5 @@
-import Axios from "axios";
+// import Axios from "axios";
+import Axios from "../../utils/api";
 import { showMessage } from "../Common/commonActions";
 import {
   DELETE_BLANKET_DEPOSIT,
@@ -10,7 +11,7 @@ export var getDeposits = (page) => {
   return async (dispatch) => {
     try {
       var deposits = await Axios.post(
-        `https://athens-backend.herokuapp.com/api/deposit/all`,
+        `deposit/all`,
         page
       );
       dispatch({
@@ -28,7 +29,7 @@ export var getDeposits = (page) => {
 export var addDeposit = async (data) => {
   try {
     var blanket = await Axios.post(
-      `https://athens-backend.herokuapp.com/api/deposit`,
+      `deposit`,
       data
     );
     return blanket;
@@ -40,7 +41,7 @@ export var deleteBlanketDeposit = (id) => {
   return async (dispatch) => {
     try {
       var blanketToDelete = await Axios.delete(
-        `https://athens-backend.herokuapp.com/api/deposit/${id}`
+        `deposit/${id}`
       );
       dispatch(showMessage(blanketToDelete.data.message));
       dispatch({
@@ -59,7 +60,7 @@ export var updateDeposit = (data) => {
   return async (dispatch) => {
     try {
       console.log(data);
-      var blanket = await Axios.put(`https://athens-backend.herokuapp.com/api/deposit`, data);
+      var blanket = await Axios.put(`deposit`, data);
       dispatch(showMessage(blanket.data.message))
       dispatch({
         type: EDIT_DEPOSIT,

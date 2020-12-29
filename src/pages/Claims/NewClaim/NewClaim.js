@@ -20,7 +20,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { setClaimForm } from "../../../Redux/PersistForms/formActions"
+import { resetClaimForm, setClaimForm } from "../../../Redux/PersistForms/formActions"
+import { cloneDeep } from "lodash";
 
 class NewClaim extends Component {
   constructor(props) {
@@ -240,7 +241,12 @@ class NewClaim extends Component {
     var { setClaimForm } = this.props;
     setClaimForm({ ...this.state })
   }
-
+  handleResetForm = () => {
+    var {resetClaimForm} = this.props
+    let customers = cloneDeep(this.state.customers)
+    resetClaimForm()
+    this.setState({...this.initialState, customers})
+  }
   render() {
     var { showClaimsDetails, customerName } = this.state;
     return (
@@ -602,22 +608,39 @@ class NewClaim extends Component {
 
 
             </div> */}
-
-            <div>
+            <div className="row" style={{padding:"1rem 2rem"}}>
+              <div className="col-6">
               <Button
                 style={{
                   background: "#00ADEE",
                   textTransform: "none",
                   color: "#FFF",
                   fontFamily: "sans-serif",
-                  margin: " 0 2rem",
-                  width: "90%",
+                  // margin: " 0 2rem",
+                  width: "100%",
+                }}
+                onClick={this.handleResetForm}
+              >
+               Reset
+              </Button>
+              </div>
+            <div className = "col-6">
+              <Button
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                  // margin: " 0 2rem",
+                  width: "100%",
                 }}
                 onClick={this.mySubmitHandler}
               >
                 Submit
               </Button>
             </div>
+            </div>
+           
           </form>
         </div>
       </div>
@@ -632,6 +655,7 @@ var mapStateToProps = (state) => ({
 var actions = {
   addClaim,
   showMessage,
-  setClaimForm
+  setClaimForm,
+  resetClaimForm
 };
 export default connect(mapStateToProps, actions)(NewClaim);

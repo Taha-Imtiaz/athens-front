@@ -90,7 +90,7 @@ function JobConfirmation(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = React.useState("");
   const [payment, setPayment] = React.useState({});
-  var [state, setState] = useState("")
+  var [state, setState] = useState("");
   const steps = getSteps();
 
   useEffect(() => {
@@ -100,15 +100,15 @@ function JobConfirmation(props) {
       typeof x == "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    job.startTime = today
+    job.startTime = today;
     setData(job);
   }, []);
 
   var handleTimeSelect = (date) => {
-    var newData = { ...data }
+    var newData = { ...data };
     setStartTime(date.toTimeString());
-    newData.startTime = date
-    setData(newData)
+    newData.startTime = date;
+    setData(newData);
   };
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -146,8 +146,6 @@ function JobConfirmation(props) {
     setData(newState);
   };
 
-
-
   const handleFormInput = (event) => {
     var { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
@@ -167,228 +165,240 @@ function JobConfirmation(props) {
     setData(job);
   };
 
-
-
   // var handleCheckBox = (e, i) => {
   //   var { name, value } = e.target;
   //   console.log(name, value)
   //   e.stopPropagation()
   //   setState({ ...data, [name]: value })
   // };
-  var changeCheckBoxState = (e,i) => {
-    console.log(e)
-    e.stopPropagation()
+  var changeCheckBoxState = (e, i) => {
+    console.log(e);
+    e.stopPropagation();
     var prevState = cloneDeep(data);
 
-    console.log(prevState, i)
+    console.log(prevState, i);
     prevState.locations[i].default = !prevState.locations[i].default;
     if (prevState.locations[i].default) {
-      prevState.locations[i].value = prevState.locations[i].type == 'pickup' ? 'Load Only / IA' : 'Unload Only'
+      prevState.locations[i].value =
+        prevState.locations[i].type == "pickup"
+          ? "Load Only / IA"
+          : "Unload Only";
     } else {
-      prevState.locations[i].value = ''
+      prevState.locations[i].value = "";
     }
-    setData(prevState)
+    setData(prevState);
     // this.setState({
     //   locations: prevState,
     // });
   };
   var removeDate = (i) => {
-    var newData = cloneDeep(data)
-    newData.dates.splice(i, 1)
-    setData(newData)
-  }
+    var newData = cloneDeep(data);
+    newData.dates.splice(i, 1);
+    setData(newData);
+  };
 
-
-  const showLocation = (e,i) => {
+  const showLocation = (e, i) => {
     // e.stopPropagation()
-    if (i === 0) {
-      return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-          <div className="col-12">
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              size="small"
-              id="from"
-              label="Pickup"
+    // if (i === 0) {
+    //   return (
+    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+    //       <div className="col-12">
+    //         <TextField
+    //           variant="outlined"
+    //           margin="normal"
+    //           required
+    //           fullWidth
+    //           size="small"
+    //           id="from"
+    //           label="Pickup"
+    //           name="pickup"
+    //           value={data.locations[0].value}
+    //           onChange={(e) => hanldeLocationInput(i, e)}
+    //           error={data.locationfromError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // } else if (i == 1) {
+    //   return (
+    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+    //       <div className="col-12">
+    //         <TextField
+    //           fullWidth
+    //           variant="outlined"
+    //           margin="normal"
+    //           required
+    //           size="small"
+    //           id="to"
+    //           label="Drop Off"
+    //           name="dropoff"
+    //           value={data.locations[i].value}
+    //           onChange={(e) => hanldeLocationInputTo(i, e)}
+    //           error={data.locationtoError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // }
+
+    console.log(data.locations[i]);
+    return (
+      <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+        <div className="col-4">
+          <RadioGroup
+            className={style.rowFlex}
+            value={data.locations[i].type}
+            onChange={(e) => handleInputChange(e, i)}
+          >
+            <FormControlLabel
+              value="pickup"
               name="pickup"
-              value={data.locations[0].value}
-              onChange={(e) => hanldeLocationInput(i, e)}
-              error={data.locationfromError ? true : false}
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="Pickup"
             />
-          </div>
-        </div>
-      );
-    } else if (i == 1) {
-      return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-          <div className="col-12">
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              label="Drop Off"
+            <FormControlLabel
+              value="dropoff"
               name="dropoff"
-              value={data.locations[i].value}
-              onChange={(e) => hanldeLocationInputTo(i, e)}
-              error={data.locationtoError ? true : false}
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="Dropoff"
             />
-          </div>
+          </RadioGroup>
         </div>
-      );
-    } else {
-      console.log(data.locations[i])
-      return (
-        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-          <div className="col-4">
-            <RadioGroup
-              className={style.rowFlex}
-              value={data.locations[i].type}
-              onChange={(e) => handleInputChange(e, i)}
-            >
-              <FormControlLabel
-                value="pickup"
-                name="pickup"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="Pickup"
-              />
-              <FormControlLabel
-                value="dropoff"
-                name="dropoff"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="Dropoff"
-              />
-            </RadioGroup>
-          </div>
-          <div className="col-4">
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              label={   data.locations[i].type == "pickup"
-              ? "Enter Pickup Point"
-              : data.locations[i].type == "dropoff"
+        <div className="col-4">
+          <TextField
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            required
+            size="small"
+            id="to"
+            label={
+              data.locations[i].type == "pickup"
+                ? "Enter Pickup Point"
+                : data.locations[i].type == "dropoff"
                 ? "Enter DropOff Point"
-                : "Choose Type"}
-              name={data.locations[i].type}
-              disabled={(data.locations[i].type ? false : true) || data.locations[i].default}
-              value={data.locations[i].type === "pickup" && data.locations[i].default ? "Load only / IA" : data.locations[i].type === "dropoff" && data.locations[i].default ? "Unload only" : data.locations[i].value}
-
-              // value={data.locations[i].value}
-              onChange={(e) => hanldeLocationInput(i, e)}
+                : "Choose Type"
+            }
+            name={data.locations[i].type}
+            disabled={
+              (data.locations[i].type ? false : true) ||
+              data.locations[i].default
+            }
+            value={
+              data.locations[i].type === "pickup" && data.locations[i].default
+                ? "Load only / IA"
+                : data.locations[i].type === "dropoff" &&
+                  data.locations[i].default
+                ? "Unload only"
+                : data.locations[i].value
+            }
+            // value={data.locations[i].value}
+            onChange={(e) => hanldeLocationInput(i, e)}
             // error={this.state.locationtoError ? true : false}
+          />
+        </div>
+        {data.locations[i].type == "pickup" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={data.locations[i].default}
+                  // onChange={(e) => handleCheckBox(e, i)}
+                  onClick={(e) => {
+                    console.log(i);
+                    changeCheckBoxState(e, i);
+                  }}
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
+              }
+              label="Load only / IA"
             />
           </div>
-          {data.locations[i].type == "pickup" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={data.locations[i].default}
-                    // onChange={(e) => handleCheckBox(e, i)}
-                    onClick={(e) =>{ console.log(i)
-                      changeCheckBoxState(e,i)}}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Load only / IA"
-              />
-            </div>
-          ) : data.locations[i].type == "dropoff" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={data.locations[i].default}
-                    // onChange={(e) => handleCheckBox(e, i)}
-                    onClick={(e) => {console.log(i)
-                      changeCheckBoxState(e,i)
-                    }}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Unload only" 
-              />
-            </div>
-          ) : (
-                <div
-                  className="col-3"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexWrap: "no-wrap",
+        ) : data.locations[i].type == "dropoff" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={data.locations[i].default}
+                  // onChange={(e) => handleCheckBox(e, i)}
+                  onClick={(e) => {
+                    console.log(i);
+                    changeCheckBoxState(e, i);
                   }}
-                ></div>
-              )}
-          <div className="col-1">
-            <FontAwesomeIcon
-              icon={faTrash}
-              onClick={() => removeLocation(i)}
-              style={{
-                transform: "translateY(1.5rem)",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            ></FontAwesomeIcon>
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
+              }
+              label="Unload only"
+            />
           </div>
+        ) : (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexWrap: "no-wrap",
+            }}
+          ></div>
+        )}
+        <div className="col-1">
+          <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => removeLocation(i)}
+            style={{
+              transform: "translateY(1.5rem)",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          ></FontAwesomeIcon>
         </div>
-      );
+      </div>
+    );
 
-      // return (
-      //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
-      //     <div className="col-11">
-      //       <TextField
-      //         fullWidth
-      //         variant="outlined"
-      //         margin="normal"
-      //         required
-      //         size="small"
-      //         id="to"
-      //         label="Drop Off"
-      //         name="to"
-      //         value={this.state.locations.to[i]}
-      //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
-      //         error={this.state.locationtoError ? true : false}
-      //       />
-      //     </div>
-      //     <div className="col-1">
-      //       <div className=" form-group col-1">
-      //         <i
-      //           className="fa fa-minus"
-      //           onClick={() => this.removeLocation(i)}
-      //           style={{ transform: "translateY(1.5rem)" }}
-      //         ></i>
-      //       </div>
-      //     </div>
-      //   </div>
-      // );
-    }
+    // return (
+    //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+    //     <div className="col-11">
+    //       <TextField
+    //         fullWidth
+    //         variant="outlined"
+    //         margin="normal"
+    //         required
+    //         size="small"
+    //         id="to"
+    //         label="Drop Off"
+    //         name="to"
+    //         value={this.state.locations.to[i]}
+    //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
+    //         error={this.state.locationtoError ? true : false}
+    //       />
+    //     </div>
+    //     <div className="col-1">
+    //       <div className=" form-group col-1">
+    //         <i
+    //           className="fa fa-minus"
+    //           onClick={() => this.removeLocation(i)}
+    //           style={{ transform: "translateY(1.5rem)" }}
+    //         ></i>
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
   };
   var addLocation = (e) => {
     e.stopPropagation();
@@ -402,8 +412,8 @@ function JobConfirmation(props) {
 
     if (data.locations[0].value !== "" && data.locations[1].value !== "") {
       var newData = { ...data };
-      console.log(data.locations)
-      newData.locations.push({ type: "", value: "",default:false });
+      console.log(data.locations);
+      newData.locations.push({ type: "", value: "", default: false });
       setData(newData);
       // this.setState({
       //   locations: {...this.state.locations }
@@ -425,10 +435,10 @@ function JobConfirmation(props) {
 
   var handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    console.log(name, value)
+    console.log(name, value);
     let updateLocation = { ...data };
     updateLocation.locations[i].type = value;
-    updateLocation.locations[i].value = '';
+    updateLocation.locations[i].value = "";
     updateLocation.locations[i].default = false;
 
     setData(updateLocation);
@@ -482,7 +492,9 @@ function JobConfirmation(props) {
             dates: stringDates,
             startTime: data.startTime,
             phone: data.customer.phone,
-            locations: data.locations.filter(x => x.value != '' && x.type != ''),
+            locations: data.locations.filter(
+              (x) => x.value != "" && x.type != ""
+            ),
             email: data.customer.email,
             customerId: data.customer._id,
           };
@@ -522,7 +534,7 @@ function JobConfirmation(props) {
       dates: stringDates,
       startTime: data.startTime,
       phone: data.customer.phone,
-      locations: data.locations.filter(x => x.value != '' && x.type != ''),
+      locations: data.locations.filter((x) => x.value != "" && x.type != ""),
       email: data.customer.email,
       customerId: data.customer._id,
     };
@@ -548,7 +560,7 @@ function JobConfirmation(props) {
             <h6>Dates:</h6>
             <div className="row">
               {data &&
-                data.dates ?.map((x, i) => {
+                data.dates?.map((x, i) => {
                   return (
                     <div className="row">
                       <div className="col-9">
@@ -577,10 +589,15 @@ function JobConfirmation(props) {
                             </div>
                           </Grid>
                         </MuiPickersUtilsProvider>
-
                       </div>
-                      <div className="col-2" style={{ display: "flex", alignItems: "center" }}>
-                        <FontAwesomeIcon icon={faTrash} onClick={() => removeDate(i)} />
+                      <div
+                        className="col-2"
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={() => removeDate(i)}
+                        />
                       </div>
                     </div>
                   );
@@ -607,7 +624,7 @@ function JobConfirmation(props) {
                         value={data.startTime}
                         onChange={handleTimeSelect}
                         KeyboardButtonProps={{
-                          'aria-label': 'change time',
+                          "aria-label": "change time",
                         }}
                       />
                     </Grid>
@@ -652,7 +669,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="First Name"
                     name="firstName"
-                    value={data.customer ?.firstName}
+                    value={data.customer?.firstName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -668,7 +685,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Last Name"
                     name="lastName"
-                    value={data.customer ?.lastName}
+                    value={data.customer?.lastName}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -684,7 +701,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Phone Number"
                     name="phone"
-                    value={data.customer ?.phone}
+                    value={data.customer?.phone}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -700,7 +717,7 @@ function JobConfirmation(props) {
                     id="name"
                     label="Email Address"
                     name="email"
-                    value={data.customer ?.email}
+                    value={data.customer?.email}
                     onChange={handleFormInput}
                   />
                 </div>
@@ -736,18 +753,40 @@ function JobConfirmation(props) {
             {/* {data.locations.map((ll, i) => {
               return showLocation(i);
             })} */}
-            {data.locations ?.map((e, i) => showLocation(e,i))}
+            {data?.locations.length === 0 && (
+             <div className="row">
+               <div className="col-10"></div>
+               <div className="col-2">
+               <Button   onClick={(e) => addLocation(e)}
+                style={{
+                  background: "#00ADEE",
+                  border: "transparent",
+                  color: "#ffffff",
+                  padding: "0.5rem",
+                  borderRadius: "0.25rem",
+                  fontFamily: "sans-serif",
+                  textTransform: "none",
+                }}
+              >Add Location</Button>
+               </div>
+             </div>
+            )}
 
-            <div className="row">
-              <div className="col-11"></div>
-              <div className="col-1">
-                <i
-                  className="fa fa-plus"
-                  onClick={(e) => addLocation(e)}
-                  style={{ transform: "translate3d(-1.3rem,0rem, 0)" }}
-                ></i>
+            {data?.locations?.length > 0 &&
+              data.locations.map((e, i) => showLocation(e, i))}
+
+            {data?.locations.length > 0 && (
+              <div className="row">
+                <div className="col-11"></div>
+                <div className="col-1">
+                  <i
+                    className="fa fa-plus"
+                    onClick={(e) => addLocation(e)}
+                    style={{ transform: "translate3d(-1.3rem,0rem, 0)" }}
+                  ></i>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         );
       case 3:
@@ -844,7 +883,7 @@ function JobConfirmation(props) {
                 float: "right",
               }}
 
-            //   className={classes.button}
+              //   className={classes.button}
             >
               Skip And Submit
             </Button>
@@ -862,7 +901,9 @@ function JobConfirmation(props) {
           const labelProps = {};
           return (
             <Step key={label} {...stepProps}>
-              <StepLabel style={{ color: "#00ADEE" }} {...labelProps}>{label}</StepLabel>
+              <StepLabel style={{ color: "#00ADEE" }} {...labelProps}>
+                {label}
+              </StepLabel>
             </Step>
           );
         })}
@@ -878,41 +919,41 @@ function JobConfirmation(props) {
             </Button>
           </div>
         ) : (
-            <div style={{ margin: "5px 30px" }}>
-              {
-                getStepContent(
-                  activeStep
-                ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
-              }
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  Back
+          <div style={{ margin: "5px 30px" }}>
+            {
+              getStepContent(
+                activeStep
+              ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
+            }
+            <div>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.button}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                Back
               </Button>
-                <Button
-                  onClick={handleNext}
-                  className={classes.button}
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  {activeStep === steps.length - 1 ? "Submit" : "Next"}
-                </Button>
-              </div>
+              <Button
+                onClick={handleNext}
+                className={classes.button}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );

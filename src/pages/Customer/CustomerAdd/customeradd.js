@@ -6,17 +6,22 @@ import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addCustomer } from "../../../Redux/Customer/customerActions";
-import { setCustomerForm } from "../../../Redux/PersistForms/formActions"
+import {
+  resetCustomerForm,
+  setCustomerForm,
+} from "../../../Redux/PersistForms/formActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FormControl, TextField } from "@material-ui/core";
 import { FormHelperText, InputLabel } from "@material-ui/core";
 import { Input } from "@material-ui/core";
+import { cloneDeep } from "lodash";
 
 class CustomerAdd extends Component {
   constructor(props) {
+    console.log("constructor");
     super(props);
-    const initialState = {
+    this.initialState = {
       firstName: "",
       lastName: "",
       phone: "",
@@ -36,8 +41,13 @@ class CustomerAdd extends Component {
       subContactEmailError: "",
     };
 
-    this.state = { ...props.addForm };
+    // this.state = { ...this.initialState };
+    this.state = { ...this.props.addForm };
   }
+
+  // componentDidMount() {
+  //   console.log(this.props.addForm);
+  // }
 
   validate = () => {
     // var {username,password,emailError,passwordError} = this.state
@@ -106,15 +116,15 @@ class CustomerAdd extends Component {
     event.preventDefault();
     var { subContacts } = this.state;
 
-
-
-
-
     const isValid = this.validate();
     if (isValid) {
       var { firstName, lastName, email, phone, subContacts } = this.state;
-      if (this.state.subContacts[0].name === "" && this.state.subContacts[0].phone === "" && this.state.subContacts[0].email === "") {
-        subContacts = []
+      if (
+        this.state.subContacts[0].name === "" &&
+        this.state.subContacts[0].phone === "" &&
+        this.state.subContacts[0].email === ""
+      ) {
+        subContacts = [];
       }
 
       var addCustomerObj = {
@@ -132,12 +142,15 @@ class CustomerAdd extends Component {
           history.push("/customer/detail/" + customer.data.data._id);
         }
       });
-
     }
   };
 
   addContacts = () => {
-    if (this.state.subContacts[0].name && this.state.subContacts[0].phone && this.state.subContacts[0].email) {
+    if (
+      this.state.subContacts[0].name &&
+      this.state.subContacts[0].phone &&
+      this.state.subContacts[0].email
+    ) {
       this.setState({
         subContacts: [
           ...this.state.subContacts,
@@ -153,9 +166,21 @@ class CustomerAdd extends Component {
 
   componentWillUnmount() {
     var { setCustomerForm } = this.props;
-    setCustomerForm({ ...this.state })
+    setCustomerForm({ ...this.state });
   }
+  handleResetForm = () => {
+    var { resetCustomerForm, addForm } = this.props;
 
+    resetCustomerForm();
+    this.setState({...this.initialState});
+    console.log("reset is called", addForm);
+
+    //     console.log(addForm)
+    //     console.log(this.initialState)
+    // this.setState({
+    //   addForm:this.initialState
+    // })
+  };
 
   render() {
     return (
@@ -317,12 +342,14 @@ class CustomerAdd extends Component {
                 </div>
               );
             })}
-            <div className="form-group">
-              <div
-                style={{ float: "right", marginRight: "2.2rem" }}
-                className="row"
-              >
-                {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
+
+            <div
+              // style={{ float: "right", marginRight: "2.2rem" }}
+              className="row"
+            >
+              <div className="col-10"></div>
+              {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
+              <div className="col-2">
                 <Button
                   onClick={this.addContacts}
                   style={{
@@ -336,31 +363,52 @@ class CustomerAdd extends Component {
                 </Button>
               </div>
             </div>
-            {/* <div className="row"> */}
-            {/* <div className={`col-12`}> */}
-            <Button
-              onClick={this.mySubmitHandler}
-              className={
-                this.props.isModal !== true
-                  ? `${style.button}`
-                  : `${style.modalButton}`
-              }
-              style={{
-                background: "#00ADEE",
-                marginBottom: "1rem",
-                marginLeft: "1rem",
-                marginRight: "0",
-                width: "92%",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-              }}
-            >
-              Submit
-            </Button>
-            {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-            {/* </div> */}
-            {/* </div> */}
+
+            <div className="row" style={{ marginBottom: "1rem" }}>
+              <div className="col-6">
+                <Button
+                  onClick={this.handleResetForm}
+                  className={
+                    this.props.isModal !== true
+                      ? `${style.button}`
+                      : `${style.modalButton}`
+                  }
+                  style={{
+                    background: "#00ADEE",
+
+                    width: "100%",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+              <div className={`col-6`}>
+                <Button
+                  onClick={this.mySubmitHandler}
+                  className={
+                    this.props.isModal !== true
+                      ? `${style.button}`
+                      : `${style.modalButton}`
+                  }
+                  style={{
+                    background: "#00ADEE",
+
+                    width: "100%",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                  }}
+                >
+                  Submit
+                </Button>
+                {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
+                {/* </div> */}
+                {/* </div> */}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -369,13 +417,13 @@ class CustomerAdd extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  addForm: state.forms.addCustomerForm
+  addForm: state.forms.addCustomerForm,
 });
-
 
 var actions = {
   addCustomer,
-  setCustomerForm
+  setCustomerForm,
+  resetCustomerForm,
 };
 
 export default connect(mapStateToProps, actions)(CustomerAdd);

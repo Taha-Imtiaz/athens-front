@@ -168,6 +168,7 @@ class JobEditDetails extends Component {
     var { title, job } = this.state;
 
     getJob(jobId).then((res) => {
+      console.log(res)
       this.setState({
         services: res.data.job.services,
         assignee: res.data.job.assignee,
@@ -417,7 +418,7 @@ class JobEditDetails extends Component {
   addLocation = () => {
     var location = cloneDeep(this.state.locations);
 
-    var locationAdded = location.push({ type: "", value: "" });
+    var locationAdded = location.push({ type: "", value: "", default: false });
     this.setState({
       locations: location,
     });
@@ -455,206 +456,204 @@ class JobEditDetails extends Component {
   };
 
   showLocation = (i) => {
-    if (i === 0) {
-      return (
-        <div className="row">
-          <div className="col-12">
-            <TextField
-              variant="outlined"
-              style={{ margin: "1rem 2rem", width: "90%" }}
-              margin="normal"
-              required
-              fullWidth
-              size="small"
-              id="from"
-              label="Pickup"
-              name="pickup"
-              value={this.state.locations[0].value}
-              onChange={(e) => this.hanldeLocationInput(i, e)}
-              error={this.state.locationfromError ? true : false}
-            />
-          </div>
-        </div>
-      );
-    } else if (i == 1) {
-      return (
-        <div className="row">
-          <div className="col-12">
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              style={{ margin: "1rem 2rem", width: "90%" }}
-              label="Drop Off"
-              name="dropoff"
-              value={this.state.locations[i].value}
-              onChange={(e) => this.hanldeLocationInputTo(i, e)}
-              error={this.state.locationtoError ? true : false}
-            />
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-          <div
-           className="col-4" style={{ display: "flex" }}
+    // if (i === 0) {
+    //   return (
+    //     <div className="row">
+    //       <div className="col-12">
+    //         <TextField
+    //           variant="outlined"
+    //           style={{ margin: "1rem 2rem", width: "90%" }}
+    //           margin="normal"
+    //           required
+    //           fullWidth
+    //           size="small"
+    //           id="from"
+    //           label="Pickup"
+    //           name="pickup"
+    //           value={this.state.locations[0].value}
+    //           onChange={(e) => this.hanldeLocationInput(i, e)}
+    //           error={this.state.locationfromError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // } else if (i == 1) {
+    //   return (
+    //     <div className="row">
+    //       <div className="col-12">
+    //         <TextField
+    //           fullWidth
+    //           variant="outlined"
+    //           margin="normal"
+    //           required
+    //           size="small"
+    //           id="to"
+    //           style={{ margin: "1rem 2rem", width: "90%" }}
+    //           label="Drop Off"
+    //           name="dropoff"
+    //           value={this.state.locations[i].value}
+    //           onChange={(e) => this.hanldeLocationInputTo(i, e)}
+    //           error={this.state.locationtoError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // } else {
+    return (
+      <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+        <div className="col-4" style={{ display: "flex" }}>
+          <RadioGroup
+            className={style.rowFlex}
+            value={this.state.locations[i].type}
+            onChange={(e) => this.handleInputChange(e, i)}
           >
-            <RadioGroup
-              className={style.rowFlex}
-              value={this.state.locations[i].type}
-              onChange={(e) => this.handleInputChange(e, i)}
-            >
-              <FormControlLabel
-                value="pickup"
-                name="pickup"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="Pickup"
-              />
-              <FormControlLabel
-                value="dropoff"
-                name="dropoff"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="Dropoff"
-              />
-            </RadioGroup>
-          </div>
-          <div className="col-4">
-            <TextField
-              fullWidth
-              variant="outlined"
-              // style={{ transform: "translateX(3rem)", width: "100%" }}
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              label={
-                this.state.locations[i].type === "pickup"
-                  ? "PickUp Location"
-                  : this.state.locations[i].type === "dropoff"
-                  ? "Drop Off Location"
-                  : "Choose Location"
+            <FormControlLabel
+              value="pickup"
+              name="pickup"
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="Pickup"
+            />
+            <FormControlLabel
+              value="dropoff"
+              name="dropoff"
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="Dropoff"
+            />
+          </RadioGroup>
+        </div>
+        <div className="col-4">
+          <TextField
+            fullWidth
+            variant="outlined"
+            // style={{ transform: "translateX(3rem)", width: "100%" }}
+            margin="normal"
+            required
+            size="small"
+            id="to"
+            label={
+              this.state.locations[i].type === "pickup"
+                ? "PickUp Location"
+                : this.state.locations[i].type === "dropoff"
+                ? "Drop Off Location"
+                : "Choose Location"
+            }
+            disabled={
+              (this.state.locations[i].type ? false : true) ||
+              this.state.locations[i].default
+            }
+            name={this.state.locations[i].type}
+            value={
+              this.state.locations[i].type === "pickup" &&
+              this.state.locations[i].default
+                ? "Load only / IA"
+                : this.state.locations[i].type === "dropoff" &&
+                  this.state.locations[i].default
+                ? "Unload only"
+                : this.state.locations[i].value
+            }
+            onChange={(e) => this.hanldeLocationInput(i, e)}
+            // error={this.state.locationtoError ? true : false}
+          />
+        </div>
+        {this.state.locations[i].type == "pickup" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              // transform: "translateX(3rem)",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.locations[i].default}
+                  // onChange={(e) => this.handleCheckBox(e, i)}
+                  onClick={() => this.changeCheckBoxState(i)}
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
               }
-              disabled={
-                (this.state.locations[i].type ? false : true) ||
-                this.state.locations[i].default
-              }
-              name={this.state.locations[i].type}
-              value={
-                this.state.locations[i].type === "pickup" &&
-                this.state.locations[i].default
-                  ? "Load only / IA"
-                  : this.state.locations[i].type === "dropoff" &&
-                    this.state.locations[i].default
-                  ? "Unload only"
-                  : this.state.locations[i].value
-              }
-              onChange={(e) => this.hanldeLocationInput(i, e)}
-              // error={this.state.locationtoError ? true : false}
+              label="Load only / IA"
             />
           </div>
-          {this.state.locations[i].type == "pickup" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                // transform: "translateX(3rem)",
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.locations[i].default}
-                    // onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={() => this.changeCheckBoxState(i)}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Load only / IA"
-              />
-            </div>
-          ) : this.state.locations[i].type == "dropoff" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                // transform: "translateX(3rem)",
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.locations[i].default}
-                    // onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={() => this.changeCheckBoxState(i)}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Unload Only"
-              />
-            </div>
-          ) : (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexWrap: "no-wrap",
-              }}
-            ></div>
-          )}
-          <div className="col-1">
-            <FontAwesomeIcon
-              icon={faTrash}
-              onClick={() => this.removeLocation(i)}
-              style={{
-                transform: "translate3d(1.2rem,1.5rem, 0)",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            ></FontAwesomeIcon>
+        ) : this.state.locations[i].type == "dropoff" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              // transform: "translateX(3rem)",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.locations[i].default}
+                  // onChange={(e) => this.handleCheckBox(e, i)}
+                  onClick={() => this.changeCheckBoxState(i)}
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
+              }
+              label="Unload Only"
+            />
           </div>
+        ) : (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexWrap: "no-wrap",
+            }}
+          ></div>
+        )}
+        <div className="col-1">
+          <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => this.removeLocation(i)}
+            style={{
+              transform: "translate3d(1.2rem,1.5rem, 0)",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          ></FontAwesomeIcon>
         </div>
-      );
+      </div>
+    );
 
-      // return (
-      //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
-      //     <div className="col-11">
-      //       <TextField
-      //         fullWidth
-      //         variant="outlined"
-      //         margin="normal"
-      //         required
-      //         size="small"
-      //         id="to"
-      //         label="Drop Off"
-      //         name="to"
-      //         value={this.state.locations.to[i]}
-      //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
-      //         error={this.state.locationtoError ? true : false}
-      //       />
-      //     </div>
-      //     <div className="col-1">
-      //       <div className=" form-group col-1">
-      //         <i
-      //           className="fa fa-minus"
-      //           onClick={() => this.removeLocation(i)}
-      //           style={{ transform: "translateY(1.5rem)" }}
-      //         ></i>
-      //       </div>
-      //     </div>
-      //   </div>
-      // );
-    }
+    // return (
+    //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
+    //     <div className="col-11">
+    //       <TextField
+    //         fullWidth
+    //         variant="outlined"
+    //         margin="normal"
+    //         required
+    //         size="small"
+    //         id="to"
+    //         label="Drop Off"
+    //         name="to"
+    //         value={this.state.locations.to[i]}
+    //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
+    //         error={this.state.locationtoError ? true : false}
+    //       />
+    //     </div>
+    //     <div className="col-1">
+    //       <div className=" form-group col-1">
+    //         <i
+    //           className="fa fa-minus"
+    //           onClick={() => this.removeLocation(i)}
+    //           style={{ transform: "translateY(1.5rem)" }}
+    //         ></i>
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
+    // }
   };
 
   addDate = () => {
@@ -663,14 +662,14 @@ class JobEditDetails extends Component {
     }
   };
   removeDate = (i) => {
-    var datesArr = cloneDeep(this.state.dates)
-  console.log(datesArr,i)
-    datesArr.splice(i, 1)
-    console.log(datesArr, i)
+    var datesArr = cloneDeep(this.state.dates);
+    console.log(datesArr, i);
+    datesArr.splice(i, 1);
+    console.log(datesArr, i);
     this.setState({
-      dates : datesArr
-    })
-  }
+      dates: datesArr,
+    });
+  };
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "_id");
     this.setState({ services: arr });
@@ -879,7 +878,11 @@ class JobEditDetails extends Component {
                               id="date-picker-dialog"
                               // style={{ zIndex: "-1" }}
                               format="MM/dd/yyyy"
-                              value={this.state.dates[i] ? this.state.dates[i] : new Date()}
+                              value={
+                                this.state.dates[i]
+                                  ? this.state.dates[i]
+                                  : new Date()
+                              }
                               onChange={(e) => this.handleStartDate(e, i)}
                               KeyboardButtonProps={{
                                 "aria-label": "change date",
@@ -895,9 +898,8 @@ class JobEditDetails extends Component {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        
                       }}
-                      onClick = {() => this.removeDate(i)}
+                      onClick={() => this.removeDate(i)}
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </div>
@@ -972,15 +974,31 @@ class JobEditDetails extends Component {
                 </FormControl>
               </div>
             </div>
-            <div className="row">
-              <div className="col-12">
-                <div style={{ margin: "1rem 2rem", width: "90%" }}>
-                  <h4>Location:</h4>
+            {this.state?.locations?.length === 0 && (
+              <div className="row">
+                <div className="col-9"></div>
+                <div className="col-3">
+                  <Button
+                    onClick={this.addLocation}
+                    style={{
+                      background: "#00ADEE",
+                      border: "transparent",
+                      color: "#ffffff",
+                      padding: "0.5rem",
+                      borderRadius: "0.25rem",
+                      fontFamily: "sans-serif",
+                      textTransform: "none",
+                      margin: " 0.5rem 2rem",
+                      // float:"right"
+                    }}
+                  >
+                    Add Location
+                  </Button>
                 </div>
               </div>
-            </div>
+            )}
 
-            {this.state.locations && (
+            {this.state?.locations?.length > 0 && (
               <div>
                 {this.state?.locations?.map((location, i) =>
                   this.showLocation(i)
@@ -1066,23 +1084,19 @@ class JobEditDetails extends Component {
                   })}
                 </div>
               } */}
-            <div className="row">
-              <div className="col-11"></div>
-              <div
-                className="col-1"
-                style={{
-                  // float: "right",
-                  // transform: "translate3d(3.7rem,0rem, 0)",
-                }}
-              >
-                <i
-                  className="fa fa-plus"
-                  name="Add Location"
-                  value="Add Location"
-                  onClick={this.addLocation}
-                />
+            {this.state?.locations?.length > 0 && (
+              <div className="row">
+                <div className="col-11"></div>
+                <div className="col-1">
+                  <i
+                    className="fa fa-plus"
+                    name="Add Location"
+                    value="Add Location"
+                    onClick={this.addLocation}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </form>
 
           {/* <div className="dropdown">
@@ -1122,7 +1136,7 @@ class JobEditDetails extends Component {
           </div>
         </div> */}
           <div>
-            {note?.length !== 0 && (
+            {note?.length > 0 && (
               <h3 style={{ transform: "translateX(2.5rem)" }}>Notes</h3>
             )}
 
@@ -1137,15 +1151,11 @@ class JobEditDetails extends Component {
                 />
               </div>
             ))}
-
-            <div className="row">
+        </div>
+            <div className="row" style = {{margin:"1.5rem", }}>
               <div
-                className={`col-12`}
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                }}
+                className={`col-6`}
+               
               >
                 <Button
                   onClick={this.handleShow}
@@ -1155,16 +1165,37 @@ class JobEditDetails extends Component {
                     textTransform: "none",
                     color: "#FFF",
                     fontFamily: "sans-serif",
-                    width: "90%",
+                   
+                    width: "100%",
                   }}
                 >
                   Add Notes
                 </Button>
               </div>
+              <div
+              className={`col-6`}
+              
+            >
+              <Button
+                type="submit"
+                onClick={this.handleJobUpdate}
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+                  width: "100%",
+                  // margin:"0 2rem",
+                  // transform: "translate3d(0rem, 1rem ,0rem)",
+                }}
+              >
+                Update
+              </Button>
             </div>
-          </div>
+            </div>
+          
           <div className="row">
-            <div className={`col-6 ${style.btnalign}`}>
+            {/* <div className={`col-6 ${style.btnalign}`}>
               <Button
                 type="submit"
                 className={`btn btn-primary  ${style.btnCustom}`}
@@ -1180,30 +1211,16 @@ class JobEditDetails extends Component {
               >
                 Reset
               </Button>
-            </div>
+            </div> */}
 
-            <div className={`col-6 ${style.btnalign}`}>
-              <Button
-                type="submit"
-                onClick={this.handleJobUpdate}
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                  width: "90%",
-                  transform: "translate3d(0rem, 1rem ,0rem)",
-                }}
-              >
-                Update
-              </Button>
-            </div>
+            
           </div>
           <Modal
             show={show}
             onHide={this.handleClose}
             animation={false}
             centered
+            dialogClassName = {style.modal}
           >
             <Modal.Header closeButton>
               <Modal.Title>Add Note</Modal.Title>

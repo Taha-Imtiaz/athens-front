@@ -1,4 +1,4 @@
-import { GET_CUSTOMER_FORM, SET_CUSTOMER_FORM, GET_JOB_FORM, SET_JOB_FORM, GET_CLAIM_FORM, SET_CLAIM_FORM, SET_DEPOSIT_FORM, GET_DEPOSIT_FORM } from "./formConstants"
+import { GET_CUSTOMER_FORM, SET_CUSTOMER_FORM, GET_JOB_FORM, SET_JOB_FORM, GET_CLAIM_FORM, SET_CLAIM_FORM, SET_DEPOSIT_FORM, GET_DEPOSIT_FORM, RESET_CUSTOMER_FORM, RESET_JOB_FORM, RESET_CLAIM_FORM, RESET_DEPOSIT_FORM } from "./formConstants"
 import { EditorState } from 'draft-js';
 
 
@@ -51,10 +51,11 @@ var initialState = {
         note: [],
         assigneesId: [],
         add: 1,
-        locations: [
-            { type: "pickup", value: "", default: false },
-            { type: "dropoff", value: "", default: false },
-        ],
+        // locations: [
+        //     { type: "pickup", value: "", default: false },
+        //     { type: "dropoff", value: "", default: false },
+        // ],
+        locations: [],
         fromTo: [],
         assigneeRequiredError: "",
         selectedDate: new Date(),
@@ -130,18 +131,24 @@ var formsReducer = (state = initialState, action) => {
             return { ...state, addCustomerForm: payload };
         case GET_CUSTOMER_FORM:
             return { ...payload.addCustomerForm };
-
-        // JOB
+        case RESET_CUSTOMER_FORM:
+            return {...state, addCustomerForm: initialState.addCustomerForm}
+       
+            // JOB
         case SET_JOB_FORM:
             return { ...state, addJobForm: payload };
         case GET_JOB_FORM:
             return { ...payload.addJobForm };
+            case RESET_JOB_FORM:
+                return {...state, addJobForm: initialState.addJobForm}
 
         // CLAIM
         case SET_CLAIM_FORM:
             return { ...state, addClaimForm: payload };
         case GET_CLAIM_FORM:
             return { ...payload.addClaimForm };
+            case RESET_CLAIM_FORM:
+                return {...state, addClaimForm:initialState.addClaimForm}
 
         // BLANKET
         case SET_DEPOSIT_FORM:
@@ -149,6 +156,8 @@ var formsReducer = (state = initialState, action) => {
         case GET_DEPOSIT_FORM:
             return { ...payload.addDepositForm };
 
+            case RESET_DEPOSIT_FORM:
+            return {...state, addDepositForm: initialState.addDepositForm}
         default:
             return state;
     }

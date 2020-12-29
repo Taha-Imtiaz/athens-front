@@ -43,13 +43,13 @@ import { Modal } from "react-bootstrap";
 import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { setJobForm } from "../../../Redux/PersistForms/formActions";
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import { data } from "jquery";
+import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
+import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from "draftjs-to-html";
 
+import { data } from "jquery";
 
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
@@ -87,10 +87,11 @@ class CreateJobs extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: [
-      { type: "pickup", value: "", default: false },
-      { type: "dropoff", value: "", default: false },
-    ],
+    // locations: [
+    //   { type: "pickup", value: "", default: false },
+    //   { type: "dropoff", value: "", default: false },
+    // ],
+    locations: [],
     fromTo: [],
     assigneeRequiredError: "",
     selectedDate: new Date(),
@@ -106,19 +107,19 @@ class CreateJobs extends Component {
       { id: 4, name: "Grand Piano" },
       { id: 5, name: "Baby" },
       { id: 6, name: "Hot Tub" },
-    ]
-
+    ],
   };
 
-
-
   componentDidMount = () => {
-    if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+    if (
+      this.props.location.customerId !== undefined &&
+      this.props.location.customerName !== undefined
+    ) {
       this.setState({
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
-        jobs: this.props.location.jobs
-      })
+        jobs: this.props.location.jobs,
+      });
     }
     getCustomersAndJobs().then((res) => {
       if (res && res.status == 201) {
@@ -152,14 +153,13 @@ class CreateJobs extends Component {
   };
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
-    
-    let updateLocation = cloneDeep(this.state.locations)
+
+    let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
-    updateLocation[i].value = '';
-    updateLocation[i].default = false
+    updateLocation[i].value = "";
+    updateLocation[i].default = false;
     this.setState({
       locations: updateLocation,
-
     });
   };
   handleClick = (event) => {
@@ -173,19 +173,19 @@ class CreateJobs extends Component {
       anchorEl: null,
     });
   };
-  handleDateChange = (date) => { };
+  handleDateChange = (date) => {};
 
   addLocation = () => {
-    if (
-      this.state.locations[0].value !== "" &&
-      this.state.locations[1].value !== ""
-    ) {
-      var location = cloneDeep(this.state.locations);
-      location.push({ type: "", value: "", default: false });
-      this.setState({
-        locations: location,
-      });
-    }
+    // if (
+    //   this.state.locations[0].value !== "" &&
+    //   this.state.locations[1].value !== ""
+    // ) {
+    var location = cloneDeep(this.state.locations);
+    location.push({ type: "", value: "", default: false });
+    this.setState({
+      locations: location,
+    });
+    // }
   };
 
   addDate = () => {
@@ -194,14 +194,14 @@ class CreateJobs extends Component {
     }
   };
   removeDate = (i) => {
-    var datesArr = cloneDeep(this.state.dates)
-  console.log(datesArr,i)
-    datesArr.splice(i, 1)
-    console.log(datesArr, i)
+    var datesArr = cloneDeep(this.state.dates);
+    console.log(datesArr, i);
+    datesArr.splice(i, 1);
+    console.log(datesArr, i);
     this.setState({
-      dates : datesArr
-    })
-  }
+      dates: datesArr,
+    });
+  };
 
   hanldeLocationInput = (i, e) => {
     let updateLocation = cloneDeep(this.state.locations);
@@ -231,14 +231,15 @@ class CreateJobs extends Component {
   //   }));
   // };
   changeCheckBoxState = (e, i) => {
-    e.stopPropagation()
+    e.stopPropagation();
     var prevState = cloneDeep(this.state.locations);
-    console.log(prevState)
+    console.log(prevState);
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
-      prevState[i].value = prevState[i].type == 'pickup' ? 'Load Only / IA' : 'Unload Only'
+      prevState[i].value =
+        prevState[i].type == "pickup" ? "Load Only / IA" : "Unload Only";
     } else {
-      prevState[i].value = ''
+      prevState[i].value = "";
     }
     this.setState({
       locations: prevState,
@@ -246,162 +247,172 @@ class CreateJobs extends Component {
   };
 
   showLocation = (i) => {
-    if (i === 0) {
-      return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-          <div className="col-12">
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              size="small"
-              id="from"
-              label="Pickup"
+    console.log(this.state.locations);
+    // if (i === 0) {
+    //   return (
+    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+    //       <div className="col-12">
+    //         <TextField
+    //           variant="outlined"
+    //           margin="normal"
+    //           required
+    //           fullWidth
+    //           size="small"
+    //           id="from"
+    //           label="Pickup"
+    //           name="pickup"
+    //           value={this.state.locations[0].value}
+    //           onChange={(e) => this.hanldeLocationInput(i, e)}
+    //           error={this.state.locationfromError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // } else if (i == 1) {
+    //   return (
+    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
+    //       <div className="col-12">
+    //         <TextField
+    //           fullWidth
+    //           variant="outlined"
+    //           margin="normal"
+    //           required
+    //           size="small"
+    //           id="to"
+    //           label="Drop Off"
+    //           name="dropoff"
+    //           value={this.state.locations[i].value}
+    //           onChange={(e) => this.hanldeLocationInputTo(i, e)}
+    //           error={this.state.locationtoError ? true : false}
+    //         />
+    //       </div>
+    //     </div>
+    //   );
+    // }
+
+    return (
+      <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
+        <div className="col-4" style={{ display: "flex" }}>
+          <RadioGroup
+            className={style.rowFlex}
+            value={this.state.locations[i].type}
+            onChange={(e) => this.handleInputChange(e, i)}
+          >
+            <FormControlLabel
+              value="pickup"
               name="pickup"
-              value={this.state.locations[0].value}
-              onChange={(e) => this.hanldeLocationInput(i, e)}
-              error={this.state.locationfromError ? true : false}
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="Pickup"
             />
-          </div>
-        </div>
-      );
-    } else if (i == 1) {
-      return (
-        <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-          <div className="col-12">
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              label="Drop Off"
+            <FormControlLabel
+              value="dropoff"
               name="dropoff"
-              value={this.state.locations[i].value}
-              onChange={(e) => this.hanldeLocationInputTo(i, e)}
-              error={this.state.locationtoError ? true : false}
+              control={<Radio style={{ color: "#00ADEE" }} />}
+              label="DropOff"
             />
-          </div>
+          </RadioGroup>
         </div>
-      );
-    } else {
-      return (
-        <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-          <div className="col-4" style={{ display: "flex" }}>
-            <RadioGroup
-              className={style.rowFlex}
-              value={this.state.locations[i].type}
-              onChange={(e) => this.handleInputChange(e, i)}
-            >
-              <FormControlLabel
-                value="pickup"
-                name="pickup"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="Pickup"
-              />
-              <FormControlLabel
-                value="dropoff"
-                name="dropoff"
-                control={<Radio style={{ color: "#00ADEE" }} />}
-                label="DropOff"
-              />
-            </RadioGroup>
-          </div>
-          <div className="col-4">
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              required
-              size="small"
-              id="to"
-              label={
-                this.state.locations[i].type == "pickup"
-                  ? "Enter Pickup Point"
-                  : this.state.locations[i].type == "dropoff"
-                    ? "Enter DropOff Point"
-                    : "Choose Type"
-              }
-              disabled={(this.state.locations[i].type ? false : true) || this.state.locations[i].default}
-              // label={'Pickup / dropoff point'}
-              name={this.state.locations[i].type}
-              value={this.state.locations[i].type === "pickup" && this.state.locations[i].default ? "Load only / IA" : this.state.locations[i].type === "dropoff" && this.state.locations[i].default ? "Unload only" : this.state.locations[i].value}
-              onChange={(e) => this.hanldeLocationInput(i, e)}
+        <div className="col-4">
+          <TextField
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            required
+            size="small"
+            id="to"
+            label={
+              this.state.locations[i].type == "pickup"
+                ? "Enter Pickup Point"
+                : this.state.locations[i].type == "dropoff"
+                ? "Enter DropOff Point"
+                : "Choose Type"
+            }
+            disabled={
+              (this.state.locations[i].type ? false : true) ||
+              this.state.locations[i].default
+            }
+            // label={'Pickup / dropoff point'}
+            name={this.state.locations[i].type}
+            value={
+              this.state.locations[i].type === "pickup" &&
+              this.state.locations[i].default
+                ? "Load only / IA"
+                : this.state.locations[i].type === "dropoff" &&
+                  this.state.locations[i].default
+                ? "Unload only"
+                : this.state.locations[i].value
+            }
+            onChange={(e) => this.hanldeLocationInput(i, e)}
             // error={this.state.locationtoError ? true : false}
+          />
+        </div>
+        {this.state.locations[i].type == "pickup" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.locations[i].default}
+                  // onChange={(e) => this.handleCheckBox(e, i)}
+                  onClick={(e) => this.changeCheckBoxState(e, i)}
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
+              }
+              label="Load only / IA"
             />
           </div>
-          {this.state.locations[i].type == "pickup" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.locations[i].default}
-                    // onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={(e) => this.changeCheckBoxState(e, i)}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Load only / IA"
-              />
-            </div>
-          ) : this.state.locations[i].type == "dropoff" ? (
-            <div
-              className="col-3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-
-              }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.locations[i].default}
-                    // onChange={(e) => this.handleCheckBox(e, i)}
-                    onClick={(e) => this.changeCheckBoxState(e, i)}
-                    name="checkboxStates"
-                    color="#00ADEE"
-                  />
-                }
-                label="Unload Only"
-              />
-            </div>
-          ) : (
-                <div
-                  className="col-3"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexWrap: "no-wrap",
-                  }}
-                ></div>
-              )}
-          <div className="col-1">
-            <FontAwesomeIcon
-              icon={faTrash}
-              onClick={() => this.removeLocation(i)}
-              style={{
-                transform: "translate3d(1.2rem,1.5rem, 0)",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            ></FontAwesomeIcon>
+        ) : this.state.locations[i].type == "dropoff" ? (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.locations[i].default}
+                  // onChange={(e) => this.handleCheckBox(e, i)}
+                  onClick={(e) => this.changeCheckBoxState(e, i)}
+                  name="checkboxStates"
+                  color="#00ADEE"
+                />
+              }
+              label="Unload Only"
+            />
           </div>
+        ) : (
+          <div
+            className="col-3"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexWrap: "no-wrap",
+            }}
+          ></div>
+        )}
+        <div className="col-1">
+          <FontAwesomeIcon
+            icon={faTrash}
+            onClick={() => this.removeLocation(i)}
+            style={{
+              transform: "translate3d(1.2rem,1.5rem, 0)",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          ></FontAwesomeIcon>
         </div>
-      );
-    }
+      </div>
+    );
   };
 
   removeLocation = (i) => {
@@ -647,7 +658,7 @@ class CreateJobs extends Component {
     if (customer) {
       this.setState({
         jobs: customer.jobs,
-        selectedCustomer: customer.firstName + ' ' + customer.lastName,
+        selectedCustomer: customer.firstName + " " + customer.lastName,
         customerId: customer.email,
         customerIdError: "",
       });
@@ -669,7 +680,7 @@ class CreateJobs extends Component {
     this.setState({
       showAddCustomer: false,
       customers,
-      selectedCustomer: newCustomer.firstName + ' ' + newCustomer.lastName,
+      selectedCustomer: newCustomer.firstName + " " + newCustomer.lastName,
       customerId: newCustomer.email,
     });
   };
@@ -682,10 +693,16 @@ class CreateJobs extends Component {
   onEditorStateChange = (e) => {
     this.setState({
       editorState: e,
-      description: draftToHtml(convertToRaw(e.getCurrentContent()))
+      description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
+  };
+  handleResetJob = () =>{
+    var {resetJobForm,jobForm} = this.props
+    console.log("resetJobForm called")
+    let customers = cloneDeep(this.state.customers)
+    resetJobForm()
+    this.setState({...this.initialState, customers})
   }
-
   render() {
     return (
       <div style={{ background: "#e9ecef" }}>
@@ -694,7 +711,6 @@ class CreateJobs extends Component {
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
-
               {this.state.customers.length > 0 ? (
                 <Autocomplete
                   noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
@@ -715,7 +731,9 @@ class CreateJobs extends Component {
                   // freeSolo
                   autoHighlight
                   getOptionLabel={(option) =>
-                    option.firstName ? option.firstName + " " + option.lastName : option
+                    option.firstName
+                      ? option.firstName + " " + option.lastName
+                      : option
                   }
                   renderOption={(option) => (
                     <React.Fragment>
@@ -743,9 +761,12 @@ class CreateJobs extends Component {
 
               <div>
                 {this.state.dates.map((x, i) => {
-                  if(i === 0) {
+                  if (i === 0) {
                     return (
-                      <div style={{ margin: "0rem 2rem", width: "90%" }} key={i}>
+                      <div
+                        style={{ margin: "0rem 2rem", width: "90%" }}
+                        key={i}
+                      >
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <Grid>
                             <KeyboardDatePicker
@@ -765,41 +786,50 @@ class CreateJobs extends Component {
                         </MuiPickersUtilsProvider>
                       </div>
                     );
-                  }
-                  else {
+                  } else {
                     return (
-                      <div className = "row" style={{ margin:"0 1rem"}}>
-                      <div  className = "col-11"style={{  width: "90%",}}  key={i}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                          <Grid>
-                            <KeyboardDatePicker
-                              inputVariant="outlined"
-                              margin="normal"
-                              fullWidth
-                              size="small"
-                              id="date-picker-dialog"
-                              format="MM/dd/yyyy"
-                              value={this.state.dates[i]}
-                              onChange={(e) => this.handleStartDate(e, i)}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-                      <div className="col-1" style={{display:"flex", justifyContent:"center", alignItems:"center" }} onClick = {() => this.removeDate(i)}>
-                        <FontAwesomeIcon icon = {faTrash}/>
-                      </div>
+                      <div className="row" style={{ margin: "0 1rem" }}>
+                        <div
+                          className="col-11"
+                          style={{ width: "90%" }}
+                          key={i}
+                        >
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid>
+                              <KeyboardDatePicker
+                                inputVariant="outlined"
+                                margin="normal"
+                                fullWidth
+                                size="small"
+                                id="date-picker-dialog"
+                                format="MM/dd/yyyy"
+                                value={this.state.dates[i]}
+                                onChange={(e) => this.handleStartDate(e, i)}
+                                KeyboardButtonProps={{
+                                  "aria-label": "change date",
+                                }}
+                              />
+                            </Grid>
+                          </MuiPickersUtilsProvider>
+                        </div>
+                        <div
+                          className="col-1"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          onClick={() => this.removeDate(i)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </div>
                       </div>
                     );
                   }
-                 
-                  
                 })}
               </div>
 
-              <div className="row" style={{ margin:"0 0.3rem"}}>
+              <div className="row" style={{ margin: "0 0.3rem" }}>
                 <div className="col-11"></div>
                 <div className="col-1" onClick={this.addDate}>
                   <i
@@ -826,10 +856,17 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="form-group" style={{ margin: "1rem 2rem", width: "90%", borderRadius: "4px", border: "1px solid rgba(0, 0, 0, 0.3)" }}>
+              <div
+                className="form-group"
+                style={{
+                  margin: "1rem 2rem",
+                  width: "90%",
+                  borderRadius: "4px",
+                  border: "1px solid rgba(0, 0, 0, 0.3)",
+                }}
+              >
                 <Editor
                   editorState={this.state.editorState}
-
                   toolbarClassName="toolbarClassName"
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
@@ -958,30 +995,65 @@ class CreateJobs extends Component {
               </div>
             ) : null} */}
 
-              <div className="row" style={{ margin: " 0rem 2.5rem" }}>
-                <h4>Location:</h4>
-              </div>
+            {this.state.locations.length === 0 &&  
+            <div className="row">
+              <div className="col-9"></div>
+              <div className="col-3">
+                <Button   onClick={this.addLocation}
+                  style={{
+                    background: "#00ADEE",
+                    border: "transparent",
+                    color: "#ffffff",
+                    padding: "0.5rem",
+                    borderRadius: "0.25rem",
+                    fontFamily: "sans-serif",
+                    textTransform: "none",
+                    margin:" 0.5rem 2rem"
+                    // float:"right"
+                  }}
+                >
+                  Add Location
+                </Button>
+                </div>
+              </div>}
 
-              {this.state.locations && (
+              {this.state.locations.length > 0 && (
                 <div>
-                  {this.state ?.locations ?.map((location, i) =>
+                  {this.state?.locations?.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
               )}
-              <div className="row">
-                <div className="col-11"></div>
-                <div className="col-1">
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    onClick={this.addLocation}
-                    // style={{ transform: "translate3d(0rem,0rem, 0)" }}
-                  ></FontAwesomeIcon>
+              {this.state.locations.length > 0 && (
+                <div className="row">
+                  <div className="col-11"></div>
+                  <div className="col-1">
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      onClick={this.addLocation}
+                      // style={{ transform: "translate3d(0rem,0rem, 0)" }}
+                    ></FontAwesomeIcon>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="form-group">
-                <div className={style.btnsubmit} style={{ margin: "0 2.5rem" }}>
+              <div className="row" style={{ margin: "1rem" }}>
+              <div className={`col-6 ${style.btnsubmit}`} >
+                  <Button
+                    type="button"
+                    style={{
+                      background: "#00ADEE",
+                      textTransform: "none",
+                      color: "#FFF",
+                      fontFamily: "sans-serif",
+                    }}
+                    onClick={this.handleResetJob}
+                  >
+                    Reset
+                  </Button>
+                </div>
+
+                <div className={`col-6 ${style.btnsubmit}`} >
                   <Button
                     type="button"
                     style={{
@@ -1005,7 +1077,7 @@ class CreateJobs extends Component {
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-        // backdrop={false}
+          // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>
@@ -1023,6 +1095,7 @@ class CreateJobs extends Component {
 var actions = {
   createJob,
   setJobForm,
+  resetJobForm
 };
 
 var mapStateToProps = (state) => ({

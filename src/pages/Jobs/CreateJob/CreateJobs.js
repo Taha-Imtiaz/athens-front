@@ -604,7 +604,8 @@ class CreateJobs extends Component {
   };
 
   servicesChanged = (newValue) => {
-    let arr = uniqBy(newValue, "_id");
+    let arr = uniqBy(newValue, "id");
+    console.log(arr)
     this.setState({ services: arr });
     if (arr.length > 0) {
       this.setState({ multiError: "" });
@@ -884,6 +885,7 @@ class CreateJobs extends Component {
                   noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   onChange={(event, newValue) => {
+                    console.log(newValue)
                     this.servicesChanged(newValue);
                   }}
                   limitTags={10}

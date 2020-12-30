@@ -671,7 +671,7 @@ class JobEditDetails extends Component {
     });
   };
   servicesChanged = (newValue) => {
-    let arr = uniqBy(newValue, "_id");
+    let arr = uniqBy(newValue, "id");
     this.setState({ services: arr });
   };
 

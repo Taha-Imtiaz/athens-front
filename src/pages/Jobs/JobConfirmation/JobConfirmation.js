@@ -105,6 +105,7 @@ function JobConfirmation(props) {
   }, []);
 
   var handleTimeSelect = (date) => {
+    console.log(date)
     var newData = { ...data };
     setStartTime(date.toTimeString());
     newData.startTime = date;
@@ -532,12 +533,13 @@ function JobConfirmation(props) {
       paidInCash: true,
       jobbyId: data._id,
       dates: stringDates,
-      startTime: data.startTime,
+      startTime: data.startTime.toString(),
       phone: data.customer.phone,
       locations: data.locations.filter((x) => x.value != "" && x.type != ""),
       email: data.customer.email,
       customerId: data.customer._id,
     };
+    console.log(obj)
     confirmJob(obj).then((res) => {
       let { showMessage } = props;
       if (res.data.status == 200) {

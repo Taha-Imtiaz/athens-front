@@ -13,6 +13,8 @@ import {
   getAllJobsOnDate,
 } from "../../Redux/Job/jobActions";
 import { Link } from "react-router-dom";
+import parse from "html-react-parser";
+
 
 import axios from "axios";
 import { connect } from "react-redux";
@@ -169,7 +171,17 @@ class CalendarApp extends Component {
       },
     });
   };
-
+   formatAMPM = (startTime) => {
+    let date = new Date(startTime)
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
   render() {
     return (
       <div>
@@ -262,7 +274,7 @@ class CalendarApp extends Component {
 
                             {job.startTime && (
                               <Chip
-                                label={job.startTime}
+                                label={this.formatAMPM(job.startTime)}
                                 clickable
                                 color="primary"
                                 variant="outlined"
@@ -295,7 +307,7 @@ class CalendarApp extends Component {
                               className="card-text"
                               style={{ whiteSpace: "pre-line" }}
                             >
-                              {`${job.description}`}
+                              {parse(job.description)}
                             </p>
                             <div>
                               {job.services.map((service) => (
@@ -402,7 +414,7 @@ class CalendarApp extends Component {
                                 className="card-text"
                                 style={{ whiteSpace: "pre-line" }}
                               >
-                                {this.state.currentDayJobs?.description}
+                                {parse(this.state.currentDayJobs?.description)}
                               </p>
                               <div>
                               {this.state.currentDayJobs.services.map((service) => (

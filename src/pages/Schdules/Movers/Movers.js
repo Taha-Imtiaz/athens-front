@@ -121,7 +121,7 @@ const MoversSchedule = (props) => {
                             </div>
                             <div className={style.para}>
                                 {list.weeklySchedule.map(status => {
-                                    return <span className="mb-1">{status.status ? status.day.split("", 3).join("") : null}&nbsp;</span>
+                                    return <span className="mb-1">{status.status ? status.day.split("", 3).join("") : null}</span>
                                 })}
                             </div>
                         </a>

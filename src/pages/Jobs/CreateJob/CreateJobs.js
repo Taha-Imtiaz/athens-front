@@ -467,13 +467,13 @@ class CreateJobs extends Component {
       jobTypeError = "Job type is required.";
     }
 
-    if (!this.state.locations[0].value) {
-      locationfromError = "Location should not be empty";
-    }
+    // if (!this.state.locations[0].value) {
+    //   locationfromError = "Location should not be empty";
+    // }
 
-    if (!this.state.locations[1].value) {
-      locationtoError = "Location should not be empty";
-    }
+    // if (!this.state.locations[1].value) {
+    //   locationtoError = "Location should not be empty";
+    // }
 
     if (
       customerIdError ||

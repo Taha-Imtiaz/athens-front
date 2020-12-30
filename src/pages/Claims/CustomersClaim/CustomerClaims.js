@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./CustomerClaims.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
-import { Button } from "@material-ui/core";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -36,6 +36,7 @@ const CustomerClaims = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var [claimToDelete, setClaimToDelete] = useState("");
+  var [value, setValue] = useState('all')
 
   var totalCount = claims.claims ?.total;
 
@@ -122,6 +123,10 @@ const CustomerClaims = (props) => {
   var handleClose = () => {
     setShow(false);
   };
+  
+ var handleChange =(e) => {
+    setValue(e.target.value)
+  }
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -157,7 +162,13 @@ const CustomerClaims = (props) => {
                 aria-labelledby="dropdownMenuLink"
                 style={{ margin: "-0.5rem" }}
               >
-                <a
+                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+    <FormControlLabel value="all" control={<Radio />} label="All" />
+    <FormControlLabel value="open" control={<Radio />} label="Open" />
+    <FormControlLabel value="closed" control={<Radio />} label="Closed" />
+    {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
+  </RadioGroup>
+                {/* <a
                   className="dropdown-item"
                   onClick={(e) => getClaimsByStatus(e, "all")}
                 >
@@ -174,7 +185,7 @@ const CustomerClaims = (props) => {
                   onClick={(e) => getClaimsByStatus(e, "closed")}
                 >
                   Closed
-                </a>
+                </a> */}
               </div>
               <div style={{ margin: "-0.5rem" }}>
                 <Link style={{ textDecoration: "none" }} to="/claim/newclaim">

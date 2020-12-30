@@ -121,17 +121,17 @@ class JobEditDetails extends Component {
         assigneeError: "assignee should not be empty",
       });
     }
-    if (locations[0].value === "") {
-      this.setState({
-        locationFromError: "from should not be empty",
-      });
-    }
+    // if (locations[0].value === "") {
+    //   this.setState({
+    //     locationFromError: "from should not be empty",
+    //   });
+    // }
 
-    if (locations[1].value === "") {
-      this.setState({
-        locationToError: "to should not be empty",
-      });
-    }
+    // if (locations[1].value === "") {
+    //   this.setState({
+    //     locationToError: "to should not be empty",
+    //   });
+    // }
     var {
       titleError,
       descriptionError,

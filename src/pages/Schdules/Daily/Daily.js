@@ -17,7 +17,7 @@ import "jspdf-autotable";
 import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
 // import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
-import { parse } from "date-fns";
+// import { parse } from "date-fns";
 import {
   Avatar,
   Button,
@@ -43,6 +43,8 @@ import {
   faBan
 } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-horizontal-datepicker";
+import parse from "html-react-parser";
+
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
@@ -167,7 +169,17 @@ const DailySchedule = (props) => {
   const handleClose = () => {
     setShow(false);
   };
-
+  const formatAMPM = (startTime) => {
+    let date = new Date(startTime)
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
   const updateJobAssignee = (e, job) => {
     if (e) {
       e.stopPropagation();
@@ -505,7 +517,7 @@ const DailySchedule = (props) => {
                         <div
                           className="col-2"
                         >
-                          {list.startTime ? list.startTime : "N/A"}
+                          {list.startTime ? formatAMPM(list.startTime) : "N/A"}
                         </div>
                         <div className="col-3" style={{}}>
                           {list.assignee.length > 0 ? (
@@ -577,7 +589,7 @@ const DailySchedule = (props) => {
                                       </a>{" "}
                                       <Chip
                                         className="col-2"
-                                        label={job.startTime ? job.startTime : 'N/A'}
+                                        label={job.startTime ? formatAMPM(job.startTime) : 'N/A'}
                                         clickable
                                         color="primary"
                                         variant="outlined"
@@ -682,7 +694,7 @@ const DailySchedule = (props) => {
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                             }}
                           >
-                            <p style={{ whiteSpace: "pre-line" }}>{list.description}</p>
+                            <p style={{ whiteSpace: "pre-line" }}>{parse(list.description)}</p>
                           </div>
                           <hr />
                           <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>

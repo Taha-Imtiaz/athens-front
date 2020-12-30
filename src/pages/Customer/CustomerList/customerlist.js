@@ -19,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "@material-ui/core/Button";
 import { Modal } from "react-bootstrap";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 // import DeleteConfirmation from "../../DeleteConfirmation/DeleteConfirmation";
 // import { setRef } from "@material-ui/core";
 
@@ -36,6 +37,7 @@ const CustomerList = (props) => {
   var [show, setShow] = useState(false);
   var [modalIndex, setModalIndex] = useState("")
   var [jobToDelete, setJobToDelete] = useState("")
+  var [value, setValue] = useState('recently added')
 
   useEffect(() => {
     var fetchCustomersObj = {
@@ -223,6 +225,9 @@ const CustomerList = (props) => {
   var handleClose = () => {
     setShow(false);
   };
+  var handleChange = (e) => {
+    setValue(e.target.value)
+  }
   var { customers } = props;
   return (
     <div>
@@ -255,7 +260,7 @@ const CustomerList = (props) => {
               aria-labelledby="dropdownMenuLink"
               style={{ margin: "-0.5rem" }}
             >
-              <a className="dropdown-item" onClick={handleUpdtedAtFilter}>
+              {/* <a className="dropdown-item" onClick={handleUpdtedAtFilter}>
                 Recently Updated
               </a>
               <a className="dropdown-item" onClick={handleDateFilter}>
@@ -263,7 +268,14 @@ const CustomerList = (props) => {
               </a>
               <a className="dropdown-item" onClick={handleSort}>
                 Sort By Name
-              </a>
+              </a> */}
+                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                <FormControlLabel value="recently added" control={<Radio />} label="Recently Added" onClick={handleDateFilter}/>
+      
+        <FormControlLabel value="recently updated" control={<Radio />} label="Recently Updated" onClick={handleUpdtedAtFilter}/>
+        <FormControlLabel value="sort by name" control={<Radio />} label="Sort By Name" onClick={handleSort}/>
+       
+      </RadioGroup>
             </div>
             <div style={{ margin: "-0.5rem" }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">

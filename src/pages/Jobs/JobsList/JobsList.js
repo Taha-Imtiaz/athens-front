@@ -21,7 +21,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
-import { Button, Typography } from "@material-ui/core";
+import { Button, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 // import { showMessage } from "../../../Redux/Common/commonActions";
@@ -55,9 +55,11 @@ class JobsList extends Component {
     show: false,
     showDeleteModal: false,
     dates: "",
+    nearestDate:"",
     jobToConfirm: "",
     modalIndex: "",
-    jobToDelete: ""
+    jobToDelete: "",
+    value:"recently added"
   };
   handleToggle = () =>
     this.setState({
@@ -116,11 +118,11 @@ class JobsList extends Component {
     getAllJobs(jobObj);
   };
 
-  handleChangeTo1 = (date) => {
-    this.setState({
-      startDateTo1: date,
-    });
-  };
+  // handleChangeTo1 = (date) => {
+  //   this.setState({
+  //     startDateTo1: date,
+  //   });
+  // };
 
   handlePageChange = (page) => {
     var { getAllJobs } = this.props;
@@ -185,23 +187,23 @@ class JobsList extends Component {
     getAllJobs(fetchJobsOnPageChange);
   };
 
-  handleChangeTo2 = (date) => {
-    this.setState({
-      startDateTo2: date,
-    });
-  };
+  // handleChangeTo2 = (date) => {
+  //   this.setState({
+  //     startDateTo2: date,
+  //   });
+  // };
 
-  handleChangeTo3 = (date) => {
-    this.setState({
-      startDateTo3: date,
-    });
-  };
+  // handleChangeTo3 = (date) => {
+  //   this.setState({
+  //     startDateTo3: date,
+  //   });
+  // };
 
-  handleChangeTo4 = (date) => {
-    this.setState({
-      startDateTo4: date,
-    });
-  };
+  // handleChangeTo4 = (date) => {
+  //   this.setState({
+  //     startDateTo4: date,
+  //   });
+  // };
 
   handleSort = () => {
     var { getAllJobs } = this.props;
@@ -242,7 +244,7 @@ class JobsList extends Component {
         dates: date.toString(),
         movedDate: "",
         startYearMonth: "",
-        nearestDate: "",
+        nearestDate: null,
         sortLast: null,
       },
       page: 1,
@@ -252,6 +254,28 @@ class JobsList extends Component {
     });
     filterJobsByDate(DateFilters);
   };
+
+  filterJobByNearestDate = (e) => {
+    var { filterJobsByDate } = this.props;
+    this.setState({
+      nearestDate: e.target.value,
+    });
+    var { nearestDate } = this.state;
+    let date = new Date(e.target.value);
+    var DateFilters = {
+      filters: {
+        dates: "",
+        startYearMonth: "",
+        nearestDate: date.toString(),
+        sortLast:null
+    },
+      page: 1,
+    };
+    this.setState({
+      currentPage: 1,
+    });
+    filterJobsByDate(DateFilters);
+  }
 
   handleDateFilter = () => {
     var { getAllJobs } = this.props;
@@ -366,7 +390,11 @@ class JobsList extends Component {
     //   })
     // }
   };
-
+  handleChange = (e) =>{
+this.setState({
+  value: e.target.value
+})
+  }
   closeDeleteModal = () => {
     this.setState({
       showDeleteModal: false
@@ -381,7 +409,7 @@ class JobsList extends Component {
 
     var totalCount = jobs[0] ?.data ?.jobs.total;
     var { popoverOpen } = this.state;
-    var { show, showDeleteModal, dates } = this.state;
+    var { show, showDeleteModal, dates, nearestDate, value} = this.state;
     return (
       <div>
         <div className={`row ${style.toprow}`}>
@@ -410,16 +438,16 @@ class JobsList extends Component {
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
-              style={{ width: "15rem", cursor: "pointer" }}
+              // style={{ width: "17rem", cursor: "pointer" }}
             >
-              <h5
+               <h5
                 className="dropdown-item"
                 style={{ fontFamily: "sans-serif" }}
               >
                 Sort
               </h5>
               <hr />
-              <a className="dropdown-item" onClick={this.handleSort} style={{}}>
+             {/* <a className="dropdown-item" onClick={this.handleSort} style={{}}>
                 Sort By Title
               </a>
               <a
@@ -437,7 +465,15 @@ class JobsList extends Component {
               >
                 Sort By Assignee Required
               </a>
-              <hr />
+              <hr /> */}
+              <RadioGroup aria-label="gender" name="gender1" value={value} onChange={this.handleChange}>
+              <FormControlLabel value="recently added" control={<Radio />} label="Recently Added"   onClick={this.handleDateFilter}/>
+       
+        <FormControlLabel value="title" control={<Radio />} label="Title" onClick={this.handleSort}/>
+        <FormControlLabel value="assignee required" control={<Radio />} label="Assignee Required" onClick={this.handleAssigneeRequired} />
+        {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
+      </RadioGroup>
+      <hr />
               <h5
                 style={{ fontFamily: "sans-serif" }}
                 className="dropdown-item"
@@ -445,6 +481,12 @@ class JobsList extends Component {
                 Filters
               </h5>
               <hr />
+              <h6
+                style={{ fontFamily: "sans-serif" }}
+                className="dropdown-item"
+              >
+                On Date Jobs
+              </h6>
               <input
                 type="date"
                 name="dates"
@@ -452,6 +494,15 @@ class JobsList extends Component {
                 id=""
                 style={{ width: "11rem", margin: " 1rem 2rem" }}
                 onChange={(e) => this.filterJobByDate(e)}
+              />
+              <h6  style={{ fontFamily: "sans-serif" }} className="dropdown-item">Upcoming Jobs</h6>
+              <input
+                type="date"
+                name="nearestDate"
+                value={nearestDate}
+                id=""
+                style={{ width: "11rem", margin: " 1rem 2rem" }}
+                onChange={(e) => this.filterJobByNearestDate(e)}
               />
             </div>
             <div style={{ margin: "-0.5rem" }}>

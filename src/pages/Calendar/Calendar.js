@@ -384,7 +384,8 @@ class CalendarApp extends Component {
                             <div>
                               {this.state.currentDayJobs?.startTime && (
                                 <Chip
-                                  label={this.state.currentDayJobs?.startTime}
+                                // {this.formatAMPM(job.startTime)}
+                                  label={this.formatAMPM(this.state.currentDayJobs?.startTime)}
                                   clickable
                                   color="primary"
                                   variant="outlined"

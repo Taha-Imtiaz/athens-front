@@ -395,16 +395,13 @@ const CustomerDetail = (props) => {
                               {customer.subContacts.map((x, i) => (
                                 <div key={i} className={`card`}>
                                   <div className="card-header" id="headingOne">
-                                    <h5
+                                    {/* <h5
                                       className="mb-0"
-                                      style={{ background: "white" }}
-                                    >
+                                      // style={{ background: "white" }}
+                                    > </h5> */}
                                       <div
-                                        style={{
-                                          outline: "none",
-                                          background: "white",
-                                        }}
-                                        className={`btn-link ${style.button}`}
+                                       
+                                        className={`btn-link`}
                                         type="button"
                                         data-toggle="collapse"
                                         data-target={`#collapse${i}`}
@@ -413,7 +410,7 @@ const CustomerDetail = (props) => {
                                       >
                                         {`Contact # ${i + 1}`}
                                       </div>
-                                    </h5>
+                                   
                                   </div>
                                   <div
                                     id={`collapse${i}`}

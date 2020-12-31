@@ -310,7 +310,7 @@ class CustomerAdd extends Component {
                       style={{ margin: "1rem 2rem", width: "92%" }}
                       size="small"
                       // required
-
+                        type = "number"
                       id="phone_number"
                       label="Phone Number"
                       name="phone"

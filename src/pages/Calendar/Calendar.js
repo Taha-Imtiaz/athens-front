@@ -282,14 +282,14 @@ class CalendarApp extends Component {
                                 style={{ margin: " 0 0.2rem" }}
                               />
                             )}
-                            <Chip
+                            {/* <Chip
                               label={job.status}
                               clickable
                               color="primary"
                               variant="outlined"
                               size="small"
                               style={{ margin: " 0 0.2rem" }}
-                            />
+                            /> */}
                           </div>
                         </div>
 
@@ -393,14 +393,14 @@ class CalendarApp extends Component {
                                   style={{ margin: " 0 0.2rem" }}
                                 />
                               )}
-                              <Chip
+                              {/* <Chip
                                 label={this.state.currentDayJobs?.status}
                                 clickable
                                 color="primary"
                                 variant="outlined"
                                 size="small"
                                 style={{ margin: " 0 0.2rem" }}
-                              />
+                              /> */}
                             </div>
                           </div>
                           <div

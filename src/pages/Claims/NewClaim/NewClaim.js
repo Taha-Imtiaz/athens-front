@@ -485,6 +485,7 @@ class NewClaim extends Component {
                       // error = {this.state.priceError}
                       size="small"
                       id="price"
+                      type = "number"
                       label="Total Cost"
                       name="price"
                       value={this.state.claims.price}

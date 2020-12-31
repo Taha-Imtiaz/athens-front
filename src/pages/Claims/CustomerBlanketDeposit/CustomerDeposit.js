@@ -400,7 +400,7 @@ const CustomerDeposit = (props) => {
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
-                <div className={`col-2 `}>
+                <div className={`col-2`} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                   {" "}
                   <p>{activity.performer.name}</p>
                 </div>
@@ -409,7 +409,7 @@ const CustomerDeposit = (props) => {
                     <p key={i}>* {x}</p>
                   ))}
                 </div>
-                <div className={`col-4 `}>
+                <div className={`col-4 `}  style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                   {/* <p> {activity.timeStamp.split("G")[0]}</p> */}
                   <TimeAgo date={activity.timeStamp} />
                 </div>

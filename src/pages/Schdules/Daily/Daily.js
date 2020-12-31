@@ -40,13 +40,12 @@ import {
   faCalendarAlt,
   faUser,
   faClock,
-  faBan
+  faBan,
 } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
-
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 var moverAssignedDate;
 
@@ -71,7 +70,8 @@ const DailySchedule = (props) => {
     getalljobs({
       date: today,
     });
-    getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
+    getalljobsfiveday({
+      // user/get-all-jobs-on-next-five-days
       date: today,
     });
   }, []);
@@ -140,29 +140,24 @@ const DailySchedule = (props) => {
       title: "Daily Schedule",
       path: "/schedule/daily",
       icon: (
-        <FontAwesomeIcon
-          icon={faClock}
-          style={{ margin: "0.2rem 0.5rem" }}
-        />
+        <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
       ),
     },
 
     {
       title: "Unavailable",
       path: "/schedule",
-      icon: <FontAwesomeIcon
-        icon={faBan}
-        style={{ margin: "0.2rem 0.5rem" }}
-      />
+      icon: (
+        <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />
+      ),
     },
     ,
     {
       title: "Movers",
       path: "/schedule/movers",
-      icon: <FontAwesomeIcon
-        icon={faUser}
-        style={{ margin: "0.2rem 0.5rem" }}
-      />,
+      icon: (
+        <FontAwesomeIcon icon={faUser} style={{ margin: "0.2rem 0.5rem" }} />
+      ),
     },
   ];
 
@@ -170,16 +165,16 @@ const DailySchedule = (props) => {
     setShow(false);
   };
   const formatAMPM = (startTime) => {
-    let date = new Date(startTime)
+    let date = new Date(startTime);
     var hours = date.getHours();
     var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
-  }
+  };
   const updateJobAssignee = (e, job) => {
     if (e) {
       e.stopPropagation();
@@ -197,7 +192,8 @@ const DailySchedule = (props) => {
           getalljobs({
             date: today,
           });
-          getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
+          getalljobsfiveday({
+            // user/get-all-jobs-on-next-five-days
             date: today,
           });
         }
@@ -230,7 +226,8 @@ const DailySchedule = (props) => {
           getalljobs({
             date: today,
           });
-          getalljobsfiveday({ // user/get-all-jobs-on-next-five-days
+          getalljobsfiveday({
+            // user/get-all-jobs-on-next-five-days
             date: today,
           });
         }
@@ -277,7 +274,7 @@ const DailySchedule = (props) => {
   const useStyles = makeStyles((theme) => ({
     popover: {
       pointerEvents: "none",
-    }
+    },
   }));
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -296,7 +293,7 @@ const DailySchedule = (props) => {
   };
 
   const printAllJobs = (e) => {
-    for (var job of props.jobs ?.data ?.jobs) {
+    for (var job of props.jobs?.data?.jobs) {
       generatePDF(e, job);
     }
   };
@@ -315,18 +312,18 @@ const DailySchedule = (props) => {
     getalljobsfiveday({
       date: d.toString(),
     });
-    setToday(new Date(d).toString())
+    setToday(new Date(d).toString());
     setOpenedPopoverId(null);
     setAnchorEl(null);
-  }
+  };
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
     let moverId = source.droppableId;
     if (!destination) {
       var { showMessage } = props;
       showMessage("Please drop on job item.");
-      return
+      return;
     }
 
     if (
@@ -335,17 +332,17 @@ const DailySchedule = (props) => {
     ) {
       var { showMessage } = props;
       showMessage("Please drop on job item.");
-      return
+      return;
     }
-
 
     var jobToUpdate = props.jobs.data.jobs.filter(
       (job) => job.jobId === parseInt(destination.droppableId)
     );
 
     if (jobToUpdate.length > 0) {
-
-      let index = jobToUpdate[0].assignee.findIndex((x) => x._id == source.droppableId);
+      let index = jobToUpdate[0].assignee.findIndex(
+        (x) => x._id == source.droppableId
+      );
       if (index != -1) {
         // Already Assigned
         var { showMessage } = props;
@@ -378,11 +375,10 @@ const DailySchedule = (props) => {
         }
       }
     }
-  }
-
+  };
 
   return (
-    <div className={`row `}>
+    <div className={`row ${style.scheduleContainer}`}>
       <div className="col-2" style={{}}>
         <SideBar routes={routes} />
       </div>
@@ -390,12 +386,14 @@ const DailySchedule = (props) => {
         <div className={`col-8`}>
           <DatePicker
             endDate={365}
-            getSelectedDay={(e) => { onSelectedDay(e) }}
+            getSelectedDay={(e) => {
+              onSelectedDay(e);
+            }}
             labelFormat={"MMMM yyyy"}
             color={"#181F47"} // #00ADEE
             selectDate={newDate}
           />
-          <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
+          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
           <div className="row justify-content-md-center">
             <div
               className="col-2"
@@ -404,7 +402,7 @@ const DailySchedule = (props) => {
               <h6 style={{ fontFamily: "sans-serif" }}>
                 {`Total Jobs: `}{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {props.jobs ?.data ?.jobs.length}
+                  {props.jobs?.data?.jobs.length}
                 </span>{" "}
               </h6>
             </div>
@@ -416,7 +414,7 @@ const DailySchedule = (props) => {
                 {`Movers Available:`}{" "}
                 <span style={{ fontWeight: "normal" }}>
                   {" "}
-                  {props.movers ?.length}
+                  {props.movers?.length}
                 </span>{" "}
               </h6>
             </div>
@@ -425,16 +423,17 @@ const DailySchedule = (props) => {
               style={{ display: "flex", alignItems: "center" }}
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
-                Movers Required: {props.jobs ?.data ?.jobs.length > 0 ? (
+                Movers Required:{" "}
+                {props.jobs?.data?.jobs.length > 0 ? (
                   props.jobs.data.jobs.reduce(
                     (sum, currentValue) => sum + currentValue.assigneeRequired,
                     0
                   )
                 ) : (
-                    <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                      0
-                </span>
-                  )}
+                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                    0
+                  </span>
+                )}
               </h6>
             </div>
             <div className="col-2">
@@ -449,11 +448,11 @@ const DailySchedule = (props) => {
               >
                 <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
                 Print All
-            </Button>
+              </Button>
             </div>
           </div>
-          <hr style={{ borderTop: '4px solid rgba(0,0,0,.1)' }}></hr>
-          {props.jobs ?.data.jobs.length > 0 && (
+          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
+          {props.jobs?.data.jobs.length > 0 && (
             <div
               className={`row card-header`}
               style={{
@@ -466,11 +465,7 @@ const DailySchedule = (props) => {
             >
               <div className="col-3">Title</div>
               <div className="col-2">Movers Req.</div>
-              <div
-                className="col-2"
-              >
-                Time
-            </div>
+              <div className="col-2">Time</div>
               <div className="col-3">Assignee</div>
 
               <div className="col-2">
@@ -481,18 +476,26 @@ const DailySchedule = (props) => {
           {props.jobs && props.jobs.data.jobs.length > 0 ? (
             props.jobs.data.jobs.map((list, i) => {
               return (
-                <Droppable droppableId={list.jobId.toString()} type="TASK" key={i}>
+                <Droppable
+                  droppableId={list.jobId.toString()}
+                  type="TASK"
+                  key={i}
+                >
                   {(provided, snapshot) => (
-                    <div id="accordion" key={i}
+                    <div
+                      id="accordion"
+                      key={i}
                       ref={provided.innerRef}
-                      {...provided.droppableProps}>
+                      {...provided.droppableProps}
+                    >
                       <div
                         className="row"
                         style={{
                           overflow: "hidden",
                           width: "100%",
                           display: "flex",
-                          fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                          fontFamily:
+                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                         }}
                         className="card-header"
                         aria-expanded="true"
@@ -503,20 +506,14 @@ const DailySchedule = (props) => {
                         onClick={() => toggleCollapse(i)}
                         onDoubleClick={() => jobDetailsNavigate(list._id)}
                       >
-                        <div
-                          className="col-3"
-                        >
-                          {list.title}
-                        </div>
+                        <div className="col-3">{list.title}</div>
 
                         <div className="col-2">
                           <span> {list.assigneeRequired}</span>{" "}
                           <span style={{ display: "none" }}>{list.jobId}</span>
                         </div>
 
-                        <div
-                          className="col-2"
-                        >
+                        <div className="col-2">
                           {list.startTime ? formatAMPM(list.startTime) : "N/A"}
                         </div>
                         <div className="col-3" style={{}}>
@@ -532,7 +529,10 @@ const DailySchedule = (props) => {
                                     padding: "0",
                                   }}
                                 >
-                                  <span style={{ padding: "0 0.4rem" }}> &#42;</span>
+                                  <span style={{ padding: "0 0.4rem" }}>
+                                    {" "}
+                                    &#42;
+                                  </span>
                                   <ListItemText
                                     style={{ width: "90%" }}
                                     primary={assignee.name}
@@ -552,8 +552,8 @@ const DailySchedule = (props) => {
                               ))}
                             </div>
                           ) : (
-                              " N/A"
-                            )}
+                            " N/A"
+                          )}
                         </div>
                         <Modal
                           show={modalShow}
@@ -565,7 +565,7 @@ const DailySchedule = (props) => {
                           <Modal.Header closeButton>
                             <Modal.Title id="contained-modal-title-vcenter">
                               Confirmation
-                        </Modal.Title>
+                            </Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
                             {mover && (
@@ -574,7 +574,7 @@ const DailySchedule = (props) => {
                                 {mover.mover.name}{" "}
                                 <span style={{ fontWeight: "normal" }}>
                                   has been assigned to these jobs:
-                            </span>{" "}
+                                </span>{" "}
                               </h5>
                             )}
                             <div>
@@ -582,14 +582,29 @@ const DailySchedule = (props) => {
                                 <div style={{ margin: "1.5rem 1rem" }}>
                                   {moverAssignedDate.map((job, i) => (
                                     <div className="row" key={i}>
-                                      <a className="col-8" onClick={() => window.open(`/job/details/${job._id}`, "_blank")}
-                                        style={{ textDecoration: "none", cursor: 'pointer' }}>
+                                      <a
+                                        className="col-8"
+                                        onClick={() =>
+                                          window.open(
+                                            `/job/details/${job._id}`,
+                                            "_blank"
+                                          )
+                                        }
+                                        style={{
+                                          textDecoration: "none",
+                                          cursor: "pointer",
+                                        }}
+                                      >
                                         &#42;
-                                    {job.title}
+                                        {job.title}
                                       </a>{" "}
                                       <Chip
                                         className="col-2"
-                                        label={job.startTime ? formatAMPM(job.startTime) : 'N/A'}
+                                        label={
+                                          job.startTime
+                                            ? formatAMPM(job.startTime)
+                                            : "N/A"
+                                        }
                                         clickable
                                         color="primary"
                                         variant="outlined"
@@ -602,17 +617,19 @@ const DailySchedule = (props) => {
                           </Modal.Body>
                           <Modal.Footer>
                             <Button
-                              onClick={(e) => updateJobAssigneeList(e, newAssignee)}
+                              onClick={(e) =>
+                                updateJobAssigneeList(e, newAssignee)
+                              }
                             >
                               Confirm
-                        </Button>
+                            </Button>
                             <Button
                               onClick={(e) => {
                                 Navigate(e);
                               }}
                             >
                               Close
-                        </Button>
+                            </Button>
                           </Modal.Footer>
                         </Modal>
                         <div className="col-2">
@@ -621,14 +638,10 @@ const DailySchedule = (props) => {
                               float: "right",
                             }}
                           >
-                            <button
-                              onClick={(e) => generatePDF(e, list)}
-                            >
-                              <i
-                                className="fa fa-print"
-                              ></i>
+                            <button onClick={(e) => generatePDF(e, list)}>
+                              <i className="fa fa-print"></i>
                               Print
-                        </button>
+                            </button>
                           </small>
                         </div>
                       </div>
@@ -684,7 +697,7 @@ const DailySchedule = (props) => {
                               }}
                             >
                               Job Description
-                        </h5>
+                            </h5>
                           </div>
                           <div
                             className="row"
@@ -694,7 +707,9 @@ const DailySchedule = (props) => {
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                             }}
                           >
-                            <p style={{ whiteSpace: "pre-line" }}>{parse(list.description)}</p>
+                            <p style={{ whiteSpace: "pre-line" }}>
+                              {parse(list.description)}
+                            </p>
                           </div>
                           <hr />
                           <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
@@ -731,81 +746,82 @@ const DailySchedule = (props) => {
               );
             })
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
         </div>
 
         <div className={`col-2 ${style.mov}`} id="mov">
-          <div className={style.scroll}>
-            <h4 className={style.movehead}>Movers</h4>
-            {movers &&
-              movers.map((list, i) => {
-
-                return (
-                  <div key={i}>
-                    <div
-                      className="row"
-                      style={{
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      {/* <Draggable
-                        {...dragHandlers}
-                        defaultPosition={{ x: 0, y: 0 }}
-                      > */}
-
-                      <Droppable droppableId={list.mover._id.toString()} type="TASK">
-                        {(provided, snapshot) => (
-                          <div ref={provided.innerRef}
-                            {...provided.droppableProps}>
-                            <Draggable
-                              draggableId={list.mover._id.toString()}
-                              index={i}
-                            >
-                              {(provided, snapshot) => (
-                                <div className="col-12"
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  ref={provided.innerRef}
+          <h4 className={style.movehead}>Movers</h4>
+          <div className={`row col-12 ${style.scroll}`}>
+            <div className = {`row ${style.scrollBar}`}>
+              <div className={style.scrollContent}>
+                {movers &&
+                  movers.map((list, i) => {
+                    return (
+                      <div key={i}>
+                        <div
+                          className="row"
+                          style={{
+                            fontFamily:
+                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                          }}
+                        >
+                          <Droppable
+                            droppableId={list.mover._id.toString()}
+                            type="TASK"
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                              >
+                                <Draggable
+                                  draggableId={list.mover._id.toString()}
+                                  index={i}
                                 >
-                                  {" "}
-                                  <h6
-                                    style={{ cursor: "pointer" }}
-                                    key={i}
-                                    className={style.movname}
-                                  >
-                                    <label style={{ fontWeight: "normal" }}>
-                                      {i + 1}.
-                            </label>{" "}
-                                    {list.mover.name}{" "}
-                                    <span
-                                      className="assigneeId"
-                                      style={{ display: "none" }}
+                                  {(provided, snapshot) => (
+                                    <div
+                                      className="col-12"
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
                                     >
-                                      {list.mover._id}
-                                    </span>
-                                  </h6>
-                                </div>
-                              )}
-                            </Draggable>
-                          </div>
-
-                        )}
-                      </Droppable>
-                    </div>
-                  </div>
-                );
-              })}
+                                      {" "}
+                                      <h6
+                                        style={{ cursor: "pointer" }}
+                                        key={i}
+                                        className={
+                                          i === 0 ? style.movname : null
+                                        }
+                                      >
+                                        <label style={{ fontWeight: "normal" }}>
+                                          {i + 1}.
+                                        </label>{" "}
+                                        {list.mover.name}{" "}
+                                        <span
+                                          className="assigneeId"
+                                          style={{ display: "none" }}
+                                        >
+                                          {list.mover._id}
+                                        </span>
+                                      </h6>
+                                    </div>
+                                  )}
+                                </Draggable>
+                              </div>
+                            )}
+                          </Droppable>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
         </div>
-
       </DragDropContext>
-
-
-
 
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
@@ -815,7 +831,7 @@ const DailySchedule = (props) => {
           <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
+                selectedValues={jobToUpdate?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event
@@ -828,20 +844,20 @@ const DailySchedule = (props) => {
           <Button onClick={handleClose} name="Close"></Button>
         </Modal.Footer>
       </Modal>
-    </div >
+    </div>
   );
 };
 var mapStateToProps = (state) => ({
   jobs: state.schedule.jobList,
   movers: state.schedule.moverList,
   loggedinUser: state.users.user,
-  newDate: state.common.scheduleDate
+  newDate: state.common.scheduleDate,
 });
 
 var actions = {
   getalljobs,
   getalljobsfiveday,
   showMessage,
-  changeDate
+  changeDate,
 };
 export default connect(mapStateToProps, actions)(DailySchedule);

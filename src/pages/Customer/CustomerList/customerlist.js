@@ -296,38 +296,38 @@ const CustomerList = (props) => {
         </div>
         {docs && docs.length > 0 ? (
           <div>
-            <div className={style.jumbotron}>
+           
               <div
-                className="row"
+                className={` ${style.jumbotron}`}
                 style={{
-                  margin: "1rem 2rem",
+                  // margin: "1rem 1rem",
                   fontWeight: "bold",
                   fontFamily: "sans-serif",
                 }}
               >
-                <div className="col-11">
-                  <div className="row">
-                    <div className="col-3">Name</div>
-                    <div className="col-2">Phone</div>
+               <div className = {style.listheader}>
+                    <div >Name</div>
+                    <div >Phone</div>
 
-                    <div className="col-3">Email</div>
+                    <div >Email</div>
 
-                    <div className="col-2">Jobs</div>
-                    <div className="col-2">Active Claims</div>
-                  </div>
-                </div>
+                    <div >Jobs</div>
+                    <div >Claims</div>
+                 
                 {props.user ?.role === "admin" && (
-                  <div className="col-1">Actions</div>
+                  <div >Actions</div>
                 )}
               </div>
+              </div>
               <div>
-                <ul className="list-group">
-                  <div className={`${style.li}`}>
+                {/* <ul> */}
+                  <div  >
                     {docs.map((doc, i) => {
                       return (
-                       
-                          <div className="row">
-                            <div className="col-11">
+                       <div className = {style.listContainer}>
+                          <div className ={`${style.listContent} `}>
+                            
+                            
                               <Link
                                 key={i}
                                 style={{
@@ -335,29 +335,31 @@ const CustomerList = (props) => {
                                   color: "black",
                                 }}
                                 to={`/customer/detail/${doc._id}`}
+                                className = {style.styleLink}
                               >
-                                 <li style={{height:"3.25rem"}}
-                          className={`checkbox list-group-item ${style.list}`}
+                                <div className ={`${style.customerList} `}>
+                                 {/* <li 
+                          className={`checkbox list-group-item `}
                           key={doc._id}
-                        >
-                                <div className="row">
-                                  <div className={`col-3 ${style.item}`}>
-                                    <span>
+                        > */}
+                               
+                                  <div className={`${style.name} ${style.item} ${style.flex}`}>
+                                   
                                       {doc.firstName} {doc.lastName}
-                                    </span>
+                                    
                                   </div>
 
-                                  <div className={`col-2 ${style.item}`}>
-                                    <p>{doc.phone}</p>
+                                  <div className={`${style.phone} ${style.item} ${style.flex}`}>
+                                    {doc.phone}
                                   </div>
-                                  <div className={`col-3 ${style.item}`}>
-                                    <p>{doc.email}</p>
+                                  <div className={`${style.email} ${style.item} ${style.flex}`}>
+                                    {doc.email}
                                   </div>
-                                  <div className={`col-2 ${style.item}`}>
+                                  <div className={`${style.jobs} ${style.item} ${style.flex}`}>
                                     <div>{doc.jobs.length}</div>
                                   </div>
-                                  <div className={`col-2 ${style.item}`}>
-                                    <div>
+                                  <div className={`${style.activeClaims} ${style.item} ${style.flex}`}>
+                                   
                                       {doc.claim ?.length > 0 ? (
                                         <div>
                                           {
@@ -369,15 +371,16 @@ const CustomerList = (props) => {
                                       ) : (
                                           0
                                         )}
-                                    </div>
-                                  </div>
+                                   
+                                 
                                 </div>
-                                 </li>
+                                 {/* </li> */} 
+                                 </div>
                               </Link>
-                            </div>
+                         
                             {props.user ?.role === "admin" && (
-                              <div>
-                                <div className="col-1">
+                             
+                                <div className ={`${style.actions} ${style.flex}`}>
                                   <Button
                                     onClick={() => handleShow(i, doc._id)}
                                     /*onClick={() => removeCustomer(i, doc._id)}*/
@@ -387,23 +390,23 @@ const CustomerList = (props) => {
                                       color: "#FFF",
                                       fontFamily: "sans-serif",
                                       // width: "100%",
-                                      padding:"0.66rem 1rem",
+                                      // padding:"0.66rem 0rem",
                                     }}
                                   >
                                     Delete
                                 </Button>
-                                </div>
+                                
                               </div>
                             )}
                           </div>
-
+                      </div>
                        
 
                       );
                     })}
                   </div>
-                </ul>
-              </div>
+                {/* </ul> */}
+             
 
               <div className={style.jumbotron}>
                 <Pagination

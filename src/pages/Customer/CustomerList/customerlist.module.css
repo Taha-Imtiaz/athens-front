@@ -24,8 +24,71 @@
   }
 
 .jumbotron{
-    margin: auto !important;
-    padding: 2%;
+    display: grid;
+    grid-template-columns: 5fr 90fr 5fr;
+    grid-template-areas: ". listheader .";
+}
+.listheader {
+    grid-area: listheader;
+    display: grid;
+    margin: 1rem 0;
+    grid-template-columns:25fr 20fr 25fr repeat(3, 10fr) ;
+    /* background-color: aqua; */
+}
+.listContainer {
+    display: grid;
+   grid-template-rows: repeat(auto-fit, minmax(8vh,1fr));
+   /* align-self: center; */
+   /* background-color: blue; */
+   /* or grid-auto-rows: 10vh; */
+    grid-template-columns: 5fr 90fr 5fr;
+    grid-template-areas: ". listContent .";
+}
+.listContent {
+    grid-area: listContent;
+    background-color: aqua;
+     display: grid;
+     /* margin: 2rem 0; */
+    grid-template-columns: 90fr 10fr ;
+    grid-template-areas: "styleLink actions";
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    background: rgba(0,0,0,.03);
+    font-size: 0.88rem;
+}
+.styleLink {
+grid-area: styleLink;
+display: grid;
+grid-template-columns: 1fr;
+/* background-color: brown; */
+grid-template-areas: "customerList";
+}
+.customerList {
+grid-area: customerList;
+display: grid;
+/* background-color: blue; */
+grid-template-columns: 25fr 20fr 25fr repeat(2, 10fr);
+grid-template-areas: "name phone email jobs activeClaims";
+
+}
+
+.name {
+    grid-area: name;
+    /* background-color: burlywood; */
+}
+.phone {
+    grid-area: phone;
+}
+.email {
+    grid-area: email;
+}
+.jobs {
+    grid-area: jobs;
+}
+.activeClaims {
+    grid-area: activeClaims;
+}
+.actions {
+    grid-area: actions;
 }
 
 .badges2{
@@ -49,7 +112,7 @@
 }
 
 .li{
-    margin:0  3%  !important;
+    /* margin:0  4%  !important; */
     /* border: 1px solid lightgrey;
     box-shadow: 0px 2px lightgrey; */
 }
@@ -144,6 +207,7 @@ margin-right: 2px !important;
     }
 }
 
+
 @media only screen and (max-width:576px){
     html{
         font-size: 75%;
@@ -167,8 +231,8 @@ margin-right: 2px !important;
     }
     
     .jumbotron{
-        margin: auto !important;
-        padding: 5%;
+        /* margin: auto !important;
+        padding: 5%; */
     }
 
     .li{

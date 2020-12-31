@@ -13,6 +13,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { payAmount } from "../../../Redux/Mover/moverActions";
 import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { connect } from "react-redux";
 import {
   Checkbox,
@@ -31,7 +32,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,7 +101,9 @@ function JobConfirmation(props) {
       typeof x == "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    job.startTime = today;
+    var currentDate = new Date('2020-08-18T09:00:00')
+    job.startTime = currentDate
+    console.log(job.startTime)
     setData(job);
   }, []);
 
@@ -628,6 +631,7 @@ function JobConfirmation(props) {
                         KeyboardButtonProps={{
                           "aria-label": "change time",
                         }}
+                        keyboardIcon={<AccessTimeIcon/>}
                       />
                     </Grid>
                   </MuiPickersUtilsProvider>

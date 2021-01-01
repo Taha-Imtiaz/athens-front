@@ -1,92 +1,166 @@
-.toprow{
-    margin-top: 1% !important;
-    margin-bottom: 1% !important;
-    margin-left: 50px !important;
+.toprow {
+  margin-top: 1% !important;
+  margin-bottom: 1% !important;
+  margin-left: 50px !important;
 }
 
-.jumbotron{
-    margin: auto !important;
-    padding: 2%;
-    /* font-family: ; */
-
+.jumbotron {
+  margin: auto !important;
+  padding: 2%;
+  /* font-family: ; */
 }
-
-.btndel{
-    margin-right: 11%;
-    margin-top: 3%;
+.flex {
+    display: flex;
+    align-items: center;
+}
+.btndel {
+  margin-right: 11%;
+  margin-top: 3%;
 }
 .list {
-    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-    border: 1px solid rgba(0, 0, 0, 0.125);
-      background: rgba(0,0,0,.03);
-      font-size: 0.88rem;
-    
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 0.88rem;
 }
 .list h6 {
-    font-size: 0.88rem !important;
+  font-size: 0.88rem !important;
 }
 .header {
-    /* font-family: sans-serif; */
-    /* font-size:18px; */
+  /* font-family: sans-serif; */
+  /* font-size:18px; */
 }
 .list:hover {
-    background-color:  #00ADEE;
-    /* color: #FFF; */
+  background-color: #00adee;
+  /* color: #FFF; */
 }
-.list:hover .item {
-    color: #fff;
+.listContent:hover .item {
+  color: #fff;
 }
 
-.create{
-    margin-right: 3%;
-    margin-top: 3%;
+.create {
+  margin-right: 3%;
+  margin-top: 3%;
 }
 .filter {
-    margin-top: 10px !important;
-    cursor: pointer;
+  margin-top: 10px !important;
+  cursor: pointer;
 }
 
-.head{
-    /* margin-top: 2%;
+.head {
+  /* margin-top: 2%;
     text-align: left;
     margin-left: 10%; */
-    /* font-size: 18px; */
+  /* font-size: 18px; */
 }
 
-.btn2{
-    /* margin-left: 5%; */
-    float: right;
-    margin-right: 10%;
-    margin-top: 2%;
-    
+.btn2 {
+  /* margin-left: 5%; */
+  float: right;
+  margin-right: 10%;
+  margin-top: 2%;
 }
 
-.color{
-    background-color: #00ADEE !important;
+.color {
+  background-color: #00adee !important;
 }
 
-.li{
-    margin:0  3%  !important;
-    /* border: 1px solid lightgrey;
+.li {
+  margin: 0 3% !important;
+  /* border: 1px solid lightgrey;
     box-shadow: 0px 2px lightgrey; */
 }
-
-.assignee{
-    margin-left: 5px;
-    padding: 5px;
+.jobListHeaderContainer {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". jobListHeader .";
+}
+.jobListHeader {
+  grid-area: jobListHeader;
+  display: grid;
+  margin: 1rem 0;
+  grid-template-columns: 25fr 20fr 10fr 25fr repeat(2, 10fr);
+  /* grid-template-areas: "title date assignee services status actions"; */
+}
+.listContainer {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
+  /* align-self: center; */
+  /* background-color: blue; */
+  /* or grid-auto-rows: 10vh; */
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". listContent .";
+}
+.listContent {
+  grid-area: listContent;
+  /* background-color: aqua; */
+  display: grid;
+  /* margin: 2rem 0; */
+  grid-template-columns: 90fr 10fr;
+  grid-template-areas: "styleLink actions";
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 0.88rem;
+}
+.listContent:hover {
+  background-color: #cac7c7 !important;
+  
 }
 
+.styleLink {
+  grid-area: styleLink;
+  display: grid;
+  grid-template-columns: 1fr;
+ 
+  /* background-color: brown; */
+  grid-template-areas: "jobList";
+}
+.jobList {
+  grid-area: jobList;
+  display: grid;
+  /* background-color: blue; */
+  grid-template-columns: 25fr 20fr 25fr repeat(2, 10fr);
+  grid-template-areas: "title date assignee services status";
+}
+ .title {
+    grid-area: title;
+    padding: 0 0.5rem;
+}
+.date {
+    grid-area: date;
+    padding: 0 0.5rem;
+}
 
-@media only screen and (max-width:500px){
-    html{
-        font-size: 75%;
-    }
+.assignee {
+    grid-area: assignee;
+    padding: 0 0.5rem;
+}
 
-    .toprow{
-        margin-top: 3%;
-    }
+.services {
+    grid-area: services;
+    padding: 0 0.5rem;
+}
+
+.status {
+    grid-area: status;
+    padding: 0 0.5rem;
+}
+
+.actions {
+    grid-area: actions;
+    padding: 0 0.5rem;
+}
+
+@media only screen and (max-width: 500px) {
+  html {
+    font-size: 75%;
+  }
+
+  .toprow {
+    margin-top: 3%;
+  }
 }
 
 .modal {
-    max-width: 70vw;
+  max-width: 70vw;
 }

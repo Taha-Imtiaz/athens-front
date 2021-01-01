@@ -5,7 +5,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getAllJobs, filterJobsByDate, deleteJob } from "../../../Redux/Job/jobActions";
+import {
+  getAllJobs,
+  filterJobsByDate,
+  deleteJob,
+} from "../../../Redux/Job/jobActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
@@ -21,7 +25,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
-import { Button, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
+import {
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 // import { showMessage } from "../../../Redux/Common/commonActions";
@@ -55,11 +65,11 @@ class JobsList extends Component {
     show: false,
     showDeleteModal: false,
     dates: "",
-    nearestDate:"",
+    nearestDate: "",
     jobToConfirm: "",
     modalIndex: "",
     jobToDelete: "",
-    value:"recently added"
+    value: "recently added",
   };
   handleToggle = () =>
     this.setState({
@@ -267,15 +277,15 @@ class JobsList extends Component {
         dates: "",
         startYearMonth: "",
         nearestDate: date.toString(),
-        sortLast:null
-    },
+        sortLast: null,
+      },
       page: 1,
     };
     this.setState({
       currentPage: 1,
     });
     filterJobsByDate(DateFilters);
-  }
+  };
 
   handleDateFilter = () => {
     var { getAllJobs } = this.props;
@@ -362,22 +372,21 @@ class JobsList extends Component {
     });
   };
   removeJob = () => {
-    var { deleteJob } = this.props
-    var { currentPage } = this.state
-    console.log(currentPage)
-    deleteJob(this.state.jobToDelete, currentPage)
+    var { deleteJob } = this.props;
+    var { currentPage } = this.state;
+    console.log(currentPage);
+    deleteJob(this.state.jobToDelete, currentPage);
     this.setState({
-      showDeleteModal: false
-    })
-
+      showDeleteModal: false,
+    });
   };
 
   openDeleteModal = (i, jobId) => {
     this.setState({
       modalIndex: i,
       showDeleteModal: true,
-      jobToDelete: jobId
-    })
+      jobToDelete: jobId,
+    });
     // if (this.state.modalIndex === i) {
     //   this.setState({
     //     showDeleteModal: true
@@ -390,15 +399,15 @@ class JobsList extends Component {
     //   })
     // }
   };
-  handleChange = (e) =>{
-this.setState({
-  value: e.target.value
-})
-  }
+  handleChange = (e) => {
+    this.setState({
+      value: e.target.value,
+    });
+  };
   closeDeleteModal = () => {
     this.setState({
-      showDeleteModal: false
-    })
+      showDeleteModal: false,
+    });
   };
 
   render() {
@@ -407,9 +416,9 @@ this.setState({
     var { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
 
-    var totalCount = jobs[0] ?.data ?.jobs.total;
+    var totalCount = jobs[0]?.data?.jobs.total;
     var { popoverOpen } = this.state;
-    var { show, showDeleteModal, dates, nearestDate, value} = this.state;
+    var { show, showDeleteModal, dates, nearestDate, value } = this.state;
     return (
       <div>
         <div className={`row ${style.toprow}`}>
@@ -440,14 +449,14 @@ this.setState({
               aria-labelledby="dropdownMenuLink"
               // style={{ width: "17rem", cursor: "pointer" }}
             >
-               <h5
+              <h5
                 className="dropdown-item"
                 style={{ fontFamily: "sans-serif" }}
               >
                 Sort
               </h5>
               <hr />
-             {/* <a className="dropdown-item" onClick={this.handleSort} style={{}}>
+              {/* <a className="dropdown-item" onClick={this.handleSort} style={{}}>
                 Sort By Title
               </a>
               <a
@@ -466,14 +475,34 @@ this.setState({
                 Sort By Assignee Required
               </a>
               <hr /> */}
-              <RadioGroup aria-label="gender" name="gender1" value={value} onChange={this.handleChange}>
-              <FormControlLabel value="recently added" control={<Radio />} label="Recently Added"   onClick={this.handleDateFilter}/>
-       
-        <FormControlLabel value="title" control={<Radio />} label="Title" onClick={this.handleSort}/>
-        <FormControlLabel value="assignee required" control={<Radio />} label="Assignee Required" onClick={this.handleAssigneeRequired} />
-        {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
-      </RadioGroup>
-      <hr />
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={value}
+                onChange={this.handleChange}
+              >
+                <FormControlLabel
+                  value="recently added"
+                  control={<Radio />}
+                  label="Recently Added"
+                  onClick={this.handleDateFilter}
+                />
+
+                <FormControlLabel
+                  value="title"
+                  control={<Radio />}
+                  label="Title"
+                  onClick={this.handleSort}
+                />
+                <FormControlLabel
+                  value="assignee required"
+                  control={<Radio />}
+                  label="Assignee Required"
+                  onClick={this.handleAssigneeRequired}
+                />
+                {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
+              </RadioGroup>
+              <hr />
               <h5
                 style={{ fontFamily: "sans-serif" }}
                 className="dropdown-item"
@@ -495,7 +524,12 @@ this.setState({
                 style={{ width: "11rem", margin: " 1rem 2rem" }}
                 onChange={(e) => this.filterJobByDate(e)}
               />
-              <h6  style={{ fontFamily: "sans-serif" }} className="dropdown-item">Upcoming Jobs</h6>
+              <h6
+                style={{ fontFamily: "sans-serif" }}
+                className="dropdown-item"
+              >
+                Upcoming Jobs
+              </h6>
               <input
                 type="date"
                 name="nearestDate"
@@ -527,265 +561,235 @@ this.setState({
           </div>
         </div>
 
-        {jobs[0] && jobs[0] ?.data ?.jobs ?.docs ?.length > 0 ? (
-          <div >
-            <div
-              className={`row ${style.header}`}
-              style={{ margin: "1rem 3%", fontWeight: "bold" }}
-            >
-              <div className="col-11">
-                <div className="row">
-                  <div className="col-3">Title</div>
-                  <div className="col-3">Date(s)</div>
-                  <div className="col-2">Assignee</div>
-                  <div className="col-2">Services</div>
-                  <div className="col-2">Status</div>
-                </div>
+        {jobs[0] && jobs[0]?.data?.jobs?.docs?.length > 0 ? (
+          <div>
+            <div className={style.jobListHeaderContainer}>
+              <div
+                className={style.jobListHeader}
+                style={{ fontWeight: "bold" }}
+              >
+                <div>Title</div>
+                <div>Date(s)</div>
+                <div>Assignee</div>
+                <div>Services</div>
+                <div>Status</div>
+                {this.props.user?.role == "admin" && <div>Actions</div>}
               </div>
-              {this.props.user ?.role == "admin" && (
-                <div className="col-1">Actions</div>
-              )}
             </div>
 
-            <ul className="list-group">
-              <div className={style.li}>
-                {jobs[0].data.jobs.docs.map((job, i) => {
-                  return (
-
-                   
-                      <div className="row">
-                        <div className="col-11">
-                          <Link
-                            key={i}
-                            style={{ textDecoration: "none", color: "black" }}
-                            to={{
-                              pathname: `/job/details/${job._id}`,
-                              jobProps: job,
-                            }}
-                          >
-                             <li style={{height:"3.2rem"}}
+            {/* <ul> */}
+            <div>
+              {jobs[0].data.jobs.docs.map((job, i) => {
+                return (
+                  <div className={style.listContainer}>
+                    <div className={`${style.listContent}`}>
+                      <Link
+                        key={i}
+                        style={{ color: "black", textDecoration: "none"}}
+                        className={style.styleLink}
+                        to={{
+                          pathname: `/job/details/${job._id}`,
+                          jobProps: job,
+                        }}
+                      >
+                        {/* <li style={{height:"3.2rem"}}
                       key={i}
                       className={`checkbox list-group-item ${style.list}`}
                      
-                    >
+                    > */}
 
-                            <div className="row">
-                              <div className={`col-3 ${style.item}`} >
-                                <label>{job.title}</label>
-                              </div>
-                              <div className={`col-3 ${style.item}`}
-                                style={{ display: "flex" }}
-                              >
-                                <FontAwesomeIcon
-                                  icon={faCalendarAlt}
-                                  style={{ margin: "0.2rem 0.5rem" }}
-                                />{" "}
-                                {
-                                  <span style={{ display: "flex" }}>
-                                    {job.dates[0]}
-                                    {job.dates.length > 1 && (
-                                      <div>
-                                        <Typography
-                                          aria-owns={
-                                            open
-                                              ? "mouse-over-popover"
-                                              : undefined
-                                          }
-                                          aria-haspopup="true"
-                                          onMouseEnter={(e) =>
-                                            this.handleDatePopoverOpen(
-                                              e,
-                                              job._id
-                                            )
-                                          }
-                                          onMouseLeave={
-                                            this.handleDatePopoverClose
-                                          }
-                                        >
-                                          ...
-                                        </Typography>
+                        <div className={`${style.jobList}`}>
+                          <div className = {`${style.title} ${style.flex} ${style.item}`}>{job.title}</div>
+                          <div className = {`${style.date} ${style.flex} ${style.item}`}>
+                            <FontAwesomeIcon
+                              icon={faCalendarAlt}
+                              style={{ margin: "0.2rem 0.5rem" }}
+                            />{" "}
+                            {
+                              <span>
+                                {job.dates[0]}
+                                {job.dates.length > 1 && (
+                                  <div>
+                                    <Typography
+                                      aria-owns={
+                                        open ? "mouse-over-popover" : undefined
+                                      }
+                                      aria-haspopup="true"
+                                      onMouseEnter={(e) =>
+                                        this.handleDatePopoverOpen(e, job._id)
+                                      }
+                                      onMouseLeave={this.handleDatePopoverClose}
+                                    >
+                                      ...
+                                    </Typography>
 
-                                        <Popover
-                                          id="mouse-over-popover"
-                                          className={classes.popover}
-                                          classes={{
-                                            paper: classes.paper,
-                                          }}
-                                          open={
-                                            this.state.openedDatePopoverId ==
-                                            job._id
-                                          }
-                                          anchorEl={this.state.anchorEl}
-                                          anchorOrigin={{
-                                            vertical: "bottom",
-                                            horizontal: "left",
-                                          }}
-                                          transformOrigin={{
-                                            vertical: "top",
-                                            horizontal: "left",
-                                          }}
-                                          onClose={this.handlePopoverClose}
-                                          disableRestoreFocus
-                                        >
-                                          {job.dates.map((date) => (
-                                            <Typography>{date}</Typography>
-                                          ))}
-                                        </Popover>
-                                      </div>
-                                    )}
-                                  </span>
-                                }
-                              </div>
-                              <div className={`col-2 ${style.item}`}>
-                                <span style={{ display: "flex" }}>
-                                  <FontAwesomeIcon
-                                    icon={faUser}
-                                    style={{ margin: "0.2rem 0.5rem" }}
-                                  />
-                                  {job.assignee.length > 0
-                                    ? job.assignee[0].name
-                                    : "N/A"}
-
-                                  {job.assignee.length > 1 && (
-                                    <div>
-                                      <Typography
-                                        aria-owns={
-                                          open
-                                            ? "mouse-over-popover"
-                                            : undefined
-                                        }
-                                        aria-haspopup="true"
-                                        onMouseEnter={(e) =>
-                                          this.handleAssigneePopoverOpen(
-                                            e,
-                                            job._id
-                                          )
-                                        }
-                                        onMouseLeave={
-                                          this.handleAssigneePopoverClose
-                                        }
-                                      >
-                                        ...
-                                      </Typography>
-
-                                      <Popover
-                                        id="mouse-over-popover"
-                                        className={classes.popover}
-                                        classes={{
-                                          paper: classes.paper,
-                                        }}
-                                        open={
-                                          this.state.openedAssigneePopoverId ==
-                                          job._id
-                                        }
-                                        anchorEl={this.state.anchorEl}
-                                        anchorOrigin={{
-                                          vertical: "bottom",
-                                          horizontal: "left",
-                                        }}
-                                        transformOrigin={{
-                                          vertical: "top",
-                                          horizontal: "left",
-                                        }}
-                                        onClose={this.handlePopoverClose}
-                                        disableRestoreFocus
-                                      >
-                                        {job.assignee.map((assignee) => (
-                                          <Typography>
-                                            {assignee.name}
-                                          </Typography>
-                                        ))}
-                                      </Popover>
-                                    </div>
-                                  )}
-                                </span>
-                              </div>
-                              <div className={`col-2 ${style.item}`}>
-                                <label style={{ display: "flex" }}>
-                                  {job.services ? job.services[0].name : null}
-                                  {job.services.length > 1 && (
-                                    <div>
-                                      <Typography
-                                        aria-owns={
-                                          open
-                                            ? "mouse-over-popover"
-                                            : undefined
-                                        }
-                                        aria-haspopup="true"
-                                        onMouseEnter={(e) =>
-                                          this.handlePopoverOpen(e, job._id)
-                                        }
-                                        onMouseLeave={this.handlePopoverClose}
-                                      >
-                                        ...
-                                      </Typography>
-
-                                      <Popover
-                                        id="mouse-over-popover"
-                                        className={classes.popover}
-                                        classes={{
-                                          paper: classes.paper,
-                                        }}
-                                        open={
-                                          this.state.openedPopoverId == job._id
-                                        }
-                                        anchorEl={this.state.anchorEl}
-                                        anchorOrigin={{
-                                          vertical: "bottom",
-                                          horizontal: "left",
-                                        }}
-                                        transformOrigin={{
-                                          vertical: "top",
-                                          horizontal: "left",
-                                        }}
-                                        onClose={this.handlePopoverClose}
-                                        disableRestoreFocus
-                                      >
-                                        {job.services.map((service, i) => (
-                                          <Typography key={i}>
-                                            {service.name}
-                                          </Typography>
-                                        ))}
-                                      </Popover>
-                                    </div>
-                                  )}
-                                </label>
-                              </div>
-                              <div className={`col-2 ${style.item}`}>
-                                <label>{job.status}</label>
-                              </div>
-
-                            </div>
-                            </li>
-                          </Link>
-                        </div>
-
-                        {this.props.user ?.role === "admin" && (
-                          <div className="col-1">
-                            <Button
-                              // onClick={() => this.removeJob(i, job._id)}
-                              onClick={() => this.openDeleteModal(i, job._id)}
-
-                              style={{
-                                background: "#00ADEE",
-                                textTransform: "none",
-                                color: "#FFF",
-                                fontFamily: "sans-serif",
-                                // width: "100%",
-                                padding:"0.5rem 1rem"
-                              }}
-                            >
-                              Delete
-                              </Button>
+                                    <Popover
+                                      id="mouse-over-popover"
+                                      className={classes.popover}
+                                      classes={{
+                                        paper: classes.paper,
+                                      }}
+                                      open={
+                                        this.state.openedDatePopoverId ==
+                                        job._id
+                                      }
+                                      anchorEl={this.state.anchorEl}
+                                      anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "left",
+                                      }}
+                                      transformOrigin={{
+                                        vertical: "top",
+                                        horizontal: "left",
+                                      }}
+                                      onClose={this.handlePopoverClose}
+                                      disableRestoreFocus
+                                    >
+                                      {job.dates.map((date) => (
+                                        <Typography>{date}</Typography>
+                                      ))}
+                                    </Popover>
+                                  </div>
+                                )}
+                              </span>
+                            }
                           </div>
-                        )}
-                      </div>
-                   
+                          <div className={`${style.assignee} ${style.flex} ${style.item}`}>
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faUser}
+                                style={{ margin: "0.2rem 0.5rem" }}
+                              />
+                              {job.assignee.length > 0
+                                ? job.assignee[0].name
+                                : "N/A"}
 
-                  );
-                })}
-              </div>
-            </ul>
+                              {job.assignee.length > 1 && (
+                                <div>
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handleAssigneePopoverOpen(e, job._id)
+                                    }
+                                    onMouseLeave={
+                                      this.handleAssigneePopoverClose
+                                    }
+                                  >
+                                    ...
+                                  </Typography>
+
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={
+                                      this.state.openedAssigneePopoverId ==
+                                      job._id
+                                    }
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
+                                  >
+                                    {job.assignee.map((assignee) => (
+                                      <Typography>{assignee.name}</Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
+                            </span>
+                          </div>
+                          <div className={`${style.services} ${style.flex} ${style.item}`}>
+                            <div>
+                              {job.services ? job.services[0].name : null}
+                              {job.services.length > 1 && (
+                                <div>
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handlePopoverOpen(e, job._id)
+                                    }
+                                    onMouseLeave={this.handlePopoverClose}
+                                  >
+                                    ...
+                                  </Typography>
+
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={this.state.openedPopoverId == job._id}
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
+                                  >
+                                    {job.services.map((service, i) => (
+                                      <Typography key={i}>
+                                        {service.name}
+                                      </Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className={`${style.status} ${style.flex} ${style.item}`}>
+                            <div>{job.status}</div>
+                          </div>
+                        </div>
+                        {/* </li> */}
+                      </Link>
+                      {this.props.user?.role === "admin" && (
+                      <div className={`${style.actions} ${style.flex}`}>
+                        <Button
+                          // onClick={() => this.removeJob(i, job._id)}
+                          onClick={() => this.openDeleteModal(i, job._id)}
+                          style={{
+                            background: "#00ADEE",
+                            textTransform: "none",
+                            color: "#FFF",
+                            fontFamily: "sans-serif",
+                            // width: "100%",
+                            // padding: "0.5rem 1rem",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    )}
+                    </div>
+
+                   
+                  </div>
+                );
+              })}
+            </div>
+            {/* </ul> */}
             <div className={style.jumbotron}>
               <Pagination
                 itemCount={totalCount}
@@ -801,7 +805,7 @@ this.setState({
               onHide={this.handleClose}
               animation={false}
               centered
-            // backdrop={false}
+              // backdrop={false}
             >
               <Modal.Header closeButton>
                 <Modal.Title>Booking Confirmation</Modal.Title>
@@ -829,16 +833,17 @@ this.setState({
             </Modal>
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
         <Modal
           show={showDeleteModal}
           onHide={this.closeDeleteModal}
           // dialogClassName={`${style.modal}`}
           centered
-          scrollable>
+          scrollable
+        >
           <Modal.Header closeButton>
             <Modal.Title> Confirmation</Modal.Title>
           </Modal.Header>
@@ -850,7 +855,6 @@ this.setState({
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "flex-end",
-
               }}
             >
               <Button
@@ -862,7 +866,10 @@ this.setState({
                   width: "100%",
                   margin: "0 0.6rem",
                 }}
-                onClick={() => this.removeJob()}>Confirm</Button>
+                onClick={() => this.removeJob()}
+              >
+                Confirm
+              </Button>
               <Button
                 style={{
                   background: "#00ADEE",
@@ -871,7 +878,10 @@ this.setState({
                   fontFamily: "sans-serif",
                   width: "100%",
                 }}
-                onClick={this.closeDeleteModal}>Cancel</Button>
+                onClick={this.closeDeleteModal}
+              >
+                Cancel
+              </Button>
             </div>
           </Modal.Footer>
         </Modal>
@@ -888,7 +898,7 @@ var mapStateToProps = (state) => ({
 var actions = {
   getAllJobs,
   filterJobsByDate,
-  deleteJob
+  deleteJob,
 };
 
 export default compose(

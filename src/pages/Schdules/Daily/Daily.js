@@ -752,71 +752,73 @@ const DailySchedule = (props) => {
           )}
         </div>
 
-        <div className={`col-2 ${style.mov}`} id="mov">
-          <h4 className={style.movehead}>Movers</h4>
-          <div className={`row col-12 ${style.scroll}`}>
-            <div className = {`row ${style.scrollBar}`}>
-              <div className={style.scrollContent}>
-                {movers &&
-                  movers.map((list, i) => {
-                    return (
-                      <div key={i}>
-                        <div
-                          className="row"
-                          style={{
-                            fontFamily:
-                              "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                          }}
-                        >
-                          <Droppable
-                            droppableId={list.mover._id.toString()}
-                            type="TASK"
+        <div className={`col-2  ${style.mov}`} id="mov">
+          <div className="row ">
+            <div className={`row ${style.scroll}`}>
+              <h4 className={`row col-12 ${style.movehead}`}>Movers</h4>
+              <div className={`${style.scrollBar}`}>
+                <div className={`  ${style.scrollContent}`}>
+                  {movers &&
+                    movers.map((list, i) => {
+                      return (
+                        <div key={i}>
+                          <div
+                            className="row"
+                            style={{
+                              fontFamily:
+                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                            }}
                           >
-                            {(provided, snapshot) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                              >
-                                <Draggable
-                                  draggableId={list.mover._id.toString()}
-                                  index={i}
+                            <Droppable
+                              droppableId={list.mover._id.toString()}
+                              type="TASK"
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.droppableProps}
                                 >
-                                  {(provided, snapshot) => (
-                                    <div
-                                      className="col-12"
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      ref={provided.innerRef}
-                                    >
-                                      {" "}
-                                      <h6
-                                        style={{ cursor: "pointer" }}
-                                        key={i}
-                                        className={
-                                          i === 0 ? style.movname : null
-                                        }
+                                  <Draggable
+                                    draggableId={list.mover._id.toString()}
+                                    index={i}
+                                  >
+                                    {(provided, snapshot) => (
+                                      <div
+                                        className="col-12"
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        ref={provided.innerRef}
                                       >
-                                        <label style={{ fontWeight: "normal" }}>
-                                          {i + 1}.
-                                        </label>{" "}
-                                        {list.mover.name}{" "}
-                                        <span
-                                          className="assigneeId"
-                                          style={{ display: "none" }}
+                                        {" "}
+                                        <h6
+                                          style={{ cursor: "pointer" }}
+                                          key={i}
+                                          className={"col-12"}
                                         >
-                                          {list.mover._id}
-                                        </span>
-                                      </h6>
-                                    </div>
-                                  )}
-                                </Draggable>
-                              </div>
-                            )}
-                          </Droppable>
+                                          <label
+                                            style={{ fontWeight: "normal" }}
+                                          >
+                                            {i + 1}.
+                                          </label>{" "}
+                                          {list.mover.name}{" "}
+                                          <span
+                                            className="assigneeId"
+                                            style={{ display: "none" }}
+                                          >
+                                            {list.mover._id}
+                                          </span>
+                                        </h6>
+                                      </div>
+                                    )}
+                                  </Draggable>
+                                </div>
+                              )}
+                            </Droppable>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                </div>
               </div>
             </div>
           </div>

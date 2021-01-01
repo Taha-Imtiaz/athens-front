@@ -59,7 +59,8 @@
     font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif
 }
 .list:hover {
-    background-color: #00ADEE;
+    background-color: #cac7c7 !important;
+
     color: #fff;
 }
 .create{

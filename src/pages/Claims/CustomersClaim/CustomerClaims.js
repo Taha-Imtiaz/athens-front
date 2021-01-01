@@ -36,9 +36,9 @@ const CustomerClaims = (props) => {
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var [claimToDelete, setClaimToDelete] = useState("");
-  var [value, setValue] = useState('all')
+  var [value, setValue] = useState("all");
 
-  var totalCount = claims.claims ?.total;
+  var totalCount = claims.claims?.total;
 
   useEffect(() => {
     var { getAllClaims, claims } = props;
@@ -105,14 +105,14 @@ const CustomerClaims = (props) => {
   var removeClaim = () => {
     var { deleteClaim } = props;
     deleteClaim(claimToDelete, currentPage);
-    setShow(false)
+    setShow(false);
   };
   var { users, claims } = props;
 
   var handleShow = (i, jobId) => {
-    setModalIndex(i)
-    setClaimToDelete(jobId)
-    setShow(true)
+    setModalIndex(i);
+    setClaimToDelete(jobId);
+    setShow(true);
 
     // if (modalIndex === i)
     //   setShow(true)
@@ -123,10 +123,10 @@ const CustomerClaims = (props) => {
   var handleClose = () => {
     setShow(false);
   };
-  
- var handleChange =(e) => {
-    setValue(e.target.value)
-  }
+
+  var handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -162,12 +162,29 @@ const CustomerClaims = (props) => {
                 aria-labelledby="dropdownMenuLink"
                 style={{ margin: "-0.5rem" }}
               >
-                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-    <FormControlLabel value="all" control={<Radio />} label="All" />
-    <FormControlLabel value="open" control={<Radio />} label="Open" />
-    <FormControlLabel value="closed" control={<Radio />} label="Closed" />
-    {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
-  </RadioGroup>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={value}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="all"
+                    control={<Radio />}
+                    label="All"
+                  />
+                  <FormControlLabel
+                    value="open"
+                    control={<Radio />}
+                    label="Open"
+                  />
+                  <FormControlLabel
+                    value="closed"
+                    control={<Radio />}
+                    label="Closed"
+                  />
+                  {/* <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" /> */}
+                </RadioGroup>
                 {/* <a
                   className="dropdown-item"
                   onClick={(e) => getClaimsByStatus(e, "all")}
@@ -203,116 +220,96 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           </div>
-          {claims ?.claims ?.docs.length > 0 ? (
-            <div className={style.jumbotron}>
-              <div
-                className={`row `}
-                style={{
-                  margin: "1rem 2rem",
-                  fontWeight: "bold",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                <div className="col-11">
-                  <div className="row">
-                    <div className="col-3">Name</div>
-                    <div className="col-3">Status</div>
-                    <div className="col-4"> Waiting To</div>
-                    <div className="col-2">Last Update</div>
-                  </div>
+          {claims?.claims?.docs.length > 0 ? (
+            <div>
+              <div className={style.claimListHeaderContainer}>
+                <div
+                  className={style.claimListHeader}
+                  style={{ fontWeight: "bold" }}
+                >
+                  <div>Name</div>
+                  <div>Status</div>
+                  <div> Waiting To</div>
+                  <div>Last Update</div>
+                  {users?.role === "admin" && <div>Actions</div>}
                 </div>
-                {users ?.role === "admin" && (
-                  <div className="col-1" >Actions</div>
-                )}
               </div>
-              <ul className="list-group">
-                <div className={`${style.li} `}>
-                  {claims ?.claims ?.docs &&
-                    claims ?.claims ?.docs.map((x, i) => {
-                      return (
-                        <div>
-                         
-                            <div className="row">
-                              <div className="col-11">
-                                <Link
-                                  to={{
-                                    pathname: `/claimsDetail/${x._id}`,
-                                    claimsId: x._id,
-                                  }}
-                                  style={{
-                                    textDecoration: "none",
-                                    color: "black",
-                                  }}
-                                >
-                                  {" "}
-                                  <li
+              {/* <ul className="list-group"> */}
+              <div>
+                {claims?.claims?.docs &&
+                  claims?.claims?.docs.map((x, i) => {
+                    return (
+                      <div className={style.listContainer}>
+                        <div className={`${style.listContent}`}>
+                          <Link
+                            className={style.styleLink}
+                            to={{
+                              pathname: `/claimsDetail/${x._id}`,
+                              claimsId: x._id,
+                            }}
+                            style={{
+                              textDecoration: "none",
+                              color: "black",
+                            }}
+                          >
+                            {" "}
+                            {/* <li
                             className={`checkbox list-group-item ${style.list}`}
                             key={x._id}
-                          >
-                                  <div className="row">
-                                    <div className={`col-3 ${style.item}`}>
-                                      <h6>
-                                        {x.customer.firstName}{" "}
-                                        {x.customer.lastName}
-                                      </h6>
-                                    </div>
-                                    <div className={`col-3  ${style.item}`}>
-                                      {x.status.toLocaleUpperCase()}
-                                    </div>
-                                    <div className={`col-4  ${style.item}`}>
-                                      <h6>{x.waitTo}</h6>
-                                    </div>
-
-                                    <div className={`col-2  ${style.item}`}>
-                                      {x.updates.length > 0 ? (
-                                        <div>
-                                          {
-                                            <TimeAgo
-                                              date={x.updates[0].timestamp}
-                                            />
-                                          }
-                                        </div>
-                                      ) : (
-                                          <div>
-                                            <TimeAgo date={x.createdAt} />
-                                          </div>
-                                        )}
-                                    </div>
-                                  </div>
-                                  </li>
-                                </Link>
+                          > */}
+                            <div className={style.claimList}>
+                              <div className={`${style.item} ${style.flex}`}>
+                                {x.customer.firstName} {x.customer.lastName}
                               </div>
-                              {users ?.role === "admin" && (
-                                <div className="col-1" style={{}}>
-                                  <Button
-                                    // onClick={() => removeClaim(i, x._id)}
-                                    onClick={() => handleShow(i, x._id)}
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      padding:"0.66rem 2rem",
-                                      fontFamily: "sans-serif",
-                                      // width: "100%",
-                                    }}
-                                  >
-                                    Delete
-                                  </Button>
-                                </div>
-                              )}
+                              <div className={`${style.item} ${style.flex}`}>
+                                {x.status.toLocaleUpperCase()}
+                              </div>
+                              <div className={`${style.item} ${style.flex}`}>{x.waitTo}</div>
+
+                              <div className={`${style.item} ${style.flex}`}>
+                                {x.updates.length > 0 ? (
+                                  <div>
+                                    {<TimeAgo date={x.updates[0].timestamp} />}
+                                  </div>
+                                ) : (
+                                  <div>
+                                    <TimeAgo date={x.createdAt} />
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                        
+                            {/* </li> */}
+                          </Link>
+
+                          {users?.role === "admin" && (
+                            <div className={`${style.flex} ${style.actions}`}>
+                              <Button
+                                // onClick={() => removeClaim(i, x._id)}
+                                onClick={() => handleShow(i, x._id)}
+                                style={{
+                                  background: "#00ADEE",
+                                  textTransform: "none",
+                                  color: "#FFF",
+                                  fontFamily: "sans-serif",
+                                  // width: "100%",
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          )}
                         </div>
-                      );
-                    })}
-                </div>
-              </ul>
+                      </div>
+                    );
+                  })}
+              </div>
+              {/* </ul> */}
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
           <div className={style.jumbotron}>
             <Pagination
               itemCount={totalCount}
@@ -329,12 +326,10 @@ const CustomerClaims = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-      // backdrop = {false}
+        // backdrop = {false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-             Confirmation
-                                        </Modal.Title>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         {/* <Modal.Body>Are You sure you want to delete this Claim with id {x._id}</Modal.Body> */}
         <Modal.Body>Are you sure you want to delete this Claim?</Modal.Body>
@@ -344,7 +339,6 @@ const CustomerClaims = (props) => {
               display: "flex",
               justifyContent: "flex-end",
               alignItems: "flex-end",
-
             }}
           >
             <Button
@@ -356,7 +350,10 @@ const CustomerClaims = (props) => {
                 width: "100%",
                 margin: "0 0.6rem",
               }}
-              onClick={() => removeClaim()}>Confirm</Button>
+              onClick={() => removeClaim()}
+            >
+              Confirm
+            </Button>
             <Button
               style={{
                 background: "#00ADEE",
@@ -364,8 +361,12 @@ const CustomerClaims = (props) => {
                 color: "#FFF",
                 fontFamily: "sans-serif",
                 width: "100%",
-                margin:"0"
-              }} onClick={handleClose}>Cancel</Button>
+                margin: "0",
+              }}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>

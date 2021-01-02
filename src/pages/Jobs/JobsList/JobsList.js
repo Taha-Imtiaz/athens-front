@@ -606,7 +606,7 @@ class JobsList extends Component {
                               style={{ margin: "0.2rem 0.5rem" }}
                             />{" "}
                             {
-                              <span>
+                              <span style={{display:"flex"}}>
                                 {job.dates[0]}
                                 {job.dates.length > 1 && (
                                   <div>
@@ -655,7 +655,7 @@ class JobsList extends Component {
                             }
                           </div>
                           <div className={`${style.assignee} ${style.flex} ${style.item}`}>
-                            <span>
+                            <span style={{display:"flex"}}>
                               <FontAwesomeIcon
                                 icon={faUser}
                                 style={{ margin: "0.2rem 0.5rem" }}
@@ -712,7 +712,7 @@ class JobsList extends Component {
                             </span>
                           </div>
                           <div className={`${style.services} ${style.flex} ${style.item}`}>
-                            <div>
+                            <div style={{display:"flex"}}>
                               {job.services ? job.services[0].name : null}
                               {job.services.length > 1 && (
                                 <div>

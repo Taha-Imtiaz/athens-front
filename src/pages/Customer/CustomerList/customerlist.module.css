@@ -33,6 +33,7 @@
   display: grid;
   margin: 1rem 0;
   grid-template-columns: 25fr 20fr 25fr repeat(3, 10fr);
+  /* padding: 0 0.5rem; */
   /* background-color: aqua; */
 }
 .listContainer {
@@ -81,6 +82,8 @@
 .phone {
   grid-area: phone;
   padding: 0 0.5rem;
+  /* background-color: burlywood; */
+
 }
 .email {
   grid-area: email;

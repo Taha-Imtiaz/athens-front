@@ -16,37 +16,37 @@
 } 
 .customStyleContainer{
 grid-area: customStyleContainer;
-    display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: "image customStyles";
+    /* display: grid; */
+  /* grid-template-rows: 1fr; */
+  /* grid-template-columns: 1fr; */
+  /* grid-template-areas: "image customStyles"; */
 }
-.image {
+/* .image {
   grid-area: image;
-  /* background-color: white; */
+  
   background-image: url("https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/121562793_1266066880419586_2665667662501797577_o.jpg?_nc_cat=100&ccb=2&_nc_sid=8bfeb9&_nc_eui2=AeFwJH65RWpVrOn1K4jSlGcUhcw6-aBOl3-FzDr5oE6Xf5eA60wn_a8vjaGrWfR2jgqeVZkMCcr162pbsP0nZGCE&_nc_ohc=99-El9MWnUEAX8q19v0&_nc_ht=scontent.fkhi10-1.fna&oh=37a9307b681deaea9d900fc9e64df71d&oe=5FE74342");
   background-size: 100% 100%, cover;
-}
+} */
 .customStyles {
     /* --ReactInputVerificationCode-itemWidth: 2.5rem;
     --ReactInputVerificationCode-itemHeight: 3.5rem; */
-    display: grid;
-    grid-template-rows: 15vh 12.2vh 17.2vh 12.2vh 30vh ;
+    /* display: grid;
+    grid-template-rows: 15vh 12.2vh 17.2vh 12.2vh 30vh ; */
     grid-area: customStyles;
-    /* background-color: peru; */
-    grid-template-areas: "."
+    
+    /* grid-template-areas: "."
                         "verificationCodeHead"
                         "verificationCodeBoxes"
                         "submitCode"
                             ".";
-/* background-color: teal; */
-  
+
+   */
 
 }
   
-  .verificationCodeHead {
+  /* .verificationCodeHead {
       grid-area: verificationCodeHead;
-      /* background-color: pink; */
+      
       display: flex;
     justify-content: center;
     align-items: center;
@@ -54,20 +54,20 @@ grid-area: customStyleContainer;
 
   .verificationCodeBoxes {
     grid-area: verificationCodeBoxes;
-    /* background-color: yellow; */
+   
     display: flex;
   justify-content: center;
   align-items: center;
   }
   .submitCode {
       grid-area: submitCode;
-      /* background-color: #046cde; */
+     
       display: flex;
       justify-content: center;
       align-items: center;
-  }
+  } */
   .customStyles .ReactInputVerificationCode__item {
-    /* position: relative; */
+   
     color: #262626;
     font-weight: 500;
   }
@@ -92,4 +92,8 @@ grid-area: customStyleContainer;
   .customStyles .ReactInputVerificationCode__item.is-active:after {
     background-color: #046cde;
   }
-  
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

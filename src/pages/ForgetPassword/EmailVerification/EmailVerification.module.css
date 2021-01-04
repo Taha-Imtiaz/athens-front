@@ -1,13 +1,13 @@
-.verificationContainer {
+ .verificationContainer {
     display: grid;
     height: 86.6vh;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "image emailverification";
+    /* grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "image emailverification"; */
 }
-.image {
+/*.image {
     grid-area: image;
-    /* background-color: white; */
+  
     background-image: url("https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/121562793_1266066880419586_2665667662501797577_o.jpg?_nc_cat=100&ccb=2&_nc_sid=8bfeb9&_nc_eui2=AeFwJH65RWpVrOn1K4jSlGcUhcw6-aBOl3-FzDr5oE6Xf5eA60wn_a8vjaGrWfR2jgqeVZkMCcr162pbsP0nZGCE&_nc_ohc=99-El9MWnUEAX8q19v0&_nc_ht=scontent.fkhi10-1.fna&oh=37a9307b681deaea9d900fc9e64df71d&oe=5FE74342");
     background-size: 100% 100%, cover;
   }
@@ -20,25 +20,24 @@
                         "verifyinput"
                         "sendcode"
                         ".";
-/* background-color: teal; */
 
 }
 .verifyhead {
     grid-area: verifyhead;
     
-    /* background-color: violet; */
+    
 }
 
 .verifyinput {
     height: 12.2vh;
     grid-area: verifyinput;
-    /* background-color: tomato; */
+    
 }
 .sendcode {
     grid-area: sendcode;
     
-    /* background-color: thistle; */
-}
+    
+} */
 .flex {
     display: flex;
     justify-content: center;

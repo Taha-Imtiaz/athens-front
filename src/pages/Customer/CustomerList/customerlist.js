@@ -306,16 +306,16 @@ const CustomerList = (props) => {
                 }}
               >
                <div className = {style.listheader}>
-                    <div >Name</div>
-                    <div >Phone</div>
+                    <div style={{padding:"0 0.5rem"}} >Name</div>
+                    <div style={{padding:"0 0.5rem"}} >Phone</div>
 
-                    <div >Email</div>
+                    <div style={{padding:"0 0.5rem"}}>Email</div>
 
-                    <div >Jobs</div>
-                    <div >Claims</div>
+                    <div style={{padding:"0 0.5rem"}}>Jobs</div>
+                    <div style={{padding:"0 0.5rem"}}>Claims</div>
                  
                 {props.user ?.role === "admin" && (
-                  <div >Actions</div>
+                  <div style={{padding:"0 0.5rem"}}>Actions</div>
                 )}
               </div>
               </div>

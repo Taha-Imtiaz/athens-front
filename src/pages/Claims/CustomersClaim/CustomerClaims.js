@@ -230,10 +230,10 @@ const CustomerClaims = (props) => {
                   className={style.claimListHeader}
                   style={{ fontWeight: "bold" }}
                 >
-                  <div>Name</div>
-                  <div>Status</div>
-                  <div> Waiting To</div>
-                  <div>Last Update</div>
+                  <div style={{padding:" 0 0.5rem"}}>Name</div>
+                  <div style={{padding:" 0 0.5rem"}}>Status</div>
+                  <div style={{padding:" 0 0.5rem"}}> Waiting To</div>
+                  <div style={{padding:" 0 0.5rem"}}>Last Update</div>
                   {users ?.role === "admin" && <div>Actions</div>}
                 </div>
               </div>

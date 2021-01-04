@@ -1,20 +1,68 @@
-.acc{
-    margin-top: 2%;
-  
-    margin-left: 5%;
-    text-align: left;
-    /* background-color: rebeccapurple; */
+.accountContainer {
+    display: grid;
+    grid-template-columns: 10fr 30fr 50fr 10fr;
+    grid-template-areas: ". profile form  .";
+    margin-top: 1rem;
+    column-gap: 2rem;
 }
+.form {
+    grid-area: form;
+    /* background-color: blue; */
+}
+.profile {
+    grid-area: profile;
+   display: grid;
+   grid-template-rows: 10vh 60vh 10vh;
+   grid-template-columns: 1fr;
+   grid-template-areas: "."
+                        "content"
+                        ".";
+ 
+}
+.content {
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+    border-radius: 0.4rem;
+    /* background-color: #181F47;
+    color: #fff; */
+    /* background-color: #27293d; */
+    grid-area: content;
 
-.button {
-  
+    display: grid;
+    grid-template-rows: 15fr 25fr repeat(2, 5fr)  35fr 10fr 5fr;
+    justify-self: "center";
+    grid-template-areas: "." 
+                        "profilePic" 
+                        "accountHolderName"
+                        "accountHolderRole"
+                        "."
+                        "editButton"
+                        ".";
+                        
+   
 }
-@media only screen and (max-width: 500px) {
-    .acc{
-        margin-top: 5%;
-        float: left;
-        margin-left: 5%;
-        text-align: left;
-    }
+.profilePic {
+    background-image: url("https://res.cloudinary.com/dz8zgvu8s/image/upload/v1570542639/user1.jpg");
+    background-size: 100% 100%, cover;
+    grid-area: profilePic;
     
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+}
+.accountHolderName {
+    grid-area: accountHolderName;
+}
+.accountHolderRole {
+    grid-area: accountHolderRole;
+}
+.editButton {
+    grid-area: editButton;
+}
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    /* flex-flow: column; */
 }

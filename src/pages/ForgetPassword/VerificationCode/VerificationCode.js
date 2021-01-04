@@ -3,6 +3,8 @@ import style from "./VerificationCode.module.css";
 import ReactInputVerificationCode from "react-input-verification-code";
 import { Button } from "@material-ui/core";
 import { verifyCode } from "../../../Redux/User/userActions";
+import { connect } from "react-redux";
+import { showMessage } from "../../../Redux/Common/commonActions";
 
 
 
@@ -28,7 +30,7 @@ else {
 
  },[])
   var navigateResetPassword = () => {
-    var { history } = props;
+    var { history, verifyCode } = props;
     if (verificationCode !== "") {
      
       // history.push("/verifyCode")
@@ -38,14 +40,21 @@ else {
         code:code,
         token:userToken
       }
-      verifyCode(verifyCodeObj).then((res) => {
-        if(res.data.status === 200){
-          localStorage.setItem("athens-token", res.data.token)
-          history.push("/restPassword")
-        }
+      verifyCode(verifyCodeObj, () => history.push("/restPassword"))
+      // .then((res) => {
+      //   if(res.data.status === 200){
+      //     localStorage.setItem("athens-token", res.data.token)
+      //     showMessage(res.data.message)
+      //     history.push("/restPassword")
+      //   }
+      //   else {
+
+      //     showMessage(res.data.message)
+
+      //   }
       
 
-      })
+      // })
 
     }
   };
@@ -66,21 +75,25 @@ else {
   
   return (
     <div className={style.verificationCode}>
-      <div className={style.customStyleContainer}>
-        <div className={style.image}></div>
+      <div className={`${style.customStyleContainer} ${style.flex}`}>
+        {/* <div className={style.image}></div> */}
 
         <div className={style.customStyles}>
-          <div className={style.verificationCodeHead}>
+          <div 
+          className={style.flex}
+          >
             <h4>Enter Verification Code</h4>
           </div>
-          <div className={style.verificationCodeBoxes}>
+          <div style={{margin:"1rem 0"}}
+           className={style.flex}
+           >
             <ReactInputVerificationCode
               placeholder=""
               onChange={(e) => handleVerificationCode(e)}
             />
           </div>
-          <div
-            className={style.submitCode}
+          <div style={{margin:"1rem 0"}}
+            // className={style.submitCode}
 
             // style={{ alignItems: "center" }}
           >
@@ -92,7 +105,7 @@ else {
                 color: "#FFF",
 
                 fontFamily: "sans-serif",
-                width: "30vw",
+                width: "25vw",
                 // margin: "0 2rem",
                 // width: "60%"
               }}
@@ -105,5 +118,7 @@ else {
     </div>
   );
 };
-
-export default VerificationCode;
+var actions = {
+  verifyCode
+}
+export default connect(null, actions)(VerificationCode);

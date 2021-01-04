@@ -17,6 +17,8 @@ const Navbar = (props) => {
   }, []);
 
   var { user } = props;
+  var {history:{location:{pathname}}} = props
+  console.log(pathname)
 
   const getNavLinkClass = (path) => {
     return props.location.pathname === path ? "nav-item active" : "nav-item";
@@ -27,7 +29,8 @@ const Navbar = (props) => {
     window.location.reload(false);
   };
   return (
-    <nav
+    <div>
+      {pathname !== "/" && <nav
       className={`navbar navbar-expand-md navbar-light ${style.elevation} sticky-top`}
     >
       <Link className={`navbar-brand ${style.logo}`} to="/">
@@ -151,7 +154,8 @@ const Navbar = (props) => {
             </ul>
           )}
       </div>
-    </nav>
+    </nav>}
+    </div>
   );
 };
 

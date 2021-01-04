@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import style from "./EmailVerification.module.css";
 import { Link } from "react-router-dom";
 import { sendCode } from "../../../Redux/User/userActions";
+import { showMessage } from "../../../Redux/Common/commonActions";
+import { connect } from "react-redux";
 const EmailVerification = (props) => {
   var [email, setEmail] = useState("");
   var [emailError, setEmailError] = useState("");
@@ -12,7 +14,7 @@ const EmailVerification = (props) => {
   };
 
   var navigateToCode = () => {
-    var { history } = props;
+    var { history, showMessage } = props;
     if (email !== "") {
       var emailObj = {
         email: email,
@@ -21,22 +23,37 @@ const EmailVerification = (props) => {
       sendCode(emailObj).then((res) => {
         if (res.data.status === 200) {
         var token = sessionStorage.setItem("token", res.data.token)
+        console.log(res.data.message)
+         showMessage(res.data.message)
           history.push("/verifycode");
+          
         }
-      });
+        else {
+  showMessage(res.data.message)
+        }
+      })
     } else {
       setEmailError("Email should not be empty");
+      
     }
   };
   return (
-    <div className={style.verificationContainer}>
-      <div className={style.image}></div>
-      <div className={`${style.emailVerification}`}>
-        <div className={`${style.verifyhead} ${style.flex}`}>
+    <div 
+    className={`${style.verificationContainer} ${style.flex}`}
+    >
+      {/* <div className={style.image}></div> */}
+      <div 
+      // className={`${style.emailVerification}`}
+      >
+        <div
+         className={`${style.flex}`}
+         >
           <h4>Enter your email address</h4>
         </div>
 
-        <div className={`${style.verifyinput} ${style.flex}`}>
+        <div 
+        // className={`${style.verifyinput} ${style.flex}`}
+        >
           <form>
             <div>
               <TextField
@@ -44,7 +61,7 @@ const EmailVerification = (props) => {
                 margin="normal"
                 required="required"
                 // fullWidth
-                style={{ margin: "0", width: "30vw" }}
+                style={{ margin: "1rem 0", width: "30vw" }}
                 size="small"
                 id="email"
                 label="Enter Email"
@@ -57,8 +74,12 @@ const EmailVerification = (props) => {
           </form>
         </div>
 
-        <div className={`${style.sendcode} ${style.flex}`}>
-          <div style={{ alignItems: "center" }}>
+        <div
+        //  className={`${style.sendcode} ${style.flex}`}
+         >
+          <div 
+          // style={{ alignItems: "center" }}
+          >
             <Button
               onClick={navigateToCode}
               // type="button"
@@ -81,5 +102,7 @@ const EmailVerification = (props) => {
     </div>
   );
 };
-
-export default EmailVerification;
+var actions = {
+  showMessage
+}
+export default connect(null,actions)(EmailVerification);

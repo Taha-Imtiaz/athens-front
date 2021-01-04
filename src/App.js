@@ -76,7 +76,7 @@ function App(props) {
         <PrivateRoute path="/user" component={UsersList} exact />
         <PrivateRoute path="/user/create" component={CreateUser} />
         <PrivateRoute path="/account" component={AccountDisplay} exact />
-        <PrivateRoute path="/account/update" component={AccountUpdate} />
+        {/* <PrivateRoute path="/account/update" component={AccountUpdate} /> */}
         <PrivateRoute path="/mover" component={MoversJobsList} exact />
         <PrivateRoute path="/mover/payment" component={Payment} />
         <PrivateRoute path="/mover/calendar" component={MoversCalendar} />

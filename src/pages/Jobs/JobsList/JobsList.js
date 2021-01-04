@@ -568,12 +568,12 @@ class JobsList extends Component {
                 className={style.jobListHeader}
                 style={{ fontWeight: "bold" }}
               >
-                <div>Title</div>
-                <div>Date(s)</div>
-                <div>Assignee</div>
-                <div>Services</div>
-                <div>Status</div>
-                {this.props.user?.role == "admin" && <div>Actions</div>}
+                <div style={{padding: "0 0.5rem"}}>Title</div>
+                <div style={{padding: "0 0.5rem"}}>Date(s)</div>
+                <div style={{padding: "0 0.5rem"}}>Assignee</div>
+                <div style={{padding: "0 0.5rem"}}>Services</div>
+                <div style={{padding: "0 0.5rem"}}>Status</div>
+                {this.props.user?.role == "admin" && <div style={{padding: "0 0.5rem"}}>Actions</div>}
               </div>
             </div>
 
@@ -603,7 +603,7 @@ class JobsList extends Component {
                           <div className = {`${style.date} ${style.flex} ${style.item}`}>
                             <FontAwesomeIcon
                               icon={faCalendarAlt}
-                              style={{ margin: "0.2rem 0.5rem" }}
+                              style={{ marginRight: "0.5rem" }}
                             />{" "}
                             {
                               <span style={{display:"flex"}}>
@@ -658,7 +658,7 @@ class JobsList extends Component {
                             <span style={{display:"flex"}}>
                               <FontAwesomeIcon
                                 icon={faUser}
-                                style={{ margin: "0.2rem 0.5rem" }}
+                                style={{ marginRight: "0.5rem" }}
                               />
                               {job.assignee.length > 0
                                 ? job.assignee[0].name

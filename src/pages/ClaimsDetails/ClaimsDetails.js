@@ -274,12 +274,12 @@ setClaimInput(claims?.waitTo)
             <hr />
 
             <div className={`col-12 row ${style.styleClaims}`}>
-              <h6
+              <h6 className = "col-3"
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
-                Title :
+                Title:
               </h6>{" "}
               <span style={{ fontWeight: "normal" }}>{claims?.title}</span>
             </div>
@@ -349,19 +349,19 @@ setClaimInput(claims?.waitTo)
             <div className="col-12">
               {claims?.updates.length > 0 ? (
                 <div>
-                  <h3>Updates</h3>
+                  <h3 className="col-12">Updates</h3>
                   {claims?.updates.map((x, i) => (
                     <div>
-                      <div
+                      <div 
                         key={i}
-                        className="row"
+                        // className="row"
                         style={{
                           fontFamily:
                             "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                         }}
                       >
                         <div className="col-12">
-                          <li style={{ listStyle: "none" }}>{`${i + 1}.  ${
+                          <li style={{ listStyle: "none" }} >{`${i + 1}.  ${
                             x.value
                           }`}</li>
                         </div>

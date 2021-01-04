@@ -127,17 +127,36 @@ export var sendCode = async (email) => {
         console.log(error)
     }
 }
-export var verifyCode = async (verifyCodeObj) => {
-    try {
-        const config = {
-            headers: { Authorization: verifyCodeObj.token },
-        };
-
-        var verifyCode = await Axios.post("user/verify", verifyCodeObj, config)
-        return verifyCode
-    } catch (error) {
-        console.log(error)
+export var verifyCode =  (verifyCodeObj, callback) => {
+    return async (dispatch) =>{
+        try {
+            const config = {
+                headers: { Authorization: verifyCodeObj.token },
+            };
+    
+            var verifyCode = await Axios.post("user/verify", verifyCodeObj, config)
+            console.log(verifyCode)
+            if (verifyCode.data.status == 200) {
+                localStorage.setItem('athens-token', verifyCode.data.token)
+                // callback()
+                dispatch(showMessage(verifyCode.data.message))
+                dispatch({
+                    type: LOGGEDIN_USER,
+                    payload: {
+                        user: verifyCode.data.data
+                    }
+                })
+                callback()
+                // return verifyCode;
+            } else {
+                dispatch(showMessage(verifyCode.data.message))
+                // return verifyCode;
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
+   
 }
 export var resetPassword = async (passwordObj) => {
     try {

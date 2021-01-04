@@ -1,5 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { showMessage } from "../../../Redux/Common/commonActions";
 import { resetPassword } from "../../../Redux/User/userActions";
 import style from "./ResetPassword.module.css";
 
@@ -13,9 +15,9 @@ const ResetPassword = (props) => {
     cpassword: "",
   });
   var userToken = localStorage.getItem("athens-token");
-  if(!userToken) {
-    var {history} = props
-    history.push("/")
+  if (!userToken) {
+    var { history } = props;
+    history.push("/");
   }
 
   var handleFormInput = (e) => {
@@ -27,7 +29,8 @@ const ResetPassword = (props) => {
   };
 
   var navigateToCustomer = () => {
-    var { history } = props;
+    var { history, showMessage, user } = props;
+    console.log(user.role)
     if (password !== "") {
       setPasswordError("");
 
@@ -37,11 +40,20 @@ const ResetPassword = (props) => {
         setPasswordError("");
         var passwordObj = {
           password: password,
-          token:userToken
+          token: userToken,
         };
         resetPassword(passwordObj).then((res) => {
           if (res.data.status === 200) {
+            showMessage(res.data.message);
+           if(user.role === "mover") {
+             history.push("/mover");
+           }
+           else {
             history.push("/customer");
+           }
+            
+          } else {
+            showMessage(res.data.message);
           }
         });
       }
@@ -52,13 +64,13 @@ const ResetPassword = (props) => {
   var { password, cpassword } = resetForm;
   return (
     <div className={style.resetContainer}>
-      <div className={style.image}></div>
-      <div className={`${style.passwordReset}`}>
-        <div className={`${style.resethead} ${style.flex}`}>
+      {/* <div className={style.image}></div> */}
+      <div className={`${style.passwordReset} ${style.flex}`}>
+        <div>
           <h4>Enter New Password</h4>
         </div>
 
-        <div className={`${style.resetinput} ${style.flex}`}>
+        <div>
           <form>
             <div>
               <TextField
@@ -97,7 +109,7 @@ const ResetPassword = (props) => {
           </form>
         </div>
 
-        <div className={`${style.resetPasswordBtn} ${style.flex}`}>
+        <div>
           <div style={{ alignItems: "center" }}>
             <Button
               onClick={navigateToCustomer}
@@ -121,5 +133,10 @@ const ResetPassword = (props) => {
     </div>
   );
 };
-
-export default ResetPassword;
+var actions = {
+  showMessage,
+};
+var mapStateToProps = (state) => ({
+  user: state.users?.user
+})
+export default connect(mapStateToProps, actions)(ResetPassword);

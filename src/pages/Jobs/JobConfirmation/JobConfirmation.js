@@ -414,7 +414,7 @@ function JobConfirmation(props) {
     //   });
     // }
 
-    if (data.locations[0].value !== "" && data.locations[1].value !== "") {
+    // if (data.locations[0].value !== "" && data.locations[1].value !== "") {
       var newData = { ...data };
       console.log(data.locations);
       newData.locations.push({ type: "", value: "", default: false });
@@ -422,7 +422,7 @@ function JobConfirmation(props) {
       // this.setState({
       //   locations: {...this.state.locations }
       // });
-    }
+    // }
   };
 
   // var removeLocation = (e, i) => {
@@ -625,7 +625,6 @@ function JobConfirmation(props) {
                       <KeyboardTimePicker
                         margin="normal"
                         id="time-picker"
-                        label="Time picker"
                         value={data.startTime}
                         onChange={handleTimeSelect}
                         KeyboardButtonProps={{

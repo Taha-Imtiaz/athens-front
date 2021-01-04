@@ -120,8 +120,11 @@ const MoversSchedule = (props) => {
                                 <small>{list.attributes[0].name}</small>
                             </div>
                             <div className={style.para}>
-                                {list.weeklySchedule.map(status => {
+                                {/* {list.weeklySchedule.filter(status => {
                                     return <span className="mb-1">{status.status ? status.day.split("", 3).join("") : null}</span>
+                                })} */}
+                                {list.weeklySchedule.filter(day => day.status).map(status => {
+                                    return <span className="mb-1">{status.day.split("", 3).join("")}&nbsp;</span>
                                 })}
                             </div>
                         </a>

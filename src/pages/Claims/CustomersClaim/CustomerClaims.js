@@ -38,7 +38,7 @@ const CustomerClaims = (props) => {
   var [claimToDelete, setClaimToDelete] = useState("");
   var [value, setValue] = useState("all");
 
-  var totalCount = claims.claims?.total;
+  var totalCount = claims.claims ?.total;
 
   useEffect(() => {
     var { getAllClaims, claims } = props;
@@ -82,9 +82,11 @@ const CustomerClaims = (props) => {
     setCurrentPage(page);
   };
 
-  const getClaimsByStatus = (e, value) => {
+  const getClaimsByStatus = (e) => {
+    let value = e.target.value;
     var { getAllClaims } = props;
     setStatus(value);
+    setValue(value);
 
     var claimsObj = {
       status: value,
@@ -125,6 +127,7 @@ const CustomerClaims = (props) => {
   };
 
   var handleChange = (e) => {
+    console.log(e.target.value)
     setValue(e.target.value);
   };
 
@@ -166,7 +169,7 @@ const CustomerClaims = (props) => {
                   aria-label="gender"
                   name="gender1"
                   value={value}
-                  onChange={handleChange}
+                  onChange={(e) => getClaimsByStatus(e)}
                 >
                   <FormControlLabel
                     value="all"
@@ -220,7 +223,7 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           </div>
-          {claims?.claims?.docs.length > 0 ? (
+          {claims ?.claims ?.docs.length > 0 ? (
             <div>
               <div className={style.claimListHeaderContainer}>
                 <div
@@ -231,13 +234,13 @@ const CustomerClaims = (props) => {
                   <div>Status</div>
                   <div> Waiting To</div>
                   <div>Last Update</div>
-                  {users?.role === "admin" && <div>Actions</div>}
+                  {users ?.role === "admin" && <div>Actions</div>}
                 </div>
               </div>
               {/* <ul className="list-group"> */}
               <div>
-                {claims?.claims?.docs &&
-                  claims?.claims?.docs.map((x, i) => {
+                {claims ?.claims ?.docs &&
+                  claims ?.claims ?.docs.map((x, i) => {
                     return (
                       <div className={style.listContainer}>
                         <div className={`${style.listContent}`}>
@@ -272,16 +275,16 @@ const CustomerClaims = (props) => {
                                     {<TimeAgo date={x.updates[0].timestamp} />}
                                   </div>
                                 ) : (
-                                  <div>
-                                    <TimeAgo date={x.createdAt} />
-                                  </div>
-                                )}
+                                    <div>
+                                      <TimeAgo date={x.createdAt} />
+                                    </div>
+                                  )}
                               </div>
                             </div>
                             {/* </li> */}
                           </Link>
 
-                          {users?.role === "admin" && (
+                          {users ?.role === "admin" && (
                             <div className={`${style.flex} ${style.actions}`}>
                               <Button
                                 // onClick={() => removeClaim(i, x._id)}
@@ -306,10 +309,10 @@ const CustomerClaims = (props) => {
               {/* </ul> */}
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
           <div className={style.jumbotron}>
             <Pagination
               itemCount={totalCount}
@@ -326,7 +329,7 @@ const CustomerClaims = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-        // backdrop = {false}
+      // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>

@@ -46,6 +46,8 @@ import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { htmlToText } from 'html-to-text'
+// const { htmlToText } = require('html-to-text');
 
 var moverAssignedDate;
 
@@ -75,6 +77,12 @@ const DailySchedule = (props) => {
       date: today,
     });
   }, []);
+
+  var specialElementHandlers = {
+    '#elementH': function (element, renderer) {
+      return true;
+    }
+  };
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
@@ -123,14 +131,19 @@ const DailySchedule = (props) => {
     doc
       .setFont("times")
       .setFontSize(11)
-      .text(50, 285, job.startTime ? job.startTime : "No Time Added");
+      .text(50, 285, job.startTime ? formatAMPM(job.startTime) : "No Time Added");
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
 
-    doc.setFont("times").setFontSize(11).text(50, 375, job.description);
+    doc.setFont("times").setFontSize(11).text(50, 375, htmlToText(job.description));
+    // doc.html(<h3>Hello</h3>, {
+    //   'x': 50,
+    //   'y': 375,
 
-    doc.setLineWidth(2);
-    doc.line(560, 725, 40, 725);
+    // });
+
+    // doc.setLineWidth(2);
+    // doc.line(560, 725, 40, 725);
 
     doc.save(`${job.title}.pdf`);
   };
@@ -293,7 +306,7 @@ const DailySchedule = (props) => {
   };
 
   const printAllJobs = (e) => {
-    for (var job of props.jobs?.data?.jobs) {
+    for (var job of props.jobs ?.data ?.jobs) {
       generatePDF(e, job);
     }
   };
@@ -402,7 +415,7 @@ const DailySchedule = (props) => {
               <h6 style={{ fontFamily: "sans-serif" }}>
                 {`Total Jobs: `}{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {props.jobs?.data?.jobs.length}
+                  {props.jobs ?.data ?.jobs.length}
                 </span>{" "}
               </h6>
             </div>
@@ -414,7 +427,7 @@ const DailySchedule = (props) => {
                 {`Movers Available:`}{" "}
                 <span style={{ fontWeight: "normal" }}>
                   {" "}
-                  {props.movers?.length}
+                  {props.movers ?.length}
                 </span>{" "}
               </h6>
             </div>
@@ -424,16 +437,16 @@ const DailySchedule = (props) => {
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
                 Movers Required:{" "}
-                {props.jobs?.data?.jobs.length > 0 ? (
+                {props.jobs ?.data ?.jobs.length > 0 ? (
                   props.jobs.data.jobs.reduce(
                     (sum, currentValue) => sum + currentValue.assigneeRequired,
                     0
                   )
                 ) : (
-                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                    0
+                    <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                      0
                   </span>
-                )}
+                  )}
               </h6>
             </div>
             <div className="col-2">
@@ -452,7 +465,7 @@ const DailySchedule = (props) => {
             </div>
           </div>
           <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
-          {props.jobs?.data.jobs.length > 0 && (
+          {props.jobs ?.data.jobs.length > 0 && (
             <div
               className={`row card-header`}
               style={{
@@ -552,8 +565,8 @@ const DailySchedule = (props) => {
                               ))}
                             </div>
                           ) : (
-                            " N/A"
-                          )}
+                              " N/A"
+                            )}
                         </div>
                         <Modal
                           show={modalShow}
@@ -746,10 +759,10 @@ const DailySchedule = (props) => {
               );
             })
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
         </div>
 
         <div className={`col-2  ${style.mov}`} id="mov">
@@ -833,7 +846,7 @@ const DailySchedule = (props) => {
           <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
             <div className="col-12">
               <Multiselect
-                selectedValues={jobToUpdate?.assignee}
+                selectedValues={jobToUpdate ?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

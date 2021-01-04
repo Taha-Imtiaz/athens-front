@@ -74,12 +74,12 @@ body {
   /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); */
   border-radius: 10px !important;
-  background: #da4679 !important;
+  background: grey !important;
 }
 
 /* Handle on hover */
 .scrollBar::-webkit-scrollbar-thumb:hover {
-  background: #da4679 !important;
+  background: grey !important;
 }
 
 .para {

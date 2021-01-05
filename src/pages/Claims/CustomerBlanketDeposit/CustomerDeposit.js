@@ -46,7 +46,7 @@ const CustomerDeposit = (props) => {
   var [depositToDelete, setDepositToDelete] = useState(false);
 
 
-  var totalCount = blanketDeposit ?.data ?.blanketDeposit ?.total;
+  var totalCount = blanketDeposit?.total;
 
   useEffect(() => {
     var { getDeposits } = props;
@@ -56,7 +56,7 @@ const CustomerDeposit = (props) => {
   useEffect(() => {
     var { blanketDeposit } = props;
     if (blanketDeposit) {
-      setBlankets(blanketDeposit ?.data ?.blanketDeposit ?.docs);
+      setBlankets(blanketDeposit.docs);
     }
   }, [blanketDeposit]);
 
@@ -361,7 +361,7 @@ const CustomerDeposit = (props) => {
         </div>
         <div className={style.jumbotron}>
           <Pagination
-            // itemCount={totalCount}
+            itemCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={handlePageChange}

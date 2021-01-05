@@ -9,7 +9,7 @@ var scheduleReducer = (state = initialState, action) => {
     var {type, payload} = action
     switch (type) {
         case GET_ALLJOBS:
-            return {...state, jobList: payload.getJobs}
+            return {...state, jobList: payload.getJobs.data.jobs}
         case GET_ALLJOBS_FIVEDAYS:
             return {...state, moverList: payload.getJobs} 
   

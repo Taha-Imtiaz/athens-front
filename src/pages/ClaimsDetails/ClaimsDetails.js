@@ -13,24 +13,22 @@ const ClaimsDetails = (props) => {
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [waitTo, setWaitTo] = useState(true);
-  const [claimInput, setClaimInput] = useState('')
+  const [claimInput, setClaimInput] = useState("");
 
   var {
     match: {
       params: { claimsId },
     },
   } = props;
-  var { claims } = props;
+
+  var { claims, getClaim } = props;
   useEffect(() => {
-    var { getClaim, claims } = props;
-    if (claims) {
-    }
     getClaim(claimsId);
   }, []);
 
-useEffect(() => {
-setClaimInput(claims?.waitTo)
-},[claims])
+  useEffect(() => {
+    setClaimInput(claims?.waitTo);
+  }, [claims]);
 
   const handleAddUpdate = (e) => {
     setUpdate(e.target.value);
@@ -80,27 +78,25 @@ setClaimInput(claims?.waitTo)
   };
 
   var editInput = () => {
-    setWaitTo(false)
-  }
+    setWaitTo(false);
+  };
   var handleClaimInput = (e) => {
-    setClaimInput(e.target.value)
-  }
+    setClaimInput(e.target.value);
+  };
 
   var disableInput = () => {
-     var { showMessage, claims } = props;
-     claims.waitTo = claimInput;
-     setWaitTo(true)
-     updateClaim(claims)
-     .then((res) => {
-       if (res.data.status == 200) {
-         showMessage(res.data.message);
-       }
-     })
-     .catch((err) => console.log(err));
-  }
+    var { showMessage, claims } = props;
+    claims.waitTo = claimInput;
+    setWaitTo(true);
+    updateClaim(claims)
+      .then((res) => {
+        if (res.data.status == 200) {
+          showMessage(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   var { claims } = props;
-  
-  
 
   return (
     <div className={`row ${style.toprow}`}>
@@ -207,7 +203,6 @@ setClaimInput(claims?.waitTo)
             return ( */}
           <div>
             <div className="row col-12">
-            
               <div className={`col-5 ${style.protectionRow}`}>
                 <h6>Protection Type : </h6>
                 <span style={{ fontWeight: "normal" }}>
@@ -269,12 +264,12 @@ setClaimInput(claims?.waitTo)
                 )}
               </div>
             </div>
-              
-            
+
             <hr />
 
             <div className={`col-12 row ${style.styleClaims}`}>
-              <h6 className = "col-3"
+              <h6
+                className="col-3"
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
@@ -285,7 +280,8 @@ setClaimInput(claims?.waitTo)
             </div>
             <hr />
             <div className={`col-12 row ${style.styleClaims}`}>
-              <h6 className = "col-3"
+              <h6
+                className="col-3"
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                   whiteSpace: "pre-line",
@@ -299,47 +295,44 @@ setClaimInput(claims?.waitTo)
             </div>
             <hr />
             <div className={`col-12 ${style.styleWaiting}`}>
-              
-              <h6 
+              <h6
                 style={{
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
                 Waiting To :{" "}
               </h6>
-             
-              <div onDoubleClick = {editInput} className = "col-9">
-              <TextField
-                variant="outlined"
-                margin="0"
-                required
-                fullWidth
-                size="small"
-                name= "claimInput"
-                value = {claimInput}
-                onChange = {(e) => handleClaimInput(e)}
-                disabled={waitTo}
-                style={{ fontWeight: "normal"}}
-              >
-                {" "}
-                
-              </TextField>
-              
+
+              <div onDoubleClick={editInput} className="col-9">
+                <TextField
+                  variant="outlined"
+                  margin="0"
+                  required
+                  fullWidth
+                  size="small"
+                  name="claimInput"
+                  value={claimInput}
+                  onChange={(e) => handleClaimInput(e)}
+                  disabled={waitTo}
+                  style={{ fontWeight: "normal" }}
+                >
+                  {" "}
+                </TextField>
               </div>
-              <div >
-              {waitTo === false && <Button onClick = {disableInput}
-              
-              style={{
+              <div>
+                {waitTo === false && (
+                  <Button
+                    onClick={disableInput}
+                    style={{
                       background: "#00ADEE",
                       textTransform: "none",
                       color: "#FFF",
                       fontFamily: "sans-serif",
-                    }}>
-                       Save
-
-                
-                </Button>
-                }
+                    }}
+                  >
+                    Save
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -352,7 +345,7 @@ setClaimInput(claims?.waitTo)
                   <h3 className="col-12">Updates</h3>
                   {claims?.updates.map((x, i) => (
                     <div>
-                      <div 
+                      <div
                         key={i}
                         // className="row"
                         style={{
@@ -361,7 +354,7 @@ setClaimInput(claims?.waitTo)
                         }}
                       >
                         <div className="col-12">
-                          <li style={{ listStyle: "none" }} >{`${i + 1}.  ${
+                          <li style={{ listStyle: "none" }}>{`${i + 1}.  ${
                             x.value
                           }`}</li>
                         </div>
@@ -460,7 +453,7 @@ setClaimInput(claims?.waitTo)
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims?.data?.claim,
+  claims: state.claims?.claim,
 });
 var actions = {
   showMessage,

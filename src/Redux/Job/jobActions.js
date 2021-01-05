@@ -27,20 +27,25 @@ export var getAllJobs = (jobObj) => {
   };
 };
 
-export var getJob = async (jobId) => {
-  // return async (dispatch) => {
+export var getJob = (jobId) => {
+  return async (dispatch) => {
   try {
     var getJob = await Axios.get(`job/${jobId}`);
-    return getJob;
-    //    dispatch({
-    //        type: GET_JOB,
+    console.log("get job called")
+    console.log(getJob)
+    
+       dispatch({
+           type: GET_JOB,
+           payload:{
+             getJob: getJob
+           }
 
-    //    })
+       })
   } catch (error) {
     console.log(error);
   }
 };
-
+}
 export var getAllMovers = async () => {
   try {
     var getMovers = await Axios.get("mover");

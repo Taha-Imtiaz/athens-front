@@ -172,9 +172,9 @@ const SearchBar = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  customers: state.customers.customers,
-  jobs: state.jobs.getJobs,
-  users: state.users.getUsers,
+  customers: state.customers,
+  jobs: state.jobs,
+  users: state.users,
 });
 
 var actions = {

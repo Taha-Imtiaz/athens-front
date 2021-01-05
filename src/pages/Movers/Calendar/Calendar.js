@@ -101,6 +101,7 @@ class MoversCalendar extends Component {
   getJobDetails = (e) => {
     getJob(e.id)
       .then((res) => {
+        console.log(res.data.job)
         this.setState({ currentDayJobs: res.data.job, date: e.start });
       })
       .catch((error) => {

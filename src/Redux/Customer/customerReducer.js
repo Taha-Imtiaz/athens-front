@@ -1,20 +1,21 @@
 import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CLAIM } from "./customerConstants"
 
 
-var initialState = {
-    customers: null
-}
+var initialState =null
 var customerReducer = (state = initialState, action) => {
     var { type, payload } = action
+    
     switch (type) {
+       
         case GET_CUSTOMERS:
-            return { ...state, customers: payload.customers }
+            console.log(payload.customers)
+            return {...state, customerList: payload.customers.data.User }
 
         case GET_CUSTOMER:
-            return { ...payload.customer }
+            return {...state, customer: payload.customer.data.customer }
 
             case DELETE_CLAIM:
-            return {  ...state, customers: payload.allCustomersExceptDelete }
+            return {...state, ...payload.allCustomersExceptDelete }
         default:
             return state
     }

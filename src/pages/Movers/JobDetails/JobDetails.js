@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import style from "./JobDetails.module.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { updateJob } from "../../../Redux/Mover/moverActions";
+import { getJob, updateJob } from "../../../Redux/Mover/moverActions";
 
-import { getJob } from "../../../Redux/Job/jobActions";
+
 import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { Chip } from "@material-ui/core";
@@ -15,21 +15,18 @@ import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
+
 const MoversJobDetails = (props) => {
-  var [job, setJob] = useState(null);
+  // var [job, setJob] = useState(null);
+  var {getJob} = props
   var {
     match: {
       params: { jobId },
     },
   } = props;
   useEffect(() => {
-    getJob(jobId)
-      .then((res) => {
-        setJob(res.data.job);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+   getJob(jobId)
+  
   }, []);
 
   const paidInCash = () => {
@@ -41,7 +38,8 @@ const MoversJobDetails = (props) => {
       }
     });
   };
-
+var {job} = props
+console.log(job)
   return (
     <div className={style.main}>
       {job && (
@@ -268,6 +266,10 @@ const MoversJobDetails = (props) => {
 
 var actions = {
   showMessage,
+  getJob
 };
+var mapStateToProps = (state) => ({
+  job: state.moverJobs?.job
+})
 
-export default connect(null, actions)(MoversJobDetails);
+export default connect(mapStateToProps, actions)(MoversJobDetails);

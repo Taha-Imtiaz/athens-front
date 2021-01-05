@@ -41,8 +41,8 @@ const UsersList = (props) => {
   };
   const width = window.innerWidth;
   var { users, getUsers } = props;
-  var totalCount = users ?.users ?.total;
-  var usersDocs = users ?.users ?.docs;
+  var totalCount = users?.total;
+  var usersDocs = users?.docs;
 
   var handleFilter = (name) => {
     var sortUserObj = {
@@ -190,7 +190,7 @@ const UsersList = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  users: state.users,
+  users: state.users?.userList,
 });
 var actions = {
   getUsers,

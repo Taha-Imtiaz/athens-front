@@ -1189,7 +1189,7 @@ const CustomerDetail = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  customer: state.customers.data ? state.customers.data.customer : null,
+  customer: state.customers?.customer,
   user: state.users.user,
 });
 

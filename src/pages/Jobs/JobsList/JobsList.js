@@ -416,7 +416,7 @@ class JobsList extends Component {
     var { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
 
-    var totalCount = jobs[0]?.data?.jobs.total;
+    var totalCount = jobs?.total;
     var { popoverOpen } = this.state;
     var { show, showDeleteModal, dates, nearestDate, value } = this.state;
     return (
@@ -561,7 +561,7 @@ class JobsList extends Component {
           </div>
         </div>
 
-        {jobs[0] && jobs[0]?.data?.jobs?.docs?.length > 0 ? (
+        {jobs?.docs?.length > 0 ? (
           <div>
             <div className={style.jobListHeaderContainer}>
               <div
@@ -579,7 +579,7 @@ class JobsList extends Component {
 
             {/* <ul> */}
             <div>
-              {jobs[0].data.jobs.docs.map((job, i) => {
+              {jobs?.docs.map((job, i) => {
                 return (
                   <div className={style.listContainer}>
                     <div className={`${style.listContent}`}>
@@ -891,7 +891,7 @@ class JobsList extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  jobs: state.jobs,
+  jobs: state.jobs?.jobList,
   user: state.users.user,
 });
 

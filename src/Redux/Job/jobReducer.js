@@ -1,6 +1,6 @@
 import { GET_JOBS, GET_JOB, FILTER_JOB, DELETE_JOB } from "./jobConstants"
 
-var initialState = []
+var initialState = null
 
 
 var jobReducer = (state = initialState, action) => {
@@ -8,17 +8,16 @@ var {type, payload} = action
 
 switch (type) {
     case GET_JOBS:
-        return [{...state, ...payload.getJobs}]
+        return {...state, jobList:payload.getJobs.data.jobs}
         
-        // case GET_JOB:
-        //     var currentState = {...state}
-        //     currentState.job =  payload.getJob
-        // return [{...currentState}]
+        case GET_JOB:
+            console.log(payload.getJob.data.job)
+        return {...state,job: payload.getJob.data.job}
         
 case FILTER_JOB:
-    return [{...payload.dateFilter}]
+    return {...payload.dateFilter}
     case DELETE_JOB:
-        return [{...payload.getAllJobsExceptDeleteOne}]
+        return {...payload.getAllJobsExceptDeleteOne}
     default:
         return state
 }

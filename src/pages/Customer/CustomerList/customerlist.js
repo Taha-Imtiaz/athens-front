@@ -35,9 +35,9 @@ const CustomerList = (props) => {
   var [sortByName, setSortByName] = useState(false);
   var { getAllCustomers } = props;
   var [show, setShow] = useState(false);
-  var [modalIndex, setModalIndex] = useState("")
-  var [jobToDelete, setJobToDelete] = useState("")
-  var [value, setValue] = useState('recently added')
+  var [modalIndex, setModalIndex] = useState("");
+  var [jobToDelete, setJobToDelete] = useState("");
+  var [value, setValue] = useState("recently added");
 
   useEffect(() => {
     var fetchCustomersObj = {
@@ -49,6 +49,7 @@ const CustomerList = (props) => {
       },
       page: 1,
     };
+    console.log("CDM");
     getAllCustomers(fetchCustomersObj);
   }, []);
 
@@ -118,20 +119,16 @@ const CustomerList = (props) => {
 
   var { customers } = props;
 
-  var totalCount = customers ?.data.User.total;
+  var totalCount = customers?.total;
 
   if (customers) {
-    var {
-      data: {
-        User: { docs },
-      },
-    } = customers;
+    var { docs } = customers;
     // var customerId = docs.map((docs) => docs._id);
   }
   var removeCustomer = () => {
     var { deleteCustomer } = props;
     deleteCustomer(jobToDelete, currentPage);
-    setShow(false)
+    setShow(false);
   };
   var handleSort = () => {
     setSortByName(true);
@@ -212,22 +209,22 @@ const CustomerList = (props) => {
   };
 
   var handleShow = (i, jobId) => {
-    console.log(i)
+    console.log(i);
     // setModalIndex(i)
     // if (modalIndex === i)
     //   setShow(true)
     // else
     //   setShow(false)
-    setJobToDelete(jobId)
-    setShow(true)
+    setJobToDelete(jobId);
+    setShow(true);
   };
 
   var handleClose = () => {
     setShow(false);
   };
   var handleChange = (e) => {
-    setValue(e.target.value)
-  }
+    setValue(e.target.value);
+  };
   var { customers } = props;
   return (
     <div>
@@ -269,13 +266,32 @@ const CustomerList = (props) => {
               <a className="dropdown-item" onClick={handleSort}>
                 Sort By Name
               </a> */}
-                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                <FormControlLabel value="recently added" control={<Radio />} label="Recently Added" onClick={handleDateFilter}/>
-      
-        <FormControlLabel value="recently updated" control={<Radio />} label="Recently Updated" onClick={handleUpdtedAtFilter}/>
-        <FormControlLabel value="sort by name" control={<Radio />} label="Sort By Name" onClick={handleSort}/>
-       
-      </RadioGroup>
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={value}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="recently added"
+                  control={<Radio />}
+                  label="Recently Added"
+                  onClick={handleDateFilter}
+                />
+
+                <FormControlLabel
+                  value="recently updated"
+                  control={<Radio />}
+                  label="Recently Updated"
+                  onClick={handleUpdtedAtFilter}
+                />
+                <FormControlLabel
+                  value="sort by name"
+                  control={<Radio />}
+                  label="Sort By Name"
+                  onClick={handleSort}
+                />
+              </RadioGroup>
             </div>
             <div style={{ margin: "-0.5rem" }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
@@ -296,117 +312,114 @@ const CustomerList = (props) => {
         </div>
         {docs && docs.length > 0 ? (
           <div>
-           
-              <div
-                className={` ${style.jumbotron}`}
-                style={{
-                  // margin: "1rem 1rem",
-                  fontWeight: "bold",
-                  fontFamily: "sans-serif",
-                }}
-              >
-               <div className = {style.listheader}>
-                    <div style={{padding:"0 0.5rem"}} >Name</div>
-                    <div style={{padding:"0 0.5rem"}} >Phone</div>
+            <div
+              className={` ${style.jumbotron}`}
+              style={{
+                // margin: "1rem 1rem",
+                fontWeight: "bold",
+                fontFamily: "sans-serif",
+              }}
+            >
+              <div className={style.listheader}>
+                <div style={{ padding: "0 0.5rem" }}>Name</div>
+                <div style={{ padding: "0 0.5rem" }}>Phone</div>
 
-                    <div style={{padding:"0 0.5rem"}}>Email</div>
+                <div style={{ padding: "0 0.5rem" }}>Email</div>
 
-                    <div style={{padding:"0 0.5rem"}}>Jobs</div>
-                    <div style={{padding:"0 0.5rem"}}>Claims</div>
-                 
-                {props.user ?.role === "admin" && (
-                  <div style={{padding:"0 0.5rem"}}>Actions</div>
+                <div style={{ padding: "0 0.5rem" }}>Jobs</div>
+                <div style={{ padding: "0 0.5rem" }}>Claims</div>
+
+                {props.user?.role === "admin" && (
+                  <div style={{ padding: "0 0.5rem" }}>Actions</div>
                 )}
               </div>
-              </div>
+            </div>
+            <div>
+              {/* <ul> */}
               <div>
-                {/* <ul> */}
-                  <div  >
-                    {docs.map((doc, i) => {
-                      return (
-                       <div className = {style.listContainer}>
-                          <div className ={`${style.listContent} `}>
-                            
-                            
-                              <Link
-                                key={i}
-                                style={{
-                                  textDecoration: "none",
-                                  color: "black",
-                                }}
-                                to={`/customer/detail/${doc._id}`}
-                                className = {style.styleLink}
-                              >
-                                <div className ={`${style.customerList} `}>
-                                 {/* <li 
+                {docs.map((doc, i) => {
+                  return (
+                    <div className={style.listContainer}>
+                      <div className={`${style.listContent} `}>
+                        <Link
+                          key={i}
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                          }}
+                          to={`/customer/detail/${doc._id}`}
+                          className={style.styleLink}
+                        >
+                          <div className={`${style.customerList} `}>
+                            {/* <li 
                           className={`checkbox list-group-item `}
                           key={doc._id}
                         > */}
-                               
-                                  <div className={`${style.name} ${style.item} ${style.flex}`}>
-                                   
-                                      {doc.firstName} {doc.lastName}
-                                    
-                                  </div>
 
-                                  <div className={`${style.phone} ${style.item} ${style.flex}`}>
-                                    {doc.phone}
-                                  </div>
-                                  <div className={`${style.email} ${style.item} ${style.flex}`}>
-                                    {doc.email}
-                                  </div>
-                                  <div className={`${style.jobs} ${style.item} ${style.flex}`}>
-                                    <div>{doc.jobs.length}</div>
-                                  </div>
-                                  <div className={`${style.activeClaims} ${style.item} ${style.flex}`}>
-                                   
-                                      {doc.claim ?.length > 0 ? (
-                                        <div>
-                                          {
-                                            doc.claim ?.filter(
-                                              (claim) => claim.status === "open"
-                                            ).length
-                                          }
-                                        </div>
-                                      ) : (
-                                          0
-                                        )}
-                                   
-                                 
+                            <div
+                              className={`${style.name} ${style.item} ${style.flex}`}
+                            >
+                              {doc.firstName} {doc.lastName}
+                            </div>
+
+                            <div
+                              className={`${style.phone} ${style.item} ${style.flex}`}
+                            >
+                              {doc.phone}
+                            </div>
+                            <div
+                              className={`${style.email} ${style.item} ${style.flex}`}
+                            >
+                              {doc.email}
+                            </div>
+                            <div
+                              className={`${style.jobs} ${style.item} ${style.flex}`}
+                            >
+                              <div>{doc.jobs.length}</div>
+                            </div>
+                            <div
+                              className={`${style.activeClaims} ${style.item} ${style.flex}`}
+                            >
+                              {doc.claim?.length > 0 ? (
+                                <div>
+                                  {
+                                    doc.claim?.filter(
+                                      (claim) => claim.status === "open"
+                                    ).length
+                                  }
                                 </div>
-                                 {/* </li> */} 
-                                 </div>
-                              </Link>
-                         
-                            {props.user ?.role === "admin" && (
-                             
-                                <div className ={`${style.actions} ${style.flex}`}>
-                                  <Button
-                                    onClick={() => handleShow(i, doc._id)}
-                                    /*onClick={() => removeCustomer(i, doc._id)}*/
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      // width: "100%",
-                                      // padding:"0.66rem 0rem",
-                                    }}
-                                  >
-                                    Delete
-                                </Button>
-                                
-                              </div>
-                            )}
+                              ) : (
+                                0
+                              )}
+                            </div>
+                            {/* </li> */}
                           </div>
-                      </div>
-                       
+                        </Link>
 
-                      );
-                    })}
-                  </div>
-                {/* </ul> */}
-             
+                        {props.user?.role === "admin" && (
+                          <div className={`${style.actions} ${style.flex}`}>
+                            <Button
+                              onClick={() => handleShow(i, doc._id)}
+                              /*onClick={() => removeCustomer(i, doc._id)}*/
+                              style={{
+                                background: "#00ADEE",
+                                textTransform: "none",
+                                color: "#FFF",
+                                fontFamily: "sans-serif",
+                                // width: "100%",
+                                // padding:"0.66rem 0rem",
+                              }}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* </ul> */}
 
               <div className={style.jumbotron}>
                 <Pagination
@@ -419,10 +432,10 @@ const CustomerList = (props) => {
             </div>
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
       <Modal
         show={show}
@@ -430,7 +443,7 @@ const CustomerList = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-      // backdrop = {false}
+        // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
@@ -455,7 +468,9 @@ const CustomerList = (props) => {
                 margin: "0 0.6rem",
               }}
               onClick={() => removeCustomer()}
-            >Confirm</Button>
+            >
+              Confirm
+            </Button>
             <Button
               style={{
                 background: "#00ADEE",
@@ -464,7 +479,10 @@ const CustomerList = (props) => {
                 fontFamily: "sans-serif",
                 width: "100%",
               }}
-              onClick={handleClose}>Cancel</Button>
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>
@@ -473,7 +491,7 @@ const CustomerList = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  customers: state ?.customers.customers,
+  customers: state?.customers?.customerList,
 
   user: state.users.user,
 });

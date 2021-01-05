@@ -23,8 +23,9 @@ import {
 
 const JobDetails = (props) => {
   const width = window.innerWidth;
+  var {job} = props
   var jobprops = props.location.jobProps;
-  var [job, setJob] = useState(null);
+  // var [job, setJob] = useState(null);
   var {
     match: {
       params: { jobId },
@@ -34,13 +35,14 @@ const JobDetails = (props) => {
   var [showBooking, setShowBooking] = useState(false);
 
   useEffect(() => {
+    var {getJob} = props
     getJob(jobId)
-      .then((res) => {
-        setJob(res.data.job);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      // .then((res) => {
+      //   setJob(res.data.job);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   }, []);
 
   var handleShow = () => {
@@ -54,13 +56,14 @@ const JobDetails = (props) => {
   const handleCloseAndRefresh = () => {
     setShowBooking(false);
     getJob(jobId)
-      .then((res) => {
-        setJob(res.data.job);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      // .then((res) => {
+      //   setJob(res.data.job);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   };
+  
   return (
     <div>
       <div>
@@ -444,11 +447,11 @@ const JobDetails = (props) => {
     </div>
   );
 };
-// var mapStateToProps = (state) => ({
-//     jobs: state.jobs
-// })
-// var actions = {
-//     getJob
-// }
+var mapStateToProps = (state) => ({
+    job: state.jobs?.job
+})
+var actions = {
+    getJob
+}
 
-export default JobDetails;
+export default connect(mapStateToProps, actions)(JobDetails);

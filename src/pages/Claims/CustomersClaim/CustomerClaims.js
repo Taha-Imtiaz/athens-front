@@ -38,7 +38,7 @@ const CustomerClaims = (props) => {
   var [claimToDelete, setClaimToDelete] = useState("");
   var [value, setValue] = useState("all");
 
-  var totalCount = claims.claims ?.total;
+  var totalCount = claims?.total;
 
   useEffect(() => {
     var { getAllClaims, claims } = props;
@@ -52,8 +52,8 @@ const CustomerClaims = (props) => {
   var data = [];
   useEffect(() => {
     var { claims } = props;
-    if (claims.claims) {
-      data = claims.claims;
+    if (claims) {
+      data = claims;
     }
   }, [claims]);
   var { claims } = props;
@@ -223,7 +223,7 @@ const CustomerClaims = (props) => {
               </div>
             </div>
           </div>
-          {claims ?.claims ?.docs.length > 0 ? (
+          {claims?.docs.length > 0 ? (
             <div>
               <div className={style.claimListHeaderContainer}>
                 <div
@@ -239,8 +239,8 @@ const CustomerClaims = (props) => {
               </div>
               {/* <ul className="list-group"> */}
               <div>
-                {claims ?.claims ?.docs &&
-                  claims ?.claims ?.docs.map((x, i) => {
+                {claims?.docs &&
+                  claims?.docs.map((x, i) => {
                     return (
                       <div className={style.listContainer}>
                         <div className={`${style.listContent}`}>
@@ -377,7 +377,7 @@ const CustomerClaims = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims,
+  claims: state.claims?.claimList,
   users: state.users.user,
 });
 

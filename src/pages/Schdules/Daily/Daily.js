@@ -465,7 +465,7 @@ const DailySchedule = (props) => {
             </div>
           </div>
           <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
-          {props.jobs ?.data.jobs.length > 0 && (
+          {props.jobs?.length > 0 && (
             <div
               className={`row card-header`}
               style={{
@@ -486,8 +486,8 @@ const DailySchedule = (props) => {
               </div>
             </div>
           )}
-          {props.jobs && props.jobs.data.jobs.length > 0 ? (
-            props.jobs.data.jobs.map((list, i) => {
+          {props.jobs && props.jobs.length > 0 ? (
+            props.jobs.map((list, i) => {
               return (
                 <Droppable
                   droppableId={list.jobId.toString()}

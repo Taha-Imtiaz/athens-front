@@ -544,6 +544,7 @@ function JobConfirmation(props) {
     };
     console.log(obj)
     confirmJob(obj).then((res) => {
+      console.log(res)
       let { showMessage } = props;
       if (res.data.status == 200) {
         showMessage(res.data.message);

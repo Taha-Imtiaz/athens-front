@@ -10,10 +10,8 @@ import {
 export var getDeposits = (page) => {
   return async (dispatch) => {
     try {
-      var deposits = await Axios.post(
-        `deposit/all`,
-        page
-      );
+      var deposits = await Axios.post(`deposit/all`, page);
+      console.log(deposits)
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: {
@@ -28,10 +26,7 @@ export var getDeposits = (page) => {
 
 export var addDeposit = async (data) => {
   try {
-    var blanket = await Axios.post(
-      `deposit`,
-      data
-    );
+    var blanket = await Axios.post(`deposit`, data);
     return blanket;
   } catch (error) {
     console.log(error);
@@ -40,9 +35,8 @@ export var addDeposit = async (data) => {
 export var deleteBlanketDeposit = (id) => {
   return async (dispatch) => {
     try {
-      var blanketToDelete = await Axios.delete(
-        `deposit/${id}`
-      );
+      var blanketToDelete = await Axios.delete(`deposit/${id}`);
+      console.log(blanketToDelete.data.data)
       dispatch(showMessage(blanketToDelete.data.message));
       dispatch({
         type: DELETE_BLANKET_DEPOSIT,
@@ -61,7 +55,8 @@ export var updateDeposit = (data) => {
     try {
       console.log(data);
       var blanket = await Axios.put(`deposit`, data);
-      dispatch(showMessage(blanket.data.message))
+      console.log(blanket.data.data)
+      dispatch(showMessage(blanket.data.message));
       dispatch({
         type: EDIT_DEPOSIT,
         payload: {
@@ -69,7 +64,7 @@ export var updateDeposit = (data) => {
         },
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 };

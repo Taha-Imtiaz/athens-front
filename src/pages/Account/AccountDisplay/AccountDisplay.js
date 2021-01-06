@@ -29,8 +29,9 @@ const AccountDisplay = (props) => {
     var userId = loggedInUser?._id;
     getUserData(userId)
       .then((res) => {
-        var { user } = res.data;
-        var { name, email, password, address, phone } = user;
+        console.log(res.data)
+        var { data } = res.data;
+        var { name, email, password, address, phone } = data;
         setEditAccount({
           name,
           email,

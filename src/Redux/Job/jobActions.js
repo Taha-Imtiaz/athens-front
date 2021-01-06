@@ -32,7 +32,7 @@ export var getJob = (jobId) => {
   try {
     var getJob = await Axios.get(`job/${jobId}`);
     console.log("get job called")
-    console.log(getJob)
+    console.log(getJob.data.data)
     
        dispatch({
            type: GET_JOB,

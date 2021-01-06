@@ -21,7 +21,9 @@ const SearchBar = (props) => {
 
   function handleSearch(e) {
     if (props.type == "customer") {
+      
       if (searchValue) {
+        console.log(e.target.value,searchValue)
         var fetchCustomersObj = {
           query: e.target.value,
           sort: {
@@ -44,6 +46,7 @@ const SearchBar = (props) => {
       }
     } else if (props.type == "user") {
       if (searchValue) {
+        console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
           filter: {
@@ -62,6 +65,7 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "claims") {
       if (searchValue) {
+        console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
           status: props.claimStatus,
@@ -78,6 +82,7 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "mover") {
       if (searchValue) {
+        console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,
 
@@ -92,6 +97,7 @@ const SearchBar = (props) => {
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
       if (searchValue) {
+        console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,
           filters: {

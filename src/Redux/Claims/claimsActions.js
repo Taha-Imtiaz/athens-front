@@ -18,7 +18,7 @@ export var getAllClaims = (data) => {
     dispatch({
       type: GET_CLAIMS,
       payload: {
-        claims:claims.data.claims
+        claims:claims.data.data
       },
     });
   };
@@ -106,6 +106,7 @@ export var getClaim = (claimId) => {
   return async (dispatch) => {
     try {
       var claim = await Axios.get(`claim/${claimId}`)
+      console.log(claim.data.data )
       dispatch({
         type: GET_CLAIM,
         payload: {
@@ -139,7 +140,7 @@ export var getClaim = (claimId) => {
       dispatch({
         type: DELETE_CLAIM,
         payload:{
-          getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.claims
+          getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.data
         }
       })
     }

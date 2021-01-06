@@ -6,6 +6,7 @@ export var getalljobs = (jobObj) => {
 
     try {
       var getJobs = await Axios.post("schedule/current-jobs", jobObj);
+      console.log(getJobs)
       //update app's state
 
       dispatch({
@@ -26,11 +27,12 @@ export var getalljobsfiveday = (jobObj) => {
 
     try {
       var movers = await Axios.post("schedule/movers", jobObj);
+      console.log(movers)
       //update app's state
       dispatch({
         type: GET_ALLJOBS_FIVEDAYS,
         payload: {
-          getJobs: movers.data.moversSchedule
+          getJobs: movers
         },
       });
       // dispatch(hideLoader());

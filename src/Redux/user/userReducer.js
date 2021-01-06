@@ -9,7 +9,7 @@ var userReducer = (state = initialState, action) => {
 
     switch (type) {
         case GET_USERS:
-            return { ...state, userList: payload.getUsersList.data.users }
+            return { ...state, userList: payload.getUsersList.data.data }
 
         case LOGGEDIN_USER:
             return { ...state, user: payload.user }

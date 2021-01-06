@@ -8,16 +8,16 @@ var {type, payload} = action
 
 switch (type) {
     case GET_JOBS:
-        return {...state, jobList:payload.getJobs.data.jobs}
+        return {...state, jobList:payload.getJobs.data.data}
         
         case GET_JOB:
             console.log(payload.getJob.data.job)
-        return {...state,job: payload.getJob.data.job}
+        return {...state,job: payload.getJob.data.data}
         
 case FILTER_JOB:
     return {...payload.dateFilter}
     case DELETE_JOB:
-        return {...payload.getAllJobsExceptDeleteOne}
+        return {jobList:payload.getAllJobsExceptDeleteOne.data.data}
     default:
         return state
 }

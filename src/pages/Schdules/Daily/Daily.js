@@ -173,7 +173,7 @@ const DailySchedule = (props) => {
       ),
     },
   ];
-
+console.log(props.jobs)
   const handleClose = () => {
     setShow(false);
   };
@@ -306,7 +306,7 @@ const DailySchedule = (props) => {
   };
 
   const printAllJobs = (e) => {
-    for (var job of props.jobs ?.data ?.jobs) {
+    for (var job of props.jobs) {
       generatePDF(e, job);
     }
   };
@@ -348,7 +348,7 @@ const DailySchedule = (props) => {
       return;
     }
 
-    var jobToUpdate = props.jobs.data.jobs.filter(
+    var jobToUpdate = props.jobs.filter(
       (job) => job.jobId === parseInt(destination.droppableId)
     );
 
@@ -415,7 +415,7 @@ const DailySchedule = (props) => {
               <h6 style={{ fontFamily: "sans-serif" }}>
                 {`Total Jobs: `}{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {props.jobs ?.data ?.jobs.length}
+                  {props.jobs ?.data ?.data.length}
                 </span>{" "}
               </h6>
             </div>
@@ -437,8 +437,8 @@ const DailySchedule = (props) => {
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
                 Movers Required:{" "}
-                {props.jobs ?.data ?.jobs.length > 0 ? (
-                  props.jobs.data.jobs.reduce(
+                {props.jobs?.length > 0 ? (
+                  props.jobs.reduce(
                     (sum, currentValue) => sum + currentValue.assigneeRequired,
                     0
                   )

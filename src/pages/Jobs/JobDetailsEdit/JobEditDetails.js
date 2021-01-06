@@ -84,6 +84,7 @@ class JobEditDetails extends Component {
       { id: 6, name: "Hot Tub" },
     ],
   };
+  
 
   handleStartDate = (date, i) => {
     let newState = cloneDeep(this.state);
@@ -159,80 +160,92 @@ class JobEditDetails extends Component {
       endDateInString: date.toString(),
     });
   };
+
+
   componentDidMount = () => {
-    var {
-      match: {
-        params: { jobId },
-      },
-    } = this.props;
-    var { title, job } = this.state;
+    var {getJob, match: {params:{ jobId}}}= this.props;
+   
+     
+     
+    
+   
+    // var { title, job } = this.state;
 
-    getJob(jobId).then((res) => {
-      console.log(res)
+    getJob(jobId);
+    // .then((res) => {
+    //   console.log(res)
+    // this.setState({
+    //   services: res.data.job.services,
+    //   assignee: res.data.job.assignee,
+    // });
+    var moversObj = {
+      name: "",
+      address: "",
+      attributes: "",
+    };
+    getAllMovers(moversObj).then((moverRes) => {
+      var mover = moverRes?.data?.movers?.docs?.map((mover) => mover);
       this.setState({
-        services: res.data.job.services,
-        assignee: res.data.job.assignee,
-      });
-      var moversObj = {
-        name: "",
-        address: "",
-        attributes: "",
-      };
-      getAllMovers(moversObj).then((moverRes) => {
-        var mover = moverRes?.data.movers.docs?.map((mover) => mover);
-        this.setState({
-          assigneeList: mover,
-        });
-      });
-
-      const contentBlock = htmlToDraft(res.data.job.description);
-      if (contentBlock) {
-        const contentState = ContentState.createFromBlockArray(
-          contentBlock.contentBlocks
-        );
-        const editorState = EditorState.createWithContent(contentState);
-        this.setState({
-          editorState,
-        });
-      }
-      var services = res.data.job.services.map((service, index) => {
-        return { id: index + 1, name: service };
-      });
-      let ids = res.data.job.assignee.map((x) => x._id);
-      let parsedDates = res.data.job.dates.map((x) => Date.parse(x));
-      this.setState({
-        job: res.data.job,
-        title: res.data.job.title,
-        startDate: Date.parse(res.data.job.startDate),
-        dates: parsedDates,
-        endDate: Date.parse(res.data.job.endDate),
-        startDateInString: res.data.job.startDate,
-        endDateInString: res.data.job.endDate,
-        startTime: res.data.job.startTime,
-        // meetTime: res.data.job.meetTime,
-        locations: res.data.job.locations,
-        jobType: res.data.job.jobType,
-        description: res.data.job.description,
-        options: services,
-        assignee: res.data.job.assignee,
-        // assigneeList:assigneeList,
-        // assigneesId: ids,
-        note: res.data.job.note,
-        userId: "5f732f880cf3f60894f771b9",
-        status: res.data.job.status,
-        show: false,
-        customerId: res.data.job.customer.email,
-        assigneeRequired: res.data.job.assigneeRequired,
-        // newService: res.data.job.newService,
+        assigneeList: mover,
       });
     });
-  };
 
-  handleShow = () => {
+    var {job} = this.props
+    
+   if(job) {
+     console.log(job)
+    const contentBlock = htmlToDraft(job.description);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(
+        contentBlock.contentBlocks
+      );
+      const editorState = EditorState.createWithContent(contentState);
+      this.setState({
+        editorState,
+      });
+    }
+    var services = job.services.map((service, index) => {
+      return { id: index + 1, name: service };
+    });
+    let ids = job.assignee.map((x) => x._id);
+    let parsedDates = job.dates.map((x) => Date.parse(x));
     this.setState({
-      show: true,
+      job: job,
+      title: job.title,
+      startDate: Date.parse(job.startDate),
+      dates: parsedDates,
+      endDate: Date.parse(job.endDate),
+      startDateInString: job.startDate,
+      endDateInString: job.endDate,
+      startTime: job.startTime,
+      // meetTime: job.meetTime,
+      locations: job.locations,
+      jobType: job.jobType,
+      description: job.description,
+      options: services,
+      assignee: job.assignee,
+      // assigneeList:assigneeList,
+      // assigneesId: ids,
+      note: job.note,
+      userId: "5f732f880cf3f60894f771b9",
+      status: job.status,
+      show: false,
+      customerId: job.customer.email,
+      assigneeRequired: job.assigneeRequired,
+      services: job.services
+      
+      // newService: job.newService,
     });
+    
+   }
+  
+  }
+    handleShow = () => {
+      this.setState({
+        show: true,
+      });
   };
+
 
   removeLocation = (i) => {
     var location = cloneDeep(this.state.locations);
@@ -710,7 +723,9 @@ class JobEditDetails extends Component {
     // console.log(draftToHtml(convertToRaw(e.getCurrentContent())))
   };
   render() {
-    var { job } = this.state;
+    // var { job } = this.state;
+    var {job} = this.props
+    console.log(job)
     console.log(this.state.locations);
     var {
       match: {
@@ -1151,31 +1166,25 @@ class JobEditDetails extends Component {
                 />
               </div>
             ))}
-        </div>
-            <div className="row" style = {{margin:"1.5rem", }}>
-              <div
-                className={`col-6`}
-               
+          </div>
+          <div className="row" style={{ margin: "1.5rem" }}>
+            <div className={`col-6`}>
+              <Button
+                onClick={this.handleShow}
+                type="submit"
+                style={{
+                  background: "#00ADEE",
+                  textTransform: "none",
+                  color: "#FFF",
+                  fontFamily: "sans-serif",
+
+                  width: "100%",
+                }}
               >
-                <Button
-                  onClick={this.handleShow}
-                  type="submit"
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                   
-                    width: "100%",
-                  }}
-                >
-                  Add Notes
-                </Button>
-              </div>
-              <div
-              className={`col-6`}
-              
-            >
+                Add Notes
+              </Button>
+            </div>
+            <div className={`col-6`}>
               <Button
                 type="submit"
                 onClick={this.handleJobUpdate}
@@ -1192,8 +1201,8 @@ class JobEditDetails extends Component {
                 Update
               </Button>
             </div>
-            </div>
-          
+          </div>
+
           <div className="row">
             {/* <div className={`col-6 ${style.btnalign}`}>
               <Button
@@ -1212,15 +1221,13 @@ class JobEditDetails extends Component {
                 Reset
               </Button>
             </div> */}
-
-            
           </div>
           <Modal
             show={show}
             onHide={this.handleClose}
             animation={false}
             centered
-            dialogClassName = {style.modal}
+            dialogClassName={style.modal}
           >
             <Modal.Header closeButton>
               <Modal.Title>Add Note</Modal.Title>
@@ -1258,10 +1265,12 @@ class JobEditDetails extends Component {
 // }
 var actions = {
   showMessage,
+  getJob,
 };
 
 var mapStateToProps = (state) => ({
   loggedinUser: state.users.user,
+  job: state.jobs?.job
 });
 
 export default connect(mapStateToProps, actions)(JobEditDetails);

@@ -122,8 +122,9 @@ class CreateJobs extends Component {
       });
     }
     getCustomersAndJobs().then((res) => {
+      console.log(res.data)
       if (res && res.status == 201) {
-        this.setState({ customers: res.data.customers });
+        this.setState({ customers: res.data.data });
       }
     });
 

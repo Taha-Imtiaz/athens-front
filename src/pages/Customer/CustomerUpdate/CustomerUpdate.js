@@ -17,13 +17,14 @@ class CustomerUpdate extends Component {
     } = this.props;
     fetchCustomerById(id)
       .then((res) => {
+        console.log(res)
         this.setState({
-          customer: res.data?.customer,
-          firstName: res.data.customer?.firstName,
-          lastName: res.data.customer?.lastName,
-          phone: res.data.customer?.phone,
-          email: res.data.customer?.email,
-          subContacts: res.data.customer?.subContacts,
+          customer: res.data?.data,
+          firstName: res.data.data?.firstName,
+          lastName: res.data.data?.lastName,
+          phone: res.data.data?.phone,
+          email: res.data.data?.email,
+          subContacts: res.data.data?.subContacts,
         });
       })
       .catch((error) => {

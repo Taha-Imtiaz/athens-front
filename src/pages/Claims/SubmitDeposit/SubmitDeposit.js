@@ -55,7 +55,7 @@ initialState =  {
       });
     }
     getCustomersAndJobs().then((res) => {
-      this.setState({ customers: res.data.customers });
+      this.setState({ customers: res.data.data });
     });
   };
 

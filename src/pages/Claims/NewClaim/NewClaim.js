@@ -73,7 +73,8 @@ class NewClaim extends Component {
       })
     }
     getCustomersAndJobs().then((res) => {
-      this.setState({ customers: res.data.customers });
+      console.log(res.data)
+      this.setState({ customers: res.data.data });
     });
   };
 

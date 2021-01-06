@@ -19,10 +19,11 @@ export var getMover = (moversObj) => {
         moversObj,
         config
       );
+      console.log(mover)
       dispatch({
         type: GET_MOVER,
         payload: {
-          mover: mover.data.jobs,
+          mover: mover.data.data,
         },
       });
     } catch (error) {

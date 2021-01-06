@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CLAIM } from "./customerConstants"
+import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants"
 
 
 var initialState =null
@@ -9,13 +9,13 @@ var customerReducer = (state = initialState, action) => {
        
         case GET_CUSTOMERS:
             console.log(payload.customers)
-            return {...state, customerList: payload.customers.data.User }
+            return {...state, customerList: payload.customers.data.data }
 
         case GET_CUSTOMER:
-            return {...state, customer: payload.customer.data.customer }
+            return {...state, customer: payload.customer.data.data }
 
-            case DELETE_CLAIM:
-            return {...state, ...payload.allCustomersExceptDelete }
+            case DELETE_CUSTOMER:
+            return {...state, customerList:payload.allCustomersExceptDelete.data.data }
         default:
             return state
     }

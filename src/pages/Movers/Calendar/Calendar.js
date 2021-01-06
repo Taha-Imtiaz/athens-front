@@ -32,7 +32,7 @@ class MoversCalendar extends Component {
     getMoverJobs(date).then((res) => {
       let jobs = [];
       let currentDayJobs = [];
-      res.data.jobs.map((x) => {
+      res.data.data.map((x) => {
         x.dates.map((y) => {
           let obj = {
             start: y,
@@ -76,7 +76,7 @@ class MoversCalendar extends Component {
       let jobs = [];
       let currentDayJobs = [];
 
-      res.data.jobs.map((x) => {
+      res.data.data.map((x) => {
         x.dates.map((y) => {
           let obj = {
             start: y,
@@ -112,7 +112,8 @@ class MoversCalendar extends Component {
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     let currentDayJobs = [];
-    this.state.jobs.map((x) => {
+    console.log(this.state)
+    this.state.currentDayJobs.map((x) => {
       x.dates.map((y) => {
         if (y == date.toDateString()) {
           currentDayJobs.push(x);

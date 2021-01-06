@@ -11,7 +11,7 @@ var claimReducer = (state = initialState, action) => {
             return { ...payload.claims }
 
             case GET_CLAIM:
-            return {  ...state,claim:payload.claim.data.claim }
+            return {  ...state,claim:payload.claim.data.data }
             case DELETE_CLAIM:
             return {...state, claimList: payload.getAllClaimsExceptDeleteOne}
         default:

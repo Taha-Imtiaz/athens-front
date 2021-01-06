@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CLAIM } from "./customerConstants";
+import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants";
 // import { UPDATE_JOB } from "../Job/jobConstants"
 // import { GET_Customers } from "./userConstants"
 import Axios from "../../utils/api";
@@ -117,10 +117,11 @@ export var deleteCustomer = (id, currentPage) => {
   return async (dispatch) => {
    try {
     var allCustomersExceptDelete = await Axios.delete(`customer/${id}`, body)
+    console.log(allCustomersExceptDelete.data.data)
     if (allCustomersExceptDelete.data.status == 200) {
       dispatch(showMessage(allCustomersExceptDelete.data.message))
     dispatch({
-      type: DELETE_CLAIM,
+      type: DELETE_CUSTOMER,
       payload:{
         allCustomersExceptDelete: allCustomersExceptDelete
       }

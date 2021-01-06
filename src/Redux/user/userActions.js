@@ -40,11 +40,12 @@ export var getLoginUser = (credentials) => {
             };
 
             var user = await Axios.get("user", config)
+            console.log(user)
             if (user.data.status == 200) {
                 diaspatch({
                     type: LOGGEDIN_USER,
                     payload: {
-                        user: user.data.user
+                        user: user.data.data
                     }
                 })
             } else {
@@ -109,7 +110,7 @@ export var updateUser = (data, userId) => {
                 dispatch({
                     type: LOGGEDIN_USER,
                     payload: {
-                        user: updatedUser.data.user
+                        user: updatedUser.data.data
                     }
                 })
             }

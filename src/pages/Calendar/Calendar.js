@@ -35,8 +35,9 @@ class CalendarApp extends Component {
     // const { getJobsByDate } = this.props;
     const date = new Date();
     getJobsByDate(date).then((res) => {
+      console.log(res)
       let jobs = [];
-      res.data.jobs.map((x) => {
+      res.data.data.map((x) => {
         x.dates.map((y) => {
           let obj = {
             start: y,
@@ -54,8 +55,9 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
+        console.log(res.data.data)
         this.setState({
-          currentDayJobs: res.data.jobs,
+          currentDayJobs: res.data.data,
           date: date,
         });
       })
@@ -84,7 +86,7 @@ class CalendarApp extends Component {
     var date = x;
     getJobsByDate(date).then((res) => {
       let jobs = [];
-      res.data.jobs.map((x) => {
+      res.data.data.map((x) => {
         x.dates.map((y) => {
           let obj = {
             start: y,
@@ -103,7 +105,7 @@ class CalendarApp extends Component {
     getAllJobsOnDate(date)
       .then((res) => {
         this.setState({
-          currentDayJobs: res.data.jobs,
+          currentDayJobs: res.data.data,
           date: date,
         });
       })
@@ -113,23 +115,29 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
+    var {getJob, job} = this.props
+    console.log(job)
     getJob(e.id)
-      .then((res) => {
-        this.setState({
-          currentDayJobs: res.data.job,
-          date: e.start,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.setState({
+      currentDayJobs:job,
+      date: e.start,
+    })
+      // .then((res) => {
+      //   this.setState({
+      //     currentDayJobs: res.data.data,
+      //     date: e.start,
+      //   });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   };
 
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     getJobsByDate(date).then((res) => {
       let jobs = [];
-      res.data.jobs.map((x) => {
+      res.data.data.map((x) => {
         x.dates.map((y) => {
           let obj = {
             start: y,
@@ -147,8 +155,9 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
+        console.log(res)
         this.setState({
-          currentDayJobs: res.data.jobs,
+          currentDayJobs: res.data.data,
           date: date,
         });
       })
@@ -224,7 +233,7 @@ class CalendarApp extends Component {
 
           <div className="col-3 text-left">
             <div>
-              {this.state.currentDayJobs.length ? (
+               {this.state.currentDayJobs.length ? (
                 <div>
                   <h5
                     style={{
@@ -267,10 +276,10 @@ class CalendarApp extends Component {
                               &nbsp;
                               {job.title}
                             </Link>
-                            {/* <h6>{job.title}</h6> */}
+                             <h6>{job.title}</h6> 
                           </div>
                           <div>
-                            {/* <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label> */}
+                            <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label>
 
                             {job.startTime && (
                               <Chip
@@ -282,14 +291,14 @@ class CalendarApp extends Component {
                                 style={{ margin: " 0 0.2rem" }}
                               />
                             )}
-                            {/* <Chip
+                            <Chip
                               label={job.status}
                               clickable
                               color="primary"
                               variant="outlined"
                               size="small"
                               style={{ margin: " 0 0.2rem" }}
-                            /> */}
+                            /> 
                           </div>
                         </div>
 
@@ -336,7 +345,8 @@ class CalendarApp extends Component {
                     </div>
                   ))}
                 </div>
-              ) : (
+              ) : 
+              ( 
                 <div>
                   {this.state.currentDayJobs.length !== 0 ? (
                     //  currentDayJobs is a object
@@ -483,11 +493,13 @@ class CalendarApp extends Component {
   }
 }
 
-{
-  /* var actions = {
-     getJobsByDate
+
+  var actions = {
+     getJob
    }
 
-   export default connect(null, actions)(CalendarApp) */
-}
-export default CalendarApp;
+  var mapStateToProps = (state) =>({
+    job: state.jobs?.job
+  })  
+
+export default connect(mapStateToProps, actions)(CalendarApp);

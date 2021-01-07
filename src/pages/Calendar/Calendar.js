@@ -15,7 +15,6 @@ import {
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 
-
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -35,7 +34,7 @@ class CalendarApp extends Component {
     // const { getJobsByDate } = this.props;
     const date = new Date();
     getJobsByDate(date).then((res) => {
-      console.log(res)
+      console.log(res);
       let jobs = [];
       res.data.data.map((x) => {
         x.dates.map((y) => {
@@ -55,7 +54,7 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
-        console.log(res.data.data)
+        console.log(res.data.data);
         this.setState({
           currentDayJobs: res.data.data,
           date: date,
@@ -115,27 +114,28 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
-    var {getJob, job} = this.props
-    console.log(job)
-    getJob(e.id)
+    var { getJob, job } = this.props;
+    console.log(job);
+    getJob(e.id);
     this.setState({
-      currentDayJobs:job,
+      currentDayJobs: job,
       date: e.start,
-    })
-      // .then((res) => {
-      //   this.setState({
-      //     currentDayJobs: res.data.data,
-      //     date: e.start,
-      //   });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+    });
+    // .then((res) => {
+    //   this.setState({
+    //     currentDayJobs: res.data.data,
+    //     date: e.start,
+    //   });
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
 
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     getJobsByDate(date).then((res) => {
+      console.log(res.data.data)
       let jobs = [];
       res.data.data.map((x) => {
         x.dates.map((y) => {
@@ -155,7 +155,7 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         this.setState({
           currentDayJobs: res.data.data,
           date: date,
@@ -180,17 +180,17 @@ class CalendarApp extends Component {
       },
     });
   };
-   formatAMPM = (startTime) => {
-    let date = new Date(startTime)
+  formatAMPM = (startTime) => {
+    let date = new Date(startTime);
     var hours = date.getHours();
     var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
+    var ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
-  }
+  };
   render() {
     return (
       <div>
@@ -233,7 +233,7 @@ class CalendarApp extends Component {
 
           <div className="col-3 text-left">
             <div>
-               {this.state.currentDayJobs.length ? (
+              {this.state?.currentDayJobs?.length ? (
                 <div>
                   <h5
                     style={{
@@ -276,10 +276,19 @@ class CalendarApp extends Component {
                               &nbsp;
                               {job.title}
                             </Link>
-                             <h6>{job.title}</h6> 
+                            <h6>{job.title}</h6>
                           </div>
                           <div>
-                            <label style={{display:"flex",fontWeight:"bold",margin: '0', padding:"0"}}>Start Time</label>
+                            <label
+                              style={{
+                                display: "flex",
+                                fontWeight: "bold",
+                                margin: "0",
+                                padding: "0",
+                              }}
+                            >
+                              Start Time
+                            </label>
 
                             {job.startTime && (
                               <Chip
@@ -298,7 +307,7 @@ class CalendarApp extends Component {
                               variant="outlined"
                               size="small"
                               style={{ margin: " 0 0.2rem" }}
-                            /> 
+                            />
                           </div>
                         </div>
 
@@ -322,7 +331,7 @@ class CalendarApp extends Component {
                               {job.services.map((service) => (
                                 <Chip
                                   label={service.name}
-                                  size = "small"
+                                  size="small"
                                   clickable
                                   color="primary"
                                   variant="outlined"
@@ -345,10 +354,9 @@ class CalendarApp extends Component {
                     </div>
                   ))}
                 </div>
-              ) : 
-              ( 
+              ) : (
                 <div>
-                  {this.state.currentDayJobs.length !== 0 ? (
+                  {this.state?.currentDayJobs?.length !== 0 ? (
                     //  currentDayJobs is a object
 
                     <div>
@@ -390,18 +398,34 @@ class CalendarApp extends Component {
                                 &nbsp;
                                 {this.state.currentDayJobs?.title}
                               </Link>
+                              <h6>{this.state.currentDayJobs?.title}</h6>
                             </div>
                             <div>
                               {this.state.currentDayJobs?.startTime && (
-                                <Chip
-                                // {this.formatAMPM(job.startTime)}
-                                  label={this.formatAMPM(this.state.currentDayJobs?.startTime)}
-                                  clickable
-                                  color="primary"
-                                  variant="outlined"
-                                  size="small"
-                                  style={{ margin: " 0 0.2rem" }}
-                                />
+                                <div>
+                                  <label
+                                    style={{
+                                      display: "flex",
+                                      fontWeight: "bold",
+                                      margin: "0",
+                                      padding: "0",
+                                    }}
+                                  >
+                                    Start Time
+                                  </label>
+
+                                  <Chip
+                                    // {this.formatAMPM(job.startTime)}
+                                    label={this.formatAMPM(
+                                      this.state.currentDayJobs?.startTime
+                                    )}
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    style={{ margin: " 0 0.2rem" }}
+                                  />
+                                </div>
                               )}
                               {/* <Chip
                                 label={this.state.currentDayJobs?.status}
@@ -425,19 +449,21 @@ class CalendarApp extends Component {
                                 className="card-text"
                                 style={{ whiteSpace: "pre-line" }}
                               >
-                                {parse(this.state.currentDayJobs?.description)}
+                              {parse(this.state.currentDayJobs?.description)}
                               </p>
                               <div>
-                              {this.state.currentDayJobs.services.map((service) => (
-                                <Chip
-                                  label={service.name}
-                                  size = "small"
-                                  clickable
-                                  color="primary"
-                                  variant="outlined"
-                                />
-                              ))}
-                            </div>
+                                {this.state.currentDayJobs.services.map(
+                                  (service) => (
+                                    <Chip
+                                      label={service.name}
+                                      size="small"
+                                      clickable
+                                      color="primary"
+                                      variant="outlined"
+                                    />
+                                  )
+                                )}
+                              </div>
                               <p className="card-text">
                                 Customer:
                                 <Link
@@ -493,13 +519,12 @@ class CalendarApp extends Component {
   }
 }
 
+var actions = {
+  getJob,
+};
 
-  var actions = {
-     getJob
-   }
-
-  var mapStateToProps = (state) =>({
-    job: state.jobs?.job
-  })  
+var mapStateToProps = (state) => ({
+  job: state.jobs?.job,
+});
 
 export default connect(mapStateToProps, actions)(CalendarApp);

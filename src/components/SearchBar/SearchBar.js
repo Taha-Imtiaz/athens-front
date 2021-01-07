@@ -22,7 +22,7 @@ const SearchBar = (props) => {
   function handleSearch(e) {
     if (props.type == "customer") {
       
-      if (searchValue) {
+      if (searchValue === "" || searchValue) {
         console.log(e.target.value,searchValue)
         var fetchCustomersObj = {
           query: e.target.value,
@@ -45,7 +45,7 @@ const SearchBar = (props) => {
         getAllCustomers(fetchCustomersObj);
       }
     } else if (props.type == "user") {
-      if (searchValue) {
+      if (searchValue === "" || searchValue) {
         console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
@@ -64,7 +64,7 @@ const SearchBar = (props) => {
         getUsers(usersObj);
       }
     } else if (props.type === "claims") {
-      if (searchValue) {
+      if (searchValue === "" || searchValue) {
         console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
@@ -81,7 +81,7 @@ const SearchBar = (props) => {
         getAllClaims(usersObj);
       }
     } else if (props.type === "mover") {
-      if (searchValue) {
+      if (searchValue === "" || searchValue) {
         console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,
@@ -96,7 +96,7 @@ const SearchBar = (props) => {
       }
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
-      if (searchValue) {
+      if (searchValue === "" || searchValue) {
         console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,

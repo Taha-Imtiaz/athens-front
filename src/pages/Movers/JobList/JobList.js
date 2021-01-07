@@ -53,8 +53,8 @@ class MoversJobsList extends Component {
 
     var moversObj = {
       filters: {
-        jobStatus: "",
-        dates: "",
+        jobStatus : "",
+        dates: null,
         nearestDate: "",
       },
       sort: {
@@ -62,6 +62,7 @@ class MoversJobsList extends Component {
       },
       page: 1,
     };
+    console.log(moversObj)
     getMover(moversObj);
     // if (user) {
     //     getMover(user._id)

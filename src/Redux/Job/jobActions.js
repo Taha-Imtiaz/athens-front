@@ -122,9 +122,28 @@ export var filterJobsByDate = (date) => {
   };
 };
 
-export var confirmJob = async (obj) => {
-  var confirmation = await Axios.post(`job/book`, obj);
-  return confirmation;
+export var confirmJob =  (obj) => {
+  return async (dispatch) => {
+    try {
+      var getJob = await Axios.post(`job/book`, obj);
+      console.log(getJob)
+      if(getJob.data.status === 200) {
+        dispatch(showMessage(getJob.data.message))
+     
+      dispatch({
+        type: GET_JOB,
+        payload:{
+          getJob
+        }
+      }) 
+    }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // console.log(confirmation)
+  // return confirmation;
 };
 
 // export var getServices = async () => {

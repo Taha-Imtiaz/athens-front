@@ -96,6 +96,7 @@ function JobConfirmation(props) {
 
   useEffect(() => {
     let job = cloneDeep(props.data);
+    console.log(job)
     loadStripe();
     let parsedDates = job.dates.map((x) =>
       typeof x == "string" ? Date.parse(x) : x
@@ -471,6 +472,7 @@ function JobConfirmation(props) {
   };
 
   const pay = (e) => {
+    var {confirmJob,job} = props
     window.Stripe.card.createToken(
       {
         number: payment.number,
@@ -502,14 +504,17 @@ function JobConfirmation(props) {
             email: data.customer.email,
             customerId: data.customer._id,
           };
-          confirmJob(obj).then((res) => {
-            let { showMessage } = props;
-            if (res.data.status == 200) {
-              showMessage(res.data.message);
-              // history.push('/job')
-              props.close();
-            }
-          });
+          confirmJob(obj)
+          setData(job)
+          props.close();
+          // .then((res) => {
+          //   let { showMessage } = props;
+          //   if (res.data.status == 200) {
+          //     showMessage(res.data.message);
+          //     // history.push('/job')
+              
+          //   }
+          // });
           // this.setState({
           //     message: `Success! Card token ${response.card.id}.`,
           //     formProcess: false
@@ -525,6 +530,7 @@ function JobConfirmation(props) {
   };
 
   const handleSubmitWithoutPay = () => {
+    var {confirmJob,job} = props
     let stringDates = data.dates.map((x) => {
       if (typeof x == "number") {
         return new Date(x).toDateString();
@@ -543,15 +549,22 @@ function JobConfirmation(props) {
       customerId: data.customer._id,
     };
     console.log(obj)
-    confirmJob(obj).then((res) => {
-      console.log(res)
-      let { showMessage } = props;
-      if (res.data.status == 200) {
-        showMessage(res.data.message);
-        // history.push('/job')
-        props.close();
-      }
-    });
+    confirmJob(obj)
+    setData(job)
+    props.close();
+    // .then((res) => {
+      
+      
+      
+      
+    //   console.log(res)
+    //   let { showMessage } = props;
+    //   if (res.data.status == 200) {
+    //     showMessage(res.data.message);
+    //     // history.push('/job')
+    //     props.close();
+    //   }
+    // });
     // this.setState({
     //     message: `Success! Card token ${response.card.id}.`,
     //     formProcess: false
@@ -967,6 +980,9 @@ function JobConfirmation(props) {
 
 var actions = {
   showMessage,
+  confirmJob
 };
-
-export default connect(null, actions)(JobConfirmation);
+var mapStateToProps = (state) => ({
+  job: state.jobs?.job
+})
+export default connect(mapStateToProps, actions)(JobConfirmation);

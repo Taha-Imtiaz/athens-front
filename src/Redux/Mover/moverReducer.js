@@ -16,7 +16,7 @@ var moverReducer = (state = initialState, action) => {
            case SEARCH_FILTER:
                return { ...payload.searchItem}
                case GET_JOB: 
-               return {job: payload.getJob.data.data}
+               return {...state, job: payload.getJob.data.data}
         default:
             return state
     }

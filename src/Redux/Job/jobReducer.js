@@ -11,7 +11,7 @@ switch (type) {
         return {...state, jobList:payload.getJobs.data.data}
         
         case GET_JOB:
-            console.log(payload.getJob.data.job)
+            // console.log(payload.getJob.data.job)
         return {...state,job: payload.getJob.data.data}
         
 case FILTER_JOB:

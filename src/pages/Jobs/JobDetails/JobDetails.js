@@ -201,15 +201,15 @@ const JobDetails = (props) => {
                           >
                             <div className={`col-2 `}>
                               {" "}
-                              <p>{activitiy.performer.name}</p>
+                              <p>{activitiy?.performer?.name}</p>
                             </div>
                             <div className={`col-6`}>
-                              {activitiy.messageLogs.map((x) => (
+                              {activitiy?.messageLogs?.map((x) => (
                                 <p>* {x}</p>
                               ))}
                             </div>
                             <div className={`col-4 `}>
-                              <p> {activitiy.timeStamp.split("G")[0]}</p>
+                              <p> {activitiy?.timeStamp?.split("G")[0]}</p>
                             </div>
                           </div>
                         ))}

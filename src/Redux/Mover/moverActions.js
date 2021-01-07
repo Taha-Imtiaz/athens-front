@@ -112,10 +112,11 @@ export var moverSearchFilter = (searchObj) => {
     };
     try {
       var searchItem = await Axios.post(`mover/search`, searchObj, config);
+      console.log(searchItem.data.data)
       dispatch({
         type: SEARCH_FILTER,
         payload: {
-          searchItem: searchItem.data.jobs
+          searchItem: searchItem.data.data
         }
       })
 

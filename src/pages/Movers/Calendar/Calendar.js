@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { getMoverJobs, getJob } from "../../../Redux/Mover/moverActions";
 import { getJobsByDate } from "../../../Redux/Job/jobActions";
 import { connect } from "react-redux";
+import parse from "html-react-parser";
 
 const localizer = momentLocalizer(moment);
 const now = new Date();
@@ -31,6 +32,7 @@ class MoversCalendar extends Component {
     const date = new Date();
     getMoverJobs(date).then((res) => {
       let jobs = [];
+      console.log(res.data)
       let currentDayJobs = [];
       res.data.data.map((x) => {
         x.dates.map((y) => {
@@ -49,7 +51,7 @@ class MoversCalendar extends Component {
       this.setState({
         myEventsList: jobs,
         currentDayJobs,
-        jobs: res.data.jobs,
+        jobs: res.data.data,
       });
     });
   };
@@ -99,24 +101,31 @@ class MoversCalendar extends Component {
   };
 
   getJobDetails = (e) => {
+    var {getJob, job} = this.props
+    console.log(job)
     getJob(e.id)
-      .then((res) => {
-        console.log(res.data.job)
-        this.setState({ currentDayJobs: res.data.job, date: e.start });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(job) {
+      this.setState({ currentDayJobs:job, date: e.start });
+    }
+    
+      // .then((res) => {
+      //   console.log(res.data)
+      //   this.setState({ currentDayJobs: res.data.job, date: e.start });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   };
 
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     let currentDayJobs = [];
-    console.log(this.state)
-    this.state.currentDayJobs.map((x) => {
+    console.log(this.state.jobs)
+    this.state.jobs.map((x) => {
       x.dates.map((y) => {
         if (y == date.toDateString()) {
           currentDayJobs.push(x);
+          console.log(currentDayJobs)
         }
       });
     });
@@ -218,7 +227,7 @@ class MoversCalendar extends Component {
           <div className="col-3 text-left">
               
             <div>
-              {this.state.currentDayJobs.length ? (
+              {this.state.currentDayJobs?.length ? (
                 <div>
                   <h5
                     style={{
@@ -303,12 +312,23 @@ class MoversCalendar extends Component {
                           data-parent="#accordion"
                         >
                           <div className="card-body">
-                            <p
+                            <span
                               className="card-text"
                               style={{whiteSpace:"pre-line" }}
                             >
-                              {`${job.description}`}
-                            </p>
+                              {parse(job.description)}
+                            </span>
+                            <div>
+                              {job.services.map((service) => (
+                                <Chip
+                                  label={service.name}
+                                  size="small"
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                />
+                              ))}
+                            </div>
                             <p className="card-text">
                               Customer:
                               <Link
@@ -327,7 +347,7 @@ class MoversCalendar extends Component {
                 </div>
               ) : (
                 <div>
-                  {this.state.currentDayJobs.length !== 0 ? (
+                  {this.state.currentDayJobs?.length !== 0 ? (
                     //  currentDayJobs is a object
 
                     <div>
@@ -400,7 +420,7 @@ class MoversCalendar extends Component {
                           >
                             <div className="card-body">
                               <p className="card-text">
-                                {this.state.currentDayJobs?.description}
+                                {parse(this.state.currentDayJobs?.description)}
                               </p>
                               <p className="card-text">
                                 Customer:
@@ -556,10 +576,11 @@ class MoversCalendar extends Component {
 var mapStateToProps = (state) => ({
   // moverJobs: state.moverJobs,
   user: state.users.user,
+  job: state.moverJobs?.job
 });
 
-// var actions = {
-//     getMover
-// };
+var actions = {
+    getJob
+};
 
-export default connect(mapStateToProps, null)(MoversCalendar);
+export default connect(mapStateToProps, actions)(MoversCalendar);

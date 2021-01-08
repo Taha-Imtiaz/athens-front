@@ -1,8 +1,3 @@
-// import Navbar from '../../Navbar/Navbar'
-import style from "./customeradd.module.css";
-// import SideBar from '../../Sidebar/SideBar'
-// import Button from '../../Button/Button'
-import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addCustomer } from "../../../Redux/Customer/customerActions";
@@ -10,16 +5,13 @@ import {
   resetCustomerForm,
   setCustomerForm,
 } from "../../../Redux/PersistForms/formActions";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FormControl, TextField } from "@material-ui/core";
-import { FormHelperText, InputLabel } from "@material-ui/core";
-import { Input } from "@material-ui/core";
-import { cloneDeep } from "lodash";
+import { TextField } from "@material-ui/core";
+import style from "./customeradd.module.css";
+import Button from "@material-ui/core/Button";
 
 class CustomerAdd extends Component {
   constructor(props) {
-    console.log("constructor");
     super(props);
     this.initialState = {
       firstName: "",
@@ -41,16 +33,10 @@ class CustomerAdd extends Component {
       subContactEmailError: "",
     };
 
-    // this.state = { ...this.initialState };
     this.state = { ...this.props.addForm };
   }
-
-  // componentDidMount() {
-  //   console.log(this.props.addForm);
-  // }
-
+  //validate(check if the form fields are empty or not)
   validate = () => {
-    // var {username,password,emailError,passwordError} = this.state
     let emailError = "";
     let firstNameError = "";
     let lastNameError = "";
@@ -74,14 +60,6 @@ class CustomerAdd extends Component {
       phoneError = "Phone Number should not be empty";
     }
 
-    // if (!this.state.emailContacts.match(mailformat)) {
-    //     altemailError = "Invalid Email"
-    // }
-
-    // if (!this.state.phoneContacts) {
-    //     altnumberError = "Phone Number should not be empty"
-    // }
-
     if (emailError || firstNameError || lastNameError || phoneError) {
       this.setState({
         firstNameError,
@@ -94,7 +72,7 @@ class CustomerAdd extends Component {
 
     return true;
   };
-
+  //onChange handler of form
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
@@ -104,13 +82,13 @@ class CustomerAdd extends Component {
       this.setState({ [name + "Error"]: "" });
     }
   };
-
+  //onChange handler of subContact
   hanldeContactsInput = (e, i) => {
     let updatedContacts = this.state.subContacts.slice();
     updatedContacts[i][e.target.name] = e.target.value;
     this.setState({ subContacts: updatedContacts });
   };
-
+  //this handler is clicked when the form is submitted
   mySubmitHandler = (event) => {
     var { addCustomer, history } = this.props;
     event.preventDefault();
@@ -119,6 +97,7 @@ class CustomerAdd extends Component {
     const isValid = this.validate();
     if (isValid) {
       var { firstName, lastName, email, phone, subContacts } = this.state;
+      //check if the subContacts fields are empty
       if (
         this.state.subContacts[0].name === "" &&
         this.state.subContacts[0].phone === "" &&
@@ -134,7 +113,7 @@ class CustomerAdd extends Component {
         email,
         subContacts,
       };
-      // if(!(subContacts[0].phone === "" && subContacts[0].email === "" )) {
+      //Call addCustomer Api
       addCustomer(addCustomerObj, (customer) => {
         if (this.props.isModal) {
           this.props.close(customer);
@@ -144,13 +123,11 @@ class CustomerAdd extends Component {
       });
     }
   };
-
+  //function to addSubContacts(if the subContacts are greater 1)
   addContacts = () => {
-    if (
-      this.state.subContacts[0].name &&
-      this.state.subContacts[0].phone &&
-      this.state.subContacts[0].email
-    ) {
+    var { subContacts } = this.state;
+    console.log(subContacts);
+    if (subContacts[0].name && subContacts[0].phone && subContacts[0].email) {
       this.setState({
         subContacts: [
           ...this.state.subContacts,
@@ -165,24 +142,20 @@ class CustomerAdd extends Component {
   };
 
   componentWillUnmount() {
+    //set the values of form fields in redux state
     var { setCustomerForm } = this.props;
     setCustomerForm({ ...this.state });
   }
+  //reset form (clear values from all fields)
   handleResetForm = () => {
-    var { resetCustomerForm, addForm } = this.props;
+    var { resetCustomerForm } = this.props;
 
     resetCustomerForm();
-    this.setState({...this.initialState});
-    console.log("reset is called", addForm);
-
-    //     console.log(addForm)
-    //     console.log(this.initialState)
-    // this.setState({
-    //   addForm:this.initialState
-    // })
+    this.setState({ ...this.initialState });
   };
 
   render() {
+    
     return (
       <div
         className={this.props.isModal !== true ? `${style.formStyle}` : null}
@@ -203,18 +176,10 @@ class CustomerAdd extends Component {
                 name="firstName"
                 autoComplete="firstName"
                 autoFocus
-                error={this.state.firstNameError}
+                error={this.state.firstNameError.length > 0}
                 value={this.state.firstName}
                 onChange={this.handleFormInput}
               />
-
-              {/* {this.state.firstNameError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.firstNameError}
-
-
-
-                            </div>) : null} */}
 
               <TextField
                 variant="outlined"
@@ -226,15 +191,10 @@ class CustomerAdd extends Component {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lastName"
-                error={this.state.lastNameError}
+                error={this.state.lastNameError.length > 0}
                 value={this.state.lastName}
                 onChange={this.handleFormInput}
               />
-              {/* {this.state.lastNameError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.lastNameError}
-
-                            </div>) : null} */}
 
               <TextField
                 variant="outlined"
@@ -246,17 +206,10 @@ class CustomerAdd extends Component {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneError}
+                error={this.state.phoneError?.length > 0}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />
-              {/* {this.state.phoneNumberError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.phoneNumberError}
-
-
-
-                            </div>) : null} */}
 
               <TextField
                 variant="outlined"
@@ -268,38 +221,25 @@ class CustomerAdd extends Component {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={this.state.emailError}
+                error={this.state.emailError.length > 0}
                 value={this.state.email}
                 onChange={this.handleFormInput}
               />
-              {/* {this.state.emailError ? (
-                            <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                                {this.state.emailError}
-
-
-
-                            </div>) : null} */}
             </form>
             <h5 style={{ margin: "0 2rem" }}>Alternate Contact</h5>
             {this.state.subContacts.map((x, i) => {
               return (
                 <div key={i}>
                   <form>
-                    {/* <InputLabel htmlFor ="phone_number">Phone Number</InputLabel>
-                                        <Input  id="phone_number" name="phone" value={this.state.subContacts[i].phone} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
-
                     <TextField
                       variant="outlined"
                       required
                       style={{ margin: "1rem 2rem", width: "92%" }}
                       size="small"
-                      // required
-
                       id="name"
                       label="Name"
                       name="name"
                       autoComplete="name"
-                      //   error={this.state.subContactPhoneError}
                       value={this.state.subContacts[i].name}
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
@@ -309,32 +249,27 @@ class CustomerAdd extends Component {
                       required
                       style={{ margin: "1rem 2rem", width: "92%" }}
                       size="small"
-                      // required
-                        type = "number"
+                      type="number"
                       id="phone_number"
                       label="Phone Number"
                       name="phone"
                       autoComplete="phone_number"
-                      error={this.state.subContactPhoneError}
+    
                       value={this.state.subContacts[i].phone}
+                      
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
 
-                    {/* <InputLabel htmlFor="emailalt">Email address</InputLabel>
-                                        <Input type="email" id = "emailalt"  name="email" value={this.state.subContacts[i].email} onChange={(e) => this.hanldeContactsInput(e, i)} /> */}
-                    {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                     <TextField
                       variant="outlined"
                       required
                       style={{ margin: "1rem 2rem", width: "92%" }}
-                      // required
-
                       id="emailalt"
                       label="Email Address"
                       size="small"
                       name="email"
                       autoComplete="emailalt"
-                      error={this.state.subContactEmailError}
+                     
                       value={this.state.subContacts[i].email}
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
@@ -343,12 +278,9 @@ class CustomerAdd extends Component {
               );
             })}
 
-            <div
-              // style={{ float: "right", marginRight: "2.2rem" }}
-              className="row"
-            >
+            <div className="row">
               <div className="col-10"></div>
-              {/* <input type="button" className="btn btn-primary" name="Add Another" value="Add Another" onClick={this.addClaim} /> */}
+
               <div className="col-2">
                 <Button
                   onClick={this.addContacts}
@@ -404,9 +336,6 @@ class CustomerAdd extends Component {
                 >
                   Submit
                 </Button>
-                {/* <button onClick={this.mySubmitHandler} type='button' className={style.button}>Sign In</button> */}
-                {/* </div> */}
-                {/* </div> */}
               </div>
             </div>
           </div>

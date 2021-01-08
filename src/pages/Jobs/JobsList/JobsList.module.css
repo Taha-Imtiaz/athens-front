@@ -165,3 +165,8 @@
 .modal {
   max-width: 70vw;
 }
+.dropDown {
+  /* padding: 0; */
+  margin: 0 1rem;
+  /* background-color: aqua; */
+}

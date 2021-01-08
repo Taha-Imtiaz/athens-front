@@ -334,10 +334,14 @@ class JobEditDetails extends Component {
       history,
     } = this.props;
     var { showMessage } = this.props;
+    console.log(dates)
     let stringDates = dates.map((x) => {
-      if (typeof x == "number") {
+      if (typeof x === "number") {
+        console.log(x,typeof x)
         return new Date(x).toDateString();
-      } else {
+      } 
+      else {
+        console.log(x)
         return x.toDateString();
       }
       //   x.toDateString()
@@ -671,7 +675,7 @@ class JobEditDetails extends Component {
 
   addDate = () => {
     if (this.state.dates[0]) {
-      this.setState({ dates: [...this.state.dates, ""] });
+      this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
   removeDate = (i) => {
@@ -895,8 +899,8 @@ class JobEditDetails extends Component {
                               format="MM/dd/yyyy"
                               value={
                                 this.state.dates[i]
-                                  ? this.state.dates[i]
-                                  : new Date()
+                                  // ? this.state.dates[i]
+                                  // : new Date()
                               }
                               onChange={(e) => this.handleStartDate(e, i)}
                               KeyboardButtonProps={{

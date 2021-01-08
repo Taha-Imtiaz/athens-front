@@ -8,7 +8,7 @@ var customerReducer = (state = initialState, action) => {
     switch (type) {
        
         case GET_CUSTOMERS:
-            console.log(payload.customers)
+            
             return {...state, customerList: payload.customers.data.data }
 
         case GET_CUSTOMER:

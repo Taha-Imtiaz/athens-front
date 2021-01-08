@@ -112,13 +112,14 @@ const BlanketList = (props) => {
         >
           <ul className="list-group">
             {blanketValue.map((deposit, i) => {
+              console.log(deposit)
               return (
-                <li className="checkbox list-group-item">
-                  {/* key={i} */}
+                <li className="checkbox list-group-item" key={i}>
+                  {/* */}
                   <div className="row">
                     <div className="col-2">
-                      <Link to={`/job/details/${deposit ?.job._id}`}>
-                        {deposit ?.job ?.jobId}
+                      <Link to={`/job/details/${deposit?.job._id}`}>
+                        {deposit?.job?.jobId}
                       </Link>
                     </div>
                     <div className="col-2">

@@ -40,7 +40,7 @@ export var getLoginUser = (credentials) => {
             };
 
             var user = await Axios.get("user", config)
-            console.log(user)
+            
             if (user.data.status == 200) {
                 diaspatch({
                     type: LOGGEDIN_USER,

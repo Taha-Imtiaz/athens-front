@@ -18,7 +18,7 @@ const Navbar = (props) => {
 
   var { user } = props;
   var {history:{location:{pathname}}} = props
-  console.log(pathname)
+  
 
   const getNavLinkClass = (path) => {
     return props.location.pathname === path ? "nav-item active" : "nav-item";

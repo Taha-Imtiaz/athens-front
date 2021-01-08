@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import style from "./customerlist.module.css";
 import SearchBar from "../../../components/SearchBar/SearchBar";
-// import Button from "../../Button/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -11,34 +10,31 @@ import {
 import { useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
 import _ from "lodash";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInfoCircle,
-  faBook,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import Button from "@material-ui/core/Button";
 import { Modal } from "react-bootstrap";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-// import DeleteConfirmation from "../../DeleteConfirmation/DeleteConfirmation";
-// import { setRef } from "@material-ui/core";
 
 const CustomerList = (props) => {
+  //defining variables
   var { getAllCustomers } = props;
+  var { customers } = props;
+  if (customers) {
+    var { docs } = customers;
+  }
+  var totalCount = customers?.total;
+  //defining state variables
   var [order, setOrder] = useState(-1);
-  var fetchCustomersOnPageChange = null;
   var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var [recentlyUpdated, setRecentlyUpdated] = useState(false);
   var [recentlyUpdated, setRecentlyUpdated] = useState(false);
   var [recentlyAdded, setRecentlyAdded] = useState(false);
   var [sortByName, setSortByName] = useState(false);
-  var { getAllCustomers } = props;
   var [show, setShow] = useState(false);
-  var [modalIndex, setModalIndex] = useState("");
-  var [jobToDelete, setJobToDelete] = useState("");
+  var [customerToDelete, setCustomerToDelete] = useState("");
   var [value, setValue] = useState("recently added");
 
+  //fetch customerList on ComponentDidMount
   useEffect(() => {
     var fetchCustomersObj = {
       query: "",
@@ -49,10 +45,11 @@ const CustomerList = (props) => {
       },
       page: 1,
     };
-    console.log("CDM");
+
     getAllCustomers(fetchCustomersObj);
   }, []);
 
+  //fetch/get customers whwn the page is changed
   var handlePageChange = (page) => {
     if (recentlyUpdated === true) {
       var fetchCustomersOnPageChange = {
@@ -101,6 +98,7 @@ const CustomerList = (props) => {
         setCurrentPage(page);
       }
     } else {
+      //sort by recently added by default
       var fetchCustomersOnPageChange = {
         query: "",
         sort: {
@@ -115,22 +113,16 @@ const CustomerList = (props) => {
     getAllCustomers(fetchCustomersOnPageChange);
   };
 
-  const width = window.innerWidth;
-
-  var { customers } = props;
-
-  var totalCount = customers?.total;
-
-  if (customers) {
-    var { docs } = customers;
-    // var customerId = docs.map((docs) => docs._id);
-  }
   var removeCustomer = () => {
+    //remove customer from the list and database too
     var { deleteCustomer } = props;
-    deleteCustomer(jobToDelete, currentPage);
+    deleteCustomer(customerToDelete, currentPage);
+    //close delete modal
     setShow(false);
   };
-  var handleSort = () => {
+  //sort the by list by name in ascending/descending order
+  var handleSortByName = () => {
+    //set the field to true which is selected(set other fields to false too)
     setSortByName(true);
     setRecentlyAdded(false);
     setRecentlyUpdated(false);
@@ -159,22 +151,12 @@ const CustomerList = (props) => {
       };
       setCurrentPage(1);
     }
-    // else {
-    //   setOrder(1);
-    //   var sortCustomersObj = {
-    //     query: "",
-    //     sort: {
-    //       plainName: 1,
-    //       createdAt: null,
-    //       updatedAt: null
-    //     },
-    //     page: 1,
-    //   };
-    // }
+
     getAllCustomers(sortCustomersObj);
   };
 
-  var handleDateFilter = () => {
+  var handleRecentlyAdded = () => {
+    //set the field to true which is selected(set other fields to false or null too)
     setRecentlyAdded(true);
     setRecentlyUpdated(false);
     setSortByName(null);
@@ -191,7 +173,8 @@ const CustomerList = (props) => {
     getAllCustomers(sortCustomersObj);
   };
 
-  var handleUpdtedAtFilter = () => {
+  var handleRecentlyUpdated = () => {
+    //set the field to true which is selected(set other fields to false or null too)
     setRecentlyUpdated(true);
     setRecentlyAdded(false);
     setSortByName(null);
@@ -208,24 +191,24 @@ const CustomerList = (props) => {
     getAllCustomers(sortCustomersObj);
   };
 
+  //show delete modal
   var handleShow = (i, jobId) => {
-    console.log(i);
-    // setModalIndex(i)
-    // if (modalIndex === i)
-    //   setShow(true)
-    // else
-    //   setShow(false)
-    setJobToDelete(jobId);
+    // console.log(i);
+    //set the customerid of the of customer you want to delete
+    setCustomerToDelete(jobId);
+    //show the delete modal
     setShow(true);
   };
 
+  //close the delete modal
   var handleClose = () => {
     setShow(false);
   };
+  //change Handler of radio buttons
   var handleChange = (e) => {
     setValue(e.target.value);
   };
-  var { customers } = props;
+
   return (
     <div>
       <div>
@@ -252,20 +235,13 @@ const CustomerList = (props) => {
               aria-expanded="false"
               style={{ transform: "translateY(-.3rem)" }}
             ></i>
+            {/* Dropdown list */}
             <div
               className="dropdown-menu"
               aria-labelledby="dropdownMenuLink"
               style={{ margin: "-0.5rem" }}
             >
-              {/* <a className="dropdown-item" onClick={handleUpdtedAtFilter}>
-                Recently Updated
-              </a>
-              <a className="dropdown-item" onClick={handleDateFilter}>
-                Recently Added
-              </a>
-              <a className="dropdown-item" onClick={handleSort}>
-                Sort By Name
-              </a> */}
+              {/* Radio buttons */}
               <RadioGroup
                 aria-label="gender"
                 name="gender1"
@@ -276,23 +252,24 @@ const CustomerList = (props) => {
                   value="recently added"
                   control={<Radio />}
                   label="Recently Added"
-                  onClick={handleDateFilter}
+                  onClick={handleRecentlyAdded}
                 />
 
                 <FormControlLabel
                   value="recently updated"
                   control={<Radio />}
                   label="Recently Updated"
-                  onClick={handleUpdtedAtFilter}
+                  onClick={handleRecentlyUpdated}
                 />
                 <FormControlLabel
                   value="sort by name"
                   control={<Radio />}
                   label="Sort By Name"
-                  onClick={handleSort}
+                  onClick={handleSortByName}
                 />
               </RadioGroup>
             </div>
+            {/* Create New Button */}
             <div style={{ margin: "-0.5rem" }}>
               <Link style={{ textDecoration: "none" }} to="/customer/add">
                 {" "}
@@ -315,7 +292,6 @@ const CustomerList = (props) => {
             <div
               className={` ${style.jumbotron}`}
               style={{
-                // margin: "1rem 1rem",
                 fontWeight: "bold",
                 fontFamily: "sans-serif",
               }}
@@ -335,11 +311,10 @@ const CustomerList = (props) => {
               </div>
             </div>
             <div>
-              {/* <ul> */}
               <div>
                 {docs.map((doc, i) => {
                   return (
-                    <div className={style.listContainer}>
+                    <div className={style.listContainer} key = {i}>
                       <div className={`${style.listContent} `}>
                         <Link
                           key={i}
@@ -351,11 +326,6 @@ const CustomerList = (props) => {
                           className={style.styleLink}
                         >
                           <div className={`${style.customerList} `}>
-                            {/* <li 
-                          className={`checkbox list-group-item `}
-                          key={doc._id}
-                        > */}
-
                             <div
                               className={`${style.name} ${style.item} ${style.flex}`}
                             >
@@ -392,7 +362,6 @@ const CustomerList = (props) => {
                                 0
                               )}
                             </div>
-                            {/* </li> */}
                           </div>
                         </Link>
 
@@ -400,14 +369,11 @@ const CustomerList = (props) => {
                           <div className={`${style.actions} ${style.flex}`}>
                             <Button
                               onClick={() => handleShow(i, doc._id)}
-                              /*onClick={() => removeCustomer(i, doc._id)}*/
                               style={{
                                 background: "#00ADEE",
                                 textTransform: "none",
                                 color: "#FFF",
                                 fontFamily: "sans-serif",
-                                // width: "100%",
-                                // padding:"0.66rem 0rem",
                               }}
                             >
                               Delete
@@ -419,7 +385,6 @@ const CustomerList = (props) => {
                   );
                 })}
               </div>
-              {/* </ul> */}
 
               <div className={style.jumbotron}>
                 <Pagination
@@ -437,18 +402,11 @@ const CustomerList = (props) => {
           </div>
         )}
       </div>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        // dialogClassName={`${style.modal}`}
-        centered
-        scrollable
-        // backdrop = {false}
-      >
+      <Modal show={show} onHide={handleClose} centered scrollable>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        {/* <Modal.Body>Are You sure you want to delete Customer with id {doc._id}</Modal.Body> */}
+
         <Modal.Body>Are you sure you want to delete Customer?</Modal.Body>
         <Modal.Footer>
           <div

@@ -66,8 +66,9 @@ const ClaimsDetails = (props) => {
       var { showMessage, history } = props;
       updateClaim(newData)
         .then((res) => {
+          console.log(res.data)
           if (res.data.status == 200) {
-            claims.updates = res.data.claim.updates;
+            claims.updates = res.data.data.updates;
             setShow(false);
             setUpdate("");
             showMessage(res.data.message);

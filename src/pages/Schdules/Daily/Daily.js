@@ -687,6 +687,7 @@ console.log(props.jobs)
                               fontSize: "0.92rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                color:"#aaaaaa"
                             }}
                           >
                             <div className="col-3">{list.jobId}</div>
@@ -703,24 +704,25 @@ console.log(props.jobs)
                             </div>
                           </div>
                           <div className="row">
-                            <h5
+                            <h6
                               style={{
-                                margin: "1rem 0",
+                                margin: "0.6rem 0",
                                 transform: "translateX(1rem)",
                               }}
                             >
                               Job Description
-                            </h5>
+                            </h6>
                           </div>
                           <div
-                            className="row"
+                            // className="row"
                             style={{
-                              margin: "0.4rem 0",
+                              marginLeft: "0.4rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                color:"#aaaaaa"
                             }}
                           >
-                            <p style={{ whiteSpace: "pre-line" }}>
+                            <p >
                               {parse(list.description)}
                             </p>
                           </div>
@@ -743,6 +745,7 @@ console.log(props.jobs)
                               fontSize: "0.92rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                                color:"#aaaaaa"
                             }}
                           >
                             <div className="col-4">

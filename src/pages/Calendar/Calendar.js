@@ -11,6 +11,7 @@ import {
   getJobsByDate,
   getJob,
   getAllJobsOnDate,
+  getCurrentDayJob,
 } from "../../Redux/Job/jobActions";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
@@ -28,6 +29,7 @@ class CalendarApp extends Component {
     myEventsList: [],
     showIndex: null,
     currentDayJobs: [],
+   
   };
 
   componentDidMount = () => {
@@ -54,7 +56,6 @@ class CalendarApp extends Component {
 
     getAllJobsOnDate(date)
       .then((res) => {
-        console.log(res.data.data);
         this.setState({
           currentDayJobs: res.data.data,
           date: date,
@@ -114,28 +115,25 @@ class CalendarApp extends Component {
   };
 
   getJobDetails = (e) => {
-    var { getJob, job } = this.props;
-    console.log(job);
-    getJob(e.id);
-    this.setState({
-      currentDayJobs: job,
-      date: e.start,
-    });
-    // .then((res) => {
-    //   this.setState({
-    //     currentDayJobs: res.data.data,
-    //     date: e.start,
-    //   });
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+    // var { getJob, job } = this.props;
+    console.log(e.start, e.end);
+    getCurrentDayJob(e.id)
+      .then((res) => {
+        this.setState({
+          currentDayJobs: [res.data.data],
+          date: new Date(e.start),
+         
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   getJobDetailsOnSlotClick = (e) => {
+    console.log(e.start, e.end);
     let date = e.end;
     getJobsByDate(date).then((res) => {
-      console.log(res.data.data)
       let jobs = [];
       res.data.data.map((x) => {
         x.dates.map((y) => {
@@ -152,13 +150,14 @@ class CalendarApp extends Component {
         myEventsList: jobs,
       });
     });
-
+    console.log(date);
     getAllJobsOnDate(date)
       .then((res) => {
         console.log(res);
         this.setState({
           currentDayJobs: res.data.data,
           date: date,
+         
         });
       })
       .catch((error) => {
@@ -191,7 +190,9 @@ class CalendarApp extends Component {
     var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
+
   render() {
+    console.log(this.state.currentDayJobs);
     return (
       <div>
         {/* <h2 className={style.toprow}>Calender </h2> */}
@@ -244,7 +245,8 @@ class CalendarApp extends Component {
                     }}
                   >
                     {this.state.date.toDateString()}
-                  </h5>
+                  </h5>{" "}
+                  <hr />
                   {this.state.currentDayJobs.map((job, i) => (
                     <div
                       id="accordion"
@@ -276,20 +278,8 @@ class CalendarApp extends Component {
                               &nbsp;
                               {job.title}
                             </Link>
-                            <h6>{job.title}</h6>
                           </div>
                           <div>
-                            <label
-                              style={{
-                                display: "flex",
-                                fontWeight: "bold",
-                                margin: "0",
-                                padding: "0",
-                              }}
-                            >
-                              Start Time
-                            </label>
-
                             {job.startTime && (
                               <Chip
                                 label={this.formatAMPM(job.startTime)}
@@ -300,23 +290,13 @@ class CalendarApp extends Component {
                                 style={{ margin: " 0 0.2rem" }}
                               />
                             )}
-                            <Chip
-                              label={job.status}
-                              clickable
-                              color="primary"
-                              variant="outlined"
-                              size="small"
-                              style={{ margin: " 0 0.2rem" }}
-                            />
                           </div>
                         </div>
 
                         <div
                           id={`collapse${i}`}
-                          // className={
-                          //   // this.state.showIndex === i ? "show" : "collapse"
-                          // }
-                          class="collapse "
+                         
+                          class="collapse"
                           aria-labelledby="headingOne"
                           data-parent="#accordion"
                         >
@@ -355,160 +335,33 @@ class CalendarApp extends Component {
                   ))}
                 </div>
               ) : (
-                <div>
-                  {this.state?.currentDayJobs?.length !== 0 ? (
-                    //  currentDayJobs is a object
-
-                    <div>
-                      <h5
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontFamily: "sans-serif",
-                        }}
-                      >
-                        {this.state.date.toString()}
-                      </h5>
-                      <div
-                        id="accordion"
-                        style={{
-                          fontFamily:
-                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                        }}
-                      >
-                        <div className={`card ${style.card}`}>
-                          <div
-                            class={`card-header ${style.cardHeader}`}
-                            id="headingOne"
-                            data-toggle="collapse"
-                            data-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne"
-                          >
-                            <div>
-                              {/* <h6>
-
-                                {this.state.currentDayJobs ?.title}
-                              </h6> */}
-                              <Link
-                                style={{ textDecoration: "none" }}
-                                to={`/job/details/${this.state.currentDayJobs?._id}`}
-                              >
-                                &nbsp;
-                                {this.state.currentDayJobs?.title}
-                              </Link>
-                              <h6>{this.state.currentDayJobs?.title}</h6>
-                            </div>
-                            <div>
-                              {this.state.currentDayJobs?.startTime && (
-                                <div>
-                                  <label
-                                    style={{
-                                      display: "flex",
-                                      fontWeight: "bold",
-                                      margin: "0",
-                                      padding: "0",
-                                    }}
-                                  >
-                                    Start Time
-                                  </label>
-
-                                  <Chip
-                                    // {this.formatAMPM(job.startTime)}
-                                    label={this.formatAMPM(
-                                      this.state.currentDayJobs?.startTime
-                                    )}
-                                    clickable
-                                    color="primary"
-                                    variant="outlined"
-                                    size="small"
-                                    style={{ margin: " 0 0.2rem" }}
-                                  />
-                                </div>
-                              )}
-                              {/* <Chip
-                                label={this.state.currentDayJobs?.status}
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                                size="small"
-                                style={{ margin: " 0 0.2rem" }}
-                              /> */}
-                            </div>
-                          </div>
-                          <div
-                            id="collapseOne"
-                            class="collapse show"
-                            // className={this.state.showIndex === i ? "show" : "collapse"}
-                            aria-labelledby="headingOne"
-                            data-parent="#accordion"
-                          >
-                            <div className="card-body">
-                              <p
-                                className="card-text"
-                                style={{ whiteSpace: "pre-line" }}
-                              >
-                              {parse(this.state.currentDayJobs?.description)}
-                              </p>
-                              <div>
-                                {this.state.currentDayJobs.services.map(
-                                  (service) => (
-                                    <Chip
-                                      label={service.name}
-                                      size="small"
-                                      clickable
-                                      color="primary"
-                                      variant="outlined"
-                                    />
-                                  )
-                                )}
-                              </div>
-                              <p className="card-text">
-                                Customer:
-                                <Link
-                                  style={{ textDecoration: "none" }}
-                                  to={`/customer/detail/${this.state.currentDayJobs?.customer?._id}`}
-                                >
-                                  &nbsp;
-                                  {this.state.currentDayJobs?.customer?.email}
-                                </Link>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
-                      <h5
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontFamily: "sans-serif",
-                        }}
-                      >
-                        {this.state.date.toDateString()}
-                      </h5>
-                      <hr />
-                      <h5
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontFamily: "sans-serif",
-                        }}
-                      >
-                        <img src="/images/no-data-found.png" />
-                      </h5>
-                    </div>
-                  )}
+               
+                <div
+                  style={{
+                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  }}
+                >
+                  <h5
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontFamily: "sans-serif",
+                    }}
+                  >
+                    {this.state.date.toDateString()}
+                  </h5>
+                  <hr />
+                  <h5
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontFamily: "sans-serif",
+                    }}
+                  >
+                    <img src="/images/no-data-found.png" />
+                  </h5>
                 </div>
               )}
             </div>
@@ -519,12 +372,6 @@ class CalendarApp extends Component {
   }
 }
 
-var actions = {
-  getJob,
-};
 
-var mapStateToProps = (state) => ({
-  job: state.jobs?.job,
-});
 
-export default connect(mapStateToProps, actions)(CalendarApp);
+export default CalendarApp;

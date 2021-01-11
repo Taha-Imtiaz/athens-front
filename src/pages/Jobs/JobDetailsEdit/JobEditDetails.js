@@ -821,6 +821,7 @@ class JobEditDetails extends Component {
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
                 onEditorStateChange={this.onEditorStateChange}
+                placeholder = "Job Description"
                 // style={{}}
               />
             </div>

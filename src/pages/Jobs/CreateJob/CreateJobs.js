@@ -873,7 +873,8 @@ class CreateJobs extends Component {
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
-                  style={{}}
+                  placeholder = "Job Description"
+                  
                 />
               </div>
 

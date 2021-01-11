@@ -37,17 +37,19 @@ const BlanketList = (props) => {
       // Call Api
       var { user } = props;
       var obj = {
-        id: newData[i] ?._id,
-        userId: user ?._id,
-        quantity: newData[i] ?.quantity,
-        cost: newData[i] ?.cost
+        id: newData[i]?._id,
+        userId: user?._id,
+        quantity: newData[i]?.quantity,
+        cost: newData[i]?.cost,
       };
       updateDeposit(obj)
         .then((res) => {
+          console.log(res)
           let newData = cloneDeep(blanketValue);
-          newData[i] = res.data.data;
+          newData[i] = res.data.data.updatedblanketDeposit;
+          console.log(newData);
           // setBlanketValue(newData);
-          props.updateBlanket(newData)
+          props.updateBlanket(newData);
           var { showMessage } = props;
           //   setEdit(false);
           showMessage(res.data.message);
@@ -68,7 +70,7 @@ const BlanketList = (props) => {
     let newData = cloneDeep(blanketValue);
     if (newData[i].edit === false) {
       newData[i].quantity = e.target.value;
-      newData[i].cost = parseInt(e.target.value) * 15
+      newData[i].cost = parseInt(e.target.value) * 15;
       // setQuantityValue(true);
       setBlanketValue(newData);
     }
@@ -81,6 +83,7 @@ const BlanketList = (props) => {
     newData[i].cost = value;
     setBlanketValue(newData);
   };
+  console.log(blanketValue);
   return (
     <div>
       <div>
@@ -111,68 +114,64 @@ const BlanketList = (props) => {
           }}
         >
           <ul className="list-group">
-            {blanketValue.map((deposit, i) => {
-              console.log(deposit)
-              return (
-                <li className="checkbox list-group-item" key={i}>
-                  {/* */}
-                  <div className="row">
-                    <div className="col-2">
-                      <Link to={`/job/details/${deposit?.job._id}`}>
-                        {deposit?.job?.jobId}
-                      </Link>
-                    </div>
-                    <div className="col-2">
-                      <div className="input-group">
-                        <FormControl>
-                          <span
-                            onDoubleClick={() => makeInputFieldsEditible(i)}
-                          >
-                            <TextField
-                              variant="outlined"
-                              margin="normal"
-                              // required
-                              fullWidth
-                              size="small"
-                              onChange={
-                                (e) => handleInput(e, i)
-                              }
-                              disabled={deposit.edit}
-                              type="text"
-                              className="form-control input-number"
-                              value={deposit.quantity}
-                              style={{ margin: "-0.25rem 0" }}
-                            ></TextField>
-                          </span>
-                        </FormControl>
+            {blanketValue &&
+              blanketValue.map((deposit, i) => {
+                return (
+                  <li className="checkbox list-group-item" key={i}>
+                    {/* */}
+                    <div className="row">
+                      <div className="col-2">
+                        <Link to={`/job/details/${deposit?.job?._id}`}>
+                          {deposit?.job?.jobId}
+                        </Link>
                       </div>
-                    </div>
-                    <div className="col-2">
-                      <div className="input-group">
-                        <FormControl>
-                          <span
-                            onDoubleClick={() => makeInputFieldsEditible(i)}
-                          >
-                            <TextField
-                              variant="outlined"
-                              margin="normal"
-                              // required
-                              fullWidth
-                              size="small"
-                              onChange={
-                                (e) => changeCost(e, i)
-                              }
-                              disabled={deposit.edit}
-                              type="number"
-                              className="form-control input-number"
-                              value={deposit.cost}
-                              style={{ margin: "-0.25rem 0" }}
-                            ></TextField>
-                          </span>
-                        </FormControl>
+                      <div className="col-2">
+                        <div className="input-group">
+                          <FormControl>
+                            <span
+                              onDoubleClick={() => makeInputFieldsEditible(i)}
+                            >
+                              <TextField
+                                variant="outlined"
+                                margin="normal"
+                                // required
+                                fullWidth
+                                size="small"
+                                onChange={(e) => handleInput(e, i)}
+                                disabled={deposit.edit}
+                                type="text"
+                                className="form-control input-number"
+                                value={deposit.quantity}
+                                style={{ margin: "-0.25rem 0" }}
+                              ></TextField>
+                            </span>
+                          </FormControl>
+                        </div>
                       </div>
-                    </div>
-                    {/* <span onDoubleClick={() => makeInputFieldsEditible(i)}>
+                      <div className="col-2">
+                        <div className="input-group">
+                          <FormControl>
+                            <span
+                              onDoubleClick={() => makeInputFieldsEditible(i)}
+                            >
+                              <TextField
+                                variant="outlined"
+                                margin="normal"
+                                // required
+                                fullWidth
+                                size="small"
+                                onChange={(e) => changeCost(e, i)}
+                                disabled={deposit.edit}
+                                type="number"
+                                className="form-control input-number"
+                                value={deposit.cost}
+                                style={{ margin: "-0.25rem 0" }}
+                              ></TextField>
+                            </span>
+                          </FormControl>
+                        </div>
+                      </div>
+                      {/* <span onDoubleClick={() => makeInputFieldsEditible(i)}>
                         <input
                           onChange={(e) => changeCost(e, i)}
                           disabled={deposit.edit}
@@ -188,29 +187,29 @@ const BlanketList = (props) => {
                         ></input>
                       </span>
                     </div> */}
-                    <div className="col-3">
-                      <TimeAgo date={deposit ?.updatedAt} />
-                    </div>
-                    <div className="col-3">
-                      {deposit.edit ? (
-                        <Button
-                          onClick={() => closeEdit(i, "edit")}
-                          style={{
-                            background: "#00ADEE",
-                            textTransform: "none",
-                            margin: "0 1rem",
-                            color: "#FFF",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          {" "}
-                          <i
-                            className="fa fa-edit"
-                            style={{ margin: "0.2rem" }}
-                          ></i>{" "}
-                          Edit{" "}
-                        </Button>
-                      ) : (
+                      <div className="col-3">
+                        <TimeAgo date={deposit?.updatedAt} />
+                      </div>
+                      <div className="col-3">
+                        {deposit.edit ? (
+                          <Button
+                            onClick={() => closeEdit(i, "edit")}
+                            style={{
+                              background: "#00ADEE",
+                              textTransform: "none",
+                              margin: "0 1rem",
+                              color: "#FFF",
+                              fontFamily: "sans-serif",
+                            }}
+                          >
+                            {" "}
+                            <i
+                              className="fa fa-edit"
+                              style={{ margin: "0.2rem" }}
+                            ></i>{" "}
+                            Edit{" "}
+                          </Button>
+                        ) : (
                           <Button
                             onClick={() => closeEdit(i, "save")}
                             style={{
@@ -227,25 +226,25 @@ const BlanketList = (props) => {
                               style={{ margin: "0.2rem" }}
                             ></i>{" "}
                             Save
-                        </Button>
+                          </Button>
                         )}
-                      <Button
-                        onClick={() => handleShow(deposit)}
-                        style={{
-                          background: "#00ADEE",
-                          textTransform: "none",
-                          margin: "0 1rem",
-                          color: "#FFF",
-                          fontFamily: "sans-serif",
-                        }}
-                      >
-                        Activities
-                      </Button>
+                        <Button
+                          onClick={() => handleShow(deposit)}
+                          style={{
+                            background: "#00ADEE",
+                            textTransform: "none",
+                            margin: "0 1rem",
+                            color: "#FFF",
+                            fontFamily: "sans-serif",
+                          }}
+                        >
+                          Activities
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              );
-            })}
+                  </li>
+                );
+              })}
           </ul>
         </div>
         {/* <div className={`row ${style.flex}`} style={{ margin: "2rem 0" }}></div> */}
@@ -254,7 +253,6 @@ const BlanketList = (props) => {
         dialogClassName={`${style.modal}`}
         show={show}
         onHide={() => setShow(false)}
-
         centered
         scrollable
       >
@@ -275,13 +273,12 @@ const BlanketList = (props) => {
           </div>
 
           {depositValue &&
-            depositValue ?.activities.map((activity, i) => (
+            depositValue?.activities.map((activity, i) => (
               <div
                 key={i}
                 className="row"
                 style={{
-                  fontFamily:
-                    "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
                 <div className={`col-2 `}>
@@ -311,7 +308,7 @@ const BlanketList = (props) => {
             onClick={() => setShow(false)}
           >
             Close
-                            </Button>
+          </Button>
           {/* <Button variant="primary">Add Activity</Button> */}
         </Modal.Footer>
       </Modal>

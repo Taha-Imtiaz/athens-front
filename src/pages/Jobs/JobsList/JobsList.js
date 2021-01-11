@@ -14,7 +14,7 @@ import Popover from "@material-ui/core/Popover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
-import JobConfirmation from "../JobConfirmation/JobConfirmation";
+
 import {
   Button,
   FormControlLabel,
@@ -24,7 +24,6 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
-
 
 //use material-ui default styles of popover
 const styles = (theme) => ({
@@ -57,45 +56,6 @@ class JobsList extends Component {
     modalIndex: "",
     jobToDelete: "",
     value: "recently added",
-  };
-  
-  handleShow = (data) => {
-    this.setState({
-      show: true,
-      jobToConfirm: data,
-    });
-  };
-
-  handleClose = () => {
-    // var { note } = this.state;
-    this.setState({
-      show: false,
-      // note: notes,
-    });
-  };
-
-  handleCloseAndRefresh = () => {
-    this.setState({
-      show: false,
-      // note: notes,
-    });
-
-    var { getAllJobs } = this.props;
-    var jobObj = {
-      query: "",
-      filters: {
-        startDate: "",
-        endDate: "",
-        movedDate: "",
-        tag: "ABC",
-        startYearMonth: "",
-      },
-      sort: {
-        createdAt: -1,
-      },
-      page: 1,
-    };
-    getAllJobs(jobObj);
   };
 
   componentDidMount = () => {
@@ -215,7 +175,7 @@ class JobsList extends Component {
     this.setState({
       dates: e.target.value,
     });
-    
+
     let date = new Date(e.target.value);
     var DateFilters = {
       filters: {
@@ -239,7 +199,7 @@ class JobsList extends Component {
     this.setState({
       nearestDate: e.target.value,
     });
-   
+
     let date = new Date(e.target.value);
     var DateFilters = {
       filters: {
@@ -376,13 +336,13 @@ class JobsList extends Component {
   };
 
   render() {
-    var { jobs,user } = this.props;
+    var { jobs, user } = this.props;
     var { pageSize, currentPage } = this.state;
     var { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
 
     var totalCount = jobs?.total;
-    
+
     var { show, showDeleteModal, dates, nearestDate, value } = this.state;
     return (
       <div>
@@ -410,11 +370,7 @@ class JobsList extends Component {
               style={{ transform: "translateY(-0.3rem)" }}
             ></i>
             {/* drop-down-menu */}
-            <div
-              className={`dropdown-menu`}
-              aria-labelledby="dropdownMenuLink"
-              
-            >
+            <div className={`dropdown-menu`} aria-labelledby="dropdownMenuLink">
               <h5
                 className={`dropdown-item`}
                 style={{ fontFamily: "sans-serif" }}
@@ -427,7 +383,7 @@ class JobsList extends Component {
                 aria-label="gender"
                 name="gender1"
                 value={value}
-                className = {style.dropDown}
+                className={style.dropDown}
                 onChange={this.handleChange}
               >
                 <FormControlLabel
@@ -435,7 +391,6 @@ class JobsList extends Component {
                   control={<Radio />}
                   label="Recently Added"
                   onClick={this.handleRecentlyAdded}
-                  
                 />
 
                 <FormControlLabel
@@ -443,7 +398,6 @@ class JobsList extends Component {
                   control={<Radio />}
                   label="Title"
                   onClick={this.handleSortByTitle}
-                  
                 />
                 <FormControlLabel
                   value="assignee required"
@@ -451,7 +405,6 @@ class JobsList extends Component {
                   label="Assignee Required"
                   onClick={this.handleAssigneeRequired}
                 />
-               
               </RadioGroup>
               <hr />
               <h5
@@ -499,7 +452,6 @@ class JobsList extends Component {
                     textTransform: "none",
                     color: "#FFF",
                     fontFamily: "sans-serif",
-                  
                   }}
                 >
                   Create New
@@ -527,7 +479,6 @@ class JobsList extends Component {
               </div>
             </div>
 
-          
             <div>
               {jobs?.docs.map((job, i) => {
                 return (
@@ -542,8 +493,6 @@ class JobsList extends Component {
                           jobProps: job,
                         }}
                       >
-                     
-
                         <div className={`${style.jobList}`}>
                           <div
                             className={`${style.title} ${style.flex} ${style.item}`}
@@ -722,19 +671,16 @@ class JobsList extends Component {
                             {job.status}
                           </div>
                         </div>
-                        
                       </Link>
                       {user?.role === "admin" && (
                         <div className={`${style.actions} ${style.flex}`}>
                           <Button
-                            
                             onClick={() => this.openDeleteModal(i, job._id)}
                             style={{
                               background: "#00ADEE",
                               textTransform: "none",
                               color: "#FFF",
                               fontFamily: "sans-serif",
-                             
                             }}
                           >
                             Delete
@@ -755,25 +701,6 @@ class JobsList extends Component {
                 onPageChange={this.handlePageChange}
               />
             </div>
-
-            <Modal
-              dialogClassName={`${style.modal}`}
-              show={show}
-              onHide={this.handleClose}
-              animation={false}
-              centered
-              
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Booking Confirmation</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <JobConfirmation
-                  data={this.state.jobToConfirm}
-                  close={this.handleCloseAndRefresh}
-                />
-              </Modal.Body>
-            </Modal>
           </div>
         ) : (
           <div className="text-center">
@@ -784,14 +711,13 @@ class JobsList extends Component {
         <Modal
           show={showDeleteModal}
           onHide={this.closeDeleteModal}
-          
           centered
           scrollable
         >
           <Modal.Header closeButton>
             <Modal.Title> Confirmation</Modal.Title>
           </Modal.Header>
-        
+
           <Modal.Body>Are you sure you want to delete Job?</Modal.Body>
           <Modal.Footer>
             <div

@@ -188,3 +188,13 @@ export var deleteJob =  (id, currentPage) => {
   }
  
 }
+
+//fetch calender currentDay Jobs
+export var getCurrentDayJob =  async (jobId) => {
+  try {
+    var getJob = await Axios.get(`job/${jobId}`);
+   return getJob
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -378,28 +378,7 @@ const ClaimsDetails = (props) => {
               ) : null}
             </div>
           </div>
-          {/* <div className="row" style={{ margin: "1rem 0" }}>
-            <div className="col-8"></div>
-            <div className="col-2" style={{ transform: "translateX(5rem)" }}>
-              {claims ?.status == "open" ? (
-                <Button
-                  // name="Add Update"
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}
-                  onClick={() => handleShow()}
-                >Add Update</Button>
-              ) : null}
-            </div>
-
-            <div className="col-2">
-              {claims ?.status == "open" ? (
-                <Button
-                  // name="Close Claim"
-                  style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", transform: "translateX(2.5rem)" }}
-                  onClick={() => handleCloseJob()}
-                >Close Claim</Button>
-              ) : null}
-            </div>
-          </div> */}
+        
         </div>
       </div>
 

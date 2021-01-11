@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import style from "./NewClaim.module.css";
-import DatePicker from "react-datepicker";
 import { Modal } from "react-bootstrap";
-
 import { Button } from "@material-ui/core";
 import "react-datepicker/dist/react-datepicker.css";
 import API from "../../../utils/api";
@@ -13,9 +11,7 @@ import {
 } from "../../../Redux/Claims/claimsActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { TextareaAutosize, TextField } from "@material-ui/core";
-
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -107,9 +103,6 @@ class NewClaim extends Component {
       titleError = "Error! should not be empty";
     }
 
-    // if (!this.state.description) {
-    //   descriptionError = "Error! should not be empty";
-    // }
     if (!this.state.price) {
       priceError = "Error! should not be empty";
     }
@@ -124,7 +117,6 @@ class NewClaim extends Component {
         customerIdError,
         jobIdError,
         priceError,
-
         titleError,
         waitToError,
       });
@@ -133,19 +125,16 @@ class NewClaim extends Component {
 
     return true;
   };
-
   mySubmitHandler = (event) => {
     event.preventDefault();
     let {
       selectedJob,
-
       title,
       waitTo,
       claims: { claimType, price, description },
     } = this.state;
     if (this.validate()) {
       var { history, showMessage } = this.props;
-      // var {history:{match}}
       let data = {
         jobId: selectedJob.jobId,
         claimType,
@@ -157,14 +146,13 @@ class NewClaim extends Component {
       addClaim(data)
         .then((res) => {
           showMessage(res.data.message);
-          history.push(`/claimsDetail/${res.data.claim}`);
+          history.push(`/claimsDetail/${res.data.data}`);
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-
   addAnotherClaim = () => {
     if (
       this.state.claims[0].claimType &&
@@ -183,7 +171,6 @@ class NewClaim extends Component {
       });
     }
   };
-
   hanldeClaimsInput = (e) => {
     let updatedClaims = { ...this.state.claims };
     updatedClaims[e.target.name] = e.target.value;
@@ -344,7 +331,7 @@ class NewClaim extends Component {
                     >
                       Close
                     </Button>
-                    {/* <Button variant="primary">Add Activity</Button> */}
+                   
                   </Modal.Footer>
                 </Modal>
               </div>
@@ -385,31 +372,7 @@ class NewClaim extends Component {
                 />
               )}
             />
-            {/* <div className="form-group">
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                style={{ margin: "1rem 2rem", width: "90%" }}
-                size="small" id="jobid" label="Job Id" name="jobId" value={this.state.jobId} onChange={this.handleFormInput} />
-            </div>
-
-            {this.state.jobIdError ? (
-              <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                {this.state.jobIdError}
-
-              </div>) : null} */}
-
-            {/* <div className="form-group">
-              <input type="input" className="form-control" id="customerId" label="Claimant Id" name="customerId" value={this.state.customerId} onChange={this.handleFormInput} />
-            </div>
-
-            {this.state.customerIdError ? (
-              <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                {this.state.customerIdError}
-
-              </div>) : null} */}
+          
 
             <div className="form-group ">
               <TextField
@@ -513,103 +476,8 @@ class NewClaim extends Component {
                 />
               </div>
             </div>
-            {/* );
-            })} */}
-
-            {/* <div className="form-group">
-              <div style={{ float: "right" }}>
-                <Button
-                  type="button"
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                    marginRight: "2.5rem",
-                  }}
-                  name="Add Another"
-                  value="Add Another"
-                  onClick={this.addAnotherClaim}
-                >
-                  Add Another
-                </Button>
-               
-              </div>
-            </div> */}
-
-            {/* 
-            <div className={`row`}>
-
-              <div className="col-2">
-                <p>Select Date</p>
-              </div>
-              <div className="col-5">
-                <div className="form-group">
-                  <DatePicker className={style.from}
-                    selected={this.state.fromDate}
-                    onChange={this.handleChangeFrom}
-                    placeholderText="From"
-                    className="form-control"
-                  />
-                </div>
-
-                {this.state.fromDateError ? (
-                  <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                    {this.state.fromDateError}
-
-                  </div>) : null}
-              </div>
-              <div className="col-5">
-                <div className="form-group">
-
-                  <DatePicker className={style.to}
-                    selected={this.state.toDate}
-                    // onFocus = {this.handleChangeTo}
-                    onChange={this.handleChangeTo}
-                    placeholderText="To"
-                    className="form-control"
-                  />
-                </div>
-                {this.state.toDateError ? (
-                  <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                    {this.state.toDateError}
-
-                  </div>) : null}
-              </div>
-            </div>
-
-
-
-            <div className="row">
-              <div className="col-2 col-md-2">
-                <div className="form-group">
-                  <label className={style.l1}>Location:</label>
-                </div>
-              </div>
-              <div className="col-5 col-md-5">
-                <div className="form-group">
-                  <input type="input" className="form-control" id="from" placeholder="From" name="locationfrom" value={this.state.locationfrom} onChange={this.handleFormInput} />
-                </div>
-
-                {this.state.locationfromError ? (
-                  <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                    {this.state.locationfromError}
-
-                  </div>) : null}
-
-              </div>
-              <div className="col-5 col-md-5">
-                <input type="input" className="form-control" id="to" placeholder="To" name="locationto" value={this.state.locationto} onChange={this.handleFormInput} />
-              </div>
-
-              {this.state.locationtoError ? (
-                <div className={`alert alert-warning alert-dismissible fade show  ${style.msg}`} role="alert">
-                  {this.state.locationtoError}
-
-                </div>) : null}
-
-
-            </div> */}
+           
+        
             <div className="row" style={{padding:"1rem 2rem"}}>
               <div className="col-6">
               <Button

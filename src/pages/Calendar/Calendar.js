@@ -27,9 +27,9 @@ class CalendarApp extends Component {
     date: new Date(),
     job: "",
     myEventsList: [],
-    showIndex: null,
-    currentDayJobs: [],
    
+
+    currentDayJobs: [],
   };
 
   componentDidMount = () => {
@@ -70,17 +70,22 @@ class CalendarApp extends Component {
   onChange = (date) => this.setState({ date });
   handleSelect = (x) => console.log(x);
 
-  toggleCollapse = (i) => {
-    if (i == this.state.showIndex) {
-      this.setState({
-        showIndex: null,
-      });
-    } else {
-      this.setState({
-        showIndex: i,
-      });
-    }
-  };
+  // toggleCollapse = (e, i, id) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   console.log(i);
+  //   if (i === this.state.showIndex && id === e.id) {
+  //     console.log(this.state.showIndex, i);
+  //     this.setState({
+       
+  //     });
+  //   } else {
+  //     console.log(this.state.showIndex, i);
+  //     this.setState({
+  //       showIndex: i,
+  //     });
+  //   }
+  // };
 
   changeDate = (x) => {
     var date = x;
@@ -116,13 +121,13 @@ class CalendarApp extends Component {
 
   getJobDetails = (e) => {
     // var { getJob, job } = this.props;
-    console.log(e.start, e.end);
+    console.log(e);
     getCurrentDayJob(e.id)
       .then((res) => {
         this.setState({
           currentDayJobs: [res.data.data],
           date: new Date(e.start),
-         
+       
         });
       })
       .catch((error) => {
@@ -131,7 +136,7 @@ class CalendarApp extends Component {
   };
 
   getJobDetailsOnSlotClick = (e) => {
-    console.log(e.start, e.end);
+    console.log(e);
     let date = e.end;
     getJobsByDate(date).then((res) => {
       let jobs = [];
@@ -264,39 +269,42 @@ class CalendarApp extends Component {
                         <div
                           className={`card-header ${style.cardHeader}`}
                           id="headingOne"
-                          // onClick={() => this.toggleCollapse(i)}
-                          aria-expanded="true"
-                          data-toggle="collapse"
-                          data-target={`#collapse${i}`}
-                          aria-controls="collapse"
                         >
-                          <div>
-                            <Link
-                              style={{ textDecoration: "none" }}
-                              to={`/job/details/${job._id}`}
-                            >
-                              &nbsp;
-                              {job.title}
-                            </Link>
-                          </div>
-                          <div>
-                            {job.startTime && (
-                              <Chip
-                                label={this.formatAMPM(job.startTime)}
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                                size="small"
-                                style={{ margin: " 0 0.2rem" }}
-                              />
-                            )}
+                          <div
+                            className="collapsed"
+                            aria-expanded="false"
+                            // onClick = {(e) =>this.toggleCollapse(e, i,job._id)}
+                            data-toggle="collapse"
+                            data-target={`#collapse${i}`}
+                            aria-controls="collapse"
+                          >
+                            <div>
+                              <Link
+                                style={{ textDecoration: "none" }}
+                                to={`/job/details/${job._id}`}
+                              >
+                                &nbsp;
+                                {job.title}
+                              </Link>
+                            </div>
+                            <div>
+                              {job.startTime && (
+                                <Chip
+                                  label={this.formatAMPM(job.startTime)}
+                                  clickable
+                                  color="primary"
+                                  variant="outlined"
+                                  size="small"
+                                  style={{ margin: " 0 0.2rem" }}
+                                />
+                              )}
+                            </div>
                           </div>
                         </div>
 
                         <div
                           id={`collapse${i}`}
-                         
-                          class="collapse"
+                          className={"collapse"}
                           aria-labelledby="headingOne"
                           data-parent="#accordion"
                         >
@@ -335,7 +343,6 @@ class CalendarApp extends Component {
                   ))}
                 </div>
               ) : (
-               
                 <div
                   style={{
                     fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
@@ -371,7 +378,5 @@ class CalendarApp extends Component {
     );
   }
 }
-
-
 
 export default CalendarApp;

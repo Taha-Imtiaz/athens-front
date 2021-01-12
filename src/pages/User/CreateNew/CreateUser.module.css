@@ -15,13 +15,17 @@
 .btncustom{
     margin-bottom: 100%;
 }
-
+.userContainer {
+    background-color:  #e9ecef;
+    padding-top: 2rem;
+   
+}
 .jumbotron{
     margin-left: 20rem;
-    margin-top: 2%;
+    /* margin-top: 2%; */
     /* margin-bottom: 2%; */
     border-radius: 0.4rem;
-    background-color:#e9ecef;
+    background-color:#fff;
     width: 55vw;
     padding: 10px;
 }

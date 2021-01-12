@@ -26,12 +26,12 @@
     display: grid;
     /* grid-template-rows: minmax(100vh,min-content); */
     grid-template-columns: 20fr 60fr 20fr;
-    
+    background-color: #e9ecef;
     grid-template-areas: ". form .";
 }
 .form {
     grid-area: form;
-   background-color: #e9ecef;
+   background-color: #fff;
    width: 100%;
    border-radius: 0.4rem;
    margin: 2rem;

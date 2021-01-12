@@ -143,7 +143,7 @@ class CreateUser extends Component {
 
   render() {
     return (
-      <div>
+      <div className = {style.userContainer}>
         <div className={style.jumbotron}>
           <div>
             <h3 className={style.head}>Create New User</h3>

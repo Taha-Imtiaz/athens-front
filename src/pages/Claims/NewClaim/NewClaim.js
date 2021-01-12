@@ -238,7 +238,7 @@ class NewClaim extends Component {
   render() {
     var { showClaimsDetails, customerName } = this.state;
     return (
-      <div>
+      <div className = {style.claimContainer}>
         <div className={`${style.form}`}>
           <h3 className={style.head}>New Claim</h3>
           <form>

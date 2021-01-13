@@ -1,76 +1,77 @@
-.btn-primary{
-    margin-bottom: 2%;
-}
 
-.btn:hover {
-    background-color: RoyalBlue;
-  }
-.button {
-    /* width: 100%;
-    /* margin:  1rem ; */
-    /* background-color:  #00ADEE; */
-    transform: translateY(2rem); 
-}
-.modalButton {
-    transform: translate3d(1rem, 1rem ,0);
 
-}
-.jumbotron{
-    /* margin: auto; */
-    margin-top: 2%;
-    margin-bottom: 2%;
-    width: 50%;
-    margin-left: 5%;
-}
+
 .formStyle {
-    display: grid;
-    /* grid-template-rows: minmax(100vh,min-content); */
-    grid-template-columns: 20fr 60fr 20fr;
-    background-color: #e9ecef;
-    grid-template-areas: ". form .";
+  display: grid;
+  /* grid-template-rows: minmax(100vh,min-content); */
+  grid-template-columns: 20fr 60fr 20fr;
+  background-color: #e9ecef;
+  grid-template-areas: ". form .";
 }
 .form {
-    grid-area: form;
-   background-color: #fff;
-   width: 100%;
-   border-radius: 0.4rem;
-   margin: 2rem;
-   padding: 2rem;
+  grid-area: form;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 0.4rem;
+  margin: 2rem;
+  padding: 2rem;
 }
-.head{
-    margin-bottom: 2%;
-    margin-left: 5%;
-    margin-top: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.head {
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.msg{
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 2%;
-  }
-
-
-@media only screen and (max-width:500px){
-    html{
-        font-size: 70%;
-    }
-
-
-    .head{
-        margin-bottom: 5%;
-        margin-left: 5%;
-        margin-top: 2%;
-    }
-
-
-    .jumbotron{
-        margin-top: 2%;
-        margin-bottom: 2%;
-        width: 80%;
-        margin-left: 5%;
-    }    
-
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.styleAddBtn {
+  display: grid;
+  grid-template-columns: 86.6fr 13.4fr;
+  grid-template-areas: ". addBtn";
+}
+.styleAddBtn .addBtn {
+  grid-area: addBtn;
+}
+.modalAddBtn {
+    display: grid;
+    grid-template-columns: 84.5fr 15.5fr;
+    grid-template-areas: ". modalBtn";
+}
+.modalBtn {
+    grid-area: modalBtn;
+}
+.addBtn .button,.modalBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  margin-bottom: 0.5rem;
+}
+.addBtn .button:hover ,.modalBtn .button:hover{
+    background-color: #00adee;
+}
+.resetButtons {
+    display: grid;
+    grid-template-columns:  49fr 1fr 1fr 49fr;
+    grid-template-areas: "formResetButton . . formSubmitButton";
+}
+.formResetButton {
+    grid-area: formResetButton;
+}
+.formSubmitButton {
+    grid-area: formSubmitButton;
+}
+.formResetButton .formButton, .formSubmitButton .formButton {
+    
+    background: #00adee !important;
+    text-transform: none;
+    color: #fff;
+    /* margin: 0 0.2rem; */
+    font-family: sans-serif;
+    width: 100%;
+}
+.resetButtons .formButton:hover {
+    background-color: #00adee;
 }

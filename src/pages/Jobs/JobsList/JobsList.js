@@ -346,116 +346,85 @@ class JobsList extends Component {
     var { show, showDeleteModal, dates, nearestDate, value } = this.state;
     return (
       <div>
-        <div className={`row ${style.toprow}`}>
-          <div className="col-3">
-            <b>
-              <h3 className={style.head}>Jobs List</h3>
-            </b>
-          </div>
-
-          <div className={`col-6 ${style.search}`}>
-            <SearchBar type="job" title="Type title or services" />
-          </div>
-          <div
-            className={`col-2  d-flex justify-content-between ${style.filter}`}
-          >
-            <i
-              className="fa fa-filter dropdown-toggle"
-              href="#"
-              role="button"
-              id="dropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              style={{ transform: "translateY(-0.3rem)" }}
-            ></i>
-            {/* drop-down-menu */}
-            <div className={`dropdown-menu`} aria-labelledby="dropdownMenuLink">
-              <h5
-                className={`dropdown-item`}
-                style={{ fontFamily: "sans-serif" }}
-              >
-                Sort
-              </h5>
-              <hr />
-
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                className={style.dropDown}
-                onChange={this.handleChange}
-              >
-                <FormControlLabel
-                  value="recently added"
-                  control={<Radio />}
-                  label="Recently Added"
-                  onClick={this.handleRecentlyAdded}
-                />
-
-                <FormControlLabel
-                  value="title"
-                  control={<Radio />}
-                  label="Title"
-                  onClick={this.handleSortByTitle}
-                />
-                <FormControlLabel
-                  value="assignee required"
-                  control={<Radio />}
-                  label="Assignee Required"
-                  onClick={this.handleAssigneeRequired}
-                />
-              </RadioGroup>
-              <hr />
-              <h5
-                style={{ fontFamily: "sans-serif" }}
-                className="dropdown-item"
-              >
-                Filters
-              </h5>
-              <hr />
-              <h6
-                style={{ fontFamily: "sans-serif" }}
-                className="dropdown-item"
-              >
-                On Date Jobs
-              </h6>
-              <input
-                type="date"
-                name="dates"
-                value={dates}
-                id=""
-                style={{ width: "11rem", margin: " 1rem 2rem" }}
-                onChange={(e) => this.filterOnDateJobs(e)}
-              />
-              <h6
-                style={{ fontFamily: "sans-serif" }}
-                className="dropdown-item"
-              >
-                Upcoming Jobs
-              </h6>
-              <input
-                type="date"
-                name="nearestDate"
-                value={nearestDate}
-                id=""
-                style={{ width: "11rem", margin: " 1rem 2rem" }}
-                onChange={(e) => this.filterUpComingJobs(e)}
-              />
+        <div className={`${style.toprow}`}>
+          <div className={style.rowContent}>
+            <div>
+              <h3>Jobs List</h3>
             </div>
-            <div style={{ margin: "-0.5rem" }}>
-              <Link style={{ textDecoration: "none" }} to="/job/add">
-                <Button
-                  className=" btn btn-primary"
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
+
+            <div>
+              <SearchBar type="job" title="Type title or services" />
+            </div>
+            <div className={`${style.filter}`}>
+              <i
+                className="fa fa-filter dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+              {/* drop-down-menu */}
+              <div
+                className={`dropdown-menu`}
+                aria-labelledby="dropdownMenuLink"
+              >
+                <h5 className="dropdown-item">Sort</h5>
+                <hr />
+
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={value}
+                  onChange={this.handleChange}
                 >
-                  Create New
-                </Button>
+                  <FormControlLabel
+                    value="recently added"
+                    control={<Radio />}
+                    label="Recently Added"
+                    onClick={this.handleRecentlyAdded}
+                  />
+
+                  <FormControlLabel
+                    value="title"
+                    control={<Radio />}
+                    label="Title"
+                    onClick={this.handleSortByTitle}
+                  />
+                  <FormControlLabel
+                    value="assignee required"
+                    control={<Radio />}
+                    label="Assignee Required"
+                    onClick={this.handleAssigneeRequired}
+                  />
+                </RadioGroup>
+                <hr />
+                <h5 className="dropdown-item">Filters</h5>
+                <hr />
+                <h6 className="dropdown-item">On Date Jobs</h6>
+                <input
+                  type="date"
+                  name="dates"
+                  value={dates}
+                  id=""
+                  className={style.styleDates}
+                  onChange={(e) => this.filterOnDateJobs(e)}
+                />
+                <h6 className="dropdown-item">Upcoming Jobs</h6>
+                <input
+                  type="date"
+                  name="nearestDate"
+                  value={nearestDate}
+                  id=""
+                  className={style.styleDates}
+                  onChange={(e) => this.filterUpComingJobs(e)}
+                />
+              </div>
+            </div>
+            <div className={style.btnStyle}>
+              <Link to="/job/create" className={style.link}>
+                <Button className={style.btn}>Create New</Button>
               </Link>
             </div>
           </div>
@@ -464,18 +433,13 @@ class JobsList extends Component {
         {jobs?.docs?.length > 0 ? (
           <div>
             <div className={style.jobListHeaderContainer}>
-              <div
-                className={style.jobListHeader}
-                style={{ fontWeight: "bold" }}
-              >
-                <div style={{ padding: "0 0.5rem" }}>Title</div>
-                <div style={{ padding: "0 0.5rem" }}>Date(s)</div>
-                <div style={{ padding: "0 0.5rem" }}>Assignee</div>
-                <div style={{ padding: "0 0.5rem" }}>Services</div>
-                <div style={{ padding: "0 0.5rem" }}>Status</div>
-                {this.props.user?.role == "admin" && (
-                  <div style={{ padding: "0 0.5rem" }}>Actions</div>
-                )}
+              <div className={style.jobListHeader}>
+                <div>Title</div>
+                <div>Date(s)</div>
+                <div>Assignee</div>
+                <div>Services</div>
+                <div>Status</div>
+                {this.props.user?.role == "admin" && <div>Actions</div>}
               </div>
             </div>
 
@@ -486,7 +450,6 @@ class JobsList extends Component {
                     <div className={`${style.listContent}`}>
                       <Link
                         key={i}
-                        style={{ color: "black", textDecoration: "none" }}
                         className={style.styleLink}
                         to={{
                           pathname: `/job/detail/${job._id}`,
@@ -504,10 +467,10 @@ class JobsList extends Component {
                           >
                             <FontAwesomeIcon
                               icon={faCalendarAlt}
-                              style={{ marginRight: "0.5rem" }}
+                              className={style.icon}
                             />{" "}
                             {
-                              <span style={{ display: "flex" }}>
+                              <span className={style.styleSpan}>
                                 {/* show 1st item of date array on jobList */}
                                 {job.dates[0]}
                                 {job.dates.length > 1 && (
@@ -556,12 +519,12 @@ class JobsList extends Component {
                             }
                           </div>
                           <div
-                            className={`${style.assignee} ${style.flex} ${style.item}`}
+                            className={`${style.assignee} ${style.flex}  ${style.item}`}
                           >
-                            <span style={{ display: "flex" }}>
+                            <span className={style.styleSpan}>
                               <FontAwesomeIcon
                                 icon={faUser}
-                                style={{ marginRight: "0.5rem" }}
+                                className={style.icon}
                               />
                               {job.assignee.length > 0
                                 ? job.assignee[0].name
@@ -618,7 +581,7 @@ class JobsList extends Component {
                           <div
                             className={`${style.services} ${style.flex} ${style.item}`}
                           >
-                            <div style={{ display: "flex" }}>
+                            <div className={style.styleSpan}>
                               {job.services ? job.services[0].name : null}
                               {job.services.length > 1 && (
                                 <div>
@@ -673,15 +636,9 @@ class JobsList extends Component {
                         </div>
                       </Link>
                       {user?.role === "admin" && (
-                        <div className={`${style.actions} ${style.flex}`}>
+                        <div className={`${style.actions} ${style.flex} `}>
                           <Button
                             onClick={() => this.openDeleteModal(i, job._id)}
-                            style={{
-                              background: "#00ADEE",
-                              textTransform: "none",
-                              color: "#FFF",
-                              fontFamily: "sans-serif",
-                            }}
                           >
                             Delete
                           </Button>
@@ -720,38 +677,15 @@ class JobsList extends Component {
 
           <Modal.Body>Are you sure you want to delete Job?</Modal.Body>
           <Modal.Footer>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <Button
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                  width: "100%",
-                  margin: "0 0.6rem",
-                }}
-                onClick={() => this.removeJob()}
-              >
-                Confirm
-              </Button>
-              <Button
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                  width: "100%",
-                }}
-                onClick={this.closeDeleteModal}
-              >
+            <div className={style.modalButtons}>
+              
+            <Button className={style.button} onClick={this.closeDeleteModal}>
                 Cancel
               </Button>
+              <Button className={style.button} onClick={() => this.removeJob()}>
+                Confirm
+              </Button>
+              
             </div>
           </Modal.Footer>
         </Modal>

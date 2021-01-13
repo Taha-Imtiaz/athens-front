@@ -212,101 +212,79 @@ const CustomerList = (props) => {
   return (
     <div>
       <div>
-        <div className={`row  ${style.toprow}`}>
-          <div className="col-3">
-            <b>
-              <h3 className={style.head}>Customer List</h3>
-            </b>
-          </div>
+        <div className={`${style.toprow}`}>
+          <div className={style.rowContent}>
+            <div>
+              <h3>Customer List</h3>
+            </div>
 
-          <div className={`col-6 ${style.search}`}>
-            <SearchBar type="customer" title="Type first name or email" />
-          </div>
-          <div
-            className={`col-2  d-flex justify-content-between ${style.filter}`}
-          >
-            <i
-              className="fa fa-filter dropdown-toggle"
-              href="#"
-              role="button"
-              id="dropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              style={{ transform: "translateY(-.3rem)" }}
-            ></i>
-            {/* Dropdown list */}
-            <div
-              className="dropdown-menu"
-              aria-labelledby="dropdownMenuLink"
-              style={{ margin: "-0.5rem" }}
-            >
-              {/* Radio buttons */}
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value="recently added"
-                  control={<Radio />}
-                  label="Recently Added"
-                  onClick={handleRecentlyAdded}
-                />
+            <div>
+              <SearchBar type="customer" title="Type first name or email" />
+            </div>
+            <div className={style.filter}>
+              <i
+                className="fa fa-filter dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+              {/* Dropdown list */}
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {/* Radio buttons */}
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={value}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="recently added"
+                    control={<Radio />}
+                    label="Recently Added"
+                    onClick={handleRecentlyAdded}
+                  />
 
-                <FormControlLabel
-                  value="recently updated"
-                  control={<Radio />}
-                  label="Recently Updated"
-                  onClick={handleRecentlyUpdated}
-                />
-                <FormControlLabel
-                  value="sort by name"
-                  control={<Radio />}
-                  label="Sort By Name"
-                  onClick={handleSortByName}
-                />
-              </RadioGroup>
+                  <FormControlLabel
+                    value="recently updated"
+                    control={<Radio />}
+                    label="Recently Updated"
+                    onClick={handleRecentlyUpdated}
+                  />
+                  <FormControlLabel
+                    value="sort by name"
+                    control={<Radio />}
+                    label="Sort By Name"
+                    onClick={handleSortByName}
+                  />
+                </RadioGroup>
+              </div>
             </div>
             {/* Create New Button */}
-            <div style={{ margin: "-0.5rem" }}>
-              <Link style={{ textDecoration: "none" }} to="/customer/add">
+            <div className={style.btnStyle}>
+              <Link to="/customer/add" className = {style.link}>
                 {" "}
-                <Button
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
-                  Create New
-                </Button>
+                <Button className={style.btn}>Create New</Button>
               </Link>
             </div>
           </div>
         </div>
         {docs && docs.length > 0 ? (
           <div>
-            <div
-              className={` ${style.jumbotron}`}
-              style={{
-                fontWeight: "bold",
-                fontFamily: "sans-serif",
-              }}
-            >
+            <div className={` ${style.jumbotron}`}>
               <div className={style.listheader}>
-                <div style={{ padding: "0 0.5rem" }}>Name</div>
-                <div style={{ padding: "0 0.5rem" }}>Phone</div>
+                <div>Name</div>
+                <div>Phone</div>
 
-                <div style={{ padding: "0 0.5rem" }}>Email</div>
+                <div>Email</div>
 
-                <div style={{ padding: "0 0.5rem" }}>Jobs</div>
-                <div style={{ padding: "0 0.5rem" }}>Claims</div>
+                <div>Jobs</div>
+                <div>Claims</div>
 
                 {props.user?.role === "admin" && (
-                  <div style={{ padding: "0 0.5rem" }}>Actions</div>
+                  <div>Actions</div>
                 )}
               </div>
             </div>
@@ -314,14 +292,11 @@ const CustomerList = (props) => {
               <div>
                 {docs.map((doc, i) => {
                   return (
-                    <div className={style.listContainer} key = {i}>
+                    <div className={style.listContainer} key={i}>
                       <div className={`${style.listContent} `}>
                         <Link
                           key={i}
-                          style={{
-                            textDecoration: "none",
-                            color: "black",
-                          }}
+                          
                           to={`/customer/detail/${doc._id}`}
                           className={style.styleLink}
                         >
@@ -367,14 +342,9 @@ const CustomerList = (props) => {
 
                         {props.user?.role === "admin" && (
                           <div className={`${style.actions} ${style.flex}`}>
-                            <Button
+                            <Button className = {style.deleteButton}
                               onClick={() => handleShow(i, doc._id)}
-                              style={{
-                                background: "#00ADEE",
-                                textTransform: "none",
-                                color: "#FFF",
-                                fontFamily: "sans-serif",
-                              }}
+                             
                             >
                               Delete
                             </Button>
@@ -409,38 +379,22 @@ const CustomerList = (props) => {
 
         <Modal.Body>Are you sure you want to delete Customer?</Modal.Body>
         <Modal.Footer>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
+          <div className = {style.modalButtons}
+          
           >
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-                margin: "0 0.6rem",
-              }}
-              onClick={() => removeCustomer()}
-            >
-              Confirm
-            </Button>
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-              }}
+             <Button className = {style.button}
+              
               onClick={handleClose}
             >
               Cancel
             </Button>
+            <Button className = {style.button}
+              
+              onClick={() => removeCustomer()}
+            >
+              Confirm
+            </Button>
+           
           </div>
         </Modal.Footer>
       </Modal>

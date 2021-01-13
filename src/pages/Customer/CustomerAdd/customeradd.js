@@ -155,12 +155,9 @@ class CustomerAdd extends Component {
   };
 
   render() {
-    
     return (
-      <div
-        className={this.props.isModal !== true ? `${style.formStyle}` : null}
-      >
-        <div className={this.props.isModal !== true ? `${style.form}` : null}>
+      <div className={this.props.isModal !== true && `${style.formStyle}`}>
+        <div className={this.props.isModal !== true && `${style.form}`}>
           {this.props.isModal !== true && (
             <h3 className={style.head}>Create New Customer</h3>
           )}
@@ -168,11 +165,12 @@ class CustomerAdd extends Component {
             <form onSubmit={this.mySubmitHandler}>
               <TextField
                 variant="outlined"
+                className={style.styleFormFields}
                 required
-                style={{ margin: "1rem 2rem", width: "92%" }}
                 id="firstName"
                 size="small"
                 label="First Name"
+                fullWidth
                 name="firstName"
                 autoComplete="firstName"
                 autoFocus
@@ -184,9 +182,9 @@ class CustomerAdd extends Component {
               <TextField
                 variant="outlined"
                 required
-                style={{ margin: "1rem 2rem", width: "92%" }}
-                required
+                className={style.styleFormFields}
                 id="lastName"
+                fullWidth
                 size="small"
                 label="Last Name"
                 name="lastName"
@@ -199,9 +197,9 @@ class CustomerAdd extends Component {
               <TextField
                 variant="outlined"
                 required
-                style={{ margin: "1rem 2rem", width: "92%" }}
-                required
+                className={style.styleFormFields}
                 size="small"
+                fullWidth
                 id="phone"
                 label="Phone Number"
                 name="phone"
@@ -214,10 +212,10 @@ class CustomerAdd extends Component {
               <TextField
                 variant="outlined"
                 required
-                style={{ margin: "1rem 2rem", width: "92%" }}
-                required
+                className={style.styleFormFields}
                 size="small"
                 id="email"
+                fullWidth
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -226,7 +224,7 @@ class CustomerAdd extends Component {
                 onChange={this.handleFormInput}
               />
             </form>
-            <h5 style={{ margin: "0 2rem" }}>Alternate Contact</h5>
+            <h5>Alternate Contact</h5>
             {this.state.subContacts.map((x, i) => {
               return (
                 <div key={i}>
@@ -234,8 +232,9 @@ class CustomerAdd extends Component {
                     <TextField
                       variant="outlined"
                       required
-                      style={{ margin: "1rem 2rem", width: "92%" }}
                       size="small"
+                      className={style.styleFormFields}
+                      fullWidth
                       id="name"
                       label="Name"
                       name="name"
@@ -247,29 +246,28 @@ class CustomerAdd extends Component {
                     <TextField
                       variant="outlined"
                       required
-                      style={{ margin: "1rem 2rem", width: "92%" }}
                       size="small"
                       type="number"
                       id="phone_number"
                       label="Phone Number"
+                      className={style.styleFormFields}
                       name="phone"
+                      fullWidth
                       autoComplete="phone_number"
-    
                       value={this.state.subContacts[i].phone}
-                      
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
 
                     <TextField
                       variant="outlined"
                       required
-                      style={{ margin: "1rem 2rem", width: "92%" }}
                       id="emailalt"
                       label="Email Address"
                       size="small"
+                      className={style.styleFormFields}
                       name="email"
+                      fullWidth
                       autoComplete="emailalt"
-                     
                       value={this.state.subContacts[i].email}
                       onChange={(e) => this.hanldeContactsInput(e, i)}
                     />
@@ -278,61 +276,37 @@ class CustomerAdd extends Component {
               );
             })}
 
-            <div className="row">
-              <div className="col-10"></div>
-
-              <div className="col-2">
-                <Button
-                  onClick={this.addContacts}
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
-                >
+            <div
+              className={
+                this.props.isModal !== true
+                  ? style.styleAddBtn
+                  : style.modalAddBtn
+              }
+            >
+              <div
+                className={
+                  this.props.isModal !== true ? style.addBtn : style.modalBtn
+                }
+              >
+                <Button onClick={this.addContacts} className={style.button}>
                   Add Another
                 </Button>
               </div>
             </div>
 
-            <div className="row" style={{ marginBottom: "1rem" }}>
-              <div className="col-6">
+            <div className={style.resetButtons}>
+              <div className={style.formResetButton}>
                 <Button
                   onClick={this.handleResetForm}
-                  className={
-                    this.props.isModal !== true
-                      ? `${style.button}`
-                      : `${style.modalButton}`
-                  }
-                  style={{
-                    background: "#00ADEE",
-
-                    width: "100%",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
+                  className={`${style.formButton}`}
                 >
                   Reset
                 </Button>
               </div>
-              <div className={`col-6`}>
+              <div className={style.formSubmitButton}>
                 <Button
                   onClick={this.mySubmitHandler}
-                  className={
-                    this.props.isModal !== true
-                      ? `${style.button}`
-                      : `${style.modalButton}`
-                  }
-                  style={{
-                    background: "#00ADEE",
-
-                    width: "100%",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                  }}
+                  className={`${style.formButton}`}
                 >
                   Submit
                 </Button>

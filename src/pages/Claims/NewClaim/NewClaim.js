@@ -16,13 +16,16 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { resetClaimForm, setClaimForm } from "../../../Redux/PersistForms/formActions"
+import {
+  resetClaimForm,
+  setClaimForm,
+} from "../../../Redux/PersistForms/formActions";
 import { cloneDeep } from "lodash";
 
 class NewClaim extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.addForm }
+    this.state = { ...props.addForm };
   }
   initialState = {
     customerId: "",
@@ -61,15 +64,18 @@ class NewClaim extends Component {
   };
 
   componentDidMount = () => {
-    if (this.props.location.customerId !== undefined && this.props.location.customerName !== undefined) {
+    if (
+      this.props.location.customerId !== undefined &&
+      this.props.location.customerName !== undefined
+    ) {
       this.setState({
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
-        jobs: this.props.location.jobs
-      })
+        jobs: this.props.location.jobs,
+      });
     }
     getCustomersAndJobs().then((res) => {
-      console.log(res.data)
+      console.log(res.data);
       this.setState({ customers: res.data.data });
     });
   };
@@ -206,12 +212,12 @@ class NewClaim extends Component {
         this.setState({
           customerClaims: true,
           showClaimsDetails: customer.claim,
-          customerName: customer.firstName + ' ' + customer.lastName
+          customerName: customer.firstName + " " + customer.lastName,
         });
       }
       this.setState({
         jobs: customer.jobs,
-        selectedCustomer: customer.firstName + ' ' + customer.lastName,
+        selectedCustomer: customer.firstName + " " + customer.lastName,
         selectedJob: "",
         customerIdError: "",
       });
@@ -227,18 +233,18 @@ class NewClaim extends Component {
 
   componentWillUnmount() {
     var { setClaimForm } = this.props;
-    setClaimForm({ ...this.state })
+    setClaimForm({ ...this.state });
   }
   handleResetForm = () => {
-    var {resetClaimForm} = this.props
-    let customers = cloneDeep(this.state.customers)
-    resetClaimForm()
-    this.setState({...this.initialState, customers})
-  }
+    var { resetClaimForm } = this.props;
+    let customers = cloneDeep(this.state.customers);
+    resetClaimForm();
+    this.setState({ ...this.initialState, customers });
+  };
   render() {
     var { showClaimsDetails, customerName } = this.state;
     return (
-      <div className = {style.claimContainer}>
+      <div className={style.claimContainer}>
         <div className={`${style.form}`}>
           <h3 className={style.head}>New Claim</h3>
           <form>
@@ -254,7 +260,9 @@ class NewClaim extends Component {
                 options={this.state.customers}
                 autoHighlight
                 getOptionLabel={(option) =>
-                  option.firstName ? option.firstName + ' ' + option.lastName : option
+                  option.firstName
+                    ? option.firstName + " " + option.lastName
+                    : option
                 }
                 renderOption={(option) => (
                   <React.Fragment>
@@ -307,16 +315,17 @@ class NewClaim extends Component {
                             "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                         }}
                       >
-                        <div className={`col-6 `}> <p>{claim.claimType}</p></div>
+                        <div className={`col-6 `}>
+                          {" "}
+                          <p>{claim.claimType}</p>
+                        </div>
                         <div className={`col-2`}>
                           <p>{claim.status}</p>
                         </div>
                         <div className={`col-4 `}>
-                          <p>  {claim.updatedAt}</p>
+                          <p> {claim.updatedAt}</p>
                         </div>
-
                       </div>
-
                     ))}
                   </Modal.Body>
                   <Modal.Footer>
@@ -331,7 +340,6 @@ class NewClaim extends Component {
                     >
                       Close
                     </Button>
-                   
                   </Modal.Footer>
                 </Modal>
               </div>
@@ -372,7 +380,6 @@ class NewClaim extends Component {
                 />
               )}
             />
-          
 
             <div className="form-group ">
               <TextField
@@ -411,11 +418,11 @@ class NewClaim extends Component {
               return ( */}
             <div>
               {/* {i == 0 ? null : <hr></hr>} */}
-              <div className="row">
+              <div className="row" style={{margin:"1rem 0"}}>
                 <div className="col-8">
                   <FormControl
                     variant="outlined"
-                    style={{ margin: "0 2rem", width: "90%" }}
+                    style={{ margin: "0 1rem", width: "100%" }}
                     margin="dense"
                   >
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -430,33 +437,26 @@ class NewClaim extends Component {
                       // style= {{width:"90%"}}
                       name="claimType"
                     >
-                      <MenuItem value={"BVP"}>
-                        BVP
-                      </MenuItem>
-                      <MenuItem value={"FVP"}>
-                        FVP
-                      </MenuItem>
+                      <MenuItem value={"BVP"}>BVP</MenuItem>
+                      <MenuItem value={"FVP"}>FVP</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
                 <div className="col-4">
-                  <div className="form-group">
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      // style={{ width: "90%" }}
-                      required
-                      // error = {this.state.priceError}
-                      size="small"
-                      id="price"
-                      type = "number"
-                      label="Total Cost"
-                      name="price"
-                      value={this.state.claims.price}
-                      onChange={(e) => this.hanldeClaimsInput(e)}
-                      style={{ margin: "-0.04rem -0.4rem" }}
-                    />
-                  </div>
+                  <TextField
+                    variant="outlined"
+                    
+                    style={{ width: "85%", marginRight: "1rem" }}
+                    required
+                    // error = {this.state.priceError}
+                    size="small"
+                    id="price"
+                    type="number"
+                    label="Total Cost"
+                    name="price"
+                    value={this.state.claims.price}
+                    onChange={(e) => this.hanldeClaimsInput(e)}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -475,41 +475,39 @@ class NewClaim extends Component {
                 />
               </div>
             </div>
-           
-        
-            <div className="row" style={{padding:"1rem 2rem"}}>
+
+            <div className="row" style={{ padding: "0.3rem 2.5rem" }}>
               <div className="col-6">
-              <Button
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                  // margin: " 0 2rem",
-                  width: "100%",
-                }}
-                onClick={this.handleResetForm}
-              >
-               Reset
-              </Button>
+                <Button
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                    // margin: " 0 2rem",
+                    width: "100%",
+                  }}
+                  onClick={this.handleResetForm}
+                >
+                  Reset
+                </Button>
               </div>
-            <div className = "col-6">
-              <Button
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                  // margin: " 0 2rem",
-                  width: "100%",
-                }}
-                onClick={this.mySubmitHandler}
-              >
-                Submit
-              </Button>
+              <div className="col-6">
+                <Button
+                  style={{
+                    background: "#00ADEE",
+                    textTransform: "none",
+                    color: "#FFF",
+                    fontFamily: "sans-serif",
+                    // margin: " 0 2rem",
+                    width: "100%",
+                  }}
+                  onClick={this.mySubmitHandler}
+                >
+                  Submit
+                </Button>
+              </div>
             </div>
-            </div>
-           
           </form>
         </div>
       </div>
@@ -518,13 +516,13 @@ class NewClaim extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  addForm: state.forms.addClaimForm
+  addForm: state.forms.addClaimForm,
 });
 
 var actions = {
   addClaim,
   showMessage,
   setClaimForm,
-  resetClaimForm
+  resetClaimForm,
 };
 export default connect(mapStateToProps, actions)(NewClaim);

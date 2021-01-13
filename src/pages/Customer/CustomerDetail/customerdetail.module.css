@@ -1,93 +1,3 @@
-.toprow{
-  margin-top: 5%;
-}
-
-.sidebar {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color:#e9f2eb;
-    position: sticky;
-    height: 100%;
-    overflow: auto;
-  }
-  
-  .sidebar a {
-    display: block;
-    color: black;
-    padding: 16px;
-    text-decoration: none;
-  }
-   
-  .sidebar a:hover {
-    color:  white;
-    background-color: royalblue;
-  }
-  
-  div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-  }
-
-  .assigned{
-    /* margin-top: 5%; */
-  }
-
-  .status{
-    /* margin-top: 5%; */
-  }
-
-  .p{
-    margin-left: 5%;
-  }
-  
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-  }
-
-  .head{
-      margin-right: 30%;
-      /* margin-top: 3%; */
-  }
-
-.l1{
-    margin-left: 5%;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-}
-  .l2{
-      margin-left: 2%;
-  }
-
-.sub{
-    margin-left: 20%;
-    /* margin-top: 5%; */
-    /* margin-bottom: 1%; */
-}
-  .container{
-     width: 70%;
-      margin-top: 2%;
-      margin-right: 10%;
-      margin-left: 20%;
-      width: auto;
-      margin-bottom: 1%;
-      background-color: #e9f2eb;
-  }
-.job{
-  /* background-color: blueviolet; */
-    /* margin-right: 50%; */
-    /* margin-top: 2%; */
-}
-
 .flex {
   display: flex;
   justify-content: center;
@@ -109,15 +19,9 @@
 .locationValue {
   grid-area: locationValue;
 }
-.li
-{
-  border: 1px solid lightgrey;
-box-shadow: 0px 2px lightgrey;
-}
 
 .modal {
   max-width: 70vw;
-  
 }
 .modal ::-webkit-scrollbar {
   width: 10px;
@@ -125,132 +29,39 @@ box-shadow: 0px 2px lightgrey;
 
 /* Track */
 .modal ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
- 
+
 /* Handle */
 .modal ::-webkit-scrollbar-thumb {
-  background: #00ADEE; 
+  background: #00adee;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .modal ::-webkit-scrollbar-thumb:hover {
-  background: #00ADEE; 
+  background: #00adee;
 }
 
-.modal-dialog {
-  background-color: blueviolet;
-  transform: translate(-50%);
-}
-.jumbotron{
-    /* width: 70%; */
-    /* margin-left: 20%;
-    margin-right: 10%; */
-    margin-top: 2%;
-    text-align: left;
-    background-color:#e9f2eb;
-}
-.jobName {
-  
-    margin-left: 5%;
-
-}
-.job{
-    /* margin-left: 20%; */
-    margin-top: 2%;
+.jumbotron {
+  margin-top: 2%;
+  text-align: left;
+  background-color: #e9f2eb;
 }
 
-.assigned{
-    /* float: right; */
-}
-.status{
-  /* float: right; */
-  /* margin-right: 10%; */
+.job {
+  margin-top: 2%;
 }
 
-.notesd{
- 
-    margin-left: 15%;
-}
-.notesh{
-    margin-left: 15%;
-}
-.button:hover {
-background-color: red;
-
-}
-.style-button {
-  width: 10vw !important;
-  padding: 1rem !important;
-  margin: 0 2rem;
-}
-.btn2{
-    /* margin-left: 60%; */
-    /* margin-right: 5%; */
+.notesh {
+  margin-left: 15%;
 }
 
-.btn{
+.btn {
   margin-left: 50%;
 }
 
-.p{
-  margin-left: 2%;
-}
-
-  textarea {
-    width: 100%;
-  }
-
-
-@media screen and (max-width: 500px) {
-  .head{
-    /* margin-right: 30%; */
-    margin-left: 15%;
-    margin-top: 5%;
-    font-size: 10px;
-}
-
-.sub{
-  margin-left: 23%;
-  margin-top: 5%;
-  margin-bottom: 1%;
-}
-
-.container{
-   margin-top: 5%;
-   margin-left: 23%;
-   width: 75%;
-   margin-bottom: 5%;
-   background-color: #e9f2eb;
-}
-.styledCard {
-  width: 70%;
-}
-
-
-
-.cardHeader:hover {
-/* background-color: #00ADEE; */
-background-color: #00ADEE;
-color: #fff;
-/* height: 4rem; */
-}
-
-.btn{
-  float: right;
-  margin-right: 3%;
-  margin-bottom: 10%;
-}
-
-
-.jumbotron{
-  width: 75%;
-  margin-left: 23%;
-  margin-top: 15%;
-  text-align: left;
-  background-color:#e9f2eb;
-}
-
+textarea {
+  width: 100%;
 }

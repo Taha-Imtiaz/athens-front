@@ -143,12 +143,11 @@ const CustomerDetail = (props) => {
     <div>
       {customer && (
         <div>
-          <div className="row">
-            <div className="col-1"></div>
-            <div className="col-10" style={{ margin: "1rem" }}>
+          <div>
+            <div>
               {/* defining AppBar */}
               <AppBar position="static">
-                <div className="row">
+                <div>
                   <Tabs
                     className="col-12"
                     style={{ background: "#00ADEE", border: "none" }}
@@ -187,7 +186,6 @@ const CustomerDetail = (props) => {
               </AppBar>
               {/* Tab Panel of customer */}
               <TabPanel value={value} index={0}>
-                
                 <div
                   style={{
                     fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
@@ -195,7 +193,7 @@ const CustomerDetail = (props) => {
                 >
                   <div className="row">
                     <div className="col-8">
-                      <h3 className={style.head}>Customer Information</h3>
+                      <h3 >Customer Information</h3>
                     </div>
                     <div
                       className="col-2"
@@ -255,10 +253,10 @@ const CustomerDetail = (props) => {
                     <div className="col-4">
                       <b>
                         {" "}
-                        <label className={style.l1}>Name</label>
+                        <label >Name</label>
                       </b>
                       <p
-                        className={style.l1}
+                        
                         style={{ transform: "translateY(-0.5rem)" }}
                       >
                         {customer.firstName} {customer.lastName}
@@ -267,10 +265,10 @@ const CustomerDetail = (props) => {
                     <div className="col-4" style={{ padding: "0.5rem 0" }}>
                       <b>
                         {" "}
-                        <label className={style.l1}>Phone</label>
+                        <label >Phone</label>
                       </b>
                       <p
-                        className={style.l1}
+                        
                         style={{ transform: "translateY(-0.5rem)" }}
                       >
                         {customer.phone}
@@ -321,25 +319,25 @@ const CustomerDetail = (props) => {
                                   <div className="row">
                                     <div className="col-3">
                                       {x.length !== 0 && (
-                                        <h6 className={style.l1}>Name</h6>
+                                        <h6 >Name</h6>
                                       )}
-                                      <label className={style.l1}>
+                                      <label >
                                         {x.name !== "" ? x.name : "N/A"}
                                       </label>
                                     </div>
                                     <div className="col-3">
                                       {x.length !== 0 && (
-                                        <h6 className={style.l1}>Email</h6>
+                                        <h6 >Email</h6>
                                       )}
-                                      <label className={style.l1}>
+                                      <label >
                                         {x.email !== "" ? x.email : "N/A"}
                                       </label>
                                     </div>
                                     <div className="col-3">
                                       {x.length !== 0 && (
-                                        <h6 className={style.l1}>Phone</h6>
+                                        <h6 >Phone</h6>
                                       )}
-                                      <label className={style.l2}>
+                                      <label >
                                         {x.phone !== "" ? x.phone : "N/A"}
                                       </label>
                                     </div>
@@ -551,12 +549,12 @@ const CustomerDetail = (props) => {
                   )}
                 </div>
               </TabPanel>
-             
+
               {/* Tab Panel of claims */}
               <TabPanel value={value} index={1}>
                 <div className="row">
                   <div className="col-6">
-                    <h3 className={style.head}>Claims</h3>
+                    <h3 >Claims</h3>
                   </div>
                   <div className="col-6">
                     <div
@@ -626,7 +624,7 @@ const CustomerDetail = (props) => {
                             style={{
                               height: "3.5rem",
                               cursor: "pointer",
-                              
+
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                             }}
@@ -648,153 +646,152 @@ const CustomerDetail = (props) => {
                             data-parent="#accordion"
                           >
                             <div className={`card-body`}>
-                              
-                              <div key = {i}>
-                              <div className="row">
-                              <div className={`col-6 ${style.protectionRow}`}>
-                                <h6>Protection Type : </h6>
-                                <h6 style={{ fontWeight: "normal" }}>
-                                  {claim.claimType}
-                                </h6>
-                            
-                              </div>
-                              <div className={`col-2 ${style.protectionRow}`}>
-                                <h6>Total: $</h6>
-                                <h6
-                                  style={{ fontWeight: "normal" }}
-                                >{`${claim.price}`}</h6>
-                              </div>
-                              <div className="col-2">
-                                {claim.status == "open" ? (
-                                  <Button
-                                    className="btn btn-primary"
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      transform: "translateX(4.5rem)",
-                                    }}
-                                    onClick={() => showUpdateModal(i)}
+                              <div key={i}>
+                                <div className="row">
+                                  <div
+                                    className={`col-6 ${style.protectionRow}`}
                                   >
-                                    Add Update
-                                  </Button>
-                                ) : null}
-                              </div>
-                              <div className="col-2">
-                                {claim.status == "open" ? (
-                                  <Button
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                    }}
-                                    onClick={() => handleCloseClaim(i)}
+                                    <h6>Protection Type : </h6>
+                                    <h6 style={{ fontWeight: "normal" }}>
+                                      {claim.claimType}
+                                    </h6>
+                                  </div>
+                                  <div
+                                    className={`col-2 ${style.protectionRow}`}
                                   >
-                                    {" "}
-                                    Close Claim
-                                  </Button>
-                                ) : (
-                                  <Chip
-                                    variant="outlined"
-                                    size="small"
-                                    label="Closed"
-                                    clickable
-                                    color="primary"
-                                  />
-                                )}
-                                
+                                    <h6>Total: $</h6>
+                                    <h6
+                                      style={{ fontWeight: "normal" }}
+                                    >{`${claim.price}`}</h6>
+                                  </div>
+                                  <div className="col-2">
+                                    {claim.status == "open" ? (
+                                      <Button
+                                        className="btn btn-primary"
+                                        style={{
+                                          background: "#00ADEE",
+                                          textTransform: "none",
+                                          color: "#FFF",
+                                          fontFamily: "sans-serif",
+                                          transform: "translateX(4.5rem)",
+                                        }}
+                                        onClick={() => showUpdateModal(i)}
+                                      >
+                                        Add Update
+                                      </Button>
+                                    ) : null}
+                                  </div>
+                                  <div className="col-2">
+                                    {claim.status == "open" ? (
+                                      <Button
+                                        style={{
+                                          background: "#00ADEE",
+                                          textTransform: "none",
+                                          color: "#FFF",
+                                          fontFamily: "sans-serif",
+                                        }}
+                                        onClick={() => handleCloseClaim(i)}
+                                      >
+                                        {" "}
+                                        Close Claim
+                                      </Button>
+                                    ) : (
+                                      <Chip
+                                        variant="outlined"
+                                        size="small"
+                                        label="Closed"
+                                        clickable
+                                        color="primary"
+                                      />
+                                    )}
+                                  </div>
                                 </div>
-                             </div>
-                            </div>
-                            <hr />
-                          
+                              </div>
+                              <hr />
 
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6
-                                className={`${style.para} ${style.styleClaims}`}
-                              >
-                                Title :
-                                <span style={{ fontWeight: "normal" }}>
-                                  {claim.title}
-                                </span>
-                              </h6>
-                            </div>
-                          </div>
-                          <hr />
+                              <div className="row">
+                                <div className={`col-12`}>
+                                  <h6
+                                    className={`${style.para} ${style.styleClaims}`}
+                                  >
+                                    Title :
+                                    <span style={{ fontWeight: "normal" }}>
+                                      {claim.title}
+                                    </span>
+                                  </h6>
+                                </div>
+                              </div>
+                              <hr />
 
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6
-                                className={`${style.para} ${style.styleClaims}`}
-                                style={{ whiteSpace: "pre-line" }}
-                              >
-                                Description :{" "}
-                                <span style={{ fontWeight: "normal" }}>
-                                  {" "}
-                                  {claim.description}
-                                </span>
-                              </h6>
-                            </div>
-                          </div>
-                          <hr />
+                              <div className="row">
+                                <div className={`col-12`}>
+                                  <h6
+                                    className={`${style.para} ${style.styleClaims}`}
+                                    style={{ whiteSpace: "pre-line" }}
+                                  >
+                                    Description :{" "}
+                                    <span style={{ fontWeight: "normal" }}>
+                                      {" "}
+                                      {claim.description}
+                                    </span>
+                                  </h6>
+                                </div>
+                              </div>
+                              <hr />
 
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6 className={`${style.styleClaims}`}>
-                                Waiting To :{" "}
-                                <span style={{ fontWeight: "normal" }}>
-                                  {" "}
-                                  {claim.waitTo}
-                                </span>
-                              </h6>
-                            </div>
-                          </div>
+                              <div className="row">
+                                <div className={`col-12`}>
+                                  <h6 className={`${style.styleClaims}`}>
+                                    Waiting To :{" "}
+                                    <span style={{ fontWeight: "normal" }}>
+                                      {" "}
+                                      {claim.waitTo}
+                                    </span>
+                                  </h6>
+                                </div>
+                              </div>
 
-                          <hr />
+                              <hr />
 
-                          <div>
-                            <div>
-                              {claim.updates.length > 0 ? (
+                              <div>
                                 <div>
-                                  <h4>Updates</h4>
-                                  {claim.updates.map((x, i) => (
-                                    <div key={i}>
-                                      <div className="row">
-                                        <div
-                                          className="col-12"
-                                          style={{ display: "flex" }}
-                                        >
-                                          {" "}
-                                          {`${i + 1}.`}{" "}
-                                          <div
-                                            style={{
-                                              margin: "0 0.5rem",
-                                            }}
-                                          >
-                                            {x.value}
+                                  {claim.updates.length > 0 ? (
+                                    <div>
+                                      <h4>Updates</h4>
+                                      {claim.updates.map((x, i) => (
+                                        <div key={i}>
+                                          <div className="row">
+                                            <div
+                                              className="col-12"
+                                              style={{ display: "flex" }}
+                                            >
+                                              {" "}
+                                              {`${i + 1}.`}{" "}
+                                              <div
+                                                style={{
+                                                  margin: "0 0.5rem",
+                                                }}
+                                              >
+                                                {x.value}
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className="row">
+                                            <div className="col-10"></div>
+                                            <div
+                                              className="col-2"
+                                              style={{ color: "#a8a8a8" }}
+                                            >
+                                              {" "}
+                                              <TimeAgo date={x.timestamp} />
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
-                                      <div className="row">
-                                        <div className="col-10"></div>
-                                        <div
-                                          className="col-2"
-                                          style={{ color: "#a8a8a8" }}
-                                        >
-                                          {" "}
-                                          <TimeAgo date={x.timestamp} />
-                                        </div>
-                                      </div>
-                                    </div> 
-                                   
-                                  ))}
+                                      ))}
+                                    </div>
+                                  ) : null}
                                 </div>
-                              ) : null}
-                               </div>
-                               </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -816,7 +813,7 @@ const CustomerDetail = (props) => {
               >
                 <div className="row">
                   <div className="col-6">
-                    <h3 className={style.head}>Blanket Deposit</h3>
+                    <h3 >Blanket Deposit</h3>
                   </div>
                   <div className="col-6">
                     <div
@@ -869,7 +866,6 @@ const CustomerDetail = (props) => {
           </div>
           <br />
         </div>
-        
       )}
       <Modal
         show={show}

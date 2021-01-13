@@ -1,29 +1,72 @@
 .formStyle {
-    display: grid;
-    /* grid-template-rows: minmax(100vh,min-content); */
-    grid-template-columns: 20fr 60fr 20fr;
-    background-color: #e9ecef;
-    grid-template-areas: ". form .";
+  display: grid;
+  grid-template-rows: minmax(86.6vh, min-content);
+  grid-template-columns: 20fr 60fr 20fr;
+  background-color: #e9ecef;
+  grid-template-areas: ". form .";
 }
 .form {
-    grid-area: form;
-   background-color: #fff;
-   width: 100%;
-   border-radius: 0.4rem;
-   margin: 2rem;
-   padding: 2rem;
+  grid-area: form;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  margin: 2rem;
+  padding: 2rem;
 }
-.head{
-    margin-bottom: 2%;
-    margin-left: 5%;
-    margin-top: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.button {
-    /* width: 100%;
-    /* margin:  1rem ; */
-    /* background-color:  #00ADEE; */
-    transform: translateY(2rem); 
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.updateBtn .button {
+  background: #00adee;
+  margin: 0.75rem 0;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.updateBtn .button:hover {
+    background-color: #00adee;
+}
+.alternateContactBtn {
+  display: grid;
+
+  grid-template-columns: 76.7fr 23.3fr;
+  grid-template-areas: ". alternateContact";
+}
+.alternateContact {
+  grid-area: alternateContact;
+}
+.alternateContact .btn {
+  background: #00adee;
+  color: #fff;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.alternateContact .btn:hover {
+  background: #00adee;
+}
+.anotherContactBtn {
+  display: grid;
+
+  grid-template-columns: 85.6fr 14.4fr;
+  grid-template-areas: ". anotherContact";
+}
+.anotherContactBtn .anotherContact {
+  grid-area: anotherContact;
+}
+.anotherContact .btn {
+  background: #00adee;
+  color: #fff;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.anotherContact .btn:hover {
+  background: #00adee;
+}
+.updateBtn {
+    display: grid;
+    grid-template-columns: 1fr;
 }

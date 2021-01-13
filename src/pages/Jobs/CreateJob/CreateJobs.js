@@ -43,7 +43,10 @@ import { Modal } from "react-bootstrap";
 import CustomerAdd from "../../Customer/CustomerAdd/customeradd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
+import {
+  resetJobForm,
+  setJobForm,
+} from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -122,29 +125,11 @@ class CreateJobs extends Component {
       });
     }
     getCustomersAndJobs().then((res) => {
-      console.log(res.data)
+      console.log(res.data);
       if (res && res.status == 201) {
         this.setState({ customers: res.data.data });
       }
     });
-
-    // getAllMovers().then((res) => {
-    //   var moverId = res.data.movers.map((mover) => mover._id);
-    //   this.setState({
-    //     assigneeList: res.data.movers,
-    //     customerId: this.props.location.customerId
-    //   });
-    // });
-
-    // getServices()
-    //   .then((res) => {
-    //     this.setState({
-    //       serviceOptions: res.data.data,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   handleChange = (event) => {
@@ -177,16 +162,11 @@ class CreateJobs extends Component {
   handleDateChange = (date) => {};
 
   addLocation = () => {
-    // if (
-    //   this.state.locations[0].value !== "" &&
-    //   this.state.locations[1].value !== ""
-    // ) {
     var location = cloneDeep(this.state.locations);
     location.push({ type: "", value: "", default: false });
     this.setState({
       locations: location,
     });
-    // }
   };
 
   addDate = () => {
@@ -222,15 +202,6 @@ class CreateJobs extends Component {
     }
   };
 
-  // handleCheckBox = (e, i) => {
-  //   var { name, value } = e.target;
-  //   console.log(name, value)
-  //   e.stopPropagation()
-  //   this.setState((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
   changeCheckBoxState = (e, i) => {
     e.stopPropagation();
     var prevState = cloneDeep(this.state.locations);
@@ -249,47 +220,6 @@ class CreateJobs extends Component {
 
   showLocation = (i) => {
     console.log(this.state.locations);
-    // if (i === 0) {
-    //   return (
-    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-    //       <div className="col-12">
-    //         <TextField
-    //           variant="outlined"
-    //           margin="normal"
-    //           required
-    //           fullWidth
-    //           size="small"
-    //           id="from"
-    //           label="Pickup"
-    //           name="pickup"
-    //           value={this.state.locations[0].value}
-    //           onChange={(e) => this.hanldeLocationInput(i, e)}
-    //           error={this.state.locationfromError ? true : false}
-    //         />
-    //       </div>
-    //     </div>
-    //   );
-    // } else if (i == 1) {
-    //   return (
-    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-    //       <div className="col-12">
-    //         <TextField
-    //           fullWidth
-    //           variant="outlined"
-    //           margin="normal"
-    //           required
-    //           size="small"
-    //           id="to"
-    //           label="Drop Off"
-    //           name="dropoff"
-    //           value={this.state.locations[i].value}
-    //           onChange={(e) => this.hanldeLocationInputTo(i, e)}
-    //           error={this.state.locationtoError ? true : false}
-    //         />
-    //       </div>
-    //     </div>
-    //   );
-    // }
 
     return (
       <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
@@ -468,14 +398,6 @@ class CreateJobs extends Component {
       jobTypeError = "Job type is required.";
     }
 
-    // if (!this.state.locations[0].value) {
-    //   locationfromError = "Location should not be empty";
-    // }
-
-    // if (!this.state.locations[1].value) {
-    //   locationtoError = "Location should not be empty";
-    // }
-
     if (
       customerIdError ||
       titleError ||
@@ -606,7 +528,7 @@ class CreateJobs extends Component {
 
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "id");
-    console.log(arr)
+    console.log(arr);
     this.setState({ services: arr });
     if (arr.length > 0) {
       this.setState({ multiError: "" });
@@ -698,18 +620,18 @@ class CreateJobs extends Component {
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
   };
-  handleResetJob = () =>{
-    var {resetJobForm,jobForm} = this.props
-    console.log("resetJobForm called")
-    let customers = cloneDeep(this.state.customers)
-    resetJobForm()
-    this.setState({...this.initialState, customers})
-  }
+  handleResetJob = () => {
+    var { resetJobForm, jobForm } = this.props;
+    console.log("resetJobForm called");
+    let customers = cloneDeep(this.state.customers);
+    resetJobForm();
+    this.setState({ ...this.initialState, customers });
+  };
   render() {
     return (
       <div style={{ background: "#e9ecef" }}>
         <ToastContainer position="bottom-right" />
-        <div className={`${style.tron}`}>
+        <div className={`${style.createJob}`}>
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
             <form onSubmit={this.mySubmitHandler}>
@@ -720,17 +642,9 @@ class CreateJobs extends Component {
                   onChange={(event, newValue) => {
                     this.getCustomerJobs(newValue); // Get the customer and get job
                   }}
-                  // inputValue={this.state.selectedCustomer}
-                  // onInputChange={(event, newInputValue) => {
-                  // }}
-                  // id="country-select-demo1"
                   style={{ width: "100%", margin: "1rem 0" }}
                   size="small"
                   options={this.state.customers}
-                  // classes={{
-                  //   option: classes.option,
-                  // }}
-                  // freeSolo
                   autoHighlight
                   getOptionLabel={(option) =>
                     option.firstName
@@ -873,8 +787,7 @@ class CreateJobs extends Component {
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
-                  placeholder = "Job Description"
-                  
+                  placeholder="Job Description"
                 />
               </div>
 
@@ -887,7 +800,7 @@ class CreateJobs extends Component {
                   noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   onChange={(event, newValue) => {
-                    console.log(newValue)
+                    console.log(newValue);
                     this.servicesChanged(newValue);
                   }}
                   limitTags={10}
@@ -914,26 +827,6 @@ class CreateJobs extends Component {
               </div>
 
               <div className="row" style={{ margin: "0 1.5rem" }}>
-                {/* <div className="form-group col-4" style={{ marginTop: "1rem" }}>
-                  <TextField
-                    id="time"
-                    label="Start Time"
-                    type="time"
-                    name="startTime"
-                    value={this.state.startTime}
-                    onChange={this.handleFormInput}
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      step: 300, // 5 min
-                    }}
-                  />
-                </div> */}
-
                 <div className={`form-group col-6`}>
                   <TextField
                     type="number"
@@ -975,51 +868,31 @@ class CreateJobs extends Component {
                     </Select>
                   </FormControl>
                 </div>
-                {/* <div className="col-1"></div> */}
               </div>
 
-              {/* <div className="form-group">
-              <Multiselect
-                className={style.multi}
-                options={this.state.assigneeList} // Options to display in the dropdown
-                onSelect={this.onAssigneeSelect} // Function will trigger on select event
-                onRemove={this.onAssigneeRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                className="form-control"
-                placeholder="Select Assignee"
-              />
-            </div> */}
-
-              {/* {this.state.assigneeError ? (
-              <div
-                className={`alert alert-warning alert-dismissible fade show  ${style.msg}`}
-                role="alert"
-              >
-                {this.state.assigneeError}
-              </div>
-            ) : null} */}
-
-            {this.state.locations.length === 0 &&  
-            <div className="row">
-              <div className="col-9"></div>
-              <div className="col-3">
-                <Button   onClick={this.addLocation}
-                  style={{
-                    background: "#00ADEE",
-                    border: "transparent",
-                    color: "#ffffff",
-                    padding: "0.5rem",
-                    borderRadius: "0.25rem",
-                    fontFamily: "sans-serif",
-                    textTransform: "none",
-                    margin:" 0.5rem 2rem"
-                    // float:"right"
-                  }}
-                >
-                  Add Location
-                </Button>
+              {this.state.locations.length === 0 && (
+                <div className="row">
+                  <div className="col-9"></div>
+                  <div className="col-3">
+                    <Button
+                      onClick={this.addLocation}
+                      style={{
+                        background: "#00ADEE",
+                        border: "transparent",
+                        color: "#ffffff",
+                        padding: "0.5rem",
+                        borderRadius: "0.25rem",
+                        fontFamily: "sans-serif",
+                        textTransform: "none",
+                        margin: " 0.5rem 2rem",
+                        // float:"right"
+                      }}
+                    >
+                      Add Location
+                    </Button>
+                  </div>
                 </div>
-              </div>}
+              )}
 
               {this.state.locations.length > 0 && (
                 <div>
@@ -1035,14 +908,13 @@ class CreateJobs extends Component {
                     <FontAwesomeIcon
                       icon={faPlus}
                       onClick={this.addLocation}
-                      // style={{ transform: "translate3d(0rem,0rem, 0)" }}
                     ></FontAwesomeIcon>
                   </div>
                 </div>
               )}
 
               <div className="row" style={{ margin: "1rem" }}>
-              <div className={`col-6 ${style.btnsubmit}`} >
+                <div className={`col-6 ${style.btnsubmit}`}>
                   <Button
                     type="button"
                     style={{
@@ -1057,7 +929,7 @@ class CreateJobs extends Component {
                   </Button>
                 </div>
 
-                <div className={`col-6 ${style.btnsubmit}`} >
+                <div className={`col-6 ${style.btnsubmit}`}>
                   <Button
                     type="button"
                     style={{
@@ -1099,7 +971,7 @@ class CreateJobs extends Component {
 var actions = {
   createJob,
   setJobForm,
-  resetJobForm
+  resetJobForm,
 };
 
 var mapStateToProps = (state) => ({

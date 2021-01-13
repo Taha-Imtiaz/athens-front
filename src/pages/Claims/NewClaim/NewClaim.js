@@ -146,7 +146,7 @@ class NewClaim extends Component {
       addClaim(data)
         .then((res) => {
           showMessage(res.data.message);
-          history.push(`/claimsDetail/${res.data.data}`);
+          history.push(`/claim/detail/${res.data.data}`);
         })
         .catch((error) => {
           console.log(error);

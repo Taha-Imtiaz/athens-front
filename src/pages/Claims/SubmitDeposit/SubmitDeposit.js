@@ -108,7 +108,7 @@ initialState =  {
     if (this.handleValidate()) {
       addDeposit(obj).then((res) => {
         showMessage(res.data.message);
-        history.push("/claim/customerdeposit");
+        history.push("/deposits");
       });
     }
   };

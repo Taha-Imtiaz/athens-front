@@ -66,7 +66,7 @@ export var getMoverJobs = async (date) => {
   }
 };
 
-export var holidayCalender = async (obj) => {
+export var holidayCalendar = async (obj) => {
   const token = localStorage.getItem("athens-token");
   const config = {
     headers: { Authorization: token },

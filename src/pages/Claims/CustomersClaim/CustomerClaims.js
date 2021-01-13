@@ -58,19 +58,6 @@ const CustomerClaims = (props) => {
   }, [claims]);
   var { claims } = props;
 
-  const routes = [
-    {
-      title: "Claims",
-      path: "/claim/customer",
-      icon: <i className="fa fa-exchange"></i>,
-    },
-    {
-      title: "Blanket Deposit",
-      path: "/claim/customerdeposit",
-      icon: <i className="fa fa-bed"></i>,
-    },
-  ];
-
   var handlePageChange = (page) => {
     var { getAllClaims } = props;
     var claimsObj = {
@@ -208,7 +195,7 @@ const CustomerClaims = (props) => {
                 </a> */}
               </div>
               <div style={{ margin: "-0.5rem" }}>
-                <Link style={{ textDecoration: "none" }} to="/claim/newclaim">
+                <Link style={{ textDecoration: "none" }} to="/claim/add">
                   <Button
                     style={{
                       background: "#00ADEE",
@@ -247,7 +234,7 @@ const CustomerClaims = (props) => {
                           <Link
                             className={style.styleLink}
                             to={{
-                              pathname: `/claimsDetail/${x._id}`,
+                              pathname: `/claim/detail/${x._id}`,
                               claimsId: x._id,
                             }}
                             style={{

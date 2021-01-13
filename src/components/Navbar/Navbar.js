@@ -32,7 +32,7 @@ const Navbar = (props) => {
   return (
     <div>
       {pathname !== "/" && <nav
-      className={pathname !== "/schedule/daily" ? `navbar navbar-expand-md navbar-light ${style.elevation} sticky-top`:`navbar navbar-expand-md navbar-light ${style.elevation} ${style.fixedNavBar} sticky-top`}
+      className={`navbar navbar-expand-md navbar-light ${style.elevation} sticky-top sticky-top`}
     >
       <Link className={`navbar-brand ${style.logo}`} to="/">
         <img src="/images/movers-logo.jpg" width="60px" alt="Logo"></img>
@@ -50,13 +50,13 @@ const Navbar = (props) => {
           <ul className="navbar-nav ml-auto">
             {props.user.role != "mover" ? (
               <React.Fragment>
-                <li className={getNavLinkClass("/customer")}>
-                  <Link className={`nav-link`} to="/customer">
+                <li className={getNavLinkClass("/customers")}>
+                  <Link className={`nav-link`} to="/customers">
                     Customer
                   </Link>
                 </li>
-                <li className={getNavLinkClass("/job")}>
-                  <Link className="nav-link" to="/job">
+                <li className={getNavLinkClass("/jobs")}>
+                  <Link className="nav-link" to="/jobs">
                     Jobs
                   </Link>
                 </li>
@@ -65,14 +65,14 @@ const Navbar = (props) => {
                     Calendar
                   </Link>
                 </li>
-                <li className={getNavLinkClass("/schedule/daily")}>
-                  <Link className="nav-link" to="/schedule/daily">
+                <li className={getNavLinkClass("/schedule")}>
+                  <Link className="nav-link" to="/schedule">
                     Schedule
                   </Link>
                 </li>
                 {props.user.role != "manager" ? (
-                  <li className={getNavLinkClass("/user")}>
-                    <Link className="nav-link" to="/user">
+                  <li className={getNavLinkClass("/users")}>
+                    <Link className="nav-link" to="/users">
                       Users
                     </Link>
                   </li>
@@ -82,13 +82,13 @@ const Navbar = (props) => {
                     Account
                   </Link>
                 </li>
-                <li className={getNavLinkClass("/claim/customer")}>
-                  <Link className="nav-link" to="/claim/customer">
+                <li className={getNavLinkClass("/claims")}>
+                  <Link className="nav-link" to="/claims">
                     Claims
                   </Link>
                 </li>
-                <li className={getNavLinkClass("/claim/customerdeposit")}>
-                  <Link className="nav-link" to="/claim/customerdeposit">
+                <li className={getNavLinkClass("/deposits")}>
+                  <Link className="nav-link" to="/deposits">
                     Blankets
                   </Link>
                 </li>

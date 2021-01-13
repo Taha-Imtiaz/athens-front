@@ -94,7 +94,7 @@ const UsersList = (props) => {
             </div>
 
             <div className={`col-2`}>
-              <Link style={{ textDecoration: "none" }} to="/user/create">
+              <Link style={{ textDecoration: "none" }} to="/user/add">
                 {" "}
                 {/* <Button name="Create New" />{" "} */}
                 <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif" }}>Create New</Button>

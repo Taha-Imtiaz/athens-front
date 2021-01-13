@@ -133,7 +133,7 @@ class CreateUser extends Component {
       createUser(createdUserObj)
         .then((res) => {
           showMessage(res.data.message)
-          history.push("/user");
+          history.push("/users");
         })
         .catch((error) => {
           console.log(error);

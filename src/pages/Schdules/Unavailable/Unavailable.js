@@ -28,7 +28,7 @@ const UnavailableSchedule = (props) => {
   const routes = [
     {
       title: "Daily Schedule",
-      path: "/schedule/daily",
+      path: "/schedule",
       icon: (
         <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
       ),
@@ -36,7 +36,7 @@ const UnavailableSchedule = (props) => {
 
     {
       title: "Unavailable",
-      path: "/schedule",
+      path: "/schedule/unavailable",
 
       icon: (
         <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />

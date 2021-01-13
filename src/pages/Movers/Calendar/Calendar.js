@@ -271,7 +271,7 @@ class MoversCalendar extends Component {
                           <div>
                             <Link
                               style={{ textDecoration: "none" }}
-                              to={`/job/details/${job._id}`}
+                              to={`/job/detail/${job._id}`}
                             >
                               &nbsp;
                               {job.title}
@@ -384,7 +384,7 @@ class MoversCalendar extends Component {
                               </h6> */}
                               <Link
                                 style={{ textDecoration: "none" }}
-                                to={`/job/details/${this.state.currentDayJobs?._id}`}
+                                to={`/job/detail/${this.state.currentDayJobs?._id}`}
                               >
                                 &nbsp;
                                 {this.state.currentDayJobs?.title}

@@ -121,7 +121,7 @@ const BlanketList = (props) => {
                     {/* */}
                     <div className="row">
                       <div className="col-2">
-                        <Link to={`/job/details/${deposit?.job?._id}`}>
+                        <Link to={`/job/detail/${deposit?.job?._id}`}>
                           {deposit?.job?.jobId}
                         </Link>
                       </div>

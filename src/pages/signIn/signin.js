@@ -29,7 +29,7 @@ class SignInForm extends React.Component {
       if (this.props.user) {
         this.props.user.role == "mover"
           ? this.props.history.push("/mover")
-          : this.props.history.push("/customer");
+          : this.props.history.push("/customers");
       }
     }
   }
@@ -42,7 +42,7 @@ class SignInForm extends React.Component {
     if (nextProps.user) {
       nextProps.user.role == "mover"
         ? this.props.history.push("/mover")
-        : this.props.history.push("/customer");
+        : this.props.history.push("/customers");
     }
   }
 
@@ -83,7 +83,7 @@ class SignInForm extends React.Component {
         if (res ?.data.status == 200) {
           res.data.data.role == "mover"
             ? this.props.history.push("/mover")
-            : this.props.history.push("/customer");
+            : this.props.history.push("/customers");
         }
       });
     }
@@ -164,7 +164,7 @@ class SignInForm extends React.Component {
                   type="password"
                 />
               </div>
-              <Link to="/emailVerification" style={{}}>
+              <Link to="/email-verification" style={{}}>
                 <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width: "80%", justifyContent: "flex-end" }}>
 
                   {/* <Button 

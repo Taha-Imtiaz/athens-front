@@ -444,7 +444,7 @@ class JobsList extends Component {
               />
             </div>
             <div style={{ margin: "-0.5rem" }}>
-              <Link style={{ textDecoration: "none" }} to="/job/create">
+              <Link style={{ textDecoration: "none" }} to="/job/add">
                 <Button
                   className=" btn btn-primary"
                   style={{
@@ -489,7 +489,7 @@ class JobsList extends Component {
                         style={{ color: "black", textDecoration: "none" }}
                         className={style.styleLink}
                         to={{
-                          pathname: `/job/details/${job._id}`,
+                          pathname: `/job/detail/${job._id}`,
                           jobProps: job,
                         }}
                       >

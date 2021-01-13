@@ -200,7 +200,6 @@ class CalendarApp extends Component {
     console.log(this.state.currentDayJobs);
     return (
       <div>
-        {/* <h2 className={style.toprow}>Calender </h2> */}
         <div className={`row ${style.toprow}`}>
           <div
             className="col-9"
@@ -281,7 +280,7 @@ class CalendarApp extends Component {
                             <div>
                               <Link
                                 style={{ textDecoration: "none" }}
-                                to={`/job/details/${job._id}`}
+                                to={`/job/detail/${job._id}`}
                               >
                                 &nbsp;
                                 {job.title}

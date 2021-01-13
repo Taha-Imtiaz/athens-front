@@ -155,7 +155,7 @@ const ClaimsDetails = (props) => {
                     className={style.assigneehead}
                     style={{ flexWrap: "nowrap" }}
                   >
-                    <Link to={`/job/details/${claims?.job?._id}`}>
+                    <Link to={`/job/detail/${claims?.job?._id}`}>
                       {" "}
                       {claims?.job?.title}
                     </Link>

@@ -368,7 +368,7 @@ class JobEditDetails extends Component {
       updateJob(jobId, updatedObj)
         .then((res) => {
           showMessage(res.data.message);
-          history.push("/job/details/" + jobId);
+          history.push("/job/detail/" + jobId);
         })
         .catch((error) => {});
     }

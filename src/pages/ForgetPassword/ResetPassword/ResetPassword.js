@@ -49,7 +49,7 @@ const ResetPassword = (props) => {
              history.push("/mover");
            }
            else {
-            history.push("/customer");
+            history.push("/customers");
            }
             
           } else {

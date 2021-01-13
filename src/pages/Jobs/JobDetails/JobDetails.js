@@ -378,7 +378,7 @@ const JobDetails = (props) => {
                 <div>
                   <Link
                     style={{ textDecoration: "none" }}
-                    to={`/job/edit/${jobId}`}
+                    to={`/job/update/${jobId}`}
                   >
                     <Button
                       type="button"

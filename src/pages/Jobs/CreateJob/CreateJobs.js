@@ -599,7 +599,7 @@ class CreateJobs extends Component {
       };
       var { history } = this.props;
       createJob(createJobObj, (job) => {
-        history.push("/job/details/" + job.data.data._id);
+        history.push("/job/detail/" + job.data.data._id);
       });
     }
   };

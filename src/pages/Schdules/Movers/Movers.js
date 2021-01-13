@@ -45,7 +45,7 @@ const MoversSchedule = (props) => {
     const routes = [
         {
             title: "Daily Schedule",
-            path: "/schedule/daily",
+            path: "/schedule",
             icon: (
                 // <img
                 //   src="/images/Icon material-schedule.png"
@@ -61,7 +61,7 @@ const MoversSchedule = (props) => {
 
         {
             title: "Unavailable",
-            path: "/schedule",
+            path: "/schedule/unavailable",
             // icon: <img src="/images/pin.png" width="20px" alt="icon"></img>,
             icon: <FontAwesomeIcon
                 icon={faBan}

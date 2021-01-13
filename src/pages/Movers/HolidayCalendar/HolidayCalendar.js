@@ -3,7 +3,7 @@ import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import style from "./HolidayCalendar.module.css";
 
-import { holidayCalender } from "../../../Redux/Mover/moverActions";
+import { holidayCalendar } from "../../../Redux/Mover/moverActions";
 import { v4 as uuidv4 } from "uuid";
 import { Modal } from "react-bootstrap";
 import { Button } from "@material-ui/core"
@@ -72,7 +72,7 @@ function RequestHolidays(props) {
         dates,
         reason: note,
       };
-      holidayCalender(obj).then((res) => {
+      holidayCalendar(obj).then((res) => {
         if (res.data.status == 200) {
           setShow(false);
           showMessage(res.data.message);

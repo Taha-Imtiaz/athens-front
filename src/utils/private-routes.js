@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import appRoutes from '../utils/roles';
 import { connect } from 'react-redux';
 
 function PrivateRoute({ component: Component, ...rest }) {

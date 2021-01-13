@@ -151,7 +151,7 @@ const DailySchedule = (props) => {
   const routes = [
     {
       title: "Daily Schedule",
-      path: "/schedule/daily",
+      path: "/schedule",
       icon: (
         <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
       ),
@@ -159,7 +159,7 @@ const DailySchedule = (props) => {
 
     {
       title: "Unavailable",
-      path: "/schedule",
+      path: "/schedule/unavailable",
       icon: (
         <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />
       ),
@@ -272,7 +272,7 @@ console.log(props.jobs)
 
   var jobDetailsNavigate = (jobId) => {
     var { history, movers } = props;
-    history.push(`/job/details/${jobId}`);
+    history.push(`/job/detail/${jobId}`);
   };
 
   var updateJobAssigneeList = (e, moverObj) => {
@@ -599,7 +599,7 @@ console.log(props.jobs)
                                         className="col-8"
                                         onClick={() =>
                                           window.open(
-                                            `/job/details/${job._id}`,
+                                            `/job/detail/${job._id}`,
                                             "_blank"
                                           )
                                         }

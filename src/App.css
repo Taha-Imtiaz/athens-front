@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 
-.form_style{
+.app{
   font-family: 'Roboto', sans-serif;
 }
 
@@ -31,7 +31,7 @@ color: #00ADEE;
   background-color: #00ADEE !important;
 }
 @media only screen and (max-width:576px) {
- .form_style {
+ .app {
    font-size: 0.9rem;
  }
 }

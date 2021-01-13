@@ -19,18 +19,7 @@ import {
 } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDeposit = (props) => {
-  const routes = [
-    {
-      title: "Claims",
-      path: "/claim/customer",
-      icon: <i className="fa fa-exchange"></i>,
-    },
-    {
-      title: "Blanket Deposit",
-      path: "/claim/customerdeposit",
-      icon: <i className="fa fa-bed"></i>,
-    },
-  ];
+  
   var { blanketDeposit } = props;
 
   const [show, setShow] = useState(false);
@@ -163,7 +152,7 @@ const CustomerDeposit = (props) => {
               <div className={style.btn}>
                 <Link
                   style={{ textDecoration: "none" }}
-                  to="/claim/customerdeposit/deposit"
+                  to="/deposit/add"
                 >
                   {" "}
                   <Button

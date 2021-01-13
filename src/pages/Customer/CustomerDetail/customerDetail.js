@@ -208,7 +208,7 @@ const CustomerDetail = (props) => {
                       <Link
                         style={{ textDecoration: "none" }}
                         to={{
-                          pathname: "/job/create",
+                          pathname: "/job/add",
                           customerId: customer.email,
                           customerName:
                             customer.firstName + " " + customer.lastName,
@@ -232,7 +232,7 @@ const CustomerDetail = (props) => {
                       <Link
                         style={{ textDecoration: "none" }}
                         to={{
-                          pathname: `/customerUpdate/${customerId}`,
+                          pathname: `/customer/update/${customerId}`,
                           customerId: customer.email,
                         }}
                       >
@@ -373,7 +373,7 @@ const CustomerDetail = (props) => {
                                 <Link
                                   style={{ textDecoration: "none" }}
                                   to={{
-                                    pathname: "/job/details/" + job._id,
+                                    pathname: "/job/detail/" + job._id,
                                   }}
                                 >
                                   <h5>{job.title}</h5>
@@ -570,7 +570,7 @@ const CustomerDetail = (props) => {
                       <Link
                         style={{ textDecoration: "none" }}
                         to={{
-                          pathname: "/claim/newclaim",
+                          pathname: "/claim/add",
                           customerId: customer.email,
                           customerName:
                             customer.firstName + " " + customer.lastName,
@@ -830,7 +830,7 @@ const CustomerDetail = (props) => {
                       <Link
                         style={{ textDecoration: "none" }}
                         to={{
-                          pathname: "/claim/customerdeposit/deposit",
+                          pathname: "/deposit/add",
                           customerId: customer.email,
                           customerName:
                             customer.firstName + " " + customer.lastName,

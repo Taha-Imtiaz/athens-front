@@ -1,40 +1,44 @@
 .accountContainer {
     display: grid;
     grid-template-columns: 10fr 30fr 50fr 10fr;
-    grid-template-areas: ". profile form  .";
+    grid-template-rows: 76.6vh 10vh;
+
+    grid-template-areas: ". profile form  ."
+                               ". . . .";
     /* margin-top: 1rem; */
     column-gap: 2rem;
     background-color: #e9ecef;
 }
 .form {
     grid-area: form;
+    border-radius: 0.4rem;
     background-color: #fff;
     margin-top: 2rem;
+ 
 }
+
 .profile {
     grid-area: profile;
+    margin-top: 2rem;
    display: grid;
-   grid-template-rows: 10vh 50vh 26.6vh;
+   grid-template-rows:  50vh 36.6vh;
    grid-template-columns: 1fr;
-   grid-template-areas: "."
-                        "content"
+   grid-template-areas: "content"
                         ".";
   
  
 }
 .content {
-    margin-top: 2rem;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+   
+   
     border-radius: 0.4rem;
      background-color: #fff;
-    /*color: #fff; */
-    /* background-color: #27293d; */
+   
     grid-area: content;
 
     display: grid;
-    grid-template-rows: 15fr 25fr repeat(2, 5fr)  35fr 10fr 5fr;
-    justify-self: "center";
+    grid-template-rows: 15fr 25fr repeat(2, 5fr)  38fr 10fr 2fr;
+   
     grid-template-areas: "." 
                         "profilePic" 
                         "accountHolderName"
@@ -56,6 +60,7 @@
 }
 .accountHolderName {
     grid-area: accountHolderName;
+    /* background-color: aqua; */
 }
 .accountHolderRole {
     grid-area: accountHolderRole;

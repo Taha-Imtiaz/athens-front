@@ -164,7 +164,7 @@ const AccountDisplay = (props) => {
     event.preventDefault();
 
     const isValid = validate();
-    console.log(isValid)
+    console.log(isValid);
     if (isValid) {
       var { name, email, address, phone } = editAccount;
       var updatedUserObj = {

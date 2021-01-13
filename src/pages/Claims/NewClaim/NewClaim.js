@@ -466,7 +466,6 @@ class NewClaim extends Component {
                   style={{
                     margin: "0rem 2rem",
                     width: "90%",
-                    backgroundColor: "#e9ecef",
                   }}
                   placeholder="Item Description"
                   name="description"

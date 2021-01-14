@@ -57,6 +57,7 @@ import { data } from "jquery";
 var today = new Date();
 var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
+  //defining state
   constructor(props) {
     super(props);
     this.state = { ...props.jobForm };
@@ -90,10 +91,6 @@ class CreateJobs extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    // locations: [
-    //   { type: "pickup", value: "", default: false },
-    //   { type: "dropoff", value: "", default: false },
-    // ],
     locations: [],
     fromTo: [],
     assigneeRequiredError: "",
@@ -114,6 +111,7 @@ class CreateJobs extends Component {
   };
 
   componentDidMount = () => {
+    //fetch customer id name and jobs if navigate from customer page
     if (
       this.props.location.customerId !== undefined &&
       this.props.location.customerName !== undefined
@@ -124,6 +122,7 @@ class CreateJobs extends Component {
         jobs: this.props.location.jobs,
       });
     }
+    //get all customers and jobs
     getCustomersAndJobs().then((res) => {
       console.log(res.data);
       if (res && res.status == 201) {
@@ -131,12 +130,7 @@ class CreateJobs extends Component {
       }
     });
   };
-
-  handleChange = (event) => {
-    this.setState({
-      jobTypeOptions: event.target.value,
-    });
-  };
+  //onchange handler of radio buttons
   handleInputChange = (e, i) => {
     let { name, value } = e.target;
 
@@ -148,19 +142,7 @@ class CreateJobs extends Component {
       locations: updateLocation,
     });
   };
-  handleClick = (event) => {
-    this.setState({
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      anchorEl: null,
-    });
-  };
-  handleDateChange = (date) => {};
-
+  //handler to add location
   addLocation = () => {
     var location = cloneDeep(this.state.locations);
     location.push({ type: "", value: "", default: false });
@@ -168,12 +150,13 @@ class CreateJobs extends Component {
       locations: location,
     });
   };
-
+  //add new Date
   addDate = () => {
     if (this.state.dates[0]) {
       this.setState({ dates: [...this.state.dates, new Date()] });
     }
   };
+  //remove the selected Date
   removeDate = (i) => {
     var datesArr = cloneDeep(this.state.dates);
     console.log(datesArr, i);
@@ -183,7 +166,7 @@ class CreateJobs extends Component {
       dates: datesArr,
     });
   };
-
+  //onChange handler for location
   hanldeLocationInput = (i, e) => {
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].value = e.target.value;
@@ -193,15 +176,7 @@ class CreateJobs extends Component {
     }
   };
 
-  hanldeLocationInputTo = (i, e) => {
-    let updateLocation = cloneDeep(this.state.locations);
-    updateLocation[i].value = e.target.value;
-    this.setState({ locations: updateLocation });
-    if (i == 0 && e.target.value) {
-      this.setState({ locationtoError: "" });
-    }
-  };
-
+  //change the state of textbox
   changeCheckBoxState = (e, i) => {
     e.stopPropagation();
     var prevState = cloneDeep(this.state.locations);
@@ -217,13 +192,13 @@ class CreateJobs extends Component {
       locations: prevState,
     });
   };
-
+  //function to show all locations
   showLocation = (i) => {
     console.log(this.state.locations);
 
     return (
-      <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-        <div className="col-4" style={{ display: "flex" }}>
+      <div className={style.locationInput}>
+        <div className={style.radioButtons}>
           <RadioGroup
             className={style.rowFlex}
             value={this.state.locations[i].type}
@@ -232,22 +207,22 @@ class CreateJobs extends Component {
             <FormControlLabel
               value="pickup"
               name="pickup"
-              control={<Radio style={{ color: "#00ADEE" }} />}
+              control={<Radio className={style.styleRadio} />}
               label="Pickup"
             />
             <FormControlLabel
               value="dropoff"
               name="dropoff"
-              control={<Radio style={{ color: "#00ADEE" }} />}
+              control={<Radio className={style.styleRadio} />}
               label="DropOff"
             />
           </RadioGroup>
         </div>
-        <div className="col-4">
+        <div className={style.inputField}>
           <TextField
             fullWidth
             variant="outlined"
-            margin="normal"
+            className={style.styleFormFields}
             required
             size="small"
             id="to"
@@ -279,11 +254,9 @@ class CreateJobs extends Component {
         </div>
         {this.state.locations[i].type == "pickup" ? (
           <div
-            className="col-3"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
+            className={
+              this.state.locations[i].type == "pickup" ? style.checkBox : null
+            }
           >
             <FormControlLabel
               control={
@@ -299,13 +272,7 @@ class CreateJobs extends Component {
             />
           </div>
         ) : this.state.locations[i].type == "dropoff" ? (
-          <div
-            className="col-3"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
+          <div className = {this.state.locations[i].type == "dropoff" ? style.checkBox:null}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -319,33 +286,17 @@ class CreateJobs extends Component {
               label="Unload Only"
             />
           </div>
-        ) : (
-          <div
-            className="col-3"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexWrap: "no-wrap",
-            }}
-          ></div>
-        )}
-        <div className="col-1">
+        ) : null}
+        <div className = {`${style.TrashIcon} ${style.centeredIcon}`}>
           <FontAwesomeIcon
             icon={faTrash}
             onClick={() => this.removeLocation(i)}
-            style={{
-              transform: "translate3d(1.2rem,1.5rem, 0)",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
           ></FontAwesomeIcon>
         </div>
       </div>
     );
   };
-
+  //remove location
   removeLocation = (i) => {
     var location = cloneDeep(this.state.locations);
     location.splice(i, 1);
@@ -353,7 +304,7 @@ class CreateJobs extends Component {
       locations: location,
     });
   };
-
+  //onChange handler of forms
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
@@ -363,7 +314,7 @@ class CreateJobs extends Component {
       this.setState({ [name + "Error"]: "" });
     }
   };
-
+  //validate form (check if the fields are empty)
   validate = () => {
     let customerIdError = "";
     let titleError = "";
@@ -423,7 +374,7 @@ class CreateJobs extends Component {
 
     return true;
   };
-
+  //onChange handler of dates
   handleStartDate = (date, i) => {
     let newState = cloneDeep(this.state);
     newState.dates[i] = date;
@@ -431,55 +382,7 @@ class CreateJobs extends Component {
       dates: newState.dates,
     });
   };
-
-  onSelect = (selectedList, selectedItem) => {
-    let serviceItem = selectedItem;
-    let newState = { ...this.state };
-    newState.services.push(serviceItem);
-    this.setState({ services: newState.services });
-  };
-
-  onRemove = (selectedList, removedItem) => {
-    let newState = { ...this.state };
-    let removeItem = removedItem;
-    var updatedState = newState.services.findIndex(
-      (service) => service === removeItem
-    );
-    newState.services.splice(updatedState, 1);
-    this.setState({ newState });
-  };
-
-  onAssigneeSelect = (selectedList, selectedItem) => {
-    let assigneeItem = selectedItem._id;
-    let newState = { ...this.state };
-    newState.assigneesId.push(assigneeItem);
-    this.setState({ assigneesId: newState.assigneesId });
-  };
-
-  onAssigneeRemove = (selectedList, removedItem) => {
-    let newState = { ...this.state };
-    let removeItem = removedItem._id;
-    var updatedState = newState.assigneesId.findIndex(
-      (assigneeId) => assigneeId === removeItem
-    );
-    newState.assigneesId.splice(updatedState, 1);
-    this.setState({ newState });
-  };
-
-  onStartTimeSelect = (selectedList, selectedTimeItem) => {
-    let selectedTime = selectedTimeItem.value;
-    let newState = { ...this.state };
-    newState.startTime = selectedTime;
-    this.setState({ startTime: newState.startTime });
-  };
-
-  onEndTimeSelect = (selectedList, selectedTimeItem) => {
-    let selectedTime = selectedTimeItem.value;
-    let newState = { ...this.state };
-    newState.meetTime = selectedTime;
-    this.setState({ meetTime: newState.meetTime });
-  };
-
+  //submit form handler
   mySubmitHandler = (event) => {
     var { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
@@ -525,7 +428,7 @@ class CreateJobs extends Component {
       });
     }
   };
-
+  //services changed
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "id");
     console.log(arr);
@@ -629,7 +532,7 @@ class CreateJobs extends Component {
   };
   render() {
     return (
-      <div style={{ background: "#e9ecef" }}>
+      <div>
         <ToastContainer position="bottom-right" />
         <div className={`${style.createJob}`}>
           <div className={`${style.form}`}>
@@ -642,7 +545,6 @@ class CreateJobs extends Component {
                   onChange={(event, newValue) => {
                     this.getCustomerJobs(newValue); // Get the customer and get job
                   }}
-                  style={{ width: "100%", margin: "1rem 0" }}
                   size="small"
                   options={this.state.customers}
                   autoHighlight
@@ -661,9 +563,10 @@ class CreateJobs extends Component {
                       required
                       autoFocus
                       {...params}
+                      className={style.styleFormFields}
                       onKeyUp={(e) => this.addNewCustomer(e)}
                       label="Choose a customer"
-                      style={{ margin: "1rem 2rem", width: "90%" }}
+                      fullWidth
                       variant="outlined"
                       error={this.state.customerIdError ? true : false}
                       inputProps={{
@@ -679,19 +582,16 @@ class CreateJobs extends Component {
                 {this.state.dates.map((x, i) => {
                   if (i === 0) {
                     return (
-                      <div
-                        style={{ margin: "0rem 2rem", width: "90%" }}
-                        key={i}
-                      >
+                      <div key={i}>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <Grid>
                             <KeyboardDatePicker
                               inputVariant="outlined"
-                              margin="normal"
                               fullWidth
                               size="small"
                               id="date-picker-dialog"
                               format="MM/dd/yyyy"
+                              className={style.styleFormFields}
                               value={this.state.dates[i]}
                               onChange={(e) => this.handleStartDate(e, i)}
                               KeyboardButtonProps={{
@@ -704,20 +604,16 @@ class CreateJobs extends Component {
                     );
                   } else {
                     return (
-                      <div className="row" style={{ margin: "0 1rem" }}>
-                        <div
-                          className="col-11"
-                          style={{ width: "90%" }}
-                          key={i}
-                        >
+                      <div className={style.styleDate}>
+                        <div key={i}>
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid>
                               <KeyboardDatePicker
                                 inputVariant="outlined"
-                                margin="normal"
                                 fullWidth
                                 size="small"
                                 id="date-picker-dialog"
+                                className={style.styleFormFields}
                                 format="MM/dd/yyyy"
                                 value={this.state.dates[i]}
                                 onChange={(e) => this.handleStartDate(e, i)}
@@ -729,12 +625,7 @@ class CreateJobs extends Component {
                           </MuiPickersUtilsProvider>
                         </div>
                         <div
-                          className="col-1"
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
+                          className={style.centeredIcon}
                           onClick={() => this.removeDate(i)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
@@ -745,45 +636,32 @@ class CreateJobs extends Component {
                 })}
               </div>
 
-              <div className="row" style={{ margin: "0 0.3rem" }}>
-                <div className="col-11"></div>
-                <div className="col-1" onClick={this.addDate}>
-                  <i
-                    className="fa fa-plus"
-                    style={{ transform: "translate3d(0rem,-0.3rem, 0)" }}
-                  ></i>
-                </div>
+              <div onClick={this.addDate} className={style.alignRight}>
+                <i className="fa fa-plus"></i>
               </div>
 
               <div>
                 <TextField
                   variant="outlined"
                   required
-                  style={{ margin: "0rem 2rem", width: "90%" }}
+                  className={style.styleFormFields}
                   size="small"
                   id="title"
                   label="Job Title"
                   name="title"
                   autoComplete="title"
-                  // autoFocus
+                  fullWidth
                   error={this.state.titleError ? true : false}
                   value={this.state.title}
                   onChange={this.handleFormInput}
                 />
               </div>
 
-              <div
-                className="form-group"
-                style={{
-                  margin: "1rem 2rem",
-                  width: "90%",
-                  borderRadius: "4px",
-                  border: "1px solid rgba(0, 0, 0, 0.3)",
-                }}
-              >
+              <div className={style.styleEditor}>
                 <Editor
                   editorState={this.state.editorState}
                   toolbarClassName="toolbarClassName"
+                  className={style.styleFormFields}
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
@@ -791,16 +669,12 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div
-                className="form-group"
-                style={{ margin: "1rem 2rem", width: "90%" }}
-              >
+              <div>
                 <Autocomplete
                   multiple
                   noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   onChange={(event, newValue) => {
-                    console.log(newValue);
                     this.servicesChanged(newValue);
                   }}
                   limitTags={10}
@@ -816,6 +690,7 @@ class CreateJobs extends Component {
                       required
                       onKeyUp={(e) => this.addCustomService(e)}
                       {...params}
+                      className={style.styleFormFields}
                       variant="outlined"
                       size="small"
                       label="Services"
@@ -826,12 +701,12 @@ class CreateJobs extends Component {
                 />
               </div>
 
-              <div className="row" style={{ margin: "0 1.5rem" }}>
-                <div className={`form-group col-6`}>
+              <div className={style.movers}>
+                <div>
                   <TextField
                     type="number"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                     required
                     fullWidth
                     size="small"
@@ -840,17 +715,14 @@ class CreateJobs extends Component {
                     autoComplete="Number of movers required"
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
+                    className={style.styleFormFields}
                     error={this.state.assigneeRequiredError ? true : false}
                     onChange={this.handleFormInput}
                   />
                 </div>
 
-                <div className="col-6">
-                  <FormControl
-                    variant="outlined"
-                    style={{ marginTop: "1rem", width: "96%" }}
-                    margin="dense"
-                  >
+                <div>
+                  <FormControl variant="outlined" margin="dense" fullWidth>
                     <InputLabel id="demo-simple-select-outlined-label">
                       Job Type
                     </InputLabel>
@@ -871,23 +743,9 @@ class CreateJobs extends Component {
               </div>
 
               {this.state.locations.length === 0 && (
-                <div className="row">
-                  <div className="col-9"></div>
-                  <div className="col-3">
-                    <Button
-                      onClick={this.addLocation}
-                      style={{
-                        background: "#00ADEE",
-                        border: "transparent",
-                        color: "#ffffff",
-                        padding: "0.5rem",
-                        borderRadius: "0.25rem",
-                        fontFamily: "sans-serif",
-                        textTransform: "none",
-                        margin: " 0.5rem 2rem",
-                        // float:"right"
-                      }}
-                    >
+                <div className={style.addLocation}>
+                  <div className={style.addLocationBtn}>
+                    <Button onClick={this.addLocation} className={style.button}>
                       Add Location
                     </Button>
                   </div>
@@ -902,42 +760,29 @@ class CreateJobs extends Component {
                 </div>
               )}
               {this.state.locations.length > 0 && (
-                <div className="row">
-                  <div className="col-11"></div>
-                  <div className="col-1">
-                    <FontAwesomeIcon
-                      icon={faPlus}
-                      onClick={this.addLocation}
-                    ></FontAwesomeIcon>
-                  </div>
+                <div className={style.alignRight}>
+                  <FontAwesomeIcon
+                    icon={faPlus}
+                    onClick={this.addLocation}
+                  ></FontAwesomeIcon>
                 </div>
               )}
 
-              <div className="row" style={{ margin: "1rem" }}>
-                <div className={`col-6 ${style.btnsubmit}`}>
+              <div className={style.resetBtns}>
+                <div>
                   <Button
+                    className={style.button}
                     type="button"
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                    }}
                     onClick={this.handleResetJob}
                   >
                     Reset
                   </Button>
                 </div>
 
-                <div className={`col-6 ${style.btnsubmit}`}>
+                <div>
                   <Button
+                    className={style.button}
                     type="button"
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                    }}
                     onClick={this.mySubmitHandler}
                   >
                     Submit

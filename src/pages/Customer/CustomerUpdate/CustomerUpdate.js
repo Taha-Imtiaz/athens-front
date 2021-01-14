@@ -13,10 +13,11 @@ class CustomerUpdate extends Component {
   componentDidMount = () => {
     var {
       match: {
-        params: { id },
+        params: { customerId },
       },
     } = this.props;
-    fetchCustomerById(id)
+    console.log(this.props)
+    fetchCustomerById(customerId)
       .then((res) => {
         console.log(res);
         this.setState({
@@ -124,7 +125,7 @@ class CustomerUpdate extends Component {
     var { subContacts } = this.state;
     var {
       match: {
-        params: { id },
+        params: { customerId },
       },
     } = this.props;
 
@@ -146,8 +147,8 @@ class CustomerUpdate extends Component {
         subContacts,
       };
 
-      updateCustomer(updateCustomerObj, id, () => {
-        history.push(`/customer/detail/${id}`);
+      updateCustomer(updateCustomerObj, customerId, () => {
+        history.push(`/customer/detail/${customerId}`);
       });
     }
   };
@@ -155,7 +156,7 @@ class CustomerUpdate extends Component {
   render() {
     var {
       match: {
-        params: { id },
+        params: { customerId },
       },
     } = this.props;
 

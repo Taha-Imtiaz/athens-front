@@ -1,7 +1,3 @@
-#starttime div span .icon_cancel {
-  display: none;
-}
-
 .createJob {
   display: grid;
   grid-template-columns: 20fr 60fr 20fr;
@@ -10,17 +6,26 @@
 }
 .form {
   grid-area: form;
-  
+  width: 100%;
   background-color: white;
+  padding: 2rem;
   margin: 2rem 0;
   border-radius: 0.4rem;
+}
+.centeredIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alignRight {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .modal {
   max-width: 50vw;
 }
-/* .modal-content {
-    height: 300px;
-  } */
+
 .modal ::-webkit-scrollbar {
   width: 10px;
 }
@@ -43,7 +48,7 @@
 }
 
 .head {
-  margin-top: 2%;
+  /* margin-top: 2rem; */
 
   display: flex;
   justify-content: center;
@@ -55,107 +60,81 @@
   /* margin: 0rem 3rem; */
   background-color: #00adee;
 }
-
-.textarea {
-  display: block;
+.styleDate {
+  display: grid;
+  grid-template-columns: 97fr 3fr;
+}
+.styleEditor {
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.movers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.5rem;
+}
+.addLocation {
+  display: grid;
+  grid-template-columns: 85.6fr 14.4fr;
+  grid-template-areas: ". addLocationBtn";
+}
+.addLocationBtn {
+  grid-area: addLocationBtn;
+  /* background-color: #00adee; */
+}
+.addLocationBtn .button {
+  background: #00adee;
+    text-transform: none;
+    color: #fff;
+    font-family: sans-serif;
+}
+.addLocationBtn .button:hover {
+background-color: #00adee;
+}
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.resetBtns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0.6rem 0;
+  column-gap: 0.5rem;
+}
+.resetBtns .button {
+  background: #00ADEE;
+  text-transform: none;
+  color: #FFF;
+  font-family: sans-serif;
   width: 100%;
-  /* height: calc(1.5em + .75rem + 2px); */
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #e9ecef;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
-.input {
-  margin-top: 5%;
+.locationInput {
+  display: grid;
+  grid-template-columns: 33fr repeat(2,32fr) 3fr;
+  grid-template-areas: "radioButtons inputField checkBox TrashIcon";
 }
-
-.btnrow {
-  margin-top: 2%;
+.radioButtons {
+  grid-area: radioButtons;
 }
-
-.color {
-  background-color: #00adee;
+.inputField {
+  grid-area: inputField;
 }
-
-.react-datepicker {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 0.8rem;
-  background-color: #a66;
-  color: #000;
-  border: 0px;
-  border-radius: 0;
-  display: inline-block;
-  position: relative;
+.checkBox {
+  grid-area: checkBox;
 }
-
-.to {
-  display: block;
-  width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.flex {
-  display: flex;
-}
-
-.multi {
-  display: block;
-  width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-@media only screen and (max-width: 576px) {
-  .tron {
-    margin-top: 2%;
-    width: 80%;
-    margin-bottom: 2%;
-    margin-left: 10%;
-    margin-right: 20%;
-  }
-
-  .head {
-    margin-top: 2%;
-    margin-left: 10%;
-  }
+.TrashIcon {
+  grid-area: TrashIcon;
 }
 
 .rowFlex {
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  
 }
-.circle {
-  width: 2.5rem;
-  padding: 0 0.1rem;
-  height: 2rem;
-  /* background-color: #fff; */
-  border-radius: 50%;
-  /* border: 1px solid #495057; */
+.styleRadio {
+  color: #00adee;
+}
+.flex {
+  display: flex;
+}
+.resetBtns .button:hover {
+  background-color: #00adee;
 }

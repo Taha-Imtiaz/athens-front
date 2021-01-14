@@ -23,6 +23,7 @@ import {
 import { cloneDeep } from "lodash";
 
 class NewClaim extends Component {
+  //defining state
   constructor(props) {
     super(props);
     this.state = { ...props.addForm };
@@ -64,6 +65,7 @@ class NewClaim extends Component {
   };
 
   componentDidMount = () => {
+    //fetch customer id , name and jobs (if navigate from customer) on mount
     if (
       this.props.location.customerId !== undefined &&
       this.props.location.customerName !== undefined
@@ -74,12 +76,13 @@ class NewClaim extends Component {
         jobs: this.props.location.jobs,
       });
     }
+    //get all customers and all jobs
     getCustomersAndJobs().then((res) => {
       console.log(res.data);
       this.setState({ customers: res.data.data });
     });
   };
-
+  //onChange handler
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
@@ -89,7 +92,7 @@ class NewClaim extends Component {
       this.setState({ [name + "Error"]: "" });
     }
   };
-
+  //validate the form
   validate = () => {
     let customerIdError = "";
     let jobIdError = "";
@@ -131,6 +134,7 @@ class NewClaim extends Component {
 
     return true;
   };
+  //submit handler
   mySubmitHandler = (event) => {
     event.preventDefault();
     let {
@@ -149,6 +153,7 @@ class NewClaim extends Component {
         title,
         waitTo,
       };
+      //call add Claim api to add a claim
       addClaim(data)
         .then((res) => {
           showMessage(res.data.message);
@@ -159,53 +164,13 @@ class NewClaim extends Component {
         });
     }
   };
-  addAnotherClaim = () => {
-    if (
-      this.state.claims[0].claimType &&
-      this.state.claims[0].description &&
-      this.state.claims[0].price
-    ) {
-      this.setState({
-        claims: [
-          ...this.state.claims,
-          {
-            claimType: "Damage To House",
-            price: 0,
-            description: "",
-          },
-        ],
-      });
-    }
-  };
+  //onChange handler of claims(description,type, cost)
   hanldeClaimsInput = (e) => {
     let updatedClaims = { ...this.state.claims };
     updatedClaims[e.target.name] = e.target.value;
     this.setState({ claims: updatedClaims });
   };
-
-  handleChangeFrom = (date, e) => {
-    if (date == null) {
-      this.setState({ ["Error"]: "Should not be empty" });
-    } else {
-      this.setState({ ["Error"]: "" });
-    }
-    this.setState({
-      fromDate: date,
-    });
-  };
-
-  handleChangeTo = (date) => {
-    // const valueOfInput = date.format()
-    if (date == "") {
-      this.setState({ ["Error"]: "Should not be empty" });
-    } else {
-      this.setState({ ["Error"]: "" });
-    }
-    this.setState({
-      toDate: date,
-    });
-  };
-
+//get (fetch the job of selected customer)
   getCustomerJobs = (customer) => {
     if (customer) {
       if (customer.claim.length > 0) {
@@ -225,16 +190,19 @@ class NewClaim extends Component {
       this.setState({ jobs: [], selectedCustomer: "", selectedJob: "" });
     }
   };
+
+  //close the modal
   handleClose = () => {
     this.setState({
       customerClaims: false,
     });
   };
-
+//store all fields in redux state upon component will unmount
   componentWillUnmount() {
     var { setClaimForm } = this.props;
     setClaimForm({ ...this.state });
   }
+  //reset the form
   handleResetForm = () => {
     var { resetClaimForm } = this.props;
     let customers = cloneDeep(this.state.customers);
@@ -255,7 +223,6 @@ class NewClaim extends Component {
                   this.getCustomerJobs(newValue); // Get the customer and get job
                 }}
                 id="country-select-demo"
-                style={{ width: "100%", margin: "1rem 0" }}
                 size="small"
                 options={this.state.customers}
                 autoHighlight
@@ -273,7 +240,8 @@ class NewClaim extends Component {
                   <TextField
                     {...params}
                     label="Choose a customer"
-                    style={{ margin: "0rem 2rem", width: "90%" }}
+                    fullWidth
+                    className={style.styleFormFields}
                     variant="outlined"
                     error={this.state.customerIdError}
                     inputProps={{
@@ -298,48 +266,29 @@ class NewClaim extends Component {
                     <Modal.Title>{`${customerName} Claims`}</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div
-                      className="row"
-                      style={{ fontWeight: "bold", fontFamily: "sans-serif" }}
-                    >
-                      <div className={`col-6`}>Protection Type</div>
-                      <div className={`col-2`}>Status</div>
-                      <div className={`col-4`}>Last Update</div>
+                    <div className={style.claimHeader}>
+                      <div>Protection Type</div>
+                      <div>Status</div>
+                      <div>Last Update</div>
                     </div>
 
                     {showClaimsDetails.map((claim) => (
-                      <div
-                        className="row"
-                        style={{
-                          fontFamily:
-                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                        }}
-                      >
-                        <div className={`col-6 `}>
-                          {" "}
-                          <p>{claim.claimType}</p>
-                        </div>
-                        <div className={`col-2`}>
-                          <p>{claim.status}</p>
-                        </div>
-                        <div className={`col-4 `}>
-                          <p> {claim.updatedAt}</p>
-                        </div>
+                      <div className={style.claimContent}>
+                        <div> {claim.claimType}</div>
+                        <div>{claim.status}</div>
+                        <div>{claim.updatedAt}</div>
                       </div>
                     ))}
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button
-                      style={{
-                        background: "#00ADEE",
-                        textTransform: "none",
-                        color: "#FFF",
-                        fontFamily: "sans-serif",
-                      }}
-                      onClick={this.handleClose}
-                    >
-                      Close
-                    </Button>
+                    <div className={style.modalBtn}>
+                      <Button
+                        className={style.modalButton}
+                        onClick={this.handleClose}
+                      >
+                        Close
+                      </Button>
+                    </div>
                   </Modal.Footer>
                 </Modal>
               </div>
@@ -354,7 +303,6 @@ class NewClaim extends Component {
                 }); // Get the customer and get job
               }}
               id="country-select-demo"
-              style={{ width: "100%", margin: "1rem 0" }}
               size="small"
               options={this.state.jobs}
               autoHighlight
@@ -370,9 +318,10 @@ class NewClaim extends Component {
                 <TextField
                   {...params}
                   label="Choose a job"
-                  style={{ margin: "0rem 2rem", width: "90%" }}
+                  fullWidth
                   variant="outlined"
                   error={this.state.jobIdError}
+                  className={style.styleFormFields}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: "new-password", // disable autocomplete and autofill
@@ -381,132 +330,90 @@ class NewClaim extends Component {
               )}
             />
 
-            <div className="form-group ">
-              <TextField
-                variant="outlined"
-                margin="normal"
-                // style={{ width: "90%" }}
-                required
-                error={this.state.titleError}
-                size="small"
-                id="title"
-                label="Title"
-                name="title"
-                value={this.state.title}
-                onChange={(e) => this.handleFormInput(e)}
-                style={{ margin: "0 2rem", width: "90%" }}
-              />
-            </div>
+            <TextField
+              variant="outlined"
+              required
+              error={this.state.titleError}
+              className={style.styleFormFields}
+              size="small"
+              id="title"
+              label="Title"
+              name="title"
+              value={this.state.title}
+              onChange={(e) => this.handleFormInput(e)}
+              fullWidth
+            />
 
-            <div className="form-group ">
-              <TextField
-                variant="outlined"
-                margin="normal"
-                // style={{ width: "90%" }}
-                required
-                error={this.state.waitToError}
-                size="small"
-                id="waitTo"
-                label="Waiting"
-                name="waitTo"
-                value={this.state.waitTo}
-                onChange={(e) => this.handleFormInput(e)}
-                style={{ margin: "0 2rem", width: "90%" }}
-              />
-            </div>
-            {/* {this.state.claims.map((x, i) => {
-              return ( */}
-            <div>
-              {/* {i == 0 ? null : <hr></hr>} */}
-              <div className="row" style={{margin:"1rem 0"}}>
-                <div className="col-8">
-                  <FormControl
-                    variant="outlined"
-                    style={{ margin: "0 1rem", width: "100%" }}
-                    margin="dense"
-                  >
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Protection Type
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={this.state.claims.claimType}
-                      onChange={(e) => this.hanldeClaimsInput(e)}
-                      label="Claim Type"
-                      // style= {{width:"90%"}}
-                      name="claimType"
-                    >
-                      <MenuItem value={"BVP"}>BVP</MenuItem>
-                      <MenuItem value={"FVP"}>FVP</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className="col-4">
-                  <TextField
-                    variant="outlined"
-                    
-                    style={{ width: "85%", marginRight: "1rem" }}
-                    required
-                    // error = {this.state.priceError}
-                    size="small"
-                    id="price"
-                    type="number"
-                    label="Total Cost"
-                    name="price"
-                    value={this.state.claims.price}
+            <TextField
+              variant="outlined"
+              required
+              error={this.state.waitToError}
+              className={style.styleFormFields}
+              size="small"
+              id="waitTo"
+              label="Waiting"
+              name="waitTo"
+              value={this.state.waitTo}
+              onChange={(e) => this.handleFormInput(e)}
+              fullWidth
+            />
+
+            <div className={style.protectionType}>
+              <div>
+                <FormControl variant="outlined" margin="dense" fullWidth>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Protection Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={this.state.claims.claimType}
                     onChange={(e) => this.hanldeClaimsInput(e)}
-                  />
-                </div>
+                    label="Claim Type"
+                    name="claimType"
+                  >
+                    <MenuItem value={"BVP"}>BVP</MenuItem>
+                    <MenuItem value={"FVP"}>FVP</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
-              <div className="form-group">
-                <TextareaAutosize
-                  rowsMax={4}
-                  id="description"
-                  style={{
-                    margin: "0rem 2rem",
-                    width: "90%",
-                  }}
-                  placeholder="Item Description"
-                  name="description"
-                  value={this.state.claims.description}
+              <div>
+                <TextField
+                  variant="outlined"
+                  required
+                  margin="dense"
+                  fullWidth
+                  size="small"
+                  id="price"
+                  type="number"
+                  label="Total Cost"
+                  name="price"
+                  value={this.state.claims.price}
                   onChange={(e) => this.hanldeClaimsInput(e)}
-                  rows="3"
                 />
               </div>
             </div>
 
-            <div className="row" style={{ padding: "0.3rem 2.5rem" }}>
-              <div className="col-6">
-                <Button
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                    // margin: " 0 2rem",
-                    width: "100%",
-                  }}
-                  onClick={this.handleResetForm}
-                >
-                  Reset
-                </Button>
-              </div>
-              <div className="col-6">
-                <Button
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                    // margin: " 0 2rem",
-                    width: "100%",
-                  }}
-                  onClick={this.mySubmitHandler}
-                >
-                  Submit
-                </Button>
-              </div>
+            <TextareaAutosize
+              rowsMax={4}
+              id="description"
+              className={style.styleFormFields}
+              fullWidth
+              placeholder="Item Description"
+              name="description"
+              value={this.state.claims.description}
+              onChange={(e) => this.hanldeClaimsInput(e)}
+              rows="3"
+            />
+
+            <div className={style.buttons}>
+              <Button className={style.button} onClick={this.handleResetForm}>
+                Reset
+              </Button>
+
+              <Button className={style.button} onClick={this.mySubmitHandler}>
+                Submit
+              </Button>
             </div>
           </form>
         </div>

@@ -423,7 +423,7 @@ class JobsList extends Component {
               </div>
             </div>
             <div className={style.btnStyle}>
-              <Link to="/job/create" className={style.link}>
+              <Link to="/job/add" className={style.link}>
                 <Button className={style.btn}>Create New</Button>
               </Link>
             </div>
@@ -678,14 +678,12 @@ class JobsList extends Component {
           <Modal.Body>Are you sure you want to delete Job?</Modal.Body>
           <Modal.Footer>
             <div className={style.modalButtons}>
-              
-            <Button className={style.button} onClick={this.closeDeleteModal}>
+              <Button className={style.button} onClick={this.closeDeleteModal}>
                 Cancel
               </Button>
               <Button className={style.button} onClick={() => this.removeJob()}>
                 Confirm
               </Button>
-              
             </div>
           </Modal.Footer>
         </Modal>

@@ -1,8 +1,93 @@
+.customerDetailsContainer {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". customerDetails . ";
+}
+.customerDetails {
+  grid-area: customerDetails;
+}
+
+.styleTabs {
+  background-color: #00adee;
+}
+.customerInfoHeader {
+  display: grid;
+  /* grid-template-rows: 10vh; */
+  grid-template-columns: 84fr repeat(2, 8fr);
+}
+.customerInfoHeader .link {
+  text-decoration: none;
+}
+.customerInfoHeader .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.customerInfoHeader .button:hover {
+  background-color: #00adee;
+}
+.customerInfoHeadings {
+  display: grid;
+  /* grid-template-rows: 10vh; */
+  grid-template-columns: repeat(3, 1fr);
+}
+.customerInfoDescription {
+  display: grid;
+  grid-template-rows: 10vh;
+  grid-template-columns: repeat(3, 1fr);
+}
+.cardBodyHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.cardBodyContent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.jumbotron {
+  margin-top: 1rem;
+  background-color: #e9f2eb;
+  padding: 1rem 0;
+}
+.jobDetails {
+  display: grid;
+  grid-template-columns: 60fr repeat(2, 20fr);
+  grid-template-areas: "jobLink jobAssignee jobService";
+}
+.jobLink {
+  grid-area: jobLink;
+  padding: 0 1rem;
+}
+.jobAssignee {
+  grid-area: jobAssignee;
+  display: flex;
+}
+
+.spacing {
+  padding: 0.5rem;
+}
+
+.jobService {
+  grid-area: jobService;
+}
+.jobDates, .services, .locations{
+  display: flex !important;
+  padding-left: 1rem;
+}
+
+.jobDetailContainer {
+  padding-left: 1rem;
+}
+.jobDetail {
+  white-space: pre-line;
+}
 .flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .protectionRow {
   display: grid;
   grid-template-columns: 42fr 58fr;
@@ -42,12 +127,6 @@
 /* Handle on hover */
 .modal ::-webkit-scrollbar-thumb:hover {
   background: #00adee;
-}
-
-.jumbotron {
-  margin-top: 2%;
-  text-align: left;
-  background-color: #e9f2eb;
 }
 
 .job {

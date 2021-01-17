@@ -19,39 +19,32 @@ const EmailVerification = (props) => {
       var emailObj = {
         email: email,
       };
-     
+
       sendCode(emailObj).then((res) => {
         if (res.data.status === 200) {
-        var token = sessionStorage.setItem("token", res.data.token)
-        console.log(res.data.message)
-         showMessage(res.data.message)
+          var token = sessionStorage.setItem("token", res.data.token);
+          console.log(res.data.message);
+          showMessage(res.data.message);
           history.push("/verifycode");
-          
+        } else {
+          showMessage(res.data.message);
         }
-        else {
-  showMessage(res.data.message)
-        }
-      })
+      });
     } else {
       setEmailError("Email should not be empty");
-      
     }
   };
   return (
-    <div 
-    className={`${style.verificationContainer} ${style.flex}`}
-    >
+    <div className={`${style.verificationContainer} ${style.flex}`}>
       {/* <div className={style.image}></div> */}
-      <div 
+      <div
       // className={`${style.emailVerification}`}
       >
-        <div
-         className={`${style.flex}`}
-         >
+        <div className={`${style.flex}`}>
           <h4>Enter your email address</h4>
         </div>
 
-        <div 
+        <div
         // className={`${style.verifyinput} ${style.flex}`}
         >
           <form>
@@ -76,9 +69,9 @@ const EmailVerification = (props) => {
 
         <div
         //  className={`${style.sendcode} ${style.flex}`}
-         >
-          <div 
-          // style={{ alignItems: "center" }}
+        >
+          <div
+         
           >
             <Button
               onClick={navigateToCode}
@@ -103,6 +96,6 @@ const EmailVerification = (props) => {
   );
 };
 var actions = {
-  showMessage
-}
-export default connect(null,actions)(EmailVerification);
+  showMessage,
+};
+export default connect(null, actions)(EmailVerification);

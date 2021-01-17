@@ -3,17 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
+
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
+
 import Typography from "@material-ui/core/Typography";
-import { clone, cloneDeep } from "lodash";
-import DatePicker from "react-datepicker";
-import { Multiselect } from "multiselect-react-dropdown";
-import { payAmount } from "../../../Redux/Mover/moverActions";
+import { cloneDeep } from "lodash";
+
 import { confirmJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { connect } from "react-redux";
 import {
   Checkbox,
@@ -32,8 +30,9 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+//material-ui styles
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -46,9 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
-var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes();
-
+//steps of stepper
 function getSteps() {
   return [
     "Confirm Date and Time",
@@ -60,32 +57,6 @@ function getSteps() {
 
 function JobConfirmation(props) {
   var [startTime, setStartTime] = useState(null);
-  const timeOptions = [
-    { name: "01:00 am", id: 1, value: "01:00:00" },
-    { name: "02:00 am", id: 2, value: "02:00:00" },
-    { name: "03:00 am", id: 3, value: "03:00:00" },
-    { name: "04:00 am", id: 4, value: "04:00:00" },
-    { name: "05:00 am", id: 5, value: "05:00:00" },
-    { name: "06:00 am", id: 6, value: "06:00:00" },
-    { name: "07:00 am", id: 7, value: "07:00:00" },
-    { name: "08:00 am", id: 8, value: "08:00:00" },
-    { name: "09:00 am", id: 9, value: "09:00:00" },
-    { name: "10:00 am", id: 10, value: "10:00:00" },
-    { name: "11:00 am", id: 11, value: "11:00:00" },
-    { name: "12:00 pm", id: 12, value: "12:00:00" },
-    { name: "01:00 pm", id: 13, value: "13:00:00" },
-    { name: "02:00 pm", id: 14, value: "14:00:00" },
-    { name: "03:00 pm", id: 15, value: "15:00:00" },
-    { name: "04:00 pm", id: 16, value: "16:00:00" },
-    { name: "05:00 pm", id: 17, value: "17:00:00" },
-    { name: "06:00 pm", id: 18, value: "18:00:00" },
-    { name: "07:00 pm", id: 19, value: "19:00:00" },
-    { name: "08:00 pm", id: 20, value: "20:00:00" },
-    { name: "09:00 pm", id: 21, value: "21:00:00" },
-    { name: "10:00 pm", id: 22, value: "22:00:00" },
-    { name: "11:00 pm", id: 23, value: "23:00:00" },
-    { name: "12:00 am", id: 24, value: "00:00:00" },
-  ];
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -95,26 +66,30 @@ function JobConfirmation(props) {
   const steps = getSteps();
 
   useEffect(() => {
+    //fetch jobData on ComponentDidMount
     let job = cloneDeep(props.data);
-    console.log(job)
+    console.log(job);
+    //load stripe
     loadStripe();
     let parsedDates = job.dates.map((x) =>
       typeof x == "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    var currentDate = new Date('2020-08-18T09:00:00')
-    job.startTime = currentDate
-    console.log(job.startTime)
+    var currentDate = new Date("2020-08-18T09:00:00");
+    job.startTime = currentDate;
+    console.log(job.startTime);
     setData(job);
   }, []);
 
+  //onChange handler of time
   var handleTimeSelect = (date) => {
-    console.log(date)
+    console.log(date);
     var newData = { ...data };
     setStartTime(date.toTimeString());
     newData.startTime = date;
     setData(newData);
   };
+  //handler calls when next button is clicked
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       pay();
@@ -122,7 +97,7 @@ function JobConfirmation(props) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
-
+  //handler calls when back button is pressed
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -130,12 +105,13 @@ function JobConfirmation(props) {
   const handleReset = () => {
     setActiveStep(0);
   };
+  //onChange handler of Date
   const handleStartDate = (date, i) => {
     let newState = cloneDeep(data);
     newState.dates[i] = date;
     setData(newState);
   };
-
+  //handler to add date
   const addDate = () => {
     if (data.dates[0]) {
       let newState = cloneDeep(data);
@@ -143,39 +119,20 @@ function JobConfirmation(props) {
       setData(newState);
     }
   };
-
-  const onStartTimeSelect = (selectedList, selectedTimeItem) => {
-    let selectedTime = selectedTimeItem.value;
-    let newState = { ...data };
-    newState.startTime = selectedTime;
-    setData(newState);
-  };
-
+  //onChange handler of formField
   const handleFormInput = (event) => {
     var { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
     updatedCustomer.customer[name] = value;
     setData(updatedCustomer);
   };
-
+  //onChange handler of location
   const hanldeLocationInput = (i, e) => {
     let job = cloneDeep(data);
     job.locations[i].value = e.target.value;
     setData(job);
   };
-
-  const hanldeLocationInputTo = (i, e) => {
-    let job = cloneDeep(data);
-    job.locations[i].value = e.target.value;
-    setData(job);
-  };
-
-  // var handleCheckBox = (e, i) => {
-  //   var { name, value } = e.target;
-  //   console.log(name, value)
-  //   e.stopPropagation()
-  //   setState({ ...data, [name]: value })
-  // };
+  //handles checkBox state
   var changeCheckBoxState = (e, i) => {
     console.log(e);
     e.stopPropagation();
@@ -192,64 +149,18 @@ function JobConfirmation(props) {
       prevState.locations[i].value = "";
     }
     setData(prevState);
-    // this.setState({
-    //   locations: prevState,
-    // });
   };
+  //remove date
   var removeDate = (i) => {
     var newData = cloneDeep(data);
     newData.dates.splice(i, 1);
     setData(newData);
   };
-
+  //show location
   const showLocation = (e, i) => {
-    // e.stopPropagation()
-    // if (i === 0) {
-    //   return (
-    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-    //       <div className="col-12">
-    //         <TextField
-    //           variant="outlined"
-    //           margin="normal"
-    //           required
-    //           fullWidth
-    //           size="small"
-    //           id="from"
-    //           label="Pickup"
-    //           name="pickup"
-    //           value={data.locations[0].value}
-    //           onChange={(e) => hanldeLocationInput(i, e)}
-    //           error={data.locationfromError ? true : false}
-    //         />
-    //       </div>
-    //     </div>
-    //   );
-    // } else if (i == 1) {
-    //   return (
-    //     <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-    //       <div className="col-12">
-    //         <TextField
-    //           fullWidth
-    //           variant="outlined"
-    //           margin="normal"
-    //           required
-    //           size="small"
-    //           id="to"
-    //           label="Drop Off"
-    //           name="dropoff"
-    //           value={data.locations[i].value}
-    //           onChange={(e) => hanldeLocationInputTo(i, e)}
-    //           error={data.locationtoError ? true : false}
-    //         />
-    //       </div>
-    //     </div>
-    //   );
-    // }
-
-    console.log(data.locations[i]);
     return (
-      <div className="row" style={{ display: "flex", margin: "0 1rem" }}>
-        <div className="col-4">
+      <div className={style.locationInput}>
+        <div className={style.radioButtons}>
           <RadioGroup
             className={style.rowFlex}
             value={data.locations[i].type}
@@ -258,22 +169,22 @@ function JobConfirmation(props) {
             <FormControlLabel
               value="pickup"
               name="pickup"
-              control={<Radio style={{ color: "#00ADEE" }} />}
+              control={<Radio className={style.styleRadio} />}
               label="Pickup"
             />
             <FormControlLabel
               value="dropoff"
               name="dropoff"
-              control={<Radio style={{ color: "#00ADEE" }} />}
+              control={<Radio className={style.styleRadio} />}
               label="Dropoff"
             />
           </RadioGroup>
         </div>
-        <div className="col-4">
+        <div className={style.inputField}>
           <TextField
             fullWidth
             variant="outlined"
-            margin="normal"
+            className={style.styleFormFields}
             required
             size="small"
             id="to"
@@ -297,24 +208,19 @@ function JobConfirmation(props) {
                 ? "Unload only"
                 : data.locations[i].value
             }
-            // value={data.locations[i].value}
             onChange={(e) => hanldeLocationInput(i, e)}
-            // error={this.state.locationtoError ? true : false}
           />
         </div>
         {data.locations[i].type == "pickup" ? (
           <div
-            className="col-3"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
+            className={
+              data.locations[i].type == "pickup" ? style.checkBox : null
+            }
           >
             <FormControlLabel
               control={
                 <Checkbox
                   checked={data.locations[i].default}
-                  // onChange={(e) => handleCheckBox(e, i)}
                   onClick={(e) => {
                     console.log(i);
                     changeCheckBoxState(e, i);
@@ -328,17 +234,14 @@ function JobConfirmation(props) {
           </div>
         ) : data.locations[i].type == "dropoff" ? (
           <div
-            className="col-3"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
+            className={
+              data.locations[i].type == "dropoff" ? style.checkBox : null
+            }
           >
             <FormControlLabel
               control={
                 <Checkbox
                   checked={data.locations[i].default}
-                  // onChange={(e) => handleCheckBox(e, i)}
                   onClick={(e) => {
                     console.log(i);
                     changeCheckBoxState(e, i);
@@ -350,94 +253,32 @@ function JobConfirmation(props) {
               label="Unload only"
             />
           </div>
-        ) : (
-          <div
-            className="col-3"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexWrap: "no-wrap",
-            }}
-          ></div>
-        )}
-        <div className="col-1">
+        ) : null}
+        <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
           <FontAwesomeIcon
             icon={faTrash}
             onClick={() => removeLocation(i)}
-            style={{
-              transform: "translateY(1.5rem)",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
           ></FontAwesomeIcon>
         </div>
       </div>
     );
-
-    // return (
-    //   <div className="row" style={{ width: "92%", margin: "0 2rem" }} key={i}>
-    //     <div className="col-11">
-    //       <TextField
-    //         fullWidth
-    //         variant="outlined"
-    //         margin="normal"
-    //         required
-    //         size="small"
-    //         id="to"
-    //         label="Drop Off"
-    //         name="to"
-    //         value={this.state.locations.to[i]}
-    //         onChange={(e) => this.hanldeLocationInputTo(i, e)}
-    //         error={this.state.locationtoError ? true : false}
-    //       />
-    //     </div>
-    //     <div className="col-1">
-    //       <div className=" form-group col-1">
-    //         <i
-    //           className="fa fa-minus"
-    //           onClick={() => this.removeLocation(i)}
-    //           style={{ transform: "translateY(1.5rem)" }}
-    //         ></i>
-    //       </div>
-    //     </div>
-    //   </div>
-    // );
   };
+  //add location
   var addLocation = (e) => {
     e.stopPropagation();
 
-    // if (this.state.locations.from && this.state.locations.to[0].length > 0) {
-    //   var dropOffLocation = this.state.locations.to.push('')
-    //   this.setState({
-    //     locations: {...this.state.locations }
-    //   });
-    // }
-
-    // if (data.locations[0].value !== "" && data.locations[1].value !== "") {
-      var newData = { ...data };
-      console.log(data.locations);
-      newData.locations.push({ type: "", value: "", default: false });
-      setData(newData);
-      // this.setState({
-      //   locations: {...this.state.locations }
-      // });
-    // }
+    var newData = { ...data };
+    console.log(data.locations);
+    newData.locations.push({ type: "", value: "", default: false });
+    setData(newData);
   };
-
-  // var removeLocation = (e, i) => {
-  //   e.stopPropagation();
-  //   let newData = { ...data };
-  //   newData.locations.to.splice(i, 1);
-  //   setData(newData);
-  // };
+  //remove location
   var removeLocation = (i) => {
     var newData = { ...data };
     newData.locations.splice(i, 1);
     setData(newData);
   };
-
+  //on change handler of radio buttons
   var handleInputChange = (e, i) => {
     let { name, value } = e.target;
     console.log(name, value);
@@ -448,7 +289,7 @@ function JobConfirmation(props) {
 
     setData(updateLocation);
   };
-
+  //load stripe
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
       var s = window.document.createElement("script");
@@ -463,16 +304,16 @@ function JobConfirmation(props) {
       window.document.body.appendChild(s);
     }
   };
-
+  //handler of input fields
   const changeHandler = (e) => {
     var { name, value } = e.target;
     let updatedPayment = cloneDeep(payment);
     updatedPayment[name] = value;
     setPayment(updatedPayment);
   };
-
+  //payment handler
   const pay = (e) => {
-    var {confirmJob,job} = props
+    var { confirmJob, job } = props;
     window.Stripe.card.createToken(
       {
         number: payment.number,
@@ -488,7 +329,6 @@ function JobConfirmation(props) {
             } else {
               return x.toDateString();
             }
-            //   x.toDateString()
           });
           let obj = {
             paidInCash: false,
@@ -504,33 +344,16 @@ function JobConfirmation(props) {
             email: data.customer.email,
             customerId: data.customer._id,
           };
-          confirmJob(obj)
-          setData(job)
+          confirmJob(obj);
+          setData(job);
           props.close();
-          // .then((res) => {
-          //   let { showMessage } = props;
-          //   if (res.data.status == 200) {
-          //     showMessage(res.data.message);
-          //     // history.push('/job')
-              
-          //   }
-          // });
-          // this.setState({
-          //     message: `Success! Card token ${response.card.id}.`,
-          //     formProcess: false
-          // });
-        } else {
-          // this.setState({
-          //     message: response.error.message,
-          //     formProcess: false
-          // });
         }
       }
     );
   };
-
+  //without payment submission
   const handleSubmitWithoutPay = () => {
-    var {confirmJob,job} = props
+    var { confirmJob, job } = props;
     let stringDates = data.dates.map((x) => {
       if (typeof x == "number") {
         return new Date(x).toDateString();
@@ -548,27 +371,10 @@ function JobConfirmation(props) {
       email: data.customer.email,
       customerId: data.customer._id,
     };
-    console.log(obj)
-    confirmJob(obj)
-    setData(job)
+    console.log(obj);
+    confirmJob(obj);
+    setData(job);
     props.close();
-    // .then((res) => {
-      
-      
-      
-      
-    //   console.log(res)
-    //   let { showMessage } = props;
-    //   if (res.data.status == 200) {
-    //     showMessage(res.data.message);
-    //     // history.push('/job')
-    //     props.close();
-    //   }
-    // });
-    // this.setState({
-    //     message: `Success! Card token ${response.card.id}.`,
-    //     formProcess: false
-    // });
   };
 
   const getStepContent = (step) => {
@@ -577,98 +383,71 @@ function JobConfirmation(props) {
         return (
           <form>
             <h6>Dates:</h6>
-            <div className="row">
-              {data &&
-                data.dates?.map((x, i) => {
-                  return (
-                    <div className="row">
-                      <div className="col-9">
+
+            {data &&
+              data.dates?.map((x, i) => {
+                return (
+                  <div className={`${style.styleDate}`}>
+                    <div className={`${style.dates} `}>
+                      <div>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <Grid>
-                            <div
-                              style={{
-                                // transform: "translateX(3rem)",
-                                width: "100%",
+                            <KeyboardDatePicker
+                              inputVariant="outlined"
+                              className={style.styleFormFields}
+                              size="small"
+                              fullWidth
+                              id="date-picker-dialog"
+                              format="MM/dd/yyyy"
+                              value={data.dates[i]}
+                              onChange={(e) => handleStartDate(e, i)}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
                               }}
-                            >
-                              <KeyboardDatePicker
-                                inputVariant="outlined"
-                                margin="normal"
-                                size="small"
-                                fullWidth
-                                id="date-picker-dialog"
-                                // style={{ zIndex: "-1" }}
-                                format="MM/dd/yyyy"
-                                value={data.dates[i]}
-                                onChange={(e) => handleStartDate(e, i)}
-                                KeyboardButtonProps={{
-                                  "aria-label": "change date",
-                                }}
-                              />
-                            </div>
+                            />
                           </Grid>
                         </MuiPickersUtilsProvider>
                       </div>
-                      <div
-                        className="col-2"
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
+                      <div className={style.flex}>
                         <FontAwesomeIcon
                           icon={faTrash}
                           onClick={() => removeDate(i)}
                         />
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
 
-              <div className="form-group col-2 my-4" onClick={addDate}>
-                <i className="fa fa-plus">Add Date</i>
-              </div>
+            <div onClick={addDate}>
+              <i className="fa fa-plus">Add Date</i>
             </div>
-            <h6>Time:</h6>
 
-            <div className="row">
-              {data && (
-                <div
-                  className="form-group col-12"
-                  style={{ marginTop: "1rem" }}
-                >
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid>
-                      <KeyboardTimePicker
-                        margin="normal"
-                        id="time-picker"
-                        value={data.startTime}
-                        onChange={handleTimeSelect}
-                        KeyboardButtonProps={{
-                          "aria-label": "change time",
-                        }}
-                        keyboardIcon={<AccessTimeIcon/>}
-                      />
-                    </Grid>
-                  </MuiPickersUtilsProvider>
-                  {/* <TextField
-                    id="time"
-                    fullWidth
-                    label="Start Time"
-                    type="time"
-                    name="startTime"
-                    value={startTime}
-                    onChange={handleTimeSelect}
-                    variant="outlined"
-                    size="small"
-                    defaultValue={data.startTime}
-                    // className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      step: 300, // 5 min
-                    }}
-                  /> */}
-                </div>
-              )}
+            <div className={style.time}>
+              <div>
+                <h6>Time:</h6>
+              </div>
+              <div>
+                {data && (
+                  <div>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid>
+                        <KeyboardTimePicker
+                          // className = {style.styleFormFields}
+                          // fullWidth
+                          id="time-picker"
+                          value={data.startTime}
+                          onChange={handleTimeSelect}
+                          KeyboardButtonProps={{
+                            "aria-label": "change time",
+                          }}
+                          keyboardIcon={<AccessTimeIcon />}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
+                  </div>
+                )}
+              </div>
             </div>
           </form>
         );
@@ -677,69 +456,61 @@ function JobConfirmation(props) {
           <form>
             {data && (
               <div>
-                <div className="form-group">
-                  {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    size="small"
-                    id="name"
-                    label="First Name"
-                    name="firstName"
-                    value={data.customer?.firstName}
-                    onChange={handleFormInput}
-                  />
-                </div>
+                {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
+                <TextField
+                  variant="outlined"
+                  className={style.styleFormFields}
+                  required
+                  fullWidth
+                  size="small"
+                  id="name"
+                  label="First Name"
+                  name="firstName"
+                  value={data.customer?.firstName}
+                  onChange={handleFormInput}
+                />
 
-                <div className="form-group">
-                  {/* <label htmlFor="exampleInputEmail1">Last Name</label> */}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    size="small"
-                    id="name"
-                    label="Last Name"
-                    name="lastName"
-                    value={data.customer?.lastName}
-                    onChange={handleFormInput}
-                  />
-                </div>
+                {/* <label htmlFor="exampleInputEmail1">Last Name</label> */}
+                <TextField
+                  variant="outlined"
+                  className={style.styleFormFields}
+                  required
+                  fullWidth
+                  size="small"
+                  id="name"
+                  label="Last Name"
+                  name="lastName"
+                  value={data.customer?.lastName}
+                  onChange={handleFormInput}
+                />
 
-                <div className="form-group">
-                  {/* <label htmlFor="exampleInputEmail1">Phone Number</label> */}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    size="small"
-                    id="name"
-                    label="Phone Number"
-                    name="phone"
-                    value={data.customer?.phone}
-                    onChange={handleFormInput}
-                  />
-                </div>
+                {/* <label htmlFor="exampleInputEmail1">Phone Number</label> */}
+                <TextField
+                  variant="outlined"
+                  className={style.styleFormFields}
+                  required
+                  fullWidth
+                  size="small"
+                  id="name"
+                  label="Phone Number"
+                  name="phone"
+                  value={data.customer?.phone}
+                  onChange={handleFormInput}
+                />
 
-                <div className="form-group">
-                  {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    size="small"
-                    id="name"
-                    label="Email Address"
-                    name="email"
-                    value={data.customer?.email}
-                    onChange={handleFormInput}
-                  />
-                </div>
+                {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
+                <TextField
+                  variant="outlined"
+                  className={style.styleFormFields}
+                  required
+                  fullWidth
+                  size="small"
+                  id="name"
+                  label="Email Address"
+                  name="email"
+                  value={data.customer?.email}
+                  onChange={handleFormInput}
+                />
               </div>
             )}
           </form>
@@ -747,63 +518,23 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {/* {data.locations && (
-              <div>
-                <div className="row" style={{ width: "92%", margin: "0 2rem" }}>
-                  <div className="col-12">
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
-                      id="from"
-                      label="Pickup"
-                      name="from"
-                      value={data.locations.from}
-                      onChange={(e) => hanldeLocationInput(e)}
-                    // error={this.state.locationfromError}
-                    />
-                  </div>
-                </div>
-              </div>
-            )} */}
-
-            {/* {data.locations.map((ll, i) => {
-              return showLocation(i);
-            })} */}
             {data?.locations.length === 0 && (
-             <div className="row">
-               <div className="col-10"></div>
-               <div className="col-2">
-               <Button   onClick={(e) => addLocation(e)}
-                style={{
-                  background: "#00ADEE",
-                  border: "transparent",
-                  color: "#ffffff",
-                  padding: "0.5rem",
-                  borderRadius: "0.25rem",
-                  fontFamily: "sans-serif",
-                  textTransform: "none",
-                }}
-              >Add Location</Button>
-               </div>
-             </div>
+              <div className={style.locationBtn}>
+                <Button
+                  className={style.button}
+                  onClick={(e) => addLocation(e)}
+                >
+                  Add Location
+                </Button>
+              </div>
             )}
 
             {data?.locations?.length > 0 &&
               data.locations.map((e, i) => showLocation(e, i))}
 
             {data?.locations.length > 0 && (
-              <div className="row">
-                <div className="col-11"></div>
-                <div className="col-1">
-                  <i
-                    className="fa fa-plus"
-                    onClick={(e) => addLocation(e)}
-                    style={{ transform: "translate3d(-1.3rem,0rem, 0)" }}
-                  ></i>
-                </div>
+              <div className={style.flexEnd}>
+                <i className="fa fa-plus" onClick={(e) => addLocation(e)}></i>
               </div>
             )}
           </div>
@@ -811,101 +542,82 @@ function JobConfirmation(props) {
       case 3:
         return (
           <div>
-            {/* <div className="text-center" style={{ margin: "26px" }}>
-              <h5>Payment Information</h5>
-            </div> */}
             <form>
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  size="small"
-                  id="cardno"
-                  label="Card Number"
-                  name="number"
-                  onChange={changeHandler}
-                />
-              </div>
+              <TextField
+                variant="outlined"
+                className={style.styleFormFields}
+                required
+                fullWidth
+                size="small"
+                id="cardno"
+                label="Card Number"
+                name="number"
+                onChange={changeHandler}
+              />
+
               <p>Testing Card #: 4242424242424242</p>
-              <div className="row">
-                <div className="col-6">
-                  <div className="form-group">
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
-                      id="month"
-                      label="Month"
-                      name="exp_month"
-                      onChange={changeHandler}
-                    />
-                  </div>
+              <div className={style.currentYear}>
+                <div >
+                  <TextField
+                    variant="outlined"
+                    className={style.styleFormFields}
+                    required
+                    fullWidth
+                    size="small"
+                    id="month"
+                    label="Month"
+                    name="exp_month"
+                    onChange={changeHandler}
+                  />
                 </div>
 
-                <div className="col-6">
-                  <div className="form-group">
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      size="small"
-                      id="year"
-                      label="Year"
-                      name="exp_year"
-                      onChange={changeHandler}
-                    />
-                  </div>
+                <div >
+                  <TextField
+                    variant="outlined"
+                    className={style.styleFormFields}
+                    required
+                    fullWidth
+                    size="small"
+                    id="year"
+                    label="Year"
+                    name="exp_year"
+                    onChange={changeHandler}
+                  />
                 </div>
               </div>
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  size="small"
-                  id="name"
-                  label="CVC"
-                  name="cvc"
-                  onChange={changeHandler}
-                />
-              </div>
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  size="small"
-                  id="amount"
-                  label="Amount"
-                  name="amount"
-                  onChange={changeHandler}
-                />
-              </div>
 
-              {/* <input type="button" className="btn btn-primary" name="pay" value="Pay" onClick={pay} /> */}
+              <TextField
+                variant="outlined"
+                className={style.styleFormFields}
+                required
+                fullWidth
+                size="small"
+                id="name"
+                label="CVC"
+                name="cvc"
+                onChange={changeHandler}
+              />
+
+              <TextField
+                variant="outlined"
+                className={style.styleFormFields}
+                required
+                fullWidth
+                size="small"
+                id="amount"
+                label="Amount"
+                name="amount"
+                onChange={changeHandler}
+              />
             </form>
-            <Button
-              onClick={handleSubmitWithoutPay}
-              //   style={{ float: "right" }}
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                float: "right",
-              }}
-
-              //   className={classes.button}
-            >
-              Skip And Submit
-            </Button>
+            <div className={style.skipSubmitBtn}>
+              <Button
+                className={`${style.button} `}
+                onClick={handleSubmitWithoutPay}
+              >
+                Skip And Submit
+              </Button>
+            </div>
           </div>
         );
       default:
@@ -913,76 +625,60 @@ function JobConfirmation(props) {
     }
   };
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${style.confirmJobModal}`}>
+      <div className = {style.stepperLabels}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           return (
             <Step key={label} {...stepProps}>
-              <StepLabel style={{ color: "#00ADEE" }} {...labelProps}>
+              <StepLabel className={style.styleRadio} {...labelProps}>
                 {label}
               </StepLabel>
             </Step>
           );
         })}
       </Stepper>
-      <div>
-        {activeStep === steps.length ? (
+</div>
+      {activeStep === steps.length ? (
+        <div className = {style.stepperContent}>
+          <Typography className={classes.instructions}>
+            All steps completed - you&apos;re finished
+          </Typography>
+          <Button onClick={handleReset} className={classes.button}>
+            Reset
+          </Button>
+        </div>
+      ) : (
+        <div className = {style.stepperContent}>
           <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
+          {getStepContent(activeStep)}
+          </div>
+          <div className={style.backAndSubmitBtn}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={activeStep === 0 ? style.back :`${style.back} ${style.backStyles}`}
+            >
+              Back
+            </Button>
+
+            <Button onClick={handleNext} className={style.next}>
+              {activeStep === steps.length - 1 ? "Submit" : "Next"}
             </Button>
           </div>
-        ) : (
-          <div style={{ margin: "5px 30px" }}>
-            {
-              getStepContent(
-                activeStep
-              ) /* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */
-            }
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                Back
-              </Button>
-              <Button
-                onClick={handleNext}
-                className={classes.button}
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
 
 var actions = {
   showMessage,
-  confirmJob
+  confirmJob,
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs?.job
-})
+  job: state.jobs?.job,
+});
 export default connect(mapStateToProps, actions)(JobConfirmation);

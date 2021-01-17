@@ -48,8 +48,6 @@
 }
 
 .head {
-  /* margin-top: 2rem; */
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,12 +82,12 @@
 }
 .addLocationBtn .button {
   background: #00adee;
-    text-transform: none;
-    color: #fff;
-    font-family: sans-serif;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
 }
 .addLocationBtn .button:hover {
-background-color: #00adee;
+  background-color: #00adee;
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;
@@ -101,15 +99,15 @@ background-color: #00adee;
   column-gap: 0.5rem;
 }
 .resetBtns .button {
-  background: #00ADEE;
+  background: #00adee;
   text-transform: none;
-  color: #FFF;
+  color: #fff;
   font-family: sans-serif;
   width: 100%;
 }
 .locationInput {
   display: grid;
-  grid-template-columns: 33fr repeat(2,32fr) 3fr;
+  grid-template-columns: 33fr repeat(2, 32fr) 3fr;
   grid-template-areas: "radioButtons inputField checkBox TrashIcon";
 }
 .radioButtons {

@@ -1,5 +1,153 @@
+.confirmJobModal {
+  display: grid;
+
+  grid-template-rows: 10vh minmax(35vh, min-content);
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas:
+    ". stepperLabels ."
+    ". stepperContent .";
+}
+.stepperLabels {
+  grid-area: stepperLabels;
+}
+.stepperContent {
+  grid-area: stepperContent;
+  display: grid;
+  grid-template-rows: minmax(25vh, min-content) 10vh;
+}
 .rowFlex {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    
-  }
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+}
+.styleRadio {
+  color: #00adee !important;
+}
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.locationInput {
+  display: grid;
+  grid-template-columns: repeat(2, 33fr) 32fr 2fr;
+  grid-template-areas: "radioButtons inputField checkBox TrashIcon";
+}
+.radioButtons {
+  grid-area: radioButtons;
+}
+.inputField {
+  grid-area: inputField;
+}
+.checkBox {
+  grid-area: checkBox;
+  padding: 0 1.5rem;
+}
+.TrashIcon {
+  grid-area: TrashIcon;
+}
+.centeredIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.styleDate {
+  display: grid;
+
+  /* grid-template-columns: repeat(auto-fit, minmax(min-content, 16rem)); */
+  /* grid-template-areas: "dates"; */
+}
+.dates {
+  /* grid-area: dates; */
+  display: grid;
+  grid-template-columns: 13rem min-content;
+  grid-row-gap: 1rem;
+  grid-column-gap: 2rem;
+  align-content: flex-start;
+}
+.time {
+  display: grid;
+  grid-template-columns: 20fr 80fr;
+  margin: 1rem 0;
+  justify-self: center;
+  align-self: center;
+}
+.currentYear {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  column-gap: 0.5rem;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.locationBtn {
+  display: grid;
+  grid-template-columns: 85fr 15fr;
+  grid-template-areas: ". button";
+}
+.locationBtn .button {
+  grid-area: button;
+  background: #00adee;
+
+  color: #ffffff;
+
+  border-radius: 0.25rem;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.locationBtn .button:hover {
+  background: #00adee;
+}
+.skipSubmitBtn {
+  display: grid;
+  grid-template-columns: 80fr 20fr;
+  grid-template-areas: ". button";
+}
+.skipSubmitBtn .button {
+  grid-area: button;
+  background: #00adee;
+
+  color: #ffffff;
+
+  border-radius: 0.25rem;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.skipSubmitBtn .button:hover {
+  background: #00adee;
+}
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.backAndSubmitBtn {
+  display: grid;
+  grid-template-columns: repeat(2, 15fr) 70fr;
+  grid-template-areas: "back next .";
+
+  column-gap: 0.5rem;
+}
+.backAndSubmitBtn .back {
+  grid-area: back;
+  margin: 1rem 0;
+ 
+  text-transform: none;
+ 
+  font-family: sans-serif;
+}
+.backAndSubmitBtn .backStyles {
+   background: #00ADEE;
+    color: #FFF;
+}
+.backAndSubmitBtn .next {
+  grid-area: next;
+  background: #00adee;
+  margin: 1rem 0;
+
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.backAndSubmitBtn .next:hover , .backAndSubmitBtn .back:hover {
+  background-color: #00adee;
+}

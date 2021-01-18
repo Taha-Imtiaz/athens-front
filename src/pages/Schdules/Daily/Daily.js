@@ -46,7 +46,7 @@ import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { htmlToText } from 'html-to-text'
+import { htmlToText } from "html-to-text";
 // const { htmlToText } = require('html-to-text');
 
 var moverAssignedDate;
@@ -79,9 +79,9 @@ const DailySchedule = (props) => {
   }, []);
 
   var specialElementHandlers = {
-    '#elementH': function (element, renderer) {
+    "#elementH": function (element, renderer) {
       return true;
-    }
+    },
   };
 
   const generatePDF = (e, job) => {
@@ -131,11 +131,18 @@ const DailySchedule = (props) => {
     doc
       .setFont("times")
       .setFontSize(11)
-      .text(50, 285, job.startTime ? formatAMPM(job.startTime) : "No Time Added");
+      .text(
+        50,
+        285,
+        job.startTime ? formatAMPM(job.startTime) : "No Time Added"
+      );
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
 
-    doc.setFont("times").setFontSize(11).text(50, 375, htmlToText(job.description));
+    doc
+      .setFont("times")
+      .setFontSize(11)
+      .text(50, 375, htmlToText(job.description));
     // doc.html(<h3>Hello</h3>, {
     //   'x': 50,
     //   'y': 375,
@@ -152,28 +159,22 @@ const DailySchedule = (props) => {
     {
       title: "Daily Schedule",
       path: "/schedule",
-      icon: (
-        <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faClock} />,
     },
 
     {
       title: "Unavailable",
       path: "/schedule/unavailable",
-      icon: (
-        <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faBan} />,
     },
     ,
     {
       title: "Movers",
       path: "/schedule/movers",
-      icon: (
-        <FontAwesomeIcon icon={faUser} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faUser} />,
     },
   ];
-console.log(props.jobs)
+
   const handleClose = () => {
     setShow(false);
   };
@@ -391,12 +392,13 @@ console.log(props.jobs)
   };
 
   return (
-    <div className={`row ${style.scheduleContainer}`}>
-      <div className="col-2" style={{}}>
+    <div className={`${style.scheduleContainer}`}>
+      <div className = {style.sidebar}>
         <SideBar routes={routes} />
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className={`col-8`}>
+    <div className = {style.dragContent}>
+      {/* <DragDropContext onDragEnd={onDragEnd} className = {style.dragDropContext}>
+        <div className = {style.jobContent}>
           <DatePicker
             endDate={365}
             getSelectedDay={(e) => {
@@ -406,33 +408,33 @@ console.log(props.jobs)
             color={"#181F47"} // #00ADEE
             selectDate={newDate}
           />
-          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
-          <div className="row justify-content-md-center">
+          <hr className = {style.styleLine}></hr>
+          <div className=" justify-content-md-center">
             <div
-              className="col-2"
+              className=""
               style={{ display: "flex", alignItems: "center" }}
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
                 {`Total Jobs: `}{" "}
                 <span style={{ fontWeight: "normal" }}>
-                  {props.jobs ?.data ?.data.length}
+                  {props.jobs?.data?.data.length}
                 </span>{" "}
               </h6>
             </div>
             <div
-              className="col-3"
+              className=""
               style={{ display: "flex", alignItems: "center" }}
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
                 {`Movers Available:`}{" "}
                 <span style={{ fontWeight: "normal" }}>
                   {" "}
-                  {props.movers ?.length}
+                  {props.movers?.length}
                 </span>{" "}
               </h6>
             </div>
             <div
-              className="col-3"
+              className=""
               style={{ display: "flex", alignItems: "center" }}
             >
               <h6 style={{ fontFamily: "sans-serif" }}>
@@ -443,13 +445,13 @@ console.log(props.jobs)
                     0
                   )
                 ) : (
-                    <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                      0
+                  <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
+                    0
                   </span>
-                  )}
+                )}
               </h6>
             </div>
-            <div className="col-2">
+            <div className="">
               <Button
                 style={{
                   background: "#00ADEE",
@@ -464,10 +466,10 @@ console.log(props.jobs)
               </Button>
             </div>
           </div>
-          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
+          <hr className = {style.styleLine}></hr>
           {props.jobs?.length > 0 && (
             <div
-              className={`row card-header`}
+              className={` card-header`}
               style={{
                 fontWeight: "bold",
                 margin: "1rem 0",
@@ -476,12 +478,12 @@ console.log(props.jobs)
                 fontFamily: "sans-serif",
               }}
             >
-              <div className="col-3">Title</div>
-              <div className="col-2">Movers Req.</div>
-              <div className="col-2">Time</div>
-              <div className="col-3">Assignee</div>
+              <div className="">Title</div>
+              <div className="">Movers Req.</div>
+              <div className="">Time</div>
+              <div className="">Assignee</div>
 
-              <div className="col-2">
+              <div className="">
                 <span style={{ float: "right" }}>Action</span>
               </div>
             </div>
@@ -502,7 +504,7 @@ console.log(props.jobs)
                       {...provided.droppableProps}
                     >
                       <div
-                        className="row"
+                        
                         style={{
                           overflow: "hidden",
                           width: "100%",
@@ -519,17 +521,17 @@ console.log(props.jobs)
                         onClick={() => toggleCollapse(i)}
                         onDoubleClick={() => jobDetailsNavigate(list._id)}
                       >
-                        <div className="col-3">{list.title}</div>
+                        <div className="">{list.title}</div>
 
-                        <div className="col-2">
+                        <div className="">
                           <span> {list.assigneeRequired}</span>{" "}
                           <span style={{ display: "none" }}>{list.jobId}</span>
                         </div>
 
-                        <div className="col-2">
+                        <div className="">
                           {list.startTime ? formatAMPM(list.startTime) : "N/A"}
                         </div>
-                        <div className="col-3" style={{}}>
+                        <div className="" style={{}}>
                           {list.assignee.length > 0 ? (
                             <div style={{ width: "100%" }}>
                               {list.assignee.map((assignee, i) => (
@@ -565,8 +567,8 @@ console.log(props.jobs)
                               ))}
                             </div>
                           ) : (
-                              " N/A"
-                            )}
+                            " N/A"
+                          )}
                         </div>
                         <Modal
                           show={modalShow}
@@ -594,9 +596,9 @@ console.log(props.jobs)
                               {mover && (
                                 <div style={{ margin: "1.5rem 1rem" }}>
                                   {moverAssignedDate.map((job, i) => (
-                                    <div className="row" key={i}>
+                                    <div  key={i}>
                                       <a
-                                        className="col-8"
+                                        className=""
                                         onClick={() =>
                                           window.open(
                                             `/job/detail/${job._id}`,
@@ -612,7 +614,7 @@ console.log(props.jobs)
                                         {job.title}
                                       </a>{" "}
                                       <Chip
-                                        className="col-2"
+                                        className=""
                                         label={
                                           job.startTime
                                             ? formatAMPM(job.startTime)
@@ -645,7 +647,7 @@ console.log(props.jobs)
                             </Button>
                           </Modal.Footer>
                         </Modal>
-                        <div className="col-2">
+                        <div className="">
                           <small
                             style={{
                               float: "right",
@@ -666,34 +668,34 @@ console.log(props.jobs)
                       >
                         <div className="card-body">
                           <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
-                          <div className="row">
-                            <div className="col-3">
+                          <div >
+                            <div className="">
                               <h6>Job Id</h6>
                             </div>
-                            <div className="col-3">
+                            <div className="">
                               <h6>Job Title</h6>
                             </div>
-                            <div className="col-3">
+                            <div className="">
                               <h6>Job Type</h6>
                             </div>
-                            <div className="col-3">
+                            <div className="">
                               <h6>Status</h6>
                             </div>
                           </div>
 
                           <div
-                            className="row"
+                            
                             style={{
                               fontSize: "0.92rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
+                              color: "#aaaaaa",
                             }}
                           >
-                            <div className="col-3">{list.jobId}</div>
-                            <div className="col-3">{list.title}</div>
-                            <div className="col-3">{list.jobType}</div>
-                            <div className="col-3">
+                            <div className="">{list.jobId}</div>
+                            <div className="">{list.title}</div>
+                            <div className="">{list.jobType}</div>
+                            <div className="">
                               <Chip
                                 label={list.status}
                                 clickable
@@ -703,7 +705,7 @@ console.log(props.jobs)
                               ></Chip>
                             </div>
                           </div>
-                          <div className="row">
+                          <div >
                             <h6
                               style={{
                                 margin: "0.6rem 0",
@@ -714,45 +716,43 @@ console.log(props.jobs)
                             </h6>
                           </div>
                           <div
-                            // className="row"
+                            // 
                             style={{
                               marginLeft: "0.4rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
+                              color: "#aaaaaa",
                             }}
                           >
-                            <p >
-                              {parse(list.description)}
-                            </p>
+                            <p>{parse(list.description)}</p>
                           </div>
                           <hr />
                           <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
-                          <div className="row">
-                            <div className="col-4">
+                          <div >
+                            <div className="">
                               <h6>Name</h6>
                             </div>
-                            <div className="col-4">
+                            <div className="">
                               <h6>Email</h6>
                             </div>
-                            <div className="col-4">
+                            <div className="">
                               <h6>Phone</h6>
                             </div>
                           </div>
                           <div
-                            className="row "
+                            className=" "
                             style={{
                               fontSize: "0.92rem",
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
+                              color: "#aaaaaa",
                             }}
                           >
-                            <div className="col-4">
+                            <div className="">
                               {list.customer.firstName} {list.customer.lastName}
                             </div>
-                            <div className="col-4">{list.customer.email}</div>
-                            <div className="col-4">{list.customer.phone}</div>
+                            <div className="">{list.customer.email}</div>
+                            <div className="">{list.customer.phone}</div>
                           </div>
                         </div>
                       </div>
@@ -762,16 +762,18 @@ console.log(props.jobs)
               );
             })
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
         </div>
 
-        <div className={`col-2  ${style.mov}`} id="mov">
-          <div className="row ">
-            <div className={`row ${style.scroll}`}>
-              <h4 className={`row col-12 ${style.movehead}`}>Movers</h4>
+
+
+         <div className={`  ${style.mov}`} id="mov">
+          <div className="">
+            <div className={` ${style.scroll}`}>
+              <h4 className={`  ${style.movehead}`}>Movers</h4>
               <div className={`${style.scrollBar}`}>
                 <div className={`  ${style.scrollContent}`}>
                   {movers &&
@@ -779,7 +781,7 @@ console.log(props.jobs)
                       return (
                         <div key={i}>
                           <div
-                            className="row"
+                            
                             style={{
                               fontFamily:
                                 "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
@@ -800,7 +802,7 @@ console.log(props.jobs)
                                   >
                                     {(provided, snapshot) => (
                                       <div
-                                        className="col-12"
+                                        className=""
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                         ref={provided.innerRef}
@@ -809,7 +811,7 @@ console.log(props.jobs)
                                         <h6
                                           style={{ cursor: "pointer" }}
                                           key={i}
-                                          className={"col-12"}
+                                          className={""}
                                         >
                                           <label
                                             style={{ fontWeight: "normal" }}
@@ -839,17 +841,19 @@ console.log(props.jobs)
             </div>
           </div>
         </div>
-      </DragDropContext>
-
+      </DragDropContext>  */}
+</div>
+     
+     
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Assignees</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
-            <div className="col-12">
+          <div  style={{ margin: "1.5rem 4.5rem" }}>
+            <div className="">
               <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
+                selectedValues={jobToUpdate?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event

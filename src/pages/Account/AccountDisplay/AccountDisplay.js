@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import style from "./AccountDisplay.module.css";
-import { Switch, Link } from "react-router-dom";
-import AccountUpdate from "../AccountUpdate/AccountUpdate";
+
 import { Button, TextField } from "@material-ui/core";
 import {
   getUserData,
@@ -57,40 +56,28 @@ const AccountDisplay = (props) => {
   }, [loggedInUser]);
 
   const validate = () => {
-    // let nameError = "";
-    // let emailError = "";
-    // let passwordError = "";
-    // var phoneError = "";
-    // var addressError = "";
-    console.log("validate");
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     var newData = { ...editAccount };
 
     if (!editAccount.name) {
-      // setNameError("Name should not be empty") ;
       newData.nameError = "Name should not be empty";
     }
 
     if (!editAccount.email.match(mailformat)) {
-      // setEmailError("Invalid Email");
       newData.emailError = "Invalid Email";
     }
 
     if (!editAccount.phone) {
-      //  setPhoneError("Phone should not be empty") ;
       newData.phoneError = "Phone should not be empty";
     }
 
     if (!editAccount.address) {
-      //  setAddressError("Address should not be empty");
       newData.addressError = "Address should not be empty";
     }
 
     if (
       newData.nameError ||
       newData.emailError ||
-      //  newData.passwordError ||
-      //  newData.confirmPasswordError ||
       newData.phoneError ||
       newData.addressError
     ) {
@@ -124,12 +111,10 @@ const AccountDisplay = (props) => {
   var validateModalInputs = () => {
     var newData = { ...editAccount };
     if (!editAccount.password) {
-      // setPasswordError("Password should not be empty");
       newData.passwordError = "Password should not be empty";
     }
 
     if (editAccount.password !== editAccount.confirmPassword) {
-      // setPasswordError("Password should not be empty");
       newData.confirmPasswordError = "Password do not match";
     }
     if (newData.passwordError || newData.confirmPasswordError) {
@@ -177,7 +162,6 @@ const AccountDisplay = (props) => {
       const { updateUser, history } = props;
       updateUser(updatedUserObj, loggedInUser._id)
         .then((res) => {
-          // history.push("/account");
           setDisabledForm(true);
         })
         .catch((error) => {
@@ -186,127 +170,74 @@ const AccountDisplay = (props) => {
     }
   };
   return (
-    <div
-      className={style.accountContainer}
-
-      // style={{
-      //   display: "flex",
-      //   justifyContent: "center",
-      //   alignItems: "center",
-      // }}
-    >
+    <div className={style.accountContainer}>
       {loggedInUser && (
         <div className={style.form}>
-          <h3
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "2rem",
-            }}
-          >
-            Account
-          </h3>
+          <h3 className={`${style.flex} ${style.header}`}>Account</h3>
           <form>
-            <div className="form-group" style={{ margin: "1rem 2rem" }}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                disabled={disabledForm}
-                fullWidth
-                size="small"
-                id="name"
-                label="Enter Name"
-                name="name"
-                value={editAccount.name}
-                onChange={handleFormInput}
-                error={editAccount.nameError}
-              />
-            </div>
+            <TextField
+              variant="outlined"
+              required
+              disabled={disabledForm}
+              fullWidth
+              size="small"
+              id="name"
+              label="Enter Name"
+              name="name"
+              className={style.styleFormFields}
+              value={editAccount.name}
+              onChange={handleFormInput}
+              error={editAccount.nameError}
+            />
 
-            <div className="form-group" style={{ margin: "1rem 2rem" }}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                disabled={disabledForm}
-                id="email"
-                label="Enter Email"
-                name="email"
-                value={editAccount.email}
-                onChange={handleFormInput}
-                error={editAccount.emailError}
-              />
-            </div>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              size="small"
+              disabled={disabledForm}
+              id="email"
+              label="Enter Email"
+              name="email"
+              value={editAccount.email}
+              onChange={handleFormInput}
+              error={editAccount.emailError}
+              className={style.styleFormFields}
+            />
 
-            <div className="form-group" style={{ margin: "1rem 2rem" }}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                disabled={disabledForm}
-                size="small"
-                id="name"
-                label="Enter Phone"
-                name="phone"
-                value={editAccount.phone}
-                onChange={handleFormInput}
-                error={editAccount.phoneError}
-              />
-            </div>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              disabled={disabledForm}
+              size="small"
+              id="name"
+              label="Enter Phone"
+              name="phone"
+              value={editAccount.phone}
+              onChange={handleFormInput}
+              error={editAccount.phoneError}
+              className={style.styleFormFields}
+            />
 
-            <div className="form-group" style={{ margin: "1rem 2rem" }}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                disabled={disabledForm}
-                required
-                fullWidth
-                size="small"
-                id="name"
-                label="Enter Address"
-                name="address"
-                value={editAccount.address}
-                error={editAccount.addressError}
-                onChange={handleFormInput}
-              />
-            </div>
-
-            <div className="form-group" style={{ margin: "1rem 2rem" }}>
-              {/* <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                disabled = {disabledForm}
-                fullWidth
-                size="small"
-                type="password"
-                id="password"
-                label="Enter Password"
-                name="password"
-                value={editAccount.password}
-                onChange={handleFormInput}
-                error={editAccount.passwordError}
-              /> */}
-            </div>
+            <TextField
+              variant="outlined"
+              disabled={disabledForm}
+              required
+              fullWidth
+              size="small"
+              id="name"
+              label="Enter Address"
+              name="address"
+              value={editAccount.address}
+              error={editAccount.addressError}
+              onChange={handleFormInput}
+              className={style.styleFormFields}
+            />
           </form>
           {!disabledForm && (
-            <div className={style.btn} style={{ margin: "1rem 2rem" }}>
-              <Button
-                className={`btn btn-primary`}
-                style={{
-                  width: "100% ",
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
-                }}
-                onClick={mySubmitHandler}
-              >
+            <div className={style.btn}>
+              <Button className={` ${style.button}`} onClick={mySubmitHandler}>
                 Update
               </Button>
             </div>
@@ -325,41 +256,17 @@ const AccountDisplay = (props) => {
           <div className={`${style.editButton} `}>
             <div>
               <Button
+                className={style.button}
                 onClick={() => setDisabledForm(false)}
-                style={{
-                  background: "#00ADEE",
-                  border: "transparent",
-                  color: "#ffffff",
-                  // padding: "0.5rem",
-                  borderRadius: "0.25rem",
-                  fontFamily: "sans-serif",
-                  textTransform: "none",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
               >
                 Edit
               </Button>
             </div>
             <div>
               <Button
+                className={style.button}
                 onClick={() => {
                   setShowModal(true);
-                }}
-                style={{
-                  background: "#00ADEE",
-                  border: "transparent",
-                  color: "#ffffff",
-                  // padding: "0.5rem",
-                  borderRadius: "0.25rem",
-                  fontFamily: "sans-serif",
-                  textTransform: "none",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
               >
                 Reset Password
@@ -382,7 +289,6 @@ const AccountDisplay = (props) => {
         <Modal.Body>
           <TextField
             variant="outlined"
-            margin="normal"
             required
             fullWidth
             size="small"
@@ -393,10 +299,10 @@ const AccountDisplay = (props) => {
             value={editAccount.password}
             onChange={handleFormInput}
             error={editAccount.passwordError}
+            className={style.styleFormFields}
           />
           <TextField
             variant="outlined"
-            margin="normal"
             required
             fullWidth
             size="small"
@@ -407,38 +313,17 @@ const AccountDisplay = (props) => {
             value={editAccount.confirmPassword}
             onChange={handleFormInput}
             error={editAccount.confirmPasswordError}
+            className={style.styleFormFields}
           />
           {/* Are you sure you want to delete this Blanket Deposit? */}
         </Modal.Body>
         <Modal.Footer>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
-          >
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-                margin: "0 0.6rem",
-              }}
-              onClick={handleModalInput}
-            >
+          <div className={`${style.flexEnd}`}>
+            <Button className={style.button} onClick={handleModalInput}>
               Confirm
             </Button>
             <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-              }}
+              className={style.button}
               onClick={() => setShowModal(false)}
             >
               Cancel

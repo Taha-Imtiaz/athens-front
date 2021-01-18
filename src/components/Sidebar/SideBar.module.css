@@ -1,63 +1,33 @@
 .sidebar {
-    height: 85vh;
-    margin: 0;
-    padding: 0;
-    width: 15vw;
-    background-color:#181F47;
-    position: fixed;
-    
-    text-align: left;
-    /* overflow: auto; */
-  }
-  
-  .sidebar a {
-    display: block;
-    color: #FFFFFF;
-    padding: 16px;
-    text-decoration: none;
-  }
+  background-color: #181f47;
+  height: 100%;
+}
 
-  .sidebar .active{
-    background-color:#00ADEE;
-  }
-   
-  .sidebar a:hover {
-    color:  white;
-    background-color: #00ADEE;
-  }
+.sidebar > .sidebarContent > a {
+  grid-template-rows: repeat(auto-fit, minmax(10vh, 1fr));
+  color: white;
 
-  .font{
-    font-size: 16px;
-    display: flex;
-    justify-content: start;
-  }
-
+  display: grid;
+  grid-template-columns: 20fr 80fr;
+ 
+}
+.sidebarContent > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-@media only screen and (max-width: 1200px) { 
-  .sidebar {
-    /* width: 18vw; */
-  }
+
+.sidebar .active {
+  background-color: #00adee;
 }
-  @media only screen and (max-width: 576px) {
-    .sidebar {
-      height: 100%;
-      width: 80px;
-      background-color:#181F47;
-      position: fixed;
-      height: 100%;
-      text-align: left;
-      /* overflow: auto; */
-    }
 
-    .sidebar a {
-      display: block;
-      color: #FFFFFF;
-      padding: 16px;
-      text-decoration: none;
-    }
-
-  }
+.sidebar .sidebarContent > a:hover {
+  color: white;
+  background-color: #00adee;
+  text-decoration: none;
+}

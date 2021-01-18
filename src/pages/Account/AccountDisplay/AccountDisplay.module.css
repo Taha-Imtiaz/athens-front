@@ -1,81 +1,120 @@
 .accountContainer {
-    display: grid;
-    grid-template-columns: 10fr 30fr 50fr 10fr;
-    grid-template-rows: 76.6vh 10vh;
+  display: grid;
+  grid-template-columns: 5fr 30fr 60fr 5fr;
+  grid-template-rows: 60vh 26.6vh;
 
-    grid-template-areas: ". profile form  ."
-                               ". . . .";
-    /* margin-top: 1rem; */
-    column-gap: 2rem;
-    background-color: #e9ecef;
+  grid-template-areas:
+    ". profile form  ."
+    ". . . .";
+  /* margin-top: 1rem; */
+  column-gap: 2rem;
+  background-color: #e9ecef;
 }
 .form {
-    grid-area: form;
-    border-radius: 0.4rem;
-    background-color: #fff;
-    margin-top: 2rem;
- 
+  grid-area: form;
+  border-radius: 0.4rem;
+  background-color: #fff;
+  margin-top: 2rem;
+  padding: 0 2rem;
+}
+.header {
+  margin-top: 1rem;
 }
 
 .profile {
-    grid-area: profile;
-    margin-top: 2rem;
-   display: grid;
-   grid-template-rows:  50vh 36.6vh;
-   grid-template-columns: 1fr;
-   grid-template-areas: "content"
-                        ".";
-  
- 
+  grid-area: profile;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-rows: 50vh 10vh;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "content"
+    ".";
 }
 .content {
-   
-   
-    border-radius: 0.4rem;
-     background-color: #fff;
-   
-    grid-area: content;
+  border-radius: 0.4rem;
+  background-color: #fff;
 
-    display: grid;
-    grid-template-rows: 15fr 25fr repeat(2, 5fr)  38fr 10fr 2fr;
-   
-    grid-template-areas: "." 
-                        "profilePic" 
-                        "accountHolderName"
-                        "accountHolderRole"
-                        "."
-                        "editButton"
-                        ".";
-                        
-   
+  grid-area: content;
+
+  display: grid;
+  grid-template-rows: 15fr 25fr repeat(2, 5fr) 38fr 10fr 2fr;
+
+  grid-template-areas:
+    "."
+    "profilePic"
+    "accountHolderName"
+    "accountHolderRole"
+    "."
+    "editButton"
+    ".";
 }
 .profilePic {
-    background-image: url("https://res.cloudinary.com/dz8zgvu8s/image/upload/v1570542639/user1.jpg");
-    background-size: 100% 100%, cover;
-    grid-area: profilePic;
-    
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
+  background-image: url("https://res.cloudinary.com/dz8zgvu8s/image/upload/v1570542639/user1.jpg");
+  background-size: 100% 100%, cover;
+  grid-area: profilePic;
+
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
 }
 .accountHolderName {
-    grid-area: accountHolderName;
-    /* background-color: aqua; */
+  grid-area: accountHolderName;
+  /* background-color: aqua; */
 }
 .accountHolderRole {
-    grid-area: accountHolderRole;
+  grid-area: accountHolderRole;
 }
 .editButton {
-    grid-area: editButton;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 0.5rem;
-    margin: 0 0.5rem;
+  grid-area: editButton;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.5rem;
+  margin: 0 0.5rem;
+}
+.editButton .button {
+  width: 100%;
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.editButton .button:hover {
+    background-color: #00adee;
+}
+.btn .button:hover {
+    background-color: #00adee;
+}
+.btn .button {
+  width: 100%;
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
 }
 .flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  /* flex-flow: column; */
+}
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.flexEnd {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-self: center;
-    /* flex-flow: column; */
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.flexEnd .button {
+    background: #00ADEE;
+    text-transform: none;
+    color: #FFF;
+    font-family: sans-serif;
+    width: 100%;
+    margin: 0 0.2rem;
+}
+.flexEnd .button:hover {
+    background-color: #00adee;
 }

@@ -1,14 +1,34 @@
+.scheduleContainer {
+ 
+  display: grid;
+  grid-template-rows: minmax(86.6vh,min-content);
+  grid-template-columns: 20fr 80fr;
+  grid-template-areas: "sidebar dragContent";
+  /* background-color: aqua; */
+}
+.sidebar {
+  grid-area: sidebar;
+ 
+}
+.dragContent {
+  grid-area: dragContent !important;
+  /* background-color: blue !important; */
+  display: grid !important;
+  grid-template-columns: 1fr;
+  grid-template-areas: "dragDropContext";
+}
+.dragDropContext {
+  grid-area: dragDropContext;
+  display: grid;
+  grid-template-columns: 75fr 25fr;
+}
+.styleLine {
+  border-top: 4px solid rgba(0, 0, 0, 0.1);
+}
+
 .items {
   margin-left: 0.15%;
 }
-/* Hide Schedule scrollbar */
-/* ::-webkit-scrollbar {
-    display: none;
-} */
-/* .color{
-    background-color: #00ADEE !important;
-    margin-left: 1%;
-} */
 
 .head {
   margin-top: 2%;
@@ -106,34 +126,4 @@ body {
   border-left: 1px solid rgb(223, 214, 214);
 
   /* position: fixed; */
-}
-
-@media only screen and (max-width: 576px) {
-  .items {
-    margin-left: 4%;
-    margin-top: 2%;
-  }
-}
-
-@media only screen and (max-width: 420px) {
-  .items {
-    margin-left: 4%;
-    margin-top: 2%;
-  }
-  .lists {
-    margin-left: 5%;
-    margin-top: 5%;
-  }
-
-  .head {
-    margin-top: 5%;
-    margin-left: 10%;
-  }
-
-  .list {
-    width: 95%;
-    margin-top: 10%;
-    margin-left: 8%;
-    margin-bottom: 5%;
-  }
 }

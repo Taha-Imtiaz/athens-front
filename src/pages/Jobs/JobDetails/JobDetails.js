@@ -130,7 +130,6 @@ const JobDetails = (props) => {
                       Close
                     </Button>
                   </div>
-                  {/* <Button variant="primary">Add Activity</Button> */}
                 </Modal.Footer>
               </Modal>
             </div>
@@ -202,17 +201,16 @@ const JobDetails = (props) => {
             )}
 
             <div className={style.jobEditBtns}>
-              
-                <div className = {style.jobEditBtn}>
-                  <Link className={`${style.link}`} to={`/job/update/${jobId}`}>
+              <div className={style.jobEditBtn}>
+                <Link className={`${style.link}`} to={`/job/update/${jobId}`}>
                   <Button className={style.buttons} type="button">
                     Edit
                   </Button>
-                  </Link>
-                </div>
-              
+                </Link>
+              </div>
+
               {job.status != "booked" ? (
-                <div className = {style.jobBookBtn}>
+                <div className={style.jobBookBtn}>
                   <Button
                     className={style.buttons}
                     onClick={() => setShowBooking(true)}
@@ -230,9 +228,7 @@ const JobDetails = (props) => {
         dialogClassName={`${style.modal}`}
         show={showBooking}
         onHide={() => setShowBooking(false)}
-        // animation={false}
         centered
-        // backdrop={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Booking Confirmation</Modal.Title>

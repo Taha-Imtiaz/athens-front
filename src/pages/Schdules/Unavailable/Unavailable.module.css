@@ -1,6 +1,6 @@
 .unavailableContainer {
   display: grid;
-  grid-template-rows: minmax(86.6vh, min-content);
+  grid-template-rows: minmax(90vh, min-content);
   grid-template-columns: 20fr 80fr;
 }
 .unavailableContent {
@@ -18,15 +18,15 @@
   grid-template-columns: 85fr 15fr;
 }
 .approveBtn .button {
-    background-color: #00adee;
-    color: #fff;
-    font-family: sans-serif;
-    text-transform: none;
-  }
-  .approveBtn .button:hover {
-    background-color: #00adee;
-  }
-  
+  background-color: #00adee;
+  color: #fff;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.approveBtn .button:hover {
+  background-color: #00adee;
+}
+
 .unavailableList {
   grid-area: unavailableList;
 }
@@ -34,5 +34,3 @@
 .checkBox {
   text-indent: 0.5rem;
 }
-
-

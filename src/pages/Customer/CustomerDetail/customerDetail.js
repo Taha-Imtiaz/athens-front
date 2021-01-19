@@ -13,7 +13,7 @@ import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import BlanketList from "../../BlanketList/BlanketList";
+import BlanketList from "../../Blanket/BlanketList/BlanketList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 

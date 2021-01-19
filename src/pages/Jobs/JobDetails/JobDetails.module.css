@@ -1,7 +1,7 @@
 .jobEditContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
-  /* grid-template-rows: minmax(86.6vh, min-content); */
+  /* grid-template-rows: minmax(90vh, min-content); */
   /* background-color: #00adee; */
   grid-template-areas: ". containerContent .";
 }
@@ -69,19 +69,17 @@
 }
 .jobDetail {
   grid-area: jobDetail;
-  background-color: #e9ecef;
+  /* background-color: #e9ecef; */
   display: grid;
-  grid-template-rows: 10vh minmax(6vh, min-content) 5vh repeat(
-      3,
-      minmax(11vh, min-content)
-    ) min-content;
+  grid-template-rows:
+    10vh minmax(6vh, min-content) 5vh repeat(3, minmax(11vh, min-content))
+    min-content;
   border-radius: 0.4rem;
   padding: 0 1rem;
   /* background-color: #00adee; */
 }
 .jobHeader {
   display: grid;
-  margin: 1rem;
   grid-template-columns: 60fr repeat(2, 20fr);
 }
 .jobDates {
@@ -148,13 +146,11 @@
   display: grid;
   grid-template-rows: 1fr;
   column-gap: 0.3rem;
-  grid-template-columns:  80fr repeat(2, 1fr);
+  grid-template-columns: 80fr repeat(2, 1fr);
   grid-template-areas: ". jobBookBtn jobEditBtn";
- 
 }
 .jobBookBtn {
   grid-area: jobBookBtn;
-
 }
 .jobEditBtn {
   grid-area: jobEditBtn;
@@ -169,10 +165,9 @@
   align-items: flex-end;
 }
 .jobEditBtns .buttons {
- 
   background: #00adee;
   text-transform: none;
-/* width: 100%; */
+  /* width: 100%; */
   color: #fff;
   font-family: sans-serif;
 }

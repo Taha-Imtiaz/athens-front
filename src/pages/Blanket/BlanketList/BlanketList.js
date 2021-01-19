@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./BlanketList.module.css";
 import TimeAgo from "react-timeago";
-import { updateDeposit } from "../../Redux/Claims/claimsActions";
-import { showMessage } from "../../Redux/Common/commonActions";
+import { updateDeposit } from "../../../Redux/Claims/claimsActions";
+import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { Modal, Alert } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 const BlanketList = (props) => {
   var [blanketValue, setBlanketValue] = useState(props.blanketValue);
@@ -44,7 +44,7 @@ const BlanketList = (props) => {
       };
       updateDeposit(obj)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           let newData = cloneDeep(blanketValue);
           newData[i] = res.data.data.updatedblanketDeposit;
           console.log(newData);
@@ -309,7 +309,6 @@ const BlanketList = (props) => {
           >
             Close
           </Button>
-          {/* <Button variant="primary">Add Activity</Button> */}
         </Modal.Footer>
       </Modal>
     </div>

@@ -80,7 +80,7 @@ class SignInForm extends React.Component {
         password: this.state.password,
       };
       login(obj).then((res) => {
-        if (res ?.data.status == 200) {
+        if (res?.data.status == 200) {
           res.data.data.role == "mover"
             ? this.props.history.push("/mover")
             : this.props.history.push("/customers");
@@ -107,9 +107,9 @@ class SignInForm extends React.Component {
     var { name, value } = event.target;
     this.setState({ [name]: value });
     if (!value) {
-      this.setState({ [name + 'Error']: name + ' is required' });
+      this.setState({ [name + "Error"]: name + " is required" });
     } else {
-      this.setState({ [name + 'Error']: '' });
+      this.setState({ [name + "Error"]: "" });
     }
   };
 
@@ -165,8 +165,14 @@ class SignInForm extends React.Component {
                 />
               </div>
               <Link to="/email-verification" style={{}}>
-                <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width: "80%", justifyContent: "flex-end" }}>
-
+                <div
+                  className={`${style.forgetPs} ${style.flex}`}
+                  style={{
+                    alignItems: "flex-start",
+                    width: "80%",
+                    justifyContent: "flex-end",
+                  }}
+                >
                   {/* <Button 
                 // type="button"
                   style={{
@@ -180,32 +186,28 @@ class SignInForm extends React.Component {
                   }}
                 > */}
                   Forgot Password?
-                {/* </Button> */}
-
+                  {/* </Button> */}
                 </div>
               </Link>
               <div
-                className={`${style.signinBtn} ${style.flex}`} style={{ alignItems: "flex-start" }}>
-                <Button type="submit"
+                className={`${style.signinBtn} ${style.flex}`}
+                style={{ alignItems: "flex-start" }}
+              >
+                <Button
+                  type="submit"
                   style={{
                     background: "#00ADEE",
                     textTransform: "none",
                     color: "#FFF",
                     fontFamily: "sans-serif",
                     margin: "0 2rem",
-                    width: "60%"
-
+                    width: "60%",
                   }}
                 >
                   Sign In
                 </Button>
-
               </div>
-              {/* <h3 className={style.heading}>Or Login With</h3>
-          <div className={style.btnStyle}>
-            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>
-            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-facebook"></i></button>
-          </div> */}
+           
             </form>
           </div>
         </div>

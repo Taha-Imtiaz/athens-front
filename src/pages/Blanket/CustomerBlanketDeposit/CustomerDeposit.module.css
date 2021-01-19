@@ -1,0 +1,74 @@
+.jumbotron {
+  /* margin: 0 3% !important;
+  border: 1px solid lightgrey;
+  box-shadow: 0px 1px lightgrey; */
+}
+.submitDepositContainer {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". submitDeposit .";
+}
+.submitDeposit {
+  grid-area: submitDeposit;
+}
+.toprow {
+  display: grid;
+  grid-template-columns: 80fr 20fr;
+  margin-top: 1rem;
+}
+.btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.btn .link {
+  text-decoration: none;
+}
+.btn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.btn .button:hover {
+  background-color: #00adee;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blaketHeader {
+  display: grid;
+  grid-template-columns: 20fr repeat(2,15fr) 20fr 30fr;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+}
+.list {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.modal {
+  max-width: 70vw;
+}
+.modal ::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.modal ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+.modal ::-webkit-scrollbar-thumb {
+  background: #00adee;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.modal ::-webkit-scrollbar-thumb:hover {
+  background: #00adee;
+}

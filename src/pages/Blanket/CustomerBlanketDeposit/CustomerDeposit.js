@@ -19,7 +19,6 @@ import {
 } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDeposit = (props) => {
-  
   var { blanketDeposit } = props;
 
   const [show, setShow] = useState(false);
@@ -33,7 +32,6 @@ const CustomerDeposit = (props) => {
   var [modalIndex, setModalIndex] = useState("");
   var [deleteModal, setDeleteModal] = useState(false);
   var [depositToDelete, setDepositToDelete] = useState(false);
-
 
   var totalCount = blanketDeposit?.total;
 
@@ -77,11 +75,6 @@ const CustomerDeposit = (props) => {
         page: currentPage,
       };
       updateDeposit(obj);
-      // .then((res) => {
-      //   var { showMessage } = props;
-      //   showMessage(res.data.message);
-      // })
-      // .catch((err) => console.log(err));
     }
   };
   var makeInputFieldEditible = (id, e, i) => {
@@ -118,22 +111,16 @@ const CustomerDeposit = (props) => {
     var { deleteBlanketDeposit } = props;
     deleteBlanketDeposit(depositToDelete);
     setDeleteModal(false);
-
   };
   var handlePageChange = (page) => {
     getDeposits(page);
     setCurrentPage(page);
   };
 
-
   var openDeleteModal = (i, deposit) => {
-    setModalIndex(i)
-    setDepositToDelete(deposit)
-    setDeleteModal(true)
-    // if (modalIndex === i)
-    //   setDeleteModal(true)
-    // else
-    //   setDeleteModal(false)
+    setModalIndex(i);
+    setDepositToDelete(deposit);
+    setDeleteModal(true);
   };
 
   var closeDeleteModal = () => {
@@ -142,53 +129,38 @@ const CustomerDeposit = (props) => {
   var { user, blanketDeposit } = props;
   return (
     <div>
-      <div className="row">
-        <div className="col-12">
-          <div className={`row  ${style.toprow}`}>
-            <div className="col-6">
-              <h3 className={style.head}>Blanket Deposit</h3>
+      <div className={style.submitDepositContainer}>
+        <div className={style.submitDeposit}>
+          <div className={` ${style.toprow}`}>
+            <div>
+              <h3>Blanket Deposit</h3>
             </div>
-            <div className="col-5">
+            <div>
               <div className={style.btn}>
-                <Link
-                  style={{ textDecoration: "none" }}
-                  to="/deposit/add"
-                >
+                <Link className={style.link} to="/deposit/add">
                   {" "}
-                  <Button
-                    style={{
-                      background: "#00ADEE",
-                      textTransform: "none",
-                      color: "#FFF",
-                      fontFamily: "sans-serif",
-                    }}
-                  >
-                    Deposit
-                  </Button>{" "}
+                  <Button className={style.button}>Deposit</Button>{" "}
                 </Link>
               </div>
             </div>
           </div>
 
           {blankets && blankets.length > 0 ? (
-            <div className="col-12">
-              <div
-                className={`row ${style.myrow}`}
-                style={{ marginTop: "2rem", marginBottom: "0.6rem" }}
-              >
-                <div className={`col-2`} style={{ fontWeight: "bold" }}>
+            <div>
+              <div className={` ${style.blaketHeader}`}>
+                <div>
                   <h6>Customer</h6>
                 </div>
-                <div className={`col-2`} style={{ fontWeight: "bold" }}>
+                <div>
                   <h6>Quantity</h6>
                 </div>
-                <div className={`col-2 `} style={{ fontWeight: "bold" }}>
+                <div>
                   <h6>Deposit</h6>
                 </div>
-                <div className="col-3" style={{ fontWeight: "bold" }}>
+                <div>
                   <h6>Last Updated</h6>
                 </div>
-                <div className={`col-3 `} style={{ fontWeight: "bold" }}>
+                <div>
                   <h6>Actions</h6>
                 </div>
               </div>
@@ -208,7 +180,7 @@ const CustomerDeposit = (props) => {
                         <div className={`row `}>
                           <div className="col-2">
                             <label>
-                              {x ?.customer ?.firstName} {x ?.customer ?.lastName}
+                              {x?.customer?.firstName} {x?.customer?.lastName}
                             </label>
                           </div>
                           <div class={`col-2 `}>
@@ -283,26 +255,26 @@ const CustomerDeposit = (props) => {
                                   </Button>
                                 </div>
                               ) : (
-                                  <div
-                                    onClick={() => closeEdit(x._id, i, "save")}
-                                    style={{ margin: "0 0.6rem" }}
+                                <div
+                                  onClick={() => closeEdit(x._id, i, "save")}
+                                  style={{ margin: "0 0.6rem" }}
+                                >
+                                  <Button
+                                    style={{
+                                      background: "#00ADEE",
+                                      textTransform: "none",
+                                      color: "#FFF",
+                                      fontFamily: "sans-serif",
+                                      width: "100%",
+                                    }}
                                   >
-                                    <Button
-                                      style={{
-                                        background: "#00ADEE",
-                                        textTransform: "none",
-                                        color: "#FFF",
-                                        fontFamily: "sans-serif",
-                                        width: "100%",
-                                      }}
-                                    >
-                                      <FontAwesomeIcon icon={faSave}>
-                                        {" "}
-                                      </FontAwesomeIcon>{" "}
-                                      Save
+                                    <FontAwesomeIcon icon={faSave}>
+                                      {" "}
+                                    </FontAwesomeIcon>{" "}
+                                    Save
                                   </Button>
-                                  </div>
-                                )}
+                                </div>
+                              )}
                               <div style={{ margin: "0 0.6rem" }}>
                                 <Button
                                   onClick={() => handleShow(x)}
@@ -317,7 +289,7 @@ const CustomerDeposit = (props) => {
                                   Activities
                                 </Button>
                               </div>
-                              {user ?.role === "admin" && (
+                              {user?.role === "admin" && (
                                 <div>
                                   <Button
                                     onClick={() => openDeleteModal(i, x._id)}
@@ -343,10 +315,10 @@ const CustomerDeposit = (props) => {
               </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
         </div>
         <div className={style.jumbotron}>
           <Pagination
@@ -381,7 +353,7 @@ const CustomerDeposit = (props) => {
           </div>
 
           {depositValue &&
-            depositValue ?.activities.map((activity, i) => (
+            depositValue?.activities.map((activity, i) => (
               <div
                 key={i}
                 className="row"
@@ -389,7 +361,14 @@ const CustomerDeposit = (props) => {
                   fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
                 }}
               >
-                <div className={`col-2`} style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <div
+                  className={`col-2`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {" "}
                   <p>{activity.performer.name}</p>
                 </div>
@@ -398,7 +377,14 @@ const CustomerDeposit = (props) => {
                     <p key={i}>* {x}</p>
                   ))}
                 </div>
-                <div className={`col-4 `}  style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <div
+                  className={`col-4 `}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {/* <p> {activity.timeStamp.split("G")[0]}</p> */}
                   <TimeAgo date={activity.timeStamp} />
                 </div>
@@ -417,7 +403,6 @@ const CustomerDeposit = (props) => {
           >
             Close
           </Button>
-          {/* <Button variant="primary">Add Activity</Button> */}
         </Modal.Footer>
       </Modal>
       <Modal
@@ -426,7 +411,7 @@ const CustomerDeposit = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-      // backdrop = {false}
+        // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
@@ -451,9 +436,10 @@ const CustomerDeposit = (props) => {
                 width: "100%",
                 margin: "0 0.6rem",
               }}
-              onClick={() =>
-                removeBlanketDeposit()
-              }>Confirm</Button>
+              onClick={() => removeBlanketDeposit()}
+            >
+              Confirm
+            </Button>
             <Button
               style={{
                 background: "#00ADEE",
@@ -462,7 +448,10 @@ const CustomerDeposit = (props) => {
                 fontFamily: "sans-serif",
                 width: "100%",
               }}
-              onClick={closeDeleteModal}>Cancel</Button>
+              onClick={closeDeleteModal}
+            >
+              Cancel
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>

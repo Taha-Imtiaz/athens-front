@@ -1,5 +1,5 @@
 .verificationCode {
-    /* margin: 0;
+  /* margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -7,16 +7,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
 
-  height: 86.6vh;
+  height: 90vh;
   display: grid;
   grid-template-areas: "customStyleContainer";
   /* background-color: pink; */
-  
+
   line-height: 1.5;
-} 
-.customStyleContainer{
-grid-area: customStyleContainer;
-    /* display: grid; */
+}
+.customStyleContainer {
+  grid-area: customStyleContainer;
+  /* display: grid; */
   /* grid-template-rows: 1fr; */
   /* grid-template-columns: 1fr; */
   /* grid-template-areas: "image customStyles"; */
@@ -28,23 +28,22 @@ grid-area: customStyleContainer;
   background-size: 100% 100%, cover;
 } */
 .customStyles {
-    /* --ReactInputVerificationCode-itemWidth: 2.5rem;
+  /* --ReactInputVerificationCode-itemWidth: 2.5rem;
     --ReactInputVerificationCode-itemHeight: 3.5rem; */
-    /* display: grid;
+  /* display: grid;
     grid-template-rows: 15vh 12.2vh 17.2vh 12.2vh 30vh ; */
-    grid-area: customStyles;
-    
-    /* grid-template-areas: "."
+  grid-area: customStyles;
+
+  /* grid-template-areas: "."
                         "verificationCodeHead"
                         "verificationCodeBoxes"
                         "submitCode"
                             ".";
 
    */
-
 }
-  
-  /* .verificationCodeHead {
+
+/* .verificationCodeHead {
       grid-area: verificationCodeHead;
       
       display: flex;
@@ -66,34 +65,33 @@ grid-area: customStyleContainer;
       justify-content: center;
       align-items: center;
   } */
-  .customStyles .ReactInputVerificationCode__item {
-   
-    color: #262626;
-    font-weight: 500;
-  }
-  
-  .customStyles .ReactInputVerificationCode__item,
-  .customStyles .ReactInputVerificationCode__item.is-active {
-    box-shadow: none;
-  }
-  
-  .customStyles .ReactInputVerificationCode__item:after {
-    content: "";
-    /* display: block;
+.customStyles .ReactInputVerificationCode__item {
+  color: #262626;
+  font-weight: 500;
+}
+
+.customStyles .ReactInputVerificationCode__item,
+.customStyles .ReactInputVerificationCode__item.is-active {
+  box-shadow: none;
+}
+
+.customStyles .ReactInputVerificationCode__item:after {
+  content: "";
+  /* display: block;
     position: absolute;
     left: 0;
     bottom: 0;
     right: 0; */
-    height: 2px;
-    background-color: #ebebeb;
-    transition: background-color 0.2s ease-out;
-  }
-  
-  .customStyles .ReactInputVerificationCode__item.is-active:after {
-    background-color: #046cde;
-  }
-  .flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  height: 2px;
+  background-color: #ebebeb;
+  transition: background-color 0.2s ease-out;
+}
+
+.customStyles .ReactInputVerificationCode__item.is-active:after {
+  background-color: #046cde;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

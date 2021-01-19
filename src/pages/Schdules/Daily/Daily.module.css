@@ -1,14 +1,12 @@
 .scheduleContainer {
- 
   display: grid;
-  grid-template-rows: minmax(86.6vh,min-content);
+  grid-template-rows: minmax(90vh, min-content);
   grid-template-columns: 20fr 80fr;
   grid-template-areas: "sidebar dragContent";
   /* background-color: aqua; */
 }
 .sidebar {
   grid-area: sidebar;
- 
 }
 .dragContent {
   grid-area: dragContent !important;

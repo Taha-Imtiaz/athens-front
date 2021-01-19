@@ -1,7 +1,7 @@
 .accountContainer {
   display: grid;
   grid-template-columns: 5fr 30fr 60fr 5fr;
-  grid-template-rows: 60vh 26.6vh;
+  grid-template-rows: 60vh 30vh;
 
   grid-template-areas:
     ". profile form  ."

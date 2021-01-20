@@ -1,6 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
 
+.app-without-nav {
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-rows: minmax(min-content, 100vh);
+  grid-template-columns: 1fr;
+  grid-template-areas: "app-content-without-nav";
+}
+.app-content-without-nav {
+  grid-area: app-content-without-nav;
+}
 .app {
   font-family: "Roboto", sans-serif;
   display: grid;
@@ -9,6 +19,7 @@
     "navigation-menu"
     "app-content-container";
 }
+
 .navigation-menu {
   grid-area: navigation-menu;
 }

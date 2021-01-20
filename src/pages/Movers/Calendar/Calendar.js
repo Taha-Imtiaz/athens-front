@@ -32,7 +32,7 @@ class MoversCalendar extends Component {
     const date = new Date();
     getMoverJobs(date).then((res) => {
       let jobs = [];
-      console.log(res.data)
+      console.log(res.data);
       let currentDayJobs = [];
       res.data.data.map((x) => {
         x.dates.map((y) => {
@@ -101,31 +101,23 @@ class MoversCalendar extends Component {
   };
 
   getJobDetails = (e) => {
-    var {getJob, job} = this.props
-    console.log(job)
-    getJob(e.id)
-    if(job) {
-      this.setState({ currentDayJobs:job, date: e.start });
+    var { getJob, job } = this.props;
+    console.log(job);
+    getJob(e.id);
+    if (job) {
+      this.setState({ currentDayJobs: job, date: e.start });
     }
-    
-      // .then((res) => {
-      //   console.log(res.data)
-      //   this.setState({ currentDayJobs: res.data.job, date: e.start });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
   };
 
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     let currentDayJobs = [];
-    console.log(this.state.jobs)
+    console.log(this.state.jobs);
     this.state.jobs.map((x) => {
       x.dates.map((y) => {
         if (y == date.toDateString()) {
           currentDayJobs.push(x);
-          console.log(currentDayJobs)
+          console.log(currentDayJobs);
         }
       });
     });
@@ -160,11 +152,14 @@ class MoversCalendar extends Component {
               fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
             }}
           >
-               <div className={`d-flex `} >
-                    <div className={` ${style.btn}`} style={{margin:"1rem 0"}}>
-                        <Link style={{ textDecoration: "none" }} to='/mover/availability'>
-                             {/* <Button name="Set Availability" /> */}
-                             <Button
+            <div className={`d-flex `}>
+              <div className={` ${style.btn}`} style={{ margin: "1rem 0" }}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/mover/availability"
+                >
+                  {/* <Button name="Set Availability" /> */}
+                  <Button
                     type="button"
                     style={{
                       background: "#00ADEE",
@@ -172,15 +167,19 @@ class MoversCalendar extends Component {
                       color: "#FFF",
                       fontFamily: "sans-serif",
                       float: "right",
-                    //   margin: "0 0rem",
-                    }}>
-                  Set Availability</Button>
-                             
-                             </Link>
-                    </div>
-                    <div className={style.btn2} style={{margin:"1rem 0rem"}}>
-                        <Link style={{ textDecoration: "none" }} to='/mover/holidaycalendar'>
-                        <Button
+                      //   margin: "0 0rem",
+                    }}
+                  >
+                    Set Availability
+                  </Button>
+                </Link>
+              </div>
+              <div className={style.btn2} style={{ margin: "1rem 0rem" }}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/mover/holidaycalendar"
+                >
+                  <Button
                     type="button"
                     style={{
                       background: "#00ADEE",
@@ -189,13 +188,15 @@ class MoversCalendar extends Component {
                       fontFamily: "sans-serif",
                       float: "right",
                       margin: "0 0.4rem",
-                    }}>
-                  Request Holidays</Button>
-                             {/* <Button name="Request Holidays" /> */}
-                             </Link>
-                    </div>
-                </div>
-            <div >
+                    }}
+                  >
+                    Request Holidays
+                  </Button>
+                  {/* <Button name="Request Holidays" /> */}
+                </Link>
+              </div>
+            </div>
+            <div>
               <Calendar
                 selectable={true}
                 localizer={localizer}
@@ -225,7 +226,6 @@ class MoversCalendar extends Component {
           </div>
 
           <div className="col-3 text-left">
-              
             <div>
               {this.state.currentDayJobs?.length ? (
                 <div>
@@ -255,10 +255,6 @@ class MoversCalendar extends Component {
                           // boxShadow: "0px 2px lightgrey"
                         }}
                       >
-                        {/* data-toggle="collapse"
-                            data-target="#collapseOne"
-                            aria-expanded="true"
-                            aria-controls="collapseOne" */}
                         <div
                           className={`card-header ${style.cardHeader}`}
                           id="headingOne"
@@ -314,7 +310,7 @@ class MoversCalendar extends Component {
                           <div className="card-body">
                             <span
                               className="card-text"
-                              style={{whiteSpace:"pre-line" }}
+                              style={{ whiteSpace: "pre-line" }}
                             >
                               {parse(job.description)}
                             </span>
@@ -472,101 +468,6 @@ class MoversCalendar extends Component {
             </div>
           </div>
         </div>
-
-        {/* <div className={`row ${style.toprow}`}>
-                    <div className="col-8">
-                        <div className={style.cal}>
-                            <Calendar
-                                selectable
-                                localizer={localizer}
-                                events={this.state.myEventsList}
-                                startAccessor="start"
-                                endAccessor="end"
-                                style={{ height: 500, width: '90%' }}
-                                views={{
-                                    month: true
-                                }}
-                                popup={true}
-                                onNavigate={this.changeDate}
-                                onSelectEvent={this.getJobDetails}
-                                onSelectSlot={this.getJobDetailsOnSlotClick}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="col-3 text-left">
-                        {this.state.job ? <div>
-                            <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>{this.state.date.toDateString()}</h5>
-
-                            <div id="accordion" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-
-                                <div className={`card ${style.cardCustom} ${style.card}`}
-                                    style={{ marginBottom: "1.5rem" }}
-                                >
-                                    <div
-                                        className={`card-header ${style.cardHeader}`}
-                                        id="headingOne"
-                                        aria-expanded="true"
-                                        data-toggle="collapse"
-                                        href={`#collapse${this.state.myEventsList.length}`}
-                                        aria-controls="collapse"
-                                    >
-                                        <div>
-                                            <Link
-                                                style={{ textDecoration: "none" }}
-                                                to={`/job/details/${this.state.job._id}`}
-                                            >
-                                                &nbsp;
-                                        {this.state.job.title}
-                                            </Link>
-                                        </div>
-                                        <div>
-                                            {this.state.job.startTime && <Chip
-                                                label={this.state.job.startTime}
-                                                clickable
-                                                color="primary"
-                                                variant="outlined"
-                                                size="small"
-                                                style={{ margin: " 0 0.2rem" }}
-                                            />}
-                                            <Chip
-                                                label={this.state.job.status}
-                                                clickable
-                                                color="primary"
-                                                variant="outlined"
-                                                size="small"
-                                                style={{ margin: " 0 0.2rem" }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        id={`collapse${this.state.myEventsList.length}`}
-                                        className="collapse show"
-                                        aria-labelledby="headingOne"
-                                        data-parent="#accordion"
-                                    >
-
-                                        <div className="card-body">
-                                            <h5 className="card-title">{this.state.job.title}</h5>
-                                            <p className="card-text" style={{ whiteSpace:"pre-line"}}>{this.state.job.description}</p>
-                                            <p className="card-text">Customer:
-                                                        <Link
-                                                    style={{ textDecoration: "none" }}
-                                                    to={`/customer/detail/${this.state.job.customer._id}`}>
-                                                    &nbsp;
-                                                                {this.state.job.customer.email}
-                                                </Link></p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div> : <h5 style={{ display: "flex", justifyContent: "center", alignItems: "center", fontFamily: "sans-serif" }}>No Jobs available</h5>}
-
-
-
-                    </div>
-                </div> */}
       </div>
     );
   }
@@ -576,11 +477,11 @@ class MoversCalendar extends Component {
 var mapStateToProps = (state) => ({
   // moverJobs: state.moverJobs,
   user: state.users.user,
-  job: state.moverJobs?.job
+  job: state.moverJobs?.job,
 });
 
 var actions = {
-    getJob
+  getJob,
 };
 
 export default connect(mapStateToProps, actions)(MoversCalendar);

@@ -1,240 +1,79 @@
-.jumbotron{
- 
-/*  justify-content: center;
-  display: grid;
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: 1fr;
-  grid-template-areas: "Username"
-                        "password";*/
-
-  /* margin:  0 20vw; */
-  /* background-color:#e9f2eb; */
-  /* width: 70vw; */
-} 
-
-.heading{
-    /* margin-top: 5%; */
-    /* margin-left: 15%; */
-  
-}
-
-/* .input_fields{
-    padding-top: 1%;
-    width: 50%;
-    margin-top: 1%;
-    border-radius: 5px;
-    outline: none;
-    border : 1px solid #a8a8a8
-}
-
-
-}
-.button {
-    background-color: #00ADEE;
-    border: none;
-    color: white;
-    padding: 8px;
-    text-align: center;
-    font-size: 20px;
-    margin: 4px 2px;
-    border-radius: 5px;
-    width: 50%;
-    margin-top:3% ;
-    margin-left: 8%;
-  }
-
-  .button:hover {
-    background-color: #00ADEE !important;
-    text-decoration: none;
-    }
-
-
-    .msg{
-      width: 50%;
-      margin-left: 25%;
-      margin-top: 2%;
-    }
-
-    
-  .bttn {
-    background-color: DodgerBlue;
-    border: none;
-    color: white;
-    padding: 12px 16px;
-    font-size: 16px;
-    border-radius: 25px; 
-    margin-left: 20px;
-     padding-bottom: 2%;
-  }
-
-  .btn:hover {
-    background-color: RoyalBlue;
-  }
-  .button:hover {
-    background-color: RoyalBlue;
-  }
-
-
-.circle{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  margin: 4px;
-  background-color:white;
-  color: dodgerblue;
-  border: 1px solid;
-
-}
-
-.labell{
-  color: #a8a8a8;
-  transform: translate3d(0rem, 0.8rem, 0);
-}
-
-.userInput{
-  grid-area: Username;
-  background-color: red;
-}
-
-
-.head{
-  margin-top: 10%;
-    margin-bottom: 2%;
-    font-size:2rem;
-    margin-left: 18%;
-    padding-top: 2%;
-}
-
-.fa-facebook{
-  background-color: #fff !important;
-  color: dodgerblue !important;
-}
-
-
-@media only screen and (max-width: 576px) {
-  .input_fields{
-    padding-top: 1%;
-    width: 100%;
-    margin-top: 1%;
-    border-radius: 5px;
-    outline: none;
-    border : 1px solid #a8a8a8
-}
-
-
-.button{
-width: 100%;
-font-size: 14px;
-margin-top: 20px;
-}
-
-.labell{
-  color: #a8a8a8;
-  transform: translate3d(0rem, 0.8rem, 0);
-  margin-bottom: 1rem;
-}
-
-.circle{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  margin: 2px;
-  background-color:white;
-  color: dodgerblue;
-  border: 1px solid;
-
-} */
-
-/* .bttn {
-  background-color: white;
-  border: 1 px ;
-  color:dodgerblue;
-  padding: 5px 6px;
-  font-size: 16px;
-  border-radius: 25px;
-  margin-left: 20px;
-  padding-bottom: 2%;
-}
-
- .jumbotron{
-  justify-content: center;
-  
-
-  margin: 0 15vw;
-  background-color:#e9f2eb;
-  width: 70vw;
-} 
- */
-
-
 /* my styling */
 
 .signInContainer {
-  /* background-color: red; */
-  /* height: minmax(90vh, min-content); */
-  height: 100vh;
+  grid-template-rows: minmax(min-content, 100vh);
+  /* background-color: aquamarine; */
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 50fr 50fr;
   grid-template-areas: "image form";
-
 }
 .image {
   grid-area: image;
-  /* background-color: white; */
+
   background-image: url("/images/loginimage.jpg");
   background-size: 100% 100%, cover;
 }
 .form {
   grid-area: form;
-  /* background-color: lightcoral; */
+
   display: grid;
-  grid-template-rows: 25vh 50vh 25vh;
-  grid-template-areas: "."
-                        "signIn"
-                        ".";
+  grid-template-rows: 30vh 40vh 30vh;
+  grid-template-areas:
+    "."
+    "signIn"
+    ".";
 }
 .signIn {
   grid-area: signIn;
-  /* background-color: lightsalmon; */
-  display: grid;
-  grid-template-rows:  repeat(3, 10vh) 5vh 15vh ;
-  grid-template-areas: "head"
-                        "email"
-                        "password"
-                        "forgetPs"
-                        "signinBtn";
 
+  display: grid;
+  grid-template-rows: repeat(3, 8vh) 6vh 10vh;
+  grid-template-areas:
+    "head"
+    "email"
+    "password"
+    "forgetPs"
+    "signinBtn";
 }
 .head {
   grid-area: head;
-  /* background-color: lightseagreen; */
-  /* height: 10vh; */
-  /* display: grid; */
+}
+.textFields {
+  width: 60%;
 }
 .email {
   grid-area: email;
-  /* background-color: lightslategrey; */
- height: 10vh;
+  width: 100% !important;
+
+  height: 8vh;
 }
 .password {
-  /* display: grid; */
   grid-area: password;
-  /* background-color: lime; */
-  height: 10vh;
-
+  width: 100% !important;
+  height: 8vh;
 }
 .forgetPs {
   grid-area: forgetPs;
-  height: 5vh;
-  /* background-color: aqua; */
+  height: 6vh;
 }
 .signinBtn {
   grid-area: signinBtn;
-  /* background-color: magenta; */
-  height: 15vh;
+
+  height: 10vh;
+}
+.signinBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+
+  width: 60%;
+}
+.signinBtn .button:hover {
+  background-color: #00adee;
 }
 .flex {
   display: flex;
   justify-content: center;
-  
+  align-items: center;
 }

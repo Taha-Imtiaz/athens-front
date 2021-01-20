@@ -1,45 +1,28 @@
 .verificationContainer {
   display: grid;
-  height: 90vh;
-  display: grid;
-  /* grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "image emailverification"; */
+  grid-template-rows: minmax(min-content, 90vh);
+  grid-template-areas: "verificationContainerContent";
 }
-/*.image {
-    grid-area: image;
-  
-    background-image: url("https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.0-9/121562793_1266066880419586_2665667662501797577_o.jpg?_nc_cat=100&ccb=2&_nc_sid=8bfeb9&_nc_eui2=AeFwJH65RWpVrOn1K4jSlGcUhcw6-aBOl3-FzDr5oE6Xf5eA60wn_a8vjaGrWfR2jgqeVZkMCcr162pbsP0nZGCE&_nc_ohc=99-El9MWnUEAX8q19v0&_nc_ht=scontent.fkhi10-1.fna&oh=37a9307b681deaea9d900fc9e64df71d&oe=5FE74342");
-    background-size: 100% 100%, cover;
-  }
-.emailVerification {
-    grid-area: emailverification;
-   display: grid;
-   grid-template-rows: 15vh repeat(3, 12.2vh) 35vh ;
-   grid-template-areas: "."
-                        "verifyhead"
-                        "verifyinput"
-                        "sendcode"
-                        ".";
-
+.verificationContainerContent {
+  grid-area: verificationContainerContent;
 }
-.verifyhead {
-    grid-area: verifyhead;
-    
-    
+.emailField {
+  margin: 0.5rem 0 !important;
+  width: 30vw;
 }
-
-.verifyinput {
-    height: 12.2vh;
-    grid-area: verifyinput;
-    
+.sendCodeBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  width: 30vw;
 }
-.sendcode {
-    grid-area: sendcode;
-    
-    
-} */
+.sendCodeBtn .button:hover {
+  background-color: #00adee;
+}
 .flex {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-flow: column;
 }

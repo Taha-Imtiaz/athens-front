@@ -650,13 +650,15 @@ class JobsList extends Component {
               })}
             </div>
             {/* pagination for multiple pages */}
-            <div className={style.jumbotron}>
+            <div className = {style.stylePagination}>
+            <div className = {style.pagination}>
               <Pagination
                 itemCount={totalCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}
               />
+            </div>
             </div>
           </div>
         ) : (

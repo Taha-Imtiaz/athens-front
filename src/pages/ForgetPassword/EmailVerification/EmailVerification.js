@@ -35,61 +35,31 @@ const EmailVerification = (props) => {
     }
   };
   return (
-    <div className={`${style.verificationContainer} ${style.flex}`}>
-      {/* <div className={style.image}></div> */}
-      <div
-      // className={`${style.emailVerification}`}
-      >
-        <div className={`${style.flex}`}>
+    <div className={`${style.verificationContainer} `}>
+      <div className={`${style.verificationContainerContent} ${style.flex}`}>
+        <div>
           <h4>Enter your email address</h4>
         </div>
 
-        <div
-        // className={`${style.verifyinput} ${style.flex}`}
-        >
+        <div>
           <form>
-            <div>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required="required"
-                // fullWidth
-                style={{ margin: "1rem 0", width: "30vw" }}
-                size="small"
-                id="email"
-                label="Enter Email"
-                name="email"
-                value={email}
-                onChange={(e) => handleFormInput(e)}
-                error={emailError}
-              />
-            </div>
+            <TextField
+              variant="outlined"
+              required
+              className={style.emailField}
+              size="small"
+              id="email"
+              label="Enter Email"
+              name="email"
+              value={email}
+              onChange={(e) => handleFormInput(e)}
+              error={emailError}
+            />
           </form>
         </div>
 
-        <div
-        //  className={`${style.sendcode} ${style.flex}`}
-        >
-          <div
-         
-          >
-            <Button
-              onClick={navigateToCode}
-              // type="button"
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-
-                fontFamily: "sans-serif",
-                width: "30vw",
-                // margin: "0 2rem",
-                // width: "60%"
-              }}
-            >
-              Send Verification Code
-            </Button>
-          </div>
+        <div className={style.sendCodeBtn}>
+          <Button onClick={navigateToCode} className = {style.button}>Send Verification Code</Button>
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ const Navbar = (props) => {
   };
   var logOut = () => {
     localStorage.clear();
-   
+
     window.location.reload(false);
   };
   return (
@@ -96,19 +96,8 @@ const Navbar = (props) => {
                         Blankets
                       </Link>
                     </li>
-                    <li>
-                      <Button
-                        style={{
-                          background: "#00ADEE",
-                          border: "transparent",
-                          color: "#ffffff",
-                          padding: "0.5rem",
-                          borderRadius: "0.25rem",
-                          fontFamily: "sans-serif",
-                          textTransform: "none",
-                        }}
-                        onClick={logOut}
-                      >
+                    <li className={style.logoutBtn}>
+                      <Button className={style.button} onClick={logOut}>
                         Log Out
                       </Button>
                     </li>
@@ -125,19 +114,8 @@ const Navbar = (props) => {
                         Calendar
                       </Link>
                     </li>
-                    <li>
-                      <Button
-                        style={{
-                          background: "#00ADEE",
-                          border: "transparent",
-                          color: "#ffffff",
-                          padding: "0.5rem",
-                          borderRadius: "0.25rem",
-                          fontFamily: "sans-serif",
-                          textTransform: "none",
-                        }}
-                        onClick={logOut}
-                      >
+                    <li className={style.logoutBtn}>
+                      <Button className={style.button} onClick={logOut}>
                         Log Out
                       </Button>
                     </li>
@@ -161,10 +139,6 @@ const Navbar = (props) => {
     </div>
   );
 };
-
-// var actions = {
-//     login
-// }
 
 const action = {
   getLoginUser,

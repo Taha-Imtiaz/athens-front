@@ -17,3 +17,15 @@
   top: 0;
   width: 100%;
 }
+.logoutBtn .button {
+  background: #00ADEE;
+  border: transparent;
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-family: sans-serif;
+  text-transform: none;
+}
+.logoutBtn .button:hover {
+  background-color: #00ADEE;
+}

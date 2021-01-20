@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,13 +46,18 @@ function App(props) {
   if (showMessage) {
     notify(showMessage);
   }
-
+  const location = useLocation();
+  var { pathname } = location;
   return (
-    <div className="app">
+    <div className={pathname !== "/" ? "app" : "app-without-nav"}>
       <div className="navigation-menu">
         <Navbar />
       </div>
-      <div className="app-content-container">
+      <div
+        className={
+          pathname !== "/" ? "app-content-container" : "app-content-without-nav"
+        }
+      >
         <ToastContainer position="bottom-right" />
         <Switch>
           {/* Auth */}

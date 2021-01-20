@@ -53,7 +53,7 @@ class MoversJobsList extends Component {
 
     var moversObj = {
       filters: {
-        jobStatus : "",
+        jobStatus: "",
         dates: null,
         nearestDate: "",
       },
@@ -62,7 +62,7 @@ class MoversJobsList extends Component {
       },
       page: 1,
     };
-    console.log(moversObj)
+    console.log(moversObj);
     getMover(moversObj);
     // if (user) {
     //     getMover(user._id)
@@ -266,7 +266,7 @@ class MoversJobsList extends Component {
   render() {
     const { moverJobs, user } = this.props;
     var { pageSize, currentPage } = this.state;
-    var totalCount = moverJobs ?.total;
+    var totalCount = moverJobs?.total;
     const open = Boolean(this.state.anchorEl);
     var { classes } = this.props;
     if (user) {
@@ -292,7 +292,7 @@ class MoversJobsList extends Component {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            // style={{ transform: "translateY(-0.3rem)" }}
+              // style={{ transform: "translateY(-0.3rem)" }}
             ></i>
             <div
               className="dropdown-menu"
@@ -389,7 +389,7 @@ class MoversJobsList extends Component {
           </div>
         </div>
 
-        {moverJobs ?.docs ?.length > 0 ? (
+        {moverJobs?.docs?.length > 0 ? (
           <div
             className={`row  ${style.li}`}
             style={{
@@ -408,7 +408,7 @@ class MoversJobsList extends Component {
           </div>
         ) : null}
 
-        {moverJobs ?.docs ?.length > 0 ? (
+        {moverJobs?.docs?.length > 0 ? (
           <div>
             {moverJobs.docs.map((list) => {
               return (
@@ -561,8 +561,8 @@ class MoversJobsList extends Component {
                                       )}
                                     </div>
                                   ) : (
-                                      "No Assignees"
-                                    )}
+                                    "No Assignees"
+                                  )}
                                 </span>
                               </div>
                               {/* })} */}
@@ -586,8 +586,8 @@ class MoversJobsList extends Component {
                                   </label>
                                 </div>
                               ) : (
-                                  <div className="col-2">{list.status}</div>
-                                )}
+                                <div className="col-2">{list.status}</div>
+                              )}
                               <div>
                                 {/* <Link style={{ textDecoration: "none" }} to={'/mover/jobdetails/' + list._id}> <Button name="Details" /></Link> */}
                               </div>
@@ -600,7 +600,8 @@ class MoversJobsList extends Component {
                 </>
               );
             })}
-            <div style={{ marginRight: "2rem", marginTop: "1rem" }} >
+            <div className = {style.stylePagination}>
+            <div className = {style.pagination}>
               <Pagination
                 itemCount={totalCount}
                 pageSize={pageSize}
@@ -608,12 +609,13 @@ class MoversJobsList extends Component {
                 onPageChange={this.handlePageChange}
               />
             </div>
+            </div>
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
       </div>
     );
   }

@@ -217,13 +217,15 @@ const CustomerClaims = (props) => {
           <img src="/images/no-data-found.png" />
         </div>
       )}
-      <div className={style.jumbotron}>
-        <Pagination
+      <div className = {style.stylePagination}>
+       <div className = {style.pagination}>
+       <Pagination
           itemCount={totalCount}
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />
+       </div>
       </div>
 
       <Modal

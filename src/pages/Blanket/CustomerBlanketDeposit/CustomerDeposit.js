@@ -47,18 +47,6 @@ const CustomerDeposit = (props) => {
     }
   }, [blanketDeposit]);
 
-  const decrement = (x, i) => {
-    let newData = cloneDeep(blankets);
-    newData[i].quantity = --x.quantity;
-    setBlankets(newData);
-  };
-
-  const increment = (x, i) => {
-    let newData = cloneDeep(blankets);
-    newData[i].quantity = ++x.quantity;
-    setBlankets(newData);
-  };
-
   const closeEdit = (id, i, type) => {
     var { updateDeposit } = props;
     let newData = cloneDeep(blankets);
@@ -147,7 +135,7 @@ const CustomerDeposit = (props) => {
 
           {blankets && blankets.length > 0 ? (
             <div>
-              <div className={` ${style.blaketHeader}`}>
+              <div className={` ${style.blanketHeader}`}>
                 <div>
                   <h6>Customer</h6>
                 </div>
@@ -165,154 +153,97 @@ const CustomerDeposit = (props) => {
                 </div>
               </div>
 
-              <div className={`${style.jumbotron}`}>
-                <ul className="list-group">
-                  {blankets.map((x, i) => {
-                    return (
-                      <li
-                        key={i}
-                        className={`list-group-item ${style.list}`}
-                        style={{
-                          fontFamily:
-                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+              {blankets.map((x, i) => {
+                return (
+                  <div key={i} className={style.listContainer}>
+                    <div className={`${style.listContent} `}>
+                      <div>
+                        {x?.customer?.firstName} {x?.customer?.lastName}
+                      </div>
+
+                      <div
+                        onDoubleClick={(e) => {
+                          makeInputFieldEditible(x._id, e, i);
                         }}
                       >
-                        <div className={`row `}>
-                          <div className="col-2">
-                            <label>
-                              {x?.customer?.firstName} {x?.customer?.lastName}
-                            </label>
-                          </div>
-                          <div class={`col-2 `}>
-                            <div>
-                              <span
-                                onDoubleClick={(e) => {
-                                  makeInputFieldEditible(x._id, e, i);
-                                }}
-                              >
-                                <TextField
-                                  variant="outlined"
-                                  // margin="normal"
-                                  // required
-                                  fullWidth
-                                  size="small"
-                                  onChange={(e) => handleInput(x._id, e, i)}
-                                  disabled={x.edit}
-                                  type="number"
-                                  className="form-control input-number"
-                                  name="quantity"
-                                  value={x.quantity}
-                                ></TextField>
-                              </span>
-                            </div>
-                          </div>
-                          <div className="col-2">
-                            <span
-                              onDoubleClick={(e) => {
-                                makeInputFieldEditible(x._id, e, i);
-                              }}
-                            >
-                              <TextField
-                                variant="outlined"
-                                // margin="normal"
-                                // required
-                                fullWidth
-                                size="small"
-                                onChange={(e) => changeCost(x._id, e, i)}
-                                disabled={x.edit}
-                                type="number"
-                                className="form-control input-number"
-                                name="cost"
-                                value={x.cost}
-                              ></TextField>
-                            </span>
-                          </div>
-                          <div className="col-3">
-                            {/* <label htmlFor="">{x.updatedAt.split("T")[0]} <span> | </span>{x.updatedAt.split("T")[1].split(".")[0]}</label> */}
-                            <TimeAgo date={x.updatedAt} />
-                          </div>
+                        <TextField
+                          variant="outlined"
+                          // margin="normal"
+                          // required
+                          fullWidth
+                          size="small"
+                          onChange={(e) => handleInput(x._id, e, i)}
+                          disabled={x.edit}
+                          type="number"
+                          className="form-control input-number"
+                          name="quantity"
+                          value={x.quantity}
+                        ></TextField>
+                      </div>
 
-                          <div className="col-3">
-                            <div style={{ display: "flex" }}>
-                              {x.edit ? (
-                                <div
-                                  onClick={() => closeEdit(x._id, i, "edit")}
-                                  style={{ margin: "0 0.6rem" }}
-                                >
-                                  <Button
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      width: "100%",
-                                    }}
-                                  >
-                                    <FontAwesomeIcon icon={faEdit}>
-                                      {" "}
-                                    </FontAwesomeIcon>{" "}
-                                    Edit
-                                  </Button>
-                                </div>
-                              ) : (
-                                <div
-                                  onClick={() => closeEdit(x._id, i, "save")}
-                                  style={{ margin: "0 0.6rem" }}
-                                >
-                                  <Button
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      width: "100%",
-                                    }}
-                                  >
-                                    <FontAwesomeIcon icon={faSave}>
-                                      {" "}
-                                    </FontAwesomeIcon>{" "}
-                                    Save
-                                  </Button>
-                                </div>
-                              )}
-                              <div style={{ margin: "0 0.6rem" }}>
-                                <Button
-                                  onClick={() => handleShow(x)}
-                                  style={{
-                                    background: "#00ADEE",
-                                    textTransform: "none",
-                                    color: "#FFF",
-                                    fontFamily: "sans-serif",
-                                    width: "100%",
-                                  }}
-                                >
-                                  Activities
-                                </Button>
-                              </div>
-                              {user?.role === "admin" && (
-                                <div>
-                                  <Button
-                                    onClick={() => openDeleteModal(i, x._id)}
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      width: "100%",
-                                    }}
-                                  >
-                                    Delete
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
+                      <div
+                        onDoubleClick={(e) => {
+                          makeInputFieldEditible(x._id, e, i);
+                        }}
+                      >
+                        <TextField
+                          variant="outlined"
+                          // margin="normal"
+                          // required
+                          fullWidth
+                          size="small"
+                          onChange={(e) => changeCost(x._id, e, i)}
+                          disabled={x.edit}
+                          type="number"
+                          className="form-control input-number"
+                          name="cost"
+                          value={x.cost}
+                        ></TextField>
+                      </div>
+
+                      <div>
+                        <TimeAgo date={x.updatedAt} />
+                      </div>
+
+                      <div className={style.depositBtn}>
+                        {x.edit ? (
+                          <div onClick={() => closeEdit(x._id, i, "edit")}>
+                            <Button className={style.button}>
+                              <FontAwesomeIcon icon={faEdit}> </FontAwesomeIcon>{" "}
+                              Edit
+                            </Button>
                           </div>
+                        ) : (
+                          <div onClick={() => closeEdit(x._id, i, "save")}>
+                            <Button className={style.button}>
+                              <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
+                              Save
+                            </Button>
+                          </div>
+                        )}
+                        <div>
+                          <Button
+                            onClick={() => handleShow(x)}
+                            className={style.button}
+                          >
+                            Activities
+                          </Button>
                         </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+                        {user?.role === "admin" && (
+                          <div>
+                            <Button
+                              onClick={() => openDeleteModal(i, x._id)}
+                              className={style.button}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center">
@@ -320,13 +251,15 @@ const CustomerDeposit = (props) => {
             </div>
           )}
         </div>
-        <div className={style.jumbotron}>
-          <Pagination
-            itemCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+        <div className={style.stylePagination}>
+          <div className={style.pagination}>
+            <Pagination
+              itemCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
       <Modal
@@ -340,69 +273,34 @@ const CustomerDeposit = (props) => {
           <Modal.Title>Activities</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div
-            className="row"
-            style={{
-              fontWeight: "bold",
-              fontFamily: "sans-serif",
-            }}
-          >
-            <div className={`col-2`}>Performer</div>
-            <div className={`col-6`}>Message</div>
-            <div className={`col-4`}>Timestamp</div>
+          <div className={style.activitiesModal}>
+            <div>Performer</div>
+            <div>Message</div>
+            <div>Timestamp</div>
           </div>
 
           {depositValue &&
             depositValue?.activities.map((activity, i) => (
-              <div
-                key={i}
-                className="row"
-                style={{
-                  fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                }}
-              >
-                <div
-                  className={`col-2`}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {" "}
-                  <p>{activity.performer.name}</p>
-                </div>
-                <div className={`col-6`}>
+              <div className={style.activitiesModalContent} key={i}>
+                <div> {activity.performer.name}</div>
+                <div>
                   {activity.messageLogs.map((x, i) => (
                     <p key={i}>* {x}</p>
                   ))}
                 </div>
-                <div
-                  className={`col-4 `}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* <p> {activity.timeStamp.split("G")[0]}</p> */}
+                <div>
                   <TimeAgo date={activity.timeStamp} />
                 </div>
               </div>
             ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-            }}
-            onClick={() => setShow(false)}
-          >
-            Close
-          </Button>
+          <div className={style.activityModalBtn}>
+            {" "}
+            <Button className={style.button} onClick={() => setShow(false)}>
+              Close
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
       <Modal
@@ -420,36 +318,14 @@ const CustomerDeposit = (props) => {
           Are you sure you want to delete this Blanket Deposit?
         </Modal.Body>
         <Modal.Footer>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
-          >
+          <div className={style.deleteModalBtn}>
             <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-                margin: "0 0.6rem",
-              }}
+              className={style.button}
               onClick={() => removeBlanketDeposit()}
             >
               Confirm
             </Button>
-            <Button
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                width: "100%",
-              }}
-              onClick={closeDeleteModal}
-            >
+            <Button className={style.button} onClick={closeDeleteModal}>
               Cancel
             </Button>
           </div>

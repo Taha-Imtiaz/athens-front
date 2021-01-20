@@ -25,10 +25,7 @@
 .filter {
   cursor: pointer;
 }
-.jumbotron {
-  /* margin: auto !important;
-  padding: 2%; */
-}
+
 .flex {
   display: flex;
   justify-content: start;
@@ -109,4 +106,15 @@
   font-family: sans-serif;
   width: 100%;
   margin: 0 0.2rem;
+}
+.stylePagination {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". pagination .";
+}
+.pagination {
+  grid-area: pagination;
+  display: grid;
+  justify-content: flex-end;
+  margin: 1rem 0;
 }

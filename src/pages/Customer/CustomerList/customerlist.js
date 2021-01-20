@@ -264,7 +264,7 @@ const CustomerList = (props) => {
             </div>
             {/* Create New Button */}
             <div className={style.btnStyle}>
-              <Link to="/customer/add" className = {style.link}>
+              <Link to="/customer/add" className={style.link}>
                 {" "}
                 <Button className={style.btn}>Create New</Button>
               </Link>
@@ -283,9 +283,7 @@ const CustomerList = (props) => {
                 <div>Jobs</div>
                 <div>Claims</div>
 
-                {props.user?.role === "admin" && (
-                  <div>Actions</div>
-                )}
+                {props.user?.role === "admin" && <div>Actions</div>}
               </div>
             </div>
             <div>
@@ -296,7 +294,6 @@ const CustomerList = (props) => {
                       <div className={`${style.listContent} `}>
                         <Link
                           key={i}
-                          
                           to={`/customer/detail/${doc._id}`}
                           className={style.styleLink}
                         >
@@ -342,9 +339,9 @@ const CustomerList = (props) => {
 
                         {props.user?.role === "admin" && (
                           <div className={`${style.actions} ${style.flex}`}>
-                            <Button className = {style.deleteButton}
+                            <Button
+                              className={style.deleteButton}
                               onClick={() => handleShow(i, doc._id)}
-                             
                             >
                               Delete
                             </Button>
@@ -355,14 +352,15 @@ const CustomerList = (props) => {
                   );
                 })}
               </div>
-
-              <div className={style.jumbotron}>
-                <Pagination
-                  itemCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
+              <div className={style.stylePagination}>
+                <div className={style.pagination}>
+                  <Pagination
+                    itemCount={totalCount}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -379,22 +377,13 @@ const CustomerList = (props) => {
 
         <Modal.Body>Are you sure you want to delete Customer?</Modal.Body>
         <Modal.Footer>
-          <div className = {style.modalButtons}
-          
-          >
-             <Button className = {style.button}
-              
-              onClick={handleClose}
-            >
+          <div className={style.modalButtons}>
+            <Button className={style.button} onClick={handleClose}>
               Cancel
             </Button>
-            <Button className = {style.button}
-              
-              onClick={() => removeCustomer()}
-            >
+            <Button className={style.button} onClick={() => removeCustomer()}>
               Confirm
             </Button>
-           
           </div>
         </Modal.Footer>
       </Modal>

@@ -148,3 +148,14 @@
 .modalButtons .button:hover {
   background-color: #00adee;
 }
+.stylePagination {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". pagination .";
+}
+.pagination {
+  grid-area: pagination;
+  display: grid;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}

@@ -120,13 +120,17 @@ const UsersList = (props) => {
                         <div className={style.listContainer} key={i}>
                           <div className={`${style.listContent} `}>
                             <div className={style.userList}>
-                              <div className = {`${style.item} ${style.flex}`}>{usersDoc.name}</div>
-                              <div className = {`${style.item} ${style.flex}`}>
+                              <div className={`${style.item} ${style.flex}`}>
+                                {usersDoc.name}
+                              </div>
+                              <div className={`${style.item} ${style.flex}`}>
                                 {usersDoc.attributes.map(
                                   (attribute) => attribute.name
                                 )}
                               </div>
-                              <div className = {`${style.item} ${style.flex}`}>{usersDoc.address}</div>
+                              <div className={`${style.item} ${style.flex}`}>
+                                {usersDoc.address}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -135,13 +139,15 @@ const UsersList = (props) => {
                   : null}
               </div>
 
-              <div className={style.jumbotron}>
+              <div className={style.stylePagination}>
+               <div className = {style.pagination} >
                 <Pagination
-                  itemCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
+                itemCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+              </div>
               </div>
             </div>
           ) : (

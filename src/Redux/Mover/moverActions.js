@@ -1,7 +1,6 @@
 // import Axios from "axios"
-import { GET_JOB, GET_MOVER, SEARCH_FILTER } from "./moverConstants";
+import { GET_MOVER, SEARCH_FILTER } from "./moverConstants";
 import Axios from "../../utils/api";
-
 
 // var baseUrl = 'https://athens-backend.herokuapp.com/api/'
 // var baseUrl = 'http://localhost:3000/api/'
@@ -14,12 +13,8 @@ export var getMover = (moversObj) => {
         headers: { Authorization: token },
       };
       // var mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
-      var mover = await Axios.post(
-        `mover/jobs`,
-        moversObj,
-        config
-      );
-      console.log(mover)
+      var mover = await Axios.post(`mover/jobs`, moversObj, config);
+      console.log(mover);
       dispatch({
         type: GET_MOVER,
         payload: {
@@ -34,10 +29,7 @@ export var getMover = (moversObj) => {
 
 export var updateJob = async (jobId, status) => {
   try {
-    var updatedJob = await Axios.put(
-      `job/status/${jobId}`,
-      status
-    );
+    var updatedJob = await Axios.put(`job/status/${jobId}`, status);
     return updatedJob;
   } catch (error) {
     console.log(error);
@@ -54,12 +46,8 @@ export var getMoverJobs = async (date) => {
     let data = {
       date: date.toString(),
     };
-    var jobs = await Axios.post(
-      `mover`,
-      data,
-      config
-    );
-    
+    var jobs = await Axios.post(`mover`, data, config);
+
     return jobs;
   } catch (error) {
     console.log(error);
@@ -85,25 +73,14 @@ export var payAmount = async (obj) => {
   return payment;
 };
 
-export var getJob =  (jobId) => {
-  return async (dispatch) => {
+export var getJob = async (jobId) => {
   try {
-    var getJob = await Axios.get(`job/${jobId}`);
-    
-       dispatch({
-           type: GET_JOB,
-           payload:{
-            getJob
-           }
-
-       })
+    var job = await Axios.get(`job/${jobId}`);
+    return job;
   } catch (error) {
     console.log(error);
   }
 };
-
-return getJob
-}
 export var moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
     const token = localStorage.getItem("athens-token");
@@ -112,17 +89,15 @@ export var moverSearchFilter = (searchObj) => {
     };
     try {
       var searchItem = await Axios.post(`mover/search`, searchObj, config);
-      console.log(searchItem.data.data)
+      console.log(searchItem.data.data);
       dispatch({
         type: SEARCH_FILTER,
         payload: {
-          searchItem: searchItem.data.data
-        }
-      })
-
+          searchItem: searchItem.data.data,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 };

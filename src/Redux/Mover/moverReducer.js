@@ -1,26 +1,17 @@
-import { GET_JOB, GET_MOVER, SEARCH_FILTER } from "./moverConstants"
+import { GET_MOVER_JOB, GET_MOVER, SEARCH_FILTER } from "./moverConstants";
 
-
-var initialState = {
-    getMover: null
-}
+var initialState = null;
 var moverReducer = (state = initialState, action) => {
-    var {type, payload} = action
-    switch (type) {
+  var { type, payload } = action;
+  switch (type) {
     case GET_MOVER:
-        return {...payload.mover}
+      return { job: payload.mover };
 
-        // case UPDATE_MOVER:
-        //     return {...payload.updatedJob}
+    case SEARCH_FILTER:
+      return { ...payload.searchItem };
 
-           case SEARCH_FILTER:
-               return { ...payload.searchItem}
-               case GET_JOB: 
-               return {...state, job: payload.getJob.data.data}
-        default:
-            return state
-    }
-   
-        
-}
-export default moverReducer
+    default:
+      return state;
+  }
+};
+export default moverReducer;

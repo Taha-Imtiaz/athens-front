@@ -64,18 +64,7 @@ class MoversJobsList extends Component {
     };
     console.log(moversObj);
     getMover(moversObj);
-    // if (user) {
-    //     getMover(user._id)
-    // }
-    // this.setState({
-    //     isLoading: false,
-    //     data: this.props.moverJobs.data
-    // })
   };
-
-  // componentDidUpdate(props) {
-  //     var { getMover } = props
-  // }
 
   handleJobUpdate = (id) => {
     updateJob(id, { status: this.state.status });
@@ -131,7 +120,6 @@ class MoversJobsList extends Component {
     this.setState({
       recentlyAdded: true,
       sortByStatus: false,
-      // assigneeRequired: false
     });
     var fetchMoverJobs = {
       filters: {
@@ -155,7 +143,6 @@ class MoversJobsList extends Component {
     this.setState({
       recentlyAdded: false,
       sortByStatus: true,
-      // assigneeRequired: false
     });
 
     var fetchMoverJobs = {
@@ -600,15 +587,15 @@ class MoversJobsList extends Component {
                 </>
               );
             })}
-            <div className = {style.stylePagination}>
-            <div className = {style.pagination}>
-              <Pagination
-                itemCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
-            </div>
+            <div className={style.stylePagination}>
+              <div className={style.pagination}>
+                <Pagination
+                  itemCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+              </div>
             </div>
           </div>
         ) : (
@@ -622,7 +609,7 @@ class MoversJobsList extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  moverJobs: state.moverJobs,
+  moverJobs: state.moverJobs?.job,
   user: state.users.user,
 });
 

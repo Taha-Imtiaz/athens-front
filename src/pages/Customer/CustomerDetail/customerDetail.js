@@ -7,7 +7,7 @@ import { Modal } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import parse from "html-react-parser";
-import { AppBar, Box, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Box, Tab, Tabs, TextareaAutosize } from "@material-ui/core";
 import { updateClaim } from "../../../Redux/Claims/claimsActions";
 import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
@@ -38,7 +38,7 @@ const CustomerDetail = (props) => {
   }, []);
 
   useEffect(() => {
-    //calculate blanket and claims Count whwn state of customer is updated
+    //calculate blanket and claim Count whwn state of customer is updated
     var customerClaims = customer?.claim;
 
     if (customerClaims?.length > 0) {
@@ -349,185 +349,106 @@ const CustomerDetail = (props) => {
                         ))}
                       </div>
                       {/* show job Description */}
-                      <div className = {style.jobDetailContainer}>
-                        <div className = {style.jobDetail}>
+                      <div className={style.jobDetailContainer}>
+                        <div className={style.jobDetail}>
                           {parse(job.description)}
                         </div>
                       </div>
 
                       {job.locations && (
-                        <div className ={style.locations}
-                         
-                        >
+                        <div className={style.locations}>
                           {job.locations.map((list) =>
                             list.type === "pickup" ? (
-                              <div 
-                               
-                              >
-                                <FontAwesomeIcon
-                                  icon={faDotCircle}
-                                  style={{
-                                    // margin: "0 0.4rem",
-                                    color: "rgb(223, 71, 89)",
-                                  }}
-                                />{" "}
-                                <span style={{ color: "#a8a8a8" }}>
-                                  {`Pickup`}{" "}
-                                </span>{" "}
+                              <div>
+                                <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                <span>{`Pickup`} </span>{" "}
                                 <div className={style.location}>
-                                  <p className={style.locationValue}>
-                                    {list.value}
-                                  </p>
+                                  {list.value}
                                 </div>
                               </div>
                             ) : (
-                              <span
-                                className="col-4"
-                                style={{
-                                  fontFamily:
-                                    "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                  // margin: "0",
-                                }}
-                              >
-                                <FontAwesomeIcon
-                                  icon={faDotCircle}
-                                  style={{
-                                    margin: "0 0.4rem",
-                                    color: "rgb(223, 71, 89)",
-                                  }}
-                                />{" "}
-                                <span style={{ color: "#a8a8a8" }}>
-                                  {`Dropoff`}
-                                </span>
+                              <div>
+                                <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                <span>{`Dropoff`}</span>
                                 <div className={style.location}>
-                                  <p className={style.locationValue}>
-                                    {list.value}
-                                  </p>
+                                  {list.value}
                                 </div>
-                              </span>
+                              </div>
                             )
                           )}
                         </div>
                       )}
 
-                      {job.note.length > 0 && (
-                        <h4 className={style.notesh}>Notes</h4>
-                      )}
-                      {job.note.map((note, i) => (
-                        <div key={i} className={`row`}>
-                          <p
-                            style={{
-                              transform: "translateX(1.5rem)",
-                            }}
-                          >
-                            {" "}
-                            {note.text}
-                          </p>
+                      {job.note.length !== 0 && (
+                        <div className={style.notes}>
+                          <div>
+                            <h5>Notes</h5>
+                          </div>
+                          {job.note.map((x) => (
+                            <div>{x.text}</div>
+                          ))}
                         </div>
-                      ))}
+                      )}
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <h4
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: "2rem 0",
-                }}
-              >
+              <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
                 No job added yet
               </h4>
             )}
           </TabPanel>
 
-          {/* Tab Panel of claims */}
+          {/* Tab Panel of claim */}
           <TabPanel value={value} index={1}>
-            <div className="row">
-              <div className="col-6">
+            <div className={style.claimTopRow}>
+              <div>
                 <h3>Claims</h3>
               </div>
-              <div className="col-6">
-                <div
-                  className={style.btn}
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
+
+              <div className={style.newClaimBtn}>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: "/claim/add",
+                    customerId: customer.email,
+                    customerName: customer.firstName + " " + customer.lastName,
+                    jobs: customer.jobs,
                   }}
                 >
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={{
-                      pathname: "/claim/add",
-                      customerId: customer.email,
-                      customerName:
-                        customer.firstName + " " + customer.lastName,
-                      jobs: customer.jobs,
-                    }}
-                  >
-                    {" "}
-                    <Button
-                      style={{
-                        background: "#00ADEE",
-                        textTransform: "none",
-                        color: "#FFF",
-                        fontFamily: "sans-serif",
-                      }}
-                    >
-                      New Claim
-                    </Button>{" "}
-                  </Link>
-                </div>
+                  {" "}
+                  <Button className={style.button}>New Claim</Button>{" "}
+                </Link>
               </div>
             </div>
             <hr />
             {customer?.claim.length > 0 && (
-              <div
-                className="row"
-                style={{
-                  fontWeight: "bold",
-                  fontFamily: "sans-serif",
-                  margin: "1rem 0",
-                }}
-              >
-                <div className="col-4">JobId</div>
-                <div className="col-4">Status</div>
-                <div className="col-4"> Last Update</div>
+              <div className={style.claimListHeaderContainer}>
+                <div className={style.claimListHeader}>
+                  <div>JobId</div>
+                  <div>Status</div>
+                  <div> Last Update</div>
+                </div>
               </div>
             )}
             <div id="accordion">
               {customer?.claim.length > 0 ? (
                 customer.claim.map((claim, i) => {
                   return (
-                    <div
-                      key={i}
-                      style={{
-                        fontFamily:
-                          "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                      }}
-                    >
+                    <div key={i}>
                       <div
-                        className={`card-header row ${style.cardHeader}`}
+                        className={`card-header ${style.cardHeader}`}
                         aria-expanded="true"
                         data-toggle="collapse"
                         data-target={`#collapse${i}`}
-                        style={{
-                          height: "3.5rem",
-                          cursor: "pointer",
-
-                          fontFamily:
-                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                        }}
                         aria-controls="collapse"
                         id="headingOne"
                       >
-                        <div className="col-4">{claim.job.jobId}</div>
+                        <div>{claim.job.jobId}</div>
 
-                        <div className="col-4">{claim.status}</div>
-                        <div className="col-4">
+                        <div>{claim.status}</div>
+                        <div>
                           <TimeAgo date={claim?.updatedAt} />
                         </div>
                       </div>
@@ -539,147 +460,83 @@ const CustomerDetail = (props) => {
                         data-parent="#accordion"
                       >
                         <div className={`card-body`}>
-                          <div key={i}>
-                            <div className="row">
-                              <div className={`col-6 ${style.protectionRow}`}>
+                          <div key={i} className={style.claimDetail}>
+                            <div className={`${style.protectionRow}`}>
+                              <div>
                                 <h6>Protection Type : </h6>
-                                <h6 style={{ fontWeight: "normal" }}>
-                                  {claim.claimType}
-                                </h6>
                               </div>
-                              <div className={`col-2 ${style.protectionRow}`}>
-                                <h6>Total: $</h6>
-                                <h6
-                                  style={{ fontWeight: "normal" }}
-                                >{`${claim.price}`}</h6>
+                              <div>{claim?.claimType}</div>
+
+                              <div>
+                                <h6>{`Total: `}</h6>
                               </div>
-                              <div className="col-2">
-                                {claim.status == "open" ? (
+                              <div>{`$${claim?.price}`}</div>
+
+                              <div>
+                                {claim?.status == "open" ? (
                                   <Button
-                                    className="btn btn-primary"
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                      transform: "translateX(4.5rem)",
-                                    }}
+                                    className={style.button}
                                     onClick={() => showUpdateModal(i)}
                                   >
                                     Add Update
                                   </Button>
                                 ) : null}
                               </div>
-                              <div className="col-2">
-                                {claim.status == "open" ? (
+
+                              <div>
+                                {claim?.status == "open" ? (
                                   <Button
-                                    style={{
-                                      background: "#00ADEE",
-                                      textTransform: "none",
-                                      color: "#FFF",
-                                      fontFamily: "sans-serif",
-                                    }}
+                                    className={style.button}
                                     onClick={() => handleCloseClaim(i)}
                                   >
-                                    {" "}
                                     Close Claim
                                   </Button>
                                 ) : (
                                   <Chip
-                                    variant="outlined"
-                                    size="small"
                                     label="Closed"
                                     clickable
                                     color="primary"
+                                    variant="outlined"
+                                    size="small"
                                   />
                                 )}
                               </div>
                             </div>
-                          </div>
-                          <hr />
-
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6
-                                className={`${style.para} ${style.styleClaims}`}
-                              >
-                                Title :
-                                <span style={{ fontWeight: "normal" }}>
-                                  {claim.title}
-                                </span>
-                              </h6>
+                            <div className={`${style.title} `}>
+                              <h6>Title:</h6> <div>{claim?.title}</div>
                             </div>
-                          </div>
-                          <hr />
 
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6
-                                className={`${style.para} ${style.styleClaims}`}
-                                style={{ whiteSpace: "pre-line" }}
-                              >
-                                Description :{" "}
-                                <span style={{ fontWeight: "normal" }}>
-                                  {" "}
-                                  {claim.description}
-                                </span>
-                              </h6>
+                            <div className={style.description}>
+                              <h6>Description:</h6>{" "}
+                              <span>{claim?.description}</span>
                             </div>
-                          </div>
-                          <hr />
-
-                          <div className="row">
-                            <div className={`col-12`}>
-                              <h6 className={`${style.styleClaims}`}>
-                                Waiting To :{" "}
-                                <span style={{ fontWeight: "normal" }}>
-                                  {" "}
-                                  {claim.waitTo}
-                                </span>
-                              </h6>
+                            <div className={`${style.waiting}`}>
+                              <div>
+                                <h6>Waiting To : </h6>
+                              </div>
+                              <div>{claim?.waitTo}</div>
                             </div>
-                          </div>
-
-                          <hr />
-
-                          <div>
-                            <div>
-                              {claim.updates.length > 0 ? (
-                                <div>
-                                  <h4>Updates</h4>
-                                  {claim.updates.map((x, i) => (
-                                    <div key={i}>
-                                      <div className="row">
-                                        <div
-                                          className="col-12"
-                                          style={{ display: "flex" }}
-                                        >
-                                          {" "}
-                                          {`${i + 1}.`}{" "}
-                                          <div
-                                            style={{
-                                              margin: "0 0.5rem",
-                                            }}
-                                          >
-                                            {x.value}
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="row">
-                                        <div className="col-10"></div>
-                                        <div
-                                          className="col-2"
-                                          style={{ color: "#a8a8a8" }}
-                                        >
-                                          {" "}
-                                          <TimeAgo date={x.timestamp} />
-                                        </div>
+                            {claim?.updates.length > 0 ? (
+                              <div className={style.updates}>
+                                <div className={style.updateHead}>
+                                  <h3>Updates</h3>
+                                </div>
+                                <div className={style.updateContent}>
+                                  {claim?.updates.map((x, i) => (
+                                    <div
+                                      key={i}
+                                      className={style.updateContentRow}
+                                    >
+                                      {" "}
+                                      <div>{`${i + 1}.  ${x.value}`}</div>
+                                      <div>
+                                        <TimeAgo date={x.timestamp} />
                                       </div>
                                     </div>
                                   ))}
                                 </div>
-                              ) : null}
-                            </div>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -695,44 +552,24 @@ const CustomerDetail = (props) => {
           </TabPanel>
 
           {/* Tab Panel of blankets */}
-          <TabPanel value={value} index={2} style={{ border: "transparent" }}>
-            <div className="row">
-              <div className="col-6">
+          <TabPanel value={value} index={2}>
+            <div className={style.toprow}>
+              <div>
                 <h3>Blanket Deposit</h3>
               </div>
-              <div className="col-6">
-                <div
-                  className={style.btn}
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
+              <div className={style.btn}>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: "/deposit/add",
+                    customerId: customer.email,
+                    customerName: customer.firstName + " " + customer.lastName,
+                    jobs: customer.jobs,
                   }}
                 >
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={{
-                      pathname: "/deposit/add",
-                      customerId: customer.email,
-                      customerName:
-                        customer.firstName + " " + customer.lastName,
-                      jobs: customer.jobs,
-                    }}
-                  >
-                    {" "}
-                    <Button
-                      style={{
-                        background: "#00ADEE",
-                        textTransform: "none",
-
-                        color: "#FFF",
-                        fontFamily: "sans-serif",
-                      }}
-                    >
-                      Deposit
-                    </Button>{" "}
-                  </Link>
-                </div>
+                  {" "}
+                  <Button className={style.button}>Deposit</Button>{" "}
+                </Link>
               </div>
             </div>
             <hr />
@@ -762,7 +599,7 @@ const CustomerDetail = (props) => {
           <Modal.Title>Add Update</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <textarea
+          <TextareaAutosize
             name=""
             id=""
             cols="65"
@@ -770,33 +607,21 @@ const CustomerDetail = (props) => {
             name="Note"
             value={update}
             onChange={handleAddUpdate}
-          ></textarea>
+          ></TextareaAutosize>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            onClick={handleClose}
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-              margin: "0 0.4rem",
-            }}
-          >
-            Close
-          </Button>
-          <Button
-            type="button"
-            onClick={updateClaimData}
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-            }}
-          >
-            Add
-          </Button>
+          <div className={style.flexEnd}>
+            <Button className={style.button} onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              className={style.button}
+              type="button"
+              onClick={updateClaimData}
+            >
+              Add
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </div>

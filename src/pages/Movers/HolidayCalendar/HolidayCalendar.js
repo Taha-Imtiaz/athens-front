@@ -4,34 +4,19 @@ import "react-day-picker/lib/style.css";
 import style from "./HolidayCalendar.module.css";
 
 import { holidayCalendar } from "../../../Redux/Mover/moverActions";
-import { v4 as uuidv4 } from "uuid";
 import { Modal } from "react-bootstrap";
-import { Button } from "@material-ui/core"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Button, TextareaAutosize } from "@material-ui/core";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { clone, cloneDeep } from "lodash";
+import { cloneDeep } from "lodash";
 
 function renderDay(day) {
   const date = day.getDate();
-  const dateStyle = {
-    position: "absolute",
-    color: "lightgray",
-    top: 0,
-    right: 0,
-    fontSize: 20,
-  };
-  const birthdayStyle = { fontSize: "0.8em", bottom: 0, left: 0 };
-  const cellStyle = {
-    height: 70,
-    width: 100,
-    position: "relative",
-  };
+
   return (
-    <div style={cellStyle}>
-      <div style={dateStyle}>{date}</div>
-      <div style={birthdayStyle}>
+    <div className={style.cellStyle}>
+      <div className={style.dateStyle}>{date}</div>
+      <div className={style.birthdayStyle}>
         <input
           type="checkbox"
           className="form-check-input"
@@ -46,12 +31,12 @@ function RequestHolidays(props) {
   const [show, setShow] = useState(false);
   const [note, setNote] = useState("");
   const [dates, setDates] = useState([]);
-  const [emptyReasonError, setEmptyReasonError] = useState("")
+  const [emptyReasonError, setEmptyReasonError] = useState("");
   const handleShow = () => {
     setShow(true);
   };
   const handleClose = () => {
-    setEmptyReasonError("")
+    setEmptyReasonError("");
     setShow(false);
   };
   const handleDayClick = (e) => {
@@ -78,48 +63,29 @@ function RequestHolidays(props) {
           showMessage(res.data.message);
         }
       });
-    }
-    else if (note.length === 0) {
-      setEmptyReasonError("Error")
+    } else if (note.length === 0) {
+      setEmptyReasonError("Error");
     }
   };
-
 
   const handleAddNote = (e) => {
     setNote(e.target.value);
-    if (note === "") {
-    }
   };
   return (
-    <>
-      <div
-        className="btnalign"
-        style={{ float: "right", marginRight: "20px", marginTop: "20px" }}
-      >
-        <Button
-          type="button"
-          style={{
-            background: "#00ADEE",
-            textTransform: "none",
-            color: "#FFF",
-            fontFamily: "sans-serif",
-            // float: "right",
-            margin: "1rem 0rem",
-          }}
-
-          onClick={handleShow}
-          type="submit"
-        // className={`btn btn-primary ${style.btnCustom}`}
-        >
+    <div className={style.holidayCalendarContainer}>
+      <div className={style.buttons}>
+        <Button className={style.button} onClick={handleShow} type="submit">
           Add Reason
         </Button>
       </div>
-      <DayPicker
-        canChangeMonth={true}
-        renderDay={renderDay}
-        onDayClick={(e) => handleDayClick(e)}
-        className={style.position}
-      />
+      <div className={style.calender}>
+        <DayPicker
+          canChangeMonth={true}
+          renderDay={renderDay}
+          onDayClick={(e) => handleDayClick(e)}
+          className={style.flex}
+        />
+      </div>
       <Modal
         dialogClassName={`${style.modal}`}
         show={show}
@@ -132,52 +98,36 @@ function RequestHolidays(props) {
         </Modal.Header>
         <Modal.Body>
           <div>
-            <textarea
+            <TextareaAutosize
               name=""
               id=""
-              cols="65"
               rows="5"
               name="note"
               value={note}
-              style={{ border: emptyReasonError !== "" ? "1px solid red" : "1px solid black" }}
-
+              className={
+                emptyReasonError !== "" ? style.redBorder : style.blackBorder
+              }
               onChange={handleAddNote}
-            ></textarea>
-
+            ></TextareaAutosize>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            type="button"
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-              float: "right",
-            }}
-            onClick={handleClose}
-          >
-            Close
-          </Button>
+          <div className={style.modalBtn}>
+            <Button
+              className={style.button}
+              type="button"
+              onClick={handleClose}
+            >
+              Close
+            </Button>
 
-          <Button
-            type="button"
-            style={{
-              background: "#00ADEE",
-              textTransform: "none",
-              color: "#FFF",
-              fontFamily: "sans-serif",
-              marginLeft: "0.5rem",
-              float: "right",
-            }}
-            onClick={addNote}
-          >
-            Send Request
-          </Button>
+            <Button className={style.button} type="button" onClick={addNote}>
+              Send Request
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 var actions = {

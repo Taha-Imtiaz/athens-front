@@ -7,8 +7,9 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getMoverJobs, getJob } from "../../../Redux/Mover/moverActions";
+import { getMoverJobs } from "../../../Redux/Mover/moverActions";
 import parse from "html-react-parser";
+import { getCurrentDayJob } from "../../../Redux/Job/jobActions";
 
 const localizer = momentLocalizer(moment);
 const now = new Date();
@@ -91,7 +92,7 @@ class MoversCalendar extends Component {
   };
 
   getJobDetails = (e) => {
-    getJob(e.id)
+    getCurrentDayJob(e.id)
       .then((res) => {
         console.log(res.data.data);
         this.setState({

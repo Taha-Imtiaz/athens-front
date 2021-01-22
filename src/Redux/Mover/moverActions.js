@@ -1,9 +1,5 @@
-// import Axios from "axios"
-import { GET_MOVER, SEARCH_FILTER } from "./moverConstants";
+import { GET_MOVER, GET_MOVER_JOB_DETAIL, SEARCH_FILTER } from "./moverConstants";
 import Axios from "../../utils/api";
-
-// var baseUrl = 'https://athens-backend.herokuapp.com/api/'
-// var baseUrl = 'http://localhost:3000/api/'
 
 export var getMover = (moversObj) => {
   return async (dispatch) => {
@@ -73,14 +69,25 @@ export var payAmount = async (obj) => {
   return payment;
 };
 
-export var getJob = async (jobId) => {
+export var getMoverJobDetail = (jobId) => {
+  return async (dispatch) => {
   try {
-    var job = await Axios.get(`job/${jobId}`);
-    return job;
+    var getJob = await Axios.get(`job/${jobId}`);
+    console.log("get job called")
+    console.log(getJob.data.data)
+    
+       dispatch({
+           type: GET_MOVER_JOB_DETAIL,
+           payload:{
+             getJob: getJob
+           }
+
+       })
   } catch (error) {
     console.log(error);
   }
 };
+}
 export var moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
     const token = localStorage.getItem("athens-token");

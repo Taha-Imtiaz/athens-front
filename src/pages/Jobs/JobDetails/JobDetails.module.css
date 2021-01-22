@@ -159,11 +159,7 @@
   text-decoration: none;
   color: #fff;
 }
-.flexEnd {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
+
 .jobEditBtns .buttons {
   background: #00adee;
   text-transform: none;

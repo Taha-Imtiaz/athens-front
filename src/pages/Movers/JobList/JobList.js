@@ -261,137 +261,79 @@ class MoversJobsList extends Component {
     }
 
     return (
-      <div className={style.toprow}>
-        <div className="row">
-          <div className="col-3">
-            <h3 className={style.head}>Job List </h3>
-          </div>
-          <div className={`col-6 `}>
-            <SearchBar type="mover" title="Type title or services" />
-          </div>
+      <div>
+        <div className={style.toprow}>
+          <div className={style.rowContent}>
+            <div>
+              <h3>Job List </h3>
+            </div>
+            <div>
+              <SearchBar type="mover" title="Type title or services" />
+            </div>
 
-          <div className={`col-2`}>
-            <i
-              className="fa fa-filter dropdown-toggle"
-              href="#"
-              role="button"
-              id="dropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              // style={{ transform: "translateY(-0.3rem)" }}
-            ></i>
-            <div
-              className="dropdown-menu"
-              aria-labelledby="dropdownMenuLink"
-              style={{ width: "18rem", cursor: "pointer" }}
-            >
-              <h5
-                style={{
-                  margin: "0rem",
-                  paddingTop: "0rem",
-                  paddingBottom: "0rem",
-                }}
-                className="dropdown-item"
-              >
-                Sort
-              </h5>
-              <a
-                className="dropdown-item"
-                style={{
-                  margin: "0rem",
-                  paddingTop: "0rem",
-                  paddingBottom: "0rem",
-                }}
-                onClick={this.handleRecentlyAdded}
-              >
-                Sort By Recently Added
-              </a>
-              <hr />
-              <h5
-                style={{
-                  margin: "0rem",
-                  paddingTop: "0rem",
-                  paddingBottom: "0rem",
-                }}
-                className="dropdown-item"
-              >
-                Filters
-              </h5>
-              <a
-                style={{
-                  margin: "0rem",
-                  paddingTop: "0rem",
-                  paddingBottom: "0rem",
-                }}
-                className="dropdown-item"
-              >
-                Filter By Date
-              </a>
-              <input
-                type="date"
-                name="dates"
-                id=""
-                style={{ width: "90%", margin: " 0.5rem 1rem" }}
-                onChange={(e) => this.filterJobByDate(e)}
-              />{" "}
-              <hr />
-              <FormControl component="fieldset">
-                <a
-                  style={{
-                    margin: "0rem",
-                    paddingTop: "0rem",
-                    paddingBottom: "0rem",
-                  }}
-                  className="dropdown-item"
-                >
-                  Filter By Status
+            <div className={`${style.filter}`}>
+              <i
+                className="fa fa-filter dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <h5 className="dropdown-item">Sort</h5>
+                <a className="dropdown-item" onClick={this.handleRecentlyAdded}>
+                  Sort By Recently Added
                 </a>
+                <hr />
+                <h5 className="dropdown-item">Filters</h5>
+                <a className="dropdown-item">Filter By Date</a>
+                <input
+                  type="date"
+                  name="dates"
+                  id=""
+                  className={style.styleDates}
+                  onChange={(e) => this.filterJobByDate(e)}
+                />{" "}
+                <hr />
+                <FormControl component="fieldset">
+                  <a className="dropdown-item">Filter By Status</a>
 
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  // style={{display: 'inline', flexDirection: 'row'}}
-                  value={this.state.value}
-                  size="small"
-                  onChange={this.handleChange}
-                >
-                  <FormControlLabel
-                    value="completed"
-                    className="dropdown-item"
-                    style={{ display: "inline" }}
-                    control={<Radio />}
-                    label="completed"
-                  />
-                  <FormControlLabel
-                    value="booked"
-                    style={{ display: "inline" }}
-                    className="dropdown-item"
-                    control={<Radio />}
-                    label="booked"
-                  />
-                </RadioGroup>
-              </FormControl>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender1"
+                    value={this.state.value}
+                    size="small"
+                    onChange={this.handleChange}
+                  >
+                    <FormControlLabel
+                      value="completed"
+                      className="dropdown-item"
+                      control={<Radio />}
+                      label="completed"
+                    />
+                    <FormControlLabel
+                      value="booked"
+                      className="dropdown-item"
+                      control={<Radio />}
+                      label="booked"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </div>
           </div>
         </div>
 
         {moverJobs?.docs?.length > 0 ? (
-          <div
-            className={`row  ${style.li}`}
-            style={{
-              fontWeight: "bold",
-              marginTop: "2rem",
-              marginBottom: "0.5rem",
-            }}
-          >
-            <div className="col-3">Title</div>
-            <div className="col-3">Date</div>
-            <div className="col-3">Assignee</div>
-            <div className="col-3">Status</div>
-            {/* <div className="col-1" style={{ transform: "translateX(-1rem)" }}>
-                    Actions
-                </div> */}
+          <div className={style.jobListHeaderContainer}>
+            <div className={style.jobListHeader}>
+              <div>Title</div>
+              <div>Date</div>
+              <div>Assignee</div>
+              <div>Status</div>
+            </div>
           </div>
         ) : null}
 
@@ -400,189 +342,157 @@ class MoversJobsList extends Component {
             {moverJobs.docs.map((list) => {
               return (
                 <>
-                  <div>
-                    <ul className="list-group ">
-                      <div className={style.li}>
-                        <Link
-                          style={{ textDecoration: "none", color: "black" }}
-                          to={"/mover/jobdetails/" + list._id}
-                        >
-                          <li
-                            className={`checkbox list-group-item ${style.list}`}
+                  <div className={style.listContainer}>
+                    <div className={`${style.listContent}`}>
+                      <Link
+                        className={style.styleLink}
+                        to={"/mover/jobdetails/" + list._id}
+                      >
+                        <div className={`${style.jobList}`}>
+                          <div
+                            className={`${style.title} ${style.flex} ${style.item}`}
                           >
-                            <div className="row">
-                              <div className={`col-3`}>
+                            {list.title}
+                          </div>
+                          <div
+                            className={`${style.date} ${style.flex} ${style.item}`}
+                          >
+                            <FontAwesomeIcon
+                              icon={faCalendarAlt}
+                              className={style.icon}
+                            />{" "}
+                            <span className={style.styleSpan}>
+                              {list.dates[0]}
+                              {list.dates.length > 1 && (
                                 <div>
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="exampleCheck1"
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handleDatePopoverOpen(e, list._id)
+                                    }
+                                    onMouseLeave={this.handleDatePopoverClose}
                                   >
-                                    {list.title}
-                                  </label>
-                                </div>
-                              </div>
-                              <div
-                                className="col-3"
-                                style={{ display: "flex" }}
-                              >
-                                {/* <i className="fa fa-calendar ">{list.dates.map(x => `${x}`)}</i> */}
-                                <FontAwesomeIcon
-                                  icon={faCalendarAlt}
-                                  style={{ margin: "0.2rem 0.5rem" }}
-                                />{" "}
-                                {list.dates[0]}
-                                {list.dates.length > 1 && (
-                                  <div style={{ display: "flex" }}>
-                                    <Typography
-                                      aria-owns={
-                                        open ? "mouse-over-popover" : undefined
-                                      }
-                                      aria-haspopup="true"
-                                      onMouseEnter={(e) =>
-                                        this.handleDatePopoverOpen(e, list._id)
-                                      }
-                                      onMouseLeave={this.handleDatePopoverClose}
-                                    >
-                                      ...
-                                    </Typography>
+                                    ...
+                                  </Typography>
 
-                                    <Popover
-                                      id="mouse-over-popover"
-                                      className={classes.popover}
-                                      classes={{
-                                        paper: classes.paper,
-                                      }}
-                                      open={
-                                        this.state.openedDatePopoverId ==
-                                        list._id
-                                      }
-                                      anchorEl={this.state.anchorEl}
-                                      anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "left",
-                                      }}
-                                      transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "left",
-                                      }}
-                                      onClose={this.handlePopoverClose}
-                                      disableRestoreFocus
-                                    >
-                                      {list.dates.map((date) => (
-                                        <Typography>{date}</Typography>
-                                      ))}
-                                    </Popover>
-                                  </div>
-                                )}
-                              </div>
-
-                              <div
-                                className="col-3"
-                                style={{ display: "flex" }}
-                              >
-                                <span style={{ display: "flex" }}>
-                                  <FontAwesomeIcon
-                                    icon={faUser}
-                                    style={{ margin: "0.2rem 0.5rem" }}
-                                  />{" "}
-                                  {list.assignee.length > 0 ? (
-                                    <div style={{ display: "flex" }}>
-                                      <label
-                                        className={`checkbox-inline ${style.assignee}`}
-                                        htmlFor="defaultCheck1"
-                                      >
-                                        {list.assignee[0].name}
-                                      </label>
-                                      {list.assignee.length > 1 && (
-                                        <div style={{ display: "flex" }}>
-                                          <Typography
-                                            aria-owns={
-                                              open
-                                                ? "mouse-over-popover"
-                                                : undefined
-                                            }
-                                            aria-haspopup="true"
-                                            onMouseEnter={(e) =>
-                                              this.handleAssigneePopoverOpen(
-                                                e,
-                                                list._id
-                                              )
-                                            }
-                                            onMouseLeave={
-                                              this.handleAssigneePopoverClose
-                                            }
-                                          >
-                                            ...
-                                          </Typography>
-
-                                          <Popover
-                                            id="mouse-over-popover"
-                                            className={classes.popover}
-                                            classes={{
-                                              paper: classes.paper,
-                                            }}
-                                            open={
-                                              this.state
-                                                .openedAssigneePopoverId ==
-                                              list._id
-                                            }
-                                            anchorEl={this.state.anchorEl}
-                                            anchorOrigin={{
-                                              vertical: "bottom",
-                                              horizontal: "left",
-                                            }}
-                                            transformOrigin={{
-                                              vertical: "top",
-                                              horizontal: "left",
-                                            }}
-                                            onClose={this.handlePopoverClose}
-                                            disableRestoreFocus
-                                          >
-                                            {list.assignee.map((assignee) => (
-                                              <Typography>
-                                                {assignee.name}
-                                              </Typography>
-                                            ))}
-                                          </Popover>
-                                        </div>
-                                      )}
-                                    </div>
-                                  ) : (
-                                    "No Assignees"
-                                  )}
-                                </span>
-                              </div>
-                              {/* })} */}
-                              {/* <div className="col-4 col-md-2 d-flex justify-content-center ">
-                                            {list.status === 'completed' ? <label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label> : <><label className="form-check-label" htmlFor="exampleCheck1">{list.status}</label>&nbsp;&nbsp;&nbsp;<Button onClick={() => this.handleJobUpdate(list._id)} name="Completed" /></>}
-                                        </div> */}
-                              {list.status === "booked" ? (
-                                <div className="col-3">
-                                  <input
-                                    onClick={() => this.markComplete(list)}
-                                    type="checkbox"
-                                    id="exampleCheck1"
-                                    style={{ margin: "0 0.4rem" }}
-                                  ></input>
-                                  <label
-                                    onClick={() => this.markComplete(list)}
-                                    className="form-check-label"
-                                    htmlFor="exampleCheck1"
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={
+                                      this.state.openedDatePopoverId == list._id
+                                    }
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
                                   >
-                                    Mark Complete
-                                  </label>
+                                    {list.dates.map((date) => (
+                                      <Typography>{date}</Typography>
+                                    ))}
+                                  </Popover>
                                 </div>
-                              ) : (
-                                <div className="col-2">{list.status}</div>
                               )}
-                              <div>
-                                {/* <Link style={{ textDecoration: "none" }} to={'/mover/jobdetails/' + list._id}> <Button name="Details" /></Link> */}
+                            </span>
+                          </div>
+
+                          <div
+                            className={`${style.assignee} ${style.flex}  ${style.item}`}
+                          >
+                            <span className={style.styleSpan}>
+                              <FontAwesomeIcon
+                                icon={faUser}
+                                className={style.icon}
+                              />{" "}
+                              {list.assignee.length > 0
+                                ? list.assignee[0].name
+                                : "No Assignees"}
+                              {list.assignee.length > 1 && (
+                                <div>
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handleAssigneePopoverOpen(
+                                        e,
+                                        list._id
+                                      )
+                                    }
+                                    onMouseLeave={
+                                      this.handleAssigneePopoverClose
+                                    }
+                                  >
+                                    ...
+                                  </Typography>
+
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={
+                                      this.state.openedAssigneePopoverId ==
+                                      list._id
+                                    }
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    onClose={this.handlePopoverClose}
+                                    disableRestoreFocus
+                                  >
+                                    {list.assignee.map((assignee) => (
+                                      <Typography>{assignee.name}</Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
+                            </span>
+                          </div>
+
+                          {list.status === "booked" ? (
+                            <div
+                              className={`${style.status} ${style.flex} ${style.item}`}
+                            >
+                              <input className = {style.styleCheckBox}
+                                onClick={() => this.markComplete(list)}
+                                type="checkbox"
+                              ></input>
+                              <div onClick={() => this.markComplete(list)}>
+                                Mark Complete
                               </div>
                             </div>
-                          </li>
-                        </Link>
-                      </div>
-                    </ul>
+                          ) : (
+                            <div
+                              className={`${style.status} ${style.flex} ${style.item}`}
+                            >
+                              {list.status}
+                            </div>
+                          )}
+                          <div></div>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </>
               );
@@ -609,7 +519,7 @@ class MoversJobsList extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  moverJobs: state.moverJobs?.job,
+  moverJobs: state.moverJobs?.jobList,
   user: state.users.user,
 });
 

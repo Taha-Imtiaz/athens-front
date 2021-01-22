@@ -1,7 +1,73 @@
-.position{
-    margin-left: 20%;
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.holidayCalendarContainer {
+  display: grid;
+  grid-template-rows: 10vh minmax(min-content, 80vh);
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas:
+    ". buttons ."
+    ". calender .";
+}
+.buttons {
+  grid-area: buttons;
+  display: grid;
+  grid-template-columns: 90fr 10fr;
+  grid-template-areas: ". button";
+}
+.calender {
+  grid-area: calender;
+}
+.buttons .button {
+  grid-area: button;
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+
+  margin: 1rem 0rem;
+}
+.buttons .button:hover {
+  background-color: #00adee;
+}
+.dateStyle {
+  position: absolute;
+  color: lightgray;
+  top: 0;
+  right: 0;
+  font-size: 1rem;
+}
+.birthdayStyle {
+  font-size: 0.8rem;
+  bottom: 0;
+  left: 0;
+}
+.cellStyle {
+  height: 3rem;
+  width: 6rem;
+  position: relative;
+}
+.modal {
+  max-width: 70vw;
 }
 
-.modal {
-    max-width: 70vw;
+.redBorder {
+  border: 1px solid red;
+  width: 100%;
+}
+.blackBorder {
+  border: 1px solid black;
+  width: 100%;
+}
+.modalBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0 0.2rem;
+}
+.modalBtn .button:hover {
+  background-color: #00adee;
 }

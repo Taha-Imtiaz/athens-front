@@ -29,23 +29,22 @@ export var getAllJobs = (jobObj) => {
 
 export var getJob = (jobId) => {
   return async (dispatch) => {
-  try {
-    var getJob = await Axios.get(`job/${jobId}`);
-    console.log("get job called")
-    console.log(getJob.data.data)
-    
-       dispatch({
-           type: GET_JOB,
-           payload:{
-             getJob: getJob
-           }
+    try {
+      var getJob = await Axios.get(`job/${jobId}`);
+      console.log("get job called");
+      console.log(getJob.data.data);
 
-       })
-  } catch (error) {
-    console.log(error);
-  }
+      dispatch({
+        type: GET_JOB,
+        payload: {
+          getJob: getJob,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
-}
 export var getAllMovers = async () => {
   try {
     var getMovers = await Axios.get("mover");
@@ -122,79 +121,57 @@ export var filterJobsByDate = (date) => {
   };
 };
 
-export var confirmJob =  (obj) => {
+export var confirmJob = (obj) => {
   return async (dispatch) => {
     try {
       var getJob = await Axios.post(`job/book`, obj);
-      console.log(getJob)
-      if(getJob.data.status === 200) {
-        dispatch(showMessage(getJob.data.message))
-     
-      dispatch({
-        type: GET_JOB,
-        payload:{
-          getJob
-        }
-      }) 
-    }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+      console.log(getJob);
+      if (getJob.data.status === 200) {
+        dispatch(showMessage(getJob.data.message));
 
-  // console.log(confirmation)
-  // return confirmation;
+        dispatch({
+          type: GET_JOB,
+          payload: {
+            getJob,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
-// export var getServices = async () => {
-//   try {
-//     var services = await Axios.get("user/get-services")
-//     return services
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-// export var addService = async (serviceObj) => {
-//   try {
-//     var serviceAdded = await Axios.post("user/add-services", serviceObj)
-//     return serviceAdded
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-export var deleteJob =  (id, currentPage) => {
+export var deleteJob = (id, currentPage) => {
   return async (dispatch) => {
     var body = {
-      page:currentPage
-    }
-    console.log(`job/${id}`, body)
+      page: currentPage,
+    };
+    console.log(`job/${id}`, body);
     try {
-  var getAllJobsExceptDeleteOne = await Axios.delete(`job/${id}`, body)
-  console.log(getAllJobsExceptDeleteOne)
-  if (getAllJobsExceptDeleteOne.data.status == 200) {
-    dispatch(showMessage(getAllJobsExceptDeleteOne.data.message))
-    dispatch({
-    type: DELETE_JOB,
-    payload:{
-      getAllJobsExceptDeleteOne: getAllJobsExceptDeleteOne
+      var getAllJobsExceptDeleteOne = await Axios.delete(`job/${id}`, body);
+      console.log(getAllJobsExceptDeleteOne);
+      if (getAllJobsExceptDeleteOne.data.status == 200) {
+        dispatch(showMessage(getAllJobsExceptDeleteOne.data.message));
+        dispatch({
+          type: DELETE_JOB,
+          payload: {
+            getAllJobsExceptDeleteOne: getAllJobsExceptDeleteOne,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  })
-  }
-  
- } catch (error) {
-   console.log(error)
- }
-  }
- 
-}
+  };
+};
 
 //fetch calendar currentDay Jobs
-export var getCurrentDayJob =  async (jobId) => {
+export var getCurrentDayJob = async (jobId) => {
   try {
     var getJob = await Axios.get(`job/${jobId}`);
-   return getJob
+    return getJob;
   } catch (error) {
     console.log(error);
   }
-}
+};

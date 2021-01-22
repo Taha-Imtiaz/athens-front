@@ -97,7 +97,6 @@ class CalendarApp extends Component {
   };
   //get job details when we click a job of a particular date
   getJobDetails = (e) => {
-    // var { getJob, job } = this.props;
     console.log(e);
     getCurrentDayJob(e.id)
       .then((res) => {

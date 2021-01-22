@@ -469,54 +469,51 @@ class JobsList extends Component {
                               icon={faCalendarAlt}
                               className={style.icon}
                             />{" "}
-                            {
-                              <span className={style.styleSpan}>
-                                {/* show 1st item of date array on jobList */}
-                                {job.dates[0]}
-                                {job.dates.length > 1 && (
-                                  <div>
-                                    <Typography
-                                      aria-owns={
-                                        open ? "mouse-over-popover" : undefined
-                                      }
-                                      aria-haspopup="true"
-                                      onMouseEnter={(e) =>
-                                        this.handleDatePopoverOpen(e, job._id)
-                                      }
-                                      onMouseLeave={this.handleDatePopoverClose}
-                                    >
-                                      ...
-                                    </Typography>
+                            <span className={style.styleSpan}>
+                              {/* show 1st item of date array on jobList */}
+                              {job.dates[0]}
+                              {job.dates.length > 1 && (
+                                <div>
+                                  <Typography
+                                    aria-owns={
+                                      open ? "mouse-over-popover" : undefined
+                                    }
+                                    aria-haspopup="true"
+                                    onMouseEnter={(e) =>
+                                      this.handleDatePopoverOpen(e, job._id)
+                                    }
+                                    onMouseLeave={this.handleDatePopoverClose}
+                                  >
+                                    ...
+                                  </Typography>
 
-                                    <Popover
-                                      id="mouse-over-popover"
-                                      className={classes.popover}
-                                      classes={{
-                                        paper: classes.paper,
-                                      }}
-                                      open={
-                                        this.state.openedDatePopoverId ==
-                                        job._id
-                                      }
-                                      anchorEl={this.state.anchorEl}
-                                      anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "left",
-                                      }}
-                                      transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "left",
-                                      }}
-                                      disableRestoreFocus
-                                    >
-                                      {job.dates.map((date, i) => (
-                                        <Typography key={i}>{date}</Typography>
-                                      ))}
-                                    </Popover>
-                                  </div>
-                                )}
-                              </span>
-                            }
+                                  <Popover
+                                    id="mouse-over-popover"
+                                    className={classes.popover}
+                                    classes={{
+                                      paper: classes.paper,
+                                    }}
+                                    open={
+                                      this.state.openedDatePopoverId == job._id
+                                    }
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "left",
+                                    }}
+                                    transformOrigin={{
+                                      vertical: "top",
+                                      horizontal: "left",
+                                    }}
+                                    disableRestoreFocus
+                                  >
+                                    {job.dates.map((date, i) => (
+                                      <Typography key={i}>{date}</Typography>
+                                    ))}
+                                  </Popover>
+                                </div>
+                              )}
+                            </span>
                           </div>
                           <div
                             className={`${style.assignee} ${style.flex}  ${style.item}`}
@@ -650,15 +647,15 @@ class JobsList extends Component {
               })}
             </div>
             {/* pagination for multiple pages */}
-            <div className = {style.stylePagination}>
-            <div className = {style.pagination}>
-              <Pagination
-                itemCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
-            </div>
+            <div className={style.stylePagination}>
+              <div className={style.pagination}>
+                <Pagination
+                  itemCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+              </div>
             </div>
           </div>
         ) : (

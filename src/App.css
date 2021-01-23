@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
-
+body {
+  overflow-x: hidden;
+}
 .app-without-nav {
   font-family: "Roboto", sans-serif;
   display: grid;

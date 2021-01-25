@@ -1,104 +1,41 @@
- .container{
-    width: 50vw;
-     /* margin: 20rem; */
-    margin-top: 5%;
-}
-
-.btn-primary{
-    margin-bottom: 2%;
-}
-
-.btn:hover {
-    background-color: RoyalBlue;
-  }
-
-.btncustom{
-    margin-bottom: 100%;
-}
 .userContainer {
-    background-color:  #e9ecef;
-    padding-top: 2rem;
-   
-}
-.jumbotron{
-    margin-left: 20rem;
-    /* margin-top: 2%; */
-    /* margin-bottom: 2%; */
-    border-radius: 0.4rem;
-    background-color:#fff;
-    width: 55vw;
-    padding: 10px;
+  display: grid;
+  grid-template-columns: 20fr 60fr 20fr;
+  grid-template-rows: minmax(90vh, min-content);
+  grid-template-areas: ". userForm .";
+  background-color: #e9ecef;
 }
 
-.head{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin-left:70vh; */
-    margin-top: 3%; 
+.userForm {
+  grid-area: userForm;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  margin: 2rem 0;
+  padding: 0 2rem;
 }
 
-.drop{
-    size: 100%;
+.head {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.mb button{
-   width: 100%;
-   margin: 1rem 2rem;
-   background-color: #00ADEE;
+.styleFormFields {
+  margin: 0.5rem 0 !important;
 }
-
-.multi{
-    display: block;
-    /* width: 100%; */
-    height: calc(1.5em + .75rem + 2px);
-    /* padding: .375rem .75rem; */
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-   
-    color: #495057;
-    margin: 0 2rem !important;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-
-  } 
-  @media only screen and (max-width:1200px) {
-    .jumbotron {
-        margin: 18rem;
-        margin-top: 2%;
-        margin-bottom: 2%;
-     
-    }
+.inputField {
+  margin: 0.5rem 0 !important;
 }
-  @media only screen and (max-width:800px) {
-      .jumbotron {
-          margin: 15rem;
-          margin-top: 2%;
-          margin-bottom: 2%;
-          /* width: 60vw; */
-      }
-  }
-  @media only screen and (max-width:650px) {
-    .jumbotron {
-        margin: 12rem;
-        margin-top: 2%;
-        margin-bottom: 2%;
-        /* width: 60vw; */
-    }
+.styleAddress {
+  margin-top: 0.5rem !important;
 }
-  @media only screen and (max-width:500px) {
-    .jumbotron {
-        margin-left: 3rem;
-        margin-right: 3rem;
-        margin-top: 5%;
-        margin-bottom: 2%;
-        width: 80vw;
-    }
-    .container {
-        width: 75vw;
-    }
+.createBtn .button {
+  background-color: #00adee;
+  color: #fff;
+  font-family: sans-serif;
+  width: 100%;
+  text-transform: none;
+}
+.createBtn .button:hover {
+  background-color: #00adee;
 }

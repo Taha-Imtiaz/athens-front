@@ -1,21 +1,17 @@
 // import Axios from "axios"
 import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants";
-// import { UPDATE_JOB } from "../Job/jobConstants"
-// import { GET_Customers } from "./userConstants"
 import Axios from "../../utils/api";
 import { showMessage } from "../../Redux/Common/commonActions";
-// var baseUrl = ''
-// var baseUrl = 'http://localhost:3000/api/'
 
 export var getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
-      
+
       var getCustomersList = await Axios.post(
         "customer/all",
         customersObj
       );
-      
+
       //update app's state
       dispatch({
         type: GET_CUSTOMERS,
@@ -82,14 +78,12 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
     phone: updateCustomerObj.phone,
     subContacts: updateCustomerObj.subContacts,
   };
-  console.log(body);
   return async (dispatch) => {
     try {
       var customerUpdated = await Axios.put(
         "customer/" + id,
         body
       );
-      console.log(customerUpdated);
       if (customerUpdated.data.status == 200) {
         callback();
         dispatch(showMessage(customerUpdated.data.message));
@@ -112,24 +106,23 @@ export var getCustomerList = async () => {
 };
 export var deleteCustomer = (id, currentPage) => {
   var body = {
-    page:currentPage
+    page: currentPage
   }
   return async (dispatch) => {
-   try {
-    var allCustomersExceptDelete = await Axios.delete(`customer/${id}`, body)
-    console.log(allCustomersExceptDelete.data.data)
-    if (allCustomersExceptDelete.data.status == 200) {
-      dispatch(showMessage(allCustomersExceptDelete.data.message))
-    dispatch({
-      type: DELETE_CUSTOMER,
-      payload:{
-        allCustomersExceptDelete: allCustomersExceptDelete
+    try {
+      var allCustomersExceptDelete = await Axios.delete(`customer/${id}`, body)
+      if (allCustomersExceptDelete.data.status == 200) {
+        dispatch(showMessage(allCustomersExceptDelete.data.message))
+        dispatch({
+          type: DELETE_CUSTOMER,
+          payload: {
+            allCustomersExceptDelete: allCustomersExceptDelete
+          }
+        })
       }
-    })
-   } 
-  }
-   catch (error) {
-     console.log(error)
-   }
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 }

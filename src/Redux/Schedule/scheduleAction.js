@@ -6,16 +6,13 @@ export var getalljobs = (jobObj) => {
 
     try {
       var getJobs = await Axios.post("schedule/current-jobs", jobObj);
-      console.log(getJobs)
       //update app's state
-
       dispatch({
         type: GET_ALLJOBS,
         payload: {
           getJobs: getJobs
         },
       });
-      // dispatch(hideLoader());
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +24,6 @@ export var getalljobsfiveday = (jobObj) => {
 
     try {
       var movers = await Axios.post("schedule/movers", jobObj);
-      console.log(movers)
       //update app's state
       dispatch({
         type: GET_ALLJOBS_FIVEDAYS,
@@ -35,7 +31,6 @@ export var getalljobsfiveday = (jobObj) => {
           getJobs: movers
         },
       });
-      // dispatch(hideLoader());
     } catch (error) {
       console.log(error);
     }
@@ -47,10 +42,6 @@ export var getAllMover = async () => {
   try {
     var moverList = await Axios.get("mover");
     return moverList;
-    //    dispatch({
-    //        type: GET_JOB,
-
-    //    })
   } catch (error) {
     console.log(error);
   }

@@ -11,13 +11,11 @@ import { Modal } from "react-bootstrap";
 import { Multiselect } from "multiselect-react-dropdown";
 import { getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
 import { clone, cloneDeep } from "lodash";
-import { showMessage, changeDate } from "../../../Redux/Common/commonActions";
+import { showMessage } from "../../../Redux/Common/commonActions";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
-// import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
-// import { parse } from "date-fns";
 import {
   Avatar,
   Button,
@@ -46,7 +44,7 @@ import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { htmlToText } from 'html-to-text'
+import { htmlToText } from "html-to-text";
 // const { htmlToText } = require('html-to-text');
 
 var moverAssignedDate;
@@ -79,9 +77,9 @@ const DailySchedule = (props) => {
   }, []);
 
   var specialElementHandlers = {
-    '#elementH': function (element, renderer) {
+    "#elementH": function (element, renderer) {
       return true;
-    }
+    },
   };
 
   const generatePDF = (e, job) => {
@@ -131,19 +129,18 @@ const DailySchedule = (props) => {
     doc
       .setFont("times")
       .setFontSize(11)
-      .text(50, 285, job.startTime ? formatAMPM(job.startTime) : "No Time Added");
+      .text(
+        50,
+        285,
+        job.startTime ? formatAMPM(job.startTime) : "No Time Added"
+      );
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
 
-    doc.setFont("times").setFontSize(11).text(50, 375, htmlToText(job.description));
-    // doc.html(<h3>Hello</h3>, {
-    //   'x': 50,
-    //   'y': 375,
-
-    // });
-
-    // doc.setLineWidth(2);
-    // doc.line(560, 725, 40, 725);
+    doc
+      .setFont("times")
+      .setFontSize(11)
+      .text(50, 375, htmlToText(job.description));
 
     doc.save(`${job.title}.pdf`);
   };
@@ -152,28 +149,22 @@ const DailySchedule = (props) => {
     {
       title: "Daily Schedule",
       path: "/schedule",
-      icon: (
-        <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faClock} />,
     },
 
     {
       title: "Unavailable",
       path: "/schedule/unavailable",
-      icon: (
-        <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faBan} />,
     },
     ,
     {
       title: "Movers",
       path: "/schedule/movers",
-      icon: (
-        <FontAwesomeIcon icon={faUser} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faUser} />,
     },
   ];
-console.log(props.jobs)
+
   const handleClose = () => {
     setShow(false);
   };
@@ -370,7 +361,6 @@ console.log(props.jobs)
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
 
         if (moverJobs) {
-          var { changeDate } = props;
           setModalShow(true);
           var mover = movers.find((x) => x.mover._id == moverId);
           setMover(mover);
@@ -389,448 +379,333 @@ console.log(props.jobs)
       }
     }
   };
-
   return (
-    <div className={`row ${style.scheduleContainer}`}>
-      <div className="col-2" style={{}}>
+    <div className={`${style.scheduleContainer}`}>
+      <div className={style.sidebar}>
         <SideBar routes={routes} />
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className={`col-8`}>
-          <DatePicker
-            endDate={365}
-            getSelectedDay={(e) => {
-              onSelectedDay(e);
-            }}
-            labelFormat={"MMMM yyyy"}
-            color={"#181F47"} // #00ADEE
-            selectDate={newDate}
-          />
-          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
-          <div className="row justify-content-md-center">
-            <div
-              className="col-2"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <h6 style={{ fontFamily: "sans-serif" }}>
-                {`Total Jobs: `}{" "}
-                <span style={{ fontWeight: "normal" }}>
-                  {props.jobs ?.data ?.data.length}
-                </span>{" "}
-              </h6>
-            </div>
-            <div
-              className="col-3"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <h6 style={{ fontFamily: "sans-serif" }}>
-                {`Movers Available:`}{" "}
-                <span style={{ fontWeight: "normal" }}>
-                  {" "}
-                  {props.movers ?.length}
-                </span>{" "}
-              </h6>
-            </div>
-            <div
-              className="col-3"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <h6 style={{ fontFamily: "sans-serif" }}>
-                Movers Required:{" "}
-                {props.jobs?.length > 0 ? (
-                  props.jobs.reduce(
-                    (sum, currentValue) => sum + currentValue.assigneeRequired,
-                    0
-                  )
-                ) : (
-                    <span style={{ fontWeight: "normal", padding: "0 0.4rem" }}>
-                      0
-                  </span>
-                  )}
-              </h6>
-            </div>
-            <div className="col-2">
-              <Button
-                style={{
-                  background: "#00ADEE",
-                  textTransform: "none",
-                  color: "#FFF",
-                  fontFamily: "sans-serif",
+      <div className={style.dragContent}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className={style.jobContent}>
+            <div className={style.styleDatePicker}>
+              <DatePicker
+                endDate={365}
+                getSelectedDay={(e) => {
+                  onSelectedDay(e);
                 }}
-                onClick={printAllJobs}
-              >
-                <i className="fa fa-print" style={{ padding: "0 0.4rem" }}></i>
-                Print All
-              </Button>
+                labelFormat={"MMMM yyyy"}
+                color={"#181F47"} // #00ADEE
+                selectDate={newDate}
+              />
             </div>
-          </div>
-          <hr style={{ borderTop: "4px solid rgba(0,0,0,.1)" }}></hr>
-          {props.jobs?.length > 0 && (
-            <div
-              className={`row card-header`}
-              style={{
-                fontWeight: "bold",
-                margin: "1rem 0",
-                backgroundColor: "transparent",
-                borderBottom: "none",
-                fontFamily: "sans-serif",
-              }}
-            >
-              <div className="col-3">Title</div>
-              <div className="col-2">Movers Req.</div>
-              <div className="col-2">Time</div>
-              <div className="col-3">Assignee</div>
-
-              <div className="col-2">
-                <span style={{ float: "right" }}>Action</span>
+            <hr className={style.styleLine}></hr>
+            <div className={style.moverAssigneeInfo}>
+              <div>
+                <h6>
+                  {`Total Jobs: `} <span>{props.jobs?.length}</span>{" "}
+                </h6>
+              </div>
+              <div>
+                <h6>
+                  {`Movers Available:`} <span> {props.movers?.length}</span>{" "}
+                </h6>
+              </div>
+              <div>
+                <h6>
+                  Movers Required:{" "}
+                  {props.jobs?.length > 0 ? (
+                    props.jobs.reduce(
+                      (sum, currentValue) =>
+                        sum + currentValue.assigneeRequired,
+                      0
+                    )
+                  ) : (
+                    <span>0</span>
+                  )}
+                </h6>
+              </div>
+              <div>
+                <Button className={style.button} onClick={printAllJobs}>
+                  <i className="fa fa-print"></i>
+                  Print All
+                </Button>
               </div>
             </div>
-          )}
-          {props.jobs && props.jobs.length > 0 ? (
-            props.jobs.map((list, i) => {
-              return (
-                <Droppable
-                  droppableId={list.jobId.toString()}
-                  type="TASK"
-                  key={i}
-                >
-                  {(provided, snapshot) => (
-                    <div
-                      id="accordion"
-                      key={i}
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                    >
+            <hr className={style.styleLine}></hr>
+            {props.jobs?.length > 0 && (
+              <div className={style.jobListHeader}>
+                <div>Title</div>
+                <div>Movers Req.</div>
+                <div>Time</div>
+                <div>Assignee</div>
+                <div>Action</div>
+              </div>
+            )}
+            {props.jobs && props.jobs.length > 0 ? (
+              props.jobs.map((list, i) => {
+                return (
+                  <Droppable
+                    droppableId={list.jobId.toString()}
+                    type="TASK"
+                    key={i}
+                  >
+                    {(provided, snapshot) => (
                       <div
-                        className="row"
-                        style={{
-                          overflow: "hidden",
-                          width: "100%",
-                          display: "flex",
-                          fontFamily:
-                            "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                        }}
-                        className="card-header"
-                        aria-expanded="true"
-                        data-toggle="collapse"
-                        data-target={`#collapse${i}`}
-                        aria-controls="collapse"
-                        id="headingOne"
-                        onClick={() => toggleCollapse(i)}
-                        onDoubleClick={() => jobDetailsNavigate(list._id)}
+                        id="accordion"
+                        key={i}
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
                       >
-                        <div className="col-3">{list.title}</div>
+                        <div
+                          className={`card-header ${style.cardHeader}`}
+                          aria-expanded="true"
+                          data-toggle="collapse"
+                          data-target={`#collapse${i}`}
+                          aria-controls="collapse"
+                          id="headingOne"
+                          onClick={() => toggleCollapse(i)}
+                          onDoubleClick={() => jobDetailsNavigate(list._id)}
+                        >
+                          <div>{list.title}</div>
 
-                        <div className="col-2">
-                          <span> {list.assigneeRequired}</span>{" "}
-                          <span style={{ display: "none" }}>{list.jobId}</span>
-                        </div>
+                          <div>
+                            {list.assigneeRequired}
+                            <span className={style.hideJobId}>
+                              {list.jobId}
+                            </span>
+                          </div>
 
-                        <div className="col-2">
-                          {list.startTime ? formatAMPM(list.startTime) : "N/A"}
-                        </div>
-                        <div className="col-3" style={{}}>
-                          {list.assignee.length > 0 ? (
-                            <div style={{ width: "100%" }}>
-                              {list.assignee.map((assignee, i) => (
-                                <ListItem
-                                  key={i}
-                                  style={{
-                                    width: "100%",
-                                    position: "relative",
-                                    margin: "0",
-                                    padding: "0",
+                          <div>
+                            {list.startTime
+                              ? formatAMPM(list.startTime)
+                              : "N/A"}
+                          </div>
+                          <div>
+                            {list.assignee.length > 0 ? (
+                              <div>
+                                {list.assignee.map((assignee, i) => (
+                                  <div key={i} className={style.assignee}>
+                                    <div className={style.assigneeName}>
+                                      {/* <span> &#42;</span> */}
+                                      {assignee.name}
+                                    </div>
+
+                                    <div className={style.closeIcon}>
+                                      <FontAwesomeIcon
+                                        onClick={(e) =>
+                                          removeAssignee(e, list, assignee._id)
+                                        }
+                                        icon={faTimes}
+                                        size="1x"
+                                      />
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div>N/A</div>
+                            )}
+                          </div>
+
+                          <Modal
+                            show={modalShow}
+                            size="lg"
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                            onHide={(e) => Navigate(e)}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title id="contained-modal-title-vcenter">
+                                Confirmation
+                              </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              {mover && (
+                                <h5>
+                                  {" "}
+                                  {mover.mover.name}{" "}
+                                  <span className={style.styleText}>
+                                    has been assigned to these jobs:
+                                  </span>{" "}
+                                </h5>
+                              )}
+
+                              {mover &&
+                                moverAssignedDate.map((job, i) => (
+                                  <div key={i} className={style.styleModalBody}>
+                                    <a
+                                      className={style.styleLink}
+                                      onClick={() =>
+                                        window.open(
+                                          `/job/detail/${job._id}`,
+                                          "_blank"
+                                        )
+                                      }
+                                    >
+                                      &#42;
+                                      {job.title}
+                                    </a>{" "}
+                                    <Chip
+                                      label={
+                                        job.startTime
+                                          ? formatAMPM(job.startTime)
+                                          : "N/A"
+                                      }
+                                      clickable
+                                      color="primary"
+                                      variant="outlined"
+                                    ></Chip>
+                                  </div>
+                                ))}
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <div className={style.modalBtns}>
+                                <Button
+                                  className={style.button}
+                                  onClick={(e) =>
+                                    updateJobAssigneeList(e, newAssignee)
+                                  }
+                                >
+                                  Confirm
+                                </Button>
+                                <Button
+                                  className={style.button}
+                                  onClick={(e) => {
+                                    Navigate(e);
                                   }}
                                 >
-                                  <span style={{ padding: "0 0.4rem" }}>
-                                    {" "}
-                                    &#42;
-                                  </span>
-                                  <ListItemText
-                                    style={{ width: "90%" }}
-                                    primary={assignee.name}
-                                  />
-                                  <FontAwesomeIcon
-                                    style={{
-                                      color: "#a8a8a8",
-                                      width: "10%",
-                                    }}
-                                    onClick={(e) =>
-                                      removeAssignee(e, list, assignee._id)
-                                    }
-                                    icon={faTimes}
-                                    size="1x"
-                                  />
-                                </ListItem>
-                              ))}
-                            </div>
-                          ) : (
-                              " N/A"
-                            )}
-                        </div>
-                        <Modal
-                          show={modalShow}
-                          size="lg"
-                          aria-labelledby="contained-modal-title-vcenter"
-                          centered
-                          onHide={(e) => Navigate(e)}
-                        >
-                          <Modal.Header closeButton>
-                            <Modal.Title id="contained-modal-title-vcenter">
-                              Confirmation
-                            </Modal.Title>
-                          </Modal.Header>
-                          <Modal.Body>
-                            {mover && (
-                              <h5>
-                                {" "}
-                                {mover.mover.name}{" "}
-                                <span style={{ fontWeight: "normal" }}>
-                                  has been assigned to these jobs:
-                                </span>{" "}
-                              </h5>
-                            )}
-                            <div>
-                              {mover && (
-                                <div style={{ margin: "1.5rem 1rem" }}>
-                                  {moverAssignedDate.map((job, i) => (
-                                    <div className="row" key={i}>
-                                      <a
-                                        className="col-8"
-                                        onClick={() =>
-                                          window.open(
-                                            `/job/detail/${job._id}`,
-                                            "_blank"
-                                          )
-                                        }
-                                        style={{
-                                          textDecoration: "none",
-                                          cursor: "pointer",
-                                        }}
-                                      >
-                                        &#42;
-                                        {job.title}
-                                      </a>{" "}
-                                      <Chip
-                                        className="col-2"
-                                        label={
-                                          job.startTime
-                                            ? formatAMPM(job.startTime)
-                                            : "N/A"
-                                        }
-                                        clickable
-                                        color="primary"
-                                        variant="outlined"
-                                      ></Chip>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </Modal.Body>
-                          <Modal.Footer>
-                            <Button
-                              onClick={(e) =>
-                                updateJobAssigneeList(e, newAssignee)
-                              }
-                            >
-                              Confirm
-                            </Button>
-                            <Button
-                              onClick={(e) => {
-                                Navigate(e);
-                              }}
-                            >
-                              Close
-                            </Button>
-                          </Modal.Footer>
-                        </Modal>
-                        <div className="col-2">
-                          <small
-                            style={{
-                              float: "right",
-                            }}
-                          >
-                            <button onClick={(e) => generatePDF(e, list)}>
+                                  Close
+                                </Button>
+                              </div>
+                            </Modal.Footer>
+                          </Modal>
+                          <div>
+                            <Button onClick={(e) => generatePDF(e, list)}>
                               <i className="fa fa-print"></i>
                               Print
-                            </button>
-                          </small>
-                        </div>
-                      </div>
-                      <div
-                        id={`collapse${i}`}
-                        className="collapse"
-                        aria-labelledby="headingOne"
-                        data-parent="#accordion"
-                      >
-                        <div className="card-body">
-                          <h4 style={{ margin: "1rem 0" }}>Job Details</h4>
-                          <div className="row">
-                            <div className="col-3">
-                              <h6>Job Id</h6>
-                            </div>
-                            <div className="col-3">
-                              <h6>Job Title</h6>
-                            </div>
-                            <div className="col-3">
-                              <h6>Job Type</h6>
-                            </div>
-                            <div className="col-3">
-                              <h6>Status</h6>
-                            </div>
+                            </Button>
                           </div>
+                        </div>
+                        <div
+                          id={`collapse${i}`}
+                          className="collapse"
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion"
+                        >
+                          <div className="card-body">
+                            <h4>Job Details</h4>
+                            <div className={style.jobDetailHeader}>
+                              <div>
+                                <h6>Job Id</h6>
+                              </div>
+                              <div>
+                                <h6>Job Title</h6>
+                              </div>
+                              <div>
+                                <h6>Job Type</h6>
+                              </div>
+                              <div>
+                                <h6>Status</h6>
+                              </div>
+                            </div>
 
-                          <div
-                            className="row"
-                            style={{
-                              fontSize: "0.92rem",
-                              fontFamily:
-                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
-                            }}
-                          >
-                            <div className="col-3">{list.jobId}</div>
-                            <div className="col-3">{list.title}</div>
-                            <div className="col-3">{list.jobType}</div>
-                            <div className="col-3">
-                              <Chip
-                                label={list.status}
-                                clickable
-                                size="small"
-                                color="primary"
-                                variant="outlined"
-                              ></Chip>
+                            <div className={style.jobDetailList}>
+                              <div>{list.jobId}</div>
+                              <div>{list.title}</div>
+                              <div>{list.jobType}</div>
+                              <div>
+                                <Chip
+                                  label={list.status}
+                                  clickable
+                                  size="small"
+                                  color="primary"
+                                  variant="outlined"
+                                ></Chip>
+                              </div>
                             </div>
-                          </div>
-                          <div className="row">
-                            <h6
-                              style={{
-                                margin: "0.6rem 0",
-                                transform: "translateX(1rem)",
-                              }}
-                            >
-                              Job Description
-                            </h6>
-                          </div>
-                          <div
-                            // className="row"
-                            style={{
-                              marginLeft: "0.4rem",
-                              fontFamily:
-                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
-                            }}
-                          >
-                            <p >
-                              {parse(list.description)}
-                            </p>
-                          </div>
-                          <hr />
-                          <h6 style={{ margin: "1rem 0" }}>Customer Details</h6>
-                          <div className="row">
-                            <div className="col-4">
-                              <h6>Name</h6>
+                            <div className={style.jobDescriptionHeader}>
+                              <h6>Job Description</h6>
                             </div>
-                            <div className="col-4">
-                              <h6>Email</h6>
+                            <div className={style.jobDescription}>
+                              <p>{parse(list.description)}</p>
                             </div>
-                            <div className="col-4">
-                              <h6>Phone</h6>
+                            <hr />
+                            <h6>Customer Details</h6>
+                            <div className={style.customerDetailHeader}>
+                              <div>
+                                <h6>Name</h6>
+                              </div>
+                              <div>
+                                <h6>Email</h6>
+                              </div>
+                              <div>
+                                <h6>Phone</h6>
+                              </div>
                             </div>
-                          </div>
-                          <div
-                            className="row "
-                            style={{
-                              fontSize: "0.92rem",
-                              fontFamily:
-                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                                color:"#aaaaaa"
-                            }}
-                          >
-                            <div className="col-4">
-                              {list.customer.firstName} {list.customer.lastName}
+                            <div className={style.customerDetailList}>
+                              <div>
+                                {list.customer.firstName}{" "}
+                                {list.customer.lastName}
+                              </div>
+                              <div>{list.customer.email}</div>
+                              <div>{list.customer.phone}</div>
                             </div>
-                            <div className="col-4">{list.customer.email}</div>
-                            <div className="col-4">{list.customer.phone}</div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </Droppable>
-              );
-            })
-          ) : (
+                    )}
+                  </Droppable>
+                );
+              })
+            ) : (
               <div className="text-center">
                 <img src="/images/no-data-found.png" />
               </div>
             )}
-        </div>
+          </div>
 
-        <div className={`col-2  ${style.mov}`} id="mov">
-          <div className="row ">
-            <div className={`row ${style.scroll}`}>
-              <h4 className={`row col-12 ${style.movehead}`}>Movers</h4>
+          <div className={`${style.movers}  ${style.mov}`} id="mov">
+            <div className={` ${style.scroll}`}>
+              <h4 className={`  ${style.movehead}`}>Movers</h4>
               <div className={`${style.scrollBar}`}>
                 <div className={`  ${style.scrollContent}`}>
                   {movers &&
                     movers.map((list, i) => {
                       return (
                         <div key={i}>
-                          <div
-                            className="row"
-                            style={{
-                              fontFamily:
-                                "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-                            }}
+                          <Droppable
+                            droppableId={list.mover._id.toString()}
+                            type="TASK"
                           >
-                            <Droppable
-                              droppableId={list.mover._id.toString()}
-                              type="TASK"
-                            >
-                              {(provided, snapshot) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.droppableProps}
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                              >
+                                <Draggable
+                                  draggableId={list.mover._id.toString()}
+                                  index={i}
                                 >
-                                  <Draggable
-                                    draggableId={list.mover._id.toString()}
-                                    index={i}
-                                  >
-                                    {(provided, snapshot) => (
-                                      <div
-                                        className="col-12"
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        ref={provided.innerRef}
-                                      >
-                                        {" "}
-                                        <h6
-                                          style={{ cursor: "pointer" }}
-                                          key={i}
-                                          className={"col-12"}
-                                        >
-                                          <label
-                                            style={{ fontWeight: "normal" }}
-                                          >
-                                            {i + 1}.
-                                          </label>{" "}
-                                          {list.mover.name}{" "}
-                                          <span
-                                            className="assigneeId"
-                                            style={{ display: "none" }}
-                                          >
-                                            {list.mover._id}
-                                          </span>
-                                        </h6>
-                                      </div>
-                                    )}
-                                  </Draggable>
-                                </div>
-                              )}
-                            </Droppable>
-                          </div>
+                                  {(provided, snapshot) => (
+                                    <div
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                    >
+                                      {" "}
+                                      <h6 className={style.moverHeader} key={i}>
+                                        <label>{i + 1}.</label>{" "}
+                                        {list.mover.name}{" "}
+                                        <span className={style.hideAssigneeId}>
+                                          {list.mover._id}
+                                        </span>
+                                      </h6>
+                                    </div>
+                                  )}
+                                </Draggable>
+                              </div>
+                            )}
+                          </Droppable>
                         </div>
                       );
                     })}
@@ -838,18 +713,18 @@ console.log(props.jobs)
               </div>
             </div>
           </div>
-        </div>
-      </DragDropContext>
+        </DragDropContext>
+      </div>
 
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Assignees</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row" style={{ margin: "1.5rem 4.5rem" }}>
-            <div className="col-12">
+          <div>
+            <div>
               <Multiselect
-                selectedValues={jobToUpdate ?.assignee}
+                selectedValues={jobToUpdate?.assignee}
                 options={allMovers} // Options to display in the dropdown
                 onSelect={onAssigneeSelect} // Function will trigger on select event
                 onRemove={onAssigneeRemove} // Function will trigger on remove event
@@ -876,6 +751,5 @@ var actions = {
   getalljobs,
   getalljobsfiveday,
   showMessage,
-  changeDate,
 };
 export default connect(mapStateToProps, actions)(DailySchedule);

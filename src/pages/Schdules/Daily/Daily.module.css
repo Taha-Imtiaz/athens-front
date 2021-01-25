@@ -1,78 +1,160 @@
-.items {
-  margin-left: 0.15%;
+.scheduleContainer {
+  display: grid;
+  grid-template-rows: minmax(90vh, min-content);
+  grid-template-columns: 20fr 80fr;
+  grid-template-areas: "sidebar dragContent";
+  /* background-color: aqua; */
 }
-/* Hide Schedule scrollbar */
-/* ::-webkit-scrollbar {
-    display: none;
-} */
-/* .color{
-    background-color: #00ADEE !important;
-    margin-left: 1%;
-} */
-
-.head {
-  margin-top: 2%;
-  margin-left: 5%;
+.sidebar {
+  grid-area: sidebar;
+}
+.dragContent {
+  grid-area: dragContent;
+  display: grid;
+  grid-template-columns: 75fr 25fr;
+  grid-template-areas: "jobContent movers";
+}
+.jobContent {
+  grid-area: jobContent;
+  /* background-color: aqua; */
+}
+.movers {
+  grid-area: movers;
+}
+.styleDatePicker {
+  width: 60vw !important;
+  height: 12vh;
+}
+.styleLine {
+  border-top: 4px solid rgba(0, 0, 0, 0.1);
+}
+.moverAssigneeInfo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 6vh;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+.moverAssigneeInfo .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.moverAssigneeInfo .button:hover {
+  background-color: #00adee;
+}
+.jobListHeader {
+  display: grid;
+  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  height: 6vh;
+  column-gap: 0.5rem;
+  align-items: center;
 }
 
-.light {
-  margin-left: 1%;
-}
+.cardHeader {
+  display: grid;
+  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
 
-.lists {
-  /* margin-left: 1%; */
-  margin-top: 5%;
+  align-items: center;
+  column-gap: 0.5rem;
 }
-
-.list {
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 3%;
-  margin-bottom: 5%;
+.hideJobId, .hideAssigneeId {
+  display: none;
 }
-/* .scroll {
-    padding-right: 20px; 
-    margin-left: -12px;
-    position: sticky;
-    top: 0;
-    height: min-content;
-    overflow-y: scroll;
-} */
+.assignee {
+  display: grid;
+  grid-template-columns: 85fr 15fr;
+  grid-template-areas: "assigneeName closeIcon";
+}
+.assigneeName {
+  grid-area: assigneeName;
+}
+.closeIcon {
+  grid-area: closeIcon;
+  /* color: #a8a8a8; */
+}
+.styleText {
+  font-weight: normal;
+}
+.styleModalBody {
+  display: grid;
+  grid-template-columns: 90fr 10fr;
+}
+.styleModalBody .styleLink {
+  text-decoration: none;
+  cursor: pointer;
+}
+.modalBtns .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0 0.2rem;
+}
+.modalBtns .button:hover {
+  background-color: #00adee;
+}
+.jobDetailHeader {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-weight: bold;
+}
+.jobDetailList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.jobDescriptionHeader {
+  margin: 0.5rem 0;
+}
+.jobDescription {
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.customerDetailHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-body {
-  overflow-x: hidden;
+}
+.customerDetailList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.moverHeader {
+  cursor: pointer;
 }
 .scroll {
-  /* background-color: burlywood; */
   position: fixed;
 }
 .scrollBar {
-  /* overflow: scroll; */
   width: 100% !important;
   margin: 0 1rem;
-  /* background-color: aqua; */
+
   overflow-x: hidden;
   height: 75vh;
 }
 .scrollBar .scrollContent {
   height: 100%;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 }
 .scrollBar::-webkit-scrollbar {
   width: 10px !important;
-  /* background-color: red; */
 }
 /* Track */
 .scrollBar::-webkit-scrollbar-track {
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
   border-radius: 10px !important;
 }
 
 /* Handle */
 .scrollBar::-webkit-scrollbar-thumb {
-  /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); */
   border-radius: 10px !important;
   background: grey !important;
 }
@@ -82,58 +164,11 @@ body {
   background: grey !important;
 }
 
-.para {
-  text-align: left;
-  /* margin-left: 1%; */
-}
-
-.badge {
-  margin-left: 1%;
-  background-color: #00adee !important;
-}
-
 .movehead {
   margin: 1rem;
-  /* background-color: blue; */
-}
-
-.movname {
-  /* position: relative;
-    top: 20%; */
 }
 
 .mov {
   border-left: 1px solid rgb(223, 214, 214);
-
-  /* position: fixed; */
 }
 
-@media only screen and (max-width: 576px) {
-  .items {
-    margin-left: 4%;
-    margin-top: 2%;
-  }
-}
-
-@media only screen and (max-width: 420px) {
-  .items {
-    margin-left: 4%;
-    margin-top: 2%;
-  }
-  .lists {
-    margin-left: 5%;
-    margin-top: 5%;
-  }
-
-  .head {
-    margin-top: 5%;
-    margin-left: 10%;
-  }
-
-  .list {
-    width: 95%;
-    margin-top: 10%;
-    margin-left: 8%;
-    margin-bottom: 5%;
-  }
-}

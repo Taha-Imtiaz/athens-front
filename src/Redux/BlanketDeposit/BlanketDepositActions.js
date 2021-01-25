@@ -11,7 +11,6 @@ export var getDeposits = (page) => {
   return async (dispatch) => {
     try {
       var deposits = await Axios.post(`deposit/all`, page);
-      console.log(deposits)
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: {
@@ -36,7 +35,6 @@ export var deleteBlanketDeposit = (id) => {
   return async (dispatch) => {
     try {
       var blanketToDelete = await Axios.delete(`deposit/${id}`);
-      console.log(blanketToDelete.data.data)
       dispatch(showMessage(blanketToDelete.data.message));
       dispatch({
         type: DELETE_BLANKET_DEPOSIT,
@@ -53,9 +51,7 @@ export var deleteBlanketDeposit = (id) => {
 export var updateDeposit = (data) => {
   return async (dispatch) => {
     try {
-      console.log(data);
       var blanket = await Axios.put(`deposit`, data);
-      console.log(blanket.data.data)
       dispatch(showMessage(blanket.data.message));
       dispatch({
         type: EDIT_DEPOSIT,

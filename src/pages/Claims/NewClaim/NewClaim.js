@@ -78,7 +78,6 @@ class NewClaim extends Component {
     }
     //get all customers and all jobs
     getCustomersAndJobs().then((res) => {
-      console.log(res.data);
       this.setState({ customers: res.data.data });
     });
   };
@@ -170,7 +169,7 @@ class NewClaim extends Component {
     updatedClaims[e.target.name] = e.target.value;
     this.setState({ claims: updatedClaims });
   };
-//get (fetch the job of selected customer)
+  //get (fetch the job of selected customer)
   getCustomerJobs = (customer) => {
     if (customer) {
       if (customer.claim.length > 0) {
@@ -197,7 +196,7 @@ class NewClaim extends Component {
       customerClaims: false,
     });
   };
-//store all fields in redux state upon component will unmount
+  //store all fields in redux state upon component will unmount
   componentWillUnmount() {
     var { setClaimForm } = this.props;
     setClaimForm({ ...this.state });

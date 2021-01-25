@@ -6,8 +6,6 @@ export var getAllData = () => {
 return async (dispatch) => {
   try {
     var unavailableList = await Axios.get("schedule");
-    console.log(unavailableList)
-    
        dispatch({
            type: GET_UNAVAILABLE_LIST,
            payload:{

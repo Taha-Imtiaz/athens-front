@@ -67,15 +67,6 @@ class Payment extends Component {
               history.push("/mover");
             }
           });
-          // this.setState({
-          //     message: `Success! Card token ${response.card.id}.`,
-          //     formProcess: false
-          // });
-        } else {
-          // this.setState({
-          //     message: response.error.message,
-          //     formProcess: false
-          // });
         }
       }
     );
@@ -87,119 +78,84 @@ class Payment extends Component {
         <div className={style.form}>
           <div className={style.tophead}>
             <h3>Credit Card Information</h3>
-            {/* <h5>Payment Information</h5> */}
 
             <div>
-            <span className={style.logo}>
-              <i className="fa fa-cc-paypal" style={{ fontSize: "36px" }}></i>
-            </span>
-            <span className={style.logo}>
-              <i
-                className="fa fa-cc-visa"
-                style={{ fontSize: "36px", backgroundColor: "red" }}
-              ></i>
-            </span>
-            <span className={style.logo}>
-              <i
-                className="fa fa-cc-mastercard"
-                style={{ fontSize: "36px" }}
-              ></i>
-            </span>
+              <span className={style.logo}>
+                <i className="fa fa-cc-paypal"></i>
+              </span>
+              <span className={style.logo}>
+                <i className={`fa fa-cc-visa ${style.visaIcon}`}></i>
+              </span>
+              <span className={style.logo}>
+                <i className="fa fa-cc-mastercard"></i>
+              </span>
             </div>
           </div>
           <form>
-            <div className="form-group">
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                size="small"
-                name="number"
-              
-                label="Card Number"
-                onChange={this.changeHandler}
-                style = {{ marginTop:"2rem"}}
-              />
-
-            
-            </div>
-            <p>Testing Card #: 4242424242424242</p>
-            <div className="row">
-              <div className="col-6">
-                <div className="form-group">
-
-                <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                size="small"
-                name="exp_month"
-                label="Month"
-                onChange={this.changeHandler}
-               
-              />
-
-                 
-                </div>
-              </div>
-
-              <div className="col-6">
-                <div className="form-group">
-                <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                size="small"
-                name="exp_year"
-                label="Year"
-                onChange={this.changeHandler}
-               
-              />
-              
-                </div>
-              </div>
-            </div>
-            <div className="form-group">
             <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                size="small"
-                name="cvc"
-                label="CVC"
-                onChange={this.changeHandler}
-               
-              />
-             
-            </div>
-            <div className="form-group">
-              <TextField
-                type="number"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                size="small"
-                id="amount"
-               label="Amount (Plus tip if any)"
-                name="amount"
-                onChange={this.changeHandler}
-              />
+              variant="outlined"
+              fullWidth
+              className={style.styleFormFields}
+              size="small"
+              name="number"
+              label="Card Number"
+              onChange={this.changeHandler}
+            />
+
+            <p>Testing Card #: 4242424242424242</p>
+            <div className={style.styleCurrentYear}>
+              <div>
+                <TextField
+                  variant="outlined"
+                  className={style.styleFormFields}
+                  fullWidth
+                  size="small"
+                  name="exp_month"
+                  label="Month"
+                  onChange={this.changeHandler}
+                />
+              </div>
+
+              <div>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  className={style.styleFormFields}
+                  name="exp_year"
+                  label="Year"
+                  onChange={this.changeHandler}
+                />
+              </div>
             </div>
 
-            <Button
-              type="button"
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-                fontFamily: "sans-serif",
-                marginLeft: "0.5rem",
-                float: "right",
-              }}
-              onClick={this.pay}
-            >
-              Pay
-            </Button>
+            <TextField
+              variant="outlined"
+              fullWidth
+              size="small"
+              name="cvc"
+              label="CVC"
+              className={style.styleFormFields}
+              onChange={this.changeHandler}
+            />
+
+            <TextField
+              type="number"
+              variant="outlined"
+              fullWidth
+              size="small"
+              id="amount"
+              className={style.styleFormFields}
+              label="Amount (Plus tip if any)"
+              name="amount"
+              onChange={this.changeHandler}
+            />
+
+            <div className={style.flexEnd}>
+              <Button className={style.button} type="button" onClick={this.pay}>
+                Pay
+              </Button>
+            </div>
           </form>
         </div>
       </div>

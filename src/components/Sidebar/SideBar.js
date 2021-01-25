@@ -10,16 +10,19 @@ const SideBar = (props) => {
     <div className={style.sidebar}>
       {props.routes.map((x, i) => {
         return (
-          <Link
-            key={i}
-            to={x.path}
-            className={props.location.pathname === x.path ? `${style.active}` : null}
-          >
-            <div className="row">
-              <div className="col-2">{x.icon}</div>
-              <div className="col-10">{width < 576 ? "" : x.title}</div>
-            </div>
-          </Link>
+          <div className={`${style.sidebarContent} `}>
+            <Link
+              
+              key={i}
+              to={x.path}
+              className={
+                props.location.pathname === x.path ? `${style.active}` : null
+              }
+            >
+              <div className ={style.flex}>{x.icon}</div>
+              <div >{width < 576 ? "" : x.title}</div>
+            </Link>
+          </div>
         );
       })}
     </div>

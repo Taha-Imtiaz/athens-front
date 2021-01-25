@@ -1,0 +1,43 @@
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.depositForm {
+  display: grid;
+
+  grid-template-rows: 60vh 30vh;
+  grid-template-columns: 20fr 60fr 20fr;
+  background-color: #e9ecef;
+  grid-template-areas:
+    ". form ."
+    ". . .";
+}
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.depositBtn {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.2rem;
+}
+.depositBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  width: 100%;
+}
+.depositBtn .button:hover {
+  background-color: #00adee;
+}
+.form {
+  grid-area: form;
+  margin: 2rem 0;
+  padding: 0 2rem;
+
+  background-color: #fff;
+  border-radius: 0.4rem;
+}

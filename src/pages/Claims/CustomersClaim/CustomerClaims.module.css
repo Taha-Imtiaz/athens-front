@@ -1,204 +1,120 @@
-.toprow{
-    margin-top: 1% !important;
-    margin-bottom: 1% !important;
-    margin-left: 50px !important;
+.toprow {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". rowContent .";
+}
+.rowContent {
+  grid-area: rowContent;
+
+  display: grid;
+  margin-top: 0.5rem;
+  grid-template-columns: 20fr 50fr repeat(2, 15fr);
+}
+.newClaimBtn .link {
+  text-decoration: none;
+}
+.newClaimBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.newClaimBtn .button:hover {
+  background-color: #00adee;
+}
+.filter {
+  cursor: pointer;
 }
 
-.head{
-    /* margin-left: 8%;
-    margin-top: 2%; */
-}
-.filter{
-    margin-top: 10px !important;
-    cursor: pointer;
-}
-.jumbotron{
-    margin: auto !important;
-    padding: 2%;
-}
-.flex{
-    display: flex;
-    justify-content: start;
-    align-items: center; 
-    padding: 0 0.5rem;
-}
-.list {
-    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-    border: 1px solid rgba(0, 0, 0, 0.125);
-      background: rgba(0,0,0,.03);
-      font-size: 0.88rem !important;
-}
-.list h6 {
-    font-size: 0.88rem !important;
-}
-
-
-.list:hover {
-    background-color:  #00ADEE;
-    /* color: white !important; */
-}
-
-.li{
-    margin:0  3%  !important;
-    /* border: 1px solid lightgrey;
-    box-shadow: 0px 2px lightgrey; */
-}
-
-.listContent:hover .item {
-    color: #fff;
-}
-.btn{
-    /* margin-top: 2%; */
-    /* margin-left: 20%; */
-}
-.jobId:hover {
-    background: "none";
-}
-
-.jumbotron{
-    /* width: 75% !important; */
-    margin-left: 20%;
-    /* overflow-x: hidden; */
-    margin-right: 5%;
-  
-    /* background-color: #e9f2eb; */
-    margin-top: 2%;
-    text-align: left;
-    padding: 10px;
-}
-.card:hover {
-background-color: #00ADEE;
-color: #fff;
-}
-.modal {
-    max-width: 70vw;
-    
-  }
-.sub{
-    margin-left: 1%;
-}
-
-.comp{
-   margin-left: 1%;
-}
-
-.para{
-    margin-left: 1%;
-}
-
-.job{
-    margin-top: 1%;
-    margin-left: 5%;
-}
-
-.p2{
-    margin-left: 30%;
+.flex {
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .claimListHeaderContainer {
-    display: grid;
-    grid-template-columns: 5fr 90fr 5fr;
-    grid-template-areas: ". claimListHeader .";
-  }
-  .claimListHeader {
-    grid-area: claimListHeader;
-    display: grid;
-    margin: 1rem 0;
-    grid-template-columns: 25fr 20fr 25fr repeat(2, 15fr);
-    /* grid-template-areas: "title date assignee services status actions"; */
-  }
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". claimListHeader .";
+}
+.claimListHeader {
+  grid-area: claimListHeader;
+  display: grid;
+  margin: 1rem 0;
+  grid-template-columns: 25fr 20fr 25fr repeat(2, 15fr);
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
 
-  .listContainer {
-    display: grid;
-    grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
-    /* align-self: center; */
-    /* background-color: blue; */
-    /* or grid-auto-rows: 10vh; */
-    grid-template-columns: 5fr 90fr 5fr;
-    grid-template-areas: ". listContent .";
-  }
-  .listContent {
-    grid-area: listContent;
-    /* background-color: aqua; */
-    display: grid;
-    /* margin: 2rem 0; */
-    grid-template-columns: 85fr 15fr;
-    grid-template-areas: "styleLink actions";
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    background: rgba(0, 0, 0, 0.03);
-    font-size: 0.88rem;
-  }
-  .listContent:hover {
+.listContainer {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
+
+  /* or grid-auto-rows: 10vh; */
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". listContent .";
+}
+.listContent {
+  grid-area: listContent;
+  /* background-color: aqua; */
+  display: grid;
+  /* margin: 2rem 0; */
+  grid-template-columns: 85fr 15fr;
+  grid-template-areas: "styleLink actions";
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 0.88rem;
+}
+.listContent:hover .item {
+  color: #fff;
+}
+.listContent:hover {
   background-color: #cac7c7 !important;
-  
 }
-  .styleLink {
-    grid-area: styleLink;
-    display: grid;
-    grid-template-columns: 1fr;
-    /* background-color: brown; */
-    grid-template-areas: "claimList";
-  }
-  .actions {
-    grid-area: actions;
-    padding: 0 0.5rem;
+.styleLink:hover {
+  text-decoration: none;
 }
-  .claimList {
-    grid-area: claimList;
-    display: grid;
-    /* background-color: blue; */
-    grid-template-columns: 25fr 20fr 25fr 15fr;
-    /* grid-template-areas: "name status "; */
-  }
-@media only screen and (max-width: 920px) {
-    .jumbotron{
-        /* width: 70% !important; */
-        /* margin-left: 20%; */
-        /* margin-right: 10%; */
-        /* background-color: #e9f2eb; */
-        width: 100% !important;
-        overflow-x: hidden;
-        /* margin-top: 5%; */
-        /* text-align: left; */
-    }
+.styleLink {
+  grid-area: styleLink;
+  display: grid;
+  grid-template-columns: 1fr;
+  /* background-color: brown; */
+  grid-template-areas: "claimList";
 }
-@media only screen and (max-width: 576px) {
-    .jumbotron{
-        width: 70% !important;
-        margin-left: 20%;
-        margin-right: 10%;
-        /* background-color: #e9f2eb; */
-        margin-top: 5%;
-        text-align: left;
-    }
+.actions {
+  grid-area: actions;
+  /* padding: 0 0.5rem; */
+}
+.claimList {
+  grid-area: claimList;
+  display: grid;
 
-    .head{
-        /* margin-left: 20%;
-        margin-top: 5%; */
-    }
-    
-    .btn{
-        margin-left: 20%;
-        margin-top: 5%;
-    }
+  color: black;
+
+  grid-template-columns: 25fr 20fr 25fr 15fr;
+  padding: 0 0.5rem;
 }
-
-@media only screen and (max-width: 400px) {
-    .jumbotron{
-        width: 70% !important;
-        margin-left: 22%;
-        margin-right: 10%;
-        background-color: #e9f2eb;
-        margin-top: 2%;
-        text-align: left;
-    }
-
-    .p2{
-        margin-left: 3%;
-    }
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
-
-.modal-content {
-    background-color: transparent !important;
-    border: none;
-  }
+.flexEnd .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  width: 100%;
+  margin: 0 0.2rem;
+}
+.stylePagination {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". pagination .";
+}
+.pagination {
+  grid-area: pagination;
+  display: grid;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addCustomer } from "../../../Redux/Customer/customerActions";
-import {
-  resetCustomerForm,
-  setCustomerForm,
-} from "../../../Redux/PersistForms/formActions";
+import { resetCustomerForm, setCustomerForm } from "../../../Redux/PersistForms/formActions";
 import "react-toastify/dist/ReactToastify.css";
 import { TextField } from "@material-ui/core";
 import style from "./customeradd.module.css";
@@ -126,7 +123,6 @@ class CustomerAdd extends Component {
   //function to addSubContacts(if the subContacts are greater 1)
   addContacts = () => {
     var { subContacts } = this.state;
-    console.log(subContacts);
     if (subContacts[0].name && subContacts[0].phone && subContacts[0].email) {
       this.setState({
         subContacts: [
@@ -204,7 +200,7 @@ class CustomerAdd extends Component {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneError?.length > 0}
+                error={this.state.phoneError.length > 0}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />
@@ -320,13 +316,13 @@ class CustomerAdd extends Component {
 }
 
 var mapStateToProps = (state) => ({
-  addForm: state.forms.addCustomerForm,
+  addForm: state.forms.addCustomerForm
 });
 
 var actions = {
   addCustomer,
   setCustomerForm,
-  resetCustomerForm,
+  resetCustomerForm
 };
 
 export default connect(mapStateToProps, actions)(CustomerAdd);

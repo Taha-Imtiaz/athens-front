@@ -1,17 +1,13 @@
-// import Axios from "axios"
 import { GET_USERS, LOGGEDIN_USER, GET_LOGGEDIN_USER } from "./userConstants"
 import Axios from '../../utils/api'
 import { showMessage } from '../Common/commonActions'
 
-var baseUrl = "https://athens-backend.herokuapp.com/api/";
-
-export var login = (credentials) => {
+export var login = (credentials, callback) => {
     return async (diaspatch) => {
         try {
             var user = await Axios.post("user/login", credentials)
             if (user.data.status == 200) {
                 localStorage.setItem('athens-token', user.data.token)
-                // callback()
                 diaspatch(showMessage(user.data.message))
                 diaspatch({
                     type: LOGGEDIN_USER,
@@ -19,10 +15,9 @@ export var login = (credentials) => {
                         user: user.data.data
                     }
                 })
-                return user;
+                callback();
             } else {
                 diaspatch(showMessage(user.data.message))
-                return user;
             }
 
         } catch (error) {
@@ -40,7 +35,7 @@ export var getLoginUser = (credentials) => {
             };
 
             var user = await Axios.get("user", config)
-            
+
             if (user.data.status == 200) {
                 diaspatch({
                     type: LOGGEDIN_USER,
@@ -128,15 +123,14 @@ export var sendCode = async (email) => {
         console.log(error)
     }
 }
-export var verifyCode =  (verifyCodeObj, callback) => {
-    return async (dispatch) =>{
+export var verifyCode = (verifyCodeObj, callback) => {
+    return async (dispatch) => {
         try {
             const config = {
                 headers: { Authorization: verifyCodeObj.token },
             };
-    
+
             var verifyCode = await Axios.post("user/verify", verifyCodeObj, config)
-            console.log(verifyCode)
             if (verifyCode.data.status == 200) {
                 localStorage.setItem('athens-token', verifyCode.data.token)
                 // callback()
@@ -157,7 +151,7 @@ export var verifyCode =  (verifyCodeObj, callback) => {
             console.log(error)
         }
     }
-   
+
 }
 export var resetPassword = async (passwordObj) => {
     try {

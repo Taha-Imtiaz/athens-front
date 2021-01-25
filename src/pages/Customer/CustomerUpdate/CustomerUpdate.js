@@ -2,13 +2,11 @@ import { Button, TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  fetchCustomerById,
-  updateCustomer,
-} from "../../../Redux/Customer/customerActions";
+import { fetchCustomerById, updateCustomer, getCustomer } from "../../../Redux/Customer/customerActions";
 
 import style from "./CustomerUpdate.module.css";
 class CustomerUpdate extends Component {
+  
   //fetch customer info (whose id is passed on mount)
   componentDidMount = () => {
     var {
@@ -21,12 +19,12 @@ class CustomerUpdate extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          customer: res.data?.data,
-          firstName: res.data.data?.firstName,
-          lastName: res.data.data?.lastName,
-          phone: res.data.data?.phone,
-          email: res.data.data?.email,
-          subContacts: res.data.data?.subContacts,
+          customer: res.data ?.data,
+          firstName: res.data.data ?.firstName,
+          lastName: res.data.data ?.lastName,
+          phone: res.data.data ?.phone,
+          email: res.data.data ?.email,
+          subContacts: res.data.data ?.subContacts,
         });
       })
       .catch((error) => {
@@ -160,7 +158,7 @@ class CustomerUpdate extends Component {
       },
     } = this.props;
 
-    return this.state?.customer ? (
+    return this.state ?.customer ? (
       <div className={style.formStyle}>
         <div className={style.form}>
           <h3 className={style.head}>Edit Customer</h3>
@@ -233,7 +231,7 @@ class CustomerUpdate extends Component {
             </form>
             <h5>Alternate Contact</h5>
             {this.state.subContacts.length > 0 ? (
-              this.state.subContacts?.map((x, i) => {
+              this.state.subContacts ?.map((x, i) => {
                 return (
                   <div key={i}>
                     <form>
@@ -284,17 +282,17 @@ class CustomerUpdate extends Component {
                 );
               })
             ) : (
-              <div className={style.alternateContactBtn}>
-                <div className={style.alternateContact}>
-                  <Button
-                    className={style.btn}
-                    onClick={this.addAlternateContact}
-                  >
-                    Add Alternate Contact
+                <div className={style.alternateContactBtn}>
+                  <div className={style.alternateContact}>
+                    <Button
+                      className={style.btn}
+                      onClick={this.addAlternateContact}
+                    >
+                      Add Alternate Contact
                   </Button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {this.state.subContacts.length > 0 && (
               <div className={style.anotherContactBtn}>
                 <div className={style.anotherContact}>
@@ -313,11 +311,17 @@ class CustomerUpdate extends Component {
           </div>
         </div>
       </div>
-    ) : null;
+    ) : null
   }
 }
 
+var mapStateToProps = (state) => ({
+  customer: state.customers.customer,
+  user: state.users.user
+});
+
 var actions = {
-  updateCustomer,
+  getCustomer,
+  updateCustomer
 };
-export default connect(null, actions)(CustomerUpdate);
+export default connect(mapStateToProps, actions)(CustomerUpdate);

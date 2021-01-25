@@ -18,7 +18,7 @@ export var getAllClaims = (data) => {
     dispatch({
       type: GET_CLAIMS,
       payload: {
-        claims:claims.data.data
+        claims: claims.data.data
       },
     });
   };
@@ -37,40 +37,13 @@ export var getClaimsByID = (customerId) => {
 };
 
 export var addClaim = async (data) => {
-  // return async (dispatch) => {
   try {
     var claim = await Axios.post(`claim`, data);
     return claim;
   } catch (error) {
     console.log(error);
   }
-
-  // dispatch({
-  //     type: GET_CLAIMS_BY_ID,
-  //     payload: {
-  //         claim
-  //     }
-  // })
-  // }
 };
-
-// export var getDeposits = async (page) => {
-//   // return async (dispatch) => {
-//   try {
-//     var deposits = await Axios.post(`deposit/all`, page);
-//     return deposits;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-  // dispatch({
-  //     type: GET_CLAIMS_BY_ID,
-  //     payload: {
-  //         claim
-  //     }
-  // })
-  // }
-;
 
 export var updateClaim = async (data) => {
   try {
@@ -106,7 +79,6 @@ export var getClaim = (claimId) => {
   return async (dispatch) => {
     try {
       var claim = await Axios.get(`claim/${claimId}`)
-      console.log(claim.data.data )
       dispatch({
         type: GET_CLAIM,
         payload: {
@@ -118,40 +90,31 @@ export var getClaim = (claimId) => {
     }
   }
 }
-// export var deleteBlanketDeposit = async (id) => {
-  
-//     try {
-//       var blanketToDelete = await Axios.delete(`deposit/${id}`)
-//       return blanketToDelete
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
 
-  export var deleteClaim = (id, currentPage) => {
-    var body = {
-      page:currentPage
-    }
+export var deleteClaim = (id, currentPage) => {
+  var body = {
+    page: currentPage
+  }
   return async (dispatch) => {
-      try {
+    try {
       var getAllClaimsExceptDeleteOne = await Axios.delete(`claim/${id}`, body)
       if (getAllClaimsExceptDeleteOne.data.status == 200) {
         dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
-      dispatch({
-        type: DELETE_CLAIM,
-        payload:{
-          getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.data
-        }
-      })
+        dispatch({
+          type: DELETE_CLAIM,
+          payload: {
+            getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.data
+          }
+        })
+      }
+
     }
-      
-    } 
     catch (error) {
       console.log(error)
     }
   }
-  
-  }
+
+}
 
 
 // "/claim/id"(delete)

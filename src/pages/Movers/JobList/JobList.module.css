@@ -1,79 +1,126 @@
-.toprow{
-    margin-top: 1%;
+.toprow {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". rowContent .";
+}
+.rowContent {
+  grid-area: rowContent;
+  display: grid;
+  margin-top: 0.5rem;
+  grid-template-columns: 20fr 60fr 20fr;
+}
+.styleDates {
+  margin: 0 1.5rem;
+}
+.link {
+  text-decoration: none !important;
 }
 
-.jumbotron{
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    /* background-color: #e9f2eb; */
-    /* margin-top: 2%; */
+.jobListHeaderContainer {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". jobListHeader .";
+}
+.jobListHeader {
+  grid-area: jobListHeader;
+  display: grid;
+  margin: 1rem 0;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 0.5rem;
+  font-weight: bold;
+  /* grid-template-areas: "title date assignee services status actions"; */
+}
+.listContainer {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
+  /* align-self: center; */
+  /* background-color: blue; */
+  /* or grid-auto-rows: 10vh; */
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". listContent .";
+}
+.listContent {
+  grid-area: listContent;
+  /* background-color: aqua; */
+  display: grid;
+  /* margin: 2rem 0; */
+  grid-template-columns: 100fr;
+  grid-template-areas: "styleLink";
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 0.88rem;
+}
+.listContent:hover {
+  background-color: #cac7c7 !important;
+  /* text-decoration: none; */
 }
 
-.btndel{
-    margin-right: 10%;
-    margin-top: 3%;
- } 
+.styleLink {
+  grid-area: styleLink;
+  color: black;
+  /* text-decoration: none; */
+  display: grid;
+  grid-template-columns: 1fr;
 
-.edit{
-    margin-right: 5%;
+  /* background-color: brown; */
+  grid-template-areas: "jobList";
+}
+.styleLink:hover {
+  text-decoration: none;
+}
+.jobList {
+  grid-area: jobList;
+  display: grid;
+  /* background-color: blue; */
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "title date assignee status";
+}
+.title {
+  grid-area: title;
+  padding: 0 0.5rem;
+}
+.date {
+  grid-area: date;
+  padding: 0 0.5rem;
+}
+.icon {
+  margin-right: 0.4rem;
+}
+.styleSpan {
+  display: flex;
+}
+.assignee {
+  grid-area: assignee;
+  padding: 0 0.5rem;
 }
 
-.checkbox{
-    margin-left: 10px;
+.status {
+  grid-area: status;
+  /* padding: 0 0.5rem; */
+}
+.styleCheckBox {
+  margin: 0 0.3rem;
+}
+.flex {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.listContent:hover .item {
+  color: #fff;
+}
+.filter {
+  cursor: pointer;
 }
 
-.create{
-    margin-right: 3%;
-    margin-top: 3%;
+.stylePagination {
+  display: grid;
+  grid-template-columns: 5fr 90fr 5fr;
+  grid-template-areas: ". pagination .";
 }
-
-.head{
-    margin-top: 1%;
-    text-align: left;
-    margin-left: 10%;
-}
-
-.btn2{
-    /* margin-left: 5%; */
-    float: right;
-    margin-right: 10%;
-    margin-top: 2%;
-    
-}
-
-.list {
-    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    background: rgba(0,0,0,.03);
-    
-}
-.list:hover {
-    background-color: #00ADEE;
-    color: #fff;
-}
-
-.color{
-    background-color: #00ADEE !important;
-}
-
-.li{
-    margin:0  3%  
-    /* border: 1px solid lightgrey; */
-    /* box-shadow: 0px 2px lightgrey; */
-}
-
-.assignee{
-    margin-left: 5px;
-}
-
-
-@media only screen and (max-width:576px){
-    html{
-        font-size: 75%;
-    }
-
-    .toprow{
-        margin-top: 5%;
-    }
+.pagination {
+  grid-area: pagination;
+  display: grid;
+  justify-content: flex-end;
+  margin: 1rem 0;
 }

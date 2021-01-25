@@ -3,10 +3,7 @@ import style from "./customerlist.module.css";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  deleteCustomer,
-  getAllCustomers,
-} from "../../../Redux/Customer/customerActions";
+import { deleteCustomer, getAllCustomers } from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
 import _ from "lodash";
@@ -18,10 +15,11 @@ const CustomerList = (props) => {
   //defining variables
   var { getAllCustomers } = props;
   var { customers } = props;
+  var totalCount = 0;
   if (customers) {
     var { docs } = customers;
+    totalCount = customers.total
   }
-  var totalCount = customers?.total;
   //defining state variables
   var [order, setOrder] = useState(-1);
   var [pageSize, setPageSize] = useState(10);
@@ -49,7 +47,7 @@ const CustomerList = (props) => {
     getAllCustomers(fetchCustomersObj);
   }, []);
 
-  //fetch/get customers whwn the page is changed
+  //fetch/get customers when the page is changed
   var handlePageChange = (page) => {
     if (recentlyUpdated === true) {
       var fetchCustomersOnPageChange = {
@@ -193,7 +191,6 @@ const CustomerList = (props) => {
 
   //show delete modal
   var handleShow = (i, jobId) => {
-    // console.log(i);
     //set the customerid of the of customer you want to delete
     setCustomerToDelete(jobId);
     //show the delete modal
@@ -264,7 +261,7 @@ const CustomerList = (props) => {
             </div>
             {/* Create New Button */}
             <div className={style.btnStyle}>
-              <Link to="/customer/add" className = {style.link}>
+              <Link to="/customer/add" className={style.link}>
                 {" "}
                 <Button className={style.btn}>Create New</Button>
               </Link>
@@ -283,9 +280,7 @@ const CustomerList = (props) => {
                 <div>Jobs</div>
                 <div>Claims</div>
 
-                {props.user?.role === "admin" && (
-                  <div>Actions</div>
-                )}
+                {props.user && props.user.role === "admin" && <div>Actions</div>}
               </div>
             </div>
             <div>
@@ -296,7 +291,6 @@ const CustomerList = (props) => {
                       <div className={`${style.listContent} `}>
                         <Link
                           key={i}
-                          
                           to={`/customer/detail/${doc._id}`}
                           className={style.styleLink}
                         >
@@ -325,26 +319,26 @@ const CustomerList = (props) => {
                             <div
                               className={`${style.activeClaims} ${style.item} ${style.flex}`}
                             >
-                              {doc.claim?.length > 0 ? (
+                              {doc.claim.length > 0 ? (
                                 <div>
                                   {
-                                    doc.claim?.filter(
+                                    doc.claim.filter(
                                       (claim) => claim.status === "open"
                                     ).length
                                   }
                                 </div>
                               ) : (
-                                0
-                              )}
+                                  0
+                                )}
                             </div>
                           </div>
                         </Link>
 
-                        {props.user?.role === "admin" && (
+                        {props.user && props.user.role === "admin" && (
                           <div className={`${style.actions} ${style.flex}`}>
-                            <Button className = {style.deleteButton}
+                            <Button
+                              className={style.deleteButton}
                               onClick={() => handleShow(i, doc._id)}
-                             
                             >
                               Delete
                             </Button>
@@ -355,22 +349,23 @@ const CustomerList = (props) => {
                   );
                 })}
               </div>
-
-              <div className={style.jumbotron}>
-                <Pagination
-                  itemCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                />
+              <div className={style.stylePagination}>
+                <div className={style.pagination}>
+                  <Pagination
+                    itemCount={totalCount}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
       </div>
       <Modal show={show} onHide={handleClose} centered scrollable>
         <Modal.Header closeButton>
@@ -379,22 +374,13 @@ const CustomerList = (props) => {
 
         <Modal.Body>Are you sure you want to delete Customer?</Modal.Body>
         <Modal.Footer>
-          <div className = {style.modalButtons}
-          
-          >
-             <Button className = {style.button}
-              
-              onClick={handleClose}
-            >
+          <div className={style.modalButtons}>
+            <Button className={style.button} onClick={handleClose}>
               Cancel
             </Button>
-            <Button className = {style.button}
-              
-              onClick={() => removeCustomer()}
-            >
+            <Button className={style.button} onClick={() => removeCustomer()}>
               Confirm
             </Button>
-           
           </div>
         </Modal.Footer>
       </Modal>
@@ -403,14 +389,13 @@ const CustomerList = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  customers: state?.customers?.customerList,
-
-  user: state.users.user,
+  customers: state.customers.customerList,
+  user: state.users.user
 });
 
 var actions = {
   getAllCustomers,
-  deleteCustomer,
+  deleteCustomer
 };
 
 export default connect(mapStateToProps, actions)(CustomerList);

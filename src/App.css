@@ -1,64 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
-
-.app{
-  font-family: 'Roboto', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans");
+body {
+  overflow-x: hidden;
+}
+.app-without-nav {
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-rows: minmax(min-content, 100vh);
+  grid-template-columns: 1fr;
+  grid-template-areas: "app-content-without-nav";
+}
+.app-content-without-nav {
+  grid-area: app-content-without-nav;
+}
+.app {
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-rows: 10vh minmax(90vh, min-content);
+  grid-template-areas:
+    "navigation-menu"
+    "app-content-container";
 }
 
+.navigation-menu {
+  grid-area: navigation-menu;
+}
+.app-content-container {
+  grid-area: app-content-container;
+}
 .btn:hover {
-  background-color: #00ADEE !important;
+  background-color: #00adee !important;
   text-decoration: none;
-  }
-
-  .DayPicker-Day {
-    border: 1px solid;
 }
 
-.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-color: #00ADEE;
-}
-.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
-  background-color: #00ADEE !important;
+.DayPicker-Day {
+  border: 1px solid;
 }
 
-*{
-  /* margin-right: 0 !important */
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show > .nav-link {
+  color: #00adee;
 }
-*{
-  /* overflow-x: hidden; */
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+  background-color: #00adee !important;
 }
+
 .page-item.active .page-link {
-  background-color: #00ADEE !important;
+  background-color: #00adee !important;
 }
-@media only screen and (max-width:576px) {
- .app {
-   font-size: 0.9rem;
- }
-}
+
 .MuiStepIcon-root.MuiStepIcon-active {
-  color: #00ADEE;
+  color: #00adee;
 }
 .MuiStepIcon-root.MuiStepIcon-completed {
-  color: #00ADEE;
+  color: #00adee;
 }
-
 
 .MuiFormGroup-root {
   display: flex;
   flex-wrap: nowrap;
   margin: 0 1.4rem;
   flex-direction: row;
-
-
 }
-
 
 .MuiTab-root {
   padding: 6px 12px;
   overflow: hidden;
   position: relative;
   font-size: 0.875rem;
-  /* max-width: 264px; */
   min-width: 72px;
   box-sizing: border-box;
   min-height: 48px;
@@ -76,11 +89,11 @@ color: #00ADEE;
 }
 
 .MuiRadio-colorSecondary.Mui-checked {
-  color: #00AAEE;
+  color: #00aaee;
 }
 
 .MuiIconButton-colorSecondary {
-  color: #00AAEE;
+  color: #00aaee;
 }
 
 .MuiFormControlLabel-root {
@@ -112,11 +125,11 @@ color: #00ADEE;
 
 .MuiBadge-anchorOriginTopRightRectangle {
   right: -12px !important;
- }
+}
 
- .DatePicker_dateLabel__GO7dX {
+.DatePicker_dateLabel__GO7dX {
   font-size: 14px !important;
 }
 .MuiStepIcon-root.MuiStepIcon-active {
-  color: #00ADEE;
+  color: #00adee;
 }

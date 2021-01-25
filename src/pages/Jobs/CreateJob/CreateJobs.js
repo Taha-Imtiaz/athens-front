@@ -124,7 +124,6 @@ class CreateJobs extends Component {
     }
     //get all customers and jobs
     getCustomersAndJobs().then((res) => {
-      console.log(res.data);
       if (res && res.status == 201) {
         this.setState({ customers: res.data.data });
       }
@@ -159,9 +158,7 @@ class CreateJobs extends Component {
   //remove the selected Date
   removeDate = (i) => {
     var datesArr = cloneDeep(this.state.dates);
-    console.log(datesArr, i);
     datesArr.splice(i, 1);
-    console.log(datesArr, i);
     this.setState({
       dates: datesArr,
     });
@@ -180,7 +177,6 @@ class CreateJobs extends Component {
   changeCheckBoxState = (e, i) => {
     e.stopPropagation();
     var prevState = cloneDeep(this.state.locations);
-    console.log(prevState);
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
@@ -194,8 +190,6 @@ class CreateJobs extends Component {
   };
   //function to show all locations
   showLocation = (i) => {
-    console.log(this.state.locations);
-
     return (
       <div className={style.locationInput}>
         <div className={style.radioButtons}>
@@ -437,6 +431,7 @@ class CreateJobs extends Component {
       this.setState({ multiError: "" });
     }
   };
+  //add custom service to services autocomplete
   addCustomService = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -464,7 +459,7 @@ class CreateJobs extends Component {
       });
     }
   };
-
+//add new customer
   addNewCustomer = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -480,7 +475,7 @@ class CreateJobs extends Component {
       });
     }
   };
-
+//get customer jobs
   getCustomerJobs = (customer) => {
     if (customer) {
       this.setState({
@@ -493,7 +488,7 @@ class CreateJobs extends Component {
       this.setState({ jobs: [], selectedCustomer: "", customerId: "" });
     }
   };
-
+//populateNewCustomer
   populateNewCustomer = (e) => {
     let newCustomer = {
       email: e.data.data.email,
@@ -511,21 +506,21 @@ class CreateJobs extends Component {
       customerId: newCustomer.email,
     });
   };
-
+//save the form fields on redux store on component unmounting
   componentWillUnmount() {
     var { setJobForm } = this.props;
     setJobForm({ ...this.state });
   }
-
+//onChange handler of editor
   onEditorStateChange = (e) => {
     this.setState({
       editorState: e,
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
   };
+  //reset form Fields
   handleResetJob = () => {
     var { resetJobForm, jobForm } = this.props;
-    console.log("resetJobForm called");
     let customers = cloneDeep(this.state.customers);
     resetJobForm();
     this.setState({ ...this.initialState, customers });

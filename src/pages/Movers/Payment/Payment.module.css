@@ -1,27 +1,49 @@
-.main{
-    /* width: 50%; */
-    display:grid;
-    grid-template-columns: 28fr 44fr 28fr;
-    grid-template-areas: ". form .";
-    
+.main {
+  display: grid;
+  grid-template-rows: minmax(min-content, 90vh);
+  grid-template-columns: 25fr 50fr 25fr;
+  grid-template-areas: ". form .";
+  background-color: #e9ecef;
 }
 .form {
-    grid-area: form;
-    background-color: #e9ecef;
-    width: 100%;
-    border-radius: 0.4rem;
-    margin: 2rem;
-    padding: 2rem;
+  grid-area: form;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 0.4rem;
+  margin: 2rem;
+  padding: 2rem;
 }
-.logo{
-    padding: 5px;
-    
+.logo {
+  font-size: 2.2rem;
 }
-
-.tophead{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-
+.visaIcon {
+  background-color: red;
+}
+.tophead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.styleFormFields {
+  margin: 0.5rem 0 !important;
+}
+.styleCurrentYear {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  column-gap: 0.5rem;
+}
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.flexEnd .button {
+  background: #00ADEE;
+  text-transform: none;
+  color: #FFF;
+  font-family: sans-serif;
+}
+.flexEnd .button:hover {
+  background-color: #00ADEE;
 }

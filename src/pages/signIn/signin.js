@@ -1,6 +1,5 @@
 import React from "react";
-import style from "./signin.module.css";
-import { Redirect } from "react-router-dom";
+import style from "./SignIn.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../Redux/User/userActions";
@@ -13,14 +12,10 @@ class SignInForm extends React.Component {
     emailError: "",
     passwordError: "",
   };
+
   constructor(props) {
     super(props);
-    // let loggedIn = false
     this.state = this.initialState;
-    let token = localStorage.getItem("athens-token");
-    // if (token) {
-    //   props.history.push('/customer')
-    // }
   }
 
   componentDidMount() {
@@ -35,10 +30,6 @@ class SignInForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // this.setState({
-    //   user: nextProps.loggedinUser,
-    //   weeklySchedule: nextProps.loggedinUser.weeklySchedule
-    // });
     if (nextProps.user) {
       nextProps.user.role == "mover"
         ? this.props.history.push("/mover")
@@ -47,7 +38,6 @@ class SignInForm extends React.Component {
   }
 
   validate = () => {
-    // var {email,password,emailError,passwordError} = this.state
     let emailError = "";
     let passwordError = "";
 
@@ -79,44 +69,27 @@ class SignInForm extends React.Component {
         email: this.state.email,
         password: this.state.password,
       };
-      login(obj).then((res) => {
-        if (res ?.data.status == 200) {
-          res.data.data.role == "mover"
+      login(obj, () => {
+        if (this.props.user) {
+          this.props.user.role == "mover"
             ? this.props.history.push("/mover")
             : this.props.history.push("/customers");
         }
-      });
+      })
     }
   };
-
-  // emailChangeHandler = (event) => {
-  //   let uname = event.target.value
-  //   if (uname == "") {
-  //     alert('Fill this Field')
-  //   }
-  //   this.setState({ email: uname })
-  // }
-
-  // passwordChangeHandler = (event) => {
-  //   let pwd = event.target.value
-
-  //   this.setState({ password: pwd })
-  // }
 
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
     if (!value) {
-      this.setState({ [name + 'Error']: name + ' is required' });
+      this.setState({ [name + "Error"]: name + " is required" });
     } else {
-      this.setState({ [name + 'Error']: '' });
+      this.setState({ [name + "Error"]: "" });
     }
   };
 
   render() {
-    // if (this.state.loggedIn) {
-    //   return <Redirect to='/admin' />
-    // }
     return (
       <div className={style.signInContainer}>
         <div className={style.image}></div>
@@ -127,17 +100,12 @@ class SignInForm extends React.Component {
             </div>
 
             <form onSubmit={this.formSubmit}>
-              <div
-                className={`${style.email} ${style.flex}`}
-                style={{ alignItems: "center" }}
-              >
+              <div className={`${style.email} ${style.flex}`}>
                 <TextField
                   variant="outlined"
-                  style={{ margin: "0 2rem", width: "60%" }}
-                  // required
-                  // fullWidth
                   size="small"
                   id="email"
+                  className={style.textFields}
                   label="Email Address"
                   name="email"
                   value={this.state.email}
@@ -145,67 +113,30 @@ class SignInForm extends React.Component {
                   error={this.state.emailError}
                 />
               </div>
-              <div
-                className={`${style.password} ${style.flex}`}
-                style={{ alignItems: "center" }}
-              >
+              <div className={`${style.password} ${style.flex}`}>
                 <TextField
                   variant="outlined"
-                  style={{ margin: "0 2rem", width: "60%" }}
-                  // required
-                  fullWidth
                   size="small"
                   id="password"
                   label="Password"
                   name="password"
+                  className={style.textFields}
                   value={this.state.password}
                   onChange={this.handleFormInput}
                   error={this.state.passwordError}
                   type="password"
                 />
               </div>
-              <Link to="/email-verification" style={{}}>
-                <div className={`${style.forgetPs} ${style.flex}`} style={{ alignItems: "flex-start", width: "80%", justifyContent: "flex-end" }}>
-
-                  {/* <Button 
-                // type="button"
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                    margin: "0 2rem",
-                    width: "30%"
-
-                  }}
-                > */}
+              <Link to="/email-verification">
+                <div className={`${style.forgetPs} ${style.flex}`}>
                   Forgot Password?
-                {/* </Button> */}
-
                 </div>
               </Link>
-              <div
-                className={`${style.signinBtn} ${style.flex}`} style={{ alignItems: "flex-start" }}>
-                <Button type="submit"
-                  style={{
-                    background: "#00ADEE",
-                    textTransform: "none",
-                    color: "#FFF",
-                    fontFamily: "sans-serif",
-                    margin: "0 2rem",
-                    width: "60%"
-
-                  }}
-                >
+              <div className={`${style.signinBtn} ${style.flex}`}>
+                <Button className={style.button} type="submit">
                   Sign In
                 </Button>
-
               </div>
-              {/* <h3 className={style.heading}>Or Login With</h3>
-          <div className={style.btnStyle}>
-            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-google"></i></button>
-            <button className={`btn btn-primary ${style.circle} ${style.bttn}`}><i className="fa fa-facebook"></i></button>
-          </div> */}
             </form>
           </div>
         </div>
@@ -219,7 +150,7 @@ var actions = {
 };
 
 var mapStateToProps = (state) => ({
-  user: state.users.user,
+  user: state.users.user
 });
 
 export default connect(mapStateToProps, actions)(SignInForm);

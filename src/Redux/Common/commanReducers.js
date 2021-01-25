@@ -10,7 +10,6 @@ var commonReducer = (state = initialState, action) => {
     switch (type) {
         case SHOW_LOADER:
             return { ...state, loading: true }
-
         case HIDE_LOADER:
             return { ...state, loading: false }
         case SHOW_MESSAGE:

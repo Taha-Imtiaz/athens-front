@@ -3,9 +3,9 @@ import style from "./CreateUser.module.css";
 import { Button } from "@material-ui/core";
 import { Multiselect } from "multiselect-react-dropdown";
 import { createUser } from "../../../Redux/User/userActions";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import { showMessage } from '../../../Redux/Common/commonActions'
+import { showMessage } from "../../../Redux/Common/commonActions";
 import { TextField } from "@material-ui/core";
 
 const initialState = {
@@ -39,8 +39,12 @@ class CreateUser extends Component {
     super(props);
 
     this.state = initialState;
+    this.style = {
+      multiselectContainer: {
+        margin: "1rem 0 ",
+      },
+    };
   }
-
   onTypeSelect = (selectedList, selectedItem) => {
     this.setState({ type: selectedItem });
   };
@@ -132,7 +136,7 @@ class CreateUser extends Component {
       };
       createUser(createdUserObj)
         .then((res) => {
-          showMessage(res.data.message)
+          showMessage(res.data.message);
           history.push("/users");
         })
         .catch((error) => {
@@ -143,122 +147,97 @@ class CreateUser extends Component {
 
   render() {
     return (
-      <div className = {style.userContainer}>
-        <div className={style.jumbotron}>
+      <div className={style.userContainer}>
+        <div className={style.userForm}>
+          <h3 className={style.head}>Create New User</h3>
+
           <div>
-            <h3 className={style.head}>Create New User</h3>
-          </div>
-          <div className={style.container}>
             <form>
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal" style={{ margin: "0 2rem" }}
-                  required
-                  fullWidth
-                  size="small"
-                  autoFocus
-                  id="name"
-                  label="Full Name"
-                  name="name"
-                  value={this.state.name}
-                  onChange={this.handleFormInput}
-                  error={this.state.nameError}
-                />
-              </div>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                size="small"
+                autoFocus
+                id="name"
+                label="Full Name"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleFormInput}
+                error={this.state.nameError}
+                className={style.styleFormFields}
+              />
 
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                size="small"
+                id="email"
+                label="Email Address"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleFormInput}
+                error={this.state.emailError}
+                className={style.styleFormFields}
+              />
 
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                size="small"
+                id="phnumber"
+                label="Phone Number"
+                name="phone"
+                value={this.state.phone}
+                onChange={this.handleFormInput}
+                error={this.state.numberError}
+                className={style.styleFormFields}
+              />
 
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  style={{ margin: "0 2rem" }}
-                  required
-                  fullWidth
-                  size="small"
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleFormInput}
-                  error={this.state.emailError}
-                />
-              </div>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                size="small"
+                id="address"
+                label="Address"
+                name="address"
+                value={this.state.address}
+                error={this.state.addressError}
+                onChange={this.handleFormInput}
+                className={style.styleAddress}
+              />
 
+              <Multiselect
+                singleSelect={true}
+                options={this.typeOptions} // Options to display in the dropdown
+                onSelect={this.onTypeSelect} // Function will trigger on select event
+                onRemove={this.onRemove} // Function will trigger on remove event
+                displayValue="name" // Property name to display in the dropdown options
+                className={`form-control `}
+                placeholder="Select Type"
+                error={this.state.typeError}
+                style={this.style}
+              />
 
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal" style={{ margin: "0 2rem" }}
-                  required
-                  fullWidth
-                  size="small"
-                  id="phnumber"
-                  label="Phone Number"
-                  name="phone"
-                  value={this.state.phone}
-                  onChange={this.handleFormInput}
-                  error={this.state.numberError}
-                />
-              </div>
+              <Multiselect
+                singleSelect={true}
+                options={this.attributeOptions} // Options to display in the dropdown
+                onSelect={this.onAttributeSelect} // Function will trigger on select event
+                onRemove={this.onRemove} // Function will trigger on remove event
+                displayValue="name" // Property name to display in the dropdown options
+                className={`form-control `}
+                placeholder="Select Attribute"
+                error={this.state.attributeError}
+                style={this.style}
+              />
 
-
-              <div className="form-group">
-                <TextField
-                  variant="outlined"
-                  margin="normal" style={{ margin: "0 2rem" }}
-                  required
-                  fullWidth
-                  size="small"
-                  id="address"
-                  label="Address"
-                  name="address"
-                  value={this.state.address}
-                  error={this.state.addressError}
-                  onChange={this.handleFormInput}
-                />
-              </div>
-
-
-
-              <div>
-
-                <div className="form-group" style={{ margin: " 1rem 2rem", width: "100%" }}>
-                  <Multiselect
-                    className={style.multi}
-                    singleSelect={true}
-                    options={this.typeOptions} // Options to display in the dropdown
-                    onSelect={this.onTypeSelect} // Function will trigger on select event
-                    onRemove={this.onRemove} // Function will trigger on remove event
-                    displayValue="name" // Property name to display in the dropdown options
-                    className="form-control"
-                    placeholder="Select Type"
-                    error={this.state.typeError}
-
-                  />
-
-                </div>
-
-
-              </div>
-              <div className="form-group" style={{ margin: " 1rem 2rem", width: "100%" }}>
-                <Multiselect
-                  className={style.multi}
-                  singleSelect={true}
-                  options={this.attributeOptions} // Options to display in the dropdown
-                  onSelect={this.onAttributeSelect} // Function will trigger on select event
-                  onRemove={this.onRemove} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                  className="form-control"
-                  placeholder="Select Attribute"
-                  error={this.state.attributeError}
-
-                />
-              </div>
-
-
-              <div className={style.mb}>
-                <Button style={{ background: "#00ADEE", textTransform: "none", color: "#FFF", fontFamily: "sans-serif", }} onClick={this.mySubmitHandler} >Create</Button>
+              <div className={style.createBtn}>
+                <Button className={style.button} onClick={this.mySubmitHandler}>
+                  Create
+                </Button>
               </div>
             </form>
           </div>
@@ -269,7 +248,7 @@ class CreateUser extends Component {
 }
 
 var actions = {
-  showMessage
-}
+  showMessage,
+};
 
 export default connect(null, actions)(CreateUser);

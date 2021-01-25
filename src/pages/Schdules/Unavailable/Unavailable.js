@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from "react";
 import style from "./Unavailable.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
-import Button from "../../../components/Button/Button";
+import { Button } from "@material-ui/core";
 import {
   getAllData,
   approveRequest,
 } from "../../../Redux/Unavailable/unavailableAction";
-import { cloneDeep } from "@babel/types";
+
 import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import {
-  faInfoCircle,
-  faBook,
-  faCalendarAlt,
-  faUser,
-  faClock,
-  faBan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnavailableSchedule = (props) => {
-  const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [dates, setDates] = useState([]);
 
@@ -29,38 +21,27 @@ const UnavailableSchedule = (props) => {
     {
       title: "Daily Schedule",
       path: "/schedule",
-      icon: (
-        <FontAwesomeIcon icon={faClock} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faClock} />,
     },
 
     {
       title: "Unavailable",
       path: "/schedule/unavailable",
 
-      icon: (
-        <FontAwesomeIcon icon={faBan} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faBan} />,
     },
     ,
     {
       title: "Movers",
       path: "/schedule/movers",
 
-      icon: (
-        <FontAwesomeIcon icon={faUser} style={{ margin: "0.2rem 0.5rem" }} />
-      ),
+      icon: <FontAwesomeIcon icon={faUser} />,
     },
   ];
 
   useEffect(() => {
     const { getAllData } = props;
     getAllData();
-    // .then(res => {
-    //     console.log(res.data)
-    //     setData(res.data)
-    //     setIsLoading(false)
-    // })
   }, []);
 
   const handleChange = (list) => {
@@ -81,37 +62,36 @@ const UnavailableSchedule = (props) => {
     approveRequest(data).then((res) => {
       showMessage(res.data.message);
       getAllData();
-      // .then(res => {
-      //     setData(res.data)
-      // })
     });
   };
-  // console.log(unavailable[0]);
+
   return (
-    <div className={``}>
-      <div className="row">
-        <div className="col-2 col-md-2">
-          <SideBar routes={routes} />
-          {/* <SideBar routes={width < 576 ? "" : {routes}} icon={routes.icon} /> */}
-        </div>
-        <div className="col-10 col-md-10">
-          <div className="row">
-            <div className={`col-6 ${style.head}`}>
-              <h5>Unavailable</h5>
-            </div>
-            <div className={`col-3 ${style.btn}`}>
-              <Button name="Approve" onClick={approveRequests} />
-            </div>
+    <div className={`${style.unavailableContainer}`}>
+      <div className={style.sidebar}>
+        <SideBar routes={routes} />
+      </div>
+
+      <div className={style.unavailableContent}>
+        <div className={style.unavailableHeader}>
+          <div>
+            <h5>Unavailable</h5>
           </div>
+          <div className={style.approveBtn}>
+            <Button className={style.button} onClick={approveRequests}>
+              Approve
+            </Button>
+          </div>
+        </div>
+        <div className={style.unavailableList}>
           {unavailable ? (
             unavailable.map((list) => {
               return (
                 <>
-                  <div className={`list-group ${style.list}`}>
-                    <div className={style.sty}>
+                  <div className={`list-group `}>
+                    <div>
                       <a
                         href="#"
-                        className={`list-group-item list-group-item-action flex-column align-items-start ${style.l}`}
+                        className={`list-group-item list-group-item-action flex-column align-items-start `}
                       >
                         <div className={`d-flex w-100 justify-content-between`}>
                           <span>
@@ -122,19 +102,19 @@ const UnavailableSchedule = (props) => {
                               onChange={() => handleChange(list)}
                             />
                             <label
-                              className={`checkbox-inline ${style.input}`}
+                              className={`checkbox-inline ${style.checkBox}`}
                               htmlFor="defaultCheck1"
                             >
                               {list[0].applicant.name}
                             </label>
                           </span>
                         </div>
-                        <div className={style.para}>
+                        <div>
                           <p className="mb-1">
                             {list[0].dates[0]} - {list[0].dates[1]}
                           </p>
                         </div>
-                        <div className={style.para}>
+                        <div>
                           <p className="mb-1">Reason: {list[0].reason}</p>
                         </div>
                       </a>
@@ -153,6 +133,7 @@ const UnavailableSchedule = (props) => {
     </div>
   );
 };
+
 var mapStateToProps = (state) => ({
   unavailable: state?.unavailable,
 });

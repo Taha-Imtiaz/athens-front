@@ -9,7 +9,7 @@
 .claimContainer {
   background-color: #e9ecef;
   display: grid;
-  grid-template-rows: minmax(86.6vh, min-content);
+  grid-template-rows: minmax(90vh, min-content);
   grid-template-columns: 20fr 60fr 20fr;
   grid-template-areas: ". form .";
   padding: 2rem 0;
@@ -21,49 +21,45 @@
   border-radius: 0.4rem;
 }
 .protectionType {
-    display: grid;
-    grid-template-columns: 66fr 34fr;
-    column-gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 66fr 34fr;
+  column-gap: 0.5rem;
 }
 .modal {
   max-width: 70vw;
 }
 .claimHeader {
-    display: grid;
-    grid-template-columns: 50fr 20fr 30fr;
-    font-weight: bold;
+  display: grid;
+  grid-template-columns: 50fr 20fr 30fr;
+  font-weight: bold;
 }
 .claimContent {
-    display: grid;
-    grid-template-columns: 50fr 20fr 30fr;
-
+  display: grid;
+  grid-template-columns: 50fr 20fr 30fr;
 }
 .styleFormFields {
-    margin: 0.5rem 0 !important;
-  }
-  .buttons {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      column-gap: 0.5rem;
-
-  }
-  .buttons .button {
-    background: #00adee;
-    text-transform: none;
-    color: #fff;
-    font-family: sans-serif;
-  }
-  .buttons .button:hover {
-    background: #00adee;
-
-  }
- .modalBtn .modalButton {
-    background: #00adee;
-    text-transform: none;
-    color: #fff;
-    font-family: sans-serif;
-  }
- .modalBtn .modalButton:hover {
-      background-color: #00adee;
-  }
-
+  margin: 0.5rem 0 !important;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.5rem;
+}
+.buttons .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.buttons .button:hover {
+  background: #00adee;
+}
+.modalBtn .modalButton {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.modalBtn .modalButton:hover {
+  background-color: #00adee;
+}

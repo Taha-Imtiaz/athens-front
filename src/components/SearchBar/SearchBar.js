@@ -20,10 +20,8 @@ const SearchBar = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
-    if (props.type == "customer") {
-      
+    if (props.type === "customer") {
       if (searchValue === "" || searchValue) {
-        console.log(e.target.value,searchValue)
         var fetchCustomersObj = {
           query: e.target.value,
           sort: {
@@ -44,9 +42,8 @@ const SearchBar = (props) => {
         };
         getAllCustomers(fetchCustomersObj);
       }
-    } else if (props.type == "user") {
+    } else if (props.type === "user") {
       if (searchValue === "" || searchValue) {
-        console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
           filter: {
@@ -65,7 +62,6 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "claims") {
       if (searchValue === "" || searchValue) {
-        console.log(e.target.value)
         var usersObj = {
           query: e.target.value,
           status: props.claimStatus,
@@ -82,7 +78,6 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "mover") {
       if (searchValue === "" || searchValue) {
-        console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,
 
@@ -97,7 +92,6 @@ const SearchBar = (props) => {
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
       if (searchValue === "" || searchValue) {
-        console.log(e.target.value)
         var fetchJobsOnPageChange = {
           query: e.target.value,
           filters: {
@@ -141,21 +135,11 @@ const SearchBar = (props) => {
 
   return (
     <div className={style.width}>
-      {/* <div className="input-group">
-            <input className="form-control py-2 rounded-pill mr-1 pr-5" type="search" placeholder="Type name or email" onChange={(e) => setSearchValue(e.target.value)} />
-            <span className="input-group-append">
-                <button onClick={handleSearch} className="btn rounded-pill border-0 ml-n5" type="button">
-                    <i className="fa fa-search"></i>
-                </button>
-            </span>
-        </div> */}
       <div className="input-group">
         <input
           type="text"
           className="form-control"
-          // placeholder={title}
           placeholder="Search"
-          style={{ outline: "transparent" }}
           onChange={(e) => {
             setSearchValue(e.target.value);
             handleSearch(e);
@@ -166,7 +150,6 @@ const SearchBar = (props) => {
           <button
             // onClick={handleSearch}
             className="btn btn-secondary"
-            style={{ width: "3rem" }}
             type="button"
           >
             <i className="fa fa-search"></i>

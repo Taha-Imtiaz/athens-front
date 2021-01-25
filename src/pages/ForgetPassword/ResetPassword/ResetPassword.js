@@ -30,7 +30,6 @@ const ResetPassword = (props) => {
 
   var navigateToCustomer = () => {
     var { history, showMessage, user } = props;
-    console.log(user.role)
     if (password !== "") {
       setPasswordError("");
 
@@ -45,13 +44,11 @@ const ResetPassword = (props) => {
         resetPassword(passwordObj).then((res) => {
           if (res.data.status === 200) {
             showMessage(res.data.message);
-           if(user.role === "mover") {
-             history.push("/mover");
-           }
-           else {
-            history.push("/customers");
-           }
-            
+            if (user.role === "mover") {
+              history.push("/mover");
+            } else {
+              history.push("/customers");
+            }
           } else {
             showMessage(res.data.message);
           }
@@ -64,7 +61,6 @@ const ResetPassword = (props) => {
   var { password, cpassword } = resetForm;
   return (
     <div className={style.resetContainer}>
-      {/* <div className={style.image}></div> */}
       <div className={`${style.passwordReset} ${style.flex}`}>
         <div>
           <h4>Enter New Password</h4>
@@ -75,11 +71,10 @@ const ResetPassword = (props) => {
             <div>
               <TextField
                 variant="outlined"
-                margin="normal"
                 required="required"
                 type="password"
                 // fullWidth
-                style={{ width: "30vw" }}
+                className={style.passwordField}
                 size="small"
                 id="password"
                 label="Enter New Password"
@@ -90,44 +85,28 @@ const ResetPassword = (props) => {
               />
             </div>
             <div>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required="required"
-                type="password"
-                // fullWidth
-                style={{ width: "30vw" }}
-                size="small"
-                id="password"
-                label="Confirm Password"
-                name="cpassword"
-                value={cpassword}
-                onChange={(e) => handleFormInput(e)}
-                error={cpasswordError}
-              />
+            <TextField
+              variant="outlined"
+              required="required"
+              type="password"
+              // fullWidth
+              className={style.passwordField}
+              size="small"
+              id="password"
+              label="Confirm Password"
+              name="cpassword"
+              value={cpassword}
+              onChange={(e) => handleFormInput(e)}
+              error={cpasswordError}
+            />
             </div>
           </form>
         </div>
 
-        <div>
-          <div style={{ alignItems: "center" }}>
-            <Button
-              onClick={navigateToCustomer}
-              // type="button"
-              style={{
-                background: "#00ADEE",
-                textTransform: "none",
-                color: "#FFF",
-
-                fontFamily: "sans-serif",
-                width: "30vw",
-                // margin: "0 2rem",
-                // width: "60%"
-              }}
-            >
-              Reset Password
-            </Button>
-          </div>
+        <div className={style.resetPasswordBtn}>
+          <Button className={style.button} onClick={navigateToCustomer}>
+            Reset Password
+          </Button>
         </div>
       </div>
     </div>
@@ -137,6 +116,6 @@ var actions = {
   showMessage,
 };
 var mapStateToProps = (state) => ({
-  user: state.users?.user
-})
+  user: state.users?.user,
+});
 export default connect(mapStateToProps, actions)(ResetPassword);

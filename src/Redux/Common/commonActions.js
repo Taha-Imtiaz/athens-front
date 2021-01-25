@@ -19,7 +19,7 @@ export var showMessage = (message) => async (dispatch) => {
             payload: {
                 message: ''
             }
-        }, 5000)
+        })
     })
     dispatch({
         type: SHOW_MESSAGE,

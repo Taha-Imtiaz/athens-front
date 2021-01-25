@@ -1,6 +1,6 @@
 .formStyle {
   display: grid;
-  grid-template-rows: minmax(86.6vh, min-content);
+  grid-template-rows: minmax(90vh, min-content);
   grid-template-columns: 20fr 60fr 20fr;
   background-color: #e9ecef;
   grid-template-areas: ". form .";
@@ -30,11 +30,11 @@
   font-family: sans-serif;
 }
 .updateBtn .button:hover {
-    background-color: #00adee;
+  background-color: #00adee;
 }
 .alternateContactBtn {
   display: grid;
-/* background-color: aqua; */
+  /* background-color: aqua; */
   grid-template-columns: 78.7fr 21.3fr;
   grid-template-areas: ". alternateContact";
 }
@@ -69,6 +69,6 @@
   background: #00adee;
 }
 .updateBtn {
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 }

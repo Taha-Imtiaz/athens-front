@@ -256,7 +256,7 @@ class JobEditDetails extends Component {
   };
   //onChange handler of addNote
   handleAddNote = (e) => {
-    var { name, value } = e.target;
+    var {value } = e.target;
     this.setState({
       Note: value,
     });
@@ -306,7 +306,7 @@ class JobEditDetails extends Component {
       assigneeRequired,
       jobType,
 
-      locations: locations.filter((x) => x.value != "" && x.type != ""),
+      locations: locations.filter((x) => x.value !== "" && x.type !== ""),
 
       status,
       userId: loggedinUser._id,
@@ -406,8 +406,8 @@ class JobEditDetails extends Component {
               this.state.locations[i].type === "pickup"
                 ? "PickUp Location"
                 : this.state.locations[i].type === "dropoff"
-                ? "Drop Off Location"
-                : "Choose Location"
+                  ? "Drop Off Location"
+                  : "Choose Location"
             }
             disabled={
               (this.state.locations[i].type ? false : true) ||
@@ -416,15 +416,15 @@ class JobEditDetails extends Component {
             name={this.state.locations[i].type}
             value={
               this.state.locations[i].type === "pickup" &&
-              this.state.locations[i].default
+                this.state.locations[i].default
                 ? "Load only / IA"
                 : this.state.locations[i].type === "dropoff" &&
                   this.state.locations[i].default
-                ? "Unload only"
-                : this.state.locations[i].value
+                  ? "Unload only"
+                  : this.state.locations[i].value
             }
             onChange={(e) => this.hanldeLocationInput(i, e)}
-            // error={this.state.locationtoError ? true : false}
+          // error={this.state.locationtoError ? true : false}
           />
         </div>
         {this.state.locations[i].type == "pickup" ? (
@@ -542,13 +542,7 @@ class JobEditDetails extends Component {
       startDate,
       endDate,
       startTime,
-      meetTime,
-      from,
-      assigneeRequired,
-      assignee,
-      to,
-      description,
-      assigneesId,
+     
       Note,
       note,
       show,
@@ -591,7 +585,7 @@ class JobEditDetails extends Component {
                 autoFocus
                 value={this.state.title}
                 onChange={this.handleFormInput}
-                error={this.state.titleError}
+                error={this.state.titleError ? true : false}
               />
             </div>
             <div className={style.styleEditor}>
@@ -624,7 +618,7 @@ class JobEditDetails extends Component {
                   getOptionLabel={(option) =>
                     option.name ? option.name : option
                   }
-                  error={this.state.multiError}
+                  // error={this.state.multiError ? true : false}
                   renderInput={(params) => (
                     <TextField
                       onKeyUp={(e) => this.addCustomService(e)}
@@ -665,8 +659,8 @@ class JobEditDetails extends Component {
                 );
               } else {
                 return (
-                  <div className={style.styleDate}>
-                    <div key={i}>
+                  <div className={style.styleDate} key={i}>
+                   
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid>
                           <KeyboardDatePicker
@@ -683,7 +677,7 @@ class JobEditDetails extends Component {
                           />
                         </Grid>
                       </MuiPickersUtilsProvider>
-                    </div>
+                    
                     <div
                       className={style.centeredIcon}
                       onClick={() => this.removeDate(i)}
@@ -712,7 +706,7 @@ class JobEditDetails extends Component {
                   autoComplete="Number of movers required"
                   name="assigneeRequired"
                   value={this.state.assigneeRequired}
-                  error={this.state.assigneeRequiredError}
+                  error={this.state.assigneeRequiredError ? true : false}
                   onChange={this.handleFormInput}
                 />
               </div>
@@ -736,8 +730,8 @@ class JobEditDetails extends Component {
                     {this.state.jobType === "Fixed" ? (
                       <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
                     ) : (
-                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
-                    )}
+                        <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                      )}
                   </Select>
                 </FormControl>
               </div>
@@ -820,7 +814,7 @@ class JobEditDetails extends Component {
               <Modal.Title>Add Note</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <TextareaAutosize
+              <TextareaAutosize className = {style.styleTextArea}
                 name=""
                 id=""
                 cols="65"

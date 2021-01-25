@@ -1,11 +1,11 @@
 .unavailableContainer {
   display: grid;
   grid-template-rows: minmax(90vh, min-content);
-  grid-template-columns: 20fr 80fr;
+  grid-template-columns: 15fr 85fr;
 }
 .unavailableContent {
   display: grid;
-  grid-template-rows: 10vh minmax(75vh, min-content);
+  grid-template-rows: 10vh minmax(80vh, min-content);
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas:
     ". unavailableHeader ."

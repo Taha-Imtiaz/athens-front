@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import style from "./Payment.module.css";
 import { Button, TextField } from "@material-ui/core";
-import { Link } from "react-router-dom";
+
 import { payAmount } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
@@ -62,7 +62,7 @@ class Payment extends Component {
           };
           payAmount(obj).then((res) => {
             let { history, showMessage } = this.props;
-            if (res.data.status == 200) {
+            if (res.data.status === 200) {
               showMessage(res.data.message);
               history.push("/mover");
             }

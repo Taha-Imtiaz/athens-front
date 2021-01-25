@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./SignIn.module.css";
+import style from "./Signin.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../Redux/User/userActions";
@@ -22,7 +22,7 @@ class SignInForm extends React.Component {
     let token = localStorage.getItem("athens-token");
     if (token) {
       if (this.props.user) {
-        this.props.user.role == "mover"
+        this.props.user.role === "mover"
           ? this.props.history.push("/mover")
           : this.props.history.push("/customers");
       }
@@ -31,7 +31,7 @@ class SignInForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
-      nextProps.user.role == "mover"
+      nextProps.user.role === "mover"
         ? this.props.history.push("/mover")
         : this.props.history.push("/customers");
     }
@@ -71,7 +71,7 @@ class SignInForm extends React.Component {
       };
       login(obj, () => {
         if (this.props.user) {
-          this.props.user.role == "mover"
+          this.props.user.role === "mover"
             ? this.props.history.push("/mover")
             : this.props.history.push("/customers");
         }

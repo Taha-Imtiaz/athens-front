@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import style from "./CreateJobs.module.css";
-import { Multiselect } from "multiselect-react-dropdown";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
+
 import FormControl from "@material-ui/core/FormControl";
 
-import API from "../../../utils/api";
+
 import {
-  getAllMovers,
+ 
   createJob,
-  addService,
+  
 } from "../../../Redux/Job/jobActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -398,7 +397,7 @@ class CreateJobs extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x != ("" || null) ? x.toDateString() : null
+        x !== ("" || null) ? x.toDateString() : null
       );
       stringDates = stringDates.filter(Boolean);
       var createJobObj = {
@@ -407,7 +406,7 @@ class CreateJobs extends Component {
         services,
         dates: stringDates,
         startTime,
-        locations: locations.filter((x) => x.value != "" && x.type != ""),
+        locations: locations.filter((x) => x.value !== "" && x.type !== ""),
         status,
         note,
         assigneesId,

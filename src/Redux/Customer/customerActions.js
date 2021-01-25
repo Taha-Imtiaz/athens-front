@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants";
+import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants";
 import Axios from "../../utils/api";
 import { showMessage } from "../../Redux/Common/commonActions";
 
@@ -58,7 +58,7 @@ export var addCustomer = (customerObj, callback) => {
         "customer",
         customerObj
       );
-      if (addedCustomer.data.status == 200) {
+      if (addedCustomer.data.status === 200) {
         callback(addedCustomer);
         dispatch(showMessage(addedCustomer.data.message));
       } else {
@@ -84,7 +84,7 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
         "customer/" + id,
         body
       );
-      if (customerUpdated.data.status == 200) {
+      if (customerUpdated.data.status === 200) {
         callback();
         dispatch(showMessage(customerUpdated.data.message));
       } else {

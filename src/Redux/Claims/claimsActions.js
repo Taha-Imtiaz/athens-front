@@ -98,7 +98,7 @@ export var deleteClaim = (id, currentPage) => {
   return async (dispatch) => {
     try {
       var getAllClaimsExceptDeleteOne = await Axios.delete(`claim/${id}`, body)
-      if (getAllClaimsExceptDeleteOne.data.status == 200) {
+      if (getAllClaimsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
         dispatch({
           type: DELETE_CLAIM,

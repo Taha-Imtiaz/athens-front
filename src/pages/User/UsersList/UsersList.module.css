@@ -26,6 +26,7 @@
 }
 .filter {
   cursor: pointer;
+  margin: 0 auto;
 }
 
 .jumbotron {
@@ -81,7 +82,7 @@
 }
 .flex {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 .stylePagination {

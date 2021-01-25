@@ -163,7 +163,7 @@ const CustomerClaims = (props) => {
             {claims?.docs &&
               claims?.docs.map((x, i) => {
                 return (
-                  <div className={style.listContainer}>
+                  <div className={style.listContainer} key = {i}>
                     <div className={`${style.listContent}`}>
                       <Link
                         className={style.styleLink}

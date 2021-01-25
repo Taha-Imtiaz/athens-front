@@ -42,7 +42,7 @@ function RequestHolidays(props) {
   const handleDayClick = (e) => {
     let newDates = cloneDeep(dates);
     let index = newDates.findIndex((x) => x == e.toString());
-    if (index != -1) {
+    if (index !== -1) {
       newDates.splice(index, 1);
       setDates(newDates);
     } else {

@@ -43,6 +43,9 @@
 .TrashIcon {
   grid-area: TrashIcon;
 }
+.locationIcon {
+  margin: 0.25rem;
+}
 .centeredIcon {
   display: flex;
   justify-content: center;
@@ -81,11 +84,11 @@
 }
 .locationBtn {
   display: grid;
-  grid-template-columns: 85fr 15fr;
-  grid-template-areas: ". button";
+  grid-template-rows: 25vh ;
+  /* grid-template-areas: ". button"; */
 }
 .locationBtn .button {
-  grid-area: button;
+  /* grid-area: button; */
   background: #00adee;
 
   color: #ffffff;

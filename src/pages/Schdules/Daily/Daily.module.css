@@ -1,8 +1,9 @@
 .scheduleContainer {
   display: grid;
   grid-template-rows: minmax(90vh, min-content);
-  grid-template-columns: 20fr 80fr;
+  grid-template-columns: 15fr 85fr;
   grid-template-areas: "sidebar dragContent";
+  column-gap: 0.75rem;
   /* background-color: aqua; */
 }
 .sidebar {
@@ -11,8 +12,10 @@
 .dragContent {
   grid-area: dragContent;
   display: grid;
-  grid-template-columns: 75fr 25fr;
+  grid-template-columns: 80fr 20fr;
   grid-template-areas: "jobContent movers";
+  column-gap: 0.75rem;
+
 }
 .jobContent {
   grid-area: jobContent;
@@ -22,7 +25,7 @@
   grid-area: movers;
 }
 .styleDatePicker {
-  width: 60vw !important;
+  width: 68vw !important;
   height: 12vh;
 }
 .styleLine {
@@ -34,6 +37,7 @@
   height: 6vh;
   align-items: center;
   padding: 0 0.5rem;
+  /* background-color: rosybrown; */
 }
 .moverAssigneeInfo .button {
   background: #00adee;
@@ -143,7 +147,7 @@
 }
 .scrollBar .scrollContent {
   height: 100%;
-  margin-right: 1rem;
+  
 }
 .scrollBar::-webkit-scrollbar {
   width: 10px !important;

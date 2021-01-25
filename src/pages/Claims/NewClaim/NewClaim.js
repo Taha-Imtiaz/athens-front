@@ -3,7 +3,7 @@ import style from "./NewClaim.module.css";
 import { Modal } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import "react-datepicker/dist/react-datepicker.css";
-import API from "../../../utils/api";
+
 import { connect } from "react-redux";
 import {
   addClaim,
@@ -85,7 +85,7 @@ class NewClaim extends Component {
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    if (value == "") {
+    if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
@@ -96,7 +96,7 @@ class NewClaim extends Component {
     let customerIdError = "";
     let jobIdError = "";
     let priceError = "";
-    let descriptionError = "";
+    
     let titleError = "";
     let waitToError = "";
 
@@ -242,7 +242,7 @@ class NewClaim extends Component {
                     fullWidth
                     className={style.styleFormFields}
                     variant="outlined"
-                    error={this.state.customerIdError}
+                    error={this.state.customerIdError ? true:false}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -319,7 +319,7 @@ class NewClaim extends Component {
                   label="Choose a job"
                   fullWidth
                   variant="outlined"
-                  error={this.state.jobIdError}
+                  error={this.state.jobIdError?true:false}
                   className={style.styleFormFields}
                   inputProps={{
                     ...params.inputProps,
@@ -332,7 +332,7 @@ class NewClaim extends Component {
             <TextField
               variant="outlined"
               required
-              error={this.state.titleError}
+              error={this.state.titleError?true:false}
               className={style.styleFormFields}
               size="small"
               id="title"
@@ -346,7 +346,7 @@ class NewClaim extends Component {
             <TextField
               variant="outlined"
               required
-              error={this.state.waitToError}
+              error={this.state.waitToError?true:false}
               className={style.styleFormFields}
               size="small"
               id="waitTo"
@@ -396,8 +396,8 @@ class NewClaim extends Component {
             <TextareaAutosize
               rowsMax={4}
               id="description"
-              className={style.styleFormFields}
-              fullWidth
+              className={`${style.styleFormFields} ${style.styleTextArea}`}
+              
               placeholder="Item Description"
               name="description"
               value={this.state.claims.description}

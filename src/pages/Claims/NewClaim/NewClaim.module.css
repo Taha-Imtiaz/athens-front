@@ -37,6 +37,9 @@
   display: grid;
   grid-template-columns: 50fr 20fr 30fr;
 }
+.styleTextArea {
+  width: 100% !important;
+}
 .styleFormFields {
   margin: 0.5rem 0 !important;
 }

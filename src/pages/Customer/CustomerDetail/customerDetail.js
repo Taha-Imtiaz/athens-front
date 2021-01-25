@@ -316,7 +316,7 @@ const CustomerDetail = (props) => {
                     {/* show dates */}
                     <div className={style.jobDates}>
                       {job.dates.map((x, i) => (
-                        <div>
+                        <div key = {i}>
                           {i === 0 ? (
                             <div key={i}>{x}</div>
                           ) : (
@@ -351,9 +351,9 @@ const CustomerDetail = (props) => {
 
                     {job.locations && (
                       <div className={style.locations}>
-                        {job.locations.map((list) =>
+                        {job.locations.map((list,i) =>
                           list.type === "pickup" ? (
-                            <div>
+                            <div key = {i}>
                               <FontAwesomeIcon icon={faDotCircle} />{" "}
                               <span>{`Pickup`} </span>{" "}
                               <div className={style.location}>
@@ -361,7 +361,7 @@ const CustomerDetail = (props) => {
                               </div>
                             </div>
                           ) : (
-                              <div>
+                              <div key = {i}>
                                 <FontAwesomeIcon icon={faDotCircle} />{" "}
                                 <span>{`Dropoff`}</span>
                                 <div className={style.location}>
@@ -378,8 +378,8 @@ const CustomerDetail = (props) => {
                         <div>
                           <h5>Notes</h5>
                         </div>
-                        {job.note.map((x) => (
-                          <div>{x.text}</div>
+                        {job.note.map((x,i) => (
+                          <div key={i}>{x.text}</div>
                         ))}
                       </div>
                     )}

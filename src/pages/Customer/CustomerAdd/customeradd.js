@@ -73,7 +73,7 @@ class CustomerAdd extends Component {
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    if (value == "") {
+    if (value === "") {
       this.setState({ [name + "Error"]: "Field Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
@@ -89,8 +89,7 @@ class CustomerAdd extends Component {
   mySubmitHandler = (event) => {
     var { addCustomer, history } = this.props;
     event.preventDefault();
-    var { subContacts } = this.state;
-
+    
     const isValid = this.validate();
     if (isValid) {
       var { firstName, lastName, email, phone, subContacts } = this.state;
@@ -170,7 +169,7 @@ class CustomerAdd extends Component {
                 name="firstName"
                 autoComplete="firstName"
                 autoFocus
-                error={this.state.firstNameError.length > 0}
+                error={this.state.firstNameError?true:false}
                 value={this.state.firstName}
                 onChange={this.handleFormInput}
               />
@@ -185,7 +184,7 @@ class CustomerAdd extends Component {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lastName"
-                error={this.state.lastNameError.length > 0}
+                error={this.state.lastNameError?true:false}
                 value={this.state.lastName}
                 onChange={this.handleFormInput}
               />
@@ -200,7 +199,7 @@ class CustomerAdd extends Component {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneError.length > 0}
+                error={this.state.phoneError?true:false}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />
@@ -215,7 +214,7 @@ class CustomerAdd extends Component {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={this.state.emailError.length > 0}
+                error={this.state.emailError?true:false}
                 value={this.state.email}
                 onChange={this.handleFormInput}
               />

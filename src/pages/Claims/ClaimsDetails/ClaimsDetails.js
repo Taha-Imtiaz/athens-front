@@ -13,7 +13,7 @@ const ClaimsDetails = (props) => {
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [waitTo, setWaitTo] = useState(true);
-  const [claimInput, setClaimInput] = useState("");
+  const [claimInput, setClaimInput] = useState('');
 
   var {
     match: {
@@ -28,7 +28,7 @@ const ClaimsDetails = (props) => {
   }, []);
 
   useEffect(() => {
-    setClaimInput(claims ?.waitTo);
+    setClaimInput(claims?.waitTo);
   }, [claims]);
 
   const handleAddUpdate = (e) => {
@@ -82,6 +82,7 @@ const ClaimsDetails = (props) => {
     setWaitTo(false);
   };
   var handleClaimInput = (e) => {
+    console.log(e.target.value);
     setClaimInput(e.target.value);
   };
 
@@ -109,32 +110,32 @@ const ClaimsDetails = (props) => {
               <h6 className="card-subtitle mb-2 text-muted">
                 <Link
                   className={style.link}
-                  to={`/customer/detail/${claims ?.customer._id}`}
+                  to={`/customer/detail/${claims?.customer._id}`}
                 >
-                  {claims ?.customer.firstName} {claims ?.customer.lastName}
+                  {claims?.customer.firstName} {claims?.customer.lastName}
                 </Link>
               </h6>
-              <p className="card-text">{claims ?.customer.phone}</p>
-              <p className="card-text">{claims ?.customer.email}</p>
+              <p className="card-text">{claims?.customer.phone}</p>
+              <p className="card-text">{claims?.customer.email}</p>
             </div>
           </div>
 
           <div className={`card ${style.jobCard}`}>
             <div className="card-body">
               <h5>Jobs</h5>
-              {claims ?.job ? (
+              {claims?.job ? (
                 <div>
                   <Link
-                    to={`/job/detail/${claims ?.job ?._id}`}
+                    to={`/job/detail/${claims?.job?._id}`}
                     className="card-title"
                   >
                     {" "}
-                    {claims ?.job ?.title}
+                    {claims?.job?.title}
                   </Link>
                   <div>
-                    {claims ?.job ?.assignee.length > 0 ? (
-                      claims ?.job ?.assignee.map((assignee) => (
-                        <Chip
+                    {claims?.job?.assignee.length > 0 ? (
+                      claims?.job?.assignee.map((assignee,i) => (
+                        <Chip key= {i}
                           label={assignee.name}
                           clickable
                           color="primary"
@@ -165,15 +166,15 @@ const ClaimsDetails = (props) => {
             <div>
               <h6>Protection Type : </h6>
             </div>
-            <div>{claims ?.claimType}</div>
+            <div>{claims?.claimType}</div>
 
             <div>
               <h6>{`Total: `}</h6>
             </div>
-            <div>{`$${claims ?.price}`}</div>
+            <div>{`$${claims?.price}`}</div>
 
             <div>
-              {claims ?.status === "open" ? (
+              {claims?.status === "open" ? (
                 <Button className={style.button} onClick={() => handleShow()}>
                   Add Update
                 </Button>
@@ -181,7 +182,7 @@ const ClaimsDetails = (props) => {
             </div>
 
             <div>
-              {claims ?.status === "open" ? (
+              {claims?.status === "open" ? (
                 <Button
                   className={style.button}
                   // name="Close Claim"
@@ -203,11 +204,11 @@ const ClaimsDetails = (props) => {
           </div>
 
           <div className={`${style.title} `}>
-            <h6>Title:</h6> <div>{claims ?.title}</div>
+            <h6>Title:</h6> <div>{claims?.title}</div>
           </div>
 
           <div className={style.description}>
-            <h6>Description:</h6> <span>{claims ?.description}</span>
+            <h6>Description:</h6> <span>{claims?.description}</span>
           </div>
 
           <div className={`${style.waiting}`}>
@@ -216,9 +217,10 @@ const ClaimsDetails = (props) => {
             </div>
 
             <div onDoubleClick={editInput}>
+              
               <TextField
                 variant="outlined"
-                margin="0"
+
                 required
                 fullWidth
                 size="small"
@@ -239,13 +241,13 @@ const ClaimsDetails = (props) => {
             </div>
           </div>
 
-          {claims ?.updates.length > 0 ? (
+          {claims?.updates.length > 0 ? (
             <div className={style.updates}>
               <div className={style.updateHead}>
                 <h3>Updates</h3>
               </div>
               <div className={style.updateContent}>
-                {claims ?.updates.map((x, i) => (
+                {claims?.updates.map((x, i) => (
                   <div key={i} className={style.updateContentRow}>
                     {" "}
                     <div>{`${i + 1}.  ${x.value}`}</div>
@@ -295,7 +297,7 @@ const ClaimsDetails = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims ?.claim,
+  claims: state.claims?.claim,
 });
 var actions = {
   showMessage,

@@ -347,7 +347,7 @@ const DailySchedule = (props) => {
       let index = jobToUpdate[0].assignee.findIndex(
         (x) => x._id == source.droppableId
       );
-      if (index != -1) {
+      if (index !== -1) {
         // Already Assigned
         var { showMessage } = props;
         showMessage("Already Assigned");

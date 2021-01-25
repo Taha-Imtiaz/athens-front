@@ -11,7 +11,7 @@ import { Modal } from "react-bootstrap";
 
 const BlanketList = (props) => {
   var [blanketValue, setBlanketValue] = useState(props.blanketValue);
-  var [quantityValue, setQuantityValue] = useState(false);
+ 
   const [show, setShow] = useState(false);
 
   var [depositValue, setDepositValue] = useState("");
@@ -67,7 +67,7 @@ const BlanketList = (props) => {
     if (newData[i].edit === false) {
       newData[i].quantity = e.target.value;
       newData[i].cost = parseInt(e.target.value) * 15;
-      // setQuantityValue(true);
+     
       setBlanketValue(newData);
     }
   };
@@ -75,7 +75,7 @@ const BlanketList = (props) => {
   var changeCost = (e, i) => {
     var { name, value } = e.target;
     let newData = cloneDeep(blanketValue);
-    // setQuantityValue(false);
+   
     newData[i].cost = value;
     setBlanketValue(newData);
   };

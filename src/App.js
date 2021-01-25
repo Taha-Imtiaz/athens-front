@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 
-import SignIn from "./pages/SignIn/SignIn";
+import SignIn from "./pages/Signin/Signin";
 import customerList from "./pages/Customer/CustomerList/customerlist";
 import customerDetail from "./pages/Customer/CustomerDetail/customerDetail";
 import CustomerClaims from "./pages/Claims/CustomersClaim/CustomerClaims";

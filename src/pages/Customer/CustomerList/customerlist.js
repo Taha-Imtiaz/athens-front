@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { deleteCustomer, getAllCustomers } from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
-import _ from "lodash";
+
 import Button from "@material-ui/core/Button";
 import { Modal } from "react-bootstrap";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";

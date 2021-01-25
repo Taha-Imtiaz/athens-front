@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import style from "./CustomerDeposit.module.css";
-import SideBar from "../../../components/Sidebar/SideBar";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { updateDeposit } from "../../../Redux/Claims/claimsActions";
-import { clone, cloneDeep } from "lodash";
+import {  cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
 import { Modal } from "react-bootstrap";
 import Pagination from "../../../components/Pagination/Pagination";

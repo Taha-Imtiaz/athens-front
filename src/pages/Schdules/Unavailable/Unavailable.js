@@ -47,7 +47,7 @@ const UnavailableSchedule = (props) => {
   const handleChange = (list) => {
     // let newDates = cloneDeep(dates)
     let index = dates.findIndex((x) => x == list._id);
-    if (index != -1) {
+    if (index !== -1) {
       dates.splice(index, 1);
     } else {
       dates.push(list._id);

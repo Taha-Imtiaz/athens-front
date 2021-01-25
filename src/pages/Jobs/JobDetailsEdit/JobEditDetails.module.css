@@ -63,6 +63,9 @@
 .styleFormFields {
   margin: 0.5rem 0 !important;
 }
+.styleTextArea {
+  width: 100% !important;
+}
 .locationInput {
   display: grid;
   grid-template-columns: 33fr repeat(2, 32fr) 3fr;

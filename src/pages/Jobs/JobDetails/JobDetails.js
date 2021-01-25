@@ -113,15 +113,15 @@ const JobDetails = (props) => {
                     <div>Timestamp</div>
                   </div>
 
-                  {job.activities.map((activitiy) => (
-                    <div className={style.modalContent}>
+                  {job.activities.map((activitiy,i) => (
+                    <div key= {i} className={style.modalContent}>
                       <div> {activitiy?.performer?.name}</div>
                       <div>
-                        {activitiy?.messageLogs?.map((x) => (
-                          <span>* {x}</span>
+                        {activitiy?.messageLogs?.map((x,i) => (
+                          <span key= {i}>* {x}</span>
                         ))}
                       </div>
-                      {/* <div>{activitiy?.timeStamp?.split("G")[0]}</div> */}
+                     
                       <TimeAgo date={activitiy?.timeStamp} />
                     </div>
                   ))}
@@ -157,11 +157,11 @@ const JobDetails = (props) => {
               </div>
             </div>
             <div className={style.jobDates}>
-              {job.dates.map((x, i) => (i === 0 ? x : <span> | {x} </span>))}
+              {job.dates.map((x, i) => (i === 0 ? <span key = {i}>{x}</span> : <span key = {i}> | {x} </span>))}
             </div>
             <div className={style.service}>
-              {job.services.map((service) => (
-                <Chip
+              {job.services.map((service,i) => (
+                <Chip key = {i}
                   variant="outlined"
                   size="small"
                   label={service.name}
@@ -211,7 +211,7 @@ const JobDetails = (props) => {
                 </Link>
               </div>
 
-              {job.status != "booked" ? (
+              {job.status !== "booked" ? (
                 <div className={style.jobBookBtn}>
                   <Button
                     className={style.buttons}

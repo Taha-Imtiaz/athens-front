@@ -39,7 +39,7 @@ const VerificationCode = (props) => {
   var handleVerificationCode = (e) => {
     var codeInString = e.toString();
     setCode(e);
-    if (codeInString.length != 4) {
+    if (codeInString.length !== 4) {
       setVerificationCode("You must enter correct verification code");
     } else {
       setVerificationCode("");

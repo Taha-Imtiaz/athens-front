@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants"
+import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants"
 
 
 var initialState = {

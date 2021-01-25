@@ -51,7 +51,7 @@ const Navbar = (props) => {
           <div className="collapse navbar-collapse" id="navbarNav">
             {props.user ? (
               <ul className="navbar-nav ml-auto">
-                {props.user.role != "mover" ? (
+                {props.user.role !== "mover" ? (
                   <React.Fragment>
                     <li className={getNavLinkClass("/customers")}>
                       <Link className={`nav-link`} to="/customers">
@@ -73,7 +73,7 @@ const Navbar = (props) => {
                         Schedule
                       </Link>
                     </li>
-                    {props.user.role != "manager" ? (
+                    {props.user.role !== "manager" ? (
                       <li className={getNavLinkClass("/users")}>
                         <Link className="nav-link" to="/users">
                           Users

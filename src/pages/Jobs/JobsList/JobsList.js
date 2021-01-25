@@ -76,9 +76,10 @@ class JobsList extends Component {
   handlePageChange = (page) => {
     //fetch jobs when the page is changed
     var { getAllJobs } = this.props;
+    var fetchJobsOnPageChange;
     //sort the jobList by name in ascending order when sort by name is checked
     if (this.state.sortByName === true) {
-      var fetchJobsOnPageChange = {
+      fetchJobsOnPageChange = {
         query: "",
         sort: {
           startDate: null,
@@ -98,7 +99,7 @@ class JobsList extends Component {
     }
     //sort the jobList by recently added  when recentlyAdded is checked
     else if (this.state.recentlyAdded === true) {
-      var fetchJobsOnPageChange = {
+       fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: null,
@@ -112,7 +113,7 @@ class JobsList extends Component {
       });
       //sort the jobList by assignee required  when Assignee Required is checked
     } else if (this.state.assigneeRequired === true) {
-      var fetchJobsOnPageChange = {
+       fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: -1,
@@ -127,7 +128,7 @@ class JobsList extends Component {
     }
     //sort the list by recently added when no sort is selected and page is changed
     else {
-      var fetchJobsOnPageChange = {
+       fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: null,

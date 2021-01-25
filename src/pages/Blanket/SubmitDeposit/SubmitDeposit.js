@@ -150,7 +150,7 @@ class SubmitDeposit extends Component {
     this.setState({ ...this.initialState, customers });
   };
   render() {
-    var { quantity, customer, cost } = this.state;
+    var { quantity, cost } = this.state;
     return (
       <div className={style.depositForm}>
         <div className={`${style.form}`}>
@@ -183,7 +183,7 @@ class SubmitDeposit extends Component {
                     fullWidth
                     className={style.styleFormFields}
                     variant="outlined"
-                    error={this.state.customerIdError}
+                    error={this.state.customerIdError?true:false}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -220,7 +220,7 @@ class SubmitDeposit extends Component {
                   fullWidth
                   className={style.styleFormFields}
                   variant="outlined"
-                  error={this.state.jobIdError}
+                  error={this.state.jobIdError?true:false}
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: "new-password", // disable autocomplete and autofill
@@ -239,7 +239,7 @@ class SubmitDeposit extends Component {
               className={style.styleFormFields}
               label="Blanket Quantity"
               onChange={this.handleQuantityFormInput}
-              error={this.state.quantityError}
+              error={this.state.quantityError?true:false}
               fullWidth
             />
 
@@ -253,7 +253,7 @@ class SubmitDeposit extends Component {
               value={cost}
               label="Cost in $"
               onChange={this.handleCostFormInput}
-              error={this.state.costError}
+              error={this.state.costError?true:false}
               fullWidth
             />
 

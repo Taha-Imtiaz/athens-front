@@ -134,7 +134,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className={style.width}>
+    <div >
       <div className="input-group">
         <input
           type="text"

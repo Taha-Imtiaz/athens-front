@@ -9,7 +9,6 @@ import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 
 const UsersList = (props) => {
-  var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
   var usersObj = {
     query: "",
@@ -20,12 +19,12 @@ const UsersList = (props) => {
   };
 
   useEffect(() => {
-    var { users, getUsers } = props;
+    var {  getUsers } = props;
     getUsers(usersObj);
   }, []);
 
   var handlePageChange = (page) => {
-    var { users, getUsers } = props;
+    var {  getUsers } = props;
     var usersObj = {
       query: "",
       filter: {
@@ -36,7 +35,7 @@ const UsersList = (props) => {
     getUsers(usersObj);
     setCurrentPage(page);
   };
-  const width = window.innerWidth;
+ 
   var { users, getUsers } = props;
   var totalCount = users?.total;
   var usersDocs = users?.docs;
@@ -79,13 +78,13 @@ const UsersList = (props) => {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <a
+                  <a href="#"
                     className="dropdown-item"
                     onClick={() => handleFilter("mover")}
                   >
                     Movers
                   </a>
-                  <a
+                  <a href="#"
                     className="dropdown-item"
                     onClick={() => handleFilter("manager")}
                   >
@@ -143,7 +142,7 @@ const UsersList = (props) => {
                <div className = {style.pagination} >
                 <Pagination
                 itemCount={totalCount}
-                pageSize={pageSize}
+                pageSize={10}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
               />
@@ -152,7 +151,7 @@ const UsersList = (props) => {
             </div>
           ) : (
             <div className="text-center">
-              <img src="/images/no-data-found.png" />
+              <img src="/images/no-data-found.png" alt = "" />
             </div>
           )}
         </div>

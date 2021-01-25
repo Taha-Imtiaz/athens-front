@@ -1,7 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import style from "./EmailVerification.module.css";
-import { Link } from "react-router-dom";
+
 import { sendCode } from "../../../Redux/User/userActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ const EmailVerification = (props) => {
   var [email, setEmail] = useState("");
   var [emailError, setEmailError] = useState("");
   var handleFormInput = (e) => {
-    var { name, value } = e.target;
+    var {  value } = e.target;
     setEmail(value);
   };
 

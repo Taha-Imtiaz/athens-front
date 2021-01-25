@@ -17,7 +17,7 @@ class Availability extends Component {
   handleChange = (e) => {
     let newData = cloneDeep(this.state);
     let index = newData.weeklySchedule.findIndex(
-      (x) => x.day == e.target.value
+      (x) => x.day === e.target.value
     );
     newData.weeklySchedule[index].status = !newData.weeklySchedule[index]
       .status;
@@ -45,7 +45,7 @@ class Availability extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.loggedinUser != prevProps.loggedinUser) {
+    if (this.props.loggedinUser !== prevProps.loggedinUser) {
       this.setState({
         user: this.props.loggedinUser,
         weeklySchedule: this.props.loggedinUser.weeklySchedule,

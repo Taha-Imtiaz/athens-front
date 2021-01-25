@@ -170,7 +170,7 @@ class CalendarApp extends Component {
     return (
       <div className={style.calenderContainer}>
         <div className={style.calender}>
-          <div>
+          <div className = {style.calenderContent}>
             <Calendar
               className={style.styleCalender}
               selectable={true}
@@ -198,13 +198,13 @@ class CalendarApp extends Component {
             />
           </div>
 
-          <div>
+          <div className = {style.sideContent}>
             {this.state?.currentDayJobs?.length ? (
               <div>
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>{" "}
                 <hr />
                 {this.state.currentDayJobs.map((job, i) => (
-                  <div id="accordion">
+                  <div id="accordion" key = {i}>
                     <div className={`card ${style.card}`}>
                       <div
                         className={`card-header ${style.cardHeader}`}
@@ -252,8 +252,8 @@ class CalendarApp extends Component {
                             {parse(job.description)}
                           </div>
                           <div>
-                            {job.services.map((service) => (
-                              <Chip
+                            {job.services.map((service,i) => (
+                              <Chip key = {i}
                                 label={service.name}
                                 size="small"
                                 clickable
@@ -282,7 +282,7 @@ class CalendarApp extends Component {
               <div>
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>
                 <hr />
-                <h5 className={style.flex}>
+                <h5 >
                   <img src="/images/no-data-found.png" />
                 </h5>
               </div>

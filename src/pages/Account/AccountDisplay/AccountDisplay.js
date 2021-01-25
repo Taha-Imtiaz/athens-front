@@ -126,7 +126,7 @@ const AccountDisplay = (props) => {
     e.preventDefault();
     var validateModal = validateModalInputs();
     if (validateModal) {
-      var { password, confirmPassword } = editAccount;
+      var { password } = editAccount;
       var resetPasswordObj = {
         password,
         token: userToken,
@@ -152,7 +152,7 @@ const AccountDisplay = (props) => {
         address,
         phone,
       };
-      const { updateUser, history } = props;
+      const { updateUser } = props;
       updateUser(updatedUserObj, loggedInUser._id)
         .then((res) => {
           setDisabledForm(true);
@@ -180,7 +180,7 @@ const AccountDisplay = (props) => {
               className={style.styleFormFields}
               value={editAccount.name}
               onChange={handleFormInput}
-              error={editAccount.nameError}
+              error={editAccount.nameError ? true: false}
             />
 
             <TextField
@@ -194,7 +194,7 @@ const AccountDisplay = (props) => {
               name="email"
               value={editAccount.email}
               onChange={handleFormInput}
-              error={editAccount.emailError}
+              error={editAccount.emailError ? true: false}
               className={style.styleFormFields}
             />
 
@@ -209,7 +209,7 @@ const AccountDisplay = (props) => {
               name="phone"
               value={editAccount.phone}
               onChange={handleFormInput}
-              error={editAccount.phoneError}
+              error={editAccount.phoneError? true: false}
               className={style.styleFormFields}
             />
 
@@ -223,7 +223,7 @@ const AccountDisplay = (props) => {
               label="Enter Address"
               name="address"
               value={editAccount.address}
-              error={editAccount.addressError}
+              error={editAccount.addressError? true: false}
               onChange={handleFormInput}
               className={style.styleFormFields}
             />
@@ -291,7 +291,7 @@ const AccountDisplay = (props) => {
             name="password"
             value={editAccount.password}
             onChange={handleFormInput}
-            error={editAccount.passwordError}
+            error={editAccount.passwordError? true: false}
             className={style.styleFormFields}
           />
           <TextField
@@ -305,7 +305,7 @@ const AccountDisplay = (props) => {
             name="confirmPassword"
             value={editAccount.confirmPassword}
             onChange={handleFormInput}
-            error={editAccount.confirmPasswordError}
+            error={editAccount.confirmPasswordError? true: false}
             className={style.styleFormFields}
           />
           {/* Are you sure you want to delete this Blanket Deposit? */}

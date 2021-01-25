@@ -3,6 +3,13 @@
 body {
   overflow-x: hidden;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 .app-without-nav {
   font-family: "Roboto", sans-serif;
   display: grid;
@@ -10,126 +17,41 @@ body {
   grid-template-columns: 1fr;
   grid-template-areas: "app-content-without-nav";
 }
+
 .app-content-without-nav {
   grid-area: app-content-without-nav;
 }
+
 .app {
   font-family: "Roboto", sans-serif;
   display: grid;
   grid-template-rows: 10vh minmax(90vh, min-content);
-  grid-template-areas:
-    "navigation-menu"
-    "app-content-container";
+  grid-template-areas: "navigation-menu" "app-content-container";
 }
 
 .navigation-menu {
   grid-area: navigation-menu;
 }
+
 .app-content-container {
   grid-area: app-content-container;
 }
+
 .btn:hover {
   background-color: #00adee !important;
   text-decoration: none;
 }
 
-.DayPicker-Day {
-  border: 1px solid;
-}
-
-.navbar-light .navbar-nav .active > .nav-link,
-.navbar-light .navbar-nav .nav-link.active,
-.navbar-light .navbar-nav .nav-link.show,
-.navbar-light .navbar-nav .show > .nav-link {
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
   color: #00adee;
 }
-.btn-secondary:not(:disabled):not(.disabled).active,
+
+/* .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show > .btn-secondary.dropdown-toggle {
   background-color: #00adee !important;
-}
+} */
 
 .page-item.active .page-link {
   background-color: #00adee !important;
-}
-
-.MuiStepIcon-root.MuiStepIcon-active {
-  color: #00adee;
-}
-.MuiStepIcon-root.MuiStepIcon-completed {
-  color: #00adee;
-}
-
-.MuiFormGroup-root {
-  display: flex;
-  flex-wrap: nowrap;
-  margin: 0 1.4rem;
-  flex-direction: row;
-}
-
-.MuiTab-root {
-  padding: 6px 12px;
-  overflow: hidden;
-  position: relative;
-  font-size: 0.875rem;
-  min-width: 72px;
-  box-sizing: border-box;
-  min-height: 48px;
-  text-align: center;
-  flex-shrink: 0;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  line-height: 1.75;
-  white-space: normal;
-  letter-spacing: 0.02857em;
-  text-transform: uppercase;
-}
-.MuiRadio-root {
-  display: flex;
-}
-
-.MuiRadio-colorSecondary.Mui-checked {
-  color: #00aaee;
-}
-
-.MuiIconButton-colorSecondary {
-  color: #00aaee;
-}
-
-.MuiFormControlLabel-root {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  margin-left: -11px;
-  margin-right: 16px;
-  vertical-align: middle;
-  -webkit-tap-highlight-color: transparent;
-}
-.rbc-event {
-  border: none;
-  box-sizing: border-box;
-  box-shadow: none;
-  margin: 0;
-  padding: 1px 3px;
-  background-color: rgb(0, 173, 238);
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  font-size: 0.8rem;
-}
-
-.MuiBadge-anchorOriginTopRightRectangle {
-  right: -12px !important;
-}
-
-.DatePicker_dateLabel__GO7dX {
-  font-size: 14px !important;
-}
-.MuiStepIcon-root.MuiStepIcon-active {
-  color: #00adee;
 }

@@ -112,7 +112,7 @@ class CreateUser extends Component {
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    if (value == "") {
+    if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });

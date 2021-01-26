@@ -7,7 +7,7 @@
 .calender {
   grid-area: calender;
   display: grid;
-  grid-template-columns: 75fr 25fr;
+  grid-template-columns: 75% 25%;
   grid-template-areas: "calenderContent sideContent";
 
   column-gap: 1rem;

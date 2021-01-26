@@ -46,26 +46,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 //steps of stepper
 function getSteps() {
-
   return [
     {
       label: "Confirm Date and Time",
-      color: "#f50057"
+      color: "#f50057",
     },
     {
       label: "Confirm Contact Info",
-      color: "#f50057"
+      color: "#f50057",
     },
     {
       label: "Confirm PU/DO Addresses",
-      color: "#f50057"
+      color: "#f50057",
     },
     {
       label: "Deposit",
-      color: "#f50057"
-    }
+      color: "#f50057",
+    },
   ];
-
 }
 
 const useIconStyles = makeStyles(
@@ -77,7 +75,6 @@ const useIconStyles = makeStyles(
   })()
 );
 function JobConfirmation(props) {
-
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState("");
@@ -206,8 +203,8 @@ function JobConfirmation(props) {
               data.locations[i].type === "pickup"
                 ? "Enter Pickup Point"
                 : data.locations[i].type === "dropoff"
-                  ? "Enter DropOff Point"
-                  : "Choose Type"
+                ? "Enter DropOff Point"
+                : "Choose Type"
             }
             name={data.locations[i].type}
             disabled={
@@ -219,8 +216,8 @@ function JobConfirmation(props) {
                 ? "Load only / IA"
                 : data.locations[i].type === "dropoff" &&
                   data.locations[i].default
-                  ? "Unload only"
-                  : data.locations[i].value
+                ? "Unload only"
+                : data.locations[i].value
             }
             onChange={(e) => hanldeLocationInput(i, e)}
           />
@@ -392,41 +389,42 @@ function JobConfirmation(props) {
         return (
           <form>
             <h6>Dates:</h6>
-
-            {data &&
-              data.dates.map((x, i) => {
-                return (
-                  <div className={`${style.styleDate}`} key={i}>
-                    <div className={`${style.dates} `}>
-                      <div>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                          <Grid>
-                            <KeyboardDatePicker
-                              inputVariant="outlined"
-                              className={style.styleFormFields}
-                              size="small"
-                              fullWidth
-                              id="date-picker-dialog"
-                              format="MM/dd/yyyy"
-                              value={data.dates[i]}
-                              onChange={(e) => handleStartDate(e, i)}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-                      <div className={style.flex}>
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={() => removeDate(i)}
-                        />
+            <div className={style.flex}>
+              {data &&
+                data.dates.map((x, i) => {
+                  return (
+                    <div className={`${style.styleDate}`} key={i}>
+                      <div className={`${style.dates} `}>
+                        <div>
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid>
+                              <KeyboardDatePicker
+                                inputVariant="outlined"
+                                className={style.styleFormFields}
+                                size="small"
+                                fullWidth
+                                id="date-picker-dialog"
+                                format="MM/dd/yyyy"
+                                value={data.dates[i]}
+                                onChange={(e) => handleStartDate(e, i)}
+                                KeyboardButtonProps={{
+                                  "aria-label": "change date",
+                                }}
+                              />
+                            </Grid>
+                          </MuiPickersUtilsProvider>
+                        </div>
+                        <div className={style.flex}>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            onClick={() => removeDate(i)}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
 
             <div onClick={addDate}>
               <i className="fa fa-plus">Add Date</i>
@@ -533,7 +531,10 @@ function JobConfirmation(props) {
                   className={`${style.button}`}
                   onClick={(e) => addLocation(e)}
                 >
-                  <FontAwesomeIcon icon={faMapMarker} className={style.locationIcon} />
+                  <FontAwesomeIcon
+                    icon={faMapMarker}
+                    className={style.locationIcon}
+                  />
                   Add Location
                 </Button>
               </div>
@@ -567,7 +568,7 @@ function JobConfirmation(props) {
 
               <p>Testing Card #: 4242424242424242</p>
               <div className={style.currentYear}>
-                <div >
+                <div>
                   <TextField
                     variant="outlined"
                     className={style.styleFormFields}
@@ -581,7 +582,7 @@ function JobConfirmation(props) {
                   />
                 </div>
 
-                <div >
+                <div>
                   <TextField
                     variant="outlined"
                     className={style.styleFormFields}
@@ -643,7 +644,9 @@ function JobConfirmation(props) {
             const labelProps = {};
             return (
               <Step key={label} {...stepProps}>
-                <StepLabel className={style.styleRadio} {...labelProps}
+                <StepLabel
+                  className={style.styleRadio}
+                  {...labelProps}
                   StepIconProps={{ classes: { root: iconClasses[index] } }}
                 >
                   {label}
@@ -663,25 +666,27 @@ function JobConfirmation(props) {
           </Button>
         </div>
       ) : (
-          <div className={style.stepperContent}>
-            <div>
-              {getStepContent(activeStep)}
-            </div>
-            <div className={style.backAndSubmitBtn}>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={activeStep === 0 ? style.back : `${style.back} ${style.backStyles}`}
-              >
-                Back
+        <div className={style.stepperContent}>
+          <div>{getStepContent(activeStep)}</div>
+          <div className={style.backAndSubmitBtn}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={
+                activeStep === 0
+                  ? style.back
+                  : `${style.back} ${style.backStyles}`
+              }
+            >
+              Back
             </Button>
 
-              <Button onClick={handleNext} className={style.next}>
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
+            <Button onClick={handleNext} className={style.next}>
+              {activeStep === steps.length - 1 ? "Submit" : "Next"}
+            </Button>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }
@@ -691,6 +696,6 @@ var actions = {
   confirmJob,
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs.job
+  job: state.jobs.job,
 });
 export default connect(mapStateToProps, actions)(JobConfirmation);

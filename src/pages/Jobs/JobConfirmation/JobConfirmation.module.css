@@ -154,3 +154,10 @@
 .backAndSubmitBtn .next:hover , .backAndSubmitBtn .back:hover {
   background-color: #00adee;
 }
+
+.flex {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-start;
+
+}

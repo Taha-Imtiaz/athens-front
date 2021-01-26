@@ -108,6 +108,9 @@
   width: 100%;
   margin: 0 0.2rem;
 }
+.flexEnd .button:hover {
+  background-color: #00adee;
+}
 .stylePagination {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;

@@ -11,6 +11,7 @@
 }
 .styleDates {
   margin: 0 1.5rem;
+  border: 1px solid black;
 }
 .link {
   text-decoration: none !important;

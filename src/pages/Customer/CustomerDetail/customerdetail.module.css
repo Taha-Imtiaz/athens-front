@@ -274,3 +274,7 @@
 .modal ::-webkit-scrollbar-thumb:hover {
   background: #00adee;
 }
+.styleTextArea {
+  width: 100% !important;
+  border: 1px solid black;
+}

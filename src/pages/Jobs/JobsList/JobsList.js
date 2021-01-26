@@ -99,7 +99,7 @@ class JobsList extends Component {
     }
     //sort the jobList by recently added  when recentlyAdded is checked
     else if (this.state.recentlyAdded === true) {
-       fetchJobsOnPageChange = {
+      fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: null,
@@ -113,7 +113,7 @@ class JobsList extends Component {
       });
       //sort the jobList by assignee required  when Assignee Required is checked
     } else if (this.state.assigneeRequired === true) {
-       fetchJobsOnPageChange = {
+      fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: -1,
@@ -128,7 +128,7 @@ class JobsList extends Component {
     }
     //sort the list by recently added when no sort is selected and page is changed
     else {
-       fetchJobsOnPageChange = {
+      fetchJobsOnPageChange = {
         query: "",
         sort: {
           assigneeRequired: null,
@@ -378,11 +378,13 @@ class JobsList extends Component {
                   name="gender1"
                   value={value}
                   onChange={this.handleChange}
+                
                 >
                   <FormControlLabel
                     value="recently added"
                     control={<Radio />}
                     label="Recently Added"
+                    className="dropdown-item"
                     onClick={this.handleRecentlyAdded}
                   />
 
@@ -390,12 +392,14 @@ class JobsList extends Component {
                     value="title"
                     control={<Radio />}
                     label="Title"
+                    className="dropdown-item"
                     onClick={this.handleSortByTitle}
                   />
                   <FormControlLabel
                     value="assignee required"
                     control={<Radio />}
                     label="Assignee Required"
+                    className="dropdown-item"
                     onClick={this.handleAssigneeRequired}
                   />
                 </RadioGroup>
@@ -603,7 +607,9 @@ class JobsList extends Component {
                                     classes={{
                                       paper: classes.paper,
                                     }}
-                                    open={this.state.openedPopoverId === job._id}
+                                    open={
+                                      this.state.openedPopoverId === job._id
+                                    }
                                     anchorEl={this.state.anchorEl}
                                     anchorOrigin={{
                                       vertical: "bottom",
@@ -660,7 +666,7 @@ class JobsList extends Component {
           </div>
         ) : (
           <div className="text-center">
-            <img src="/images/no-data-found.png" alt = "No Data Found"/>
+            <img src="/images/no-data-found.png" alt="No Data Found" />
           </div>
         )}
         {/* Modal for delete job */}

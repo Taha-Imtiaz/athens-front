@@ -39,6 +39,7 @@
 }
 .styleTextArea {
   width: 100% !important;
+  border: 1px solid black;
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;

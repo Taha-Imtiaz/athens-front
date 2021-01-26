@@ -8,7 +8,6 @@ import { showMessage } from "../../../Redux/Common/commonActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import {
-  FormControl,
   FormControlLabel,
   Popover,
   Radio,
@@ -281,30 +280,27 @@ class MoversJobsList extends Component {
                   onChange={(e) => this.filterJobByDate(e)}
                 />{" "}
                 <hr />
-                <FormControl component="fieldset">
-                  <p className="dropdown-item">Filter By Status</p>
-
-                  <RadioGroup
-                    aria-label="gender"
-                    name="gender1"
-                    value={this.state.value}
-                    size="small"
-                    onChange={this.handleChange}
-                  >
-                    <FormControlLabel
-                      value="completed"
-                      className="dropdown-item"
-                      control={<Radio />}
-                      label="completed"
-                    />
-                    <FormControlLabel
-                      value="booked"
-                      className="dropdown-item"
-                      control={<Radio />}
-                      label="booked"
-                    />
-                  </RadioGroup>
-                </FormControl>
+                <p className="dropdown-item">Filter By Status</p>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={this.state.value}
+                  size="small"
+                  onChange={this.handleChange}
+                >
+                  <FormControlLabel
+                    value="completed"
+                    className="dropdown-item"
+                    control={<Radio />}
+                    label="completed"
+                  />
+                  <FormControlLabel
+                    value="booked"
+                    className="dropdown-item"
+                    control={<Radio />}
+                    label="booked"
+                  />
+                </RadioGroup>
               </div>
             </div>
           </div>

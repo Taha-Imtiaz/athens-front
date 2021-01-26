@@ -74,7 +74,7 @@
 }
 .currentYear {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 0.5rem;
 }
 .flex {
@@ -84,7 +84,7 @@
 }
 .locationBtn {
   display: grid;
-  grid-template-rows: 25vh ;
+  grid-template-rows: 25vh;
   /* grid-template-areas: ". button"; */
 }
 .locationBtn .button {
@@ -133,14 +133,14 @@
 .backAndSubmitBtn .back {
   grid-area: back;
   margin: 1rem 0;
- 
+
   text-transform: none;
- 
+
   font-family: sans-serif;
 }
 .backAndSubmitBtn .backStyles {
-   background: #00ADEE;
-    color: #FFF;
+  background: #00adee;
+  color: #fff;
 }
 .backAndSubmitBtn .next {
   grid-area: next;
@@ -151,13 +151,12 @@
   color: #fff;
   font-family: sans-serif;
 }
-.backAndSubmitBtn .next:hover , .backAndSubmitBtn .back:hover {
+.backAndSubmitBtn .next:hover,
+.backAndSubmitBtn .back:hover {
   background-color: #00adee;
 }
 
-.flex {
-  display: flex;
-  gap: 2rem;
-  justify-content: flex-start;
-
+.flexDates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }

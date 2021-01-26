@@ -389,7 +389,7 @@ function JobConfirmation(props) {
         return (
           <form>
             <h6>Dates:</h6>
-            <div className={style.flex}>
+            <div className={style.flexDates}>
               {data &&
                 data.dates.map((x, i) => {
                   return (

@@ -124,3 +124,7 @@
 .flexEnd .button:hover {
   background-color: #00ADEE;
 }
+.styleTextArea {
+  width: 100%;
+  border: 1px solid black;
+}

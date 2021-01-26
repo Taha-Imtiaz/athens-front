@@ -65,6 +65,7 @@
 }
 .styleTextArea {
   width: 100% !important;
+  border: 1px solid black;
 }
 .locationInput {
   display: grid;
@@ -81,7 +82,7 @@
 }
 .checkBox {
   grid-area: checkBox;
- padding: 0 1.5rem;
+  padding: 0 1.5rem;
 }
 .TrashIcon {
   grid-area: TrashIcon;
@@ -100,32 +101,32 @@
   row-gap: 2rem;
 }
 .notesBtn {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin: 0.6rem 0;
-    column-gap: 0.5rem;
-  }
-  .notesBtn .button {
-    background: #00adee;
-    text-transform: none;
-    color: #fff;
-    font-family: sans-serif;
-    width: 100%;
-  }
-  .notesBtn .button:hover {
-    background-color: #00adee;
-  }
-  .modal .modalButtons {
-    background: #00adee;
-    text-transform: none;
-    color: #fff;
-    font-family: sans-serif;
-    margin: 0 0.15rem;
-    /* width: 100%; */
-  }
-  .modal .modalButtons:hover {
-    background-color: #00adee;
-  }
-  .modal {
-    max-width: 70vw;
-  }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0.6rem 0;
+  column-gap: 0.5rem;
+}
+.notesBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  width: 100%;
+}
+.notesBtn .button:hover {
+  background-color: #00adee;
+}
+.modal .modalButtons {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0 0.15rem;
+  /* width: 100%; */
+}
+.modal .modalButtons:hover {
+  background-color: #00adee;
+}
+.modal {
+  max-width: 70vw;
+}

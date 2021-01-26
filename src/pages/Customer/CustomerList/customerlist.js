@@ -239,6 +239,7 @@ const CustomerList = (props) => {
                   <FormControlLabel
                     value="recently added"
                     control={<Radio />}
+                    className="dropdown-item"
                     label="Recently Added"
                     onClick={handleRecentlyAdded}
                   />
@@ -246,6 +247,7 @@ const CustomerList = (props) => {
                   <FormControlLabel
                     value="recently updated"
                     control={<Radio />}
+                    className="dropdown-item"
                     label="Recently Updated"
                     onClick={handleRecentlyUpdated}
                   />
@@ -253,6 +255,7 @@ const CustomerList = (props) => {
                     value="sort by name"
                     control={<Radio />}
                     label="Sort By Name"
+                    className="dropdown-item"
                     onClick={handleSortByName}
                   />
                 </RadioGroup>

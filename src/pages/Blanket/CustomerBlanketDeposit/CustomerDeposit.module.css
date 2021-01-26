@@ -105,7 +105,7 @@
 .activitiesModalContent {
   display: grid;
   grid-template-columns: 20fr 50fr 30fr;
-  column-gap: 0.2rem;
+  /* column-gap: 0.2rem; */
 }
 .activityModalBtn .button {
   background: #00adee;

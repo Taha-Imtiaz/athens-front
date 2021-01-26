@@ -601,6 +601,7 @@ const CustomerDetail = (props) => {
             name="Note"
             value={update}
             onChange={handleAddUpdate}
+            className = {style.styleTextArea}
           ></TextareaAutosize>
         </Modal.Body>
         <Modal.Footer>

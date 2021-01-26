@@ -269,7 +269,7 @@ const CustomerDeposit = (props) => {
                 <div> {activity.performer.name}</div>
                 <div>
                   {activity.messageLogs.map((x, i) => (
-                    <p key={i}>* {x}</p>
+                     <label key={i}>* {x}</label>
                   ))}
                 </div>
                 <div>

@@ -11,7 +11,6 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import TimeAgo from "react-timeago";
 
 const CustomerClaims = (props) => {
-
   var { getAllClaims, claims, user } = props;
 
   const [show, setShow] = useState(false);
@@ -23,14 +22,14 @@ const CustomerClaims = (props) => {
 
   useEffect(() => {
     let getClaims = async (obj) => {
-      await getAllClaims(obj)
-    }
+      await getAllClaims(obj);
+    };
     var claimsObj = {
-      status: 'all',
+      status: "all",
       page: 1,
       query: "",
     };
-    getClaims(claimsObj)
+    getClaims(claimsObj);
   }, [getAllClaims]);
 
   useEffect(() => {
@@ -118,16 +117,19 @@ const CustomerClaims = (props) => {
                     value="all"
                     control={<Radio />}
                     label="All"
+                    className="dropdown-item"
                   />
                   <FormControlLabel
                     value="open"
                     control={<Radio />}
                     label="Open"
+                    className="dropdown-item"
                   />
                   <FormControlLabel
                     value="closed"
                     control={<Radio />}
                     label="Closed"
+                    className="dropdown-item"
                   />
                 </RadioGroup>
               </div>
@@ -183,10 +185,10 @@ const CustomerClaims = (props) => {
                                 {<TimeAgo date={x.updates[0].timestamp} />}
                               </div>
                             ) : (
-                                <div>
-                                  <TimeAgo date={x.createdAt} />
-                                </div>
-                              )}
+                              <div>
+                                <TimeAgo date={x.createdAt} />
+                              </div>
+                            )}
                           </div>
                         </div>
                       </Link>
@@ -206,10 +208,10 @@ const CustomerClaims = (props) => {
           {/* </ul> */}
         </div>
       ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" alt="No data found" />
-          </div>
-        )}
+        <div className="text-center">
+          <img src="/images/no-data-found.png" alt="No data found" />
+        </div>
+      )}
       <div className={style.stylePagination}>
         <div className={style.pagination}>
           <Pagination
@@ -221,12 +223,7 @@ const CustomerClaims = (props) => {
         </div>
       </div>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        centered
-        scrollable
-      >
+      <Modal show={show} onHide={handleClose} centered scrollable>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>

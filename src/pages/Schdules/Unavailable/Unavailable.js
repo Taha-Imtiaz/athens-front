@@ -42,10 +42,10 @@ const UnavailableSchedule = (props) => {
   useEffect(() => {
     const { getAllData } = props;
     getAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAllData]);
 
   const handleChange = (list) => {
-    // let newDates = cloneDeep(dates)
     let index = dates.findIndex((x) => x === list._id);
     if (index !== -1) {
       dates.splice(index, 1);
@@ -122,10 +122,10 @@ const UnavailableSchedule = (props) => {
               );
             })
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" alt = "" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="" />
+              </div>
+            )}
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@ const UnavailableSchedule = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  unavailable: state?.unavailable,
+  unavailable: state.unavailable
 });
 var actions = {
   showMessage,

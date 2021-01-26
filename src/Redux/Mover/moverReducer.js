@@ -1,6 +1,8 @@
 import { GET_MOVER, GET_MOVER_JOB_DETAIL, SEARCH_FILTER } from "./moverConstants";
 
-var initialState = null;
+var initialState = {
+  job: ''
+};
 var moverReducer = (state = initialState, action) => {
   var { type, payload } = action;
   switch (type) {

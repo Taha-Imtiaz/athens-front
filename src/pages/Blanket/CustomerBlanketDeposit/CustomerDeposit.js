@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import style from "./CustomerDeposit.module.css";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-// import { updateDeposit } from "../../../Redux/Claims/claimsActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
@@ -11,11 +10,7 @@ import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
 import { Modal } from "react-bootstrap";
 import Pagination from "../../../components/Pagination/Pagination";
-import {
-  deleteBlanketDeposit,
-  getDeposits,
-  updateDeposit,
-} from "../../../Redux/BlanketDeposit/BlanketDepositActions";
+import { deleteBlanketDeposit, getDeposits, updateDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDeposit = (props) => {
   var { blanketDeposit } = props;
@@ -31,6 +26,7 @@ const CustomerDeposit = (props) => {
   useEffect(() => {
     var { getDeposits } = props;
     getDeposits(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, getDeposits]);
 
   useEffect(() => {
@@ -39,6 +35,7 @@ const CustomerDeposit = (props) => {
       setTotalCount(blanketDeposit.total);
       setBlankets(blanketDeposit.docs);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blanketDeposit]);
 
   const closeEdit = (id, i, type) => {
@@ -60,7 +57,6 @@ const CustomerDeposit = (props) => {
     }
   };
   var makeInputFieldEditible = (id, e, i) => {
-    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
     newData.map((data) => (data.edit = true));
     newData[i].edit = !newData[i].edit;
@@ -68,7 +64,6 @@ const CustomerDeposit = (props) => {
   };
   var handleInput = (id, e, i) => {
     var { value } = e.target;
-    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
 
     if (newData[i].edit === false) {
@@ -79,7 +74,6 @@ const CustomerDeposit = (props) => {
   };
   var changeCost = (id, e, i) => {
     var { value } = e.target;
-    // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
 
     newData[i].cost = value;

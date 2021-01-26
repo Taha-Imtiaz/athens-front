@@ -62,24 +62,24 @@ const MoversSchedule = (props) => {
               Crew Leader
             </Button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a href="/#" className="dropdown-item">
+              <p className="dropdown-item">
                 Crew Leader
-              </a>
-              <a href="/#" className="dropdown-item">
+              </p>
+              <p className="dropdown-item">
                 Crew Leader in training
-              </a>
-              <a href="/#" className="dropdown-item">
+              </p>
+              <p className="dropdown-item">
                 Mover
-              </a>
-              <a href="/#" className="dropdown-item">
+              </p>
+              <p className="dropdown-item">
                 New Employee
-              </a>
-              <a href="/#" className="dropdown-item">
+              </p>
+              <p className="dropdown-item">
                 On Vacation
-              </a>
-              <a href="/#" className="dropdown-item">
+              </p>
+              <p className="dropdown-item">
                 Reserve
-              </a>
+              </p>
             </div>
           </div>
         </div>
@@ -114,10 +114,10 @@ const MoversSchedule = (props) => {
                 );
               })
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="" />
+                </div>
+              )}
           </div>
         </div>
       </div>

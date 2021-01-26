@@ -24,7 +24,7 @@ const MoversJobDetails = (props) => {
 
   useEffect(() => {
     getMoverJobDetail(jobId);
-  }, [jobId]);
+  }, [getMoverJobDetail, jobId]);
 
   const paidInCash = () => {
     let { history, showMessage } = props;
@@ -76,17 +76,17 @@ const MoversJobDetails = (props) => {
                 </div>
               </div>
               <div className={style.jobDates}>
-                {job?.dates?.map((x, i) =>
+                {job.dates.map((x, i) =>
                   i === 0 ? (
                     <span key={i}>{x}</span>
                   ) : (
-                    <span key={i}> | {x} </span>
-                  )
+                      <span key={i}> | {x} </span>
+                    )
                 )}
               </div>
 
               <div className={style.service}>
-                {job?.services?.map((service, i) => (
+                {job.services.map((service, i) => (
                   <Chip
                     key={i}
                     variant="outlined"
@@ -123,12 +123,12 @@ const MoversJobDetails = (props) => {
                         <div className={style.location}>{list.value}</div>
                       </div>
                     ) : (
-                      <div key={i}>
-                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                        <span>{`Dropoff`}</span>
-                        <div className={style.location}>{list.value}</div>
-                      </div>
-                    )
+                        <div key={i}>
+                          <FontAwesomeIcon icon={faDotCircle} />{" "}
+                          <span>{`Dropoff`}</span>
+                          <div className={style.location}>{list.value}</div>
+                        </div>
+                      )
                   )}
                 </div>
               )}
@@ -173,7 +173,7 @@ var actions = {
   getMoverJobDetail,
 };
 var mapStateToProps = (state) => ({
-  job: state.moverJobs?.job,
+  job: state.moverJobs.job
 });
 
 export default connect(mapStateToProps, actions)(MoversJobDetails);

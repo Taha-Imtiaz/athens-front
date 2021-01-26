@@ -2,6 +2,7 @@ import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 
 var initialState = {
   user: null,
+  userList: {}
 };
 
 var userReducer = (state = initialState, action) => {

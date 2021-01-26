@@ -8,10 +8,11 @@ import { getLoginUser } from "../../Redux/User/userActions";
 import Button from "@material-ui/core/Button";
 
 const Navbar = (props) => {
+  var { getLoginUser } = props;
+
   useEffect(() => {
     const token = localStorage.getItem("athens-token");
     if (token) {
-      var { getLoginUser } = props;
       getLoginUser();
     }
   }, [getLoginUser]);

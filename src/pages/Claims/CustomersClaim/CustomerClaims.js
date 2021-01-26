@@ -38,6 +38,7 @@ const CustomerClaims = (props) => {
     if (claims) {
       setTotalCount(claims.total);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [claims]);
 
   var handlePageChange = (page) => {
@@ -206,7 +207,7 @@ const CustomerClaims = (props) => {
         </div>
       ) : (
           <div className="text-center">
-            <img src="/images/no-data-found.png" alt = "No data found"/>
+            <img src="/images/no-data-found.png" alt="No data found" />
           </div>
         )}
       <div className={style.stylePagination}>

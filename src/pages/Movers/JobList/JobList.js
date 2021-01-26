@@ -267,18 +267,12 @@ class MoversJobsList extends Component {
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <h5 className="dropdown-item">Sort</h5>
-                <a
-                  className="dropdown-item"
-                  onClick={this.handleRecentlyAdded}
-                  herf="/#"
-                >
+                <p className="dropdown-item" onClick={this.handleRecentlyAdded}>
                   Sort By Recently Added
-                </a>
+                </p>
                 <hr />
                 <h5 className="dropdown-item">Filters</h5>
-                <a className="dropdown-item" herf="/#">
-                  Filter By Date
-                </a>
+                <p className="dropdown-item">Filter By Date</p>
                 <input
                   type="date"
                   name="dates"
@@ -288,9 +282,7 @@ class MoversJobsList extends Component {
                 />{" "}
                 <hr />
                 <FormControl component="fieldset">
-                  <a className="dropdown-item" herf="/#">
-                    Filter By Status
-                  </a>
+                  <p className="dropdown-item">Filter By Status</p>
 
                   <RadioGroup
                     aria-label="gender"
@@ -447,8 +439,10 @@ class MoversJobsList extends Component {
                                   onClose={this.handlePopoverClose}
                                   disableRestoreFocus
                                 >
-                                  {list.assignee.map((assignee) => (
-                                    <Typography>{assignee.name}</Typography>
+                                  {list.assignee.map((assignee, i) => (
+                                    <Typography key={i}>
+                                      {assignee.name}
+                                    </Typography>
                                   ))}
                                 </Popover>
                               </div>

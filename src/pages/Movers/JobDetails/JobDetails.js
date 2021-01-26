@@ -53,9 +53,9 @@ const MoversJobDetails = (props) => {
               </div>
               <div className={`card ${style.assigneeCard}`}>
                 {job.assignee.map((assignee, i) => (
-                  <div className="card-body" key = {i}>
+                  <div className="card-body" key={i}>
                     <h5 className="card-title">Assignees</h5>
-                    <div className={style.assigneehead} >
+                    <div className={style.assigneehead}>
                       <li> {assignee.name}</li>
                     </div>
                   </div>
@@ -77,13 +77,18 @@ const MoversJobDetails = (props) => {
               </div>
               <div className={style.jobDates}>
                 {job?.dates?.map((x, i) =>
-                  i === 0 ? x : <span> | {x} </span>
+                  i === 0 ? (
+                    <span key={i}>{x}</span>
+                  ) : (
+                    <span key={i}> | {x} </span>
+                  )
                 )}
               </div>
 
               <div className={style.service}>
-                {job ?.services ?.map((service, i) => (
-                  <Chip key = {i}
+                {job?.services?.map((service, i) => (
+                  <Chip
+                    key={i}
                     variant="outlined"
                     size="small"
                     label={service.name}
@@ -102,8 +107,8 @@ const MoversJobDetails = (props) => {
                   <div>
                     <h5>Notes</h5>
                   </div>
-                  {job.note.map((x,i) => (
-                    <div key = {i}>{x.text}</div>
+                  {job.note.map((x, i) => (
+                    <div key={i}>{x.text}</div>
                   ))}
                 </div>
               )}
@@ -112,18 +117,18 @@ const MoversJobDetails = (props) => {
                 <div className={style.locations}>
                   {job.locations.map((list, i) =>
                     list.type === "pickup" ? (
-                      <div key = {i}>
+                      <div key={i}>
                         <FontAwesomeIcon icon={faDotCircle} />{" "}
                         <span>{`Pickup`} </span>{" "}
                         <div className={style.location}>{list.value}</div>
                       </div>
                     ) : (
-                        <div key = {i}>
-                          <FontAwesomeIcon icon={faDotCircle} />{" "}
-                          <span>{`Dropoff`}</span>
-                          <div className={style.location}>{list.value}</div>
-                        </div>
-                      )
+                      <div key={i}>
+                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                        <span>{`Dropoff`}</span>
+                        <div className={style.location}>{list.value}</div>
+                      </div>
+                    )
                   )}
                 </div>
               )}
@@ -168,7 +173,7 @@ var actions = {
   getMoverJobDetail,
 };
 var mapStateToProps = (state) => ({
-  job: state.moverJobs ?.job,
+  job: state.moverJobs?.job,
 });
 
 export default connect(mapStateToProps, actions)(MoversJobDetails);

@@ -14,7 +14,6 @@ const VerificationCode = (props) => {
   useEffect(() => {
     var { history } = props;
     var getToken = sessionStorage.getItem("token");
-
     setUserToken(getToken);
     if (getToken) {
       //remove email from sessionStorage

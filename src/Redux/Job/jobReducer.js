@@ -1,6 +1,8 @@
 import { GET_JOBS, GET_JOB, FILTER_JOB, DELETE_JOB } from "./jobConstants"
 
-var initialState = null
+var initialState = {
+    job: ''
+}
 
 
 var jobReducer = (state = initialState, action) => {

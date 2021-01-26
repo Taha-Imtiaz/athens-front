@@ -45,16 +45,13 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
-import { data } from "jquery";
-
-var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes();
 class CreateJobs extends Component {
   //defining state
   constructor(props) {
     super(props);
     this.state = { ...props.jobForm };
   }
+
   initialState = {
     editorState: EditorState.createEmpty(),
     title: "",
@@ -117,14 +114,14 @@ class CreateJobs extends Component {
     }
     //get all customers and jobs
     getCustomersAndJobs().then((res) => {
-      if (res && res.status == 201) {
+      if (res && res.status === 201) {
         this.setState({ customers: res.data.data });
       }
     });
   };
   //onchange handler of radio buttons
   handleInputChange = (e, i) => {
-    let { name, value } = e.target;
+    let { value } = e.target;
 
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
@@ -173,7 +170,7 @@ class CreateJobs extends Component {
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
-        prevState[i].type == "pickup" ? "Load Only / IA" : "Unload Only";
+        prevState[i].type === "pickup" ? "Load Only / IA" : "Unload Only";
     } else {
       prevState[i].value = "";
     }
@@ -214,9 +211,9 @@ class CreateJobs extends Component {
             size="small"
             id="to"
             label={
-              this.state.locations[i].type == "pickup"
+              this.state.locations[i].type === "pickup"
                 ? "Enter Pickup Point"
-                : this.state.locations[i].type == "dropoff"
+                : this.state.locations[i].type === "dropoff"
                   ? "Enter DropOff Point"
                   : "Choose Type"
             }
@@ -239,10 +236,10 @@ class CreateJobs extends Component {
           // error={this.state.locationtoError ? true : false}
           />
         </div>
-        {this.state.locations[i].type == "pickup" ? (
+        {this.state.locations[i].type === "pickup" ? (
           <div
             className={
-              this.state.locations[i].type == "pickup" ? style.checkBox : null
+              this.state.locations[i].type === "pickup" ? style.checkBox : null
             }
           >
             <FormControlLabel
@@ -258,8 +255,8 @@ class CreateJobs extends Component {
               label="Load only / IA"
             />
           </div>
-        ) : this.state.locations[i].type == "dropoff" ? (
-          <div className={this.state.locations[i].type == "dropoff" ? style.checkBox : null}>
+        ) : this.state.locations[i].type === "dropoff" ? (
+          <div className={this.state.locations[i].type === "dropoff" ? style.checkBox : null}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -295,7 +292,7 @@ class CreateJobs extends Component {
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    if (value == "") {
+    if (value === "") {
       // this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
@@ -305,7 +302,7 @@ class CreateJobs extends Component {
   validate = () => {
     let customerIdError = "";
     let titleError = "";
-    let descriptionError = "";
+    // let descriptionError = "";
     let multiError = "";
     let locationfromError = "";
     let locationtoError = "";
@@ -320,9 +317,9 @@ class CreateJobs extends Component {
       titleError = "Title should not be empty";
     }
 
-    if (!this.state.description) {
-      descriptionError = "Description should not be empty";
-    }
+    // if (!this.state.description) {
+    //   descriptionError = "Description should not be empty";
+    // }
 
     if (this.state.services.length === 0) {
       multiError = "Services Should not be empty";
@@ -409,7 +406,6 @@ class CreateJobs extends Component {
         userId: loggedInUser._id,
         jobType,
       };
-      var { history } = this.props;
       createJob(createJobObj, (job) => {
         history.push("/job/detail/" + job.data.data._id);
       });
@@ -513,11 +509,12 @@ class CreateJobs extends Component {
   };
   //reset form Fields
   handleResetJob = () => {
-    var { resetJobForm, jobForm } = this.props;
+    var { resetJobForm } = this.props;
     let customers = cloneDeep(this.state.customers);
     resetJobForm();
     this.setState({ ...this.initialState, customers });
   };
+
   render() {
     return (
       <div>

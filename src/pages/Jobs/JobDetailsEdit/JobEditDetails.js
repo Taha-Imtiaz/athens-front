@@ -48,7 +48,7 @@ class JobEditDetails extends Component {
     endDate: "",
     startTime: "",
     meetTime: "",
-    jobType: "fixed",
+    jobType: "Fixed",
     title: "",
     titleError: "",
     descriptionError: "",
@@ -71,7 +71,7 @@ class JobEditDetails extends Component {
       { id: 4, name: "Grand Piano" },
       { id: 5, name: "Baby" },
       { id: 6, name: "Hot Tub" },
-    ],
+    ]
   };
   //onChange handler of date
   handleDateChange = (date, i) => {
@@ -133,7 +133,7 @@ class JobEditDetails extends Component {
     }
   };
   //fetch job id on componentDidMount
-  componentDidMount = () => {
+  componentDidMount = async () => {
     var {
       getJob,
       match: {
@@ -141,53 +141,53 @@ class JobEditDetails extends Component {
       },
     } = this.props;
 
-    getJob(jobId);
+    await getJob(jobId);
 
     var { job } = this.props;
-
     if (job) {
-      const contentBlock = htmlToDraft(job.description);
-      if (contentBlock) {
-        const contentState = ContentState.createFromBlockArray(
-          contentBlock.contentBlocks
-        );
-        const editorState = EditorState.createWithContent(contentState);
-        this.setState({
-          editorState,
-        });
-      }
-      //fetch services of jobs
-      var services = job.services.map((service, index) => {
-        return { id: index + 1, name: service };
-      });
-
-      let parsedDates = job.dates.map((x) => Date.parse(x));
-      this.setState({
-        job: job,
-        title: job.title,
-        startDate: Date.parse(job.startDate),
-        dates: parsedDates,
-        endDate: Date.parse(job.endDate),
-        startDateInString: job.startDate,
-        endDateInString: job.endDate,
-        startTime: job.startTime,
-
-        locations: job.locations,
-        jobType: job.jobType,
-        description: job.description,
-        options: services,
-        assignee: job.assignee,
-
-        note: job.note,
-        userId: "5f732f880cf3f60894f771b9",
-        status: job.status,
-        show: false,
-        customerId: job.customer.email,
-        assigneeRequired: job.assigneeRequired,
-        services: job.services,
-      });
+      this.setInitialState(job);
     }
   };
+
+  setInitialState = (job) => {
+    const contentBlock = htmlToDraft(job.description);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(
+        contentBlock.contentBlocks
+      );
+      const editorState = EditorState.createWithContent(contentState);
+      this.setState({
+        editorState,
+      });
+    }
+    //fetch services of jobs
+    var services = job.services.map((service, index) => {
+      return { id: index + 1, name: service };
+    });
+
+    let parsedDates = job.dates.map((x) => Date.parse(x));
+    this.setState({
+      job: job,
+      title: job.title,
+      startDate: Date.parse(job.startDate),
+      dates: parsedDates,
+      endDate: Date.parse(job.endDate),
+      startDateInString: job.startDate,
+      endDateInString: job.endDate,
+      startTime: job.startTime,
+      locations: job.locations,
+      jobType: job.jobType,
+      description: job.description,
+      options: services,
+      assignee: job.assignee,
+      note: job.note,
+      status: job.status,
+      show: false,
+      customerId: job.customer.email,
+      assigneeRequired: job.assigneeRequired,
+      services: job.services,
+    });
+  }
   //show modal when addNote button is pressed
   handleShow = () => {
     this.setState({
@@ -732,9 +732,8 @@ class JobEditDetails extends Component {
           </form>
 
           <div>
-            {note ?.length > 0 && <h3>Notes</h3>}
-
-            {note ?.map((note) => (
+            {note && note.length > 0 && <h3>Notes</h3>}
+            {note && note.map((note) => (
               <div className={style.notesStyle}>
                 <div>{note.text}</div>
                 <div>
@@ -780,7 +779,6 @@ class JobEditDetails extends Component {
             </Modal.Header>
             <Modal.Body>
               <TextareaAutosize className={style.styleTextArea}
-                name=""
                 id=""
                 cols="65"
                 rows="5"
@@ -811,7 +809,7 @@ var actions = {
 
 var mapStateToProps = (state) => ({
   loggedinUser: state.users.user,
-  job: state.jobs ?.job,
+  job: state.jobs.job
 });
 
 export default connect(mapStateToProps, actions)(JobEditDetails);

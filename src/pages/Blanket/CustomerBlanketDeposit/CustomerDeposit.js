@@ -3,7 +3,7 @@ import style from "./CustomerDeposit.module.css";
 import { Button, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 // import { updateDeposit } from "../../../Redux/Claims/claimsActions";
-import {  cloneDeep } from "lodash";
+import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,27 +21,24 @@ const CustomerDeposit = (props) => {
   var { blanketDeposit } = props;
 
   const [show, setShow] = useState(false);
-
-  const [edit, setEdit] = useState(true);
-  var [costValue, setCostValue] = useState("");
-  var [depositValue, setDepositValue] = useState("");
+  const [depositValue, setDepositValue] = useState("");
   const [blankets, setBlankets] = useState("");
-  var [pageSize, setPageSize] = useState(10);
-  var [currentPage, setCurrentPage] = useState(1);
-  var [modalIndex, setModalIndex] = useState("");
-  var [deleteModal, setDeleteModal] = useState(false);
-  var [depositToDelete, setDepositToDelete] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [depositToDelete, setDepositToDelete] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
 
-  var totalCount = blanketDeposit?.total;
+
 
   useEffect(() => {
     var { getDeposits } = props;
     getDeposits(currentPage);
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     var { blanketDeposit } = props;
     if (blanketDeposit) {
+      setTotalCount(blanketDeposit.total)
       setBlankets(blanketDeposit.docs);
     }
   }, [blanketDeposit]);
@@ -100,12 +97,10 @@ const CustomerDeposit = (props) => {
     setDeleteModal(false);
   };
   var handlePageChange = (page) => {
-    getDeposits(page);
     setCurrentPage(page);
   };
 
   var openDeleteModal = (i, deposit) => {
-    setModalIndex(i);
     setDepositToDelete(deposit);
     setDeleteModal(true);
   };
@@ -157,7 +152,7 @@ const CustomerDeposit = (props) => {
                   <div key={i} className={style.listContainer}>
                     <div className={`${style.listContent} `}>
                       <div>
-                        {x?.customer?.firstName} {x?.customer?.lastName}
+                        {x ?.customer ?.firstName} {x ?.customer ?.lastName}
                       </div>
 
                       <div
@@ -187,8 +182,6 @@ const CustomerDeposit = (props) => {
                       >
                         <TextField
                           variant="outlined"
-                          // margin="normal"
-                          // required
                           fullWidth
                           size="small"
                           onChange={(e) => changeCost(x._id, e, i)}
@@ -213,13 +206,13 @@ const CustomerDeposit = (props) => {
                             </Button>
                           </div>
                         ) : (
-                          <div onClick={() => closeEdit(x._id, i, "save")}>
-                            <Button className={style.button}>
-                              <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
-                              Save
+                            <div onClick={() => closeEdit(x._id, i, "save")}>
+                              <Button className={style.button}>
+                                <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
+                                Save
                             </Button>
-                          </div>
-                        )}
+                            </div>
+                          )}
                         <div>
                           <Button
                             onClick={() => handleShow(x)}
@@ -228,7 +221,7 @@ const CustomerDeposit = (props) => {
                             Activities
                           </Button>
                         </div>
-                        {user?.role === "admin" && (
+                        {user ?.role === "admin" && (
                           <div>
                             <Button
                               onClick={() => openDeleteModal(i, x._id)}
@@ -245,16 +238,16 @@ const CustomerDeposit = (props) => {
               })}
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" />
+              </div>
+            )}
         </div>
         <div className={style.stylePagination}>
           <div className={style.pagination}>
             <Pagination
               itemCount={totalCount}
-              pageSize={pageSize}
+              pageSize={10}
               currentPage={currentPage}
               onPageChange={handlePageChange}
             />
@@ -279,7 +272,7 @@ const CustomerDeposit = (props) => {
           </div>
 
           {depositValue &&
-            depositValue?.activities.map((activity, i) => (
+            depositValue ?.activities.map((activity, i) => (
               <div className={style.activitiesModalContent} key={i}>
                 <div> {activity.performer.name}</div>
                 <div>
@@ -308,7 +301,7 @@ const CustomerDeposit = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-        // backdrop = {false}
+      // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>

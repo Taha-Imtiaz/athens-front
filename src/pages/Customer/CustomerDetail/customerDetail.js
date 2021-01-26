@@ -28,11 +28,17 @@ const CustomerDetail = (props) => {
   var [value, setValue] = useState(0);
   var [claims, setClaims] = useState([]);
 
+  //get customerId from props
+  var {
+    match: {
+      params: { customerId },
+    },
+  } = props;
 
   useEffect(() => {
     //getCustomer on ComponentDidMount
     getCustomer(customerId);
-  }, []);
+  }, [getCustomer, customerId]);
 
   useEffect(() => {
     //calculate blanket and claim Count whwn state of customer is updated
@@ -53,13 +59,6 @@ const CustomerDetail = (props) => {
   //close modal
   const handleClose = () => setShow(false);
 
-  //get customerId from props
-  var {
-    match: {
-      params: { customerId },
-    },
-  } = props;
-
   //update the claim data(whwn update button is clicked through modal)
   const updateClaimData = () => {
     let ob = {
@@ -67,12 +66,13 @@ const CustomerDetail = (props) => {
       value: update,
     };
     let newData = cloneDeep(claims);
+    console.log(newData)
     newData[updateIndex].updates.unshift(ob);
     var { showMessage } = props;
     //Call Update Claim Api to update claim
     updateClaim(newData[updateIndex])
       .then((res) => {
-        if (res.data.status == 200) {
+        if (res.data.status === 200) {
           newData[updateIndex].updates = res.data.data.updates;
           setClaims(newData)
           setShow(false);
@@ -95,6 +95,7 @@ const CustomerDetail = (props) => {
 
   //add new update modal
   const showUpdateModal = (i) => {
+    setUpdateIndex(i)
     setShow(true);
   };
   //tabPanel of material ui
@@ -120,7 +121,7 @@ const CustomerDetail = (props) => {
     updatedClaims[i].status = "closed";
     updateClaim(updatedClaims[i])
       .then((res) => {
-        if (res.data.status == 200) {
+        if (res.data.status === 200) {
           let newCount = --claimCount;
           updatedClaims[i].updatedAt = res.data.data.updatedAt;
           setClaimCount(newCount);
@@ -316,7 +317,7 @@ const CustomerDetail = (props) => {
                     {/* show dates */}
                     <div className={style.jobDates}>
                       {job.dates.map((x, i) => (
-                        <div key = {i}>
+                        <div key={i}>
                           {i === 0 ? (
                             <div key={i}>{x}</div>
                           ) : (
@@ -351,9 +352,9 @@ const CustomerDetail = (props) => {
 
                     {job.locations && (
                       <div className={style.locations}>
-                        {job.locations.map((list,i) =>
+                        {job.locations.map((list, i) =>
                           list.type === "pickup" ? (
-                            <div key = {i}>
+                            <div key={i}>
                               <FontAwesomeIcon icon={faDotCircle} />{" "}
                               <span>{`Pickup`} </span>{" "}
                               <div className={style.location}>
@@ -361,7 +362,7 @@ const CustomerDetail = (props) => {
                               </div>
                             </div>
                           ) : (
-                              <div key = {i}>
+                              <div key={i}>
                                 <FontAwesomeIcon icon={faDotCircle} />{" "}
                                 <span>{`Dropoff`}</span>
                                 <div className={style.location}>
@@ -378,7 +379,7 @@ const CustomerDetail = (props) => {
                         <div>
                           <h5>Notes</h5>
                         </div>
-                        {job.note.map((x,i) => (
+                        {job.note.map((x, i) => (
                           <div key={i}>{x.text}</div>
                         ))}
                       </div>
@@ -467,7 +468,7 @@ const CustomerDetail = (props) => {
                             <div>{`$${claim.price}`}</div>
 
                             <div>
-                              {claim.status == "open" ? (
+                              {claim.status === "open" ? (
                                 <Button
                                   className={style.button}
                                   onClick={() => showUpdateModal(i)}
@@ -478,7 +479,7 @@ const CustomerDetail = (props) => {
                             </div>
 
                             <div>
-                              {claim.status == "open" ? (
+                              {claim.status === "open" ? (
                                 <Button
                                   className={style.button}
                                   onClick={() => handleCloseClaim(i)}
@@ -539,7 +540,7 @@ const CustomerDetail = (props) => {
               })
             ) : (
                 <div className="text-center">
-                  <img src="/images/no-data-found.png" />
+                  <img src="/images/no-data-found.png" alt="Data not found" />
                 </div>
               )}
           </div>
@@ -574,7 +575,7 @@ const CustomerDetail = (props) => {
             />
           ) : (
               <div className="text-center">
-                <img src="/images/no-data-found.png" />
+                <img src="/images/no-data-found.png" alt="Data not found" />
               </div>
             )}
         </TabPanel>
@@ -594,7 +595,6 @@ const CustomerDetail = (props) => {
         </Modal.Header>
         <Modal.Body>
           <TextareaAutosize
-            name=""
             id=""
             cols="65"
             rows="5"

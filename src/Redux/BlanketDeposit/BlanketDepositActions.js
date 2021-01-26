@@ -10,7 +10,10 @@ import {
 export var getDeposits = (page) => {
   return async (dispatch) => {
     try {
-      var deposits = await Axios.post(`deposit/all`, page);
+      let body = {
+        page
+      }
+      var deposits = await Axios.post(`deposit/all`, body);
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: {

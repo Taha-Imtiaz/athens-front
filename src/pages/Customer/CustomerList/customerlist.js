@@ -22,9 +22,7 @@ const CustomerList = (props) => {
   }
   //defining state variables
   var [order, setOrder] = useState(-1);
-  var [pageSize, setPageSize] = useState(10);
   var [currentPage, setCurrentPage] = useState(1);
-  var [recentlyUpdated, setRecentlyUpdated] = useState(false);
   var [recentlyUpdated, setRecentlyUpdated] = useState(false);
   var [recentlyAdded, setRecentlyAdded] = useState(false);
   var [sortByName, setSortByName] = useState(false);
@@ -45,12 +43,13 @@ const CustomerList = (props) => {
     };
 
     getAllCustomers(fetchCustomersObj);
-  }, []);
+  }, [getAllCustomers]);
 
   //fetch/get customers when the page is changed
   var handlePageChange = (page) => {
+    let fetchCustomersOnPageChange;
     if (recentlyUpdated === true) {
-      var fetchCustomersOnPageChange = {
+      fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
@@ -61,7 +60,7 @@ const CustomerList = (props) => {
       };
       setCurrentPage(page);
     } else if (recentlyAdded === true) {
-      var fetchCustomersOnPageChange = {
+      fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
@@ -73,7 +72,7 @@ const CustomerList = (props) => {
       setCurrentPage(page);
     } else if (sortByName === true) {
       if (order === 1) {
-        var fetchCustomersOnPageChange = {
+        fetchCustomersOnPageChange = {
           query: "",
           sort: {
             plainName: 1,
@@ -83,8 +82,8 @@ const CustomerList = (props) => {
           page: page,
         };
         setCurrentPage(page);
-      } else if (order == -1) {
-        var fetchCustomersOnPageChange = {
+      } else if (order === -1) {
+        fetchCustomersOnPageChange = {
           query: "",
           sort: {
             plainName: -1,
@@ -97,7 +96,7 @@ const CustomerList = (props) => {
       }
     } else {
       //sort by recently added by default
-      var fetchCustomersOnPageChange = {
+      fetchCustomersOnPageChange = {
         query: "",
         sort: {
           plainName: "",
@@ -124,9 +123,10 @@ const CustomerList = (props) => {
     setSortByName(true);
     setRecentlyAdded(false);
     setRecentlyUpdated(false);
-    if (order == 1) {
+    let sortCustomersObj;
+    if (order === 1) {
       setOrder(-1);
-      var sortCustomersObj = {
+      sortCustomersObj = {
         query: "",
         sort: {
           plainName: -1,
@@ -136,9 +136,9 @@ const CustomerList = (props) => {
         page: 1,
       };
       setCurrentPage(1);
-    } else if (order == -1) {
+    } else if (order === -1) {
       setOrder(1);
-      var sortCustomersObj = {
+      sortCustomersObj = {
         query: "",
         sort: {
           plainName: 1,
@@ -149,7 +149,6 @@ const CustomerList = (props) => {
       };
       setCurrentPage(1);
     }
-
     getAllCustomers(sortCustomersObj);
   };
 
@@ -353,7 +352,7 @@ const CustomerList = (props) => {
                 <div className={style.pagination}>
                   <Pagination
                     itemCount={totalCount}
-                    pageSize={pageSize}
+                    pageSize={10}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}
                   />
@@ -363,7 +362,7 @@ const CustomerList = (props) => {
           </div>
         ) : (
             <div className="text-center">
-              <img src="/images/no-data-found.png" />
+              <img src="/images/no-data-found.png" alt = "No data found"/>
             </div>
           )}
       </div>

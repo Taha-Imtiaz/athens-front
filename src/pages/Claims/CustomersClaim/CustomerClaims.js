@@ -11,7 +11,8 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import TimeAgo from "react-timeago";
 
 const CustomerClaims = (props) => {
-  var { claims } = props;
+
+  var { getAllClaims, claims, user } = props;
 
   const [show, setShow] = useState(false);
   const [status, setStatus] = useState("all");
@@ -20,32 +21,29 @@ const CustomerClaims = (props) => {
   const [value, setValue] = useState("all");
   const [totalCount, setTotalCount] = useState(0);
 
-  var { getAllClaims } = props;
-
   useEffect(() => {
+    let getClaims = async (obj) => {
+      await getAllClaims(obj)
+    }
     var claimsObj = {
-      status: status,
-      page: currentPage,
+      status: 'all',
+      page: 1,
       query: "",
     };
-    getAllClaims(claimsObj);
-  }, [getAllClaims, currentPage]);
-
-  var data = [];
+    getClaims(claimsObj)
+  }, [getAllClaims]);
 
   useEffect(() => {
-    var { claims } = props;
+    let { claims } = props;
     if (claims) {
-      data = claims;
-      setTotalCount(claims.total)
+      setTotalCount(claims.total);
     }
   }, [claims]);
-  var { claims } = props;
 
   var handlePageChange = (page) => {
     var { getAllClaims } = props;
     var claimsObj = {
-      status: "all",
+      status,
       page: page,
       query: "",
     };
@@ -58,10 +56,10 @@ const CustomerClaims = (props) => {
     var { getAllClaims } = props;
     setStatus(value);
     setValue(value);
-
+    setCurrentPage(1);
     var claimsObj = {
       status: value,
-      page: currentPage,
+      page: 1,
       query: "",
     };
     getAllClaims(claimsObj);
@@ -72,7 +70,6 @@ const CustomerClaims = (props) => {
     deleteClaim(claimToDelete, currentPage);
     setShow(false);
   };
-  var { users, claims } = props;
 
   var handleShow = (i, jobId) => {
     setClaimToDelete(jobId);
@@ -142,7 +139,7 @@ const CustomerClaims = (props) => {
           </div>
         </div>
       )}
-      {claims ?.docs.length > 0 ? (
+      {claims && claims.docs.length > 0 ? (
         <div>
           <div className={style.claimListHeaderContainer}>
             <div className={style.claimListHeader}>
@@ -150,13 +147,13 @@ const CustomerClaims = (props) => {
               <div>Status</div>
               <div> Waiting To</div>
               <div>Last Update</div>
-              {users ?.role === "admin" && <div>Actions</div>}
+              {user && user.role === "admin" && <div>Actions</div>}
             </div>
           </div>
 
           <div>
-            {claims ?.docs &&
-              claims ?.docs.map((x, i) => {
+            {claims.docs &&
+              claims.docs.map((x, i) => {
                 return (
                   <div className={style.listContainer} key={i}>
                     <div className={`${style.listContent}`}>
@@ -193,7 +190,7 @@ const CustomerClaims = (props) => {
                         </div>
                       </Link>
 
-                      {users ?.role === "admin" && (
+                      {user && user.role === "admin" && (
                         <div className={`${style.center} ${style.actions}`}>
                           <Button onClick={() => handleShow(i, x._id)}>
                             Delete
@@ -209,7 +206,7 @@ const CustomerClaims = (props) => {
         </div>
       ) : (
           <div className="text-center">
-            <img src="/images/no-data-found.png" />
+            <img src="/images/no-data-found.png" alt = "No data found"/>
           </div>
         )}
       <div className={style.stylePagination}>
@@ -228,12 +225,10 @@ const CustomerClaims = (props) => {
         onHide={handleClose}
         centered
         scrollable
-      // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        {/* <Modal.Body>Are You sure you want to delete this Claim with id {x._id}</Modal.Body> */}
         <Modal.Body>Are you sure you want to delete this Claim?</Modal.Body>
         <Modal.Footer>
           <div className={style.flexEnd}>
@@ -250,8 +245,8 @@ const CustomerClaims = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims ?.claimList,
-  users: state.users.user,
+  claims: state.claims.claimList,
+  user: state.users.user,
 });
 
 var actions = {

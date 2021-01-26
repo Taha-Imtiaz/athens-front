@@ -52,7 +52,6 @@ const ClaimsDetails = (props) => {
 
   const handleShow = () => {
     setShow(true);
-    // setUpdateIndex(i);
   };
 
   const handleClose = () => {

@@ -15,13 +15,15 @@ const SearchBar = (props) => {
     getAllClaims,
   } = props;
 
-  var title = props.title;
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
+    var fetchCustomersObj;
+    var usersObj;
+    var fetchJobsOnPageChange;
     if (props.type === "customer") {
       if (searchValue === "" || searchValue) {
-        var fetchCustomersObj = {
+        fetchCustomersObj = {
           query: e.target.value,
           sort: {
             plainname: null,
@@ -31,7 +33,7 @@ const SearchBar = (props) => {
         };
         getAllCustomers(fetchCustomersObj);
       } else {
-        var fetchCustomersObj = {
+        fetchCustomersObj = {
           query: "",
           sort: {
             plainname: null,
@@ -43,7 +45,7 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "user") {
       if (searchValue === "" || searchValue) {
-        var usersObj = {
+        usersObj = {
           query: e.target.value,
           filter: {
             type: "",
@@ -51,7 +53,7 @@ const SearchBar = (props) => {
         };
         getUsers(usersObj);
       } else {
-        var usersObj = {
+        usersObj = {
           query: "",
           filter: {
             type: "",
@@ -61,14 +63,14 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "claims") {
       if (searchValue === "" || searchValue) {
-        var usersObj = {
+        usersObj = {
           query: e.target.value,
           status: props.claimStatus,
           page: 1,
         };
         getAllClaims(usersObj);
       } else {
-        var usersObj = {
+        usersObj = {
           query: "",
           status: props.claimStatus,
           page: 1,
@@ -77,13 +79,13 @@ const SearchBar = (props) => {
       }
     } else if (props.type === "mover") {
       if (searchValue === "" || searchValue) {
-        var fetchJobsOnPageChange = {
+        fetchJobsOnPageChange = {
           query: e.target.value,
 
           page: 1,
         };
       } else {
-        var fetchJobsOnPageChange = {
+        fetchJobsOnPageChange = {
           query: "",
           page: 1,
         };
@@ -91,7 +93,7 @@ const SearchBar = (props) => {
       moverSearchFilter(fetchJobsOnPageChange);
     } else {
       if (searchValue === "" || searchValue) {
-        var fetchJobsOnPageChange = {
+        fetchJobsOnPageChange = {
           query: e.target.value,
           filters: {
             startDate: "",
@@ -106,7 +108,7 @@ const SearchBar = (props) => {
           page: 1,
         };
       } else {
-        var fetchJobsOnPageChange = {
+        fetchJobsOnPageChange = {
           query: "",
           filters: {
             startDate: "",
@@ -133,7 +135,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div >
+    <div>
       <div className="input-group">
         <input
           type="text"

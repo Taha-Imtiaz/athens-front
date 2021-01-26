@@ -89,7 +89,7 @@ const UnavailableSchedule = (props) => {
                 <div className={`list-group`} key={i}>
                   <div>
                     <a
-                      href="#"
+                      href="/#"
                       className={`list-group-item list-group-item-action flex-column align-items-start `}
                     >
                       <div className={`d-flex w-100 justify-content-between`}>
@@ -123,7 +123,7 @@ const UnavailableSchedule = (props) => {
             })
           ) : (
             <div className="text-center">
-              <img src="/images/no-data-found.png" />
+              <img src="/images/no-data-found.png" alt = "" />
             </div>
           )}
         </div>

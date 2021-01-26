@@ -67,7 +67,7 @@ const CustomerDeposit = (props) => {
     setBlankets(newData);
   };
   var handleInput = (id, e, i) => {
-    var { name, value } = e.target;
+    var { value } = e.target;
     // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
 
@@ -78,7 +78,7 @@ const CustomerDeposit = (props) => {
     }
   };
   var changeCost = (id, e, i) => {
-    var { name, value } = e.target;
+    var { value } = e.target;
     // var {blanketDeposit } = props
     let newData = cloneDeep(blankets);
 
@@ -106,7 +106,7 @@ const CustomerDeposit = (props) => {
   var closeDeleteModal = () => {
     setDeleteModal(false);
   };
-  var { user, blanketDeposit } = props;
+  var { user} = props;
   return (
     <div>
       <div className={style.submitDepositContainer}>

@@ -27,8 +27,8 @@ class MoversCalendar extends Component {
     getMoverJobs(date).then((res) => {
       let jobs = [];
       let currentDayJobs = [];
-      res.data.data.map((x) => {
-        x.dates.map((y) => {
+      res.data.data.forEach((x) => {
+        x.dates.forEach((y) => {
           let obj = {
             start: y,
             end: y,
@@ -55,8 +55,8 @@ class MoversCalendar extends Component {
       let jobs = [];
       let currentDayJobs = [];
 
-      res.data.data.map((x) => {
-        x.dates.map((y) => {
+      res.data.data.forEach((x) => {
+        x.dates.forEach((y) => {
           let obj = {
             start: y,
             end: y,
@@ -105,8 +105,8 @@ class MoversCalendar extends Component {
   getJobDetailsOnSlotClick = (e) => {
     let date = e.end;
     let currentDayJobs = [];
-    this.state.jobs.map((x) => {
-      x.dates.map((y) => {
+    this.state.jobs.forEach((x) => {
+      x.dates.forEach((y) => {
         if (y === date.toDateString()) {
           currentDayJobs.push(x);
         }
@@ -185,8 +185,7 @@ class MoversCalendar extends Component {
                   <div key={i} id="accordion">
                     <div className={`card ${style.card}`}>
                       <div
-                        className={`card-header ${style.cardHeader}`}
-                        className="collapsed"
+                        className={`card-header collapsed ${style.cardHeader}`}
                         id="headingOne"
                         aria-expanded="false"
                         data-toggle="collapse"
@@ -234,8 +233,9 @@ class MoversCalendar extends Component {
                             {parse(job.description)}
                           </span>
                           <div>
-                            {job.services.map((service,i) => (
-                              <Chip key = {i}
+                            {job.services.map((service, i) => (
+                              <Chip
+                                key={i}
                                 label={service.name}
                                 size="small"
                                 clickable
@@ -265,7 +265,7 @@ class MoversCalendar extends Component {
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>
                 <hr />
                 <h5 className={style.flex}>
-                  <img src="/images/no-data-found.png" />
+                  <img src="/images/no-data-found.png" alt="" />
                 </h5>
               </div>
             )}

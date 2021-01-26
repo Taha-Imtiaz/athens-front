@@ -283,7 +283,7 @@ class CalendarApp extends Component {
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>
                 <hr />
                 <h5>
-                  <img src="/images/no-data-found.png" />
+                  <img src="/images/no-data-found.png" alt="" />
                 </h5>
               </div>
             )}

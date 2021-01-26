@@ -62,22 +62,22 @@ const MoversSchedule = (props) => {
               Crew Leader
             </Button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 Crew Leader
               </a>
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 Crew Leader in training
               </a>
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 Mover
               </a>
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 New Employee
               </a>
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 On Vacation
               </a>
-              <a href="/#" className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item">
                 Reserve
               </a>
             </div>
@@ -91,7 +91,7 @@ const MoversSchedule = (props) => {
                 return (
                   <div key={i}>
                     <a
-                      href="#"
+                      href="/#"
                       className="list-group-item list-group-item-action flex-column align-items-start"
                     >
                       <div className="d-flex w-100 justify-content-between">
@@ -115,7 +115,7 @@ const MoversSchedule = (props) => {
               })
             ) : (
               <div className="text-center">
-                <img src="/images/no-data-found.png" />
+                <img src="/images/no-data-found.png" alt="" />
               </div>
             )}
           </div>

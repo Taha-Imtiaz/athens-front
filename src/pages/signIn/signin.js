@@ -75,7 +75,7 @@ class SignInForm extends React.Component {
             ? this.props.history.push("/mover")
             : this.props.history.push("/customers");
         }
-      })
+      });
     }
   };
 
@@ -110,7 +110,7 @@ class SignInForm extends React.Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.handleFormInput}
-                  error={this.state.emailError}
+                  error={this.state.emailError ? true : false}
                 />
               </div>
               <div className={`${style.password} ${style.flex}`}>
@@ -123,7 +123,7 @@ class SignInForm extends React.Component {
                   className={style.textFields}
                   value={this.state.password}
                   onChange={this.handleFormInput}
-                  error={this.state.passwordError}
+                  error={this.state.passwordError ? true : false}
                   type="password"
                 />
               </div>
@@ -150,7 +150,7 @@ var actions = {
 };
 
 var mapStateToProps = (state) => ({
-  user: state.users.user
+  user: state.users.user,
 });
 
 export default connect(mapStateToProps, actions)(SignInForm);

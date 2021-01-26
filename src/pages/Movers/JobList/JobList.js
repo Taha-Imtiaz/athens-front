@@ -20,8 +20,6 @@ import { compose } from "redux";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Pagination from "../../../components/Pagination/Pagination";
 
-
-
 const styles = (theme) => ({
   popover: {
     pointerEvents: "none",
@@ -165,7 +163,7 @@ class MoversJobsList extends Component {
     this.setState({
       dates: e.target.value,
     });
-    
+
     let date = new Date(e.target.value);
     var DateFilters = {
       filters: {
@@ -188,7 +186,7 @@ class MoversJobsList extends Component {
     var { getMover } = this.props;
     var fetchMoverJobs;
     if (this.state.recentlyAdded === true) {
-       fetchMoverJobs = {
+      fetchMoverJobs = {
         filters: {
           jobStatus: "",
           dates: "",
@@ -202,9 +200,8 @@ class MoversJobsList extends Component {
       this.setState({
         currentPage: page,
       });
-    } 
-    else if (this.state.sortByStatus === true) {
-       fetchMoverJobs = {
+    } else if (this.state.sortByStatus === true) {
+      fetchMoverJobs = {
         filters: {
           jobStatus: this.state.value,
           dates: "",
@@ -219,7 +216,7 @@ class MoversJobsList extends Component {
         currentPage: page,
       });
     } else {
-       fetchMoverJobs = {
+      fetchMoverJobs = {
         filters: {
           jobStatus: "",
           dates: "",
@@ -270,12 +267,18 @@ class MoversJobsList extends Component {
               ></i>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <h5 className="dropdown-item">Sort</h5>
-                <a className="dropdown-item" onClick={this.handleRecentlyAdded}>
+                <a
+                  className="dropdown-item"
+                  onClick={this.handleRecentlyAdded}
+                  herf="/#"
+                >
                   Sort By Recently Added
                 </a>
                 <hr />
                 <h5 className="dropdown-item">Filters</h5>
-                <a className="dropdown-item">Filter By Date</a>
+                <a className="dropdown-item" herf="/#">
+                  Filter By Date
+                </a>
                 <input
                   type="date"
                   name="dates"
@@ -285,7 +288,9 @@ class MoversJobsList extends Component {
                 />{" "}
                 <hr />
                 <FormControl component="fieldset">
-                  <a className="dropdown-item">Filter By Status</a>
+                  <a className="dropdown-item" herf="/#">
+                    Filter By Status
+                  </a>
 
                   <RadioGroup
                     aria-label="gender"
@@ -371,7 +376,7 @@ class MoversJobsList extends Component {
                                     paper: classes.paper,
                                   }}
                                   open={
-                                    this.state.openedDatePopoverId == list._id
+                                    this.state.openedDatePopoverId === list._id
                                   }
                                   anchorEl={this.state.anchorEl}
                                   anchorOrigin={{
@@ -427,7 +432,7 @@ class MoversJobsList extends Component {
                                     paper: classes.paper,
                                   }}
                                   open={
-                                    this.state.openedAssigneePopoverId ==
+                                    this.state.openedAssigneePopoverId ===
                                     list._id
                                   }
                                   anchorEl={this.state.anchorEl}
@@ -491,7 +496,7 @@ class MoversJobsList extends Component {
           </div>
         ) : (
           <div className="text-center">
-            <img src="/images/no-data-found.png" />
+            <img src="/images/no-data-found.png" alt="" />
           </div>
         )}
       </div>

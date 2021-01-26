@@ -31,7 +31,7 @@ const MoversSchedule = (props) => {
 
       icon: <FontAwesomeIcon icon={faBan} />,
     },
-    ,
+
     {
       title: "Movers",
       path: "/schedule/movers",
@@ -51,8 +51,8 @@ const MoversSchedule = (props) => {
           </div>
 
           <div className={`dropdown ${style.dropdown}`}>
-            <Button className = {style.button}
-             
+            <Button
+              className={style.button}
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
@@ -62,22 +62,22 @@ const MoversSchedule = (props) => {
               Crew Leader
             </Button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 Crew Leader
               </a>
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 Crew Leader in training
               </a>
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 Mover
               </a>
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 New Employee
               </a>
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 On Vacation
               </a>
-              <a className="dropdown-item" href="#">
+              <a href="/#" className="dropdown-item" href="#">
                 Reserve
               </a>
             </div>
@@ -87,9 +87,9 @@ const MoversSchedule = (props) => {
         <div className={`list-group ${style.moverList}`}>
           <div className={style.listContent}>
             {allMovers && allMovers.length ? (
-              allMovers.map((list) => {
+              allMovers.map((list, i) => {
                 return (
-                  <div>
+                  <div key={i}>
                     <a
                       href="#"
                       className="list-group-item list-group-item-action flex-column align-items-start"
@@ -98,13 +98,12 @@ const MoversSchedule = (props) => {
                         <h5 className={`mb-1 `}>{list.name}</h5>
                         <small>{list.attributes[0].name}</small>
                       </div>
-                      <div >
-                     
+                      <div>
                         {list.weeklySchedule
                           .filter((day) => day.status)
-                          .map((status) => {
+                          .map((status, i) => {
                             return (
-                              <span className="mb-1">
+                              <span className="mb-1" key={i}>
                                 {status.day.split("", 3).join("")}&nbsp;
                               </span>
                             );

@@ -13,7 +13,7 @@ import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnavailableSchedule = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [dates, setDates] = useState([]);
 
   var { getAllData, unavailable } = props;
@@ -30,7 +30,7 @@ const UnavailableSchedule = (props) => {
 
       icon: <FontAwesomeIcon icon={faBan} />,
     },
-    ,
+
     {
       title: "Movers",
       path: "/schedule/movers",
@@ -42,11 +42,11 @@ const UnavailableSchedule = (props) => {
   useEffect(() => {
     const { getAllData } = props;
     getAllData();
-  }, []);
+  }, [getAllData]);
 
   const handleChange = (list) => {
     // let newDates = cloneDeep(dates)
-    let index = dates.findIndex((x) => x == list._id);
+    let index = dates.findIndex((x) => x === list._id);
     if (index !== -1) {
       dates.splice(index, 1);
     } else {
@@ -84,43 +84,41 @@ const UnavailableSchedule = (props) => {
         </div>
         <div className={style.unavailableList}>
           {unavailable ? (
-            unavailable.map((list) => {
+            unavailable.map((list, i) => {
               return (
-                <>
-                  <div className={`list-group `}>
-                    <div>
-                      <a
-                        href="#"
-                        className={`list-group-item list-group-item-action flex-column align-items-start `}
-                      >
-                        <div className={`d-flex w-100 justify-content-between`}>
-                          <span>
-                            <input
-                              type="checkbox"
-                              id="defaultCheck1"
-                              value=""
-                              onChange={() => handleChange(list)}
-                            />
-                            <label
-                              className={`checkbox-inline ${style.checkBox}`}
-                              htmlFor="defaultCheck1"
-                            >
-                              {list[0].applicant.name}
-                            </label>
-                          </span>
-                        </div>
-                        <div>
-                          <p className="mb-1">
-                            {list[0].dates[0]} - {list[0].dates[1]}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="mb-1">Reason: {list[0].reason}</p>
-                        </div>
-                      </a>
-                    </div>
+                <div className={`list-group`} key={i}>
+                  <div>
+                    <a
+                      href="#"
+                      className={`list-group-item list-group-item-action flex-column align-items-start `}
+                    >
+                      <div className={`d-flex w-100 justify-content-between`}>
+                        <span>
+                          <input
+                            type="checkbox"
+                            id="defaultCheck1"
+                            value=""
+                            onChange={() => handleChange(list)}
+                          />
+                          <label
+                            className={`checkbox-inline ${style.checkBox}`}
+                            htmlFor="defaultCheck1"
+                          >
+                            {list[0].applicant.name}
+                          </label>
+                        </span>
+                      </div>
+                      <div>
+                        <p className="mb-1">
+                          {list[0].dates[0]} - {list[0].dates[1]}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="mb-1">Reason: {list[0].reason}</p>
+                      </div>
+                    </a>
                   </div>
-                </>
+                </div>
               );
             })
           ) : (

@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 
 const localizer = momentLocalizer(moment);
-const now = new Date();
 
 class CalendarApp extends Component {
   //defining state
@@ -34,8 +33,8 @@ class CalendarApp extends Component {
     //fetch jobs of current month
     getJobsByDate(date).then((res) => {
       let jobs = [];
-      res.data.data.map((x) => {
-        x.dates.map((y) => {
+      res.data.data.forEach((x) => {
+        x.dates.forEach((y) => {
           let obj = {
             start: y,
             end: y,
@@ -67,8 +66,8 @@ class CalendarApp extends Component {
     var date = x;
     getJobsByDate(date).then((res) => {
       let jobs = [];
-      res.data.data.map((x) => {
-        x.dates.map((y) => {
+      res.data.data.forEach((x) => {
+        x.dates.forEach((y) => {
           let obj = {
             start: y,
             end: y,
@@ -112,8 +111,8 @@ class CalendarApp extends Component {
     let date = e.end;
     getJobsByDate(date).then((res) => {
       let jobs = [];
-      res.data.data.map((x) => {
-        x.dates.map((y) => {
+      res.data.data.forEach((x) => {
+        x.dates.forEach((y) => {
           let obj = {
             start: y,
             end: y,
@@ -170,7 +169,7 @@ class CalendarApp extends Component {
     return (
       <div className={style.calenderContainer}>
         <div className={style.calender}>
-          <div className = {style.calenderContent}>
+          <div className={style.calenderContent}>
             <Calendar
               className={style.styleCalender}
               selectable={true}
@@ -198,13 +197,13 @@ class CalendarApp extends Component {
             />
           </div>
 
-          <div className = {style.sideContent}>
+          <div className={style.sideContent}>
             {this.state?.currentDayJobs?.length ? (
               <div>
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>{" "}
                 <hr />
                 {this.state.currentDayJobs.map((job, i) => (
-                  <div id="accordion" key = {i}>
+                  <div id="accordion" key={i}>
                     <div className={`card ${style.card}`}>
                       <div
                         className={`card-header ${style.cardHeader}`}
@@ -252,8 +251,9 @@ class CalendarApp extends Component {
                             {parse(job.description)}
                           </div>
                           <div>
-                            {job.services.map((service,i) => (
-                              <Chip key = {i}
+                            {job.services.map((service, i) => (
+                              <Chip
+                                key={i}
                                 label={service.name}
                                 size="small"
                                 clickable
@@ -282,7 +282,7 @@ class CalendarApp extends Component {
               <div>
                 <h5 className={style.flex}>{this.state.date.toDateString()}</h5>
                 <hr />
-                <h5 >
+                <h5>
                   <img src="/images/no-data-found.png" />
                 </h5>
               </div>

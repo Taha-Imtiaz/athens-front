@@ -28,17 +28,15 @@ const CustomerDeposit = (props) => {
   const [depositToDelete, setDepositToDelete] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
-
-
   useEffect(() => {
     var { getDeposits } = props;
     getDeposits(currentPage);
-  }, [currentPage]);
+  }, [currentPage, getDeposits]);
 
   useEffect(() => {
     var { blanketDeposit } = props;
     if (blanketDeposit) {
-      setTotalCount(blanketDeposit.total)
+      setTotalCount(blanketDeposit.total);
       setBlankets(blanketDeposit.docs);
     }
   }, [blanketDeposit]);
@@ -152,7 +150,7 @@ const CustomerDeposit = (props) => {
                   <div key={i} className={style.listContainer}>
                     <div className={`${style.listContent} `}>
                       <div>
-                        {x ?.customer ?.firstName} {x ?.customer ?.lastName}
+                        {x?.customer?.firstName} {x?.customer?.lastName}
                       </div>
 
                       <div
@@ -206,13 +204,13 @@ const CustomerDeposit = (props) => {
                             </Button>
                           </div>
                         ) : (
-                            <div onClick={() => closeEdit(x._id, i, "save")}>
-                              <Button className={style.button}>
-                                <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
-                                Save
+                          <div onClick={() => closeEdit(x._id, i, "save")}>
+                            <Button className={style.button}>
+                              <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
+                              Save
                             </Button>
-                            </div>
-                          )}
+                          </div>
+                        )}
                         <div>
                           <Button
                             onClick={() => handleShow(x)}
@@ -221,7 +219,7 @@ const CustomerDeposit = (props) => {
                             Activities
                           </Button>
                         </div>
-                        {user ?.role === "admin" && (
+                        {user?.role === "admin" && (
                           <div>
                             <Button
                               onClick={() => openDeleteModal(i, x._id)}
@@ -236,22 +234,22 @@ const CustomerDeposit = (props) => {
                   </div>
                 );
               })}
+              <div className={style.stylePagination}>
+                <div className={style.pagination}>
+                  <Pagination
+                    itemCount={totalCount}
+                    pageSize={10}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" />
-              </div>
-            )}
-        </div>
-        <div className={style.stylePagination}>
-          <div className={style.pagination}>
-            <Pagination
-              itemCount={totalCount}
-              pageSize={10}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
-          </div>
+            <div className="text-center">
+              <img src="/images/no-data-found.png" />
+            </div>
+          )}
         </div>
       </div>
       <Modal
@@ -272,7 +270,7 @@ const CustomerDeposit = (props) => {
           </div>
 
           {depositValue &&
-            depositValue ?.activities.map((activity, i) => (
+            depositValue?.activities.map((activity, i) => (
               <div className={style.activitiesModalContent} key={i}>
                 <div> {activity.performer.name}</div>
                 <div>
@@ -301,7 +299,7 @@ const CustomerDeposit = (props) => {
         // dialogClassName={`${style.modal}`}
         centered
         scrollable
-      // backdrop = {false}
+        // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>

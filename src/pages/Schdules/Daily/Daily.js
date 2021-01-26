@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Daily.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,38 +8,18 @@ import {
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
-import { Multiselect } from "multiselect-react-dropdown";
-import { getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
-import { clone, cloneDeep } from "lodash";
+import { updateJob } from "../../../Redux/Job/jobActions";
+import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import { Link } from "react-router-dom";
-import Chip from "@material-ui/core/Chip";
-import {
-  Avatar,
-  Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Popover,
-  Typography,
-} from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCaretLeft,
-  faCaretRight,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
 
-import {
-  faInfoCircle,
-  faBook,
-  faCalendarAlt,
-  faUser,
-  faClock,
-  faBan,
-} from "@fortawesome/free-solid-svg-icons";
+import Chip from "@material-ui/core/Chip";
+import { Button } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
+import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
@@ -50,21 +30,12 @@ import { htmlToText } from "html-to-text";
 var moverAssignedDate;
 
 const DailySchedule = (props) => {
-  const [show, setShow] = useState(false);
   const [newAssignee, setAssignee] = useState("");
-  const [jobToUpdate, setJobToUpdate] = useState([]);
-  const [allMovers, setAllMovers] = useState();
   const [showIndex, setShowIndex] = useState(null);
   const [today, setToday] = useState(new Date().toString());
-  const [startDate, setStartDate] = useState(new Date());
-  const [day, setDay] = useState(new Date().getDay());
-  const [weekNames, setWeekNames] = useState();
-  const [date, setDate] = useState(new Date().toString());
-  const [indexDate, setIndexDate] = useState(0);
   const [modalShow, setModalShow] = useState(false);
   const [mover, setMover] = useState("");
-  const [test, setTest] = useState(0);
-  const { getalljobs, getalljobsfiveday, jobs, movers, newDate } = props;
+  const { getalljobs, getalljobsfiveday, movers, newDate } = props;
 
   useEffect(() => {
     getalljobs({
@@ -74,13 +45,13 @@ const DailySchedule = (props) => {
       // user/get-all-jobs-on-next-five-days
       date: today,
     });
-  }, []);
+  }, [getalljobs, getalljobsfiveday, today]);
 
-  var specialElementHandlers = {
-    "#elementH": function (element, renderer) {
-      return true;
-    },
-  };
+  // var specialElementHandlers = {
+  //   "#elementH": function (element, renderer) {
+  //     return true;
+  //   },
+  // };
 
   const generatePDF = (e, job) => {
     e.stopPropagation();
@@ -157,7 +128,7 @@ const DailySchedule = (props) => {
       path: "/schedule/unavailable",
       icon: <FontAwesomeIcon icon={faBan} />,
     },
-    ,
+    
     {
       title: "Movers",
       path: "/schedule/movers",
@@ -165,9 +136,6 @@ const DailySchedule = (props) => {
     },
   ];
 
-  const handleClose = () => {
-    setShow(false);
-  };
   const formatAMPM = (startTime) => {
     let date = new Date(startTime);
     var hours = date.getHours();
@@ -183,7 +151,7 @@ const DailySchedule = (props) => {
     if (e) {
       e.stopPropagation();
     }
-    var { loggedinUser, showMessage, changeDate } = props;
+    var { loggedinUser, showMessage } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
@@ -191,7 +159,7 @@ const DailySchedule = (props) => {
     delete jobToUpdate.customer;
     updateJob(jobToUpdate._id, jobToUpdate)
       .then((res) => {
-        if (res.data.status == 200) {
+        if (res.data.status === 200) {
           showMessage(res.data.message);
           getalljobs({
             date: today,
@@ -217,7 +185,7 @@ const DailySchedule = (props) => {
     jobToUpdate.customerId = jobToUpdate.customer.email;
     let assigneesId = jobToUpdate.assignee.map((x) => x._id);
     let assigneeIndex = jobToUpdate.assignee.findIndex(
-      (x) => x._id == assignee
+      (x) => x._id === assignee
     );
     assigneesId.splice(assigneeIndex, 1);
     jobToUpdate.assigneesId = assigneesId;
@@ -225,7 +193,7 @@ const DailySchedule = (props) => {
     delete jobToUpdate.customer;
     updateJob(jobToUpdate._id, jobToUpdate)
       .then((res) => {
-        if (res.data.status == 200) {
+        if (res.data.status === 200) {
           showMessage(res.data.message);
           getalljobs({
             date: today,
@@ -241,20 +209,8 @@ const DailySchedule = (props) => {
       });
   };
 
-  const onAssigneeSelect = (selectedList, selectedItem) => {
-    let job = cloneDeep(jobToUpdate);
-    job.assignee = selectedList;
-    setJobToUpdate(job);
-  };
-
-  const onAssigneeRemove = (selectedList, removedItem) => {
-    let job = cloneDeep(jobToUpdate);
-    job.assignee = selectedList;
-    setJobToUpdate(job);
-  };
-
   const toggleCollapse = (i) => {
-    if (i == showIndex) {
+    if (i === showIndex) {
       setShowIndex(null);
     } else {
       setShowIndex(i);
@@ -262,7 +218,7 @@ const DailySchedule = (props) => {
   };
 
   var jobDetailsNavigate = (jobId) => {
-    var { history, movers } = props;
+    var { history } = props;
     history.push(`/job/detail/${jobId}`);
   };
 
@@ -280,21 +236,7 @@ const DailySchedule = (props) => {
       pointerEvents: "none",
     },
   }));
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [openedPopoverId, setOpenedPopoverId] = useState(null);
-
-  const handlePopoverOpen = (event, id) => {
-    event.stopPropagation();
-    setOpenedPopoverId(id);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = (event) => {
-    event.stopPropagation();
-    setOpenedPopoverId(null);
-    setAnchorEl(null);
-  };
+   useStyles();
 
   const printAllJobs = (e) => {
     for (var job of props.jobs) {
@@ -307,8 +249,6 @@ const DailySchedule = (props) => {
     // props.history.push("/schedule/daiily");
   };
 
-  const open = Boolean(anchorEl);
-
   const onSelectedDay = (d) => {
     getalljobs({
       date: d.toString(),
@@ -317,15 +257,13 @@ const DailySchedule = (props) => {
       date: d.toString(),
     });
     setToday(new Date(d).toString());
-    setOpenedPopoverId(null);
-    setAnchorEl(null);
   };
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
+    var { showMessage } = props;
     let moverId = source.droppableId;
     if (!destination) {
-      var { showMessage } = props;
       showMessage("Please drop on job item.");
       return;
     }
@@ -334,7 +272,6 @@ const DailySchedule = (props) => {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      var { showMessage } = props;
       showMessage("Please drop on job item.");
       return;
     }
@@ -345,16 +282,16 @@ const DailySchedule = (props) => {
 
     if (jobToUpdate.length > 0) {
       let index = jobToUpdate[0].assignee.findIndex(
-        (x) => x._id == source.droppableId
+        (x) => x._id === source.droppableId
       );
       if (index !== -1) {
         // Already Assigned
-        var { showMessage } = props;
+       
         showMessage("Already Assigned");
       } else {
         let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
 
-        let index = movers.findIndex((x) => x.mover._id == moverId);
+        let index = movers.findIndex((x) => x.mover._id === moverId);
         moverAssignedDate = movers[index].mover.jobs.filter((job) =>
           job.dates.some((date) => date === new Date(today).toDateString())
         );
@@ -362,7 +299,7 @@ const DailySchedule = (props) => {
 
         if (moverJobs) {
           setModalShow(true);
-          var mover = movers.find((x) => x.mover._id == moverId);
+          var mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
           var newAssigneeObj = {
             moverId,
@@ -535,6 +472,7 @@ const DailySchedule = (props) => {
                                   <div key={i} className={style.styleModalBody}>
                                     <a
                                       className={style.styleLink}
+                                      href="/#"
                                       onClick={() =>
                                         window.open(
                                           `/job/detail/${job._id}`,
@@ -627,7 +565,7 @@ const DailySchedule = (props) => {
                               <h6>Job Description</h6>
                             </div>
                             <div className={style.jobDescription}>
-                              <p>{parse(list.description)}</p>
+                              <span>{parse(list.description)}</span>
                             </div>
                             <hr />
                             <h6>Customer Details</h6>
@@ -659,7 +597,7 @@ const DailySchedule = (props) => {
               })
             ) : (
               <div className="text-center">
-                <img src="/images/no-data-found.png" />
+                <img src="/images/no-data-found.png"  alt = ""/>
               </div>
             )}
           </div>
@@ -715,28 +653,6 @@ const DailySchedule = (props) => {
           </div>
         </DragDropContext>
       </div>
-
-      <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Assignees</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <div>
-              <Multiselect
-                selectedValues={jobToUpdate?.assignee}
-                options={allMovers} // Options to display in the dropdown
-                onSelect={onAssigneeSelect} // Function will trigger on select event
-                onRemove={onAssigneeRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-              />
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose} name="Close"></Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

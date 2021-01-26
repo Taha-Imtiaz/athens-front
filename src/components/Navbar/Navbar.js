@@ -14,9 +14,8 @@ const Navbar = (props) => {
       var { getLoginUser } = props;
       getLoginUser();
     }
-  }, []);
+  }, [getLoginUser]);
 
-  var { user } = props;
   var {
     history: {
       location: { pathname },

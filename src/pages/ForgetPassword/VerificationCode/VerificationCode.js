@@ -10,9 +10,9 @@ const VerificationCode = (props) => {
 
   var [verificationCode, setVerificationCode] = useState("");
   var [userToken, setUserToken] = useState("");
+  var { history } = props;
 
   useEffect(() => {
-    var { history } = props;
     var getToken = sessionStorage.getItem("token");
     setUserToken(getToken);
     if (getToken) {
@@ -22,6 +22,7 @@ const VerificationCode = (props) => {
       history.push("/email-verification");
     }
   }, []);
+
   var navigateResetPassword = () => {
     var { history, verifyCode } = props;
     if (verificationCode !== "") {

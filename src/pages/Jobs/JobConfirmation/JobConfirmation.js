@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -21,7 +21,6 @@ import {
   RadioGroup,
   TextField,
 } from "@material-ui/core";
-import { useState } from "react";
 import style from "./JobConfirmation.module.css";
 import {
   KeyboardDatePicker,
@@ -80,9 +79,9 @@ const useIconStyles = makeStyles(
 function JobConfirmation(props) {
 
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [data, setData] = React.useState("");
-  const [payment, setPayment] = React.useState({});
+  const [activeStep, setActiveStep] = useState(0);
+  const [data, setData] = useState("");
+  const [payment, setPayment] = useState({});
   const steps = getSteps();
   const iconClasses = useIconStyles();
 
@@ -395,7 +394,7 @@ function JobConfirmation(props) {
             <h6>Dates:</h6>
 
             {data &&
-              data.dates ?.map((x, i) => {
+              data.dates.map((x, i) => {
                 return (
                   <div className={`${style.styleDate}`} key={i}>
                     <div className={`${style.dates} `}>
@@ -476,7 +475,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="First Name"
                   name="firstName"
-                  value={data.customer ?.firstName}
+                  value={data.customer.firstName}
                   onChange={handleFormInput}
                 />
 
@@ -490,7 +489,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Last Name"
                   name="lastName"
-                  value={data.customer ?.lastName}
+                  value={data.customer.lastName}
                   onChange={handleFormInput}
                 />
 
@@ -504,7 +503,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Phone Number"
                   name="phone"
-                  value={data.customer ?.phone}
+                  value={data.customer.phone}
                   onChange={handleFormInput}
                 />
 
@@ -518,7 +517,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Email Address"
                   name="email"
-                  value={data.customer ?.email}
+                  value={data.customer.email}
                   onChange={handleFormInput}
                 />
               </div>
@@ -528,7 +527,7 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data ?.locations.length === 0 && (
+            {data.locations.length === 0 && (
               <div className={`${style.locationBtn} ${style.flex}`}>
                 <Button
                   className={`${style.button}`}
@@ -540,10 +539,10 @@ function JobConfirmation(props) {
               </div>
             )}
 
-            {data ?.locations ?.length > 0 &&
+            {data.locations.length > 0 &&
               data.locations.map((e, i) => showLocation(e, i))}
 
-            {data ?.locations.length > 0 && (
+            {data.locations.length > 0 && (
               <div className={style.flexEnd}>
                 <i className="fa fa-plus" onClick={(e) => addLocation(e)}></i>
               </div>
@@ -692,6 +691,6 @@ var actions = {
   confirmJob,
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs ?.job,
+  job: state.jobs.job
 });
 export default connect(mapStateToProps, actions)(JobConfirmation);

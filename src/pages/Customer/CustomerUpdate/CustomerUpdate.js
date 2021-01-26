@@ -2,40 +2,37 @@ import { Button, TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchCustomerById, updateCustomer, getCustomer } from "../../../Redux/Customer/customerActions";
+import { updateCustomer, getCustomer } from "../../../Redux/Customer/customerActions";
 
 import style from "./CustomerUpdate.module.css";
 class CustomerUpdate extends Component {
-  
+
   //fetch customer info (whose id is passed on mount)
-  componentDidMount = () => {
+  componentDidMount = async () => {
     var {
+      getCustomer,
       match: {
         params: { customerId },
       },
     } = this.props;
-    console.log(this.props)
-    fetchCustomerById(customerId)
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          customer: res.data ?.data,
-          firstName: res.data.data ?.firstName,
-          lastName: res.data.data ?.lastName,
-          phone: res.data.data ?.phone,
-          email: res.data.data ?.email,
-          subContacts: res.data.data ?.subContacts,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    await getCustomer(customerId)
+    let { customer } = this.props
+    if (customer) {
+      this.setState({
+        customer,
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        phone: customer.phone,
+        email: customer.email,
+        subContacts: customer.subContacts,
       });
+    }
   };
   // form onChangeHandler
   handleFormInput = (event) => {
     var { name, value } = event.target;
     this.setState({ [name]: value });
-    if (value == "") {
+    if (value === "") {
       this.setState({ [name + "Error"]: "Field Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
@@ -129,7 +126,7 @@ class CustomerUpdate extends Component {
 
     const isValid = this.validate();
     if (isValid) {
-      var { firstName, lastName, email, phone, subContacts } = this.state;
+      var { firstName, lastName, email, phone } = this.state;
       if (
         this.state.subContacts[0].name === "" &&
         this.state.subContacts[0].phone === "" &&
@@ -152,13 +149,7 @@ class CustomerUpdate extends Component {
   };
 
   render() {
-    var {
-      match: {
-        params: { customerId },
-      },
-    } = this.props;
-
-    return this.state ?.customer ? (
+    return this.state.customer && (
       <div className={style.formStyle}>
         <div className={style.form}>
           <h3 className={style.head}>Edit Customer</h3>
@@ -186,7 +177,6 @@ class CustomerUpdate extends Component {
                 required
                 fullWidth
                 className={style.styleFormFields}
-                required
                 id="lastName"
                 size="small"
                 label="Last Name"
@@ -202,7 +192,6 @@ class CustomerUpdate extends Component {
                 required
                 fullWidth
                 className={style.styleFormFields}
-                required
                 size="small"
                 id="phone"
                 label="Phone Number"
@@ -218,7 +207,6 @@ class CustomerUpdate extends Component {
                 required
                 fullWidth
                 className={style.styleFormFields}
-                required
                 size="small"
                 id="email"
                 label="Email Address"
@@ -231,7 +219,7 @@ class CustomerUpdate extends Component {
             </form>
             <h5>Alternate Contact</h5>
             {this.state.subContacts.length > 0 ? (
-              this.state.subContacts ?.map((x, i) => {
+              this.state.subContacts.map((x, i) => {
                 return (
                   <div key={i}>
                     <form>
@@ -311,7 +299,7 @@ class CustomerUpdate extends Component {
           </div>
         </div>
       </div>
-    ) : null
+    )
   }
 }
 

@@ -4,44 +4,40 @@ import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllClaims, deleteClaim } from "../../../Redux/Claims/claimsActions";
-
 import { Modal } from "react-bootstrap";
-
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../../components/Pagination/Pagination";
-
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import TimeAgo from "react-timeago";
 
 const CustomerClaims = (props) => {
   var { claims } = props;
+
   const [show, setShow] = useState(false);
-
   const [status, setStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [claimToDelete, setClaimToDelete] = useState("");
+  const [value, setValue] = useState("all");
+  const [totalCount, setTotalCount] = useState(0);
 
-  var [modalIndex, setModalIndex] = useState("");
-
-  var [pageSize, setPageSize] = useState(10);
-  var [currentPage, setCurrentPage] = useState(1);
-  var [claimToDelete, setClaimToDelete] = useState("");
-  var [value, setValue] = useState("all");
-
-  var totalCount = claims?.total;
+  var { getAllClaims } = props;
 
   useEffect(() => {
-    var { getAllClaims, claims } = props;
     var claimsObj = {
       status: status,
       page: currentPage,
       query: "",
     };
     getAllClaims(claimsObj);
-  }, []);
+  }, [getAllClaims, currentPage]);
+
   var data = [];
+
   useEffect(() => {
     var { claims } = props;
     if (claims) {
       data = claims;
+      setTotalCount(claims.total)
     }
   }, [claims]);
   var { claims } = props;
@@ -79,7 +75,6 @@ const CustomerClaims = (props) => {
   var { users, claims } = props;
 
   var handleShow = (i, jobId) => {
-    setModalIndex(i);
     setClaimToDelete(jobId);
     setShow(true);
   };
@@ -147,7 +142,7 @@ const CustomerClaims = (props) => {
           </div>
         </div>
       )}
-      {claims?.docs.length > 0 ? (
+      {claims ?.docs.length > 0 ? (
         <div>
           <div className={style.claimListHeaderContainer}>
             <div className={style.claimListHeader}>
@@ -155,15 +150,15 @@ const CustomerClaims = (props) => {
               <div>Status</div>
               <div> Waiting To</div>
               <div>Last Update</div>
-              {users?.role === "admin" && <div>Actions</div>}
+              {users ?.role === "admin" && <div>Actions</div>}
             </div>
           </div>
 
           <div>
-            {claims?.docs &&
-              claims?.docs.map((x, i) => {
+            {claims ?.docs &&
+              claims ?.docs.map((x, i) => {
                 return (
-                  <div className={style.listContainer} key = {i}>
+                  <div className={style.listContainer} key={i}>
                     <div className={`${style.listContent}`}>
                       <Link
                         className={style.styleLink}
@@ -190,15 +185,15 @@ const CustomerClaims = (props) => {
                                 {<TimeAgo date={x.updates[0].timestamp} />}
                               </div>
                             ) : (
-                              <div>
-                                <TimeAgo date={x.createdAt} />
-                              </div>
-                            )}
+                                <div>
+                                  <TimeAgo date={x.createdAt} />
+                                </div>
+                              )}
                           </div>
                         </div>
                       </Link>
 
-                      {users?.role === "admin" && (
+                      {users ?.role === "admin" && (
                         <div className={`${style.center} ${style.actions}`}>
                           <Button onClick={() => handleShow(i, x._id)}>
                             Delete
@@ -213,19 +208,19 @@ const CustomerClaims = (props) => {
           {/* </ul> */}
         </div>
       ) : (
-        <div className="text-center">
-          <img src="/images/no-data-found.png" />
+          <div className="text-center">
+            <img src="/images/no-data-found.png" />
+          </div>
+        )}
+      <div className={style.stylePagination}>
+        <div className={style.pagination}>
+          <Pagination
+            itemCount={totalCount}
+            pageSize={10}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
-      )}
-      <div className = {style.stylePagination}>
-       <div className = {style.pagination}>
-       <Pagination
-          itemCount={totalCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-       </div>
       </div>
 
       <Modal
@@ -233,7 +228,7 @@ const CustomerClaims = (props) => {
         onHide={handleClose}
         centered
         scrollable
-        // backdrop = {false}
+      // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
@@ -255,7 +250,7 @@ const CustomerClaims = (props) => {
   );
 };
 var mapStateToProps = (state) => ({
-  claims: state.claims?.claimList,
+  claims: state.claims ?.claimList,
   users: state.users.user,
 });
 

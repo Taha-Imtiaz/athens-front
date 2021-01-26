@@ -7,7 +7,7 @@ import { getJob } from "../../../Redux/Job/jobActions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import TimeAgo from "react-timeago"; 
+import TimeAgo from "react-timeago";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
@@ -18,7 +18,6 @@ import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import JobConfirmation from "../JobConfirmation/JobConfirmation";
 
 const JobDetails = (props) => {
-  const width = window.innerWidth;
   var { job } = props;
 
   var {
@@ -28,12 +27,13 @@ const JobDetails = (props) => {
   } = props;
   var [show, setShow] = useState(false);
   var [showBooking, setShowBooking] = useState(false);
+  var { getJob } = props;
 
   useEffect(() => {
     //fetch id on componentDidMount
-    var { getJob } = props;
     getJob(jobId);
-  }, []);
+  }, [getJob, jobId]);
+
   //show activities modal
   var handleShow = () => {
     setShow(true);
@@ -80,8 +80,8 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                      <div>Not Added</div>
-                    )}
+                        <div>Not Added</div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -95,45 +95,6 @@ const JobDetails = (props) => {
               >
                 Activities
               </Button>
-              <Modal
-                dialogClassName={`${style.modal}`}
-                show={show}
-                onHide={handleClose}
-                // animation={false}
-                centered
-                scrollable
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Activities</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className={style.modalHeader}>
-                    <div>Performer</div>
-                    <div>Message</div>
-                    <div>Timestamp</div>
-                  </div>
-
-                  {job.activities.map((activitiy,i) => (
-                    <div key= {i} className={style.modalContent}>
-                      <div> {activitiy?.performer?.name}</div>
-                      <div>
-                        {activitiy?.messageLogs?.map((x,i) => (
-                          <span key= {i}>* {x}</span>
-                        ))}
-                      </div>
-                     
-                      <TimeAgo date={activitiy?.timeStamp} />
-                    </div>
-                  ))}
-                </Modal.Body>
-                <Modal.Footer>
-                  <div className={style.modalButtons}>
-                    <Button className={`${style.button}`} onClick={handleClose}>
-                      Close
-                    </Button>
-                  </div>
-                </Modal.Footer>
-              </Modal>
             </div>
           </div>{" "}
           {/* jobDetails section */}
@@ -157,11 +118,11 @@ const JobDetails = (props) => {
               </div>
             </div>
             <div className={style.jobDates}>
-              {job.dates.map((x, i) => (i === 0 ? <span key = {i}>{x}</span> : <span key = {i}> | {x} </span>))}
+              {job.dates.map((x, i) => (i === 0 ? <span key={i}>{x}</span> : <span key={i}> | {x} </span>))}
             </div>
             <div className={style.service}>
-              {job.services.map((service,i) => (
-                <Chip key = {i}
+              {job.services.map((service, i) => (
+                <Chip key={i}
                   variant="outlined"
                   size="small"
                   label={service.name}
@@ -192,12 +153,12 @@ const JobDetails = (props) => {
                       <div className={style.location}>{list.value}</div>
                     </div>
                   ) : (
-                    <div>
-                      <FontAwesomeIcon icon={faDotCircle} />{" "}
-                      <span>{`Dropoff`}</span>
-                      <div className={style.location}>{list.value}</div>
-                    </div>
-                  )
+                      <div>
+                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                        <span>{`Dropoff`}</span>
+                        <div className={style.location}>{list.value}</div>
+                      </div>
+                    )
                 )}
               </div>
             )}
@@ -224,26 +185,70 @@ const JobDetails = (props) => {
               ) : null}
             </div>
           </div>
+
+          {/* Activvities Modal */}
+          <Modal
+            dialogClassName={`${style.modal}`}
+            show={show}
+            onHide={handleClose}
+            // animation={false}
+            centered
+            scrollable
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Activities</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className={style.modalHeader}>
+                <div>Performer</div>
+                <div>Message</div>
+                <div>Timestamp</div>
+              </div>
+
+              {job.activities.map((activitiy, i) => (
+                <div key={i} className={style.modalContent}>
+                  <div> {activitiy.performer.name}</div>
+                  <div>
+                    {activitiy.messageLogs.map((x, i) => (
+                      <span key={i}>* {x}</span>
+                    ))}
+                  </div>
+
+                  <TimeAgo date={activitiy.timeStamp} />
+                </div>
+              ))}
+            </Modal.Body>
+            <Modal.Footer>
+              <div className={style.modalButtons}>
+                <Button className={`${style.button}`} onClick={handleClose}>
+                  Close
+                   </Button>
+              </div>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Confirmtation Modal */}
+          <Modal
+            dialogClassName={`${style.modal}`}
+            show={showBooking}
+            onHide={() => setShowBooking(false)}
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Booking Confirmation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <JobConfirmation data={job} close={handleCloseAndRefresh} />
+            </Modal.Body>
+          </Modal>
+
         </div>
       ) : null}
-      <Modal
-        dialogClassName={`${style.modal}`}
-        show={showBooking}
-        onHide={() => setShowBooking(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Booking Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <JobConfirmation data={job} close={handleCloseAndRefresh} />
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs?.job,
+  job: state.jobs.job
 });
 var actions = {
   getJob,

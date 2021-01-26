@@ -34,6 +34,7 @@ export var getJob = (jobId) => {
     }
   };
 };
+
 export var getAllMovers = async () => {
   try {
     var getMovers = await Axios.get("mover");

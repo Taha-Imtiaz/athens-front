@@ -31,7 +31,7 @@ export var getCustomer = (customerId) => {
       dispatch({
         type: GET_CUSTOMER,
         payload: {
-          customer: customer,
+          customer: customer
         },
       });
     } catch (error) {
@@ -40,16 +40,6 @@ export var getCustomer = (customerId) => {
   };
 };
 
-//this function is same as getCustomer
-
-export var fetchCustomerById = async (customerId) => {
-  try {
-    var customer = await Axios.get(`customer/details/${customerId}`);
-    return customer;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export var addCustomer = (customerObj, callback) => {
   return async (dispatch) => {

@@ -21,10 +21,10 @@ const VerificationCode = (props) => {
     } else {
       history.push("/email-verification");
     }
-  }, []);
+  }, [history]);
 
   var navigateResetPassword = () => {
-    var { history, verifyCode } = props;
+    var { verifyCode } = props;
     if (verificationCode !== "") {
       // history.push("/verifyCode")
     } else {

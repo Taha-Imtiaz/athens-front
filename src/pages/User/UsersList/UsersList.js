@@ -78,13 +78,13 @@ const UsersList = (props) => {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <a href="#"
+                  <a href="/#"
                     className="dropdown-item"
                     onClick={() => handleFilter("mover")}
                   >
                     Movers
                   </a>
-                  <a href="#"
+                  <a href="/#"
                     className="dropdown-item"
                     onClick={() => handleFilter("manager")}
                   >

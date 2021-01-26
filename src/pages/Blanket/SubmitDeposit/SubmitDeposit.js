@@ -232,7 +232,6 @@ class SubmitDeposit extends Component {
             <TextField
               variant="outlined"
               type="number"
-              fullWidth
               size="small"
               name="quantity"
               value={quantity}
@@ -254,7 +253,7 @@ class SubmitDeposit extends Component {
               label="Cost in $"
               onChange={this.handleCostFormInput}
               error={this.state.costError?true:false}
-              fullWidth
+              
             />
 
             <div className={style.depositBtn}>

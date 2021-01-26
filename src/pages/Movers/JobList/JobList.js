@@ -10,7 +10,6 @@ import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import {
   FormControl,
   FormControlLabel,
- 
   Popover,
   Radio,
   RadioGroup,
@@ -21,7 +20,7 @@ import { compose } from "redux";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Pagination from "../../../components/Pagination/Pagination";
 
-const width = window.innerWidth;
+
 
 const styles = (theme) => ({
   popover: {
@@ -78,7 +77,7 @@ class MoversJobsList extends Component {
 
   markComplete = (list) => {
     updateJob(list._id, { status: "completed" }).then((res) => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         var { getMover, showMessage } = this.props;
         showMessage(res.data.message);
         getMover();
@@ -166,7 +165,7 @@ class MoversJobsList extends Component {
     this.setState({
       dates: e.target.value,
     });
-    var { dates } = this.state;
+    
     let date = new Date(e.target.value);
     var DateFilters = {
       filters: {
@@ -187,8 +186,9 @@ class MoversJobsList extends Component {
 
   handlePageChange = (page) => {
     var { getMover } = this.props;
+    var fetchMoverJobs;
     if (this.state.recentlyAdded === true) {
-      var fetchMoverJobs = {
+       fetchMoverJobs = {
         filters: {
           jobStatus: "",
           dates: "",
@@ -202,21 +202,9 @@ class MoversJobsList extends Component {
       this.setState({
         currentPage: page,
       });
-    } else if (this.state.recentlyAdded === true) {
-      var fetchJobsOnPageChange = {
-        query: "",
-        sort: {
-          assigneeRequired: null,
-          plainTitle: "",
-          createdAt: -1,
-        },
-        page: page,
-      };
-      this.setState({
-        currentPage: page,
-      });
-    } else if (this.state.sortByStatus === true) {
-      var fetchMoverJobs = {
+    } 
+    else if (this.state.sortByStatus === true) {
+       fetchMoverJobs = {
         filters: {
           jobStatus: this.state.value,
           dates: "",
@@ -231,7 +219,7 @@ class MoversJobsList extends Component {
         currentPage: page,
       });
     } else {
-      var fetchMoverJobs = {
+       fetchMoverJobs = {
         filters: {
           jobStatus: "",
           dates: "",
@@ -338,162 +326,156 @@ class MoversJobsList extends Component {
 
         {moverJobs?.docs?.length > 0 ? (
           <div>
-            {moverJobs.docs.map((list) => {
+            {moverJobs.docs.map((list, i) => {
               return (
-                <>
-                  <div className={style.listContainer}>
-                    <div className={`${style.listContent}`}>
-                      <Link
-                        className={style.styleLink}
-                        to={"/mover/jobdetails/" + list._id}
-                      >
-                        <div className={`${style.jobList}`}>
-                          <div
-                            className={`${style.title} ${style.flex} ${style.item}`}
-                          >
-                            {list.title}
-                          </div>
-                          <div
-                            className={`${style.date} ${style.flex} ${style.item}`}
-                          >
+                <div className={style.listContainer} key={i}>
+                  <div className={`${style.listContent}`}>
+                    <Link
+                      className={style.styleLink}
+                      to={"/mover/jobdetails/" + list._id}
+                    >
+                      <div className={`${style.jobList}`}>
+                        <div
+                          className={`${style.title} ${style.flex} ${style.item}`}
+                        >
+                          {list.title}
+                        </div>
+                        <div
+                          className={`${style.date} ${style.flex} ${style.item}`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faCalendarAlt}
+                            className={style.icon}
+                          />{" "}
+                          <span className={style.styleSpan}>
+                            {list.dates[0]}
+                            {list.dates.length > 1 && (
+                              <div>
+                                <Typography
+                                  aria-owns={
+                                    open ? "mouse-over-popover" : undefined
+                                  }
+                                  aria-haspopup="true"
+                                  onMouseEnter={(e) =>
+                                    this.handleDatePopoverOpen(e, list._id)
+                                  }
+                                  onMouseLeave={this.handleDatePopoverClose}
+                                >
+                                  ...
+                                </Typography>
+
+                                <Popover
+                                  id="mouse-over-popover"
+                                  className={classes.popover}
+                                  classes={{
+                                    paper: classes.paper,
+                                  }}
+                                  open={
+                                    this.state.openedDatePopoverId == list._id
+                                  }
+                                  anchorEl={this.state.anchorEl}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                  }}
+                                  onClose={this.handlePopoverClose}
+                                  disableRestoreFocus
+                                >
+                                  {list.dates.map((date) => (
+                                    <Typography>{date}</Typography>
+                                  ))}
+                                </Popover>
+                              </div>
+                            )}
+                          </span>
+                        </div>
+
+                        <div
+                          className={`${style.assignee} ${style.flex}  ${style.item}`}
+                        >
+                          <span className={style.styleSpan}>
                             <FontAwesomeIcon
-                              icon={faCalendarAlt}
+                              icon={faUser}
                               className={style.icon}
                             />{" "}
-                            <span className={style.styleSpan}>
-                              {list.dates[0]}
-                              {list.dates.length > 1 && (
-                                <div>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleDatePopoverOpen(e, list._id)
-                                    }
-                                    onMouseLeave={this.handleDatePopoverClose}
-                                  >
-                                    ...
-                                  </Typography>
+                            {list.assignee.length > 0
+                              ? list.assignee[0].name
+                              : "No Assignees"}
+                            {list.assignee.length > 1 && (
+                              <div>
+                                <Typography
+                                  aria-owns={
+                                    open ? "mouse-over-popover" : undefined
+                                  }
+                                  aria-haspopup="true"
+                                  onMouseEnter={(e) =>
+                                    this.handleAssigneePopoverOpen(e, list._id)
+                                  }
+                                  onMouseLeave={this.handleAssigneePopoverClose}
+                                >
+                                  ...
+                                </Typography>
 
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedDatePopoverId == list._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    onClose={this.handlePopoverClose}
-                                    disableRestoreFocus
-                                  >
-                                    {list.dates.map((date) => (
-                                      <Typography>{date}</Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
-                            </span>
-                          </div>
-
-                          <div
-                            className={`${style.assignee} ${style.flex}  ${style.item}`}
-                          >
-                            <span className={style.styleSpan}>
-                              <FontAwesomeIcon
-                                icon={faUser}
-                                className={style.icon}
-                              />{" "}
-                              {list.assignee.length > 0
-                                ? list.assignee[0].name
-                                : "No Assignees"}
-                              {list.assignee.length > 1 && (
-                                <div>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleAssigneePopoverOpen(
-                                        e,
-                                        list._id
-                                      )
-                                    }
-                                    onMouseLeave={
-                                      this.handleAssigneePopoverClose
-                                    }
-                                  >
-                                    ...
-                                  </Typography>
-
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedAssigneePopoverId ==
-                                      list._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    onClose={this.handlePopoverClose}
-                                    disableRestoreFocus
-                                  >
-                                    {list.assignee.map((assignee) => (
-                                      <Typography>{assignee.name}</Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
-                            </span>
-                          </div>
-
-                          {list.status === "booked" ? (
-                            <div
-                              className={`${style.status} ${style.flex} ${style.item}`}
-                            >
-                              <input className = {style.styleCheckBox}
-                                onClick={() => this.markComplete(list)}
-                                type="checkbox"
-                              ></input>
-                              <div onClick={() => this.markComplete(list)}>
-                                Mark Complete
+                                <Popover
+                                  id="mouse-over-popover"
+                                  className={classes.popover}
+                                  classes={{
+                                    paper: classes.paper,
+                                  }}
+                                  open={
+                                    this.state.openedAssigneePopoverId ==
+                                    list._id
+                                  }
+                                  anchorEl={this.state.anchorEl}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                  }}
+                                  onClose={this.handlePopoverClose}
+                                  disableRestoreFocus
+                                >
+                                  {list.assignee.map((assignee) => (
+                                    <Typography>{assignee.name}</Typography>
+                                  ))}
+                                </Popover>
                               </div>
-                            </div>
-                          ) : (
-                            <div
-                              className={`${style.status} ${style.flex} ${style.item}`}
-                            >
-                              {list.status}
-                            </div>
-                          )}
-                          <div></div>
+                            )}
+                          </span>
                         </div>
-                      </Link>
-                    </div>
+
+                        {list.status === "booked" ? (
+                          <div
+                            className={`${style.status} ${style.flex} ${style.item}`}
+                          >
+                            <input
+                              className={style.styleCheckBox}
+                              onClick={() => this.markComplete(list)}
+                              type="checkbox"
+                            ></input>
+                            <div onClick={() => this.markComplete(list)}>
+                              Mark Complete
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            className={`${style.status} ${style.flex} ${style.item}`}
+                          >
+                            {list.status}
+                          </div>
+                        )}
+                        <div></div>
+                      </div>
+                    </Link>
                   </div>
-                </>
+                </div>
               );
             })}
             <div className={style.stylePagination}>

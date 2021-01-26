@@ -19,6 +19,7 @@
 }
 .calender {
   grid-area: calender;
+  
 }
 .buttons .button {
   grid-area: button;
@@ -33,8 +34,8 @@
   background-color: #00adee;
 }
 .dateStyle {
-  position: absolute;
-  color: lightgray;
+  position: absolute ;
+  color: lightgray ;
   top: 0;
   right: 0;
   font-size: 1rem;
@@ -48,7 +49,10 @@
   height: 3rem;
   width: 6rem;
   position: relative;
+  color: lightgray !important;
+  
 }
+
 .modal {
   max-width: 70vw;
 }

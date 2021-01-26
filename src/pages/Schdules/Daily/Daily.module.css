@@ -140,7 +140,8 @@
 }
 .scrollBar {
   width: 100% !important;
-  margin: 0 1rem;
+  margin: 0 0.1rem;
+  /* background-color: #00adee; */
 
   overflow-x: hidden;
   height: 75vh;
@@ -150,16 +151,16 @@
   
 }
 .scrollBar::-webkit-scrollbar {
-  width: 10px !important;
+  width: 8px !important;
 }
 /* Track */
 .scrollBar::-webkit-scrollbar-track {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
 }
 
 /* Handle */
 .scrollBar::-webkit-scrollbar-thumb {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   background: grey !important;
 }
 
@@ -169,7 +170,7 @@
 }
 
 .movehead {
-  margin: 1rem;
+  margin: 1rem 0;
 }
 
 .mov {

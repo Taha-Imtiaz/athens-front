@@ -174,17 +174,17 @@ const CustomerClaims = (props) => {
                       >
                         {" "}
                         <div className={style.claimList}>
-                          <div className={`${style.item} ${style.flex}`}>
+                          <div className={`${style.item} ${style.center}`}>
                             {x.customer.firstName} {x.customer.lastName}
                           </div>
-                          <div className={`${style.item} ${style.flex}`}>
+                          <div className={`${style.item} ${style.center}`}>
                             {x.status.toLocaleUpperCase()}
                           </div>
-                          <div className={`${style.item} ${style.flex}`}>
+                          <div className={`${style.item} ${style.center}`}>
                             {x.waitTo}
                           </div>
 
-                          <div className={`${style.item} ${style.flex}`}>
+                          <div className={`${style.item} ${style.center}`}>
                             {x.updates.length > 0 ? (
                               <div>
                                 {<TimeAgo date={x.updates[0].timestamp} />}
@@ -199,7 +199,7 @@ const CustomerClaims = (props) => {
                       </Link>
 
                       {users?.role === "admin" && (
-                        <div className={`${style.flex} ${style.actions}`}>
+                        <div className={`${style.center} ${style.actions}`}>
                           <Button onClick={() => handleShow(i, x._id)}>
                             Delete
                           </Button>

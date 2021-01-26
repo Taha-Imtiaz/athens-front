@@ -60,9 +60,9 @@ class Availability extends Component {
           <h3>Select Your Availability</h3>
         </div>
         <div className={style.availabilitySchedule}>
-          {this.state.weeklySchedule.map((list) => {
+          {this.state.weeklySchedule.map((list,i) => {
             return (
-              <div className={`${style.scheduleContainer}`}>
+              <div className={`${style.scheduleContainer}`} key = {i}>
                 <div className={`${style.schedule}`}>
                   <div className={style.checkbox}>
                     <input

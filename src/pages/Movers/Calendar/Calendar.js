@@ -12,7 +12,6 @@ import parse from "html-react-parser";
 import { getCurrentDayJob } from "../../../Redux/Job/jobActions";
 
 const localizer = momentLocalizer(moment);
-const now = new Date();
 
 class MoversCalendar extends Component {
   state = {
@@ -37,7 +36,7 @@ class MoversCalendar extends Component {
             id: x._id,
           };
           jobs.push(obj);
-          if (y == date.toDateString()) {
+          if (y === date.toDateString()) {
             currentDayJobs.push(x);
           }
         });
@@ -65,7 +64,7 @@ class MoversCalendar extends Component {
             id: x._id,
           };
           jobs.push(obj);
-          if (y == date.toDateString()) {
+          if (y === date.toDateString()) {
             currentDayJobs.push(x);
           }
         });
@@ -108,7 +107,7 @@ class MoversCalendar extends Component {
     let currentDayJobs = [];
     this.state.jobs.map((x) => {
       x.dates.map((y) => {
-        if (y == date.toDateString()) {
+        if (y === date.toDateString()) {
           currentDayJobs.push(x);
         }
       });
@@ -125,9 +124,9 @@ class MoversCalendar extends Component {
       style: {
         ...children.style,
         backgroundColor:
-          value.toDateString() == date.toDateString() ? "#eaf6fe" : "white",
+          value.toDateString() === date.toDateString() ? "#eaf6fe" : "white",
         border:
-          value.toDateString() == date.toDateString()
+          value.toDateString() === date.toDateString()
             ? "1px solid #00adee"
             : "",
       },
@@ -235,8 +234,8 @@ class MoversCalendar extends Component {
                             {parse(job.description)}
                           </span>
                           <div>
-                            {job.services.map((service) => (
-                              <Chip
+                            {job.services.map((service,i) => (
+                              <Chip key = {i}
                                 label={service.name}
                                 size="small"
                                 clickable

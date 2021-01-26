@@ -55,3 +55,7 @@ body {
 .page-item.active .page-link {
   background-color: #00adee !important;
 }
+/* for border of holiday calender */
+.DayPicker-Day {
+  border: 1px solid;
+}

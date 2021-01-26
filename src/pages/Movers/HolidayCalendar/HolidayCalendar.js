@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import style from "./HolidayCalendar.module.css";
@@ -41,7 +41,7 @@ function RequestHolidays(props) {
   };
   const handleDayClick = (e) => {
     let newDates = cloneDeep(dates);
-    let index = newDates.findIndex((x) => x == e.toString());
+    let index = newDates.findIndex((x) => x === e.toString());
     if (index !== -1) {
       newDates.splice(index, 1);
       setDates(newDates);
@@ -58,7 +58,7 @@ function RequestHolidays(props) {
         reason: note,
       };
       holidayCalendar(obj).then((res) => {
-        if (res.data.status == 200) {
+        if (res.data.status === 200) {
           setShow(false);
           showMessage(res.data.message);
         }
@@ -99,7 +99,7 @@ function RequestHolidays(props) {
         <Modal.Body>
           <div>
             <TextareaAutosize
-              name=""
+             
               id=""
               rows="5"
               name="note"

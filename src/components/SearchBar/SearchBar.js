@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import style from "./SearchBar.module.css";
 import { connect } from "react-redux";
 import { getAllCustomers } from "../../Redux/Customer/customerActions";
 import { getAllJobs } from "../../Redux/Job/jobActions";
 import { getUsers } from "../../Redux/User/userActions";
-import { getMover, moverSearchFilter } from "../../Redux/Mover/moverActions";
+import { moverSearchFilter } from "../../Redux/Mover/moverActions";
 import { getAllClaims } from "../../Redux/Claims/claimsActions";
 
 const SearchBar = (props) => {

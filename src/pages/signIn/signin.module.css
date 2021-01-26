@@ -1,8 +1,5 @@
-/* my styling */
-
 .signInContainer {
   grid-template-rows: minmax(min-content, 100vh);
-  /* background-color: aquamarine; */
   display: grid;
   grid-template-columns: 50fr 50fr;
   grid-template-areas: "image form";

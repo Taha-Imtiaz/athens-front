@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Signin.module.css";
+import style from "./SignIn.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../Redux/User/userActions";

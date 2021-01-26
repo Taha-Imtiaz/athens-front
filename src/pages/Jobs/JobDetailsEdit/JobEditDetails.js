@@ -3,7 +3,7 @@ import style from "./JobEditDetails.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { connect } from "react-redux";
-import { getJob, getAllMovers, updateJob } from "../../../Redux/Job/jobActions";
+import { getJob, updateJob } from "../../../Redux/Job/jobActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,7 +43,6 @@ class JobEditDetails extends Component {
     services: [],
     assignee: [],
     assigneeList: [],
-
     startDate: "",
     dates: [""],
     endDate: "",
@@ -59,7 +58,7 @@ class JobEditDetails extends Component {
     locationFromError: "",
     locationToError: "",
     job: null,
-    Note: "",
+    newNote: "",
     customerId: "",
     statusOptions: ["Booked", "Completed", "Pending"],
     status: "",
@@ -144,19 +143,6 @@ class JobEditDetails extends Component {
 
     getJob(jobId);
 
-    var moversObj = {
-      name: "",
-      address: "",
-      attributes: "",
-    };
-    //why this api calls
-    getAllMovers(moversObj).then((moverRes) => {
-      var mover = moverRes?.data?.movers?.docs?.map((mover) => mover);
-      this.setState({
-        assigneeList: mover,
-      });
-    });
-
     var { job } = this.props;
 
     if (job) {
@@ -225,14 +211,14 @@ class JobEditDetails extends Component {
   };
   //add note when add note button of modal is pressed
   AddNote = () => {
-    var { Note, note } = this.state;
+    var { newNote, note } = this.state;
     if (note) {
       let notes = [...this.state.note];
-      notes.push({ uid: uuidv4(), text: Note });
+      notes.push({ uid: uuidv4(), text: newNote });
       this.setState({
         show: false,
         note: notes,
-        Note: "",
+        newNote: "",
       });
     }
   };
@@ -256,30 +242,24 @@ class JobEditDetails extends Component {
   };
   //onChange handler of addNote
   handleAddNote = (e) => {
-    var {value } = e.target;
+    var { value } = e.target;
     this.setState({
-      Note: value,
+      newNote: value,
     });
   };
   //update job
   handleJobUpdate = () => {
     var {
       title,
-
       dates,
-
       locations,
       services,
-
       description,
-
       status,
       jobType,
-
       assigneeRequired,
-
       customerId,
-      note,
+      note
     } = this.state;
 
     var {
@@ -305,13 +285,11 @@ class JobEditDetails extends Component {
       services,
       assigneeRequired,
       jobType,
-
       locations: locations.filter((x) => x.value !== "" && x.type !== ""),
-
       status,
       userId: loggedinUser._id,
       customerId,
-      note,
+      note
     };
     //check if the fields are empty
     if (this.handleValidation()) {
@@ -339,15 +317,13 @@ class JobEditDetails extends Component {
   //add new location
   addLocation = () => {
     var location = cloneDeep(this.state.locations);
-
-    var locationAdded = location.push({ type: "", value: "", default: false });
     this.setState({
       locations: location,
     });
   };
   //onChange handler of radio buttons
   handleInputChange = (e, i) => {
-    let { name, value } = e.target;
+    let { value } = e.target;
     let updateLocation = cloneDeep(this.state.locations);
     updateLocation[i].type = value;
     updateLocation[i].value = "";
@@ -362,7 +338,7 @@ class JobEditDetails extends Component {
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
-        prevState[i].type == "pickup" ? "Load Only / IA" : "Unload Only";
+        prevState[i].type === "pickup" ? "Load Only / IA" : "Unload Only";
     } else {
       prevState[i].value = "";
     }
@@ -427,10 +403,10 @@ class JobEditDetails extends Component {
           // error={this.state.locationtoError ? true : false}
           />
         </div>
-        {this.state.locations[i].type == "pickup" ? (
+        {this.state.locations[i].type === "pickup" ? (
           <div
             className={
-              this.state.locations[i].type == "pickup" ? style.checkBox : null
+              this.state.locations[i].type === "pickup" ? style.checkBox : null
             }
           >
             <FormControlLabel
@@ -446,10 +422,10 @@ class JobEditDetails extends Component {
               label="Load only / IA"
             />
           </div>
-        ) : this.state.locations[i].type == "dropoff" ? (
+        ) : this.state.locations[i].type === "dropoff" ? (
           <div
             className={
-              this.state.locations[i].type == "dropoff" ? style.checkBox : null
+              this.state.locations[i].type === "dropoff" ? style.checkBox : null
             }
           >
             <FormControlLabel
@@ -530,20 +506,7 @@ class JobEditDetails extends Component {
     });
   };
   render() {
-    var { job } = this.props;
     var {
-      match: {
-        params: { jobId },
-      },
-    } = this.props;
-
-    var {
-      title,
-      startDate,
-      endDate,
-      startTime,
-     
-      Note,
       note,
       show,
     } = this.state;
@@ -660,24 +623,24 @@ class JobEditDetails extends Component {
               } else {
                 return (
                   <div className={style.styleDate} key={i}>
-                   
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid>
-                          <KeyboardDatePicker
-                            inputVariant="outlined"
-                            size="small"
-                            fullWidth
-                            id="date-picker-dialog"
-                            format="MM/dd/yyyy"
-                            value={this.state.dates[i]}
-                            onChange={(e) => this.handleDateChange(e, i)}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-                            }}
-                          />
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-                    
+
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid>
+                        <KeyboardDatePicker
+                          inputVariant="outlined"
+                          size="small"
+                          fullWidth
+                          id="date-picker-dialog"
+                          format="MM/dd/yyyy"
+                          value={this.state.dates[i]}
+                          onChange={(e) => this.handleDateChange(e, i)}
+                          KeyboardButtonProps={{
+                            "aria-label": "change date",
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
+
                     <div
                       className={style.centeredIcon}
                       onClick={() => this.removeDate(i)}
@@ -736,40 +699,42 @@ class JobEditDetails extends Component {
                 </FormControl>
               </div>
             </div>
-            {this.state?.locations?.length === 0 && (
-              <div className={style.addLocation}>
-                <div className={style.addLocationBtn}>
-                  <Button onClick={this.addLocation} className={style.button}>
-                    Add Location
+            {
+              this.state.locations && <div>
+                {this.state.locations.length === 0 && (
+                  <div className={style.addLocation}>
+                    <div className={style.addLocationBtn}>
+                      <Button onClick={this.addLocation} className={style.button}>
+                        Add Location
                   </Button>
-                </div>
-              </div>
-            )}
-
-            {this.state?.locations?.length > 0 && (
-              <div>
-                {this.state?.locations?.map((location, i) =>
-                  this.showLocation(i)
+                    </div>
+                  </div>
+                )}
+                {this.state.locations.length > 0 && (
+                  <div>
+                    {this.state.locations.map((location, i) =>
+                      this.showLocation(i)
+                    )}
+                  </div>
+                )}
+                {this.state.locations.length > 0 && (
+                  <div className={style.alignRight}>
+                    <i
+                      className="fa fa-plus"
+                      name="Add Location"
+                      value="Add Location"
+                      onClick={this.addLocation}
+                    />
+                  </div>
                 )}
               </div>
-            )}
-
-            {this.state?.locations?.length > 0 && (
-              <div className={style.alignRight}>
-                <i
-                  className="fa fa-plus"
-                  name="Add Location"
-                  value="Add Location"
-                  onClick={this.addLocation}
-                />
-              </div>
-            )}
+            }
           </form>
 
           <div>
-            {note?.length > 0 && <h3>Notes</h3>}
+            {note ?.length > 0 && <h3>Notes</h3>}
 
-            {note?.map((note) => (
+            {note ?.map((note) => (
               <div className={style.notesStyle}>
                 <div>{note.text}</div>
                 <div>
@@ -814,13 +779,13 @@ class JobEditDetails extends Component {
               <Modal.Title>Add Note</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <TextareaAutosize className = {style.styleTextArea}
+              <TextareaAutosize className={style.styleTextArea}
                 name=""
                 id=""
                 cols="65"
                 rows="5"
                 name="Note"
-                value={Note}
+                value={this.state.newNote}
                 onChange={this.handleAddNote}
               ></TextareaAutosize>
             </Modal.Body>
@@ -846,7 +811,7 @@ var actions = {
 
 var mapStateToProps = (state) => ({
   loggedinUser: state.users.user,
-  job: state.jobs?.job,
+  job: state.jobs ?.job,
 });
 
 export default connect(mapStateToProps, actions)(JobEditDetails);

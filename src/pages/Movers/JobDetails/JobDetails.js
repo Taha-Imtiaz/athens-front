@@ -21,14 +21,15 @@ const MoversJobDetails = (props) => {
       params: { jobId },
     },
   } = props;
+
   useEffect(() => {
     getMoverJobDetail(jobId);
-  }, []);
+  }, [jobId]);
 
   const paidInCash = () => {
     let { history, showMessage } = props;
     updateJob(job._id, { status: "Paid Cash" }).then((res) => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         showMessage(res.data.message);
         history.push("/mover");
       }
@@ -75,13 +76,13 @@ const MoversJobDetails = (props) => {
                 </div>
               </div>
               <div className={style.jobDates}>
-                {job?.dates?.map((x, i) =>
+                {job ?.dates ?.map((x, i) =>
                   i === 0 ? x : <span> | {x} </span>
                 )}
               </div>
 
               <div className={style.service}>
-                {job?.services?.map((service, i) => (
+                {job ?.services ?.map((service, i) => (
                   <Chip
                     variant="outlined"
                     size="small"
@@ -117,17 +118,17 @@ const MoversJobDetails = (props) => {
                         <div className={style.location}>{list.value}</div>
                       </div>
                     ) : (
-                      <div>
-                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                        <span>{`Dropoff`}</span>
-                        <div className={style.location}>{list.value}</div>
-                      </div>
-                    )
+                        <div>
+                          <FontAwesomeIcon icon={faDotCircle} />{" "}
+                          <span>{`Dropoff`}</span>
+                          <div className={style.location}>{list.value}</div>
+                        </div>
+                      )
                   )}
                 </div>
               )}
 
-              {job.status == "booked" || job.status == "completed" ? (
+              {job.status === "booked" || job.status === "completed" ? (
                 <div className={style.payBtns}>
                   <div className={style.payOnlineBtn}>
                     <Button
@@ -167,7 +168,7 @@ var actions = {
   getMoverJobDetail,
 };
 var mapStateToProps = (state) => ({
-  job: state.moverJobs?.job,
+  job: state.moverJobs ?.job,
 });
 
 export default connect(mapStateToProps, actions)(MoversJobDetails);

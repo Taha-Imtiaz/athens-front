@@ -51,10 +51,6 @@ var initialState = {
         note: [],
         assigneesId: [],
         add: 1,
-        // locations: [
-        //     { type: "pickup", value: "", default: false },
-        //     { type: "dropoff", value: "", default: false },
-        // ],
         locations: [],
         fromTo: [],
         assigneeRequiredError: "",

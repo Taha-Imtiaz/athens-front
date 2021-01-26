@@ -6,34 +6,28 @@ import FormControl from "@material-ui/core/FormControl";
 
 
 import {
- 
+
   createJob,
-  
+
 } from "../../../Redux/Job/jobActions";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import { clone, cloneDeep, uniqBy } from "lodash";
+import { cloneDeep, uniqBy } from "lodash";
 import {
   InputLabel,
-  Menu,
   MenuItem,
   Button,
   Select,
-  TextareaAutosize,
   TextField,
   RadioGroup,
   FormControlLabel,
   Radio,
   Checkbox,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { Autocomplete } from "@material-ui/lab";
@@ -223,8 +217,8 @@ class CreateJobs extends Component {
               this.state.locations[i].type == "pickup"
                 ? "Enter Pickup Point"
                 : this.state.locations[i].type == "dropoff"
-                ? "Enter DropOff Point"
-                : "Choose Type"
+                  ? "Enter DropOff Point"
+                  : "Choose Type"
             }
             disabled={
               (this.state.locations[i].type ? false : true) ||
@@ -234,15 +228,15 @@ class CreateJobs extends Component {
             name={this.state.locations[i].type}
             value={
               this.state.locations[i].type === "pickup" &&
-              this.state.locations[i].default
+                this.state.locations[i].default
                 ? "Load only / IA"
                 : this.state.locations[i].type === "dropoff" &&
                   this.state.locations[i].default
-                ? "Unload only"
-                : this.state.locations[i].value
+                  ? "Unload only"
+                  : this.state.locations[i].value
             }
             onChange={(e) => this.hanldeLocationInput(i, e)}
-            // error={this.state.locationtoError ? true : false}
+          // error={this.state.locationtoError ? true : false}
           />
         </div>
         {this.state.locations[i].type == "pickup" ? (
@@ -265,7 +259,7 @@ class CreateJobs extends Component {
             />
           </div>
         ) : this.state.locations[i].type == "dropoff" ? (
-          <div className = {this.state.locations[i].type == "dropoff" ? style.checkBox:null}>
+          <div className={this.state.locations[i].type == "dropoff" ? style.checkBox : null}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -280,7 +274,7 @@ class CreateJobs extends Component {
             />
           </div>
         ) : null}
-        <div className = {`${style.TrashIcon} ${style.centeredIcon}`}>
+        <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
           <FontAwesomeIcon
             icon={faTrash}
             onClick={() => this.removeLocation(i)}
@@ -458,7 +452,7 @@ class CreateJobs extends Component {
       });
     }
   };
-//add new customer
+  //add new customer
   addNewCustomer = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -474,7 +468,7 @@ class CreateJobs extends Component {
       });
     }
   };
-//get customer jobs
+  //get customer jobs
   getCustomerJobs = (customer) => {
     if (customer) {
       this.setState({
@@ -487,7 +481,7 @@ class CreateJobs extends Component {
       this.setState({ jobs: [], selectedCustomer: "", customerId: "" });
     }
   };
-//populateNewCustomer
+  //populateNewCustomer
   populateNewCustomer = (e) => {
     let newCustomer = {
       email: e.data.data.email,
@@ -505,12 +499,12 @@ class CreateJobs extends Component {
       customerId: newCustomer.email,
     });
   };
-//save the form fields on redux store on component unmounting
+  //save the form fields on redux store on component unmounting
   componentWillUnmount() {
     var { setJobForm } = this.props;
     setJobForm({ ...this.state });
   }
-//onChange handler of editor
+  //onChange handler of editor
   onEditorStateChange = (e) => {
     this.setState({
       editorState: e,
@@ -527,7 +521,6 @@ class CreateJobs extends Component {
   render() {
     return (
       <div>
-        <ToastContainer position="bottom-right" />
         <div className={`${style.createJob}`}>
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create New Job</h3>
@@ -748,7 +741,7 @@ class CreateJobs extends Component {
 
               {this.state.locations.length > 0 && (
                 <div>
-                  {this.state?.locations?.map((location, i) =>
+                  {this.state.locations.map((location, i) =>
                     this.showLocation(i)
                   )}
                 </div>
@@ -792,7 +785,7 @@ class CreateJobs extends Component {
           onHide={() => this.setState({ showAddCustomer: false })}
           // animation={false}
           centered
-          // backdrop={false}
+        // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>

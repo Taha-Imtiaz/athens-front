@@ -1,26 +1,18 @@
 // import Axios from "axios";
-import { GET_JOBS, GET_JOB, FILTER_JOB, DELETE_JOB } from "./jobConstants";
+import { GET_JOBS, GET_JOB, DELETE_JOB } from "./jobConstants";
 import Axios from "../../utils/api";
-import {
-  showLoader,
-  hideLoader,
-  showMessage,
-} from "../../Redux/Common/commonActions";
-// var baseUrl = 'http://10.0.4.213:3000/'
-var baseUrl = "https://athens-backend.herokuapp.com/api/";
+import { showMessage } from "../../Redux/Common/commonActions";
+
 export var getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
       var getJobs = await Axios.post("job/all", jobObj);
-      //update app's state
-      // dispatch(showLoader());
       dispatch({
         type: GET_JOBS,
         payload: {
           getJobs: getJobs,
         },
       });
-      // dispatch(hideLoader());
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +47,7 @@ export var createJob = (newJobObj, callback) => {
   return async (dispatch) => {
     try {
       var newJob = await Axios.post("job", newJobObj);
-      if (newJob.data.status == 200) {
+      if (newJob.data.status === 200) {
         callback(newJob);
         dispatch(showMessage(newJob.data.message));
       } else {
@@ -110,7 +102,6 @@ export var filterJobsByDate = (date) => {
           getJobs: dateFilter,
         },
       });
-      // dispatch(hideLoader());
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +135,7 @@ export var deleteJob = (id, currentPage) => {
     };
     try {
       var getAllJobsExceptDeleteOne = await Axios.delete(`job/${id}`, body);
-      if (getAllJobsExceptDeleteOne.data.status == 200) {
+      if (getAllJobsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllJobsExceptDeleteOne.data.message));
         dispatch({
           type: DELETE_JOB,

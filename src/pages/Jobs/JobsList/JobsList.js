@@ -343,7 +343,7 @@ class JobsList extends Component {
 
     var totalCount = jobs?.total;
 
-    var { show, showDeleteModal, dates, nearestDate, value } = this.state;
+    var { showDeleteModal, dates, nearestDate, value } = this.state;
     return (
       <div>
         <div className={`${style.toprow}`}>
@@ -439,7 +439,7 @@ class JobsList extends Component {
                 <div>Assignee</div>
                 <div>Services</div>
                 <div>Status</div>
-                {this.props.user?.role == "admin" && <div>Actions</div>}
+                {this.props.user?.role === "admin" && <div>Actions</div>}
               </div>
             </div>
 
@@ -494,7 +494,7 @@ class JobsList extends Component {
                                       paper: classes.paper,
                                     }}
                                     open={
-                                      this.state.openedDatePopoverId == job._id
+                                      this.state.openedDatePopoverId === job._id
                                     }
                                     anchorEl={this.state.anchorEl}
                                     anchorOrigin={{
@@ -551,7 +551,7 @@ class JobsList extends Component {
                                       paper: classes.paper,
                                     }}
                                     open={
-                                      this.state.openedAssigneePopoverId ==
+                                      this.state.openedAssigneePopoverId ===
                                       job._id
                                     }
                                     anchorEl={this.state.anchorEl}
@@ -603,7 +603,7 @@ class JobsList extends Component {
                                     classes={{
                                       paper: classes.paper,
                                     }}
-                                    open={this.state.openedPopoverId == job._id}
+                                    open={this.state.openedPopoverId === job._id}
                                     anchorEl={this.state.anchorEl}
                                     anchorOrigin={{
                                       vertical: "bottom",
@@ -660,7 +660,7 @@ class JobsList extends Component {
           </div>
         ) : (
           <div className="text-center">
-            <img src="/images/no-data-found.png" />
+            <img src="/images/no-data-found.png" alt = "No Data Found"/>
           </div>
         )}
         {/* Modal for delete job */}

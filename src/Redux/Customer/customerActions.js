@@ -111,7 +111,7 @@ export var deleteCustomer = (id, currentPage) => {
   return async (dispatch) => {
     try {
       var allCustomersExceptDelete = await Axios.delete(`customer/${id}`, body)
-      if (allCustomersExceptDelete.data.status == 200) {
+      if (allCustomersExceptDelete.data.status === 200) {
         dispatch(showMessage(allCustomersExceptDelete.data.message))
         dispatch({
           type: DELETE_CUSTOMER,

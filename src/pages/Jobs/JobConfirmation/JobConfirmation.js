@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 //steps of stepper
 function getSteps() {
- 
+
   return [
     {
       label: "Confirm Date and Time",
@@ -62,11 +62,11 @@ function getSteps() {
       color: "#f50057"
     },
     {
-      label:  "Deposit",
+      label: "Deposit",
       color: "#f50057"
     }
   ];
- 
+
 }
 
 const useIconStyles = makeStyles(
@@ -78,7 +78,6 @@ const useIconStyles = makeStyles(
   })()
 );
 function JobConfirmation(props) {
-  var [startTime, setStartTime] = useState(null);
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -99,12 +98,11 @@ function JobConfirmation(props) {
     var currentDate = new Date("2020-08-18T09:00:00");
     job.startTime = currentDate;
     setData(job);
-  }, []);
+  }, [props.data]);
 
   //onChange handler of time
   var handleTimeSelect = (date) => {
     var newData = { ...data };
-    setStartTime(date.toTimeString());
     newData.startTime = date;
     setData(newData);
   };
@@ -209,8 +207,8 @@ function JobConfirmation(props) {
               data.locations[i].type === "pickup"
                 ? "Enter Pickup Point"
                 : data.locations[i].type === "dropoff"
-                ? "Enter DropOff Point"
-                : "Choose Type"
+                  ? "Enter DropOff Point"
+                  : "Choose Type"
             }
             name={data.locations[i].type}
             disabled={
@@ -222,8 +220,8 @@ function JobConfirmation(props) {
                 ? "Load only / IA"
                 : data.locations[i].type === "dropoff" &&
                   data.locations[i].default
-                ? "Unload only"
-                : data.locations[i].value
+                  ? "Unload only"
+                  : data.locations[i].value
             }
             onChange={(e) => hanldeLocationInput(i, e)}
           />
@@ -294,7 +292,7 @@ function JobConfirmation(props) {
   };
   //on change handler of radio buttons
   var handleInputChange = (e, i) => {
-    let {  value } = e.target;
+    let { value } = e.target;
     let updateLocation = { ...data };
     updateLocation.locations[i].type = value;
     updateLocation.locations[i].value = "";
@@ -397,9 +395,9 @@ function JobConfirmation(props) {
             <h6>Dates:</h6>
 
             {data &&
-              data.dates?.map((x, i) => {
+              data.dates ?.map((x, i) => {
                 return (
-                  <div className={`${style.styleDate}`} key = {i}>
+                  <div className={`${style.styleDate}`} key={i}>
                     <div className={`${style.dates} `}>
                       <div>
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -478,7 +476,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="First Name"
                   name="firstName"
-                  value={data.customer?.firstName}
+                  value={data.customer ?.firstName}
                   onChange={handleFormInput}
                 />
 
@@ -492,7 +490,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Last Name"
                   name="lastName"
-                  value={data.customer?.lastName}
+                  value={data.customer ?.lastName}
                   onChange={handleFormInput}
                 />
 
@@ -506,7 +504,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Phone Number"
                   name="phone"
-                  value={data.customer?.phone}
+                  value={data.customer ?.phone}
                   onChange={handleFormInput}
                 />
 
@@ -520,7 +518,7 @@ function JobConfirmation(props) {
                   id="name"
                   label="Email Address"
                   name="email"
-                  value={data.customer?.email}
+                  value={data.customer ?.email}
                   onChange={handleFormInput}
                 />
               </div>
@@ -530,22 +528,22 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data?.locations.length === 0 && (
+            {data ?.locations.length === 0 && (
               <div className={`${style.locationBtn} ${style.flex}`}>
                 <Button
                   className={`${style.button}`}
                   onClick={(e) => addLocation(e)}
                 >
-                  <FontAwesomeIcon icon = {faMapMarker} className = {style.locationIcon}/>
+                  <FontAwesomeIcon icon={faMapMarker} className={style.locationIcon} />
                   Add Location
                 </Button>
               </div>
             )}
 
-            {data?.locations?.length > 0 &&
+            {data ?.locations ?.length > 0 &&
               data.locations.map((e, i) => showLocation(e, i))}
 
-            {data?.locations.length > 0 && (
+            {data ?.locations.length > 0 && (
               <div className={style.flexEnd}>
                 <i className="fa fa-plus" onClick={(e) => addLocation(e)}></i>
               </div>
@@ -639,25 +637,25 @@ function JobConfirmation(props) {
   };
   return (
     <div className={`${classes.root} ${style.confirmJobModal}`}>
-      <div className = {style.stepperLabels}>
-      <Stepper activeStep={activeStep}>
-        {steps.map(({ label, color }, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel className={style.styleRadio} {...labelProps}
-              StepIconProps={{ classes: { root: iconClasses[index] } }}
-              >
-                {label}
-              </StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-</div>
+      <div className={style.stepperLabels}>
+        <Stepper activeStep={activeStep}>
+          {steps.map(({ label, color }, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel className={style.styleRadio} {...labelProps}
+                  StepIconProps={{ classes: { root: iconClasses[index] } }}
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+      </div>
       {activeStep === steps.length ? (
-        <div className = {style.stepperContent}>
+        <div className={style.stepperContent}>
           <Typography className={classes.instructions}>
             All steps completed - you&apos;re finished
           </Typography>
@@ -666,25 +664,25 @@ function JobConfirmation(props) {
           </Button>
         </div>
       ) : (
-        <div className = {style.stepperContent}>
-          <div>
-          {getStepContent(activeStep)}
-          </div>
-          <div className={style.backAndSubmitBtn}>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={activeStep === 0 ? style.back :`${style.back} ${style.backStyles}`}
-            >
-              Back
+          <div className={style.stepperContent}>
+            <div>
+              {getStepContent(activeStep)}
+            </div>
+            <div className={style.backAndSubmitBtn}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={activeStep === 0 ? style.back : `${style.back} ${style.backStyles}`}
+              >
+                Back
             </Button>
 
-            <Button onClick={handleNext} className={style.next}>
-              {activeStep === steps.length - 1 ? "Submit" : "Next"}
-            </Button>
+              <Button onClick={handleNext} className={style.next}>
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }
@@ -694,6 +692,6 @@ var actions = {
   confirmJob,
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs?.job,
+  job: state.jobs ?.job,
 });
 export default connect(mapStateToProps, actions)(JobConfirmation);

@@ -106,7 +106,7 @@ const CustomerDeposit = (props) => {
   var closeDeleteModal = () => {
     setDeleteModal(false);
   };
-  var { user} = props;
+  var { user } = props;
   return (
     <div>
       <div className={style.submitDepositContainer}>
@@ -150,7 +150,7 @@ const CustomerDeposit = (props) => {
                   <div key={i} className={style.listContainer}>
                     <div className={`${style.listContent} `}>
                       <div>
-                        {x?.customer?.firstName} {x?.customer?.lastName}
+                        {x.customer.firstName} {x.customer.lastName}
                       </div>
 
                       <div
@@ -204,13 +204,13 @@ const CustomerDeposit = (props) => {
                             </Button>
                           </div>
                         ) : (
-                          <div onClick={() => closeEdit(x._id, i, "save")}>
-                            <Button className={style.button}>
-                              <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
-                              Save
+                            <div onClick={() => closeEdit(x._id, i, "save")}>
+                              <Button className={style.button}>
+                                <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
+                                Save
                             </Button>
-                          </div>
-                        )}
+                            </div>
+                          )}
                         <div>
                           <Button
                             onClick={() => handleShow(x)}
@@ -219,7 +219,7 @@ const CustomerDeposit = (props) => {
                             Activities
                           </Button>
                         </div>
-                        {user?.role === "admin" && (
+                        {user && user.role === "admin" && (
                           <div>
                             <Button
                               onClick={() => openDeleteModal(i, x._id)}
@@ -246,10 +246,10 @@ const CustomerDeposit = (props) => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="No data found" />
+              </div>
+            )}
         </div>
       </div>
       <Modal
@@ -270,7 +270,7 @@ const CustomerDeposit = (props) => {
           </div>
 
           {depositValue &&
-            depositValue?.activities.map((activity, i) => (
+            depositValue.activities.map((activity, i) => (
               <div className={style.activitiesModalContent} key={i}>
                 <div> {activity.performer.name}</div>
                 <div>
@@ -296,10 +296,8 @@ const CustomerDeposit = (props) => {
       <Modal
         show={deleteModal}
         onHide={closeDeleteModal}
-        // dialogClassName={`${style.modal}`}
         centered
         scrollable
-        // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>

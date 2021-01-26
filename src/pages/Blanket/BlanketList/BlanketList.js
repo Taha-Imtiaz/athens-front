@@ -3,26 +3,17 @@ import { cloneDeep } from "lodash";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./BlanketList.module.css";
-import TimeAgo from "react-timeago"; 
+import TimeAgo from "react-timeago";
 import { updateDeposit } from "../../../Redux/Claims/claimsActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
 
 const BlanketList = (props) => {
-  var [blanketValue, setBlanketValue] = useState(props.blanketValue);
- 
+
+  const [blanketValue, setBlanketValue] = useState(props.blanketValue);
   const [show, setShow] = useState(false);
-
-  var [depositValue, setDepositValue] = useState("");
-
-  var [depositToEdit, setDepositToEdit] = useState(null);
-  var [edit, setEdit] = useState(false);
-
-  const editDeposit = (i) => {
-    setDepositToEdit(i);
-    setEdit(true);
-  };
+  const [depositValue, setDepositValue] = useState("");
 
   const handleShow = (deposit) => {
     setDepositValue(deposit);
@@ -37,10 +28,10 @@ const BlanketList = (props) => {
       // Call Api
       var { user } = props;
       var obj = {
-        id: newData[i]?._id,
-        userId: user?._id,
-        quantity: newData[i]?.quantity,
-        cost: newData[i]?.cost,
+        id: newData[i]._id,
+        userId: user._id,
+        quantity: newData[i].quantity,
+        cost: newData[i].cost,
       };
       updateDeposit(obj)
         .then((res) => {
@@ -62,23 +53,21 @@ const BlanketList = (props) => {
   };
 
   var handleInput = (e, i) => {
-    // var { name, value } = e.target;
     let newData = cloneDeep(blanketValue);
     if (newData[i].edit === false) {
       newData[i].quantity = e.target.value;
       newData[i].cost = parseInt(e.target.value) * 15;
-     
       setBlanketValue(newData);
     }
   };
 
   var changeCost = (e, i) => {
-    var { name, value } = e.target;
+    var { value } = e.target;
     let newData = cloneDeep(blanketValue);
-   
     newData[i].cost = value;
     setBlanketValue(newData);
   };
+
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>
@@ -107,8 +96,8 @@ const BlanketList = (props) => {
             <div key={i} className={style.listContainer}>
               <div className={`${style.listContent} `}>
                 <div>
-                  <Link to={`/job/detail/${deposit?.job?._id}`}>
-                    {deposit?.job?.jobId}
+                  <Link to={`/job/detail/${deposit.job._id}`}>
+                    {deposit.job.jobId}
                   </Link>
                 </div>
 
@@ -141,7 +130,7 @@ const BlanketList = (props) => {
                 </div>
 
                 <div>
-                  <TimeAgo date={deposit?.updatedAt} />
+                  <TimeAgo date={deposit.updatedAt} />
                 </div>
                 <div className={style.depositBtn}>
                   {deposit.edit ? (
@@ -153,14 +142,14 @@ const BlanketList = (props) => {
                       <i className="fa fa-edit"></i> Edit{" "}
                     </Button>
                   ) : (
-                    <Button
-                      onClick={() => closeEdit(i, "save")}
-                      className={style.button}
-                    >
-                      {" "}
-                      <i className="fa fa-save"></i> Save
+                      <Button
+                        onClick={() => closeEdit(i, "save")}
+                        className={style.button}
+                      >
+                        {" "}
+                        <i className="fa fa-save"></i> Save
                     </Button>
-                  )}
+                    )}
                   <Button
                     onClick={() => handleShow(deposit)}
                     className={style.button}
@@ -191,7 +180,7 @@ const BlanketList = (props) => {
           </div>
 
           {depositValue &&
-            depositValue?.activities.map((activity, i) => (
+            depositValue.activities.map((activity, i) => (
               <div key={i} className={style.activitiesModalContent}>
                 <div> {activity.performer.name}</div>
                 <div>

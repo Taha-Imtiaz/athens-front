@@ -13,9 +13,10 @@ import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import BlanketList from "../../Blanket/BlanketList/BlanketList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import Blankets from "../../../components/Blankets/Blankets";
+import { deleteBlanketDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDetail = (props) => {
   var { customer, getCustomer } = props;
@@ -27,7 +28,8 @@ const CustomerDetail = (props) => {
   var [claimCount, setClaimCount] = useState(0);
   var [value, setValue] = useState(0);
   var [claims, setClaims] = useState([]);
-
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [depositToDelete, setDepositToDelete] = useState(false);
   //get customerId from props
   var {
     match: {
@@ -45,8 +47,10 @@ const CustomerDetail = (props) => {
     if (customer) {
       let customerClaims = customer.claim;
       if (customerClaims.length > 0) {
-        setClaims(customerClaims)
-        let openClaims = customerClaims.filter((claim) => claim.status === "open").length;
+        setClaims(customerClaims);
+        let openClaims = customerClaims.filter(
+          (claim) => claim.status === "open"
+        ).length;
         setClaimCount(openClaims);
       } else {
         setClaimCount(0);
@@ -66,7 +70,7 @@ const CustomerDetail = (props) => {
       value: update,
     };
     let newData = cloneDeep(claims);
-    console.log(newData)
+    console.log(newData);
     newData[updateIndex].updates.unshift(ob);
     var { showMessage } = props;
     //Call Update Claim Api to update claim
@@ -74,7 +78,7 @@ const CustomerDetail = (props) => {
       .then((res) => {
         if (res.data.status === 200) {
           newData[updateIndex].updates = res.data.data.updates;
-          setClaims(newData)
+          setClaims(newData);
           setShow(false);
           setUpdate("");
           showMessage(res.data.message);
@@ -95,9 +99,24 @@ const CustomerDetail = (props) => {
 
   //add new update modal
   const showUpdateModal = (i) => {
-    setUpdateIndex(i)
+    setUpdateIndex(i);
     setShow(true);
   };
+  //set deposit
+  var openDeleteModal = (i, deposit) => {
+    setDepositToDelete(deposit);
+    setDeleteModal(true);
+  };
+  var closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+  //remove blanket deposit
+  var removeBlanketDeposit = () => {
+    var { deleteBlanketDeposit } = props;
+    deleteBlanketDeposit(depositToDelete);
+    setDeleteModal(false);
+  };
+
   //tabPanel of material ui
   const TabPanel = (props) => {
     var { children, value, index, ...other } = props;
@@ -117,7 +136,7 @@ const CustomerDetail = (props) => {
   //close the claim
   const handleCloseClaim = (i) => {
     var { showMessage } = props;
-    let updatedClaims = cloneDeep(claims)
+    let updatedClaims = cloneDeep(claims);
     updatedClaims[i].status = "closed";
     updateClaim(updatedClaims[i])
       .then((res) => {
@@ -125,7 +144,7 @@ const CustomerDetail = (props) => {
           let newCount = --claimCount;
           updatedClaims[i].updatedAt = res.data.data.updatedAt;
           setClaimCount(newCount);
-          setClaims(updatedClaims)
+          setClaims(updatedClaims);
           showMessage(res.data.message);
         }
       })
@@ -137,231 +156,232 @@ const CustomerDetail = (props) => {
 
   return (
     <div className={style.customerDetailsContainer}>
-      {customer && <div className={style.customerDetails}>
-        {/* defining AppBar for material ui tabs */}
-        <AppBar position="static">
-          <Tabs
-            className={style.styleTabs}
-            onChange={handleChange}
-            value={value}
-            aria-label="simple tabs example"
-            centered
-          >
-            <Tab label="Customer Information" />
-            <Tab
-              label={
-                <Badge badgeContent={claimCount} color="primary">
-                  Claims
+      {customer && (
+        <div className={style.customerDetails}>
+          {/* defining AppBar for material ui tabs */}
+          <AppBar position="static">
+            <Tabs
+              className={style.styleTabs}
+              onChange={handleChange}
+              value={value}
+              aria-label="simple tabs example"
+              centered
+            >
+              <Tab label="Customer Information" />
+              <Tab
+                label={
+                  <Badge badgeContent={claimCount} color="primary">
+                    Claims
                   </Badge>
-              }
-            />{" "}
-            <Tab
-              label={
-                <Badge
-                  badgeContent={customer.blanketDeposit.reduce(
-                    (sum, currentValue) =>
-                      sum + parseInt(currentValue.quantity),
-                    0
-                  )}
-                  color="primary"
+                }
+              />{" "}
+              <Tab
+                label={
+                  <Badge
+                    badgeContent={customer.blanketDeposit.reduce(
+                      (sum, currentValue) =>
+                        sum + parseInt(currentValue.quantity),
+                      0
+                    )}
+                    color="primary"
+                  >
+                    Blankets
+                  </Badge>
+                }
+              />
+            </Tabs>
+          </AppBar>
+          {/* Tab Panel of customer */}
+          <TabPanel value={value} index={0}>
+            <div className={style.customerInfoHeader}>
+              <div>
+                <h3>Customer Information</h3>
+              </div>
+              <div>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: "/job/add",
+                    customerId: customer.email,
+                    customerName: customer.firstName + " " + customer.lastName,
+                    jobs: customer.jobs,
+                  }}
                 >
-                  Blankets
-                  </Badge>
-              }
-            />
-          </Tabs>
-        </AppBar>
-        {/* Tab Panel of customer */}
-        <TabPanel value={value} index={0}>
-          <div className={style.customerInfoHeader}>
-            <div>
-              <h3>Customer Information</h3>
-            </div>
-            <div>
-              <Link
-                className={style.link}
-                to={{
-                  pathname: "/job/add",
-                  customerId: customer.email,
-                  customerName: customer.firstName + " " + customer.lastName,
-                  jobs: customer.jobs,
-                }}
-              >
-                {" "}
-                <Button className={style.button}>Create Job</Button>{" "}
-              </Link>
-            </div>
-            <div>
-              <Link
-                className={style.link}
-                to={{
-                  pathname: `/customer/update/${customerId}`,
-                  customerId: customer.email,
-                }}
-              >
-                {" "}
-                <Button className={style.button}>Edit</Button>{" "}
-              </Link>
-            </div>
-          </div>
-          <hr />
-          <div className={style.customerInfoHeadings}>
-            <div>
-              <h6>Name</h6>
-            </div>
-            <div>
-              <h6>Phone</h6>
-            </div>
-            <div>
-              <h6>Email</h6>
-            </div>
-          </div>
-          <div className={style.customerInfoDescription}>
-            <div>
-              {customer.firstName} {customer.lastName}
-            </div>
-            <div>{customer.phone}</div>
-            <div>{customer.email}</div>
-          </div>
-
-          {customer.subContacts.length !== 0 ? (
-            <div>
-              <h4>Alternate Contact</h4>
-
-              <div className="accordion" id="accordionExample">
-                {customer.subContacts.map((x, i) => (
-                  <div key={i} className={`card`}>
-                    <div className="card-header" id="headingOne">
-                      <div
-                        className={`btn-link`}
-                        type="button"
-                        data-toggle="collapse"
-                        data-target={`#collapse${i}`}
-                        aria-expanded="true"
-                        aria-controls="collapse"
-                      >
-                        {`Contact # ${i + 1}`}
-                      </div>
-                    </div>
-                    <div
-                      id={`collapse${i}`}
-                      className="collapse show"
-                      aria-labelledby="headingOne"
-                      data-parent="#accordionExample"
-                    >
-                      <div className="card-body">
-                        <div className={style.cardBodyHeader}>
-                          <div>{x.length !== 0 && <h6>Name</h6>}</div>
-                          <div>{x.length !== 0 && <h6>Email</h6>}</div>
-                          <div>{x.length !== 0 && <h6>Phone</h6>}</div>
-                        </div>
-                        <div className={style.cardBodyContent}>
-                          <div>{x.name !== "" ? x.name : "N/A"}</div>
-                          <div>{x.email !== "" ? x.email : "N/A"}</div>
-                          <div>{x.phone !== "" ? x.phone : "N/A"}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  {" "}
+                  <Button className={style.button}>Create Job</Button>{" "}
+                </Link>
+              </div>
+              <div>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: `/customer/update/${customerId}`,
+                    customerId: customer.email,
+                  }}
+                >
+                  {" "}
+                  <Button className={style.button}>Edit</Button>{" "}
+                </Link>
               </div>
             </div>
-          ) : null}
+            <hr />
+            <div className={style.customerInfoHeadings}>
+              <div>
+                <h6>Name</h6>
+              </div>
+              <div>
+                <h6>Phone</h6>
+              </div>
+              <div>
+                <h6>Email</h6>
+              </div>
+            </div>
+            <div className={style.customerInfoDescription}>
+              <div>
+                {customer.firstName} {customer.lastName}
+              </div>
+              <div>{customer.phone}</div>
+              <div>{customer.email}</div>
+            </div>
 
-          {customer.jobs && customer.jobs.length > 0 ? (
-            <div>
-              <h3 className={`${style.job}`}>Jobs</h3>
-              {customer.jobs.map((job, i) => {
-                return (
-                  <div key={i} className={style.jumbotron}>
-                    {/* show job Details */}
-                    <div className={style.jobDetails}>
-                      <div className={style.jobLink}>
-                        <Link
-                          className={style.link}
-                          to={{
-                            pathname: "/job/detail/" + job._id,
-                          }}
+            {customer.subContacts.length !== 0 ? (
+              <div>
+                <h4>Alternate Contact</h4>
+
+                <div className="accordion" id="accordionExample">
+                  {customer.subContacts.map((x, i) => (
+                    <div key={i} className={`card`}>
+                      <div className="card-header" id="headingOne">
+                        <div
+                          className={`btn-link`}
+                          type="button"
+                          data-toggle="collapse"
+                          data-target={`#collapse${i}`}
+                          aria-expanded="true"
+                          aria-controls="collapse"
                         >
-                          <h5>{job.title}</h5>
-                        </Link>
+                          {`Contact # ${i + 1}`}
+                        </div>
                       </div>
+                      <div
+                        id={`collapse${i}`}
+                        className="collapse show"
+                        aria-labelledby="headingOne"
+                        data-parent="#accordionExample"
+                      >
+                        <div className="card-body">
+                          <div className={style.cardBodyHeader}>
+                            <div>{x.length !== 0 && <h6>Name</h6>}</div>
+                            <div>{x.length !== 0 && <h6>Email</h6>}</div>
+                            <div>{x.length !== 0 && <h6>Phone</h6>}</div>
+                          </div>
+                          <div className={style.cardBodyContent}>
+                            <div>{x.name !== "" ? x.name : "N/A"}</div>
+                            <div>{x.email !== "" ? x.email : "N/A"}</div>
+                            <div>{x.phone !== "" ? x.phone : "N/A"}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
-                      {job.assignee.length > 0 ? (
-                        <div className={style.jobAssignee}>
-                          {job.assignee.map((assignee, i) =>
-                            i === 0 ? (
-                              <div key={i}>{assignee.name}</div>
-                            ) : (
+            {customer.jobs && customer.jobs.length > 0 ? (
+              <div>
+                <h3 className={`${style.job}`}>Jobs</h3>
+                {customer.jobs.map((job, i) => {
+                  return (
+                    <div key={i} className={style.jumbotron}>
+                      {/* show job Details */}
+                      <div className={style.jobDetails}>
+                        <div className={style.jobLink}>
+                          <Link
+                            className={style.link}
+                            to={{
+                              pathname: "/job/detail/" + job._id,
+                            }}
+                          >
+                            <h5>{job.title}</h5>
+                          </Link>
+                        </div>
+
+                        {job.assignee.length > 0 ? (
+                          <div className={style.jobAssignee}>
+                            {job.assignee.map((assignee, i) =>
+                              i === 0 ? (
+                                <div key={i}>{assignee.name}</div>
+                              ) : (
                                 <div key={i}>
                                   <span className={style.spacing}>|</span>
                                   {assignee.name}
                                 </div>
                               )
-                          )}
-                        </div>
-                      ) : (
+                            )}
+                          </div>
+                        ) : (
                           <div>No Assignee</div>
                         )}
 
-                      <div className={style.jobService}>
-                        <Chip
-                          variant="outlined"
-                          size="small"
-                          label={job.status}
-                          clickable
-                          color="primary"
-                        />
+                        <div className={style.jobService}>
+                          <Chip
+                            variant="outlined"
+                            size="small"
+                            label={job.status}
+                            clickable
+                            color="primary"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    {/* show dates */}
-                    <div className={style.jobDates}>
-                      {job.dates.map((x, i) => (
-                        <div key={i}>
-                          {i === 0 ? (
-                            <div key={i}>{x}</div>
-                          ) : (
+                      {/* show dates */}
+                      <div className={style.jobDates}>
+                        {job.dates.map((x, i) => (
+                          <div key={i}>
+                            {i === 0 ? (
+                              <div key={i}>{x}</div>
+                            ) : (
                               <div key={i}>
                                 <span className={style.spacing}>|</span>
                                 {x}
                               </div>
                             )}
-                        </div>
-                      ))}
-                    </div>
-                    {/* show services */}
-                    <div className={style.services}>
-                      {job.services.map((service, i) => (
-                        <div key={i}>
-                          <Chip
-                            variant="outlined"
-                            size="small"
-                            label={service.name}
-                            clickable
-                            color="primary"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    {/* show job Description */}
-                    <div className={style.jobDetailContainer}>
-                      <div className={style.jobDetail}>
-                        {parse(job.description)}
+                          </div>
+                        ))}
                       </div>
-                    </div>
+                      {/* show services */}
+                      <div className={style.services}>
+                        {job.services.map((service, i) => (
+                          <div key={i}>
+                            <Chip
+                              variant="outlined"
+                              size="small"
+                              label={service.name}
+                              clickable
+                              color="primary"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      {/* show job Description */}
+                      <div className={style.jobDetailContainer}>
+                        <div className={style.jobDetail}>
+                          {parse(job.description)}
+                        </div>
+                      </div>
 
-                    {job.locations && (
-                      <div className={style.locations}>
-                        {job.locations.map((list, i) =>
-                          list.type === "pickup" ? (
-                            <div key={i}>
-                              <FontAwesomeIcon icon={faDotCircle} />{" "}
-                              <span>{`Pickup`} </span>{" "}
-                              <div className={style.location}>
-                                {list.value}
+                      {job.locations && (
+                        <div className={style.locations}>
+                          {job.locations.map((list, i) =>
+                            list.type === "pickup" ? (
+                              <div key={i}>
+                                <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                <span>{`Pickup`} </span>{" "}
+                                <div className={style.location}>
+                                  {list.value}
+                                </div>
                               </div>
-                            </div>
-                          ) : (
+                            ) : (
                               <div key={i}>
                                 <FontAwesomeIcon icon={faDotCircle} />{" "}
                                 <span>{`Dropoff`}</span>
@@ -370,123 +390,123 @@ const CustomerDetail = (props) => {
                                 </div>
                               </div>
                             )
-                        )}
-                      </div>
-                    )}
-
-                    {job.note.length !== 0 && (
-                      <div className={style.notes}>
-                        <div>
-                          <h5>Notes</h5>
+                          )}
                         </div>
-                        {job.note.map((x, i) => (
-                          <div key={i}>{x.text}</div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
+                      )}
+
+                      {job.note.length !== 0 && (
+                        <div className={style.notes}>
+                          <div>
+                            <h5>Notes</h5>
+                          </div>
+                          {job.note.map((x, i) => (
+                            <div key={i}>{x.text}</div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
               <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
                 No job added yet
               </h4>
             )}
-        </TabPanel>
+          </TabPanel>
 
-        {/* Tab Panel of claim */}
-        <TabPanel value={value} index={1}>
-          <div className={style.claimTopRow}>
-            <div>
-              <h3>Claims</h3>
-            </div>
+          {/* Tab Panel of claim */}
+          <TabPanel value={value} index={1}>
+            <div className={style.claimTopRow}>
+              <div>
+                <h3>Claims</h3>
+              </div>
 
-            <div className={style.newClaimBtn}>
-              <Link
-                className={style.link}
-                to={{
-                  pathname: "/claim/add",
-                  customerId: customer.email,
-                  customerName: customer.firstName + " " + customer.lastName,
-                  jobs: customer.jobs,
-                }}
-              >
-                {" "}
-                <Button className={style.button}>New Claim</Button>{" "}
-              </Link>
-            </div>
-          </div>
-          <hr />
-          {claims.length > 0 && (
-            <div className={style.claimListHeaderContainer}>
-              <div className={style.claimListHeader}>
-                <div>JobId</div>
-                <div>Status</div>
-                <div> Last Update</div>
+              <div className={style.newClaimBtn}>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: "/claim/add",
+                    customerId: customer.email,
+                    customerName: customer.firstName + " " + customer.lastName,
+                    jobs: customer.jobs,
+                  }}
+                >
+                  {" "}
+                  <Button className={style.button}>New Claim</Button>{" "}
+                </Link>
               </div>
             </div>
-          )}
-          <div id="accordion">
-            {claims.length > 0 ? (
-              claims.map((claim, i) => {
-                return (
-                  <div key={i}>
-                    <div
-                      className={`card-header ${style.cardHeader}`}
-                      aria-expanded="true"
-                      data-toggle="collapse"
-                      data-target={`#collapse${i}`}
-                      aria-controls="collapse"
-                      id="headingOne"
-                    >
-                      <div>{claim.job.jobId}</div>
+            <hr />
+            {claims.length > 0 && (
+              <div className={style.claimListHeaderContainer}>
+                <div className={style.claimListHeader}>
+                  <div>JobId</div>
+                  <div>Status</div>
+                  <div> Last Update</div>
+                </div>
+              </div>
+            )}
+            <div id="accordion">
+              {claims.length > 0 ? (
+                claims.map((claim, i) => {
+                  return (
+                    <div key={i}>
+                      <div
+                        className={`card-header ${style.cardHeader}`}
+                        aria-expanded="true"
+                        data-toggle="collapse"
+                        data-target={`#collapse${i}`}
+                        aria-controls="collapse"
+                        id="headingOne"
+                      >
+                        <div>{claim.job.jobId}</div>
 
-                      <div>{claim.status}</div>
-                      <div>
-                        <TimeAgo date={claim.updatedAt} />
+                        <div>{claim.status}</div>
+                        <div>
+                          <TimeAgo date={claim.updatedAt} />
+                        </div>
                       </div>
-                    </div>
 
-                    <div
-                      id={`collapse${i}`}
-                      className="collapse"
-                      aria-labelledby="headingOne"
-                      data-parent="#accordion"
-                    >
-                      <div className={`card-body`}>
-                        <div key={i} className={style.claimDetail}>
-                          <div className={`${style.protectionRow}`}>
-                            <div>
-                              <h6>Protection Type : </h6>
-                            </div>
-                            <div>{claim.claimType}</div>
+                      <div
+                        id={`collapse${i}`}
+                        className="collapse"
+                        aria-labelledby="headingOne"
+                        data-parent="#accordion"
+                      >
+                        <div className={`card-body`}>
+                          <div key={i} className={style.claimDetail}>
+                            <div className={`${style.protectionRow}`}>
+                              <div>
+                                <h6>Protection Type : </h6>
+                              </div>
+                              <div>{claim.claimType}</div>
 
-                            <div>
-                              <h6>{`Total: `}</h6>
-                            </div>
-                            <div>{`$${claim.price}`}</div>
+                              <div>
+                                <h6>{`Total: `}</h6>
+                              </div>
+                              <div>{`$${claim.price}`}</div>
 
-                            <div>
-                              {claim.status === "open" ? (
-                                <Button
-                                  className={style.button}
-                                  onClick={() => showUpdateModal(i)}
-                                >
-                                  Add Update
+                              <div>
+                                {claim.status === "open" ? (
+                                  <Button
+                                    className={style.button}
+                                    onClick={() => showUpdateModal(i)}
+                                  >
+                                    Add Update
                                   </Button>
-                              ) : null}
-                            </div>
+                                ) : null}
+                              </div>
 
-                            <div>
-                              {claim.status === "open" ? (
-                                <Button
-                                  className={style.button}
-                                  onClick={() => handleCloseClaim(i)}
-                                >
-                                  Close Claim
+                              <div>
+                                {claim.status === "open" ? (
+                                  <Button
+                                    className={style.button}
+                                    onClick={() => handleCloseClaim(i)}
+                                  >
+                                    Close Claim
                                   </Button>
-                              ) : (
+                                ) : (
                                   <Chip
                                     label="Closed"
                                     clickable
@@ -495,94 +515,98 @@ const CustomerDetail = (props) => {
                                     size="small"
                                   />
                                 )}
+                              </div>
                             </div>
-                          </div>
-                          <div className={`${style.title} `}>
-                            <h6>Title:</h6> <div>{claim.title}</div>
-                          </div>
+                            <div className={`${style.title} `}>
+                              <h6>Title:</h6> <div>{claim.title}</div>
+                            </div>
 
-                          <div className={style.description}>
-                            <h6>Description:</h6>{" "}
-                            <span>{claim.description}</span>
-                          </div>
-                          <div className={`${style.waiting}`}>
-                            <div>
-                              <h6>Waiting To : </h6>
+                            <div className={style.description}>
+                              <h6>Description:</h6>{" "}
+                              <span>{claim.description}</span>
                             </div>
-                            <div>{claim.waitTo}</div>
-                          </div>
-                          {claim.updates.length > 0 ? (
-                            <div className={style.updates}>
-                              <div className={style.updateHead}>
-                                <h3>Updates</h3>
+                            <div className={`${style.waiting}`}>
+                              <div>
+                                <h6>Waiting To : </h6>
                               </div>
-                              <div className={style.updateContent}>
-                                {claim.updates.map((x, i) => (
-                                  <div
-                                    key={i}
-                                    className={style.updateContentRow}
-                                  >
-                                    {" "}
-                                    <div>{`${i + 1}.  ${x.value}`}</div>
-                                    <div>
-                                      <TimeAgo date={x.timestamp} />
+                              <div>{claim.waitTo}</div>
+                            </div>
+                            {claim.updates.length > 0 ? (
+                              <div className={style.updates}>
+                                <div className={style.updateHead}>
+                                  <h3>Updates</h3>
+                                </div>
+                                <div className={style.updateContent}>
+                                  {claim.updates.map((x, i) => (
+                                    <div
+                                      key={i}
+                                      className={style.updateContentRow}
+                                    >
+                                      {" "}
+                                      <div>{`${i + 1}.  ${x.value}`}</div>
+                                      <div>
+                                        <TimeAgo date={x.timestamp} />
+                                      </div>
                                     </div>
-                                  </div>
-                                ))}
+                                  ))}
+                                </div>
                               </div>
-                            </div>
-                          ) : null}
+                            ) : null}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
+                  );
+                })
+              ) : (
                 <div className="text-center">
                   <img src="/images/no-data-found.png" alt="Data not found" />
                 </div>
               )}
-          </div>
-        </TabPanel>
+            </div>
+          </TabPanel>
 
-        {/* Tab Panel of blankets */}
-        <TabPanel value={value} index={2}>
-          <div className={style.toprow}>
-            <div>
-              <h3>Blanket Deposit</h3>
+          {/* Tab Panel of blankets */}
+          <TabPanel value={value} index={2}>
+            <div className={style.toprow}>
+              <div>
+                <h3>Blanket Deposit</h3>
+              </div>
+              <div className={style.btn}>
+                <Link
+                  className={style.link}
+                  to={{
+                    pathname: "/deposit/add",
+                    customerId: customer.email,
+                    customerName: customer.firstName + " " + customer.lastName,
+                    jobs: customer.jobs,
+                  }}
+                >
+                  {" "}
+                  <Button className={style.button}>Deposit</Button>{" "}
+                </Link>
+              </div>
             </div>
-            <div className={style.btn}>
-              <Link
-                className={style.link}
-                to={{
-                  pathname: "/deposit/add",
-                  customerId: customer.email,
-                  customerName: customer.firstName + " " + customer.lastName,
-                  jobs: customer.jobs,
-                }}
-              >
-                {" "}
-                <Button className={style.button}>Deposit</Button>{" "}
-              </Link>
-            </div>
-          </div>
-          <hr />
-          {blanketValue && blanketValue.length > 0 ? (
-            <BlanketList
-              blanketValue={blanketValue}
-              updateBlanket={updateBlanket}
-            />
-          ) : (
+            <hr />
+            {blanketValue && blanketValue.length > 0 ? (
+              <Blankets
+                items={blanketValue}
+                update={updateBlanket}
+                deleteDeposit={removeBlanketDeposit}
+                openDeleteModal={openDeleteModal}
+                deleteModal={deleteModal}
+                closeDeleteModal = {closeDeleteModal}
+              />
+            ) : (
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="Data not found" />
               </div>
             )}
-        </TabPanel>
+          </TabPanel>
 
-        <br />
-      </div>
-      }
+          <br />
+        </div>
+      )}
       <Modal
         show={show}
         onHide={handleClose}
@@ -601,7 +625,7 @@ const CustomerDetail = (props) => {
             name="Note"
             value={update}
             onChange={handleAddUpdate}
-            className = {style.styleTextArea}
+            className={style.styleTextArea}
           ></TextareaAutosize>
         </Modal.Body>
         <Modal.Footer>
@@ -624,11 +648,12 @@ const CustomerDetail = (props) => {
 };
 var mapStateToProps = (state) => ({
   customer: state.customers.customer,
-  user: state.users.user
+  user: state.users.user,
 });
 
 var actions = {
   getCustomer,
   showMessage,
+  deleteBlanketDeposit,
 };
 export default connect(mapStateToProps, actions)(CustomerDetail);

@@ -1,34 +1,3 @@
-.submitDepositContainer {
-  display: grid;
-  grid-template-columns: 5fr 90fr 5fr;
-  grid-template-areas: ". submitDeposit .";
-}
-.submitDeposit {
-  grid-area: submitDeposit;
-}
-.toprow {
-  display: grid;
-  grid-template-columns: 80fr 20fr;
-  margin-top: 1rem;
-}
-.btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-.btn .link {
-  text-decoration: none;
-}
-.btn .button {
-  background: #00adee;
-  text-transform: none;
-  color: #fff;
-  font-family: sans-serif;
-}
-.btn .button:hover {
-  background-color: #00adee;
-}
-
 .blanketHeader {
   display: grid;
   grid-template-columns: 20fr repeat(2, 20fr) 20fr 20fr;
@@ -73,16 +42,4 @@
 }
 .depositBtn .button:hover {
   background-color: #00adee;
-}
-
-.stylePagination {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas: "pagination";
-}
-.pagination {
-  grid-area: pagination;
-  display: grid;
-  justify-content: flex-end;
-  margin: 1rem 0;
 }

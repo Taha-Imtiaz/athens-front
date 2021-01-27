@@ -14,7 +14,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import customerList from "./pages/Customer/CustomerList/customerlist";
 import customerDetail from "./pages/Customer/CustomerDetail/customerDetail";
 import CustomerClaims from "./pages/Claims/CustomersClaim/CustomerClaims";
-import CustomerDeposit from "./pages/Blanket/CustomerBlanketDeposit/CustomerDeposit";
+import BlanketList from "./pages/Blanket/BlanketList/BlanketList";
 import NewClaim from "./pages/Claims/NewClaim/NewClaim";
 import JobsList from "./pages/Jobs/JobsList/JobsList";
 import JobDetails from "./pages/Jobs/JobDetails/JobDetails";
@@ -106,7 +106,7 @@ function App(props) {
             <PrivateRoute path="/claim/detail/:claimId" component={ClaimsDetails} />
 
             {/* Deposit */}
-            <PrivateRoute path="/deposits" exact component={CustomerDeposit} />
+            <PrivateRoute path="/deposits" exact component={BlanketList} />
             <PrivateRoute path="/deposit/add" component={SubmitDeposit} />
 
             {/* Mover */}

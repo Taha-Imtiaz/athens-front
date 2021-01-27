@@ -4,6 +4,7 @@ import style from "./DeleteConfirmation.module.css";
 import { Button } from "@material-ui/core";
 
 const DeleteConfirmation = ({ show, handleClose, type, deleteItem }) => {
+ 
   return (
     <div>
       <Modal show={show} onHide={handleClose} centered scrollable>

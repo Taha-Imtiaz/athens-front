@@ -3,13 +3,16 @@ import style from "./customerlist.module.css";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteCustomer, getAllCustomers } from "../../../Redux/Customer/customerActions";
+import {
+  deleteCustomer,
+  getAllCustomers,
+} from "../../../Redux/Customer/customerActions";
 import { useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
 
 import Button from "@material-ui/core/Button";
-import { Modal } from "react-bootstrap";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 
 const CustomerList = (props) => {
   //defining variables
@@ -18,7 +21,7 @@ const CustomerList = (props) => {
   var totalCount = 0;
   if (customers) {
     var { docs } = customers;
-    totalCount = customers.total
+    totalCount = customers.total;
   }
   //defining state variables
   var [order, setOrder] = useState(-1);
@@ -282,7 +285,9 @@ const CustomerList = (props) => {
                 <div>Jobs</div>
                 <div>Claims</div>
 
-                {props.user && props.user.role === "admin" && <div>Actions</div>}
+                {props.user && props.user.role === "admin" && (
+                  <div>Actions</div>
+                )}
               </div>
             </div>
             <div>
@@ -330,8 +335,8 @@ const CustomerList = (props) => {
                                   }
                                 </div>
                               ) : (
-                                  0
-                                )}
+                                0
+                              )}
                             </div>
                           </div>
                         </Link>
@@ -364,40 +369,30 @@ const CustomerList = (props) => {
             </div>
           </div>
         ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" alt = "No data found"/>
-            </div>
-          )}
-      </div>
-      <Modal show={show} onHide={handleClose} centered scrollable>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>Are you sure you want to delete Customer?</Modal.Body>
-        <Modal.Footer>
-          <div className={style.modalButtons}>
-            <Button className={style.button} onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button className={style.button} onClick={() => removeCustomer()}>
-              Confirm
-            </Button>
+          <div className="text-center">
+            <img src="/images/no-data-found.png" alt="No data found" />
           </div>
-        </Modal.Footer>
-      </Modal>
+        )}
+      </div>
+
+      <DeleteConfirmation
+        show={show}
+        handleClose={handleClose}
+        type="Customer"
+        deleteItem={removeCustomer}
+      />
     </div>
   );
 };
 
 var mapStateToProps = (state) => ({
   customers: state.customers.customerList,
-  user: state.users.user
+  user: state.users.user,
 });
 
 var actions = {
   getAllCustomers,
-  deleteCustomer
+  deleteCustomer,
 };
 
 export default connect(mapStateToProps, actions)(CustomerList);

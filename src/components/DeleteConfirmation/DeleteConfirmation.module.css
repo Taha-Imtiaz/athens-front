@@ -1,0 +1,16 @@
+.modalButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  .modalButtons .button {
+    background-color: #00adee;
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: normal;
+    transition: all 0.3sec ease-in-out;
+    margin: 0 0.1rem;
+  }
+  .modalButtons .button:hover {
+    background-color: #00adee;
+  }

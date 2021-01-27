@@ -13,7 +13,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "react-bootstrap";
+
 
 import {
   Button,
@@ -24,6 +24,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
+import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 
 //use material-ui default styles of popover
 const styles = (theme) => ({
@@ -670,28 +671,13 @@ class JobsList extends Component {
           </div>
         )}
         {/* Modal for delete job */}
-        <Modal
-          show={showDeleteModal}
-          onHide={this.closeDeleteModal}
-          centered
-          scrollable
-        >
-          <Modal.Header closeButton>
-            <Modal.Title> Confirmation</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>Are you sure you want to delete Job?</Modal.Body>
-          <Modal.Footer>
-            <div className={style.modalButtons}>
-              <Button className={style.button} onClick={this.closeDeleteModal}>
-                Cancel
-              </Button>
-              <Button className={style.button} onClick={() => this.removeJob()}>
-                Confirm
-              </Button>
-            </div>
-          </Modal.Footer>
-        </Modal>
+       
+         <DeleteConfirmation
+        show={showDeleteModal}
+        handleClose={this.closeDeleteModal}
+        type="Job"
+        deleteItem={this.removeJob}
+      />
       </div>
     );
   }

@@ -9,7 +9,7 @@ const EmailVerification = (props) => {
   var [email, setEmail] = useState("");
   var [emailError, setEmailError] = useState("");
   var handleFormInput = (e) => {
-    var {  value } = e.target;
+    var { value } = e.target;
     setEmail(value);
   };
 
@@ -51,13 +51,15 @@ const EmailVerification = (props) => {
               name="email"
               value={email}
               onChange={(e) => handleFormInput(e)}
-              error={emailError}
+              error={emailError ? true : false}
             />
           </form>
         </div>
 
         <div className={style.sendCodeBtn}>
-          <Button onClick={navigateToCode} className = {style.button}>Send Verification Code</Button>
+          <Button onClick={navigateToCode} className={style.button}>
+            Send Verification Code
+          </Button>
         </div>
       </div>
     </div>

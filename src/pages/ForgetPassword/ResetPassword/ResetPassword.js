@@ -81,24 +81,24 @@ const ResetPassword = (props) => {
                 name="password"
                 value={password}
                 onChange={(e) => handleFormInput(e)}
-                error={passwordError}
+                error={passwordError ? true : false}
               />
             </div>
             <div>
-            <TextField
-              variant="outlined"
-              required="required"
-              type="password"
-              // fullWidth
-              className={style.passwordField}
-              size="small"
-              id="password"
-              label="Confirm Password"
-              name="cpassword"
-              value={cpassword}
-              onChange={(e) => handleFormInput(e)}
-              error={cpasswordError}
-            />
+              <TextField
+                variant="outlined"
+                required="required"
+                type="password"
+                // fullWidth
+                className={style.passwordField}
+                size="small"
+                id="password"
+                label="Confirm Password"
+                name="cpassword"
+                value={cpassword}
+                onChange={(e) => handleFormInput(e)}
+                error={cpasswordError ? true : false}
+              />
             </div>
           </form>
         </div>

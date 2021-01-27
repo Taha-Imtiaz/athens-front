@@ -4,11 +4,11 @@ import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAllClaims, deleteClaim } from "../../../Redux/Claims/claimsActions";
-import { Modal } from "react-bootstrap";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import TimeAgo from "react-timeago";
+import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 
 const CustomerClaims = (props) => {
   var { getAllClaims, claims, user } = props;
@@ -223,22 +223,12 @@ const CustomerClaims = (props) => {
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose} centered scrollable>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this Claim?</Modal.Body>
-        <Modal.Footer>
-          <div className={style.flexEnd}>
-            <Button className={style.button} onClick={() => removeClaim()}>
-              Confirm
-            </Button>
-            <Button className={style.button} onClick={handleClose}>
-              Cancel
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+      <DeleteConfirmation
+        show={show}
+        handleClose={handleClose}
+        type="Claim"
+        deleteItem={removeClaim}
+      />
     </div>
   );
 };

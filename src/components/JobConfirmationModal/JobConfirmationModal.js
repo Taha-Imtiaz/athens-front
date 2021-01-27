@@ -1,15 +1,16 @@
 import React from 'react'
-import style from "./JobConfirmation.module.css"
+import style from "./JobConfirmationModal.module.css"
 import { Modal } from "react-bootstrap";
+import JobConfirmation from '../../pages/Jobs/JobConfirmation/JobConfirmation';
 
-const JobConfirmationModal = () => {
+const JobConfirmationModal = ({job,show,handleCloseAndRefresh,closeJobConfirmationModal}) => {
     return (
         <div>
                 {/* Confirmtation Modal */}
           <Modal
             dialogClassName={`${style.modal}`}
-            show={showBooking}
-            onHide={() => setShowBooking(false)}
+            show={show}
+            onHide={closeJobConfirmationModal}
             centered
           >
             <Modal.Header closeButton>

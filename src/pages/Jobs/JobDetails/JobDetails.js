@@ -46,6 +46,10 @@ const JobDetails = (props) => {
     setShowBooking(false);
     getJob(jobId);
   };
+  // close jobConfirmation modal
+  const closeJobConfirmationModal = () => {
+    setShowBooking(false)
+  }
   return (
     <div className={style.jobEditContainer}>
       {job ? (
@@ -211,7 +215,7 @@ const JobDetails = (props) => {
               <JobConfirmation data={job} close={handleCloseAndRefresh} />
             </Modal.Body>
           </Modal> */}
-          <JobConfirmationModal/>
+          <JobConfirmationModal job = {job} show = {showBooking} handleCloseAndRefresh = {handleCloseAndRefresh} closeJobConfirmationModal = {closeJobConfirmationModal}/>
         </div>
       ) : null}
     </div>

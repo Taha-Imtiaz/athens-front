@@ -7,7 +7,7 @@ import TimeAgo from "react-timeago";
 import { updateDeposit } from "../../../Redux/Claims/claimsActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
-import { Modal } from "react-bootstrap";
+import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 
 const BlanketList = (props) => {
 
@@ -67,7 +67,11 @@ const BlanketList = (props) => {
     newData[i].cost = value;
     setBlanketValue(newData);
   };
-
+  // close delete modal
+  var handleClose = () =>{
+    setShow(false)
+  }
+ 
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>
@@ -162,46 +166,12 @@ const BlanketList = (props) => {
           );
         })}
 
-      <Modal
-        dialogClassName={`${style.modal}`}
-        show={show}
-        onHide={() => setShow(false)}
-        centered
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Activities</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className={style.activitiesModal}>
-            <div>Performer</div>
-            <div>Message</div>
-            <div>Timestamp</div>
-          </div>
-
-          {depositValue &&
-            depositValue.activities.map((activity, i) => (
-              <div key={i} className={style.activitiesModalContent}>
-                <div> {activity.performer.name}</div>
-                <div>
-                  {activity.messageLogs.map((x, i) => (
-                    <label key={i}>* {x}</label>
-                  ))}
-                </div>
-                <div>
-                  <TimeAgo date={activity.timeStamp} />
-                </div>
-              </div>
-            ))}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={style.activityModalBtn}>
-            <Button className={style.button} onClick={() => setShow(false)}>
-              Close
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+     
+      <ActivitiesModal
+            show={show}
+            activities={depositValue.activities}
+            handleClose={handleClose}
+          />
     </div>
   );
 };

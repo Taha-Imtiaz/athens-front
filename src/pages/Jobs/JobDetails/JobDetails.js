@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import { getJob } from "../../../Redux/Job/jobActions";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
-import TimeAgo from "react-timeago";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
@@ -15,7 +13,9 @@ import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
-import JobConfirmation from "../JobConfirmation/JobConfirmation";
+
+import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
+import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
 
 const JobDetails = (props) => {
   var { job } = props;
@@ -80,8 +80,8 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                        <div>Not Added</div>
-                      )}
+                      <div>Not Added</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -118,11 +118,18 @@ const JobDetails = (props) => {
               </div>
             </div>
             <div className={style.jobDates}>
-              {job.dates.map((x, i) => (i === 0 ? <span key={i}>{x}</span> : <span key={i}> | {x} </span>))}
+              {job.dates.map((x, i) =>
+                i === 0 ? (
+                  <span key={i}>{x}</span>
+                ) : (
+                  <span key={i}> | {x} </span>
+                )
+              )}
             </div>
             <div className={style.service}>
               {job.services.map((service, i) => (
-                <Chip key={i}
+                <Chip
+                  key={i}
                   variant="outlined"
                   size="small"
                   label={service.name}
@@ -153,12 +160,12 @@ const JobDetails = (props) => {
                       <div className={style.location}>{list.value}</div>
                     </div>
                   ) : (
-                      <div>
-                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                        <span>{`Dropoff`}</span>
-                        <div className={style.location}>{list.value}</div>
-                      </div>
-                    )
+                    <div>
+                      <FontAwesomeIcon icon={faDotCircle} />{" "}
+                      <span>{`Dropoff`}</span>
+                      <div className={style.location}>{list.value}</div>
+                    </div>
+                  )
                 )}
               </div>
             )}
@@ -185,50 +192,13 @@ const JobDetails = (props) => {
               ) : null}
             </div>
           </div>
-
-          {/* Activvities Modal */}
-          <Modal
-            dialogClassName={`${style.modal}`}
+          <ActivitiesModal
             show={show}
-            onHide={handleClose}
-            // animation={false}
-            centered
-            scrollable
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Activities</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className={style.modalHeader}>
-                <div>Performer</div>
-                <div>Message</div>
-                <div>Timestamp</div>
-              </div>
-
-              {job.activities.map((activitiy, i) => (
-                <div key={i} className={style.modalContent}>
-                  <div> {activitiy.performer.name}</div>
-                  <div>
-                    {activitiy.messageLogs.map((x, i) => (
-                      <span key={i}>* {x}</span>
-                    ))}
-                  </div>
-
-                  <TimeAgo date={activitiy.timeStamp} />
-                </div>
-              ))}
-            </Modal.Body>
-            <Modal.Footer>
-              <div className={style.modalButtons}>
-                <Button className={`${style.button}`} onClick={handleClose}>
-                  Close
-                   </Button>
-              </div>
-            </Modal.Footer>
-          </Modal>
-
+            activities={job.activities}
+            handleClose={handleClose}
+          />
           {/* Confirmtation Modal */}
-          <Modal
+          {/* <Modal
             dialogClassName={`${style.modal}`}
             show={showBooking}
             onHide={() => setShowBooking(false)}
@@ -240,15 +210,15 @@ const JobDetails = (props) => {
             <Modal.Body>
               <JobConfirmation data={job} close={handleCloseAndRefresh} />
             </Modal.Body>
-          </Modal>
-
+          </Modal> */}
+          <JobConfirmationModal/>
         </div>
       ) : null}
     </div>
   );
 };
 var mapStateToProps = (state) => ({
-  job: state.jobs.job
+  job: state.jobs.job,
 });
 var actions = {
   getJob,

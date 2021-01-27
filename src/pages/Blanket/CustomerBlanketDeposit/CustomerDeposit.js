@@ -8,10 +8,15 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import TimeAgo from "react-timeago";
-import { Modal } from "react-bootstrap";
+
 import Pagination from "../../../components/Pagination/Pagination";
-import { deleteBlanketDeposit, getDeposits, updateDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
+import {
+  deleteBlanketDeposit,
+  getDeposits,
+  updateDeposit,
+} from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 
 const CustomerDeposit = (props) => {
   var { blanketDeposit } = props;
@@ -84,6 +89,11 @@ const CustomerDeposit = (props) => {
     setDepositValue(deposit);
     setShow(true);
   };
+  //close activities modal
+  const handleClose = () => {
+    setShow(false);
+  };
+
   var removeBlanketDeposit = () => {
     var { deleteBlanketDeposit } = props;
     deleteBlanketDeposit(depositToDelete);
@@ -199,13 +209,13 @@ const CustomerDeposit = (props) => {
                             </Button>
                           </div>
                         ) : (
-                            <div onClick={() => closeEdit(x._id, i, "save")}>
-                              <Button className={style.button}>
-                                <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
-                                Save
+                          <div onClick={() => closeEdit(x._id, i, "save")}>
+                            <Button className={style.button}>
+                              <FontAwesomeIcon icon={faSave}> </FontAwesomeIcon>{" "}
+                              Save
                             </Button>
-                            </div>
-                          )}
+                          </div>
+                        )}
                         <div>
                           <Button
                             onClick={() => handleShow(x)}
@@ -241,55 +251,21 @@ const CustomerDeposit = (props) => {
               </div>
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="No data found" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" alt="No data found" />
+            </div>
+          )}
         </div>
       </div>
-      <Modal
-        dialogClassName={`${style.modal}`}
-        show={show}
-        onHide={() => setShow(false)}
-        centered
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Activities</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className={style.activitiesModal}>
-            <div>Performer</div>
-            <div>Message</div>
-            <div>Timestamp</div>
-          </div>
 
-          {depositValue &&
-            depositValue.activities.map((activity, i) => (
-              <div className={style.activitiesModalContent} key={i}>
-                <div> {activity.performer.name}</div>
-                <div>
-                  {activity.messageLogs.map((x, i) => (
-                     <label key={i}>* {x}</label>
-                  ))}
-                </div>
-                <div>
-                  <TimeAgo date={activity.timeStamp} />
-                </div>
-              </div>
-            ))}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={style.activityModalBtn}>
-            {" "}
-            <Button className={style.button} onClick={() => setShow(false)}>
-              Close
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
-    
-       <DeleteConfirmation
+      {/* activities modal */}
+      <ActivitiesModal
+        show={show}
+        activities={depositValue.activities}
+        handleClose={handleClose}
+      />
+
+      <DeleteConfirmation
         show={deleteModal}
         handleClose={closeDeleteModal}
         type="Deposit"

@@ -146,11 +146,11 @@ class SignInForm extends React.Component {
 }
 
 var actions = {
-  login
+  login,
 };
 
 var mapStateToProps = (state) => ({
-  user: state.users.user
+  user: state.users.user,
 });
 
 export default connect(mapStateToProps, actions)(SignInForm);

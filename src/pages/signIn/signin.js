@@ -29,9 +29,9 @@ class SignInForm extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user) {
-      nextProps.user.role === "mover"
+  componentDidUpdate(prevProps) {
+    if (this.props.user) {
+      this.props.user.role === "mover"
         ? this.props.history.push("/mover")
         : this.props.history.push("/customers");
     }
@@ -146,11 +146,11 @@ class SignInForm extends React.Component {
 }
 
 var actions = {
-  login,
+  login
 };
 
 var mapStateToProps = (state) => ({
-  user: state.users.user,
+  user: state.users.user
 });
 
 export default connect(mapStateToProps, actions)(SignInForm);

@@ -95,22 +95,7 @@
   grid-template-columns: 25fr 20fr 25fr 15fr;
   padding: 0 0.5rem;
 }
-.flexEnd {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-.flexEnd .button {
-  background: #00adee;
-  text-transform: none;
-  color: #fff;
-  font-family: sans-serif;
-  width: 100%;
-  margin: 0 0.2rem;
-}
-.flexEnd .button:hover {
-  background-color: #00adee;
-}
+
 .stylePagination {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;

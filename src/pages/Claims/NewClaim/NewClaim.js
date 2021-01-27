@@ -21,6 +21,7 @@ import {
   setClaimForm,
 } from "../../../Redux/PersistForms/formActions";
 import { cloneDeep } from "lodash";
+import TimeAgo from "react-timeago";
 
 class NewClaim extends Component {
   //defining state
@@ -96,7 +97,7 @@ class NewClaim extends Component {
     let customerIdError = "";
     let jobIdError = "";
     let priceError = "";
-    
+
     let titleError = "";
     let waitToError = "";
 
@@ -242,7 +243,7 @@ class NewClaim extends Component {
                     fullWidth
                     className={style.styleFormFields}
                     variant="outlined"
-                    error={this.state.customerIdError ? true:false}
+                    error={this.state.customerIdError ? true : false}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -275,7 +276,9 @@ class NewClaim extends Component {
                       <div className={style.claimContent}>
                         <div> {claim.claimType}</div>
                         <div>{claim.status}</div>
-                        <div>{claim.updatedAt}</div>
+                        <div>
+                          <TimeAgo date={claim.updatedAt} />
+                        </div>
                       </div>
                     ))}
                   </Modal.Body>
@@ -319,7 +322,7 @@ class NewClaim extends Component {
                   label="Choose a job"
                   fullWidth
                   variant="outlined"
-                  error={this.state.jobIdError?true:false}
+                  error={this.state.jobIdError ? true : false}
                   className={style.styleFormFields}
                   inputProps={{
                     ...params.inputProps,
@@ -332,7 +335,7 @@ class NewClaim extends Component {
             <TextField
               variant="outlined"
               required
-              error={this.state.titleError?true:false}
+              error={this.state.titleError ? true : false}
               className={style.styleFormFields}
               size="small"
               id="title"
@@ -346,7 +349,7 @@ class NewClaim extends Component {
             <TextField
               variant="outlined"
               required
-              error={this.state.waitToError?true:false}
+              error={this.state.waitToError ? true : false}
               className={style.styleFormFields}
               size="small"
               id="waitTo"
@@ -397,7 +400,6 @@ class NewClaim extends Component {
               rowsMax={4}
               id="description"
               className={`${style.styleFormFields} ${style.styleTextArea}`}
-              
               placeholder="Item Description"
               name="description"
               value={this.state.claims.description}

@@ -2,11 +2,13 @@ import { Button, TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateCustomer, getCustomer } from "../../../Redux/Customer/customerActions";
+import {
+  updateCustomer,
+  getCustomer,
+} from "../../../Redux/Customer/customerActions";
 
 import style from "./CustomerUpdate.module.css";
 class CustomerUpdate extends Component {
-
   //fetch customer info (whose id is passed on mount)
   componentDidMount = async () => {
     var {
@@ -15,8 +17,8 @@ class CustomerUpdate extends Component {
         params: { customerId },
       },
     } = this.props;
-    await getCustomer(customerId)
-    let { customer } = this.props
+    await getCustomer(customerId);
+    let { customer } = this.props;
     if (customer) {
       this.setState({
         customer,
@@ -149,127 +151,128 @@ class CustomerUpdate extends Component {
   };
 
   render() {
-    return this.state.customer && (
-      <div className={style.formStyle}>
-        <div className={style.form}>
-          <h3 className={style.head}>Edit Customer</h3>
-          {/* edit customer form */}
-          <div>
-            <form onSubmit={this.mySubmitHandler}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                id="firstName"
-                size="small"
-                label="First Name"
-                name="firstName"
-                autoComplete="firstName"
-                autoFocus
-                error={this.state.firstNameError}
-                value={this.state.firstName}
-                onChange={this.handleFormInput}
-              />
+    return (
+      this.state.customer && (
+        <div className={style.formStyle}>
+          <div className={style.form}>
+            <h3 className={style.head}>Edit Customer</h3>
+            {/* edit customer form */}
+            <div>
+              <form onSubmit={this.mySubmitHandler}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={style.styleFormFields}
+                  id="firstName"
+                  size="small"
+                  label="First Name"
+                  name="firstName"
+                  autoComplete="firstName"
+                  autoFocus
+                  error={this.state.firstNameError ? true : false}
+                  value={this.state.firstName}
+                  onChange={this.handleFormInput}
+                />
 
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                id="lastName"
-                size="small"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lastName"
-                error={this.state.lastNameError}
-                value={this.state.lastName}
-                onChange={this.handleFormInput}
-              />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={style.styleFormFields}
+                  id="lastName"
+                  size="small"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lastName"
+                  error={this.state.lastNameError ? true : false}
+                  value={this.state.lastName}
+                  onChange={this.handleFormInput}
+                />
 
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                size="small"
-                id="phone"
-                label="Phone Number"
-                name="phone"
-                autoComplete="phone"
-                error={this.state.phoneError}
-                value={this.state.phone}
-                onChange={this.handleFormInput}
-              />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={style.styleFormFields}
+                  size="small"
+                  id="phone"
+                  label="Phone Number"
+                  name="phone"
+                  autoComplete="phone"
+                  error={this.state.phoneError ? true : false}
+                  value={this.state.phone}
+                  onChange={this.handleFormInput}
+                />
 
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                size="small"
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                error={this.state.emailError}
-                value={this.state.email}
-                onChange={this.handleFormInput}
-              />
-            </form>
-            <h5>Alternate Contact</h5>
-            {this.state.subContacts.length > 0 ? (
-              this.state.subContacts.map((x, i) => {
-                return (
-                  <div key={i}>
-                    <form>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        className={style.styleFormFields}
-                        size="small"
-                        id="name"
-                        label="Name"
-                        name="name"
-                        autoComplete="name"
-                        value={this.state.subContacts[i].name}
-                        onChange={(e) => this.hanldeContactsInput(e, i)}
-                      />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  className={style.styleFormFields}
+                  size="small"
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  error={this.state.emailError ? true : false}
+                  value={this.state.email}
+                  onChange={this.handleFormInput}
+                />
+              </form>
+              <h5>Alternate Contact</h5>
+              {this.state.subContacts.length > 0 ? (
+                this.state.subContacts.map((x, i) => {
+                  return (
+                    <div key={i}>
+                      <form>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          className={style.styleFormFields}
+                          size="small"
+                          id="name"
+                          label="Name"
+                          name="name"
+                          autoComplete="name"
+                          value={this.state.subContacts[i].name}
+                          onChange={(e) => this.hanldeContactsInput(e, i)}
+                        />
 
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        className={style.styleFormFields}
-                        size="small"
-                        type="number"
-                        id="phone_number"
-                        label="Phone Number"
-                        name="phone"
-                        autoComplete="phone_number"
-                        value={this.state.subContacts[i].phone}
-                        onChange={(e) => this.hanldeContactsInput(e, i)}
-                      />
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          className={style.styleFormFields}
+                          size="small"
+                          type="number"
+                          id="phone_number"
+                          label="Phone Number"
+                          name="phone"
+                          autoComplete="phone_number"
+                          value={this.state.subContacts[i].phone}
+                          onChange={(e) => this.hanldeContactsInput(e, i)}
+                        />
 
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        className={style.styleFormFields}
-                        id="emailalt"
-                        label="Email Address"
-                        size="small"
-                        name="email"
-                        autoComplete="emailalt"
-                        value={this.state.subContacts[i].email}
-                        onChange={(e) => this.hanldeContactsInput(e, i)}
-                      />
-                    </form>
-                  </div>
-                );
-              })
-            ) : (
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          className={style.styleFormFields}
+                          id="emailalt"
+                          label="Email Address"
+                          size="small"
+                          name="email"
+                          autoComplete="emailalt"
+                          value={this.state.subContacts[i].email}
+                          onChange={(e) => this.hanldeContactsInput(e, i)}
+                        />
+                      </form>
+                    </div>
+                  );
+                })
+              ) : (
                 <div className={style.alternateContactBtn}>
                   <div className={style.alternateContact}>
                     <Button
@@ -277,39 +280,40 @@ class CustomerUpdate extends Component {
                       onClick={this.addAlternateContact}
                     >
                       Add Alternate Contact
-                  </Button>
+                    </Button>
                   </div>
                 </div>
               )}
-            {this.state.subContacts.length > 0 && (
-              <div className={style.anotherContactBtn}>
-                <div className={style.anotherContact}>
-                  <Button className={style.btn} onClick={this.addContacts}>
-                    Add Another
-                  </Button>
+              {this.state.subContacts.length > 0 && (
+                <div className={style.anotherContactBtn}>
+                  <div className={style.anotherContact}>
+                    <Button className={style.btn} onClick={this.addContacts}>
+                      Add Another
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <div className={style.updateBtn}>
-              <Button onClick={this.mySubmitHandler} className={style.button}>
-                Update
-              </Button>
+              <div className={style.updateBtn}>
+                <Button onClick={this.mySubmitHandler} className={style.button}>
+                  Update
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    );
   }
 }
 
 var mapStateToProps = (state) => ({
   customer: state.customers.customer,
-  user: state.users.user
+  user: state.users.user,
 });
 
 var actions = {
   getCustomer,
-  updateCustomer
+  updateCustomer,
 };
 export default connect(mapStateToProps, actions)(CustomerUpdate);

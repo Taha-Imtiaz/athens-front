@@ -164,7 +164,7 @@ class CreateUser extends Component {
                 name="name"
                 value={this.state.name}
                 onChange={this.handleFormInput}
-                error={this.state.nameError}
+                error={this.state.nameError ? true : false}
                 className={style.styleFormFields}
               />
 
@@ -178,7 +178,7 @@ class CreateUser extends Component {
                 name="email"
                 value={this.state.email}
                 onChange={this.handleFormInput}
-                error={this.state.emailError}
+                error={this.state.emailError ? true : false}
                 className={style.styleFormFields}
               />
 
@@ -192,7 +192,7 @@ class CreateUser extends Component {
                 name="phone"
                 value={this.state.phone}
                 onChange={this.handleFormInput}
-                error={this.state.numberError}
+                error={this.state.numberError ? true : false}
                 className={style.styleFormFields}
               />
 
@@ -205,7 +205,7 @@ class CreateUser extends Component {
                 label="Address"
                 name="address"
                 value={this.state.address}
-                error={this.state.addressError}
+                error={this.state.addressError ? true : false}
                 onChange={this.handleFormInput}
                 className={style.styleAddress}
               />
@@ -218,7 +218,7 @@ class CreateUser extends Component {
                 displayValue="name" // Property name to display in the dropdown options
                 className={`form-control `}
                 placeholder="Select Type"
-                error={this.state.typeError}
+                error={this.state.typeError ? true : false}
                 style={this.style}
               />
 
@@ -230,7 +230,7 @@ class CreateUser extends Component {
                 displayValue="name" // Property name to display in the dropdown options
                 className={`form-control `}
                 placeholder="Select Attribute"
-                error={this.state.attributeError}
+                error={this.state.attributeError ? true : false}
                 style={this.style}
               />
 

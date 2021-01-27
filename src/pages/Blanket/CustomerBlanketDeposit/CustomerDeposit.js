@@ -11,6 +11,7 @@ import TimeAgo from "react-timeago";
 import { Modal } from "react-bootstrap";
 import Pagination from "../../../components/Pagination/Pagination";
 import { deleteBlanketDeposit, getDeposits, updateDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
+import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 
 const CustomerDeposit = (props) => {
   var { blanketDeposit } = props;
@@ -287,32 +288,13 @@ const CustomerDeposit = (props) => {
           </div>
         </Modal.Footer>
       </Modal>
-      <Modal
+    
+       <DeleteConfirmation
         show={deleteModal}
-        onHide={closeDeleteModal}
-        centered
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete this Blanket Deposit?
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={style.deleteModalBtn}>
-            <Button
-              className={style.button}
-              onClick={() => removeBlanketDeposit()}
-            >
-              Confirm
-            </Button>
-            <Button className={style.button} onClick={closeDeleteModal}>
-              Cancel
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+        handleClose={closeDeleteModal}
+        type="Deposit"
+        deleteItem={removeBlanketDeposit}
+      />
     </div>
   );
 };

@@ -71,7 +71,7 @@ const ResetPassword = (props) => {
             <div>
               <TextField
                 variant="outlined"
-                required="required"
+                required
                 type="password"
                 // fullWidth
                 className={style.passwordField}
@@ -87,12 +87,12 @@ const ResetPassword = (props) => {
             <div>
               <TextField
                 variant="outlined"
-                required="required"
+                required
                 type="password"
                 // fullWidth
                 className={style.passwordField}
                 size="small"
-                id="password"
+                id="cpassword"
                 label="Confirm Password"
                 name="cpassword"
                 value={cpassword}

@@ -75,18 +75,17 @@ export var getAllJobsOnDate = async (date) => {
       date: date.toString(),
     };
     var currentDayJobs = await Axios.post("schedule/current-jobs", data);
+
     return currentDayJobs;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var getJobsByDate = async (date) => {
+export var getJobsByDate = async (body) => {
   try {
-    let data = {
-      date: date.toString(),
-    };
-    var jobs = await Axios.post("job/monthly-jobs", data);
+    var jobs = await Axios.post("job/monthly-jobs", body);
+
     return jobs;
   } catch (error) {
     console.log(error);
@@ -134,9 +133,11 @@ export var deleteJob = (id, currentPage) => {
     try {
       let body = {
         page: currentPage,
-        id
+        id,
       };
-      var getAllJobsExceptDeleteOne = await Axios.delete(`job`, { params: body });
+      var getAllJobsExceptDeleteOne = await Axios.delete(`job`, {
+        params: body,
+      });
       if (getAllJobsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllJobsExceptDeleteOne.data.message));
         dispatch({

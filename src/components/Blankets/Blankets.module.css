@@ -33,13 +33,19 @@
   grid-template-columns: repeat(3, 1fr);
   column-gap: 0.2rem;
 }
-.depositBtn .button {
+.customerDepositBtn {
+  display: grid;
+  /* background-color: aqua; */
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.2rem;
+}
+.depositBtn .button , .customerDepositBtn .button{
   background: #00adee;
   text-transform: none;
   color: #fff;
   font-family: sans-serif;
   width: 100%;
 }
-.depositBtn .button:hover {
+.depositBtn .button:hover, .customerDepositBtn .button:hover {
   background-color: #00adee;
 }

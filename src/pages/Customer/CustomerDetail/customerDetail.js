@@ -28,8 +28,7 @@ const CustomerDetail = (props) => {
   var [claimCount, setClaimCount] = useState(0);
   var [value, setValue] = useState(0);
   var [claims, setClaims] = useState([]);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [depositToDelete, setDepositToDelete] = useState(false);
+  
   //get customerId from props
   var {
     match: {
@@ -70,7 +69,7 @@ const CustomerDetail = (props) => {
       value: update,
     };
     let newData = cloneDeep(claims);
-    console.log(newData);
+   
     newData[updateIndex].updates.unshift(ob);
     var { showMessage } = props;
     //Call Update Claim Api to update claim
@@ -102,20 +101,8 @@ const CustomerDetail = (props) => {
     setUpdateIndex(i);
     setShow(true);
   };
-  //set deposit
-  var openDeleteModal = (i, deposit) => {
-    setDepositToDelete(deposit);
-    setDeleteModal(true);
-  };
-  var closeDeleteModal = () => {
-    setDeleteModal(false);
-  };
-  //remove blanket deposit
-  var removeBlanketDeposit = () => {
-    var { deleteBlanketDeposit } = props;
-    deleteBlanketDeposit(depositToDelete);
-    setDeleteModal(false);
-  };
+
+ 
 
   //tabPanel of material ui
   const TabPanel = (props) => {
@@ -589,14 +576,7 @@ const CustomerDetail = (props) => {
             </div>
             <hr />
             {blanketValue && blanketValue.length > 0 ? (
-              <Blankets
-                items={blanketValue}
-                update={updateBlanket}
-                deleteDeposit={removeBlanketDeposit}
-                openDeleteModal={openDeleteModal}
-                deleteModal={deleteModal}
-                closeDeleteModal = {closeDeleteModal}
-              />
+              <Blankets items={blanketValue} update={updateBlanket} />
             ) : (
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="Data not found" />

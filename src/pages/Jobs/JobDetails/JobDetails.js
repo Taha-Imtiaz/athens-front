@@ -201,20 +201,7 @@ const JobDetails = (props) => {
             activities={job.activities}
             handleClose={handleClose}
           />
-          {/* Confirmtation Modal */}
-          {/* <Modal
-            dialogClassName={`${style.modal}`}
-            show={showBooking}
-            onHide={() => setShowBooking(false)}
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Booking Confirmation</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <JobConfirmation data={job} close={handleCloseAndRefresh} />
-            </Modal.Body>
-          </Modal> */}
+         
           <JobConfirmationModal job = {job} show = {showBooking} handleCloseAndRefresh = {handleCloseAndRefresh} closeJobConfirmationModal = {closeJobConfirmationModal}/>
         </div>
       ) : null}

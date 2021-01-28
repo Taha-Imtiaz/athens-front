@@ -1,7 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import style from "./Blankets.module.css";
 import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
@@ -22,7 +22,7 @@ const Blankets = (props) => {
   useEffect(() => {
     setBlanketValue(props.items);
   }, [props.items]);
-  
+
   const handleShow = (deposit) => {
     setDepositValue(deposit);
     setShow(true);
@@ -40,8 +40,7 @@ const Blankets = (props) => {
         userId: user._id,
         quantity: newData[i].quantity,
         cost: newData[i].cost,
-        page:props.page
-        
+        page: props.page,
       };
       updateDeposit(obj)
         .then((res) => {
@@ -82,6 +81,9 @@ const Blankets = (props) => {
   var handleClose = () => {
     setShow(false);
   };
+  var {
+    location: { pathname },
+  } = props;
 
   return (
     <div>
@@ -147,7 +149,13 @@ const Blankets = (props) => {
                 <div>
                   <TimeAgo date={deposit.updatedAt} />
                 </div>
-                <div className={style.depositBtn}>
+                <div
+                  className={
+                    pathname === "/deposits"
+                      ? style.depositBtn
+                      : style.customerDepositBtn
+                  }
+                >
                   {deposit.edit ? (
                     <Button
                       onClick={() => closeEdit(i, "edit")}
@@ -171,7 +179,7 @@ const Blankets = (props) => {
                   >
                     Activities
                   </Button>
-                  {user && user.role === "admin" && (
+                  {user && user.role === "admin" && pathname === "/deposits" && (
                     <Button
                       onClick={() => props.openDeleteModal(i, deposit._id)}
                       className={style.button}
@@ -190,12 +198,14 @@ const Blankets = (props) => {
         activities={depositValue.activities}
         handleClose={handleClose}
       />
-      <DeleteConfirmation
-        show={props.deleteModal}
-        handleClose={props.closeDeleteModal}
-        type="Deposit"
-        deleteItem={props.deleteDeposit}
-      />
+      {pathname === "/deposits" && (
+        <DeleteConfirmation
+          show={props.deleteModal}
+          handleClose={props.closeDeleteModal}
+          type="Deposit"
+          deleteItem={props.deleteDeposit}
+        />
+      )}
     </div>
   );
 };
@@ -208,4 +218,4 @@ var actions = {
   deleteBlanketDeposit,
 };
 
-export default connect(mapStateToProps, actions)(Blankets);
+export default connect(mapStateToProps, actions)(withRouter(Blankets));

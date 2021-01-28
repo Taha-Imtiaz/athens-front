@@ -33,8 +33,7 @@ const BlanketList = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blanketDeposit]);
-  
-  
+
   //close activities modal
 
   var handlePageChange = (page) => {
@@ -59,7 +58,10 @@ const BlanketList = (props) => {
   var closeDeleteModal = () => {
     setDeleteModal(false);
   };
-  
+  var {
+    location: { pathname },
+  } = props;
+ 
   return (
     <div>
       <div className={style.submitDepositContainer}>
@@ -78,7 +80,7 @@ const BlanketList = (props) => {
             </div>
           </div>
 
-          {blankets && blankets.length > 0 ? (
+          {blankets && blankets.length > 0 && pathname === "/deposits" ? (
             <div>
               <Blankets
                 items={blankets}

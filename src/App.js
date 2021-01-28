@@ -30,7 +30,7 @@ import AccountDisplay from "./pages/Account/AccountDisplay/AccountDisplay";
 import MoversJobDetails from "./pages/Movers/JobDetails/JobDetails";
 import Payment from "./pages/Movers/Payment/Payment";
 import CustomerAdd from "./pages/Customer/CustomerAdd/customeradd";
-import MoversCalendar from "./pages/Movers/Calendar/Calendar";
+import MoversCalendar from "./pages/Movers/MoversCalendar/MoversCalendar";
 import Availability from "./pages/Movers/Availability/Availability";
 import MoversJobsList from "./pages/Movers/JobList/JobList";
 import RequestHolidays from "./pages/Movers/HolidayCalendar/HolidayCalendar";

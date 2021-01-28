@@ -5,8 +5,9 @@ import TimeAgo from "react-timeago";
 import { Button } from "@material-ui/core";
 
 const ActivitiesModal = ({ show, activities, handleClose }) => {
-  
+ 
   return (
+  
     <div>
       {/* Activities Modal */}
       <Modal

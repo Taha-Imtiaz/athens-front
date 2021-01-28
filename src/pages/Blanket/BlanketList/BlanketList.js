@@ -1,186 +1,124 @@
-import { Button, TextField } from "@material-ui/core";
-import { cloneDeep } from "lodash";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import style from "./BlanketList.module.css";
-import TimeAgo from "react-timeago";
-import { updateDeposit } from "../../../Redux/Claims/claimsActions";
-import { showMessage } from "../../../Redux/Common/commonActions";
+import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
+
+import Pagination from "../../../components/Pagination/Pagination";
+import {
+  deleteBlanketDeposit,
+  getDeposits,
+} from "../../../Redux/BlanketDeposit/BlanketDepositActions";
+import Blankets from "../../../components/Blankets/Blankets";
 
 const BlanketList = (props) => {
+  var { blanketDeposit } = props;
 
-  const [blanketValue, setBlanketValue] = useState(props.blanketValue);
-  const [show, setShow] = useState(false);
-  const [depositValue, setDepositValue] = useState("");
+  const [blankets, setBlankets] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [depositToDelete, setDepositToDelete] = useState(false);
+  useEffect(() => {
+    var { getDeposits } = props;
+    getDeposits(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, getDeposits]);
 
-  const handleShow = (deposit) => {
-    setDepositValue(deposit);
-    setShow(true);
-  };
-
-  const closeEdit = (i, type) => {
-    let newData = cloneDeep(blanketValue);
-    newData[i].edit = !newData[i].edit;
-    setBlanketValue(newData);
-    if (type === "save") {
-      // Call Api
-      var { user } = props;
-      var obj = {
-        id: newData[i]._id,
-        userId: user._id,
-        quantity: newData[i].quantity,
-        cost: newData[i].cost,
-      };
-      updateDeposit(obj)
-        .then((res) => {
-          let newData = cloneDeep(blanketValue);
-          newData[i] = res.data.data.updatedblanketDeposit;
-          props.updateBlanket(newData);
-          var { showMessage } = props;
-          showMessage(res.data.message);
-        })
-        .catch((err) => console.log(err));
+  useEffect(() => {
+    var { blanketDeposit } = props;
+    if (blanketDeposit) {
+      setTotalCount(blanketDeposit.total);
+      setBlankets(blanketDeposit.docs);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blanketDeposit]);
+  
+  
+  //close activities modal
+
+  var handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
-  const makeInputFieldsEditible = (i) => {
-    var newData = cloneDeep(blanketValue);
-    newData.map((data) => (data.edit = true));
-    newData[i].edit = !newData[i].edit;
-    setBlanketValue(newData);
+  //update blanket Deposit
+  const updateBlanket = (data) => {
+    setBlankets(data);
   };
 
-  var handleInput = (e, i) => {
-    let newData = cloneDeep(blanketValue);
-    if (newData[i].edit === false) {
-      newData[i].quantity = e.target.value;
-      newData[i].cost = parseInt(e.target.value) * 15;
-      setBlanketValue(newData);
-    }
+  var removeBlanketDeposit = () => {
+    var { deleteBlanketDeposit } = props;
+    deleteBlanketDeposit(depositToDelete);
+    setDeleteModal(false);
   };
-
-  var changeCost = (e, i) => {
-    var { value } = e.target;
-    let newData = cloneDeep(blanketValue);
-    newData[i].cost = value;
-    setBlanketValue(newData);
+  //set deposit
+  var openDeleteModal = (i, deposit) => {
+    setDepositToDelete(deposit);
+    setDeleteModal(true);
   };
-  // close delete modal
-  var handleClose = () =>{
-    setShow(false)
-  }
- 
+  var closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+  
   return (
     <div>
-      <div className={` ${style.blanketHeader}`}>
-        <div>
-          <h6>Job Id</h6>
-        </div>
-        <div>
-          <h6>Quantity</h6>
-        </div>
-        <div>
-          <h6>Deposit</h6>
-        </div>
+      <div className={style.submitDepositContainer}>
+        <div className={style.submitDeposit}>
+          <div className={` ${style.toprow}`}>
+            <div>
+              <h3>Blanket Deposit</h3>
+            </div>
+            <div>
+              <div className={style.btn}>
+                <Link className={style.link} to="/deposit/add">
+                  {" "}
+                  <Button className={style.button}>Deposit</Button>{" "}
+                </Link>
+              </div>
+            </div>
+          </div>
 
-        <div>
-          <h6>Last Updated</h6>
-        </div>
+          {blankets && blankets.length > 0 ? (
+            <div>
+              <Blankets
+                items={blankets}
+                update={updateBlanket}
+                deleteDeposit={removeBlanketDeposit}
+                openDeleteModal={openDeleteModal}
+                deleteModal={deleteModal}
+                closeDeleteModal={closeDeleteModal}
+                page={currentPage}
+              />
 
-        <div>
-          <h6>Actions</h6>
-        </div>
-      </div>
-
-      {blanketValue &&
-        blanketValue.map((deposit, i) => {
-          return (
-            <div key={i} className={style.listContainer}>
-              <div className={`${style.listContent} `}>
-                <div>
-                  <Link to={`/job/detail/${deposit.job._id}`}>
-                    {deposit.job.jobId}
-                  </Link>
-                </div>
-
-                <div onDoubleClick={() => makeInputFieldsEditible(i)}>
-                  <TextField
-                    variant="outlined"
-                    // required
-                    fullWidth
-                    size="small"
-                    onChange={(e) => handleInput(e, i)}
-                    disabled={deposit.edit}
-                    type="number"
-                    className="form-control input-number"
-                    value={deposit.quantity}
-                  ></TextField>
-                </div>
-
-                <div onDoubleClick={() => makeInputFieldsEditible(i)}>
-                  <TextField
-                    variant="outlined"
-                    // required
-                    fullWidth
-                    size="small"
-                    onChange={(e) => changeCost(e, i)}
-                    disabled={deposit.edit}
-                    type="number"
-                    className="form-control input-number"
-                    value={deposit.cost}
-                  ></TextField>
-                </div>
-
-                <div>
-                  <TimeAgo date={deposit.updatedAt} />
-                </div>
-                <div className={style.depositBtn}>
-                  {deposit.edit ? (
-                    <Button
-                      onClick={() => closeEdit(i, "edit")}
-                      className={style.button}
-                    >
-                      {" "}
-                      <i className="fa fa-edit"></i> Edit{" "}
-                    </Button>
-                  ) : (
-                      <Button
-                        onClick={() => closeEdit(i, "save")}
-                        className={style.button}
-                      >
-                        {" "}
-                        <i className="fa fa-save"></i> Save
-                    </Button>
-                    )}
-                  <Button
-                    onClick={() => handleShow(deposit)}
-                    className={style.button}
-                  >
-                    Activities
-                  </Button>
+              <div className={style.stylePagination}>
+                <div className={style.pagination}>
+                  <Pagination
+                    itemCount={totalCount}
+                    pageSize={10}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                  />
                 </div>
               </div>
             </div>
-          );
-        })}
-
-     
-      <ActivitiesModal
-            show={show}
-            activities={depositValue.activities}
-            handleClose={handleClose}
-          />
+          ) : (
+            <div className="text-center">
+              <img src="/images/no-data-found.png" alt="No data found" />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
-var mapStateToProps = (state) => ({
-  user: state.users.user,
-});
 var actions = {
-  showMessage,
+  getDeposits,
+  deleteBlanketDeposit,
 };
+
+var mapStateToProps = (state) => ({
+  blanketDeposit: state.blankets,
+});
 
 export default connect(mapStateToProps, actions)(BlanketList);

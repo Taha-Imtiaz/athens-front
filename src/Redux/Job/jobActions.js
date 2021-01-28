@@ -131,11 +131,12 @@ export var confirmJob = (obj) => {
 
 export var deleteJob = (id, currentPage) => {
   return async (dispatch) => {
-    var body = {
-      page: currentPage,
-    };
     try {
-      var getAllJobsExceptDeleteOne = await Axios.delete(`job/${id}`, body);
+      let body = {
+        page: currentPage,
+        id
+      };
+      var getAllJobsExceptDeleteOne = await Axios.delete(`job`, { params: body });
       if (getAllJobsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllJobsExceptDeleteOne.data.message));
         dispatch({

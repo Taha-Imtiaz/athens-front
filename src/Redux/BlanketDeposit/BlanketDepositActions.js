@@ -34,10 +34,14 @@ export var addDeposit = async (data) => {
     console.log(error);
   }
 };
-export var deleteBlanketDeposit = (id) => {
+export var deleteBlanketDeposit = (id, currentPage) => {
   return async (dispatch) => {
     try {
-      var blanketToDelete = await Axios.delete(`deposit/${id}`);
+      let body = {
+        page: currentPage,
+        id
+      }
+      var blanketToDelete = await Axios.delete(`deposit`, { params: body });
       dispatch(showMessage(blanketToDelete.data.message));
       dispatch({
         type: DELETE_BLANKET_DEPOSIT,

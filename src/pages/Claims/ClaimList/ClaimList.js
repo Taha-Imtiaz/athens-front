@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./CustomerClaims.module.css";
+import style from "./ClaimList.module.css";
 import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -7,16 +7,13 @@ import { getAllClaims, deleteClaim } from "../../../Redux/Claims/claimsActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
-import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 import Claims from "../../../components/Claims/Claims";
 
 const CustomerClaims = (props) => {
   var { getAllClaims, claims, user } = props;
 
-  const [show, setShow] = useState(false);
   const [status, setStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [claimToDelete, setClaimToDelete] = useState("");
   const [value, setValue] = useState("all");
   const [totalCount, setTotalCount] = useState(0);
 
@@ -68,7 +65,6 @@ const CustomerClaims = (props) => {
   var removeClaim = (id) => {
     var { deleteClaim } = props;
     deleteClaim(id, currentPage);
-    setShow(false);
   };
 
   return (

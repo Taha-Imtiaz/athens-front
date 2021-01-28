@@ -13,7 +13,7 @@ import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import SignIn from "./pages/SignIn/SignIn";
 import customerList from "./pages/Customer/CustomerList/customerlist";
 import customerDetail from "./pages/Customer/CustomerDetail/customerDetail";
-import CustomerClaims from "./pages/Claims/CustomersClaim/CustomerClaims";
+import ClaimList from "./pages/Claims/ClaimList/ClaimList";
 import BlanketList from "./pages/Blanket/BlanketList/BlanketList";
 import NewClaim from "./pages/Claims/NewClaim/NewClaim";
 import JobsList from "./pages/Jobs/JobsList/JobsList";
@@ -101,7 +101,7 @@ function App(props) {
             <PrivateRoute path="/account" component={AccountDisplay} exact />
 
             {/* Claim */}
-            <PrivateRoute path="/claims" component={CustomerClaims} />
+            <PrivateRoute path="/claims" component={ClaimList} />
             <PrivateRoute path="/claim/add" component={NewClaim} exact />
             <PrivateRoute path="/claim/detail/:claimId" component={ClaimsDetails} />
 

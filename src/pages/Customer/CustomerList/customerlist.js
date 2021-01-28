@@ -16,8 +16,7 @@ import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteCon
 
 const CustomerList = (props) => {
   //defining variables
-  var { getAllCustomers } = props;
-  var { customers } = props;
+  var { getAllCustomers, customers } = props;
   var totalCount = 0;
   if (customers) {
     var { docs } = customers;
@@ -335,8 +334,8 @@ const CustomerList = (props) => {
                                   }
                                 </div>
                               ) : (
-                                0
-                              )}
+                                  0
+                                )}
                             </div>
                           </div>
                         </Link>
@@ -369,10 +368,10 @@ const CustomerList = (props) => {
             </div>
           </div>
         ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" alt="No data found" />
-          </div>
-        )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" alt="No data found" />
+            </div>
+          )}
       </div>
 
       <DeleteConfirmation

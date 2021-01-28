@@ -11,9 +11,6 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 const UsersList = (props) => {
 
   var [currentPage, setCurrentPage] = useState(1);
-
-
-
   var { users, getUsers } = props;
 
   useEffect(() => {

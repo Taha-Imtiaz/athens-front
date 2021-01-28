@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./JobsList.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  getAllJobs,
-  filterJobsByDate,
-  deleteJob,
-} from "../../../Redux/Job/jobActions";
+import { getAllJobs, filterJobsByDate, deleteJob } from "../../../Redux/Job/jobActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
@@ -36,14 +32,19 @@ const styles = (theme) => ({
   },
 });
 
-class JobsList extends Component {
+const JobsList = (props) => {
   //defining state
-  state = {
+  var { getAllJobs, jobs, user } = props;
+  var totalCount = 0;
+  if (jobs) {
+    var { docs } = jobs;
+    totalCount = jobs.total;
+  }
+  const [state, setState] = useState({
     anchorEl: null,
     openedPopoverId: null,
     openedDatePopoverId: null,
     openedAssigneePopoverId: null,
-    pageSize: 10,
     currentPage: 1,
     popoverOpen: false,
     sortByName: false,
@@ -57,11 +58,10 @@ class JobsList extends Component {
     modalIndex: "",
     jobToDelete: "",
     value: "recently added",
-  };
+  });
 
-  componentDidMount = () => {
-    //fetch all jobs on componentDidMount
-    var { getAllJobs } = this.props;
+  useEffect(() => {
+    //fetch all jobs on page load
     var jobObj = {
       query: "",
       sort: {
@@ -72,14 +72,15 @@ class JobsList extends Component {
       page: 1,
     };
     getAllJobs(jobObj);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     //fetch jobs when the page is changed
-    var { getAllJobs } = this.props;
+    var { getAllJobs } = props;
     var fetchJobsOnPageChange;
     //sort the jobList by name in ascending order when sort by name is checked
-    if (this.state.sortByName === true) {
+    if (state.sortByName === true) {
       fetchJobsOnPageChange = {
         query: "",
         sort: {
@@ -94,12 +95,13 @@ class JobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
     }
     //sort the jobList by recently added  when recentlyAdded is checked
-    else if (this.state.recentlyAdded === true) {
+    else if (state.recentlyAdded === true) {
       fetchJobsOnPageChange = {
         query: "",
         sort: {
@@ -109,11 +111,12 @@ class JobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
       //sort the jobList by assignee required  when Assignee Required is checked
-    } else if (this.state.assigneeRequired === true) {
+    } else if (state.assigneeRequired === true) {
       fetchJobsOnPageChange = {
         query: "",
         sort: {
@@ -123,7 +126,8 @@ class JobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
     }
@@ -138,16 +142,18 @@ class JobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
     }
     getAllJobs(fetchJobsOnPageChange);
   };
   //sort the jobList by title
-  handleSortByTitle = () => {
-    var { getAllJobs } = this.props;
-    this.setState({
+  const handleSortByTitle = () => {
+    var { getAllJobs } = props;
+    setState({
+      ...state,
       sortByName: true,
       assigneeRequired: false,
       recentlyAdded: false,
@@ -166,15 +172,17 @@ class JobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
       currentPage: 1,
     });
     getAllJobs(fetchJobsOnPageChange);
   };
   //filter todays(onDate) jobs
-  filterOnDateJobs = (e) => {
-    var { filterJobsByDate } = this.props;
-    this.setState({
+  const filterOnDateJobs = (e) => {
+    var { filterJobsByDate } = props;
+    setState({
+      ...state,
       dates: e.target.value,
     });
 
@@ -189,16 +197,18 @@ class JobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
       currentPage: 1,
     });
     filterJobsByDate(DateFilters);
   };
 
   //filter upcoming jobs
-  filterUpComingJobs = (e) => {
-    var { filterJobsByDate } = this.props;
-    this.setState({
+  const filterUpComingJobs = (e) => {
+    var { filterJobsByDate } = props;
+    setState({
+      ...state,
       nearestDate: e.target.value,
     });
 
@@ -212,15 +222,17 @@ class JobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
       currentPage: 1,
     });
     filterJobsByDate(DateFilters);
   };
   //sort jobList by recently added(when recentlyAdded is clicked)
-  handleRecentlyAdded = () => {
-    var { getAllJobs } = this.props;
-    this.setState({
+  const handleRecentlyAdded = () => {
+    var { getAllJobs } = props;
+    setState({
+      ...state,
       recentlyAdded: true,
       sortByName: false,
       assigneeRequired: false,
@@ -234,15 +246,17 @@ class JobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
       currentPage: 1,
     });
     getAllJobs(fetchJobsOnPageChange);
   };
   //sort the jobList by assignee required(when assigneeRequired is clicked)
-  handleAssigneeRequired = () => {
-    var { getAllJobs } = this.props;
-    this.setState({
+  const handleAssigneeRequired = () => {
+    var { getAllJobs } = props;
+    setState({
+      ...state,
       assigneeRequired: true,
       sortByName: false,
       recentlyAdded: false,
@@ -257,435 +271,441 @@ class JobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
       currentPage: 1,
     });
     getAllJobs(fetchJobsOnPageChange);
   };
   //handle Service Popover open
-  handleServicePopoverOpen = (event, id) => {
-    this.setState({
+  const handleServicePopoverOpen = (event, id) => {
+    setState({
+      ...state,
       anchorEl: event.currentTarget,
       openedPopoverId: id,
     });
   };
   //handle Service Popover close
-  handleServicePopoverClose = () => {
-    this.setState({
+  const handleServicePopoverClose = () => {
+    setState({
+      ...state,
       anchorEl: null,
       openedPopoverId: null,
     });
   };
   //handle Date Popover open
-  handleDatePopoverOpen = (event, id) => {
-    this.setState({
+  const handleDatePopoverOpen = (event, id) => {
+    setState({
+      ...state,
       anchorEl: event.currentTarget,
       openedDatePopoverId: id,
     });
   };
   //handle Date Popover close
-  handleDatePopoverClose = () => {
-    this.setState({
+  const handleDatePopoverClose = () => {
+    setState({
+      ...state,
       anchorEl: null,
       openedDatePopoverId: null,
     });
   };
   //handle Assignee Popover open
 
-  handleAssigneePopoverOpen = (event, id) => {
-    this.setState({
+  const handleAssigneePopoverOpen = (event, id) => {
+    setState({
+      ...state,
       anchorEl: event.currentTarget,
       openedAssigneePopoverId: id,
     });
   };
   //handle Assignee Popover close
 
-  handleAssigneePopoverClose = () => {
-    this.setState({
+  const handleAssigneePopoverClose = () => {
+    setState({
+      ...state,
       anchorEl: null,
       openedAssigneePopoverId: null,
     });
   };
-  removeJob = () => {
+
+  const removeJob = () => {
     //removes job from jobList
-    var { deleteJob } = this.props;
-    var { currentPage } = this.state;
-    deleteJob(this.state.jobToDelete, currentPage);
-    this.setState({
+    var { deleteJob } = props;
+    var { currentPage } = state;
+    deleteJob(state.jobToDelete, currentPage);
+    setState({
+      ...state,
       showDeleteModal: false,
     });
   };
   //open delete modal
-  openDeleteModal = (i, jobId) => {
-    this.setState({
+  const openDeleteModal = (i, jobId) => {
+    setState({
+      ...state,
       modalIndex: i,
       showDeleteModal: true,
       jobToDelete: jobId,
     });
   };
   //change handler of radio buttons
-  handleChange = (e) => {
-    this.setState({
+  const handleChange = (e) => {
+    setState({
+      ...state,
       value: e.target.value,
     });
   };
   //close delete modal
-  closeDeleteModal = () => {
-    this.setState({
+  const closeDeleteModal = () => {
+    setState({
+      ...state,
       showDeleteModal: false,
     });
   };
 
-  render() {
-    var { jobs, user } = this.props;
-    var { pageSize, currentPage } = this.state;
-    var { classes } = this.props;
-    const open = Boolean(this.state.anchorEl);
+  var { currentPage } = state;
+  var { classes } = props;
+  const open = Boolean(state.anchorEl);
+  var { showDeleteModal, dates, nearestDate, value } = state;
 
-    var totalCount = jobs?.total;
+  return (
+    <div>
+      <div className={`${style.toprow}`}>
+        <div className={style.rowContent}>
+          <div>
+            <h3>Jobs List</h3>
+          </div>
 
-    var { showDeleteModal, dates, nearestDate, value } = this.state;
-    return (
-      <div>
-        <div className={`${style.toprow}`}>
-          <div className={style.rowContent}>
-            <div>
-              <h3>Jobs List</h3>
-            </div>
+          <div>
+            <SearchBar type="job" title="Type title or services" />
+          </div>
+          <div className={`${style.filter}`}>
+            <i
+              className="fa fa-filter dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            ></i>
+            {/* drop-down-menu */}
+            <div
+              className={`dropdown-menu`}
+              aria-labelledby="dropdownMenuLink"
+            >
+              <h5 className="dropdown-item">Sort</h5>
+              <hr />
 
-            <div>
-              <SearchBar type="job" title="Type title or services" />
-            </div>
-            <div className={`${style.filter}`}>
-              <i
-                className="fa fa-filter dropdown-toggle"
-                href="#"
-                role="button"
-                id="dropdownMenuLink"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              ></i>
-              {/* drop-down-menu */}
-              <div
-                className={`dropdown-menu`}
-                aria-labelledby="dropdownMenuLink"
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={value}
+                onChange={handleChange}
+
               >
-                <h5 className="dropdown-item">Sort</h5>
-                <hr />
-
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value={value}
-                  onChange={this.handleChange}
-                
-                >
-                  <FormControlLabel
-                    value="recently added"
-                    control={<Radio />}
-                    label="Recently Added"
-                    className="dropdown-item"
-                    onClick={this.handleRecentlyAdded}
-                  />
-
-                  <FormControlLabel
-                    value="title"
-                    control={<Radio />}
-                    label="Title"
-                    className="dropdown-item"
-                    onClick={this.handleSortByTitle}
-                  />
-                  <FormControlLabel
-                    value="assignee required"
-                    control={<Radio />}
-                    label="Assignee Required"
-                    className="dropdown-item"
-                    onClick={this.handleAssigneeRequired}
-                  />
-                </RadioGroup>
-                <hr />
-                <h5 className="dropdown-item">Filters</h5>
-                <hr />
-                <h6 className="dropdown-item">On Date Jobs</h6>
-                <input
-                  type="date"
-                  name="dates"
-                  value={dates}
-                  id=""
-                  className={style.styleDates}
-                  onChange={(e) => this.filterOnDateJobs(e)}
+                <FormControlLabel
+                  value="recently added"
+                  control={<Radio />}
+                  label="Recently Added"
+                  className="dropdown-item"
+                  onClick={handleRecentlyAdded}
                 />
-                <h6 className="dropdown-item">Upcoming Jobs</h6>
-                <input
-                  type="date"
-                  name="nearestDate"
-                  value={nearestDate}
-                  id=""
-                  className={style.styleDates}
-                  onChange={(e) => this.filterUpComingJobs(e)}
+
+                <FormControlLabel
+                  value="title"
+                  control={<Radio />}
+                  label="Title"
+                  className="dropdown-item"
+                  onClick={handleSortByTitle}
                 />
-              </div>
+                <FormControlLabel
+                  value="assignee required"
+                  control={<Radio />}
+                  label="Assignee Required"
+                  className="dropdown-item"
+                  onClick={handleAssigneeRequired}
+                />
+              </RadioGroup>
+              <hr />
+              <h5 className="dropdown-item">Filters</h5>
+              <hr />
+              <h6 className="dropdown-item">On Date Jobs</h6>
+              <input
+                type="date"
+                name="dates"
+                value={dates}
+                id=""
+                className={style.styleDates}
+                onChange={(e) => filterOnDateJobs(e)}
+              />
+              <h6 className="dropdown-item">Upcoming Jobs</h6>
+              <input
+                type="date"
+                name="nearestDate"
+                value={nearestDate}
+                id=""
+                className={style.styleDates}
+                onChange={(e) => filterUpComingJobs(e)}
+              />
             </div>
-            <div className={style.btnStyle}>
-              <Link to="/job/add" className={style.link}>
-                <Button className={style.btn}>Create New</Button>
-              </Link>
+          </div>
+          <div className={style.btnStyle}>
+            <Link to="/job/add" className={style.link}>
+              <Button className={style.btn}>Create New</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {docs && docs.length > 0 ? (
+        <div>
+          <div className={style.jobListHeaderContainer}>
+            <div className={style.jobListHeader}>
+              <div>Title</div>
+              <div>Date(s)</div>
+              <div>Assignee</div>
+              <div>Services</div>
+              <div>Status</div>
+              {user && user.role === "admin" && <div>Actions</div>}
+            </div>
+          </div>
+          <div>
+            {docs.map((job, i) => {
+              return (
+                <div className={style.listContainer} key={i}>
+                  <div className={`${style.listContent}`}>
+                    <Link
+                      key={i}
+                      className={style.styleLink}
+                      to={{
+                        pathname: `/job/detail/${job._id}`,
+                        jobProps: job,
+                      }}
+                    >
+                      <div className={`${style.jobList}`}>
+                        <div
+                          className={`${style.title} ${style.flex} ${style.item}`}
+                        >
+                          {job.title}
+                        </div>
+                        <div
+                          className={`${style.date} ${style.flex} ${style.item}`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faCalendarAlt}
+                            className={style.icon}
+                          />{" "}
+                          <span className={style.styleSpan}>
+                            {/* show 1st item of date array on jobList */}
+                            {job.dates[0]}
+                            {job.dates.length > 1 && (
+                              <div>
+                                <Typography
+                                  aria-owns={
+                                    open ? "mouse-over-popover" : undefined
+                                  }
+                                  aria-haspopup="true"
+                                  onMouseEnter={(e) =>
+                                    handleDatePopoverOpen(e, job._id)
+                                  }
+                                  onMouseLeave={handleDatePopoverClose}
+                                >
+                                  ...
+                                  </Typography>
+
+                                <Popover
+                                  id="mouse-over-popover"
+                                  className={classes.popover}
+                                  classes={{
+                                    paper: classes.paper,
+                                  }}
+                                  open={
+                                    state.openedDatePopoverId === job._id
+                                  }
+                                  anchorEl={state.anchorEl}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                  }}
+                                  disableRestoreFocus
+                                >
+                                  {job.dates.map((date, i) => (
+                                    <Typography key={i}>{date}</Typography>
+                                  ))}
+                                </Popover>
+                              </div>
+                            )}
+                          </span>
+                        </div>
+                        <div
+                          className={`${style.assignee} ${style.flex}  ${style.item}`}
+                        >
+                          <span className={style.styleSpan}>
+                            <FontAwesomeIcon
+                              icon={faUser}
+                              className={style.icon}
+                            />
+                            {job.assignee.length > 0
+                              ? job.assignee[0].name
+                              : "N/A"}
+
+                            {job.assignee.length > 1 && (
+                              <div>
+                                <Typography
+                                  aria-owns={
+                                    open ? "mouse-over-popover" : undefined
+                                  }
+                                  aria-haspopup="true"
+                                  onMouseEnter={(e) =>
+                                    handleAssigneePopoverOpen(e, job._id)
+                                  }
+                                  onMouseLeave={
+                                    handleAssigneePopoverClose
+                                  }
+                                >
+                                  ...
+                                  </Typography>
+
+                                <Popover
+                                  id="mouse-over-popover"
+                                  className={classes.popover}
+                                  classes={{
+                                    paper: classes.paper,
+                                  }}
+                                  open={
+                                    state.openedAssigneePopoverId ===
+                                    job._id
+                                  }
+                                  anchorEl={state.anchorEl}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                  }}
+                                  disableRestoreFocus
+                                >
+                                  {job.assignee.map((assignee, i) => (
+                                    <Typography key={i}>
+                                      {assignee.name}
+                                    </Typography>
+                                  ))}
+                                </Popover>
+                              </div>
+                            )}
+                          </span>
+                        </div>
+                        <div
+                          className={`${style.services} ${style.flex} ${style.item}`}
+                        >
+                          <div className={style.styleSpan}>
+                            {job.services ? job.services[0].name : null}
+                            {job.services.length > 1 && (
+                              <div>
+                                <Typography
+                                  aria-owns={
+                                    open ? "mouse-over-popover" : undefined
+                                  }
+                                  aria-haspopup="true"
+                                  onMouseEnter={(e) =>
+                                    handleServicePopoverOpen(e, job._id)
+                                  }
+                                  onMouseLeave={
+                                    handleServicePopoverClose
+                                  }
+                                >
+                                  ...
+                                  </Typography>
+
+                                <Popover
+                                  id="mouse-over-popover"
+                                  className={classes.popover}
+                                  classes={{
+                                    paper: classes.paper,
+                                  }}
+                                  open={
+                                    state.openedPopoverId === job._id
+                                  }
+                                  anchorEl={state.anchorEl}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                  }}
+                                  disableRestoreFocus
+                                >
+                                  {job.services.map((service, i) => (
+                                    <Typography key={i}>
+                                      {service.name}
+                                    </Typography>
+                                  ))}
+                                </Popover>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          className={`${style.status} ${style.flex} ${style.item}`}
+                        >
+                          {job.status}
+                        </div>
+                      </div>
+                    </Link>
+                    {user && user.role === "admin" && (
+                      <div className={`${style.actions} ${style.flex} `}>
+                        <Button
+                          onClick={() => openDeleteModal(i, job._id)}
+                        >
+                          Delete
+                          </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* pagination for multiple pages */}
+          <div className={style.stylePagination}>
+            <div className={style.pagination}>
+              <Pagination
+                itemCount={totalCount}
+                pageSize={10}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>
-
-        {jobs?.docs?.length > 0 ? (
-          <div>
-            <div className={style.jobListHeaderContainer}>
-              <div className={style.jobListHeader}>
-                <div>Title</div>
-                <div>Date(s)</div>
-                <div>Assignee</div>
-                <div>Services</div>
-                <div>Status</div>
-                {this.props.user?.role === "admin" && <div>Actions</div>}
-              </div>
-            </div>
-
-            <div>
-              {jobs?.docs.map((job, i) => {
-                return (
-                  <div className={style.listContainer} key={i}>
-                    <div className={`${style.listContent}`}>
-                      <Link
-                        key={i}
-                        className={style.styleLink}
-                        to={{
-                          pathname: `/job/detail/${job._id}`,
-                          jobProps: job,
-                        }}
-                      >
-                        <div className={`${style.jobList}`}>
-                          <div
-                            className={`${style.title} ${style.flex} ${style.item}`}
-                          >
-                            {job.title}
-                          </div>
-                          <div
-                            className={`${style.date} ${style.flex} ${style.item}`}
-                          >
-                            <FontAwesomeIcon
-                              icon={faCalendarAlt}
-                              className={style.icon}
-                            />{" "}
-                            <span className={style.styleSpan}>
-                              {/* show 1st item of date array on jobList */}
-                              {job.dates[0]}
-                              {job.dates.length > 1 && (
-                                <div>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleDatePopoverOpen(e, job._id)
-                                    }
-                                    onMouseLeave={this.handleDatePopoverClose}
-                                  >
-                                    ...
-                                  </Typography>
-
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedDatePopoverId === job._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    disableRestoreFocus
-                                  >
-                                    {job.dates.map((date, i) => (
-                                      <Typography key={i}>{date}</Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
-                            </span>
-                          </div>
-                          <div
-                            className={`${style.assignee} ${style.flex}  ${style.item}`}
-                          >
-                            <span className={style.styleSpan}>
-                              <FontAwesomeIcon
-                                icon={faUser}
-                                className={style.icon}
-                              />
-                              {job.assignee.length > 0
-                                ? job.assignee[0].name
-                                : "N/A"}
-
-                              {job.assignee.length > 1 && (
-                                <div>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleAssigneePopoverOpen(e, job._id)
-                                    }
-                                    onMouseLeave={
-                                      this.handleAssigneePopoverClose
-                                    }
-                                  >
-                                    ...
-                                  </Typography>
-
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedAssigneePopoverId ===
-                                      job._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    disableRestoreFocus
-                                  >
-                                    {job.assignee.map((assignee, i) => (
-                                      <Typography key={i}>
-                                        {assignee.name}
-                                      </Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
-                            </span>
-                          </div>
-                          <div
-                            className={`${style.services} ${style.flex} ${style.item}`}
-                          >
-                            <div className={style.styleSpan}>
-                              {job.services ? job.services[0].name : null}
-                              {job.services.length > 1 && (
-                                <div>
-                                  <Typography
-                                    aria-owns={
-                                      open ? "mouse-over-popover" : undefined
-                                    }
-                                    aria-haspopup="true"
-                                    onMouseEnter={(e) =>
-                                      this.handleServicePopoverOpen(e, job._id)
-                                    }
-                                    onMouseLeave={
-                                      this.handleServicePopoverClose
-                                    }
-                                  >
-                                    ...
-                                  </Typography>
-
-                                  <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                      paper: classes.paper,
-                                    }}
-                                    open={
-                                      this.state.openedPopoverId === job._id
-                                    }
-                                    anchorEl={this.state.anchorEl}
-                                    anchorOrigin={{
-                                      vertical: "bottom",
-                                      horizontal: "left",
-                                    }}
-                                    transformOrigin={{
-                                      vertical: "top",
-                                      horizontal: "left",
-                                    }}
-                                    disableRestoreFocus
-                                  >
-                                    {job.services.map((service, i) => (
-                                      <Typography key={i}>
-                                        {service.name}
-                                      </Typography>
-                                    ))}
-                                  </Popover>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div
-                            className={`${style.status} ${style.flex} ${style.item}`}
-                          >
-                            {job.status}
-                          </div>
-                        </div>
-                      </Link>
-                      {user?.role === "admin" && (
-                        <div className={`${style.actions} ${style.flex} `}>
-                          <Button
-                            onClick={() => this.openDeleteModal(i, job._id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            {/* pagination for multiple pages */}
-            <div className={style.stylePagination}>
-              <div className={style.pagination}>
-                <Pagination
-                  itemCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
-                />
-              </div>
-            </div>
-          </div>
-        ) : (
+      ) : (
           <div className="text-center">
             <img src="/images/no-data-found.png" alt="No Data Found" />
           </div>
         )}
-        {/* Modal for delete job */}
-       
-         <DeleteConfirmation
+      {/* Modal for delete job */}
+
+      <DeleteConfirmation
         show={showDeleteModal}
-        handleClose={this.closeDeleteModal}
+        handleClose={closeDeleteModal}
         type="Job"
-        deleteItem={this.removeJob}
+        deleteItem={removeJob}
       />
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 var mapStateToProps = (state) => ({
-  jobs: state.jobs?.jobList,
-  user: state.users.user,
+  jobs: state.jobs.jobList,
+  user: state.users.user
 });
 
 var actions = {

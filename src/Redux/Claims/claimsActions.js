@@ -92,12 +92,18 @@ export var getClaim = (claimId) => {
 }
 
 export var deleteClaim = (id, currentPage) => {
-  var body = {
-    page: currentPage
-  }
+
   return async (dispatch) => {
     try {
-      var getAllClaimsExceptDeleteOne = await Axios.delete(`claim/${id}`, body)
+      let body = {
+        page: currentPage
+      }
+      console.log(body)
+      var getAllClaimsExceptDeleteOne = await Axios.delete(`claim/${id}`, {
+        data: {
+          page: currentPage
+        }
+      })
       if (getAllClaimsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
         dispatch({

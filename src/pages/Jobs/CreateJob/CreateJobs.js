@@ -414,7 +414,6 @@ class CreateJobs extends Component {
   //services changed
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "id");
-    console.log(arr);
     this.setState({ services: arr });
     if (arr.length > 0) {
       this.setState({ multiError: "" });

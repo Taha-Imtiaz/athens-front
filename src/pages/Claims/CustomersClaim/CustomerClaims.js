@@ -7,8 +7,8 @@ import { getAllClaims, deleteClaim } from "../../../Redux/Claims/claimsActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
-import TimeAgo from "react-timeago";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+import Claims from "../../../components/Claims/Claims";
 
 const CustomerClaims = (props) => {
   var { getAllClaims, claims, user } = props;
@@ -65,18 +65,9 @@ const CustomerClaims = (props) => {
     getAllClaims(claimsObj);
   };
 
-  var removeClaim = () => {
+  var removeClaim = (id) => {
     var { deleteClaim } = props;
-    deleteClaim(claimToDelete, currentPage);
-    setShow(false);
-  };
-
-  var handleShow = (i, jobId) => {
-    setClaimToDelete(jobId);
-    setShow(true);
-  };
-
-  var handleClose = () => {
+    deleteClaim(id, currentPage);
     setShow(false);
   };
 
@@ -143,75 +134,12 @@ const CustomerClaims = (props) => {
         </div>
       )}
       {claims && claims.docs.length > 0 ? (
-        <div>
-          <div className={style.claimListHeaderContainer}>
-            <div className={style.claimListHeader}>
-              <div>Name</div>
-              <div>Status</div>
-              <div> Waiting To</div>
-              <div>Last Update</div>
-              {user && user.role === "admin" && <div>Actions</div>}
-            </div>
-          </div>
-
-          <div>
-            {claims.docs &&
-              claims.docs.map((x, i) => {
-                return (
-                  <div className={style.listContainer} key={i}>
-                    <div className={`${style.listContent}`}>
-                      <Link
-                        className={style.styleLink}
-                        to={{
-                          pathname: `/claim/detail/${x._id}`,
-                          claimsId: x._id,
-                        }}
-                      >
-                        {" "}
-                        <div className={style.claimList}>
-                          <div className={`${style.item} ${style.center}`}>
-                            {x.customer.firstName} {x.customer.lastName}
-                          </div>
-                          <div className={`${style.item} ${style.center}`}>
-                            {x.status.toLocaleUpperCase()}
-                          </div>
-                          <div className={`${style.item} ${style.center}`}>
-                            {x.waitTo}
-                          </div>
-
-                          <div className={`${style.item} ${style.center}`}>
-                            {x.updates.length > 0 ? (
-                              <div>
-                                {<TimeAgo date={x.updates[0].timestamp} />}
-                              </div>
-                            ) : (
-                              <div>
-                                <TimeAgo date={x.createdAt} />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </Link>
-
-                      {user && user.role === "admin" && (
-                        <div className={`${style.center} ${style.actions}`}>
-                          <Button onClick={() => handleShow(i, x._id)}>
-                            Delete
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-          {/* </ul> */}
-        </div>
+        <Claims items={claims} user={user} delete={removeClaim} />
       ) : (
-        <div className="text-center">
-          <img src="/images/no-data-found.png" alt="No data found" />
-        </div>
-      )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" alt="No data found" />
+          </div>
+        )}
       <div className={style.stylePagination}>
         <div className={style.pagination}>
           <Pagination
@@ -222,13 +150,6 @@ const CustomerClaims = (props) => {
           />
         </div>
       </div>
-
-      <DeleteConfirmation
-        show={show}
-        handleClose={handleClose}
-        type="Claim"
-        deleteItem={removeClaim}
-      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./UsersList.module.css";
-import { Button } from "@material-ui/core";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -11,6 +11,8 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 const UsersList = (props) => {
 
   var [currentPage, setCurrentPage] = useState(1);
+  var [filterType, setFilterType] = useState('');
+
   var { users, getUsers } = props;
 
   useEffect(() => {
@@ -36,14 +38,16 @@ const UsersList = (props) => {
     setCurrentPage(page);
   };
 
-  var handleFilter = (name) => {
+  var handleFilter = (e) => {
+    let value = e.target.value;
     let sortUserObj = {
       query: "",
       filter: {
-        type: name,
+        type: value,
       },
       page: 1
     };
+    setFilterType(value)
     getUsers(sortUserObj);
     setCurrentPage(1);
   };
@@ -76,7 +80,7 @@ const UsersList = (props) => {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <p
+                  {/* <p
                     className="dropdown-item"
                     onClick={() => handleFilter("mover")}
                   >
@@ -87,7 +91,33 @@ const UsersList = (props) => {
                     onClick={() => handleFilter("manager")}
                   >
                     Managers
-                  </p>
+                  </p> */}
+                  <RadioGroup
+                    aria-label="Filter"
+                    name="Filter"
+                    value={filterType}
+                    onChange={(e) => handleFilter(e)}
+                  >
+                    <FormControlLabel
+                      value=""
+                      control={<Radio />}
+                      label="All"
+                      className="dropdown-item"
+                    />
+                    <FormControlLabel
+                      value="mover"
+                      control={<Radio />}
+                      label="Movers"
+                      className="dropdown-item"
+                    />
+                    <FormControlLabel
+                      value="manager"
+                      control={<Radio />}
+                      label="Manager"
+                      className="dropdown-item"
+                    />
+                  </RadioGroup>
+
                 </div>
               </div>
 

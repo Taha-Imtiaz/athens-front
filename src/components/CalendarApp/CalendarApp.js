@@ -69,17 +69,17 @@ const CalendarApp = (props) => {
 
   //handler called when we change date
   const changeDate = (x) => {
-    console.log(x)
+    let date = x;
     let { user } = props;
     let body;
     if (user.role === "mover") {
       body = {
-        date: x.toDateString(),
+        date: date.toDateString(),
         id: user._id,
       };
     } else {
       body = {
-        date: x.toDateString(),
+        date: date.toDateString(),
       };
     }
     getJobsByDate(body).then((res) => {
@@ -94,7 +94,7 @@ const CalendarApp = (props) => {
             id: x._id,
           };
           jobs.push(obj);
-          if (y === new Date().toDateString()) {
+          if (y === date.toDateString()) {
             currentDayJobs.push(x);
           }
         });
@@ -106,14 +106,11 @@ const CalendarApp = (props) => {
         jobs: res.data.data,
         date: x
       });
-      console.log(currentDayJobs)
     });
   };
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
-    console.log(e)
-
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
     setState({
@@ -124,7 +121,6 @@ const CalendarApp = (props) => {
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
-    console.log(e)
     let jobs = cloneDeep(state.jobs);
     let currentDayJobs = [];
     jobs.forEach((x) => {

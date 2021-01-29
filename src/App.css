@@ -76,6 +76,16 @@ body {
   width: 100% !important;
   text-align: left !important;
 }
+
+.rbc-event-content {
+  font-size: 13px !important;
+  margin-bottom: 1px !important;
+}
+
+.rbc-show-more {
+  color: #00adee !important;
+}
+
 /* styling all radio buttons */
 .MuiFormControlLabel-root {
   cursor: pointer !important;
@@ -86,3 +96,4 @@ body {
   vertical-align: middle !important;
   -webkit-tap-highlight-color: transparent !important;
 }
+

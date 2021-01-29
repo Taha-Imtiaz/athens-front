@@ -1,24 +1,21 @@
 import React, { useEffect, useState, Children } from "react";
-import { getCurrentDayJob, getJobsByDate } from "../../Redux/Job/jobActions";
+import { getJobsByDate } from "../../Redux/Job/jobActions";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { connect } from "react-redux";
 import "react-calendar/dist/Calendar.css";
-
 import style from "./CalendarApp.module.css";
 import Chip from "@material-ui/core/Chip";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { cloneDeep } from "lodash";
-import { CodeSharp } from "@material-ui/icons";
 
 const localizer = momentLocalizer(moment);
 
 const CalendarApp = (props) => {
   const [state, setState] = useState({
     date: new Date(),
-    job: "",
     myEventsList: [],
     currentDayJobs: [],
     jobs: [],
@@ -29,7 +26,6 @@ const CalendarApp = (props) => {
     let body;
     if (user) {
       if (user.role === "mover") {
-        console.log(user);
         body = {
           date: new Date().toDateString(),
           id: user._id,
@@ -41,7 +37,6 @@ const CalendarApp = (props) => {
       }
       //fetch jobs of current month
       getJobsByDate(body).then((res) => {
-        console.log(res);
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {
@@ -55,7 +50,7 @@ const CalendarApp = (props) => {
             };
             jobs.push(obj);
             // Set Current Date Jobs
-            if (y == new Date().toDateString()) {
+            if (y === new Date().toDateString()) {
               currentDayJobs.push(x);
             }
           });
@@ -65,14 +60,16 @@ const CalendarApp = (props) => {
           myEventsList: jobs,
           currentDayJobs,
           jobs: res.data.data,
-          
+
         });
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   //handler called when we change date
   const changeDate = (x) => {
+    console.log(x)
     let { user } = props;
     let body;
     if (user.role === "mover") {
@@ -97,7 +94,7 @@ const CalendarApp = (props) => {
             id: x._id,
           };
           jobs.push(obj);
-          if (y == new Date().toDateString()) {
+          if (y === new Date().toDateString()) {
             currentDayJobs.push(x);
           }
         });
@@ -107,17 +104,18 @@ const CalendarApp = (props) => {
         myEventsList: jobs,
         currentDayJobs,
         jobs: res.data.data,
+        date: x
       });
+      console.log(currentDayJobs)
     });
   };
 
-  const setCurrentDayJobs = (jobs) => {};
-
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
+    console.log(e)
+
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
-    console.log(jobs[index]);
     setState({
       ...state,
       currentDayJobs: [jobs[index]],
@@ -126,12 +124,12 @@ const CalendarApp = (props) => {
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
+    console.log(e)
     let jobs = cloneDeep(state.jobs);
-    console.log(e.end)
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
-        if (y == e.end.toDateString()) {
+        if (y === e.end.toDateString()) {
           currentDayJobs.push(x);
         }
       });
@@ -139,7 +137,7 @@ const CalendarApp = (props) => {
     setState({
       ...state,
       currentDayJobs,
-      date:e.end
+      date: e.end
     });
   };
 
@@ -170,7 +168,7 @@ const CalendarApp = (props) => {
     var strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
-  console.log(state.date.toDateString());
+
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>
@@ -189,11 +187,6 @@ const CalendarApp = (props) => {
             onNavigate={changeDate}
             onSelectEvent={getJobDetails}
             onSelectSlot={getJobDetailsOnSlotClick}
-            // selected = {true}
-            // slotPropGetter={(date) => {
-            //   return { style: { backgroundColor: '#3174ad', borderTop: '1px solid #3174ad' } }
-            // }
-            // }
             components={{
               // you have to pass your custom wrapper here
               // so that it actually gets used
@@ -203,7 +196,7 @@ const CalendarApp = (props) => {
         </div>
 
         <div className={style.sideContent}>
-          {state?.currentDayJobs?.length ? (
+          {state.currentDayJobs.length ? (
             <div>
               <h5 className={style.flex}>{state.date.toDateString()}</h5> <hr />
               {state.currentDayJobs.map((job, i) => (
@@ -216,7 +209,6 @@ const CalendarApp = (props) => {
                       <div
                         className="collapsed"
                         aria-expanded="false"
-                        // onClick = {(e) =>toggleCollapse(e, i,job._id)}
                         data-toggle="collapse"
                         data-target={`#collapse${i}`}
                         aria-controls="collapse"
@@ -283,14 +275,14 @@ const CalendarApp = (props) => {
               ))}
             </div>
           ) : (
-            <div>
-              <h5 className={style.flex}>{state.date.toDateString()}</h5>
-              <hr />
-              <h5>
-                <img src="/images/no-data-found.png" alt="" />
-              </h5>
-            </div>
-          )}
+              <div>
+                <h5 className={style.flex}>{state.date.toDateString()}</h5>
+                <hr />
+                <h5>
+                  <img src="/images/no-data-found.png" alt="" />
+                </h5>
+              </div>
+            )}
         </div>
       </div>
     </div>

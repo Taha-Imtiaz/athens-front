@@ -16,13 +16,13 @@ class Payment extends Component {
   };
 
   changeHandler = (e) => {
-    var { name, value } = e.target;
+    let { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
-      var s = window.document.createElement("script");
+      let s = window.document.createElement("script");
       s.id = "stripe-script";
       s.type = "text/javascript";
       s.src = "https://js.stripe.com/v2/";

@@ -2,10 +2,10 @@ import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 import Axios from "../../utils/api";
 import { showMessage } from "../Common/commonActions";
 
-export var login = (credentials, callback) => {
+export const login = (credentials, callback) => {
   return async (diaspatch) => {
     try {
-      var user = await Axios.post("user/login", credentials);
+      const user = await Axios.post("user/login", credentials);
       if (user.data.status === 200) {
         localStorage.setItem("athens-token", user.data.token);
         diaspatch(showMessage(user.data.message));
@@ -25,7 +25,7 @@ export var login = (credentials, callback) => {
   };
 };
 
-export var getLoginUser = (credentials) => {
+export const getLoginUser = (credentials) => {
   return async (diaspatch) => {
     try {
       const token = localStorage.getItem("athens-token");
@@ -33,7 +33,7 @@ export var getLoginUser = (credentials) => {
         headers: { Authorization: token },
       };
 
-      var user = await Axios.get("user", config);
+      const user = await Axios.get("user", config);
 
       if (user.data.status === 200) {
         diaspatch({
@@ -51,10 +51,10 @@ export var getLoginUser = (credentials) => {
   };
 };
 
-export var getUsers = (UsersObj) => {
+export const getUsers = (UsersObj) => {
   return async (diaspatch) => {
     try {
-      var getUsersList = await Axios.post("user/all", UsersObj);
+      const getUsersList = await Axios.post("user/all", UsersObj);
       diaspatch({
         type: GET_USERS,
         payload: {
@@ -67,28 +67,28 @@ export var getUsers = (UsersObj) => {
   };
 };
 
-export var createUser = async (newUserObj) => {
+export const createUser = async (newUserObj) => {
   // return async (dispatch) => {
   try {
-    var createdUser = await Axios.post("user", newUserObj);
+    const createdUser = await Axios.post("user", newUserObj);
     // dispatch(showMessage(createdUser.data.message))
     return createdUser;
   } catch (error) {}
   // }
 };
 
-export var getUserData = async (userId) => {
+export const getUserData = async (userId) => {
   try {
-    var getUser = await Axios.get(`user/${userId}`);
+    const getUser = await Axios.get(`user/${userId}`);
     return getUser;
   } catch (error) {
     console.log(error);
   }
 };
-export var updateUser = (data, userId) => {
+export const updateUser = (data, userId) => {
   return async (dispatch) => {
     try {
-      var updatedUser = await Axios.put(`user/${userId}`, data);
+      const updatedUser = await Axios.put(`user/${userId}`, data);
 
       if (updatedUser.data.status === 200) {
         // diaspatch({
@@ -110,22 +110,22 @@ export var updateUser = (data, userId) => {
     }
   };
 };
-export var sendCode = async (email) => {
+export const sendCode = async (email) => {
   try {
-    var verifyEmail = await Axios.post("user/forgot-password", email);
+    const verifyEmail = await Axios.post("user/forgot-password", email);
     return verifyEmail;
   } catch (error) {
     console.log(error);
   }
 };
-export var verifyCode = (verifyCodeObj, callback) => {
+export const verifyCode = (verifyCodeObj, callback) => {
   return async (dispatch) => {
     try {
       const config = {
         headers: { Authorization: verifyCodeObj.token },
       };
 
-      var verifyCode = await Axios.post("user/verify", verifyCodeObj, config);
+      const verifyCode = await Axios.post("user/verify", verifyCodeObj, config);
       if (verifyCode.data.status === 200) {
         localStorage.setItem("athens-token", verifyCode.data.token);
         // callback()
@@ -147,12 +147,12 @@ export var verifyCode = (verifyCodeObj, callback) => {
     }
   };
 };
-export var resetPassword = async (passwordObj) => {
+export const resetPassword = async (passwordObj) => {
   try {
     const config = {
       headers: { Authorization: passwordObj.token },
     };
-    var newPassword = await Axios.put("user", passwordObj, config);
+    const newPassword = await Axios.put("user", passwordObj, config);
     return newPassword;
   } catch (error) {
     console.log(error);

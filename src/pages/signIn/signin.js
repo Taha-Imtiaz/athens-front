@@ -41,7 +41,7 @@ class SignInForm extends React.Component {
     let emailError = "";
     let passwordError = "";
 
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!this.state.email.match(mailformat)) {
       emailError = "Invalid Email";
@@ -63,7 +63,7 @@ class SignInForm extends React.Component {
     e.preventDefault();
 
     const isValid = this.validate();
-    var { login } = this.props;
+    let { login } = this.props;
     if (isValid) {
       let obj = {
         email: this.state.email,
@@ -80,7 +80,7 @@ class SignInForm extends React.Component {
   };
 
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     this.setState({ [name]: value });
     if (!value) {
       this.setState({ [name + "Error"]: name + " is required" });

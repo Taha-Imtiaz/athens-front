@@ -34,8 +34,8 @@ const styles = (theme) => ({
 
 const JobsList = (props) => {
   //defining state
-  var { getAllJobs, jobs, user } = props;
-  var totalCount = 0;
+  let { getAllJobs, jobs, user } = props;
+  let totalCount = 0;
   if (jobs) {
     var { docs } = jobs;
     totalCount = jobs.total;
@@ -62,7 +62,7 @@ const JobsList = (props) => {
 
   useEffect(() => {
     //fetch all jobs on page load
-    var jobObj = {
+    let jobObj = {
       query: "",
       sort: {
         assigneeRequired: null,
@@ -77,8 +77,8 @@ const JobsList = (props) => {
 
   const handlePageChange = (page) => {
     //fetch jobs when the page is changed
-    var { getAllJobs } = props;
-    var fetchJobsOnPageChange;
+    let { getAllJobs } = props;
+    let fetchJobsOnPageChange;
     //sort the jobList by name in ascending order when sort by name is checked
     if (state.sortByName === true) {
       fetchJobsOnPageChange = {
@@ -151,14 +151,14 @@ const JobsList = (props) => {
   };
   //sort the jobList by title
   const handleSortByTitle = () => {
-    var { getAllJobs } = props;
+    let { getAllJobs } = props;
     setState({
       ...state,
       sortByName: true,
       assigneeRequired: false,
       recentlyAdded: false,
     });
-    var fetchJobsOnPageChange = {
+    let fetchJobsOnPageChange = {
       query: "",
       sort: {
         startDate: null,
@@ -180,14 +180,14 @@ const JobsList = (props) => {
   };
   //filter todays(onDate) jobs
   const filterOnDateJobs = (e) => {
-    var { filterJobsByDate } = props;
+    let { filterJobsByDate } = props;
     setState({
       ...state,
       dates: e.target.value,
     });
 
     let date = new Date(e.target.value);
-    var DateFilters = {
+    let DateFilters = {
       filters: {
         dates: date.toString(),
         movedDate: "",
@@ -206,14 +206,14 @@ const JobsList = (props) => {
 
   //filter upcoming jobs
   const filterUpComingJobs = (e) => {
-    var { filterJobsByDate } = props;
+    let { filterJobsByDate } = props;
     setState({
       ...state,
       nearestDate: e.target.value,
     });
 
     let date = new Date(e.target.value);
-    var DateFilters = {
+    let DateFilters = {
       filters: {
         dates: "",
         startYearMonth: "",
@@ -230,14 +230,14 @@ const JobsList = (props) => {
   };
   //sort jobList by recently added(when recentlyAdded is clicked)
   const handleRecentlyAdded = () => {
-    var { getAllJobs } = props;
+    let { getAllJobs } = props;
     setState({
       ...state,
       recentlyAdded: true,
       sortByName: false,
       assigneeRequired: false,
     });
-    var fetchJobsOnPageChange = {
+    let fetchJobsOnPageChange = {
       query: "",
       sort: {
         assigneeRequired: null,
@@ -254,7 +254,7 @@ const JobsList = (props) => {
   };
   //sort the jobList by assignee required(when assigneeRequired is clicked)
   const handleAssigneeRequired = () => {
-    var { getAllJobs } = props;
+    let { getAllJobs } = props;
     setState({
       ...state,
       assigneeRequired: true,
@@ -262,7 +262,7 @@ const JobsList = (props) => {
       recentlyAdded: false,
     });
 
-    var fetchJobsOnPageChange = {
+    let fetchJobsOnPageChange = {
       query: "",
       sort: {
         assigneeRequired: -1,
@@ -330,8 +330,8 @@ const JobsList = (props) => {
 
   const removeJob = () => {
     //removes job from jobList
-    var { deleteJob } = props;
-    var { currentPage } = state;
+    let { deleteJob } = props;
+    let { currentPage } = state;
     deleteJob(state.jobToDelete, currentPage);
     setState({
       ...state,
@@ -362,10 +362,10 @@ const JobsList = (props) => {
     });
   };
 
-  var { currentPage } = state;
-  var { classes } = props;
+  let { currentPage } = state;
+  let { classes } = props;
   const open = Boolean(state.anchorEl);
-  var { showDeleteModal, dates, nearestDate, value } = state;
+  let { showDeleteModal, dates, nearestDate, value } = state;
 
   return (
     <div>

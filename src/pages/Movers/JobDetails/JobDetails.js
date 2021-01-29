@@ -15,8 +15,8 @@ import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MoversJobDetails = (props) => {
-  var { getMoverJobDetail } = props;
-  var {
+  let { getMoverJobDetail } = props;
+  let {
     match: {
       params: { jobId },
     },
@@ -35,7 +35,7 @@ const MoversJobDetails = (props) => {
       }
     });
   };
-  var { job } = props;
+  let { job } = props;
   return (
     <div className={style.jobEditContainer}>
       {job && (

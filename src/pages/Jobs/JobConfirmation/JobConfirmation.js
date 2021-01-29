@@ -91,14 +91,14 @@ function JobConfirmation(props) {
       typeof x === "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    var currentDate = new Date("2020-08-18T09:00:00");
+    let currentDate = new Date("2020-08-18T09:00:00");
     job.startTime = currentDate;
     setData(job);
   }, [props.data]);
 
   //onChange handler of time
-  var handleTimeSelect = (date) => {
-    var newData = { ...data };
+  const handleTimeSelect = (date) => {
+    let newData = { ...data };
     newData.startTime = date;
     setData(newData);
   };
@@ -134,7 +134,7 @@ function JobConfirmation(props) {
   };
   //onChange handler of formField
   const handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
     updatedCustomer.customer[name] = value;
     setData(updatedCustomer);
@@ -146,9 +146,9 @@ function JobConfirmation(props) {
     setData(job);
   };
   //handles checkBox state
-  var changeCheckBoxState = (e, i) => {
+  const changeCheckBoxState = (e, i) => {
     e.stopPropagation();
-    var prevState = cloneDeep(data);
+    let prevState = cloneDeep(data);
 
     prevState.locations[i].default = !prevState.locations[i].default;
     if (prevState.locations[i].default) {
@@ -162,8 +162,8 @@ function JobConfirmation(props) {
     setData(prevState);
   };
   //remove date
-  var removeDate = (i) => {
-    var newData = cloneDeep(data);
+  const removeDate = (i) => {
+    let newData = cloneDeep(data);
     newData.dates.splice(i, 1);
     setData(newData);
   };
@@ -273,21 +273,21 @@ function JobConfirmation(props) {
     );
   };
   //add location
-  var addLocation = (e) => {
+  const addLocation = (e) => {
     e.stopPropagation();
 
-    var newData = { ...data };
+    let newData = { ...data };
     newData.locations.push({ type: "", value: "", default: false });
     setData(newData);
   };
   //remove location
-  var removeLocation = (i) => {
-    var newData = { ...data };
+  const removeLocation = (i) => {
+    let newData = { ...data };
     newData.locations.splice(i, 1);
     setData(newData);
   };
   //on change handler of radio buttons
-  var handleInputChange = (e, i) => {
+  const handleInputChange = (e, i) => {
     let { value } = e.target;
     let updateLocation = { ...data };
     updateLocation.locations[i].type = value;
@@ -299,7 +299,7 @@ function JobConfirmation(props) {
   //load stripe
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
-      var s = window.document.createElement("script");
+      let s = window.document.createElement("script");
       s.id = "stripe-script";
       s.type = "text/javascript";
       s.src = "https://js.stripe.com/v2/";
@@ -313,14 +313,14 @@ function JobConfirmation(props) {
   };
   //handler of input fields
   const changeHandler = (e) => {
-    var { name, value } = e.target;
+    let { name, value } = e.target;
     let updatedPayment = cloneDeep(payment);
     updatedPayment[name] = value;
     setPayment(updatedPayment);
   };
   //payment handler
   const pay = (e) => {
-    var { confirmJob, job } = props;
+    let { confirmJob, job } = props;
     window.Stripe.card.createToken(
       {
         number: payment.number,
@@ -360,7 +360,7 @@ function JobConfirmation(props) {
   };
   //without payment submission
   const handleSubmitWithoutPay = () => {
-    var { confirmJob, job } = props;
+    let { confirmJob, job } = props;
     let stringDates = data.dates.map((x) => {
       if (typeof x == "number") {
         return new Date(x).toDateString();

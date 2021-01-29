@@ -45,9 +45,9 @@ class MoversJobsList extends Component {
   };
 
   componentDidMount = () => {
-    var { getMover } = this.props;
+    let { getMover } = this.props;
 
-    var moversObj = {
+    let moversObj = {
       filters: {
         jobStatus: "",
         dates: null,
@@ -75,7 +75,7 @@ class MoversJobsList extends Component {
   markComplete = (list) => {
     updateJob(list._id, { status: "completed" }).then((res) => {
       if (res.data.status === 200) {
-        var { getMover, showMessage } = this.props;
+        let { getMover, showMessage } = this.props;
         showMessage(res.data.message);
         getMover();
       }
@@ -111,12 +111,12 @@ class MoversJobsList extends Component {
   };
 
   handleRecentlyAdded = () => {
-    var { getMover } = this.props;
+    let { getMover } = this.props;
     this.setState({
       recentlyAdded: true,
       sortByStatus: false,
     });
-    var fetchMoverJobs = {
+    let fetchMoverJobs = {
       filters: {
         jobStatus: "",
         dates: "",
@@ -134,13 +134,13 @@ class MoversJobsList extends Component {
   };
 
   filterJobByStatus = (value) => {
-    var { getMover } = this.props;
+    let { getMover } = this.props;
     this.setState({
       recentlyAdded: false,
       sortByStatus: true,
     });
 
-    var fetchMoverJobs = {
+    let fetchMoverJobs = {
       filters: {
         jobStatus: value,
         dates: "",
@@ -158,13 +158,13 @@ class MoversJobsList extends Component {
   };
 
   filterJobByDate = (e) => {
-    var { getMover } = this.props;
+    let { getMover } = this.props;
     this.setState({
       dates: e.target.value,
     });
 
     let date = new Date(e.target.value);
-    var DateFilters = {
+    let DateFilters = {
       filters: {
         dates: date.toDateString(),
         jobStatus: "",
@@ -182,8 +182,8 @@ class MoversJobsList extends Component {
   };
 
   handlePageChange = (page) => {
-    var { getMover } = this.props;
-    var fetchMoverJobs;
+    let { getMover } = this.props;
+    let fetchMoverJobs;
     if (this.state.recentlyAdded === true) {
       fetchMoverJobs = {
         filters: {
@@ -235,10 +235,10 @@ class MoversJobsList extends Component {
 
   render() {
     const { moverJobs, user } = this.props;
-    var { pageSize, currentPage } = this.state;
-    var totalCount = moverJobs?.total;
+    let { pageSize, currentPage } = this.state;
+    let totalCount = moverJobs?.total;
     const open = Boolean(this.state.anchorEl);
-    var { classes } = this.props;
+    const { classes } = this.props;
     if (user) {
       getMover(user._id);
     }

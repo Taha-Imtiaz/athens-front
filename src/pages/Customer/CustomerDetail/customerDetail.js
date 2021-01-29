@@ -19,18 +19,18 @@ import Blankets from "../../../components/Blankets/Blankets";
 import { deleteBlanketDeposit } from "../../../Redux/BlanketDeposit/BlanketDepositActions";
 
 const CustomerDetail = (props) => {
-  var { customer, getCustomer } = props;
+  let { customer, getCustomer } = props;
   //delearing state variables
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [updateIndex, setUpdateIndex] = useState(0);
-  var [blanketValue, setBlanketValue] = useState([]);
-  var [claimCount, setClaimCount] = useState(0);
-  var [value, setValue] = useState(0);
-  var [claims, setClaims] = useState([]);
+  const [blanketValue, setBlanketValue] = useState([]);
+  const [claimCount, setClaimCount] = useState(0);
+  const [value, setValue] = useState(0);
+  const [claims, setClaims] = useState([]);
   
   //get customerId from props
-  var {
+  let {
     match: {
       params: { customerId },
     },
@@ -71,7 +71,7 @@ const CustomerDetail = (props) => {
     let newData = cloneDeep(claims);
    
     newData[updateIndex].updates.unshift(ob);
-    var { showMessage } = props;
+    let { showMessage } = props;
     //Call Update Claim Api to update claim
     updateClaim(newData[updateIndex])
       .then((res) => {
@@ -106,7 +106,7 @@ const CustomerDetail = (props) => {
 
   //tabPanel of material ui
   const TabPanel = (props) => {
-    var { children, value, index, ...other } = props;
+    let { children, value, index, ...other } = props;
     return (
       <div
         // role="tabpanel"
@@ -122,13 +122,14 @@ const CustomerDetail = (props) => {
 
   //close the claim
   const handleCloseClaim = (i) => {
-    var { showMessage } = props;
+    let { showMessage } = props;
     let updatedClaims = cloneDeep(claims);
     updatedClaims[i].status = "closed";
     updateClaim(updatedClaims[i])
       .then((res) => {
         if (res.data.status === 200) {
-          let newCount = --claimCount;
+          let updatedCount  = cloneDeep(claimCount)
+          let newCount = --updatedCount;
           updatedClaims[i].updatedAt = res.data.data.updatedAt;
           setClaimCount(newCount);
           setClaims(updatedClaims);

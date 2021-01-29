@@ -2,7 +2,7 @@ import { GET_CUSTOMER_FORM, SET_CUSTOMER_FORM, GET_JOB_FORM, SET_JOB_FORM, GET_C
 import { EditorState } from 'draft-js';
 
 
-var initialState = {
+let initialState = {
     addCustomerForm: {
         firstName: "",
         lastName: "",
@@ -119,8 +119,8 @@ var initialState = {
         disabled: true,
     },
 };
-var formsReducer = (state = initialState, action) => {
-    var { type, payload } = action;
+const formsReducer = (state = initialState, action) => {
+    let { type, payload } = action;
     switch (type) {
         // CUSTOMER
         case SET_CUSTOMER_FORM:

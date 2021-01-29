@@ -25,7 +25,7 @@ class Availability extends Component {
   };
 
   handleSubmit = (e) => {
-    var { showMessage } = this.props;
+    let { showMessage } = this.props;
     e.preventDefault();
     let obj = {
       weeklySchedule: this.state.weeklySchedule,

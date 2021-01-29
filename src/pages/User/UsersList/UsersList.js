@@ -10,10 +10,10 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 
 const UsersList = (props) => {
 
-  var [currentPage, setCurrentPage] = useState(1);
-  var [filterType, setFilterType] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filterType, setFilterType] = useState('');
 
-  var { users, getUsers } = props;
+  const { users, getUsers } = props;
 
   useEffect(() => {
     let usersObj = {
@@ -26,7 +26,7 @@ const UsersList = (props) => {
     getUsers(usersObj);
   }, [getUsers]);
 
-  var handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     let usersObj = {
       query: "",
       filter: {
@@ -38,7 +38,7 @@ const UsersList = (props) => {
     setCurrentPage(page);
   };
 
-  var handleFilter = (e) => {
+  const handleFilter = (e) => {
     let value = e.target.value;
     let sortUserObj = {
       query: "",

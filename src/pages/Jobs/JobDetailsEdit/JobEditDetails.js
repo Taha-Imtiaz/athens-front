@@ -83,7 +83,7 @@ class JobEditDetails extends Component {
   };
   //validate form if the fields are empty
   handleValidation = () => {
-    var {
+    let {
       title,
       description,
       option,
@@ -111,7 +111,7 @@ class JobEditDetails extends Component {
       });
     }
 
-    var {
+    let {
       titleError,
       descriptionError,
       servicesError,
@@ -134,7 +134,7 @@ class JobEditDetails extends Component {
   };
   //fetch job id on componentDidMount
   componentDidMount = async () => {
-    var {
+    let {
       getJob,
       match: {
         params: { jobId },
@@ -143,7 +143,7 @@ class JobEditDetails extends Component {
 
     await getJob(jobId);
 
-    var { job } = this.props;
+    let { job } = this.props;
     if (job) {
       this.setInitialState(job);
     }
@@ -161,7 +161,7 @@ class JobEditDetails extends Component {
       });
     }
     //fetch services of jobs
-    var services = job.services.map((service, index) => {
+    let services = job.services.map((service, index) => {
       return { id: index + 1, name: service };
     });
 
@@ -196,7 +196,7 @@ class JobEditDetails extends Component {
   };
   //remove location
   removeLocation = (i) => {
-    var location = cloneDeep(this.state.locations);
+    let location = cloneDeep(this.state.locations);
     location.splice(i, 1);
     this.setState({
       locations: location,
@@ -211,7 +211,7 @@ class JobEditDetails extends Component {
   };
   //add note when add note button of modal is pressed
   AddNote = () => {
-    var { newNote, note } = this.state;
+    let { newNote, note } = this.state;
     if (note) {
       let notes = [...this.state.note];
       notes.push({ uid: uuidv4(), text: newNote });
@@ -224,15 +224,15 @@ class JobEditDetails extends Component {
   };
   //onChange handler of form
   handleFormInput = (e) => {
-    var { name, value } = e.target;
+    let { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   };
   //delete ntoe
   handleDeleteNote = (deleteNote) => {
-    var { note } = this.state;
-    var noteToDelete = note.findIndex((n) => n.uid === deleteNote.uid);
+    let { note } = this.state;
+    let noteToDelete = note.findIndex((n) => n.uid === deleteNote.uid);
     if (noteToDelete !== -1) {
       note.splice(noteToDelete, 1);
       this.setState({
@@ -242,14 +242,14 @@ class JobEditDetails extends Component {
   };
   //onChange handler of addNote
   handleAddNote = (e) => {
-    var { value } = e.target;
+    let { value } = e.target;
     this.setState({
       newNote: value,
     });
   };
   //update job
   handleJobUpdate = () => {
-    var {
+    let {
       title,
       dates,
       locations,
@@ -262,13 +262,13 @@ class JobEditDetails extends Component {
       note
     } = this.state;
 
-    var {
+    let {
       match: {
         params: { jobId },
       },
       history,
     } = this.props;
-    var { showMessage } = this.props;
+    let { showMessage } = this.props;
     let stringDates = dates.map((x) => {
       if (typeof x === "number") {
         return new Date(x).toDateString();
@@ -277,8 +277,8 @@ class JobEditDetails extends Component {
       }
     });
 
-    var { loggedinUser } = this.props;
-    var updatedObj = {
+    let { loggedinUser } = this.props;
+    let updatedObj = {
       dates: stringDates,
       title,
       description,
@@ -316,7 +316,7 @@ class JobEditDetails extends Component {
 
   //add new location
   addLocation = () => {
-    var location = cloneDeep(this.state.locations);
+    let location = cloneDeep(this.state.locations);
     this.setState({
       locations: location,
     });
@@ -334,7 +334,7 @@ class JobEditDetails extends Component {
   };
   //change checkBox state
   changeCheckBoxState = (i) => {
-    var prevState = cloneDeep(this.state.locations);
+    let prevState = cloneDeep(this.state.locations);
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
@@ -459,7 +459,7 @@ class JobEditDetails extends Component {
   };
   //remove date upon clicking remove icon
   removeDate = (i) => {
-    var datesArr = cloneDeep(this.state.dates);
+    let datesArr = cloneDeep(this.state.dates);
     datesArr.splice(i, 1);
     this.setState({
       dates: datesArr,
@@ -478,7 +478,7 @@ class JobEditDetails extends Component {
         newService: e.target.value,
       });
       if (e.keyCode === 13 && e.target.value) {
-        var serviceAdded = {
+        let serviceAdded = {
           name: this.state.newService,
           id: Math.random() * 10,
         };
@@ -506,7 +506,7 @@ class JobEditDetails extends Component {
     });
   };
   render() {
-    var {
+    let {
       note,
       show,
     } = this.state;

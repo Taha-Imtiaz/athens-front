@@ -1,11 +1,11 @@
 import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants"
 
 
-var initialState = {
+let initialState = {
     customerList: []
 }
-var customerReducer = (state = initialState, action) => {
-    var { type, payload } = action
+const customerReducer = (state = initialState, action) => {
+    let { type, payload } = action
 
     switch (type) {
 

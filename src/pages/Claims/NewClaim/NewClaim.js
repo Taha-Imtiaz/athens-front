@@ -210,7 +210,7 @@ class NewClaim extends Component {
     this.setState({ ...this.initialState, customers });
   };
   render() {
-    var { showClaimsDetails, customerName } = this.state;
+    let { showClaimsDetails, customerName } = this.state;
     return (
       <div className={style.claimContainer}>
         <div className={`${style.form}`}>

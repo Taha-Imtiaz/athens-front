@@ -133,7 +133,7 @@ class CreateJobs extends Component {
   };
   //handler to add location
   addLocation = () => {
-    var location = cloneDeep(this.state.locations);
+    let location = cloneDeep(this.state.locations);
     location.push({ type: "", value: "", default: false });
     this.setState({
       locations: location,
@@ -147,7 +147,7 @@ class CreateJobs extends Component {
   };
   //remove the selected Date
   removeDate = (i) => {
-    var datesArr = cloneDeep(this.state.dates);
+    let datesArr = cloneDeep(this.state.dates);
     datesArr.splice(i, 1);
     this.setState({
       dates: datesArr,
@@ -166,7 +166,7 @@ class CreateJobs extends Component {
   //change the state of textbox
   changeCheckBoxState = (e, i) => {
     e.stopPropagation();
-    var prevState = cloneDeep(this.state.locations);
+    let prevState = cloneDeep(this.state.locations);
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
@@ -282,7 +282,7 @@ class CreateJobs extends Component {
   };
   //remove location
   removeLocation = (i) => {
-    var location = cloneDeep(this.state.locations);
+    let location = cloneDeep(this.state.locations);
     location.splice(i, 1);
     this.setState({
       locations: location,
@@ -290,7 +290,7 @@ class CreateJobs extends Component {
   };
   //onChange handler of forms
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     this.setState({ [name]: value });
     if (value === "") {
       // this.setState({ [name + "Error"]: "Should not be empty" });
@@ -368,11 +368,11 @@ class CreateJobs extends Component {
   };
   //submit form handler
   mySubmitHandler = (event) => {
-    var { createJob, history, loggedInUser } = this.props;
+    let { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      var {
+      let {
         title,
         description,
         services,
@@ -391,7 +391,7 @@ class CreateJobs extends Component {
         x !== ("" || null) ? x.toDateString() : null
       );
       stringDates = stringDates.filter(Boolean);
-      var createJobObj = {
+      let createJobObj = {
         title,
         description,
         services,
@@ -426,7 +426,7 @@ class CreateJobs extends Component {
       this.setState({
         newService: e.target.value,
       });
-      var serviceAdded = {
+      let serviceAdded = {
         name: this.state.newService,
         id: Math.random() * 10,
       };
@@ -496,7 +496,7 @@ class CreateJobs extends Component {
   };
   //save the form fields on redux store on component unmounting
   componentWillUnmount() {
-    var { setJobForm } = this.props;
+    let { setJobForm } = this.props;
     setJobForm({ ...this.state });
   }
   //onChange handler of editor
@@ -508,7 +508,7 @@ class CreateJobs extends Component {
   };
   //reset form Fields
   handleResetJob = () => {
-    var { resetJobForm } = this.props;
+    let { resetJobForm } = this.props;
     let customers = cloneDeep(this.state.customers);
     resetJobForm();
     this.setState({ ...this.initialState, customers });

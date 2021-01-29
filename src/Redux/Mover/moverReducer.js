@@ -1,10 +1,10 @@
 import { GET_MOVER, GET_MOVER_JOB_DETAIL, SEARCH_FILTER } from "./moverConstants";
 
-var initialState = {
+let initialState = {
   job: ''
 };
-var moverReducer = (state = initialState, action) => {
-  var { type, payload } = action;
+const moverReducer = (state = initialState, action) => {
+  let { type, payload } = action;
   switch (type) {
     case GET_MOVER:
       return { jobList: payload.mover };

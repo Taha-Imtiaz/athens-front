@@ -7,13 +7,13 @@ import {
   GET_ALL_DEPOSITS,
 } from "./BlanketDepositConstants";
 
-export var getDeposits = (page) => {
+export const getDeposits = (page) => {
   return async (dispatch) => {
     try {
       let body = {
         page
       }
-      var deposits = await Axios.post(`deposit/all`, body);
+      let deposits = await Axios.post(`deposit/all`, body);
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: {
@@ -26,22 +26,22 @@ export var getDeposits = (page) => {
   };
 };
 
-export var addDeposit = async (data) => {
+export const addDeposit = async (data) => {
   try {
-    var blanket = await Axios.post(`deposit`, data);
+    let blanket = await Axios.post(`deposit`, data);
     return blanket;
   } catch (error) {
     console.log(error);
   }
 };
-export var deleteBlanketDeposit = (id, currentPage) => {
+export const deleteBlanketDeposit = (id, currentPage) => {
   return async (dispatch) => {
     try {
       let body = {
         page: currentPage,
         id
       }
-      var blanketToDelete = await Axios.delete(`deposit`, { params: body });
+      let blanketToDelete = await Axios.delete(`deposit`, { params: body });
       dispatch(showMessage(blanketToDelete.data.message));
       dispatch({
         type: DELETE_BLANKET_DEPOSIT,
@@ -55,10 +55,10 @@ export var deleteBlanketDeposit = (id, currentPage) => {
     }
   };
 };
-export var updateDeposit = (data) => {
+export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
-      var blanket = await Axios.put(`deposit`, data);
+      let blanket = await Axios.put(`deposit`, data);
       dispatch(showMessage(blanket.data.message));
       dispatch({
         type: EDIT_DEPOSIT,

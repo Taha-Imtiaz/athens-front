@@ -6,14 +6,14 @@ import { verifyCode } from "../../../Redux/User/userActions";
 import { connect } from "react-redux";
 
 const VerificationCode = (props) => {
-  var [code, setCode] = useState("");
+  const [code, setCode] = useState("");
 
-  var [verificationCode, setVerificationCode] = useState("");
-  var [userToken, setUserToken] = useState("");
-  var { history } = props;
+  const [verificationCode, setVerificationCode] = useState("");
+  const [userToken, setUserToken] = useState("");
+  let { history } = props;
 
   useEffect(() => {
-    var getToken = sessionStorage.getItem("token");
+    let getToken = sessionStorage.getItem("token");
     setUserToken(getToken);
     if (getToken) {
       //remove email from sessionStorage
@@ -23,12 +23,12 @@ const VerificationCode = (props) => {
     }
   }, [history]);
 
-  var navigateResetPassword = () => {
-    var { verifyCode } = props;
+  const navigateResetPassword = () => {
+    let { verifyCode } = props;
     if (verificationCode !== "") {
       // history.push("/verifyCode")
     } else {
-      var verifyCodeObj = {
+      let verifyCodeObj = {
         code: code,
         token: userToken,
       };
@@ -36,8 +36,8 @@ const VerificationCode = (props) => {
     }
   };
 
-  var handleVerificationCode = (e) => {
-    var codeInString = e.toString();
+  const handleVerificationCode = (e) => {
+    let codeInString = e.toString();
     setCode(e);
     if (codeInString.length !== 4) {
       setVerificationCode("You must enter correct verification code");

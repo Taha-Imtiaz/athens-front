@@ -6,30 +6,30 @@ import { resetPassword } from "../../../Redux/User/userActions";
 import style from "./ResetPassword.module.css";
 
 const ResetPassword = (props) => {
-  // var [password, setPassword] = useState('')
-  var [passwordError, setPasswordError] = useState("");
-  // var [cpassword, csetPassword] = useState('')
-  var [cpasswordError, setcPasswordError] = useState("");
-  var [resetForm, setResetForm] = useState({
+  // const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState("");
+  // const [cpassword, csetPassword] = useState('')
+  const [cpasswordError, setcPasswordError] = useState("");
+  const [resetForm, setResetForm] = useState({
     password: "",
     cpassword: "",
   });
-  var userToken = localStorage.getItem("athens-token");
+  let userToken = localStorage.getItem("athens-token");
   if (!userToken) {
-    var { history } = props;
+    let { history } = props;
     history.push("/");
   }
 
-  var handleFormInput = (e) => {
-    var { name, value } = e.target;
+  const handleFormInput = (e) => {
+    let { name, value } = e.target;
     setResetForm({
       ...resetForm,
       [name]: value,
     });
   };
 
-  var navigateToCustomer = () => {
-    var { history, showMessage, user } = props;
+  const navigateToCustomer = () => {
+    let { history, showMessage, user } = props;
     if (password !== "") {
       setPasswordError("");
 
@@ -37,7 +37,7 @@ const ResetPassword = (props) => {
         setcPasswordError("Passwords do not match");
       } else {
         setPasswordError("");
-        var passwordObj = {
+        let passwordObj = {
           password: password,
           token: userToken,
         };
@@ -58,7 +58,7 @@ const ResetPassword = (props) => {
       setPasswordError("Password should not be empty");
     }
   };
-  var { password, cpassword } = resetForm;
+  let { password, cpassword } = resetForm;
   return (
     <div className={style.resetContainer}>
       <div className={`${style.passwordReset} ${style.flex}`}>

@@ -1,12 +1,12 @@
 import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE,SCHEDULE_DATE } from "./commonConstants"
 
-var initialState = {
+let initialState = {
     loading: false,
     displayMessage: '',
     scheduleDate: new Date()
 }
-var commonReducer = (state = initialState, action) => {
-    var { type, payload } = action
+const commonReducer = (state = initialState, action) => {
+    let { type, payload } = action
     switch (type) {
         case SHOW_LOADER:
             return { ...state, loading: true }

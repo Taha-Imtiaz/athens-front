@@ -7,7 +7,7 @@ import { moverSearchFilter } from "../../Redux/Mover/moverActions";
 import { getAllClaims } from "../../Redux/Claims/claimsActions";
 
 const SearchBar = (props) => {
-  var {
+  let {
     getAllCustomers,
     getAllJobs,
     getUsers,
@@ -18,9 +18,9 @@ const SearchBar = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   function handleSearch(e) {
-    var fetchCustomersObj;
-    var usersObj;
-    var fetchJobsOnPageChange;
+    let fetchCustomersObj;
+    let usersObj;
+    let fetchJobsOnPageChange;
     if (props.type === "customer") {
       if (searchValue === "" || searchValue) {
         fetchCustomersObj = {
@@ -127,7 +127,7 @@ const SearchBar = (props) => {
     }
   }
 
-  var handleKeyPress = (e) => {
+  const handleKeyPress = (e) => {
     e.preventDefault();
     if (e.which === 13) {
       handleSearch(e);

@@ -17,7 +17,7 @@ const Blankets = (props) => {
   const [show, setShow] = useState(false);
   const [depositValue, setDepositValue] = useState("");
 
-  var { user } = props;
+  let { user } = props;
 
   useEffect(() => {
     setBlanketValue(props.items);
@@ -35,7 +35,7 @@ const Blankets = (props) => {
     if (type === "save") {
       // Call Api
 
-      var obj = {
+      let obj = {
         id: newData[i]._id,
         userId: user._id,
         quantity: newData[i].quantity,
@@ -47,7 +47,7 @@ const Blankets = (props) => {
           let newData = cloneDeep(blanketValue);
           newData[i] = res.data.data.updatedblanketDeposit;
           props.update(newData);
-          var { showMessage } = props;
+          let { showMessage } = props;
           showMessage(res.data.message);
         })
         .catch((err) => console.log(err));
@@ -55,13 +55,13 @@ const Blankets = (props) => {
   };
 
   const makeInputFieldsEditible = (i) => {
-    var newData = cloneDeep(blanketValue);
+    let newData = cloneDeep(blanketValue);
     newData.map((data) => (data.edit = true));
     newData[i].edit = !newData[i].edit;
     setBlanketValue(newData);
   };
 
-  var handleInput = (e, i) => {
+  const handleInput = (e, i) => {
     let newData = cloneDeep(blanketValue);
     if (newData[i].edit === false) {
       newData[i].quantity = e.target.value;
@@ -70,18 +70,18 @@ const Blankets = (props) => {
     }
   };
 
-  var changeCost = (e, i) => {
-    var { value } = e.target;
+  const changeCost = (e, i) => {
+    let { value } = e.target;
     let newData = cloneDeep(blanketValue);
     newData[i].cost = value;
     setBlanketValue(newData);
   };
 
   // close activities modal
-  var handleClose = () => {
+  const handleClose = () => {
     setShow(false);
   };
-  var {
+  let {
     location: { pathname },
   } = props;
 

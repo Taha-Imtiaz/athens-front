@@ -51,23 +51,35 @@
   justify-content: center;
   align-items: center;
 }
-.styleDate {
+.dateContainer {
   display: grid;
+  grid-template-columns: 12.5fr 75fr 12.5fr;
+  column-gap: 0.5rem;
+}
+.flexDates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
 
-  /* grid-template-columns: repeat(auto-fit, minmax(min-content, 16rem)); */
-  /* grid-template-areas: "dates"; */
+.dateHeader, .timeHeader {
+  margin: 0.5rem 0 !important;
+
 }
 .dates {
   /* grid-area: dates; */
   display: grid;
-  grid-template-columns: 13rem min-content;
+  grid-template-columns: 14rem min-content;
   grid-row-gap: 1rem;
   grid-column-gap: 2rem;
   align-content: flex-start;
 }
+.addDateBtn {
+  margin: 0.5rem 0 !important;
+
+}
 .time {
   display: grid;
-  grid-template-columns: 20fr 80fr;
+  grid-template-columns: 12.5fr 87.5fr;
   margin: 1rem 0;
   justify-self: center;
   align-self: center;
@@ -87,7 +99,7 @@
   grid-template-rows: 25vh;
   /* grid-template-areas: ". button"; */
 }
-.locationBtn .button {
+.locationBtn .button, .addDateBtn .button {
   /* grid-area: button; */
   background: #00adee;
 
@@ -97,7 +109,7 @@
   font-family: sans-serif;
   text-transform: none;
 }
-.locationBtn .button:hover {
+.locationBtn .button:hover, .addDateBtn .button:hover {
   background: #00adee;
 }
 .skipSubmitBtn {
@@ -156,7 +168,3 @@
   background-color: #00adee;
 }
 
-.flexDates {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}

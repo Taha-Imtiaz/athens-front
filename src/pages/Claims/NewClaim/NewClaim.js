@@ -84,7 +84,7 @@ class NewClaim extends Component {
   };
   //onChange handler
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     this.setState({ [name]: value });
     if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
@@ -144,7 +144,7 @@ class NewClaim extends Component {
       claims: { claimType, price, description },
     } = this.state;
     if (this.validate()) {
-      var { history, showMessage } = this.props;
+      let { history, showMessage } = this.props;
       let data = {
         jobId: selectedJob.jobId,
         claimType,
@@ -199,12 +199,12 @@ class NewClaim extends Component {
   };
   //store all fields in redux state upon component will unmount
   componentWillUnmount() {
-    var { setClaimForm } = this.props;
+    let { setClaimForm } = this.props;
     setClaimForm({ ...this.state });
   }
   //reset the form
   handleResetForm = () => {
-    var { resetClaimForm } = this.props;
+    let { resetClaimForm } = this.props;
     let customers = cloneDeep(this.state.customers);
     resetClaimForm();
     this.setState({ ...this.initialState, customers });

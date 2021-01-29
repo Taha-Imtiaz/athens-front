@@ -12,7 +12,7 @@ import {
 import Blankets from "../../../components/Blankets/Blankets";
 
 const BlanketList = (props) => {
-  var { blanketDeposit } = props;
+  let { blanketDeposit } = props;
 
   const [blankets, setBlankets] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,13 +20,13 @@ const BlanketList = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [depositToDelete, setDepositToDelete] = useState(false);
   useEffect(() => {
-    var { getDeposits } = props;
+    let { getDeposits } = props;
     getDeposits(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, getDeposits]);
 
   useEffect(() => {
-    var { blanketDeposit } = props;
+    let { blanketDeposit } = props;
     if (blanketDeposit) {
       setTotalCount(blanketDeposit.total);
       setBlankets(blanketDeposit.docs);
@@ -36,7 +36,7 @@ const BlanketList = (props) => {
 
   //close activities modal
 
-  var handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
@@ -45,20 +45,20 @@ const BlanketList = (props) => {
     setBlankets(data);
   };
 
-  var removeBlanketDeposit = () => {
-    var { deleteBlanketDeposit } = props;
+  const removeBlanketDeposit = () => {
+    let { deleteBlanketDeposit } = props;
     deleteBlanketDeposit(depositToDelete);
     setDeleteModal(false);
   };
   //set deposit
-  var openDeleteModal = (i, deposit) => {
+  const openDeleteModal = (i, deposit) => {
     setDepositToDelete(deposit);
     setDeleteModal(true);
   };
-  var closeDeleteModal = () => {
+  const closeDeleteModal = () => {
     setDeleteModal(false);
   };
-  var {
+  const {
     location: { pathname },
   } = props;
  

@@ -16,7 +16,7 @@ const UnavailableSchedule = (props) => {
   // const [isLoading, setIsLoading] = useState(true);
   const [dates, setDates] = useState([]);
 
-  var { getAllData, unavailable } = props;
+  let { getAllData, unavailable } = props;
   const routes = [
     {
       title: "Daily Schedule",
@@ -58,7 +58,7 @@ const UnavailableSchedule = (props) => {
     let data = {
       id: dates,
     };
-    var { showMessage } = props;
+    let { showMessage } = props;
     approveRequest(data).then((res) => {
       showMessage(res.data.message);
       getAllData();

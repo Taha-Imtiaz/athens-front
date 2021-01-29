@@ -50,7 +50,7 @@ class SubmitDeposit extends Component {
   };
 
   handleValidate = () => {
-    var { selectedCustomer, selectedJob, quantity, cost } = this.state;
+    let { selectedCustomer, selectedJob, quantity, cost } = this.state;
     let customerIdError = "";
     let jobIdError = "";
     let quantityError = "";
@@ -87,14 +87,14 @@ class SubmitDeposit extends Component {
   };
 
   handleSubmit = (e) => {
-    var { quantity, selectedJob, cost } = this.state;
+    let { quantity, selectedJob, cost } = this.state;
     e.preventDefault();
     let obj = {
       quantity,
       jobId: selectedJob.jobId,
       cost,
     };
-    var { showMessage, history } = this.props;
+    let { showMessage, history } = this.props;
     if (this.handleValidate()) {
       addDeposit(obj).then((res) => {
         showMessage(res.data.message);
@@ -104,7 +104,7 @@ class SubmitDeposit extends Component {
   };
 
   handleQuantityFormInput = (e) => {
-    var { value } = e.target;
+    let { value } = e.target;
     if (value === "") {
       this.setState({ quantityError: "Should not be empty", quantity: "" });
     } else {
@@ -118,7 +118,7 @@ class SubmitDeposit extends Component {
   };
 
   handleCostFormInput = (e) => {
-    var { value } = e.target;
+    let { value } = e.target;
     if (value === "") {
       this.setState({ costError: "Should not be empty", cost: "" });
     } else {
@@ -140,17 +140,17 @@ class SubmitDeposit extends Component {
   };
 
   componentWillUnmount() {
-    var { setDepositForm } = this.props;
+    let { setDepositForm } = this.props;
     setDepositForm({ ...this.state });
   }
   handleResetDeposit = () => {
-    var { resetDepositForm } = this.props;
+    let { resetDepositForm } = this.props;
     let customers = cloneDeep(this.state.customers);
     resetDepositForm();
     this.setState({ ...this.initialState, customers });
   };
   render() {
-    var { quantity, cost } = this.state;
+    let { quantity, cost } = this.state;
     return (
       <div className={style.depositForm}>
         <div className={`${style.form}`}>

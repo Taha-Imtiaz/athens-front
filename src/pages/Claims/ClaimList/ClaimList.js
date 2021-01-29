@@ -10,7 +10,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import Claims from "../../../components/Claims/Claims";
 
 const CustomerClaims = (props) => {
-  var { getAllClaims, claims, user } = props;
+  let { getAllClaims, claims, user } = props;
 
   const [status, setStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +21,7 @@ const CustomerClaims = (props) => {
     let getClaims = async (obj) => {
       await getAllClaims(obj);
     };
-    var claimsObj = {
+    let claimsObj = {
       status: "all",
       page: 1,
       query: "",
@@ -37,9 +37,9 @@ const CustomerClaims = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [claims]);
 
-  var handlePageChange = (page) => {
-    var { getAllClaims } = props;
-    var claimsObj = {
+  const handlePageChange = (page) => {
+    let { getAllClaims } = props;
+    let claimsObj = {
       status,
       page: page,
       query: "",
@@ -50,11 +50,11 @@ const CustomerClaims = (props) => {
 
   const getClaimsByStatus = (e) => {
     let value = e.target.value;
-    var { getAllClaims } = props;
+    let { getAllClaims } = props;
     setStatus(value);
     setValue(value);
     setCurrentPage(1);
-    var claimsObj = {
+    let claimsObj = {
       status: value,
       page: 1,
       query: "",
@@ -62,8 +62,8 @@ const CustomerClaims = (props) => {
     getAllClaims(claimsObj);
   };
 
-  var removeClaim = (id) => {
-    var { deleteClaim } = props;
+  const removeClaim = (id) => {
+    let { deleteClaim } = props;
     deleteClaim(id, currentPage);
   };
 

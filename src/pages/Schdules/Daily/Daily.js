@@ -27,7 +27,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
 // const { htmlToText } = require('html-to-text');
 
-var moverAssignedDate;
+let moverAssignedDate;
 
 const DailySchedule = (props) => {
   const [newAssignee, setAssignee] = useState("");
@@ -138,20 +138,20 @@ const DailySchedule = (props) => {
 
   const formatAMPM = (startTime) => {
     let date = new Date(startTime);
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? "pm" : "am";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
+    let strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
   const updateJobAssignee = (e, job) => {
     if (e) {
       e.stopPropagation();
     }
-    var { loggedinUser, showMessage } = props;
+    let { loggedinUser, showMessage } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
@@ -179,7 +179,7 @@ const DailySchedule = (props) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
-    var { loggedinUser, showMessage } = props;
+    let { loggedinUser, showMessage } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
@@ -217,12 +217,12 @@ const DailySchedule = (props) => {
     }
   };
 
-  var jobDetailsNavigate = (jobId) => {
-    var { history } = props;
+  const jobDetailsNavigate = (jobId) => {
+    let { history } = props;
     history.push(`/job/detail/${jobId}`);
   };
 
-  var updateJobAssigneeList = (e, moverObj) => {
+  const updateJobAssigneeList = (e, moverObj) => {
     e.stopPropagation();
     setModalShow(false);
     moverObj.assigneesId.push(moverObj.moverId);
@@ -261,7 +261,7 @@ const DailySchedule = (props) => {
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
-    var { showMessage } = props;
+    let { showMessage } = props;
     let moverId = source.droppableId;
     if (!destination) {
       showMessage("Please drop on job item.");
@@ -276,7 +276,7 @@ const DailySchedule = (props) => {
       return;
     }
 
-    var jobToUpdate = props.jobs.filter(
+    let jobToUpdate = props.jobs.filter(
       (job) => job.jobId === parseInt(destination.droppableId)
     );
 
@@ -299,9 +299,9 @@ const DailySchedule = (props) => {
 
         if (moverJobs) {
           setModalShow(true);
-          var mover = movers.find((x) => x.mover._id === moverId);
+          let mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
-          var newAssigneeObj = {
+          let newAssigneeObj = {
             moverId,
             assigneesId: assigneesId,
             jobToUpdate: jobToUpdate[0],

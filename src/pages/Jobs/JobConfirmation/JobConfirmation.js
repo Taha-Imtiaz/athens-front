@@ -388,50 +388,57 @@ function JobConfirmation(props) {
       case 0:
         return (
           <form>
-            <h6>Dates:</h6>
-            <div className={style.flexDates}>
-              {data &&
-                data.dates.map((x, i) => {
-                  return (
-                    <div className={`${style.styleDate}`} key={i}>
-                      <div className={`${style.dates} `}>
-                        <div>
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid>
-                              <KeyboardDatePicker
-                                inputVariant="outlined"
-                                className={style.styleFormFields}
-                                size="small"
-                                fullWidth
-                                id="date-picker-dialog"
-                                format="MM/dd/yyyy"
-                                value={data.dates[i]}
-                                onChange={(e) => handleStartDate(e, i)}
-                                KeyboardButtonProps={{
-                                  "aria-label": "change date",
-                                }}
-                              />
-                            </Grid>
-                          </MuiPickersUtilsProvider>
-                        </div>
-                        <div className={style.flex}>
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            onClick={() => removeDate(i)}
-                          />
+            <div className={style.dateContainer}>
+              <div className={style.dateHeader}>
+                <h6>Dates:</h6>
+              </div>
+              <div className={style.flexDates}>
+                {data &&
+                  data.dates.map((x, i) => {
+                    return (
+                      <div className={`${style.styleDate}`} key={i}>
+                        <div className={`${style.dates} `}>
+                          <div>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                              <Grid>
+                                <KeyboardDatePicker
+                                  inputVariant="outlined"
+                                  className={style.styleFormFields}
+                                  size="small"
+                                  fullWidth
+                                  id="date-picker-dialog"
+                                  format="MM/dd/yyyy"
+                                  value={data.dates[i]}
+                                  onChange={(e) => handleStartDate(e, i)}
+                                  KeyboardButtonProps={{
+                                    "aria-label": "change date",
+                                  }}
+                                />
+                              </Grid>
+                            </MuiPickersUtilsProvider>
+                          </div>
+                          <div className={style.flex}>
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              onClick={() => removeDate(i)}
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
+              <div onClick={addDate} className={style.addDateBtn}>
+                <Button className={style.button}>
+                  {" "}
+                  <i className="fa fa-plus"></i>
+                  Add Date
+                </Button>
+              </div>
             </div>
-
-            <div onClick={addDate}>
-              <i className="fa fa-plus">Add Date</i>
-            </div>
-
+            <hr />
             <div className={style.time}>
-              <div>
+              <div className={style.timeHeader}>
                 <h6>Time:</h6>
               </div>
               <div>

@@ -8,21 +8,21 @@ import { deleteClaim } from "../../Redux/Claims/claimsActions";
 import { connect } from "react-redux";
 
 const Claims = (props) => {
-    var { items, user } = props;
+    let { items, user } = props;
 
     const [show, setShow] = useState(false);
     const [claimToDelete, setClaimToDelete] = useState("");
 
-    var handleShow = (jobId) => {
+    const handleShow = (jobId) => {
         setClaimToDelete(jobId);
         setShow(true);
     };
 
-    var handleClose = () => {
+    const handleClose = () => {
         setShow(false);
     };
 
-    var deleteBlanket = () => {
+    const deleteBlanket = () => {
         props.delete(claimToDelete)
         handleClose();
     }

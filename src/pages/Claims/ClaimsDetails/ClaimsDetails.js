@@ -15,13 +15,13 @@ const ClaimsDetails = (props) => {
   const [waitTo, setWaitTo] = useState(true);
   const [claimInput, setClaimInput] = useState('');
 
-  var {
+  let {
     match: {
       params: { claimId },
     },
   } = props;
 
-  var { claims, getClaim } = props;
+  let { claims, getClaim } = props;
 
   useEffect(() => {
     getClaim(claimId);
@@ -38,7 +38,7 @@ const ClaimsDetails = (props) => {
   };
 
   const handleCloseJob = () => {
-    var { showMessage, claims } = props;
+    let { showMessage, claims } = props;
 
     claims.status = "closed";
     updateClaim(claims)
@@ -65,7 +65,7 @@ const ClaimsDetails = (props) => {
       };
       let newData = cloneDeep(claims);
       newData.updates.unshift(ob);
-      var { showMessage } = props;
+      let { showMessage } = props;
       updateClaim(newData)
         .then((res) => {
           if (res.data.status === 200) {
@@ -79,16 +79,16 @@ const ClaimsDetails = (props) => {
     }
   };
 
-  var editInput = () => {
+  const editInput = () => {
     setWaitTo(false);
   };
-  var handleClaimInput = (e) => {
+  const handleClaimInput = (e) => {
     console.log(e.target.value);
     setClaimInput(e.target.value);
   };
 
-  var disableInput = () => {
-    var { showMessage, claims } = props;
+  const disableInput = () => {
+    let { showMessage, claims } = props;
     claims.waitTo = claimInput;
     setWaitTo(true);
     updateClaim(claims)

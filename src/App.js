@@ -52,7 +52,7 @@ function App(props) {
   const notify = (message) => toast(message);
 
   const location = useLocation();
-  var { pathname } = location;
+  let { pathname } = location;
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>

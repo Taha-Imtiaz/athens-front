@@ -8,7 +8,7 @@ import { getLoginUser } from "../../Redux/User/userActions";
 import Button from "@material-ui/core/Button";
 
 const Navbar = (props) => {
-  var { getLoginUser } = props;
+  let { getLoginUser } = props;
 
   useEffect(() => {
     const token = localStorage.getItem("athens-token");
@@ -17,7 +17,7 @@ const Navbar = (props) => {
     }
   }, [getLoginUser]);
 
-  var {
+  let {
     history: {
       location: { pathname },
     },
@@ -26,7 +26,7 @@ const Navbar = (props) => {
   const getNavLinkClass = (path) => {
     return props.location.pathname === path ? "nav-item active" : "nav-item";
   };
-  var logOut = () => {
+  let logOut = () => {
     localStorage.clear();
 
     window.location.reload(false);

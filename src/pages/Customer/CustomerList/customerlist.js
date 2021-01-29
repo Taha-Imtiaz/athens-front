@@ -23,18 +23,18 @@ const CustomerList = (props) => {
     totalCount = customers.total;
   }
   //defining state variables
-  var [order, setOrder] = useState(-1);
-  var [currentPage, setCurrentPage] = useState(1);
-  var [recentlyUpdated, setRecentlyUpdated] = useState(false);
-  var [recentlyAdded, setRecentlyAdded] = useState(false);
-  var [sortByName, setSortByName] = useState(false);
-  var [show, setShow] = useState(false);
-  var [customerToDelete, setCustomerToDelete] = useState("");
-  var [value, setValue] = useState("recently added");
+  const [order, setOrder] = useState(-1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recentlyUpdated, setRecentlyUpdated] = useState(false);
+  const [recentlyAdded, setRecentlyAdded] = useState(false);
+  const [sortByName, setSortByName] = useState(false);
+  const [show, setShow] = useState(false);
+  const [customerToDelete, setCustomerToDelete] = useState("");
+  const [value, setValue] = useState("recently added");
 
   //fetch customerList on ComponentDidMount
   useEffect(() => {
-    var fetchCustomersObj = {
+    let fetchCustomersObj = {
       query: "",
       sort: {
         plainName: "",
@@ -48,7 +48,7 @@ const CustomerList = (props) => {
   }, [getAllCustomers]);
 
   //fetch/get customers when the page is changed
-  var handlePageChange = (page) => {
+  const handlePageChange = (page) => {
     let fetchCustomersOnPageChange;
     if (recentlyUpdated === true) {
       fetchCustomersOnPageChange = {
@@ -112,7 +112,7 @@ const CustomerList = (props) => {
     getAllCustomers(fetchCustomersOnPageChange);
   };
 
-  var removeCustomer = () => {
+  const removeCustomer = () => {
     //remove customer from the list and database too
     var { deleteCustomer } = props;
     deleteCustomer(customerToDelete, currentPage);
@@ -120,7 +120,7 @@ const CustomerList = (props) => {
     setShow(false);
   };
   //sort the by list by name in ascending/descending order
-  var handleSortByName = () => {
+  const handleSortByName = () => {
     //set the field to true which is selected(set other fields to false too)
     setSortByName(true);
     setRecentlyAdded(false);
@@ -154,7 +154,7 @@ const CustomerList = (props) => {
     getAllCustomers(sortCustomersObj);
   };
 
-  var handleRecentlyAdded = () => {
+  const handleRecentlyAdded = () => {
     //set the field to true which is selected(set other fields to false or null too)
     setRecentlyAdded(true);
     setRecentlyUpdated(false);
@@ -172,7 +172,7 @@ const CustomerList = (props) => {
     getAllCustomers(sortCustomersObj);
   };
 
-  var handleRecentlyUpdated = () => {
+  const handleRecentlyUpdated = () => {
     //set the field to true which is selected(set other fields to false or null too)
     setRecentlyUpdated(true);
     setRecentlyAdded(false);
@@ -191,7 +191,7 @@ const CustomerList = (props) => {
   };
 
   //show delete modal
-  var handleShow = (i, jobId) => {
+  const handleShow = (i, jobId) => {
     //set the customerid of the of customer you want to delete
     setCustomerToDelete(jobId);
     //show the delete modal
@@ -199,11 +199,11 @@ const CustomerList = (props) => {
   };
 
   //close the delete modal
-  var handleClose = () => {
+  const handleClose = () => {
     setShow(false);
   };
   //change Handler of radio buttons
-  var handleChange = (e) => {
+  const handleChange = (e) => {
     setValue(e.target.value);
   };
 

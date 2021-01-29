@@ -39,7 +39,7 @@ class CustomerAdd extends Component {
     let lastNameError = "";
     let phoneError = "";
 
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!this.state.email.match(mailformat)) {
       emailError = "Invalid Email";
@@ -71,7 +71,7 @@ class CustomerAdd extends Component {
   };
   //onChange handler of form
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    const { name, value } = event.target;
     this.setState({ [name]: value });
     if (value === "") {
       this.setState({ [name + "Error"]: "Field Should not be empty" });
@@ -87,12 +87,12 @@ class CustomerAdd extends Component {
   };
   //this handler is clicked when the form is submitted
   mySubmitHandler = (event) => {
-    var { addCustomer, history } = this.props;
+    let { addCustomer, history } = this.props;
     event.preventDefault();
     
     const isValid = this.validate();
     if (isValid) {
-      var { firstName, lastName, email, phone, subContacts } = this.state;
+      let { firstName, lastName, email, phone, subContacts } = this.state;
       //check if the subContacts fields are empty
       if (
         this.state.subContacts[0].name === "" &&
@@ -102,7 +102,7 @@ class CustomerAdd extends Component {
         subContacts = [];
       }
 
-      var addCustomerObj = {
+      let addCustomerObj = {
         firstName,
         lastName,
         phone,
@@ -121,7 +121,7 @@ class CustomerAdd extends Component {
   };
   //function to addSubContacts(if the subContacts are greater 1)
   addContacts = () => {
-    var { subContacts } = this.state;
+    let { subContacts } = this.state;
     if (subContacts[0].name && subContacts[0].phone && subContacts[0].email) {
       this.setState({
         subContacts: [
@@ -138,12 +138,12 @@ class CustomerAdd extends Component {
 
   componentWillUnmount() {
     //set the values of form fields in redux state
-    var { setCustomerForm } = this.props;
+    let { setCustomerForm } = this.props;
     setCustomerForm({ ...this.state });
   }
   //reset form (clear values from all fields)
   handleResetForm = () => {
-    var { resetCustomerForm } = this.props;
+    let { resetCustomerForm } = this.props;
 
     resetCustomerForm();
     this.setState({ ...this.initialState });

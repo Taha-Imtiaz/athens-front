@@ -14,11 +14,11 @@ import { Modal } from "react-bootstrap";
 import { showMessage } from "../../../Redux/Common/commonActions";
 
 const AccountDisplay = (props) => {
-  var { loggedInUser } = props;
-  var [disabledForm, setDisabledForm] = useState(true);
-  var [showModal, setShowModal] = useState(false);
+  let { loggedInUser } = props;
+  const [disabledForm, setDisabledForm] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
-  var [editAccount, setEditAccount] = useState({
+  const [editAccount, setEditAccount] = useState({
     name: "",
     email: "",
     password: "",
@@ -34,12 +34,12 @@ const AccountDisplay = (props) => {
   });
 
   useEffect(() => {
-    var userId = loggedInUser?._id;
+    const userId = loggedInUser?._id;
     if (userId) {
       getUserData(userId)
         .then((res) => {
-          var { data } = res.data;
-          var { name, email, address, phone } = data;
+          let { data } = res.data;
+          let { name, email, address, phone } = data;
           setEditAccount({
             name,
             email,
@@ -54,8 +54,8 @@ const AccountDisplay = (props) => {
   }, [loggedInUser]);
 
   const validate = () => {
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    var newData = { ...editAccount };
+    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let newData = { ...editAccount };
 
     if (!editAccount.name) {
       newData.nameError = "Name should not be empty";
@@ -87,7 +87,7 @@ const AccountDisplay = (props) => {
   };
 
   const handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     setEditAccount((prevState) => ({
       ...prevState,
       [name]: value,
@@ -104,8 +104,8 @@ const AccountDisplay = (props) => {
       }));
     }
   };
-  var validateModalInputs = () => {
-    var newData = { ...editAccount };
+  const validateModalInputs = () => {
+    let newData = { ...editAccount };
     if (!editAccount.password) {
       newData.passwordError = "Password should not be empty";
     }
@@ -120,14 +120,14 @@ const AccountDisplay = (props) => {
     return true;
   };
 
-  var handleModalInput = (e) => {
-    var { showMessage } = props;
-    var userToken = localStorage.getItem("athens-token");
+  const handleModalInput = (e) => {
+    let { showMessage } = props;
+    let userToken = localStorage.getItem("athens-token");
     e.preventDefault();
-    var validateModal = validateModalInputs();
+    let validateModal = validateModalInputs();
     if (validateModal) {
-      var { password } = editAccount;
-      var resetPasswordObj = {
+      let { password } = editAccount;
+      let resetPasswordObj = {
         password,
         token: userToken,
       };
@@ -144,8 +144,8 @@ const AccountDisplay = (props) => {
 
     const isValid = validate();
     if (isValid) {
-      var { name, email, address, phone } = editAccount;
-      var updatedUserObj = {
+      let { name, email, address, phone } = editAccount;
+      let updatedUserObj = {
         name,
         email,
 

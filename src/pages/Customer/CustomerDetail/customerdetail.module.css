@@ -277,4 +277,5 @@
 .styleTextArea {
   width: 100% !important;
   border: 1px solid black;
+  border-radius: 0.4rem;
 }

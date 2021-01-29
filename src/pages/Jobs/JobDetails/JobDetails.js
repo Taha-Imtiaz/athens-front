@@ -78,8 +78,8 @@ const JobDetails = (props) => {
                   <div className="card-body">
                     <h5 className="card-title">Assignees</h5>
                     {job.assignee.length > 0 ? (
-                      job.assignee.map((assignee) => (
-                        <div className={style.assigneehead}>
+                      job.assignee.map((assignee,i) => (
+                        <div key = {i} className={style.assigneehead}>
                           <li> {assignee.name}</li>
                         </div>
                       ))

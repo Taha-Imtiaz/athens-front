@@ -22,6 +22,8 @@ const EmailVerification = (props) => {
 
       sendCode(emailObj).then((res) => {
         if (res.data.status === 200) {
+          console.log(res.data.message, history);
+          sessionStorage.setItem("token", res.data.token);
           showMessage(res.data.message);
           history.push("/verifycode");
         } else {

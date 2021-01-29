@@ -1,5 +1,11 @@
-import { GET_MOVER, GET_MOVER_JOB_DETAIL, SEARCH_FILTER } from "./moverConstants";
+import {
+  GET_MOVER,
+  GET_MOVER_JOB_DETAIL,
+  SEARCH_FILTER,
+} from "./moverConstants";
 import Axios from "../../utils/api";
+import { showMessage } from "../Common/commonActions";
+import { LOGGEDIN_USER } from "../User/userConstants";
 
 export const getMover = (moversObj) => {
   return async (dispatch) => {
@@ -59,9 +65,21 @@ export const holidayCalendar = async (obj) => {
   return days;
 };
 
-export const setAvailability = async (obj, _id) => {
-  const days = await Axios.put(`mover/${_id}`, obj);
-  return days;
+export const setAvailability = (obj, _id) => {
+  return async (dispatch) => {
+    try {
+      const user = await Axios.put(`mover/${_id}`, obj);
+      dispatch(showMessage(user.data.message));
+      dispatch({
+        type: LOGGEDIN_USER,
+        payload: {
+          user: user.data.data,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const payAmount = async (obj) => {
@@ -71,20 +89,19 @@ export const payAmount = async (obj) => {
 
 export const getMoverJobDetail = (jobId) => {
   return async (dispatch) => {
-  try {
-    const getJob = await Axios.get(`job/${jobId}`);
-       dispatch({
-           type: GET_MOVER_JOB_DETAIL,
-           payload:{
-             getJob: getJob
-           }
-
-       })
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+      const getJob = await Axios.get(`job/${jobId}`);
+      dispatch({
+        type: GET_MOVER_JOB_DETAIL,
+        payload: {
+          getJob: getJob,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
-}
 export const moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
     const token = localStorage.getItem("athens-token");

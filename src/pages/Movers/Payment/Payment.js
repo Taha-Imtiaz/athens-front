@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Payment.module.css";
 import { Button, TextField } from "@material-ui/core";
 
@@ -6,21 +6,29 @@ import { payAmount } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
 
-class Payment extends Component {
-  state = {
-    number: "",
-    exp_month: "",
-    exp_year: "",
-    cvc: "",
-    amount: "",
-  };
+const Payment = (props) =>  {
+ const [state,setState] = useState({
+  number: "",
+  exp_month: "",
+  exp_year: "",
+  cvc: "",
+  amount: "",
+ }) 
+ useEffect(() => {
+  loadStripe();
+  const { history } = props;
+  if (!props.location.jobId) {
+    history.push("/mover");
+  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+},[]) 
 
-  changeHandler = (e) => {
+const changeHandler = (e) => {
     let { name, value } = e.target;
-    this.setState({ [name]: value });
+    setState({...state, [name]: value });
   };
 
-  loadStripe = () => {
+ const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
       let s = window.document.createElement("script");
       s.id = "stripe-script";
@@ -34,34 +42,28 @@ class Payment extends Component {
       window.document.body.appendChild(s);
     }
   };
-  componentDidMount() {
-    this.loadStripe();
-    const { history } = this.props;
-    if (!this.props.location.jobId) {
-      history.push("/mover");
-    }
-  }
+  
 
-  pay = (e) => {
+ const pay = (e) => {
     e.preventDefault();
 
     window.Stripe.card.createToken(
       {
-        number: this.state.number,
-        exp_month: this.state.exp_month,
-        exp_year: this.state.exp_year,
-        cvc: this.state.cvc,
+        number: state.number,
+        exp_month: state.exp_month,
+        exp_year: state.exp_year,
+        cvc: state.cvc,
       },
       (status, response) => {
         if (status === 200) {
           // Send Token To Backend
           let obj = {
             stripeToken: response.id,
-            amount: this.state.amount,
-            jobId: this.props.location.jobId,
+            amount: state.amount,
+            jobId: props.location.jobId,
           };
           payAmount(obj).then((res) => {
-            let { history, showMessage } = this.props;
+            let { history, showMessage } = props;
             if (res.data.status === 200) {
               showMessage(res.data.message);
               history.push("/mover");
@@ -72,7 +74,7 @@ class Payment extends Component {
     );
   };
 
-  render() {
+  
     return (
       <div className={style.main}>
         <div className={style.form}>
@@ -99,7 +101,7 @@ class Payment extends Component {
               size="small"
               name="number"
               label="Card Number"
-              onChange={this.changeHandler}
+              onChange={changeHandler}
             />
 
             <p>Testing Card #: 4242424242424242</p>
@@ -112,7 +114,7 @@ class Payment extends Component {
                   size="small"
                   name="exp_month"
                   label="Month"
-                  onChange={this.changeHandler}
+                  onChange={changeHandler}
                 />
               </div>
 
@@ -124,7 +126,7 @@ class Payment extends Component {
                   className={style.styleFormFields}
                   name="exp_year"
                   label="Year"
-                  onChange={this.changeHandler}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -136,7 +138,7 @@ class Payment extends Component {
               name="cvc"
               label="CVC"
               className={style.styleFormFields}
-              onChange={this.changeHandler}
+              onChange={changeHandler}
             />
 
             <TextField
@@ -148,11 +150,11 @@ class Payment extends Component {
               className={style.styleFormFields}
               label="Amount (Plus tip if any)"
               name="amount"
-              onChange={this.changeHandler}
+              onChange={changeHandler}
             />
 
             <div className={style.flexEnd}>
-              <Button className={style.button} type="button" onClick={this.pay}>
+              <Button className={style.button} type="button" onClick={pay}>
                 Pay
               </Button>
             </div>
@@ -161,7 +163,7 @@ class Payment extends Component {
       </div>
     );
   }
-}
+
 
 var actions = {
   showMessage,

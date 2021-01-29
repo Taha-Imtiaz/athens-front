@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./JobList.module.css";
 import { Link } from "react-router-dom";
 import { getMover } from "../../../Redux/Mover/moverActions";
@@ -19,6 +19,7 @@ import { compose } from "redux";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Pagination from "../../../components/Pagination/Pagination";
 
+
 const styles = (theme) => ({
   popover: {
     pointerEvents: "none",
@@ -28,11 +29,11 @@ const styles = (theme) => ({
   },
 });
 
-class MoversJobsList extends Component {
-  state = {
+const MoversJobsList = (props) => {
+  const [state, setState] = useState({
     isLoading: true,
     data: [],
-    status: "completed",
+    status: "booked",
     anchorEl: null,
     openedDatePopoverId: null,
     openedAssigneePopoverId: null,
@@ -42,10 +43,16 @@ class MoversJobsList extends Component {
     currentPage: 1,
     recentlyAdded: false,
     sortByStatus: false,
-  };
+  });
+  // const [status,setStatus] = useState("completed")
+  const { moverJobs, user } = props;
+  let { pageSize, currentPage } = state;
+  let totalCount = moverJobs?.total;
+  const open = Boolean(state.anchorEl);
+  const { classes } = props;
 
-  componentDidMount = () => {
-    let { getMover } = this.props;
+  useEffect(() => {
+    let { getMover } = props;
 
     let moversObj = {
       filters: {
@@ -59,63 +66,88 @@ class MoversJobsList extends Component {
       page: 1,
     };
     getMover(moversObj);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   let { getMover } = props;
+
+  //   let moversObj = {
+  //     filters: {
+  //       jobStatus: "",
+  //       dates: null,
+  //       nearestDate: "",
+  //     },
+  //     sort: {
+  //       createdAt: null,
+  //     },
+  //     page: 1,
+  //   };
+  //   getMover(moversObj);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [moverJobs]);
+
+  // const handleJobUpdate = (id) => {
+  //   updateJob(id, { status: state.status });
+  // };
+
+  const handleChange = (event) => {
+    var newState = state;
+    newState.status = event.target.value;
+    setState(newState);
+    // setState((prevState) => ({
+    //   ...prevState,
+    //   status:event.target.value
+    // }))
+    // setStatus("booked")
+    filterJobByStatus(event.target.value);
   };
 
-  handleJobUpdate = (id) => {
-    updateJob(id, { status: this.state.status });
-  };
-
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value,
-    });
-    this.filterJobByStatus(event.target.value);
-  };
-
-  markComplete = (list) => {
+  const markComplete = (list) => {
     updateJob(list._id, { status: "completed" }).then((res) => {
       if (res.data.status === 200) {
-        let { getMover, showMessage } = this.props;
+        let { getMover, showMessage } = props;
         showMessage(res.data.message);
         getMover();
       }
     });
   };
 
-  handleDatePopoverOpen = (event, id) => {
-    this.setState({
+  const handleDatePopoverOpen = (event, id) => {
+    setState({
+      ...state,
       anchorEl: event.currentTarget,
       openedDatePopoverId: id,
     });
   };
 
-  handleDatePopoverClose = () => {
-    this.setState({
+  const handleDatePopoverClose = () => {
+    setState({
+      ...state,
       anchorEl: null,
       openedDatePopoverId: null,
     });
   };
 
-  handleAssigneePopoverOpen = (event, id) => {
-    this.setState({
+  const handleAssigneePopoverOpen = (event, id) => {
+    setState({
+      ...state,
       anchorEl: event.currentTarget,
       openedAssigneePopoverId: id,
     });
   };
 
-  handleAssigneePopoverClose = () => {
-    this.setState({
+  const handleAssigneePopoverClose = () => {
+    setState({
+      ...state,
       anchorEl: null,
       openedAssigneePopoverId: null,
     });
   };
 
-  handleRecentlyAdded = () => {
-    let { getMover } = this.props;
-    this.setState({
-      recentlyAdded: true,
-      sortByStatus: false,
-    });
+  const handleRecentlyAdded = () => {
+    let { getMover } = props;
+
     let fetchMoverJobs = {
       filters: {
         jobStatus: "",
@@ -127,18 +159,18 @@ class MoversJobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
+      recentlyAdded: true,
+      sortByStatus: false,
       currentPage: 1,
     });
+
     getMover(fetchMoverJobs);
   };
 
-  filterJobByStatus = (value) => {
-    let { getMover } = this.props;
-    this.setState({
-      recentlyAdded: false,
-      sortByStatus: true,
-    });
+  const filterJobByStatus = (value) => {
+    let { getMover } = props;
 
     let fetchMoverJobs = {
       filters: {
@@ -151,17 +183,18 @@ class MoversJobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
+      recentlyAdded: false,
+      sortByStatus: true,
       currentPage: 1,
     });
+
     getMover(fetchMoverJobs);
   };
 
-  filterJobByDate = (e) => {
-    let { getMover } = this.props;
-    this.setState({
-      dates: e.target.value,
-    });
+  const filterJobByDate = (e) => {
+    let { getMover } = props;
 
     let date = new Date(e.target.value);
     let DateFilters = {
@@ -175,16 +208,19 @@ class MoversJobsList extends Component {
       },
       page: 1,
     };
-    this.setState({
+    setState({
+      ...state,
+      dates: e.target.value,
       currentPage: 1,
     });
+
     getMover(DateFilters);
   };
 
-  handlePageChange = (page) => {
-    let { getMover } = this.props;
+  const handlePageChange = (page) => {
+    let { getMover } = props;
     let fetchMoverJobs;
-    if (this.state.recentlyAdded === true) {
+    if (state.recentlyAdded === true) {
       fetchMoverJobs = {
         filters: {
           jobStatus: "",
@@ -196,13 +232,14 @@ class MoversJobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
-    } else if (this.state.sortByStatus === true) {
+    } else if (state.sortByStatus === true) {
       fetchMoverJobs = {
         filters: {
-          jobStatus: this.state.value,
+          jobStatus: state.value,
           dates: "",
           nearestDate: "",
         },
@@ -211,7 +248,8 @@ class MoversJobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
     } else {
@@ -226,273 +264,264 @@ class MoversJobsList extends Component {
         },
         page: page,
       };
-      this.setState({
+      setState({
+        ...state,
         currentPage: page,
       });
     }
     getMover(fetchMoverJobs);
   };
 
-  render() {
-    const { moverJobs, user } = this.props;
-    let { pageSize, currentPage } = this.state;
-    let totalCount = moverJobs?.total;
-    const open = Boolean(this.state.anchorEl);
-    const { classes } = this.props;
-    if (user) {
-      getMover(user._id);
-    }
+  if (user) {
+    getMover(user._id);
+  }
+  console.log(state.status);
+  return (
+    <div>
+      <div className={style.toprow}>
+        <div className={style.rowContent}>
+          <div>
+            <h3>Job List </h3>
+          </div>
+          <div>
+            <SearchBar type="mover" title="Type title or services" />
+          </div>
 
-    return (
-      <div>
-        <div className={style.toprow}>
-          <div className={style.rowContent}>
-            <div>
-              <h3>Job List </h3>
-            </div>
-            <div>
-              <SearchBar type="mover" title="Type title or services" />
-            </div>
-
-            <div className={`${style.filter}`}>
-              <i
-                className="fa fa-filter dropdown-toggle"
-                href="#"
-                role="button"
-                id="dropdownMenuLink"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              ></i>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <h5 className="dropdown-item">Sort</h5>
-                <p className="dropdown-item" onClick={this.handleRecentlyAdded}>
-                  Sort By Recently Added
-                </p>
-                <hr />
-                <h5 className="dropdown-item">Filters</h5>
-                <p className="dropdown-item">Filter By Date</p>
-                <input
-                  type="date"
-                  name="dates"
-                  id=""
-                  className={style.styleDates}
-                  onChange={(e) => this.filterJobByDate(e)}
-                />{" "}
-                <hr />
-                <p className="dropdown-item">Filter By Status</p>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value={this.state.value}
-                  size="small"
-                  onChange={this.handleChange}
-                >
-                  <FormControlLabel
-                    value="completed"
-                    className="dropdown-item"
-                    control={<Radio />}
-                    label="completed"
-                  />
-                  <FormControlLabel
-                    value="booked"
-                    className="dropdown-item"
-                    control={<Radio />}
-                    label="booked"
-                  />
-                </RadioGroup>
-              </div>
+          <div className={`${style.filter}`}>
+            <i
+              className="fa fa-filter dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            ></i>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <h5 className="dropdown-item">Sort</h5>
+              <p className="dropdown-item" onClick={handleRecentlyAdded}>
+                Sort By Recently Added
+              </p>
+              <hr />
+              <h5 className="dropdown-item">Filters</h5>
+              <p className="dropdown-item">Filter By Date</p>
+              <input
+                type="date"
+                name="dates"
+                id=""
+                className={style.styleDates}
+                onChange={(e) => filterJobByDate(e)}
+              />{" "}
+              <hr />
+              <p className="dropdown-item">Filter By Status</p>
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={state.status}
+                size="small"
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value="completed"
+                  className="dropdown-item"
+                  control={<Radio />}
+                  label="completed"
+                />
+                <FormControlLabel
+                  value="booked"
+                  className="dropdown-item"
+                  control={<Radio />}
+                  label="booked"
+                />
+              </RadioGroup>
             </div>
           </div>
         </div>
+      </div>
 
-        {moverJobs?.docs?.length > 0 ? (
-          <div className={style.jobListHeaderContainer}>
-            <div className={style.jobListHeader}>
-              <div>Title</div>
-              <div>Date</div>
-              <div>Assignee</div>
-              <div>Status</div>
-            </div>
+      {moverJobs?.docs?.length > 0 ? (
+        <div className={style.jobListHeaderContainer}>
+          <div className={style.jobListHeader}>
+            <div>Title</div>
+            <div>Date</div>
+            <div>Assignee</div>
+            <div>Status</div>
           </div>
-        ) : null}
+        </div>
+      ) : null}
 
-        {moverJobs?.docs?.length > 0 ? (
-          <div>
-            {moverJobs.docs.map((list, i) => {
-              return (
-                <div className={style.listContainer} key={i}>
-                  <div className={`${style.listContent}`}>
-                    <Link
-                      className={style.styleLink}
-                      to={"/mover/jobdetails/" + list._id}
-                    >
-                      <div className={`${style.jobList}`}>
-                        <div
-                          className={`${style.title} ${style.flex} ${style.item}`}
-                        >
-                          {list.title}
-                        </div>
-                        <div
-                          className={`${style.date} ${style.flex} ${style.item}`}
-                        >
+      {moverJobs?.docs?.length > 0 ? (
+        <div>
+          {moverJobs.docs.map((list, i) => {
+            return (
+              <div className={style.listContainer} key={i}>
+                <div className={`${style.listContent}`}>
+                  <Link
+                    className={style.styleLink}
+                    to={"/mover/jobdetails/" + list._id}
+                  >
+                    <div className={`${style.jobList}`}>
+                      <div
+                        className={`${style.title} ${style.flex} ${style.item}`}
+                      >
+                        {list.title}
+                      </div>
+                      <div
+                        className={`${style.date} ${style.flex} ${style.item}`}
+                      >
+                        <FontAwesomeIcon
+                          icon={faCalendarAlt}
+                          className={style.icon}
+                        />{" "}
+                        <span className={style.styleSpan}>
+                          {list.dates[0]}
+                          {list.dates.length > 1 && (
+                            <div>
+                              <Typography
+                                aria-owns={
+                                  open ? "mouse-over-popover" : undefined
+                                }
+                                aria-haspopup="true"
+                                onMouseEnter={(e) =>
+                                  handleDatePopoverOpen(e, list._id)
+                                }
+                                onMouseLeave={handleDatePopoverClose}
+                              >
+                                ...
+                              </Typography>
+
+                              <Popover
+                                id="mouse-over-popover"
+                                className={classes.popover}
+                                classes={{
+                                  paper: classes.paper,
+                                }}
+                                open={state.openedDatePopoverId === list._id}
+                                anchorEl={state.anchorEl}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                  vertical: "top",
+                                  horizontal: "left",
+                                }}
+                                onClose={handleDatePopoverClose}
+                                disableRestoreFocus
+                              >
+                                {list.dates.map((date) => (
+                                  <Typography>{date}</Typography>
+                                ))}
+                              </Popover>
+                            </div>
+                          )}
+                        </span>
+                      </div>
+
+                      <div
+                        className={`${style.assignee} ${style.flex}  ${style.item}`}
+                      >
+                        <span className={style.styleSpan}>
                           <FontAwesomeIcon
-                            icon={faCalendarAlt}
+                            icon={faUser}
                             className={style.icon}
                           />{" "}
-                          <span className={style.styleSpan}>
-                            {list.dates[0]}
-                            {list.dates.length > 1 && (
-                              <div>
-                                <Typography
-                                  aria-owns={
-                                    open ? "mouse-over-popover" : undefined
-                                  }
-                                  aria-haspopup="true"
-                                  onMouseEnter={(e) =>
-                                    this.handleDatePopoverOpen(e, list._id)
-                                  }
-                                  onMouseLeave={this.handleDatePopoverClose}
-                                >
-                                  ...
-                                </Typography>
+                          {list.assignee.length > 0
+                            ? list.assignee[0].name
+                            : "No Assignees"}
+                          {list.assignee.length > 1 && (
+                            <div>
+                              <Typography
+                                aria-owns={
+                                  open ? "mouse-over-popover" : undefined
+                                }
+                                aria-haspopup="true"
+                                onMouseEnter={(e) =>
+                                  handleAssigneePopoverOpen(e, list._id)
+                                }
+                                onMouseLeave={handleAssigneePopoverClose}
+                              >
+                                ...
+                              </Typography>
 
-                                <Popover
-                                  id="mouse-over-popover"
-                                  className={classes.popover}
-                                  classes={{
-                                    paper: classes.paper,
-                                  }}
-                                  open={
-                                    this.state.openedDatePopoverId === list._id
-                                  }
-                                  anchorEl={this.state.anchorEl}
-                                  anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left",
-                                  }}
-                                  transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "left",
-                                  }}
-                                  onClose={this.handlePopoverClose}
-                                  disableRestoreFocus
-                                >
-                                  {list.dates.map((date) => (
-                                    <Typography>{date}</Typography>
-                                  ))}
-                                </Popover>
-                              </div>
-                            )}
-                          </span>
-                        </div>
-
-                        <div
-                          className={`${style.assignee} ${style.flex}  ${style.item}`}
-                        >
-                          <span className={style.styleSpan}>
-                            <FontAwesomeIcon
-                              icon={faUser}
-                              className={style.icon}
-                            />{" "}
-                            {list.assignee.length > 0
-                              ? list.assignee[0].name
-                              : "No Assignees"}
-                            {list.assignee.length > 1 && (
-                              <div>
-                                <Typography
-                                  aria-owns={
-                                    open ? "mouse-over-popover" : undefined
-                                  }
-                                  aria-haspopup="true"
-                                  onMouseEnter={(e) =>
-                                    this.handleAssigneePopoverOpen(e, list._id)
-                                  }
-                                  onMouseLeave={this.handleAssigneePopoverClose}
-                                >
-                                  ...
-                                </Typography>
-
-                                <Popover
-                                  id="mouse-over-popover"
-                                  className={classes.popover}
-                                  classes={{
-                                    paper: classes.paper,
-                                  }}
-                                  open={
-                                    this.state.openedAssigneePopoverId ===
-                                    list._id
-                                  }
-                                  anchorEl={this.state.anchorEl}
-                                  anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left",
-                                  }}
-                                  transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "left",
-                                  }}
-                                  onClose={this.handlePopoverClose}
-                                  disableRestoreFocus
-                                >
-                                  {list.assignee.map((assignee, i) => (
-                                    <Typography key={i}>
-                                      {assignee.name}
-                                    </Typography>
-                                  ))}
-                                </Popover>
-                              </div>
-                            )}
-                          </span>
-                        </div>
-
-                        {list.status === "booked" ? (
-                          <div
-                            className={`${style.status} ${style.flex} ${style.item}`}
-                          >
-                            <input
-                              className={style.styleCheckBox}
-                              onClick={() => this.markComplete(list)}
-                              type="checkbox"
-                            ></input>
-                            <div onClick={() => this.markComplete(list)}>
-                              Mark Complete
+                              <Popover
+                                id="mouse-over-popover"
+                                className={classes.popover}
+                                classes={{
+                                  paper: classes.paper,
+                                }}
+                                open={
+                                  state.openedAssigneePopoverId === list._id
+                                }
+                                anchorEl={state.anchorEl}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                  vertical: "top",
+                                  horizontal: "left",
+                                }}
+                                onClose={handleAssigneePopoverClose}
+                                disableRestoreFocus
+                              >
+                                {list.assignee.map((assignee, i) => (
+                                  <Typography key={i}>
+                                    {assignee.name}
+                                  </Typography>
+                                ))}
+                              </Popover>
                             </div>
-                          </div>
-                        ) : (
-                          <div
-                            className={`${style.status} ${style.flex} ${style.item}`}
-                          >
-                            {list.status}
-                          </div>
-                        )}
-                        <div></div>
+                          )}
+                        </span>
                       </div>
-                    </Link>
-                  </div>
+
+                      {list.status === "booked" ? (
+                        <div
+                          className={`${style.status} ${style.flex} ${style.item}`}
+                        >
+                          <input
+                            className={style.styleCheckBox}
+                            onClick={() => markComplete(list)}
+                            type="checkbox"
+                          ></input>
+                          <div onClick={() => markComplete(list)}>
+                            Mark Complete
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className={`${style.status} ${style.flex} ${style.item}`}
+                        >
+                          {list.status}
+                        </div>
+                      )}
+                      <div></div>
+                    </div>
+                  </Link>
                 </div>
-              );
-            })}
-            <div className={style.stylePagination}>
-              <div className={style.pagination}>
-                <Pagination
-                  itemCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
-                />
               </div>
+            );
+          })}
+          <div className={style.stylePagination}>
+            <div className={style.pagination}>
+              <Pagination
+                itemCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
-        ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" alt="" />
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+        </div>
+      ) : (
+        <div className="text-center">
+          <img src="/images/no-data-found.png" alt="" />
+        </div>
+      )}
+    </div>
+  );
+};
 
 var mapStateToProps = (state) => ({
   moverJobs: state.moverJobs?.jobList,

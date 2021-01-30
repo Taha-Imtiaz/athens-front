@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import style from "./AccountDisplay.module.css";
+import style from "./Account.module.css";
 
 import { Button, TextField } from "@material-ui/core";
 import {
   getUserData,
   resetPassword,
   updateUser,
-} from "../../../Redux/User/userActions";
+} from "../../Redux/User/userActions";
 import { useState } from "react";
-import { getLoginUser } from "../../../Redux/User/userActions";
+import { getLoginUser } from "../../Redux/User/userActions";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
-import { showMessage } from "../../../Redux/Common/commonActions";
+import { showMessage } from "../../Redux/Common/commonActions";
 
-const AccountDisplay = (props) => {
-  let { loggedInUser } = props;
+const Account = (props) => {
+  let { user } = props;
   const [disabledForm, setDisabledForm] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
@@ -34,8 +34,8 @@ const AccountDisplay = (props) => {
   });
 
   useEffect(() => {
-    const userId = loggedInUser?._id;
-    if (userId) {
+    if (user) {
+      const userId = user._id;
       getUserData(userId)
         .then((res) => {
           let { data } = res.data;
@@ -51,7 +51,7 @@ const AccountDisplay = (props) => {
           console.log(error);
         });
     }
-  }, [loggedInUser]);
+  }, [user]);
 
   const validate = () => {
     let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -153,7 +153,7 @@ const AccountDisplay = (props) => {
         phone,
       };
       const { updateUser } = props;
-      updateUser(updatedUserObj, loggedInUser._id)
+      updateUser(updatedUserObj, user._id)
         .then((res) => {
           setDisabledForm(true);
         })
@@ -164,7 +164,7 @@ const AccountDisplay = (props) => {
   };
   return (
     <div className={style.accountContainer}>
-      {loggedInUser && (
+      {user && (
         <div className={style.form}>
           <h3 className={`${style.flex} ${style.header}`}>Account</h3>
           <form>
@@ -180,7 +180,7 @@ const AccountDisplay = (props) => {
               className={style.styleFormFields}
               value={editAccount.name}
               onChange={handleFormInput}
-              error={editAccount.nameError ? true: false}
+              error={editAccount.nameError ? true : false}
             />
 
             <TextField
@@ -194,7 +194,7 @@ const AccountDisplay = (props) => {
               name="email"
               value={editAccount.email}
               onChange={handleFormInput}
-              error={editAccount.emailError ? true: false}
+              error={editAccount.emailError ? true : false}
               className={style.styleFormFields}
             />
 
@@ -209,7 +209,7 @@ const AccountDisplay = (props) => {
               name="phone"
               value={editAccount.phone}
               onChange={handleFormInput}
-              error={editAccount.phoneError? true: false}
+              error={editAccount.phoneError ? true : false}
               className={style.styleFormFields}
             />
 
@@ -223,7 +223,7 @@ const AccountDisplay = (props) => {
               label="Enter Address"
               name="address"
               value={editAccount.address}
-              error={editAccount.addressError? true: false}
+              error={editAccount.addressError ? true : false}
               onChange={handleFormInput}
               className={style.styleFormFields}
             />
@@ -237,14 +237,14 @@ const AccountDisplay = (props) => {
           )}
         </div>
       )}
-      <div className={style.profile}>
+      {user && <div className={style.profile}>
         <div className={`${style.content} `}>
           <div className={`${style.profilePic} ${style.flex}`}></div>
           <div className={`${style.accountHolderName} ${style.flex}`}>
-            {loggedInUser?.name}
+            {user.name}
           </div>
           <div className={`${style.accountHolderRole} ${style.flex}`}>
-            {loggedInUser?.role}
+            {user.role}
           </div>
           <div className={`${style.editButton} `}>
             <div>
@@ -268,13 +268,12 @@ const AccountDisplay = (props) => {
           </div>
         </div>
       </div>
+      }
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
-        // dialogClassName={`${style.modal}`}
         centered
         scrollable
-        // backdrop = {false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Reset Password</Modal.Title>
@@ -291,7 +290,7 @@ const AccountDisplay = (props) => {
             name="password"
             value={editAccount.password}
             onChange={handleFormInput}
-            error={editAccount.passwordError? true: false}
+            error={editAccount.passwordError ? true : false}
             className={style.styleFormFields}
           />
           <TextField
@@ -305,7 +304,7 @@ const AccountDisplay = (props) => {
             name="confirmPassword"
             value={editAccount.confirmPassword}
             onChange={handleFormInput}
-            error={editAccount.confirmPasswordError? true: false}
+            error={editAccount.confirmPasswordError ? true : false}
             className={style.styleFormFields}
           />
           {/* Are you sure you want to delete this Blanket Deposit? */}
@@ -335,7 +334,7 @@ const action = {
 };
 
 var mapStateToProps = (state) => ({
-  loggedInUser: state.users.user,
+  user: state.users.user,
 });
 
-export default connect(mapStateToProps, action)(AccountDisplay);
+export default connect(mapStateToProps, action)(Account);

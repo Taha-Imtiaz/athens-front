@@ -26,7 +26,7 @@ import DailySchedule from "./pages/Schdules/Daily/Daily";
 import MoversSchedule from "./pages/Schdules/Movers/Movers";
 import CreateUser from "./pages/User/CreateNew/CreateUser";
 import UsersList from "./pages/User/UsersList/UsersList";
-import AccountDisplay from "./pages/Account/AccountDisplay/AccountDisplay";
+import Account from "./pages/Account/Account";
 import MoversJobDetails from "./pages/Movers/JobDetails/JobDetails";
 import Payment from "./pages/Movers/Payment/Payment";
 import CustomerAdd from "./pages/Customer/CustomerAdd/customeradd";
@@ -98,7 +98,7 @@ function App(props) {
             <PrivateRoute path="/user/add" component={CreateUser} />
 
             {/* Account */}
-            <PrivateRoute path="/account" component={AccountDisplay} exact />
+            <PrivateRoute path="/account" component={Account} exact />
 
             {/* Claim */}
             <PrivateRoute path="/claims" component={ClaimList} />

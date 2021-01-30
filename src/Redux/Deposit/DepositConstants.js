@@ -1,0 +1,3 @@
+export const GET_ALL_DEPOSITS = "GET_ALL_DEPOSITS"
+export const DELETE_DEPOSIT = "DELETE_DEPOSIT"
+export const EDIT_DEPOSIT = "EDIT_DEPOSIT"

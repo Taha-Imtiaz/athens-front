@@ -1,5 +1,5 @@
 import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
-import Axios from "../../utils/api";
+import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
 export const login = (credentials, callback) => {
@@ -25,30 +25,44 @@ export const login = (credentials, callback) => {
   };
 };
 
-export const getLoginUser = (credentials) => {
-  return async (diaspatch) => {
-    try {
-      const token = localStorage.getItem("athens-token");
-      const config = {
-        headers: { Authorization: token },
-      };
-
-      const user = await Axios.get("user", config);
-
-      if (user.data.status === 200) {
-        diaspatch({
+export const getLoginUser = () => {
+  return (dispatch) => {
+    Axios.get('/user', { config: { handlerEnabled: true } })
+      .then(res => {
+        dispatch({
           type: LOGGEDIN_USER,
           payload: {
-            user: user.data.data,
-          },
-        });
-      } else {
-        diaspatch(showMessage(user.data.message));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+            user: res.data.data,
+          }
+        })
+      })
+      .catch(err => {
+        dispatch(showMessage(err.message))
+      })
+  }
+  // return async (diaspatch) => {
+  //   try {
+  //     const token = localStorage.getItem("athens-token");
+  //     const config = {
+  //       headers: { Authorization: token },
+  //     };
+
+  //     const user = await Axios.get("user", config);
+
+  //     if (user.data.status === 200) {
+  //       diaspatch({
+  //         type: LOGGEDIN_USER,
+  //         payload: {
+  //           user: user.data.data,
+  //         },
+  //       });
+  //     } else {
+  //       diaspatch(showMessage(user.data.message));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 };
 
 export const getUsers = (UsersObj) => {
@@ -73,18 +87,10 @@ export const createUser = async (newUserObj) => {
     const createdUser = await Axios.post("user", newUserObj);
     // dispatch(showMessage(createdUser.data.message))
     return createdUser;
-  } catch (error) {}
+  } catch (error) { }
   // }
 };
 
-export const getUserData = async (userId) => {
-  try {
-    const getUser = await Axios.get(`user/${userId}`);
-    return getUser;
-  } catch (error) {
-    console.log(error);
-  }
-};
 export const updateUser = (data, userId) => {
   return async (dispatch) => {
     try {
@@ -118,6 +124,7 @@ export const sendCode = async (email) => {
     console.log(error);
   }
 };
+
 export const verifyCode = (verifyCodeObj, callback) => {
   return async (dispatch) => {
     try {
@@ -128,7 +135,6 @@ export const verifyCode = (verifyCodeObj, callback) => {
       const verifyCode = await Axios.post("user/verify", verifyCodeObj, config);
       if (verifyCode.data.status === 200) {
         localStorage.setItem("athens-token", verifyCode.data.token);
-        // callback()
         dispatch(showMessage(verifyCode.data.message));
         dispatch({
           type: LOGGEDIN_USER,
@@ -147,7 +153,9 @@ export const verifyCode = (verifyCodeObj, callback) => {
     }
   };
 };
+
 export const resetPassword = async (passwordObj) => {
+
   try {
     const config = {
       headers: { Authorization: passwordObj.token },
@@ -157,4 +165,21 @@ export const resetPassword = async (passwordObj) => {
   } catch (error) {
     console.log(error);
   }
+  // return (dispatch) => {
+  //   Axios.get('/user', { config: { handlerEnabled: true } })
+  //     .then(res => {
+  //       dispatch({
+  //         type: LOGGEDIN_USER,
+  //         payload: {
+  //           user: res.data.data,
+  //         }
+  //       })
+  //     })
+  //     .catch(err => {
+  //       dispatch({
+  //         type: 'ERR_FETCHING_USER',
+  //         err
+  //       })
+  //     })
+  // }
 };

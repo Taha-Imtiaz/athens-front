@@ -6,7 +6,6 @@ import { showMessage } from "../../Redux/Common/commonActions";
 export const getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
-
       let getCustomersList = await Axios.post(
         "customer/all",
         customersObj

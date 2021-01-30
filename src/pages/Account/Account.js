@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import style from "./Account.module.css";
 
 import { Button, TextField } from "@material-ui/core";
-import {
-  getUserData,
-  resetPassword,
-  updateUser,
-} from "../../Redux/User/userActions";
+import { resetPassword, updateUser } from "../../Redux/User/userActions";
 import { useState } from "react";
 import { getLoginUser } from "../../Redux/User/userActions";
 import { connect } from "react-redux";
@@ -35,21 +31,13 @@ const Account = (props) => {
 
   useEffect(() => {
     if (user) {
-      const userId = user._id;
-      getUserData(userId)
-        .then((res) => {
-          let { data } = res.data;
-          let { name, email, address, phone } = data;
-          setEditAccount({
-            name,
-            email,
-            address,
-            phone,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      let { name, email, address, phone } = user;
+      setEditAccount({
+        name,
+        email,
+        address,
+        phone,
+      });
     }
   }, [user]);
 
@@ -131,12 +119,14 @@ const Account = (props) => {
         password,
         token: userToken,
       };
+
       resetPassword(resetPasswordObj).then((res) => {
         if (res.data.status === 200) {
           setShowModal(false);
           showMessage(res.data.message);
         }
       });
+
     }
   };
   const mySubmitHandler = (event) => {

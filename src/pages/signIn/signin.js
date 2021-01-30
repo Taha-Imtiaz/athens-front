@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { login } from "../../Redux/User/userActions";
 import { Button, TextField } from "@material-ui/core";
 
-class SignInForm extends React.Component {
+class SignIn extends React.Component {
   initialState = {
     email: "",
     password: "",
@@ -153,4 +153,4 @@ var mapStateToProps = (state) => ({
   user: state.users.user,
 });
 
-export default connect(mapStateToProps, actions)(SignInForm);
+export default connect(mapStateToProps, actions)(SignIn);

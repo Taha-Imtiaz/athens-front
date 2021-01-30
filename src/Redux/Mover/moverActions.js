@@ -10,12 +10,7 @@ import { LOGGEDIN_USER } from "../User/userConstants";
 export const getMover = (moversObj) => {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem("athens-token");
-      const config = {
-        headers: { Authorization: token },
-      };
-      // const mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
-      const mover = await Axios.post(`mover/jobs`, moversObj, config);
+      const mover = await Axios.post(`mover/jobs`, moversObj, { config: { handlerEnabled: true } });
       console.log(mover);
       dispatch({
         type: GET_MOVER,
@@ -40,15 +35,10 @@ export const updateJob = async (jobId, status) => {
 
 export const getMoverJobs = async (date) => {
   try {
-    const token = localStorage.getItem("athens-token");
-    const config = {
-      headers: { Authorization: token },
-    };
-    // const date = new Date()
     let data = {
       date: date.toString(),
     };
-    const jobs = await Axios.post(`mover`, data, config);
+    const jobs = await Axios.post(`mover`, data, { config: { handlerEnabled: true } });
 
     return jobs;
   } catch (error) {
@@ -57,11 +47,7 @@ export const getMoverJobs = async (date) => {
 };
 
 export const holidayCalendar = async (obj) => {
-  const token = localStorage.getItem("athens-token");
-  const config = {
-    headers: { Authorization: token },
-  };
-  const days = await Axios.post(`schedule`, obj, config);
+  const days = await Axios.post(`schedule`, obj, { config: { handlerEnabled: true } });
   return days;
 };
 
@@ -104,12 +90,8 @@ export const getMoverJobDetail = (jobId) => {
 };
 export const moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
-    const token = localStorage.getItem("athens-token");
-    const config = {
-      headers: { Authorization: token },
-    };
     try {
-      const searchItem = await Axios.post(`mover/search`, searchObj, config);
+      const searchItem = await Axios.post(`mover/search`, searchObj, { config: { handlerEnabled: true } });
       dispatch({
         type: SEARCH_FILTER,
         payload: {

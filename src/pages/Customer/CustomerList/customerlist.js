@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import style from "./customerlist.module.css";
+import style from "./CustomerList.module.css";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";

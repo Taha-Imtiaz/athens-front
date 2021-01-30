@@ -1,14 +1,14 @@
-import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE, SCHEDULE_DATE } from "./commonConstants"
+import { START_LOADING, FINISH_LOADING, SHOW_MESSAGE, SCHEDULE_DATE } from "./commonConstants"
 
 export const showLoader = () => (dispatch) => {
     dispatch({
-        type: SHOW_LOADER
+        type: START_LOADING
     })
 }
 
 export const hideLoader = () => (dispatch) => {
     dispatch({
-        type: HIDE_LOADER
+        type: FINISH_LOADING
     })
 }
 

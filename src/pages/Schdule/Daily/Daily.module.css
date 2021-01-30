@@ -1,0 +1,180 @@
+.scheduleContainer {
+  display: grid;
+  grid-template-rows: minmax(90vh, min-content);
+  grid-template-columns: 15fr 85fr;
+  grid-template-areas: "sidebar dragContent";
+  column-gap: 0.75rem;
+  /* background-color: aqua; */
+}
+.sidebar {
+  grid-area: sidebar;
+}
+.dragContent {
+  grid-area: dragContent;
+  display: grid;
+  grid-template-columns: 80fr 20fr;
+  grid-template-areas: "jobContent movers";
+  column-gap: 0.75rem;
+
+}
+.jobContent {
+  grid-area: jobContent;
+  /* background-color: aqua; */
+}
+.movers {
+  grid-area: movers;
+}
+.styleDatePicker {
+  width: 68vw !important;
+  height: 12vh;
+}
+.styleLine {
+  border-top: 4px solid rgba(0, 0, 0, 0.1);
+}
+.moverAssigneeInfo {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 6vh;
+  align-items: center;
+  padding: 0 0.5rem;
+  /* background-color: rosybrown; */
+}
+.moverAssigneeInfo .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+}
+.moverAssigneeInfo .button:hover {
+  background-color: #00adee;
+}
+.jobListHeader {
+  display: grid;
+  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  height: 6vh;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
+.cardHeader {
+  display: grid;
+  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+
+  align-items: center;
+  column-gap: 0.5rem;
+}
+.hideJobId, .hideAssigneeId {
+  display: none;
+}
+.assignee {
+  display: grid;
+  grid-template-columns: 85fr 15fr;
+  grid-template-areas: "assigneeName closeIcon";
+}
+.assigneeName {
+  grid-area: assigneeName;
+}
+.closeIcon {
+  grid-area: closeIcon;
+  /* color: #a8a8a8; */
+}
+.styleText {
+  font-weight: normal;
+}
+.styleModalBody {
+  display: grid;
+  grid-template-columns: 90fr 10fr;
+}
+.styleModalBody .styleLink {
+  text-decoration: none;
+  cursor: pointer;
+}
+.modalBtns .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0 0.2rem;
+}
+.modalBtns .button:hover {
+  background-color: #00adee;
+}
+.jobDetailHeader {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-weight: bold;
+}
+.jobDetailList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.jobDescriptionHeader {
+  margin: 0.5rem 0;
+}
+.jobDescription {
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.customerDetailHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+}
+.customerDetailList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+.moverHeader {
+  cursor: pointer;
+}
+.scroll {
+  position: fixed;
+}
+.scrollBar {
+  width: 100% !important;
+  margin: 0 0.1rem;
+  /* background-color: #00adee; */
+
+  overflow-x: hidden;
+  height: 75vh;
+}
+.scrollBar .scrollContent {
+  height: 100%;
+  
+}
+.scrollBar::-webkit-scrollbar {
+  width: 8px !important;
+}
+/* Track */
+.scrollBar::-webkit-scrollbar-track {
+  border-radius: 8px !important;
+}
+
+/* Handle */
+.scrollBar::-webkit-scrollbar-thumb {
+  border-radius: 8px !important;
+  background: grey !important;
+}
+
+/* Handle on hover */
+.scrollBar::-webkit-scrollbar-thumb:hover {
+  background: grey !important;
+}
+
+.movehead {
+  margin: 1rem 0;
+}
+
+.mov {
+  padding-left: 4px;
+  border-left: 1px solid rgb(223, 214, 214);
+}

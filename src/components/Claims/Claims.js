@@ -4,7 +4,7 @@ import TimeAgo from "react-timeago";
 import { Button } from "@material-ui/core";
 import style from "./Claims.module.css";
 import DeleteConfirmation from "../../components/DeleteConfirmation/DeleteConfirmation";
-import { deleteClaim } from "../../Redux/Claims/claimsActions";
+import { deleteClaim } from "../../Redux/Claim/claimActions";
 import { connect } from "react-redux";
 
 const Claims = (props) => {

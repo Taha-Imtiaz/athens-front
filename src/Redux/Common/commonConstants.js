@@ -1,5 +1,5 @@
-export const SHOW_LOADER = "SHOW_LOADER"
-export const HIDE_LOADER = "HIDE_LOADER"
+export const START_LOADING = "START_LOADING"
+export const FINISH_LOADING = "FINISH_LOADING"
 export const SHOW_MESSAGE = "SHOW_MESSAGE"
 export const SCHEDULE_DATE = "SCHEDULE_DATE"
 

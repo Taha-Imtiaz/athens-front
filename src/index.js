@@ -6,6 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom"
 import store from './Redux/store';
 import {Provider} from 'react-redux'
+import Axios from "./utils/api";
+
+Axios();
 
 ReactDOM.render(
   <Provider store = {store}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import style from "./JobConfirmationModal.module.css"
 import { Modal } from "react-bootstrap";
-import JobConfirmation from '../../pages/Jobs/JobConfirmation/JobConfirmation';
+import JobConfirmation from '../../pages/Job/JobConfirmation/JobConfirmation';
 
 const JobConfirmationModal = ({job,show,handleCloseAndRefresh,closeJobConfirmationModal}) => {
     return (

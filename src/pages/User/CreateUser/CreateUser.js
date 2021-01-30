@@ -3,7 +3,7 @@ import style from "./CreateUser.module.css";
 import { Button } from "@material-ui/core";
 import { Multiselect } from "multiselect-react-dropdown";
 import { createUser } from "../../../Redux/User/userActions";
-import "./node_modules/react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { TextField } from "@material-ui/core";

@@ -1,12 +1,13 @@
 .sidebar {
+  position: fixed;
   background-color: #181f47;
   height: 100%;
+  width: 15%;
 }
 
 .sidebar > .sidebarContent > a {
   grid-template-rows: repeat(auto-fit, minmax(10vh, 1fr));
   color: white;
-
   display: grid;
   grid-template-columns: 20fr 80fr;
  

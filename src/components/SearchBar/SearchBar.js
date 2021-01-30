@@ -4,7 +4,7 @@ import { getAllCustomers } from "../../Redux/Customer/customerActions";
 import { getAllJobs } from "../../Redux/Job/jobActions";
 import { getUsers } from "../../Redux/User/userActions";
 import { moverSearchFilter } from "../../Redux/Mover/moverActions";
-import { getAllClaims } from "../../Redux/Claims/claimsActions";
+import { getAllClaims } from "../../Redux/Claim/claimActions";
 
 const SearchBar = (props) => {
   let {

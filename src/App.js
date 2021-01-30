@@ -5,45 +5,65 @@ import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./utils/private-routes";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
-
+/* Auth */
 import SignIn from "./pages/SignIn/SignIn";
-import customerList from "./pages/Customer/CustomerList/customerlist";
-import customerDetail from "./pages/Customer/CustomerDetail/customerDetail";
-import ClaimList from "./pages/Claims/ClaimList/ClaimList";
-import BlanketList from "./pages/Blanket/BlanketList/BlanketList";
-import NewClaim from "./pages/Claims/NewClaim/NewClaim";
-import JobsList from "./pages/Jobs/JobsList/JobsList";
-import JobDetails from "./pages/Jobs/JobDetails/JobDetails";
-import CreateJobs from "./pages/Jobs/CreateJob/CreateJobs";
-import JobEditDetails from "./pages/Jobs/JobDetailsEdit/JobEditDetails";
-import Calendar from "./pages/Calendar/Calendar";
-import UnavailableSchedule from "./pages/Schdules/Unavailable/Unavailable";
-import DailySchedule from "./pages/Schdules/Daily/Daily";
-import MoversSchedule from "./pages/Schdules/Movers/Movers";
-import CreateUser from "./pages/User/CreateNew/CreateUser";
-import UsersList from "./pages/User/UsersList/UsersList";
-import Account from "./pages/Account/Account";
-import MoversJobDetails from "./pages/Movers/JobDetails/JobDetails";
-import Payment from "./pages/Movers/Payment/Payment";
-import CustomerAdd from "./pages/Customer/CustomerAdd/customeradd";
-import MoversCalendar from "./pages/Movers/MoversCalendar/MoversCalendar";
-import Availability from "./pages/Movers/Availability/Availability";
-import MoversJobsList from "./pages/Movers/JobList/JobList";
-import RequestHolidays from "./pages/Movers/HolidayCalendar/HolidayCalendar";
-import SubmitDeposit from "./pages/Blanket/SubmitDeposit/SubmitDeposit";
 import EmailVerification from "./pages/ForgetPassword/EmailVerification/EmailVerification";
-import VerificationCode from "./pages/ForgetPassword/VerificationCode/VerificationCode";
+import CodeVerification from "./pages/ForgetPassword/CodeVerification/CodeVerification";
 import ResetPassword from "./pages/ForgetPassword/ResetPassword/ResetPassword";
-import ClaimsDetails from "./pages/Claims/ClaimsDetails/ClaimsDetails";
-import CustomerUpdate from "./pages/Customer/CustomerUpdate/CustomerUpdate";
+
+/* Customer */
+import CustomerList from "./pages/Customer/CustomerList/CustomerList";
+import CustomerDetails from "./pages/Customer/CustomerDetails/CustomerDetails";
+import CreateCustomer from "./pages/Customer/CreateCustomer/CreateCustomer";
+import UpdateCustomer from "./pages/Customer/UpdateCustomer/UpdateCustomer";
+
+/* Job */
+import JobList from "./pages/Job/JobList/JobList";
+import JobDetails from "./pages/Job/JobDetails/JobDetails";
+import CreateJob from "./pages/Job/CreateJob/CreateJob";
+import UpdateJob from "./pages/Job/UpdateJob/UpdateJob";
+
+/* Calendar */
+import Calendar from "./pages/Calendar/Calendar";
+
+/* Schedule */
+import UnavailableSchedule from "./pages/Schdule/Unavailable/Unavailable";
+import DailySchedule from "./pages/Schdule/Daily/Daily";
+import MoversSchedule from "./pages/Schdule/Movers/Movers";
+
+/* User */
+import UserList from "./pages/User/UserList/UserList";
+import CreateUser from "./pages/User/CreateUser/CreateUser";
+
+/* Account */
+import Account from "./pages/Account/Account";
+
+/* Claim */
+import ClaimList from "./pages/Claim/ClaimList/ClaimList";
+import ClaimDetails from "./pages/Claim/ClaimDetails/ClaimDetails";
+import CreateClaim from "./pages/Claim/CreateClaim/CreateClaim";
+
+/* Deposit */
+import DepositList from "./pages/Deposit/DepositList/DepositList";
+import CreateDeposit from "./pages/Deposit/CreateDeposit/CreateDeposit";
+
+/* Mover */
+import MoversJobList from "./pages/Mover/JobList/JobList";
+import MoverJobDetails from "./pages/Mover/JobDetails/JobDetails";
+import Payment from "./pages/Mover/Payment/Payment";
+import MoversCalendar from "./pages/Mover/MoverCalendar/MoverCalendar";
+import Availability from "./pages/Mover/Availability/Availability";
+import RequestHolidays from "./pages/Mover/HolidayCalendar/HolidayCalendar";
+
 
 function App(props) {
   // To show server responses to user.
-  const { showMessage } = props;
+  const { totalRequest, showMessage } = props;
   useEffect(() => {
     if (showMessage) {
       notify(showMessage);
@@ -56,6 +76,12 @@ function App(props) {
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>
+      {totalRequest > 0 ?
+          <div className="loader">
+            <CircularProgress />
+          </div>
+          : null
+        }
       <div className="navigation-menu">
         <Navbar />
       </div>
@@ -64,26 +90,27 @@ function App(props) {
           pathname !== "/" ? "app-content-container" : "app-content-without-nav"
         }
       >
+        
         <ToastContainer position="bottom-right" />
         <Switch>
           <ErrorBoundary>
             {/* Auth */}
             <Route path="/" exact component={SignIn} />
             <Route path="/email-verification" component={EmailVerification} />
-            <Route path="/verifycode" component={VerificationCode} />
+            <Route path="/verifycode" component={CodeVerification} />
             <PrivateRoute path="/rest-password" component={ResetPassword} />
 
             {/* Customer */}
-            <PrivateRoute path="/customers" exact component={customerList} />
-            <PrivateRoute path="/customer/detail/:customerId" component={customerDetail} />
-            <PrivateRoute path="/customer/add" component={CustomerAdd} />
-            <PrivateRoute path="/customer/update/:customerId" component={CustomerUpdate} />
+            <PrivateRoute path="/customers" exact component={CustomerList} />
+            <PrivateRoute path="/customer/detail/:customerId" component={CustomerDetails} />
+            <PrivateRoute path="/customer/add" component={CreateCustomer} />
+            <PrivateRoute path="/customer/update/:customerId" component={UpdateCustomer} />
 
             {/* Job */}
-            <PrivateRoute path="/jobs" component={JobsList} exact />
+            <PrivateRoute path="/jobs" component={JobList} exact />
             <PrivateRoute path="/job/detail/:jobId" component={JobDetails} />
-            <PrivateRoute path="/job/add" component={CreateJobs} />
-            <PrivateRoute path="/job/update/:jobId" component={JobEditDetails} />
+            <PrivateRoute path="/job/add" component={CreateJob} />
+            <PrivateRoute path="/job/update/:jobId" component={UpdateJob} />
 
             {/* Calendar */}
             <PrivateRoute path="/calendar" component={Calendar} />
@@ -94,7 +121,7 @@ function App(props) {
             <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
 
             {/* User */}
-            <PrivateRoute path="/users" component={UsersList} exact />
+            <PrivateRoute path="/users" component={UserList} exact />
             <PrivateRoute path="/user/add" component={CreateUser} />
 
             {/* Account */}
@@ -102,19 +129,19 @@ function App(props) {
 
             {/* Claim */}
             <PrivateRoute path="/claims" component={ClaimList} />
-            <PrivateRoute path="/claim/add" component={NewClaim} exact />
-            <PrivateRoute path="/claim/detail/:claimId" component={ClaimsDetails} />
+            <PrivateRoute path="/claim/detail/:claimId" component={ClaimDetails} />
+            <PrivateRoute path="/claim/add" component={CreateClaim} exact />
 
             {/* Deposit */}
-            <PrivateRoute path="/deposits" exact component={BlanketList} />
-            <PrivateRoute path="/deposit/add" component={SubmitDeposit} />
+            <PrivateRoute path="/deposits" exact component={DepositList} />
+            <PrivateRoute path="/deposit/add" component={CreateDeposit} />
 
             {/* Mover */}
-            <PrivateRoute path="/mover" component={MoversJobsList} exact />
+            <PrivateRoute path="/mover" component={MoversJobList} exact />
+            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoverJobDetails} />
             <PrivateRoute path="/mover/payment" component={Payment} />
             <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
             <PrivateRoute path="/mover/availability" component={Availability} />
-            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoversJobDetails} />
             <PrivateRoute path="/mover/holidaycalendar" component={RequestHolidays} />
           </ErrorBoundary>
         </Switch>
@@ -125,6 +152,7 @@ function App(props) {
 
 const mapStateToProps = (state) => ({
   showMessage: state.common.displayMessage.message,
+  totalRequest: state.common.totalRequest
 });
 
 export default connect(mapStateToProps, null)(App);

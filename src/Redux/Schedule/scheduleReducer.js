@@ -1,12 +1,12 @@
 import { GET_ALLJOBS, GET_ALLJOBS_FIVEDAYS } from "./scheduleConstant"
 
 
-var initialState = {
+let initialState = {
     jobList: null,
     moverList: null
 }
-var scheduleReducer = (state = initialState, action) => {
-    var {type, payload} = action
+const scheduleReducer = (state = initialState, action) => {
+    let {type, payload} = action
     switch (type) {
         case GET_ALLJOBS:
             return {...state, jobList: payload.getJobs.data.data}

@@ -1,12 +1,12 @@
 import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 
-var initialState = {
+let initialState = {
   user: null,
   userList: {}
 };
 
-var userReducer = (state = initialState, action) => {
-  var { type, payload } = action;
+const userReducer = (state = initialState, action) => {
+  let { type, payload } = action;
 
   switch (type) {
     case GET_USERS:

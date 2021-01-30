@@ -6,17 +6,17 @@ import { sendCode } from "../../../Redux/User/userActions";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 const EmailVerification = (props) => {
-  var [email, setEmail] = useState("");
-  var [emailError, setEmailError] = useState("");
-  var handleFormInput = (e) => {
-    var { value } = e.target;
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const handleFormInput = (e) => {
+    let { value } = e.target;
     setEmail(value);
   };
 
-  var navigateToCode = () => {
-    var { history, showMessage } = props;
+  const navigateToCode = () => {
+    let { history, showMessage } = props;
     if (email !== "") {
-      var emailObj = {
+      let emailObj = {
         email: email,
       };
 

@@ -10,7 +10,7 @@ import scheduleReducer from './Schedule/scheduleReducer';
 import formsReducer from './PersistForms/formReducer';
 import blanketReducer from './BlanketDeposit/BlanketDepositReducer'
 
-var rootReducer = combineReducers({
+const rootReducer = combineReducers({
     customers: customerReducer,
     jobs: jobReducer,
     claims: claimReducer,

@@ -1,18 +1,18 @@
 import { SHOW_LOADER, HIDE_LOADER, SHOW_MESSAGE, SCHEDULE_DATE } from "./commonConstants"
 
-export var showLoader = () => (dispatch) => {
+export const showLoader = () => (dispatch) => {
     dispatch({
         type: SHOW_LOADER
     })
 }
 
-export var hideLoader = () => (dispatch) => {
+export const hideLoader = () => (dispatch) => {
     dispatch({
         type: HIDE_LOADER
     })
 }
 
-export var showMessage = (message) => async (dispatch) => {
+export const showMessage = (message) => async (dispatch) => {
     setTimeout(() => {
         dispatch({
             type: SHOW_MESSAGE,
@@ -29,7 +29,7 @@ export var showMessage = (message) => async (dispatch) => {
     })
 }
 
-export var changeDate = (date) => (dispatch) => {
+export const changeDate = (date) => (dispatch) => {
     dispatch({
         type: SCHEDULE_DATE,
         payload: date

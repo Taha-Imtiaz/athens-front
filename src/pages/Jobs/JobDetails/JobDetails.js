@@ -18,16 +18,16 @@ import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
 
 const JobDetails = (props) => {
-  var { job } = props;
+  let { job } = props;
 
-  var {
+  let {
     match: {
       params: { jobId },
     },
   } = props;
-  var [show, setShow] = useState(false);
-  var [showBooking, setShowBooking] = useState(false);
-  var { getJob } = props;
+  const [show, setShow] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
+  let { getJob } = props;
 
   useEffect(() => {
     //fetch id on componentDidMount
@@ -35,11 +35,11 @@ const JobDetails = (props) => {
   }, [getJob, jobId]);
 
   //show activities modal
-  var handleShow = () => {
+  const handleShow = () => {
     setShow(true);
   };
   //close activities modal
-  var handleClose = () => {
+  const handleClose = () => {
     setShow(false);
   };
   const handleCloseAndRefresh = () => {

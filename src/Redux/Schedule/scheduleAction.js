@@ -1,11 +1,11 @@
 import { GET_ALLJOBS, GET_ALLJOBS_FIVEDAYS } from "./scheduleConstant"
 import Axios from '../../utils/api'
 
-export var getalljobs = (jobObj) => {
+export const getalljobs = (jobObj) => {
   return async (dispatch) => {
 
     try {
-      var getJobs = await Axios.post("schedule/current-jobs", jobObj);
+      const getJobs = await Axios.post("schedule/current-jobs", jobObj);
       //update app's state
       dispatch({
         type: GET_ALLJOBS,
@@ -19,11 +19,11 @@ export var getalljobs = (jobObj) => {
   };
 };
 
-export var getalljobsfiveday = (jobObj) => {
+export const getalljobsfiveday = (jobObj) => {
   return async (dispatch) => {
 
     try {
-      var movers = await Axios.post("schedule/movers", jobObj);
+      const movers = await Axios.post("schedule/movers", jobObj);
       //update app's state
       dispatch({
         type: GET_ALLJOBS_FIVEDAYS,
@@ -37,10 +37,10 @@ export var getalljobsfiveday = (jobObj) => {
   };
 };
 
-export var getAllMover = async () => {
+export const getAllMover = async () => {
 
   try {
-    var moverList = await Axios.get("mover");
+    const moverList = await Axios.get("mover");
     return moverList;
   } catch (error) {
     console.log(error);

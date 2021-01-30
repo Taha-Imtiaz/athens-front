@@ -61,7 +61,7 @@ class CreateUser extends Component {
     let typeError = "";
     let attributeError = "";
 
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!this.state.name) {
       nameError = "Name should not be empty";
@@ -110,7 +110,7 @@ class CreateUser extends Component {
   };
 
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     this.setState({ [name]: value });
     if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
@@ -122,11 +122,11 @@ class CreateUser extends Component {
   mySubmitHandler = (event) => {
     event.preventDefault();
     const isValid = this.validate();
-    var { showMessage, history } = this.props;
+    let { showMessage, history } = this.props;
 
     if (isValid) {
-      var { name, phone, email, address, type, attributes } = this.state;
-      var createdUserObj = {
+      let { name, phone, email, address, type, attributes } = this.state;
+      let createdUserObj = {
         name,
         phone,
         address,

@@ -1,15 +1,21 @@
-import { GET_MOVER, GET_MOVER_JOB_DETAIL, SEARCH_FILTER } from "./moverConstants";
+import {
+  GET_MOVER,
+  GET_MOVER_JOB_DETAIL,
+  SEARCH_FILTER,
+} from "./moverConstants";
 import Axios from "../../utils/api";
+import { showMessage } from "../Common/commonActions";
+import { LOGGEDIN_USER } from "../User/userConstants";
 
-export var getMover = (moversObj) => {
+export const getMover = (moversObj) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("athens-token");
       const config = {
         headers: { Authorization: token },
       };
-      // var mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
-      var mover = await Axios.post(`mover/jobs`, moversObj, config);
+      // const mover = await Axios.get(`user/get-all-jobs-by-mover/${moverId}`, config)
+      const mover = await Axios.post(`mover/jobs`, moversObj, config);
       console.log(mover);
       dispatch({
         type: GET_MOVER,
@@ -23,16 +29,16 @@ export var getMover = (moversObj) => {
   };
 };
 
-export var updateJob = async (jobId, status) => {
+export const updateJob = async (jobId, status) => {
   try {
-    var updatedJob = await Axios.put(`job/status/${jobId}`, status);
+    const updatedJob = await Axios.put(`job/status/${jobId}`, status);
     return updatedJob;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var getMoverJobs = async (date) => {
+export const getMoverJobs = async (date) => {
   try {
     const token = localStorage.getItem("athens-token");
     const config = {
@@ -42,7 +48,7 @@ export var getMoverJobs = async (date) => {
     let data = {
       date: date.toString(),
     };
-    var jobs = await Axios.post(`mover`, data, config);
+    const jobs = await Axios.post(`mover`, data, config);
 
     return jobs;
   } catch (error) {
@@ -50,49 +56,60 @@ export var getMoverJobs = async (date) => {
   }
 };
 
-export var holidayCalendar = async (obj) => {
+export const holidayCalendar = async (obj) => {
   const token = localStorage.getItem("athens-token");
   const config = {
     headers: { Authorization: token },
   };
-  var days = await Axios.post(`schedule`, obj, config);
+  const days = await Axios.post(`schedule`, obj, config);
   return days;
 };
 
-export var setAvailability = async (obj, _id) => {
-  var days = await Axios.put(`mover/${_id}`, obj);
-  return days;
+export const setAvailability = (obj, _id) => {
+  return async (dispatch) => {
+    try {
+      const user = await Axios.put(`mover/${_id}`, obj);
+      dispatch(showMessage(user.data.message));
+      dispatch({
+        type: LOGGEDIN_USER,
+        payload: {
+          user: user.data.data,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
-export var payAmount = async (obj) => {
-  var payment = await Axios.post(`job/payment`, obj);
+export const payAmount = async (obj) => {
+  const payment = await Axios.post(`job/payment`, obj);
   return payment;
 };
 
-export var getMoverJobDetail = (jobId) => {
+export const getMoverJobDetail = (jobId) => {
   return async (dispatch) => {
-  try {
-    var getJob = await Axios.get(`job/${jobId}`);
-       dispatch({
-           type: GET_MOVER_JOB_DETAIL,
-           payload:{
-             getJob: getJob
-           }
-
-       })
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+      const getJob = await Axios.get(`job/${jobId}`);
+      dispatch({
+        type: GET_MOVER_JOB_DETAIL,
+        payload: {
+          getJob: getJob,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
-}
-export var moverSearchFilter = (searchObj) => {
+export const moverSearchFilter = (searchObj) => {
   return async (dispatch) => {
     const token = localStorage.getItem("athens-token");
     const config = {
       headers: { Authorization: token },
     };
     try {
-      var searchItem = await Axios.post(`mover/search`, searchObj, config);
+      const searchItem = await Axios.post(`mover/search`, searchObj, config);
       dispatch({
         type: SEARCH_FILTER,
         payload: {

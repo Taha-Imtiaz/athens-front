@@ -3,15 +3,15 @@ import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_CLAIM } from "./claimsC
 import Axios from "../../utils/api";
 import { showMessage } from "../Common/commonActions";
 
-// var baseUrl = "";
+// let baseUrl = "";
 
-export var getAllClaims = (data) => {
+export const getAllClaims = (data) => {
   let body = {
     page: data.page,
     query: data.query
   };
   return async (dispatch) => {
-    var claims = await Axios.post("claim/" + data.status,
+    let claims = await Axios.post("claim/" + data.status,
       body
     );
     //update app's state
@@ -24,9 +24,9 @@ export var getAllClaims = (data) => {
   };
 };
 
-export var getClaimsByID = (customerId) => {
+export const getClaimsByID = (customerId) => {
   return async (dispatch) => {
-    var claims = await Axios.get(`customer/details/${customerId}`);
+    let claims = await Axios.get(`customer/details/${customerId}`);
     dispatch({
       type: GET_CLAIMS_BY_ID,
       payload: {
@@ -36,18 +36,18 @@ export var getClaimsByID = (customerId) => {
   };
 };
 
-export var addClaim = async (data) => {
+export const addClaim = async (data) => {
   try {
-    var claim = await Axios.post(`claim`, data);
+    let claim = await Axios.post(`claim`, data);
     return claim;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var updateClaim = async (data) => {
+export const updateClaim = async (data) => {
   try {
-    var claim = await Axios.put(`claim/${data._id}`, data);
+    let claim = await Axios.put(`claim/${data._id}`, data);
     return claim;
   } catch (error) {
     console.log(error);
@@ -55,9 +55,9 @@ export var updateClaim = async (data) => {
 };
 
 
-export var updateDeposit = async (data) => {
+export const updateDeposit = async (data) => {
   try {
-    var blanket = await Axios.put(
+    let blanket = await Axios.put(
       `deposit`,
       data
     );
@@ -66,19 +66,19 @@ export var updateDeposit = async (data) => {
   }
 };
 
-export var getCustomersAndJobs = async () => {
+export const getCustomersAndJobs = async () => {
   try {
-    var customers = await Axios.get(`customer/jobs`);
+    let customers = await Axios.get(`customer/jobs`);
     return customers;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var getClaim = (claimId) => {
+export const getClaim = (claimId) => {
   return async (dispatch) => {
     try {
-      var claim = await Axios.get(`claim/${claimId}`)
+      let claim = await Axios.get(`claim/${claimId}`)
       dispatch({
         type: GET_CLAIM,
         payload: {
@@ -91,7 +91,7 @@ export var getClaim = (claimId) => {
   }
 }
 
-export var deleteClaim = (id, currentPage) => {
+export const deleteClaim = (id, currentPage) => {
 
   return async (dispatch) => {
     try {
@@ -100,7 +100,7 @@ export var deleteClaim = (id, currentPage) => {
         id
       }
       console.log(body)
-      var getAllClaimsExceptDeleteOne = await Axios.delete(`claim`, { params: body })
+      let getAllClaimsExceptDeleteOne = await Axios.delete(`claim`, { params: body })
       if (getAllClaimsExceptDeleteOne.data.status === 200) {
         dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
         dispatch({

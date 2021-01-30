@@ -1,10 +1,10 @@
 import { DELETE_CLAIM, GET_CLAIM, GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants"
 
-var initialState = {
+let initialState = {
     claim: ''
 }
-var claimReducer = (state = initialState, action) => {
-    var { type, payload } = action
+const claimReducer = (state = initialState, action) => {
+    let { type, payload } = action
     switch (type) {
         case GET_CLAIMS:
             return { ...state, claimList: payload.claims }

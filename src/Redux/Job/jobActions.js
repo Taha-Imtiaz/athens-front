@@ -3,10 +3,10 @@ import { GET_JOBS, GET_JOB, DELETE_JOB } from "./jobConstants";
 import Axios from "../../utils/api";
 import { showMessage } from "../../Redux/Common/commonActions";
 
-export var getAllJobs = (jobObj) => {
+export const getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      var getJobs = await Axios.post("job/all", jobObj);
+      let getJobs = await Axios.post("job/all", jobObj);
       dispatch({
         type: GET_JOBS,
         payload: {
@@ -19,10 +19,10 @@ export var getAllJobs = (jobObj) => {
   };
 };
 
-export var getJob = (jobId) => {
+export const getJob = (jobId) => {
   return async (dispatch) => {
     try {
-      var getJob = await Axios.get(`job/${jobId}`);
+      let getJob = await Axios.get(`job/${jobId}`);
       dispatch({
         type: GET_JOB,
         payload: {
@@ -35,19 +35,19 @@ export var getJob = (jobId) => {
   };
 };
 
-export var getAllMovers = async () => {
+export const getAllMovers = async () => {
   try {
-    var getMovers = await Axios.get("mover");
+    let getMovers = await Axios.get("mover");
     return getMovers;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var createJob = (newJobObj, callback) => {
+export const createJob = (newJobObj, callback) => {
   return async (dispatch) => {
     try {
-      var newJob = await Axios.post("job", newJobObj);
+      let newJob = await Axios.post("job", newJobObj);
       if (newJob.data.status === 200) {
         callback(newJob);
         dispatch(showMessage(newJob.data.message));
@@ -60,21 +60,21 @@ export var createJob = (newJobObj, callback) => {
   };
 };
 
-export var updateJob = async (jobId, jobObj) => {
+export const updateJob = async (jobId, jobObj) => {
   try {
-    var updatedJob = await Axios.put(`job/${jobId}`, jobObj);
+    let updatedJob = await Axios.put(`job/${jobId}`, jobObj);
     return updatedJob;
   } catch (error) {
     console.log(error);
   }
 };
 
-export var getAllJobsOnDate = async (date) => {
+export const getAllJobsOnDate = async (date) => {
   try {
     let data = {
       date: date.toString(),
     };
-    var currentDayJobs = await Axios.post("schedule/current-jobs", data);
+    let currentDayJobs = await Axios.post("schedule/current-jobs", data);
 
     return currentDayJobs;
   } catch (error) {
@@ -82,9 +82,9 @@ export var getAllJobsOnDate = async (date) => {
   }
 };
 
-export var getJobsByDate = async (body) => {
+export const getJobsByDate = async (body) => {
   try {
-    var jobs = await Axios.post("job/monthly-jobs", body);
+    let jobs = await Axios.post("job/monthly-jobs", body);
 
     return jobs;
   } catch (error) {
@@ -92,10 +92,10 @@ export var getJobsByDate = async (body) => {
   }
 };
 
-export var filterJobsByDate = (date) => {
+export const filterJobsByDate = (date) => {
   return async (dispatch) => {
     try {
-      var dateFilter = await Axios.post("job/filter", date);
+      let dateFilter = await Axios.post("job/filter", date);
       dispatch({
         type: GET_JOBS,
         payload: {
@@ -108,10 +108,10 @@ export var filterJobsByDate = (date) => {
   };
 };
 
-export var confirmJob = (obj) => {
+export const confirmJob = (obj) => {
   return async (dispatch) => {
     try {
-      var getJob = await Axios.post(`job/book`, obj);
+      let getJob = await Axios.post(`job/book`, obj);
       if (getJob.data.status === 200) {
         dispatch(showMessage(getJob.data.message));
 
@@ -128,14 +128,14 @@ export var confirmJob = (obj) => {
   };
 };
 
-export var deleteJob = (id, currentPage) => {
+export const deleteJob = (id, currentPage) => {
   return async (dispatch) => {
     try {
       let body = {
         page: currentPage,
         id,
       };
-      var getAllJobsExceptDeleteOne = await Axios.delete(`job`, {
+      let getAllJobsExceptDeleteOne = await Axios.delete(`job`, {
         params: body,
       });
       if (getAllJobsExceptDeleteOne.data.status === 200) {
@@ -154,9 +154,9 @@ export var deleteJob = (id, currentPage) => {
 };
 
 //fetch calendar currentDay Jobs
-export var getCurrentDayJob = async (jobId) => {
+export const getCurrentDayJob = async (jobId) => {
   try {
-    var getJob = await Axios.get(`job/${jobId}`);
+    let getJob = await Axios.get(`job/${jobId}`);
     return getJob;
   } catch (error) {
     console.log(error);

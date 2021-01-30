@@ -3,11 +3,11 @@ import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER } from "./customerConstant
 import Axios from "../../utils/api";
 import { showMessage } from "../../Redux/Common/commonActions";
 
-export var getAllCustomers = (customersObj) => {
+export const getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
 
-      var getCustomersList = await Axios.post(
+      let getCustomersList = await Axios.post(
         "customer/all",
         customersObj
       );
@@ -24,10 +24,10 @@ export var getAllCustomers = (customersObj) => {
     }
   };
 };
-export var getCustomer = (customerId) => {
+export const getCustomer = (customerId) => {
   return async (dispatch) => {
     try {
-      var customer = await Axios.get(`customer/details/${customerId}`);
+      let customer = await Axios.get(`customer/details/${customerId}`);
       dispatch({
         type: GET_CUSTOMER,
         payload: {
@@ -41,10 +41,10 @@ export var getCustomer = (customerId) => {
 };
 
 
-export var addCustomer = (customerObj, callback) => {
+export const addCustomer = (customerObj, callback) => {
   return async (dispatch) => {
     try {
-      var addedCustomer = await Axios.post(
+      let addedCustomer = await Axios.post(
         "customer",
         customerObj
       );
@@ -60,8 +60,8 @@ export var addCustomer = (customerObj, callback) => {
   };
 };
 
-export var updateCustomer = (updateCustomerObj, id, callback) => {
-  var body = {
+export const updateCustomer = (updateCustomerObj, id, callback) => {
+  let body = {
     firstName: updateCustomerObj.firstName,
     lastName: updateCustomerObj.lastName,
     email: updateCustomerObj.email,
@@ -70,7 +70,7 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
   };
   return async (dispatch) => {
     try {
-      var customerUpdated = await Axios.put(
+      let customerUpdated = await Axios.put(
         "customer/" + id,
         body
       );
@@ -86,15 +86,15 @@ export var updateCustomer = (updateCustomerObj, id, callback) => {
   };
 };
 
-export var getCustomerList = async () => {
+export const getCustomerList = async () => {
   try {
-    var customerList = await Axios.get("customer");
+    let customerList = await Axios.get("customer");
     return customerList;
   } catch (error) {
     console.log(error);
   }
 };
-export var deleteCustomer = (id, currentPage) => {
+export const deleteCustomer = (id, currentPage) => {
 
   return async (dispatch) => {
     try {
@@ -102,7 +102,7 @@ export var deleteCustomer = (id, currentPage) => {
         page: currentPage,
         id
       }
-      var allCustomersExceptDelete = await Axios.delete(`customer`, { params: body })
+      let allCustomersExceptDelete = await Axios.delete(`customer`, { params: body })
       if (allCustomersExceptDelete.data.status === 200) {
         dispatch(showMessage(allCustomersExceptDelete.data.message))
         dispatch({

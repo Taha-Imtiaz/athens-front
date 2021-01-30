@@ -11,7 +11,7 @@ import style from "./CustomerUpdate.module.css";
 class CustomerUpdate extends Component {
   //fetch customer info (whose id is passed on mount)
   componentDidMount = async () => {
-    var {
+    let {
       getCustomer,
       match: {
         params: { customerId },
@@ -32,7 +32,7 @@ class CustomerUpdate extends Component {
   };
   // form onChangeHandler
   handleFormInput = (event) => {
-    var { name, value } = event.target;
+    let { name, value } = event.target;
     this.setState({ [name]: value });
     if (value === "") {
       this.setState({ [name + "Error"]: "Field Should not be empty" });
@@ -79,13 +79,13 @@ class CustomerUpdate extends Component {
   };
   // validate if the form fields are empty or not
   validate = () => {
-    // var {username,password,emailError,passwordError} = this.state
+    // let {username,password,emailError,passwordError} = this.state
     let emailError = "";
     let firstNameError = "";
     let lastNameError = "";
     let phoneError = "";
 
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!this.state.email.match(mailformat)) {
       emailError = "Invalid Email";
@@ -117,10 +117,10 @@ class CustomerUpdate extends Component {
   };
   //form onSubmit handler
   mySubmitHandler = (event) => {
-    var { history, updateCustomer } = this.props;
+    let { history, updateCustomer } = this.props;
     event.preventDefault();
-    var { subContacts } = this.state;
-    var {
+    let { subContacts } = this.state;
+    let {
       match: {
         params: { customerId },
       },
@@ -128,7 +128,7 @@ class CustomerUpdate extends Component {
 
     const isValid = this.validate();
     if (isValid) {
-      var { firstName, lastName, email, phone } = this.state;
+      let { firstName, lastName, email, phone } = this.state;
       if (
         this.state.subContacts[0].name === "" &&
         this.state.subContacts[0].phone === "" &&
@@ -136,7 +136,7 @@ class CustomerUpdate extends Component {
       ) {
         subContacts = [];
       }
-      var updateCustomerObj = {
+      let updateCustomerObj = {
         firstName,
         lastName,
         phone,

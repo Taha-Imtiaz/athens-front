@@ -1,12 +1,12 @@
 import { GET_JOBS, GET_JOB, FILTER_JOB, DELETE_JOB } from "./jobConstants"
 
-var initialState = {
+let initialState = {
     job: ''
 }
 
 
-var jobReducer = (state = initialState, action) => {
-var {type, payload} = action
+const jobReducer = (state = initialState, action) => {
+let {type, payload} = action
 
 switch (type) {
     case GET_JOBS:

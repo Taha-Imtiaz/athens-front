@@ -16,8 +16,8 @@ import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteCon
 
 const CustomerList = (props) => {
   //defining variables
-  var { getAllCustomers, customers } = props;
-  var totalCount = 0;
+  let { getAllCustomers, customers } = props;
+  let totalCount = 0;
   if (customers) {
     var { docs } = customers;
     totalCount = customers.total;
@@ -114,7 +114,7 @@ const CustomerList = (props) => {
 
   const removeCustomer = () => {
     //remove customer from the list and database too
-    var { deleteCustomer } = props;
+    let { deleteCustomer } = props;
     deleteCustomer(customerToDelete, currentPage);
     //close delete modal
     setShow(false);
@@ -159,7 +159,7 @@ const CustomerList = (props) => {
     setRecentlyAdded(true);
     setRecentlyUpdated(false);
     setSortByName(null);
-    var sortCustomersObj = {
+    let sortCustomersObj = {
       query: "",
       sort: {
         plainName: "",
@@ -177,7 +177,7 @@ const CustomerList = (props) => {
     setRecentlyUpdated(true);
     setRecentlyAdded(false);
     setSortByName(null);
-    var sortCustomersObj = {
+    let sortCustomersObj = {
       query: "",
       sort: {
         plainName: "",

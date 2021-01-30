@@ -2,10 +2,10 @@ import { GET_UNAVAILABLE_LIST } from "./unavailableConstant"
 import Axios from '../../utils/api'
 // import { GET_UNAVAILABLE_LIST } from "../Job/jobConstants";
 
-export var getAllData = () => {
+export const getAllData = () => {
 return async (dispatch) => {
   try {
-    var unavailableList = await Axios.get("schedule");
+    const unavailableList = await Axios.get("schedule");
        dispatch({
            type: GET_UNAVAILABLE_LIST,
            payload:{
@@ -21,10 +21,10 @@ return async (dispatch) => {
 
 }
 
-export var approveRequest = async (data) => {
+export const approveRequest = async (data) => {
 
   try {
-    var approved = await Axios.put("schedule", data);
+    const approved = await Axios.put("schedule", data);
     return approved;
     //    dispatch({
     //        type: GET_UNAVAILABLE_LIST,

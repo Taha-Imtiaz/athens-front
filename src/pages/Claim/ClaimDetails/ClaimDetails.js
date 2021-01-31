@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { updateClaim, getClaim } from "../../../Redux/Claim/claimActions";
 import style from "./ClaimDetails.module.css";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import TimeAgo from "react-timeago";
 
 const ClaimDetails = (props) => {
@@ -21,7 +20,7 @@ const ClaimDetails = (props) => {
     },
   } = props;
 
-  let { claims, getClaim } = props;
+  let { claims, getClaim, updateClaim } = props;
 
   useEffect(() => {
     getClaim(claimId);
@@ -38,16 +37,16 @@ const ClaimDetails = (props) => {
   };
 
   const handleCloseJob = () => {
-    let { showMessage, claims } = props;
+    let { claims } = props;
 
     claims.status = "closed";
-    updateClaim(claims)
-      .then((res) => {
-        if (res.data.status === 200) {
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+    updateClaim(claims, () => { })
+    // .then((res) => {
+    //   if (res.data.status === 200) {
+    //     showMessage(res.data.message);
+    //   }
+    // })
+    // .catch((err) => console.log(err));
   };
 
   const handleShow = () => {
@@ -65,17 +64,20 @@ const ClaimDetails = (props) => {
       };
       let newData = cloneDeep(claims);
       newData.updates.unshift(ob);
-      let { showMessage } = props;
-      updateClaim(newData)
-        .then((res) => {
-          if (res.data.status === 200) {
-            claims.updates = res.data.data.updates;
-            setShow(false);
-            setUpdate("");
-            showMessage(res.data.message);
-          }
-        })
-        .catch((err) => console.log(err));
+      updateClaim(newData, (res) => {
+        claims.updates = res.data.data.updates;
+        setShow(false);
+        setUpdate("");
+      })
+      // .then((res) => {
+      //   if (res.data.status === 200) {
+      //     claims.updates = res.data.data.updates;
+      //     setShow(false);
+      //     setUpdate("");
+      //     showMessage(res.data.message);
+      //   }
+      // })
+      // .catch((err) => console.log(err));
     }
   };
 
@@ -88,16 +90,16 @@ const ClaimDetails = (props) => {
   };
 
   const disableInput = () => {
-    let { showMessage, claims } = props;
+    let { claims } = props;
     claims.waitTo = claimInput;
     setWaitTo(true);
-    updateClaim(claims)
-      .then((res) => {
-        if (res.data.status === 200) {
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+    updateClaim(claims, () => { })
+    // .then((res) => {
+    //   if (res.data.status === 200) {
+    //     showMessage(res.data.message);
+    //   }
+    // })
+    // .catch((err) => console.log(err));
   };
 
   return (
@@ -276,7 +278,7 @@ const ClaimDetails = (props) => {
               name="Note"
               value={update}
               onChange={handleAddUpdate}
-              className = {style.styleTextArea}
+              className={style.styleTextArea}
             ></TextareaAutosize>
           </Modal.Body>
           <Modal.Footer>
@@ -298,8 +300,9 @@ const ClaimDetails = (props) => {
 var mapStateToProps = (state) => ({
   claims: state.claims.claim
 });
+
 var actions = {
-  showMessage,
-  getClaim
+  getClaim,
+  updateClaim
 };
 export default connect(mapStateToProps, actions)(ClaimDetails);

@@ -1,4 +1,4 @@
-import { DELETE_CLAIM, GET_CLAIM, GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimsConstants"
+import { DELETE_CLAIM, GET_CLAIM, GET_CLAIMS, GET_CLAIMS_BY_ID } from "./claimConstants"
 
 let initialState = {
     claim: ''
@@ -14,13 +14,12 @@ const claimReducer = (state = initialState, action) => {
 
         case GET_CLAIM:
             return { ...state, claim: payload.claim.data.data }
+
         case DELETE_CLAIM:
             return { ...state, claimList: payload.getAllClaimsExceptDeleteOne }
+
         default:
             return state
-
     }
-
-
 }
 export default claimReducer

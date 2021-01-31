@@ -1,6 +1,5 @@
-// import Axios from "axios";
 import { GET_JOBS, GET_JOB, DELETE_JOB } from "./jobConstants";
-import Axios from "../../utils/api";
+import Axios from "axios";
 import { showMessage } from "../../Redux/Common/commonActions";
 
 export const getAllJobs = (jobObj) => {
@@ -82,13 +81,14 @@ export const getAllJobsOnDate = async (date) => {
   }
 };
 
-export const getJobsByDate = async (body) => {
-  try {
-    let jobs = await Axios.post("job/monthly-jobs", body);
-
-    return jobs;
-  } catch (error) {
-    console.log(error);
+export const getJobsByDate = (body, callback) => {
+  return async (dispatch) => {
+    try {
+      let jobs = await Axios.post("job/monthly-jobs", body);
+      callback(jobs);
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
   }
 };
 

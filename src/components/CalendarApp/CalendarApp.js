@@ -20,7 +20,7 @@ const CalendarApp = (props) => {
     currentDayJobs: [],
     jobs: [],
   });
-  let { user } = props;
+  let { user, getJobsByDate } = props;
 
   useEffect(() => {
     let body;
@@ -36,7 +36,8 @@ const CalendarApp = (props) => {
         };
       }
       //fetch jobs of current month
-      getJobsByDate(body).then((res) => {
+      getJobsByDate(body, (res) => {
+        console.log(res)
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {
@@ -82,7 +83,8 @@ const CalendarApp = (props) => {
         date: date.toDateString(),
       };
     }
-    getJobsByDate(body).then((res) => {
+
+    getJobsByDate(body, (res) => {
       let jobs = [];
       let currentDayJobs = [];
       res.data.data.forEach((x) => {
@@ -284,8 +286,10 @@ const CalendarApp = (props) => {
     </div>
   );
 };
-
+var action = {
+  getJobsByDate
+}
 var mapStateToProps = (state) => ({
   user: state.users.user,
 });
-export default connect(mapStateToProps)(CalendarApp);
+export default connect(mapStateToProps, action)(CalendarApp);

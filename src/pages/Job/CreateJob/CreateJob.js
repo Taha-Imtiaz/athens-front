@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import style from "./CreateJob.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-
 import FormControl from "@material-ui/core/FormControl";
-
-
-import {
-
-  createJob,
-
-} from "../../../Redux/Job/jobActions";
+import { createJob } from "../../../Redux/Job/jobActions";
 import { connect } from "react-redux";
 import { cloneDeep, uniqBy } from "lodash";
 import {
@@ -36,10 +29,7 @@ import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import {
-  resetJobForm,
-  setJobForm,
-} from "../../../Redux/PersistForms/formActions";
+import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -779,15 +769,12 @@ class CreateJob extends Component {
           dialogClassName={`${style.modal}`}
           show={this.state.showAddCustomer}
           onHide={() => this.setState({ showAddCustomer: false })}
-          // animation={false}
           centered
-        // backdrop={false}
         >
           <Modal.Header closeButton>
             <Modal.Title>Create New Customer</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* <JobConfirmation data={job} close={handleCloseAndRefresh} /> */}
             <CreateCustomer isModal={true} close={this.populateNewCustomer} />
           </Modal.Body>
         </Modal>

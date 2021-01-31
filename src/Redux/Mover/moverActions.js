@@ -3,7 +3,7 @@ import {
   GET_MOVER_JOB_DETAIL,
   SEARCH_FILTER,
 } from "./moverConstants";
-import Axios from "../../utils/api";
+import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 import { LOGGEDIN_USER } from "../User/userConstants";
 

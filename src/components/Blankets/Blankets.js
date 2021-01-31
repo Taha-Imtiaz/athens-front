@@ -6,11 +6,11 @@ import style from "./Blankets.module.css";
 import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
 
-import { updateDeposit } from "../../Redux/Claim/claimActions";
+import { updateDeposit } from "../../Redux/Deposit/depositActions";
 import { showMessage } from "../../Redux/Common/commonActions";
 import ActivitiesModal from "../ActivitiesModal/ActivitiesModal";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
-import { deleteBlanketDeposit } from "../../Redux/Deposit/DepositActions";
+import { deleteBlanketDeposit } from "../../Redux/Deposit/depositActions";
 
 const Blankets = (props) => {
   const [blanketValue, setBlanketValue] = useState(props.items);
@@ -34,7 +34,6 @@ const Blankets = (props) => {
     setBlanketValue(newData);
     if (type === "save") {
       // Call Api
-
       let obj = {
         id: newData[i]._id,
         userId: user._id,
@@ -42,15 +41,8 @@ const Blankets = (props) => {
         cost: newData[i].cost,
         page: props.page,
       };
+      let { updateDeposit } = props;
       updateDeposit(obj)
-        .then((res) => {
-          let newData = cloneDeep(blanketValue);
-          newData[i] = res.data.data.updatedblanketDeposit;
-          props.update(newData);
-          let { showMessage } = props;
-          showMessage(res.data.message);
-        })
-        .catch((err) => console.log(err));
     }
   };
 
@@ -165,14 +157,14 @@ const Blankets = (props) => {
                       <i className="fa fa-edit"></i> Edit{" "}
                     </Button>
                   ) : (
-                    <Button
-                      onClick={() => closeEdit(i, "save")}
-                      className={style.button}
-                    >
-                      {" "}
-                      <i className="fa fa-save"></i> Save
+                      <Button
+                        onClick={() => closeEdit(i, "save")}
+                        className={style.button}
+                      >
+                        {" "}
+                        <i className="fa fa-save"></i> Save
                     </Button>
-                  )}
+                    )}
                   <Button
                     onClick={() => handleShow(deposit)}
                     className={style.button}
@@ -215,6 +207,7 @@ var mapStateToProps = (state) => ({
 });
 var actions = {
   showMessage,
+  updateDeposit,
   deleteBlanketDeposit,
 };
 

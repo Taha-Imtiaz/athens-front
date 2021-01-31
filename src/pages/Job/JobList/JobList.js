@@ -40,6 +40,7 @@ const JobsList = (props) => {
     var { docs } = jobs;
     totalCount = jobs.total;
   }
+
   const [state, setState] = useState({
     anchorEl: null,
     openedPopoverId: null,

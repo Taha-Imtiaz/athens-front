@@ -1,5 +1,5 @@
 import { GET_ALLJOBS, GET_ALLJOBS_FIVEDAYS } from "./scheduleConstant"
-import Axios from '../../utils/api'
+import Axios from "axios";
 
 export const getalljobs = (jobObj) => {
   return async (dispatch) => {

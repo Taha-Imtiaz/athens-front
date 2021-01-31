@@ -1,6 +1,5 @@
-// import Axios from "axios"
 import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER } from "./customerConstants";
-import Axios from "../../utils/api";
+import Axios from "axios";
 import { showMessage } from "../../Redux/Common/commonActions";
 
 export const getAllCustomers = (customersObj) => {
@@ -18,11 +17,12 @@ export const getAllCustomers = (customersObj) => {
           customers: getCustomersList,
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
+
 export const getCustomer = (customerId) => {
   return async (dispatch) => {
     try {
@@ -33,28 +33,25 @@ export const getCustomer = (customerId) => {
           customer: customer
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
 
-
 export const addCustomer = (customerObj, callback) => {
   return async (dispatch) => {
     try {
-      let addedCustomer = await Axios.post(
+      let response = await Axios.post(
         "customer",
         customerObj
       );
-      if (addedCustomer.data.status === 200) {
-        callback(addedCustomer);
-        dispatch(showMessage(addedCustomer.data.message));
-      } else {
-        dispatch(showMessage(addedCustomer.data.message));
+      if (response.data.status === 200) {
+        callback(response);
       }
-    } catch (error) {
-      console.log(error);
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
@@ -69,30 +66,20 @@ export const updateCustomer = (updateCustomerObj, id, callback) => {
   };
   return async (dispatch) => {
     try {
-      let customerUpdated = await Axios.put(
+      let response = await Axios.put(
         "customer/" + id,
         body
       );
-      if (customerUpdated.data.status === 200) {
+      if (response.data.status === 200) {
         callback();
-        dispatch(showMessage(customerUpdated.data.message));
-      } else {
-        dispatch(showMessage(customerUpdated.data.message));
       }
-    } catch (error) {
-      console.log(error);
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
 
-export const getCustomerList = async () => {
-  try {
-    let customerList = await Axios.get("customer");
-    return customerList;
-  } catch (error) {
-    console.log(error);
-  }
-};
 export const deleteCustomer = (id, currentPage) => {
 
   return async (dispatch) => {
@@ -101,19 +88,19 @@ export const deleteCustomer = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let allCustomersExceptDelete = await Axios.delete(`customer`, { params: body })
-      if (allCustomersExceptDelete.data.status === 200) {
-        dispatch(showMessage(allCustomersExceptDelete.data.message))
+      let response = await Axios.delete(`customer`, { params: body })
+      if (response.data.status === 200) {
         dispatch({
           type: DELETE_CUSTOMER,
           payload: {
-            allCustomersExceptDelete: allCustomersExceptDelete
+            response
           }
         })
       }
+      dispatch(showMessage(response.data.message))
     }
-    catch (error) {
-      console.log(error)
+    catch (err) {
+      dispatch(showMessage(err.message));
     }
   }
 }

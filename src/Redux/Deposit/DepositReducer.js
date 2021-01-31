@@ -1,21 +1,18 @@
-import { DELETE_DEPOSIT, EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./DepositConstants"
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./depositConstants"
 
-let initialState =null
+let initialState = null
 
-const blanketReducer = (state = initialState ,action) => {
-    let {type, payload} = action
+const depositReducer = (state = initialState, action) => {
+    let { type, payload } = action
     switch (type) {
         case GET_ALL_DEPOSITS:
-            return {...state,...payload.deposits.data.data}
-            
-         case DELETE_DEPOSIT:
-            return {...payload.blanketToDelete.data.data}
+            return { ...state, ...payload.deposits.data.data }
 
-            case EDIT_DEPOSIT: 
-            return {...payload.blanket.data.data.blanketDeposit}
-    
+        case EDIT_DEPOSIT:
+            return { ...state, ...payload.response.data.data.blanketDeposit }
+
         default:
-           return state
+            return state
     }
 }
-export default blanketReducer
+export default depositReducer

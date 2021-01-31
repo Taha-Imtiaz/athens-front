@@ -17,7 +17,7 @@ const customerReducer = (state = initialState, action) => {
             return { ...state, customer: payload.customer.data.data }
 
         case DELETE_CUSTOMER:
-            return { ...state, customerList: payload.allCustomersExceptDelete.data.data }
+            return { ...state, customerList: payload.response.data.data }
         default:
             return state
     }

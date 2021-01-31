@@ -16,25 +16,10 @@ const requestHandler = (request) => {
   return request
 }
 
-// const Axios = axios.create({
-// baseURL: `/api/`
-// baseURL: `https://athens-backend.herokuapp.com/api/`
-// baseURL: `http://10.0.5.97:3001/api/`
-// baseURL: `http://10.0.4.217:3001/api/`
-// baseURL: `http://localhost:3001/api/`
-// baseURL: 'https://athens-297121.uc.r.appspot.com/api/'
-// });
-
-// Axios.interceptors.request.use(req => {
-//   showLoader();
-//   return req;
-// }, error => {
-//   return Promise.reject(error);
-// }
-// );
-
 const Axios = () => {
-  axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
+  // axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
+  // axios.defaults.baseURL = 'http://localhost:3001/api/';
+  axios.defaults.baseURL = '/api/';
 
   // Request Interceptor
   axios.interceptors.request.use(req => {
@@ -56,14 +41,14 @@ const Axios = () => {
     store.dispatch({ type: 'FINISH_LOADING' })
     return res
   }, err => {
+    store.dispatch({ type: 'FINISH_LOADING' })
     if (axios.isCancel(err)) {
       console.log('Request canceled', err.message);
     } else {
       // handle error
-      store.dispatch({ type: 'FINISH_LOADING' })
       if (err.message === "Network Error") {
         // Server Is Down, Try Latter
-        console.log('Server Is down')
+        store.dispatch(showMessage('Server Is Down, Try Latter.'))
       }
     }
     return Promise.reject(err);

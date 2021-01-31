@@ -3,13 +3,11 @@ import style from "./CreateClaim.module.css";
 import { Modal } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import "react-datepicker/dist/react-datepicker.css";
-
 import { connect } from "react-redux";
 import {
   addClaim,
   getCustomersAndJobs,
 } from "../../../Redux/Claim/claimActions";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { TextareaAutosize, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import FormControl from "@material-ui/core/FormControl";
@@ -78,9 +76,13 @@ class CreateClaim extends Component {
       });
     }
     //get all customers and all jobs
-    getCustomersAndJobs().then((res) => {
+    let { getCustomersAndJobs } = this.props;
+    getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
-    });
+    })
+    // .then((res) => {
+    //   this.setState({ customers: res.data.data });
+    // });
   };
   //onChange handler
   handleFormInput = (event) => {
@@ -144,7 +146,7 @@ class CreateClaim extends Component {
       claims: { claimType, price, description },
     } = this.state;
     if (this.validate()) {
-      let { history, showMessage } = this.props;
+      let { history, addClaim } = this.props;
       let data = {
         jobId: selectedJob.jobId,
         claimType,
@@ -154,14 +156,9 @@ class CreateClaim extends Component {
         waitTo,
       };
       //call add Claim api to add a claim
-      addClaim(data)
-        .then((res) => {
-          showMessage(res.data.message);
-          history.push(`/claim/detail/${res.data.data}`);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      addClaim(data, (res) => {
+        history.push(`/claim/detail/${res.data.data}`);
+      })
     }
   };
   //onChange handler of claims(description,type, cost)
@@ -272,8 +269,8 @@ class CreateClaim extends Component {
                       <div>Last Update</div>
                     </div>
 
-                    {showClaimsDetails.map((claim,i) => (
-                      <div className={style.claimContent} key = {i}>
+                    {showClaimsDetails.map((claim, i) => (
+                      <div className={style.claimContent} key={i}>
                         <div> {claim.claimType}</div>
                         <div>{claim.status}</div>
                         <div>
@@ -428,8 +425,8 @@ var mapStateToProps = (state) => ({
 });
 
 var actions = {
+  getCustomersAndJobs,
   addClaim,
-  showMessage,
   setClaimForm,
   resetClaimForm,
 };

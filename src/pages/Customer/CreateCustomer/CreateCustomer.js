@@ -89,7 +89,7 @@ class CreateCustomer extends Component {
   mySubmitHandler = (event) => {
     let { addCustomer, history } = this.props;
     event.preventDefault();
-    
+
     const isValid = this.validate();
     if (isValid) {
       let { firstName, lastName, email, phone, subContacts } = this.state;
@@ -110,11 +110,11 @@ class CreateCustomer extends Component {
         subContacts,
       };
       //Call addCustomer Api
-      addCustomer(addCustomerObj, (customer) => {
+      addCustomer(addCustomerObj, (res) => {
         if (this.props.isModal) {
-          this.props.close(customer);
+          this.props.close(res);
         } else {
-          history.push("/customer/detail/" + customer.data.data._id);
+          history.push("/customer/detail/" + res.data.data._id);
         }
       });
     }
@@ -169,7 +169,7 @@ class CreateCustomer extends Component {
                 name="firstName"
                 autoComplete="firstName"
                 autoFocus
-                error={this.state.firstNameError?true:false}
+                error={this.state.firstNameError ? true : false}
                 value={this.state.firstName}
                 onChange={this.handleFormInput}
               />
@@ -184,7 +184,7 @@ class CreateCustomer extends Component {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lastName"
-                error={this.state.lastNameError?true:false}
+                error={this.state.lastNameError ? true : false}
                 value={this.state.lastName}
                 onChange={this.handleFormInput}
               />
@@ -199,7 +199,7 @@ class CreateCustomer extends Component {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneError?true:false}
+                error={this.state.phoneError ? true : false}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />
@@ -214,7 +214,7 @@ class CreateCustomer extends Component {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={this.state.emailError?true:false}
+                error={this.state.emailError ? true : false}
                 value={this.state.email}
                 onChange={this.handleFormInput}
               />

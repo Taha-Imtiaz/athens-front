@@ -12,11 +12,9 @@ import { updateClaim } from "../../../Redux/Claim/claimActions";
 import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import Blankets from "../../../components/Blankets/Blankets";
-import { deleteBlanketDeposit } from "../../../Redux/Deposit/DepositActions";
 
 const CustomerDetails = (props) => {
   let { customer, getCustomer } = props;
@@ -28,7 +26,7 @@ const CustomerDetails = (props) => {
   const [claimCount, setClaimCount] = useState(0);
   const [value, setValue] = useState(0);
   const [claims, setClaims] = useState([]);
-  
+
   //get customerId from props
   let {
     match: {
@@ -69,21 +67,16 @@ const CustomerDetails = (props) => {
       value: update,
     };
     let newData = cloneDeep(claims);
-   
+
     newData[updateIndex].updates.unshift(ob);
-    let { showMessage } = props;
+    let { updateClaim } = props;
     //Call Update Claim Api to update claim
-    updateClaim(newData[updateIndex])
-      .then((res) => {
-        if (res.data.status === 200) {
-          newData[updateIndex].updates = res.data.data.updates;
-          setClaims(newData);
-          setShow(false);
-          setUpdate("");
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+    updateClaim(newData[updateIndex], (res) => {
+      newData[updateIndex].updates = res.data.data.updates;
+      setClaims(newData);
+      setShow(false);
+      setUpdate("");
+    })
   };
 
   //onChange handler of textarea of modal
@@ -102,7 +95,7 @@ const CustomerDetails = (props) => {
     setShow(true);
   };
 
- 
+
 
   //tabPanel of material ui
   const TabPanel = (props) => {
@@ -122,21 +115,27 @@ const CustomerDetails = (props) => {
 
   //close the claim
   const handleCloseClaim = (i) => {
-    let { showMessage } = props;
+    let { updateClaim } = props;
     let updatedClaims = cloneDeep(claims);
     updatedClaims[i].status = "closed";
-    updateClaim(updatedClaims[i])
-      .then((res) => {
-        if (res.data.status === 200) {
-          let updatedCount  = cloneDeep(claimCount)
-          let newCount = --updatedCount;
-          updatedClaims[i].updatedAt = res.data.data.updatedAt;
-          setClaimCount(newCount);
-          setClaims(updatedClaims);
-          showMessage(res.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+    updateClaim(updatedClaims[i], (res) => {
+      let updatedCount = cloneDeep(claimCount)
+      let newCount = --updatedCount;
+      updatedClaims[i].updatedAt = res.data.data.updatedAt;
+      setClaimCount(newCount);
+      setClaims(updatedClaims);
+    })
+    // .then((res) => {
+    //   if (res.data.status === 200) {
+    //     let updatedCount = cloneDeep(claimCount)
+    //     let newCount = --updatedCount;
+    //     updatedClaims[i].updatedAt = res.data.data.updatedAt;
+    //     setClaimCount(newCount);
+    //     setClaims(updatedClaims);
+    //     showMessage(res.data.message);
+    //   }
+    // })
+    // .catch((err) => console.log(err));
   };
   const updateBlanket = (data) => {
     setBlanketValue(data);
@@ -301,16 +300,16 @@ const CustomerDetails = (props) => {
                               i === 0 ? (
                                 <div key={i}>{assignee.name}</div>
                               ) : (
-                                <div key={i}>
-                                  <span className={style.spacing}>|</span>
-                                  {assignee.name}
-                                </div>
-                              )
+                                  <div key={i}>
+                                    <span className={style.spacing}>|</span>
+                                    {assignee.name}
+                                  </div>
+                                )
                             )}
                           </div>
                         ) : (
-                          <div>No Assignee</div>
-                        )}
+                            <div>No Assignee</div>
+                          )}
 
                         <div className={style.jobService}>
                           <Chip
@@ -329,11 +328,11 @@ const CustomerDetails = (props) => {
                             {i === 0 ? (
                               <div key={i}>{x}</div>
                             ) : (
-                              <div key={i}>
-                                <span className={style.spacing}>|</span>
-                                {x}
-                              </div>
-                            )}
+                                <div key={i}>
+                                  <span className={style.spacing}>|</span>
+                                  {x}
+                                </div>
+                              )}
                           </div>
                         ))}
                       </div>
@@ -370,14 +369,14 @@ const CustomerDetails = (props) => {
                                 </div>
                               </div>
                             ) : (
-                              <div key={i}>
-                                <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                <span>{`Dropoff`}</span>
-                                <div className={style.location}>
-                                  {list.value}
+                                <div key={i}>
+                                  <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                  <span>{`Dropoff`}</span>
+                                  <div className={style.location}>
+                                    {list.value}
+                                  </div>
                                 </div>
-                              </div>
-                            )
+                              )
                           )}
                         </div>
                       )}
@@ -397,10 +396,10 @@ const CustomerDetails = (props) => {
                 })}
               </div>
             ) : (
-              <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
-                No job added yet
+                <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
+                  No job added yet
               </h4>
-            )}
+              )}
           </TabPanel>
 
           {/* Tab Panel of claim */}
@@ -495,14 +494,14 @@ const CustomerDetails = (props) => {
                                     Close Claim
                                   </Button>
                                 ) : (
-                                  <Chip
-                                    label="Closed"
-                                    clickable
-                                    color="primary"
-                                    variant="outlined"
-                                    size="small"
-                                  />
-                                )}
+                                    <Chip
+                                      label="Closed"
+                                      clickable
+                                      color="primary"
+                                      variant="outlined"
+                                      size="small"
+                                    />
+                                  )}
                               </div>
                             </div>
                             <div className={`${style.title} `}>
@@ -547,10 +546,10 @@ const CustomerDetails = (props) => {
                   );
                 })
               ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
-                </div>
-              )}
+                  <div className="text-center">
+                    <img src="/images/no-data-found.png" alt="Data not found" />
+                  </div>
+                )}
             </div>
           </TabPanel>
 
@@ -579,10 +578,10 @@ const CustomerDetails = (props) => {
             {blanketValue && blanketValue.length > 0 ? (
               <Blankets items={blanketValue} update={updateBlanket} />
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="Data not found" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="Data not found" />
+                </div>
+              )}
           </TabPanel>
 
           <br />
@@ -634,7 +633,6 @@ var mapStateToProps = (state) => ({
 
 var actions = {
   getCustomer,
-  showMessage,
-  deleteBlanketDeposit,
+  updateClaim,
 };
 export default connect(mapStateToProps, actions)(CustomerDetails);

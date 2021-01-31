@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import style from "./CreateDeposit.module.css";
 import { Button } from "@material-ui/core";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import { resetDepositForm, setDepositForm } from "../../../Redux/PersistForms/formActions";
-import { addDeposit } from "../../../Redux/Deposit/DepositActions";
+import { addDeposit } from "../../../Redux/Deposit/depositActions";
 import { cloneDeep } from "lodash";
 
 class CreateDeposit extends Component {
@@ -29,6 +28,7 @@ class CreateDeposit extends Component {
     costError: "",
     disabled: true,
   };
+
   componentDidMount = () => {
     if (
       this.props.location.customerId !== undefined &&
@@ -40,9 +40,8 @@ class CreateDeposit extends Component {
         jobs: this.props.location.jobs,
       });
     }
-    getCustomersAndJobs().then((res) => {
-      this.setState({ customers: res.data.data });
-    });
+    let { getCustomersAndJobs } = this.props;
+    getCustomersAndJobs(res => this.setState({ customers: res.data.data }))
   };
 
   handleValidate = () => {
@@ -90,12 +89,9 @@ class CreateDeposit extends Component {
       jobId: selectedJob.jobId,
       cost,
     };
-    let { showMessage, history } = this.props;
+    let { addDeposit, history } = this.props;
     if (this.handleValidate()) {
-      addDeposit(obj).then((res) => {
-        showMessage(res.data.message);
-        history.push("/deposits");
-      });
+      addDeposit(obj, () => history.push("/deposits"))
     }
   };
 
@@ -281,7 +277,8 @@ var mapStateToProps = (state) => ({
 });
 
 var actions = {
-  showMessage,
+  addDeposit,
+  getCustomersAndJobs,
   setDepositForm,
   resetDepositForm,
 };

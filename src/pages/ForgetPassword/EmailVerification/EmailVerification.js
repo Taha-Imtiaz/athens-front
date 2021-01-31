@@ -1,10 +1,9 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import style from "./EmailVerification.module.css";
-
 import { sendCode } from "../../../Redux/User/userActions";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
+
 const EmailVerification = (props) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -14,21 +13,15 @@ const EmailVerification = (props) => {
   };
 
   const navigateToCode = () => {
-    let { history, showMessage } = props;
+    let { history, sendCode } = props;
     if (email !== "") {
       let emailObj = {
         email: email,
       };
 
-      sendCode(emailObj).then((res) => {
-        if (res.data.status === 200) {
-          console.log(res.data.message, history);
-          sessionStorage.setItem("token", res.data.token);
-          showMessage(res.data.message);
-          history.push("/verifycode");
-        } else {
-          showMessage(res.data.message);
-        }
+      sendCode(emailObj, (res) => {
+        sessionStorage.setItem("token", res.data.token);
+        history.push("/verifycode");
       });
     } else {
       setEmailError("Email should not be empty");
@@ -68,6 +61,6 @@ const EmailVerification = (props) => {
   );
 };
 var actions = {
-  showMessage,
+  sendCode
 };
 export default connect(null, actions)(EmailVerification);

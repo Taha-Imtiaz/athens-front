@@ -1,20 +1,18 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
+import { connect } from "react-redux"
 import { resetPassword } from "../../../Redux/User/userActions";
 import style from "./ResetPassword.module.css";
 
 const ResetPassword = (props) => {
-  // const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState("");
-  // const [cpassword, csetPassword] = useState('')
   const [cpasswordError, setcPasswordError] = useState("");
   const [resetForm, setResetForm] = useState({
     password: "",
     cpassword: "",
   });
   let userToken = localStorage.getItem("athens-token");
+  
   if (!userToken) {
     let { history } = props;
     history.push("/");
@@ -29,7 +27,7 @@ const ResetPassword = (props) => {
   };
 
   const navigateToCustomer = () => {
-    let { history, showMessage, user } = props;
+    let { history, resetPassword, user } = props;
     if (password !== "") {
       setPasswordError("");
 
@@ -41,16 +39,11 @@ const ResetPassword = (props) => {
           password: password,
           token: userToken,
         };
-        resetPassword(passwordObj).then((res) => {
-          if (res.data.status === 200) {
-            showMessage(res.data.message);
-            if (user.role === "mover") {
-              history.push("/mover");
-            } else {
-              history.push("/customers");
-            }
+        resetPassword(passwordObj, () => {
+          if (user.role === "mover") {
+            history.push("/mover");
           } else {
-            showMessage(res.data.message);
+            history.push("/customers");
           }
         });
       }
@@ -113,9 +106,9 @@ const ResetPassword = (props) => {
   );
 };
 var actions = {
-  showMessage,
+  resetPassword
 };
 var mapStateToProps = (state) => ({
-  user: state.users?.user,
+  user: state.users.user
 });
 export default connect(mapStateToProps, actions)(ResetPassword);

@@ -3,46 +3,33 @@ import style from "./DepositList.module.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
 import Pagination from "../../../components/Pagination/Pagination";
 import {
   deleteBlanketDeposit,
   getDeposits,
-} from "../../../Redux/Deposit/DepositActions";
+} from "../../../Redux/Deposit/depositActions";
 import Blankets from "../../../components/Blankets/Blankets";
 
 const DepositList = (props) => {
   let { blanketDeposit } = props;
-
-  const [blankets, setBlankets] = useState("");
+  let totalCount = 0;
+  if (blanketDeposit) {
+    var { docs } = blanketDeposit;
+    totalCount = blanketDeposit.total;
+  }
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
   const [deleteModal, setDeleteModal] = useState(false);
   const [depositToDelete, setDepositToDelete] = useState(false);
+
   useEffect(() => {
     let { getDeposits } = props;
     getDeposits(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, getDeposits]);
 
-  useEffect(() => {
-    let { blanketDeposit } = props;
-    if (blanketDeposit) {
-      setTotalCount(blanketDeposit.total);
-      setBlankets(blanketDeposit.docs);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blanketDeposit]);
-
   //close activities modal
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-
-  //update blanket Deposit
-  const updateBlanket = (data) => {
-    setBlankets(data);
   };
 
   const removeBlanketDeposit = () => {
@@ -61,7 +48,7 @@ const DepositList = (props) => {
   const {
     location: { pathname },
   } = props;
- 
+
   return (
     <div>
       <div className={style.submitDepositContainer}>
@@ -80,11 +67,10 @@ const DepositList = (props) => {
             </div>
           </div>
 
-          {blankets && blankets.length > 0 && pathname === "/deposits" ? (
+          {docs && docs.length > 0 && pathname === "/deposits" ? (
             <div>
               <Blankets
-                items={blankets}
-                update={updateBlanket}
+                items={docs}
                 deleteDeposit={removeBlanketDeposit}
                 openDeleteModal={openDeleteModal}
                 deleteModal={deleteModal}
@@ -104,10 +90,10 @@ const DepositList = (props) => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" alt="No data found" />
-            </div>
-          )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="No data found" />
+              </div>
+            )}
         </div>
       </div>
     </div>

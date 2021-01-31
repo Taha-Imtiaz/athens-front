@@ -2,10 +2,10 @@ import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
-export const login = (credentials, callback) => {
+export const login = (data, callback) => {
   return async (diaspatch) => {
     try {
-      const user = await Axios.post("user/login", credentials);
+      const user = await Axios.post("user/login", data);
       if (user.data.status === 200) {
         localStorage.setItem("athens-token", user.data.token);
         diaspatch(showMessage(user.data.message));
@@ -26,19 +26,18 @@ export const login = (credentials, callback) => {
 };
 
 export const getLoginUser = () => {
-  return (dispatch) => {
-    Axios.get('/user', { config: { handlerEnabled: true } })
-      .then(res => {
-        dispatch({
-          type: LOGGEDIN_USER,
-          payload: {
-            user: res.data.data,
-          }
-        })
+  return async (dispatch) => {
+    try {
+      let user = await Axios.get('/user', { config: { handlerEnabled: true } })
+      dispatch({
+        type: LOGGEDIN_USER,
+        payload: {
+          user: user.data.data,
+        }
       })
-      .catch(err => {
-        dispatch(showMessage(err.message))
-      })
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
   }
   // return async (diaspatch) => {
   //   try {
@@ -65,10 +64,24 @@ export const getLoginUser = () => {
   // };
 };
 
-export const getUsers = (UsersObj) => {
+export const resetPassword = (data, callback) => {
+  return async (dispatch) => {
+    try {
+      let user = await Axios.put("user", data, { config: { handlerEnabled: true } });
+      if (user.data.status === 200) {
+        dispatch(showMessage(user.data.message));
+        callback()
+      }
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  }
+}
+
+export const getUsers = (data) => {
   return async (diaspatch) => {
     try {
-      const getUsersList = await Axios.post("user/all", UsersObj);
+      const getUsersList = await Axios.post("user/all", data);
       diaspatch({
         type: GET_USERS,
         payload: {
@@ -81,28 +94,12 @@ export const getUsers = (UsersObj) => {
   };
 };
 
-export const createUser = async (newUserObj) => {
-  // return async (dispatch) => {
-  try {
-    const createdUser = await Axios.post("user", newUserObj);
-    // dispatch(showMessage(createdUser.data.message))
-    return createdUser;
-  } catch (error) { }
-  // }
-};
-
-export const updateUser = (data, userId) => {
+export const updateUser = (data, userId, callback) => {
   return async (dispatch) => {
     try {
       const updatedUser = await Axios.put(`user/${userId}`, data);
-
       if (updatedUser.data.status === 200) {
-        // diaspatch({
-        //     type: GET_LOGGEDIN_USER,
-        //     payload: {
-        //         user: user.data.user
-        //     }
-        // })
+        callback()
         dispatch({
           type: LOGGEDIN_USER,
           payload: {
@@ -111,28 +108,41 @@ export const updateUser = (data, userId) => {
         });
       }
       dispatch(showMessage(updatedUser.data.message));
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
-export const sendCode = async (email) => {
+
+export const createUser = async (data) => {
+  // return async (dispatch) => {
   try {
-    const verifyEmail = await Axios.post("user/forgot-password", email);
-    return verifyEmail;
-  } catch (error) {
-    console.log(error);
+    const createdUser = await Axios.post("user", data);
+    // dispatch(showMessage(createdUser.data.message))
+    return createdUser;
+  } catch (error) { }
+  // }
+};
+
+export const sendCode = async (data, callback) => {
+  return async (dispatch) => {
+    try {
+      const response = await Axios.post("user/forgot-password", data);
+      callback(response);
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
   }
 };
 
-export const verifyCode = (verifyCodeObj, callback) => {
+export const verifyCode = (data, callback) => {
   return async (dispatch) => {
     try {
       const config = {
-        headers: { Authorization: verifyCodeObj.token },
+        headers: { Authorization: data.token },
       };
 
-      const verifyCode = await Axios.post("user/verify", verifyCodeObj, config);
+      const verifyCode = await Axios.post("user/verify", data, config);
       if (verifyCode.data.status === 200) {
         localStorage.setItem("athens-token", verifyCode.data.token);
         dispatch(showMessage(verifyCode.data.message));
@@ -143,43 +153,12 @@ export const verifyCode = (verifyCodeObj, callback) => {
           },
         });
         callback();
-        // return verifyCode;
       } else {
         dispatch(showMessage(verifyCode.data.message));
-        // return verifyCode;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      dispatch(showMessage(err.message));
     }
   };
 };
 
-export const resetPassword = async (passwordObj) => {
-
-  try {
-    const config = {
-      headers: { Authorization: passwordObj.token },
-    };
-    const newPassword = await Axios.put("user", passwordObj, config);
-    return newPassword;
-  } catch (error) {
-    console.log(error);
-  }
-  // return (dispatch) => {
-  //   Axios.get('/user', { config: { handlerEnabled: true } })
-  //     .then(res => {
-  //       dispatch({
-  //         type: LOGGEDIN_USER,
-  //         payload: {
-  //           user: res.data.data,
-  //         }
-  //       })
-  //     })
-  //     .catch(err => {
-  //       dispatch({
-  //         type: 'ERR_FETCHING_USER',
-  //         err
-  //       })
-  //     })
-  // }
-};

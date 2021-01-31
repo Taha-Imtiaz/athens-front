@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import "./App.css";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./utils/private-routes";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
@@ -77,11 +77,11 @@ function App(props) {
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>
       {totalRequest > 0 ?
-          <div className="loader">
-            <CircularProgress />
-          </div>
-          : null
-        }
+        <div className="loader">
+          <CircularProgress />
+        </div>
+        : null
+      }
       <div className="navigation-menu">
         <Navbar />
       </div>
@@ -90,7 +90,7 @@ function App(props) {
           pathname !== "/" ? "app-content-container" : "app-content-without-nav"
         }
       >
-        
+
         <ToastContainer position="bottom-right" />
         <Switch>
           <ErrorBoundary>

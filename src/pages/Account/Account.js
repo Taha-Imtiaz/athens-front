@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import style from "./Account.module.css";
-
 import { Button, TextField } from "@material-ui/core";
 import { resetPassword, updateUser } from "../../Redux/User/userActions";
 import { useState } from "react";
-import { getLoginUser } from "../../Redux/User/userActions";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
-import { showMessage } from "../../Redux/Common/commonActions";
 
 const Account = (props) => {
   let { user } = props;
@@ -109,24 +106,15 @@ const Account = (props) => {
   };
 
   const handleModalInput = (e) => {
-    let { showMessage } = props;
-    let userToken = localStorage.getItem("athens-token");
+    let { resetPassword } = props;
     e.preventDefault();
     let validateModal = validateModalInputs();
     if (validateModal) {
       let { password } = editAccount;
-      let resetPasswordObj = {
-        password,
-        token: userToken,
+      let data = {
+        password
       };
-
-      resetPassword(resetPasswordObj).then((res) => {
-        if (res.data.status === 200) {
-          setShowModal(false);
-          showMessage(res.data.message);
-        }
-      });
-
+      resetPassword(data, () => setShowModal(false))
     }
   };
   const mySubmitHandler = (event) => {
@@ -143,13 +131,7 @@ const Account = (props) => {
         phone,
       };
       const { updateUser } = props;
-      updateUser(updatedUserObj, user._id)
-        .then((res) => {
-          setDisabledForm(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      updateUser(updatedUserObj, user._id, () => setDisabledForm(true))
     }
   };
   return (
@@ -318,9 +300,8 @@ const Account = (props) => {
 };
 
 const action = {
-  getLoginUser,
   updateUser,
-  showMessage,
+  resetPassword
 };
 
 var mapStateToProps = (state) => ({

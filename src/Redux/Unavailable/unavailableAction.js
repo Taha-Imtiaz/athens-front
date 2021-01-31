@@ -1,6 +1,5 @@
 import { GET_UNAVAILABLE_LIST } from "./unavailableConstant"
-import Axios from '../../utils/api'
-// import { GET_UNAVAILABLE_LIST } from "../Job/jobConstants";
+import Axios from "axios";
 
 export const getAllData = () => {
 return async (dispatch) => {

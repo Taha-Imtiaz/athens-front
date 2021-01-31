@@ -13,7 +13,6 @@ import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnavailableSchedule = (props) => {
-  // const [isLoading, setIsLoading] = useState(true);
   const [dates, setDates] = useState([]);
 
   let { getAllData, unavailable } = props;
@@ -83,40 +82,33 @@ const UnavailableSchedule = (props) => {
           </div>
         </div>
         <div className={style.unavailableList}>
-          {unavailable ? (
+          {unavailable && unavailable.length > 0 ? (
             unavailable.map((list, i) => {
               return (
-                <div className={`list-group`} key={i}>
-                  <div>
-                    <a
-                      href="/#"
-                      className={`list-group-item list-group-item-action flex-column align-items-start `}
-                    >
-                      <div className={`d-flex w-100 justify-content-between`}>
-                        <span>
-                          <input
-                            type="checkbox"
-                            id="defaultCheck1"
-                            value=""
-                            onChange={() => handleChange(list)}
-                          />
-                          <label
-                            className={`checkbox-inline ${style.checkBox}`}
-                            htmlFor="defaultCheck1"
-                          >
-                            {list[0].applicant.name}
-                          </label>
-                        </span>
-                      </div>
-                      <div>
-                        <p className="mb-1">
-                          {list[0].dates[0]} - {list[0].dates[1]}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="mb-1">Reason: {list[0].reason}</p>
-                      </div>
-                    </a>
+                <div className={`list-group ${style.item}`} key={i}>
+                  <div className={`list-group-item list-group-item-action flex-column align-items-start `}>
+                    <div className={`d-flex w-100 justify-content-between`}>
+                      <span>
+                        <input
+                          type="checkbox"
+                          id="defaultCheck1"
+                          value=""
+                          onChange={() => handleChange(list)}
+                        />
+                        <label
+                          className={`checkbox-inline ${style.checkBox}`}
+                          htmlFor="defaultCheck1"
+                        >
+                          {list.applicant && list.applicant.name}
+                        </label>
+                      </span>
+                    </div>
+                    <p className="mb-1">
+                      {list.dates.map((date, k) => <span className="mr-2" key={k}>{new Date(date).toDateString()}</span>)}
+                    </p>
+                    <div>
+                      <p className="mb-1">Reason: {list.reason}</p>
+                    </div>
                   </div>
                 </div>
               );

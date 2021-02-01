@@ -42,14 +42,14 @@ const MoverJobDetails = (props) => {
                 </div>
               </div>
               <div className={`card ${style.assigneeCard}`}>
-                {job.assignee.map((assignee, i) => (
-                  <div className="card-body" key={i}>
-                    <h5 className="card-title">Assignees</h5>
-                    <div className={style.assigneehead}>
+                <div className="card-body">
+                  <h5 className="card-title">Assignees</h5>
+                  {job.assignee.map((assignee, i) => (
+                    <div className={style.assigneehead} key={i}>
                       <li> {assignee.name}</li>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
             <div className={`${style.jobDetail}`}>

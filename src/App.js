@@ -90,7 +90,6 @@ function App(props) {
           pathname !== "/" ? "app-content-container" : "app-content-without-nav"
         }
       >
-
         <ToastContainer position="bottom-right" />
         <Switch>
           <ErrorBoundary>

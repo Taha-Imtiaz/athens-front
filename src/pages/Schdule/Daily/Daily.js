@@ -134,15 +134,6 @@ const DailySchedule = (props) => {
         date: today,
       });
     })
-    // .then((res) => {
-    //   if (res.data.status === 200) {
-    //     showMessage(res.data.message);
-
-    //   }
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   };
 
   const removeAssignee = (e, job, assignee) => {
@@ -253,14 +244,14 @@ const DailySchedule = (props) => {
         let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
-        moverAssignedDate = movers[index].mover.jobs.filter((job) =>
-          job.dates.some((date) => date === new Date(today).toDateString())
-        );
-        let moverJobs = moverAssignedDate.length > 0 ? true : false;
+        moverAssignedDate = movers[index].mover.jobs.filter((job) => {
+          return job.dates.some((date) => date === new Date(today).toDateString()) && job.status === 'pending'
+        });
 
+        let moverJobs = moverAssignedDate.length > 0 ? true : false;
         if (moverJobs) {
-          setModalShow(true);
           let mover = movers.find((x) => x.mover._id === moverId);
+          console.log(mover)
           setMover(mover);
           let newAssigneeObj = {
             moverId,
@@ -268,6 +259,7 @@ const DailySchedule = (props) => {
             jobToUpdate: jobToUpdate[0],
           };
           setAssignee(newAssigneeObj);
+          setModalShow(true);
         } else {
           assigneesId.push(moverId);
           jobToUpdate[0].assigneesId = assigneesId;
@@ -551,14 +543,11 @@ const DailySchedule = (props) => {
         onHide={(e) => Navigate(e)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Confirmation
-                              </Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {mover && (
             <h5>
-              {" "}
               {mover.mover.name}{" "}
               <span className={style.styleText}>
                 has been assigned to these jobs:

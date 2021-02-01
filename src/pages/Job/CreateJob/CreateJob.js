@@ -103,10 +103,9 @@ class CreateJob extends Component {
       });
     }
     //get all customers and jobs
-    getCustomersAndJobs().then((res) => {
-      if (res && res.status === 201) {
-        this.setState({ customers: res.data.data });
-      }
+    let { getCustomersAndJobs } = this.props;
+    getCustomersAndJobs(res => {
+      this.setState({ customers: res.data.data });
     });
   };
   //onchange handler of radio buttons
@@ -171,7 +170,7 @@ class CreateJob extends Component {
   //function to show all locations
   showLocation = (i) => {
     return (
-      <div className={style.locationInput}>
+      <div className={style.locationInput} key = {i}>
         <div className={style.radioButtons}>
           <RadioGroup
             className={style.rowFlex}
@@ -787,6 +786,7 @@ var actions = {
   createJob,
   setJobForm,
   resetJobForm,
+  getCustomersAndJobs
 };
 
 var mapStateToProps = (state) => ({
@@ -795,4 +795,3 @@ var mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, actions)(CreateJob);
-// export default CreateJob;

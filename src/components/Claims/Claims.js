@@ -21,7 +21,7 @@ const Claims = (props) => {
     setShow(false);
   };
 
-  const deleteBlanket = () => {
+  const deleteClaim = () => {
     props.delete(claimToDelete)
     handleClose();
   }
@@ -93,7 +93,7 @@ const Claims = (props) => {
         show={show}
         handleClose={handleClose}
         type="Claim"
-        deleteItem={deleteBlanket}
+        deleteItem={deleteClaim}
       />
     </div>
   )

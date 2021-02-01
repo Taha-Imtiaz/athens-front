@@ -38,6 +38,7 @@ class CreateDeposit extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
+        selectedJob: ''
       });
     }
     let { getCustomersAndJobs } = this.props;

@@ -14,6 +14,11 @@ const UserList = (props) => {
   const [filterType, setFilterType] = useState('');
 
   const { users, getUsers } = props;
+  let totalCount = 0;
+  if (users) {
+    var { docs } = users;
+    totalCount = users.total;
+  }
 
   useEffect(() => {
     let usersObj = {
@@ -54,7 +59,7 @@ const UserList = (props) => {
 
   return (
     <div>
-      {users && users.docs && (
+      {users && docs && (
         <div>
           <div className={`${style.toprow}`}>
             <div className={style.rowContent}>
@@ -128,7 +133,7 @@ const UserList = (props) => {
               </div>
             </div>
           </div>
-          {users && users.docs.length > 0 ? (
+          {docs && docs.length > 0 ? (
             <div>
               <div className={style.jumbotron}>
                 <div className={style.listheader}>
@@ -139,7 +144,7 @@ const UserList = (props) => {
               </div>
 
               <div>
-                {users.docs.map((usersDoc, i) => {
+                {docs.map((usersDoc, i) => {
                   return (
                     <div className={style.listContainer} key={i}>
                       <div className={`${style.listContent} `}>
@@ -165,7 +170,7 @@ const UserList = (props) => {
               <div className={style.stylePagination}>
                 <div className={style.pagination} >
                   <Pagination
-                    itemCount={users.total}
+                    itemCount={totalCount}
                     pageSize={10}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}

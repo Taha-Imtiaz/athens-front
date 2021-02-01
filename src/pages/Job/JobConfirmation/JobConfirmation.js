@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import { cloneDeep } from "lodash";
 
 import { confirmJob } from "../../../Redux/Job/jobActions";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { connect } from "react-redux";
 import {
@@ -699,7 +698,6 @@ function JobConfirmation(props) {
 }
 
 var actions = {
-  showMessage,
   confirmJob,
 };
 var mapStateToProps = (state) => ({

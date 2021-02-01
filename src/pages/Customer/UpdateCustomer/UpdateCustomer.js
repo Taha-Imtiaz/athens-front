@@ -22,7 +22,7 @@ class UpdateCustomer extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     let {
       getCustomer,
       match: {
@@ -63,7 +63,7 @@ class UpdateCustomer extends Component {
     updatedContacts[i][e.target.name] = e.target.value;
     this.setState({ subContacts: updatedContacts });
   };
-  
+
   // add alternateContacts (when no alternateContacts is added)
   addAlternateContact = () => {
     this.setState({

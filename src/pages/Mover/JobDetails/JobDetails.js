@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import style from "./JobDetails.module.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {
-  getMoverJobDetail,
-  updateJob,
-} from "../../../Redux/Mover/moverActions";
-
+import { getMoverJobDetail, updateJob } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
@@ -27,13 +22,8 @@ const MoverJobDetails = (props) => {
   }, [getMoverJobDetail, jobId]);
 
   const paidInCash = () => {
-    let { history, showMessage } = props;
-    updateJob(job._id, { status: "Paid Cash" }).then((res) => {
-      if (res.data.status === 200) {
-        showMessage(res.data.message);
-        history.push("/mover");
-      }
-    });
+    let { history, updateJob } = props;
+    updateJob(job._id, { status: "Paid Cash" }, () => history.push("/mover"))
   };
   let { job } = props;
   return (
@@ -169,8 +159,8 @@ const MoverJobDetails = (props) => {
 };
 
 var actions = {
-  showMessage,
   getMoverJobDetail,
+  updateJob
 };
 var mapStateToProps = (state) => ({
   job: state.moverJobs.job

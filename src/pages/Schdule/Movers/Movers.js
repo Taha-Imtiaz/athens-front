@@ -5,17 +5,14 @@ import { getAllMover } from "../../../Redux/Schedule/scheduleAction";
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@material-ui/core";
+import { connect } from "react-redux";
 
 const MoversSchedule = (props) => {
   const [allMovers, setAllMovers] = useState();
   useEffect(() => {
-    getAllMover()
-      .then((res) => {
-        setAllMovers(res.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    let { getAllMover } = props;
+    getAllMover(res => setAllMovers(res.data.data))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const routes = [
@@ -89,27 +86,22 @@ const MoversSchedule = (props) => {
             {allMovers && allMovers.length ? (
               allMovers.map((list, i) => {
                 return (
-                  <div key={i}>
-                    <a
-                      href="/#"
-                      className="list-group-item list-group-item-action flex-column align-items-start"
-                    >
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className={`mb-1 `}>{list.name}</h5>
-                        <small>{list.attributes[0].name}</small>
-                      </div>
-                      <div>
-                        {list.weeklySchedule
-                          .filter((day) => day.status)
-                          .map((status, i) => {
-                            return (
-                              <span className="mb-1" key={i}>
-                                {status.day.split("", 3).join("")}&nbsp;
+                  <div key={i} className="list-group-item list-group-item-action flex-column align-items-start">
+                    <div className="d-flex w-100 justify-content-between">
+                      <h5 className={`mb-1 `}>{list.name}</h5>
+                      <small>{list.attributes[0].name}</small>
+                    </div>
+                    <div>
+                      {list.weeklySchedule
+                        .filter((day) => day.status)
+                        .map((status, i) => {
+                          return (
+                            <span className="mb-1" key={i}>
+                              {status.day.split("", 3).join("")}&nbsp;
                               </span>
-                            );
-                          })}
-                      </div>
-                    </a>
+                          );
+                        })}
+                    </div>
                   </div>
                 );
               })
@@ -121,8 +113,12 @@ const MoversSchedule = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
-export default MoversSchedule;
+var actions = {
+  getAllMover
+};
+
+export default connect(null, actions)(MoversSchedule);

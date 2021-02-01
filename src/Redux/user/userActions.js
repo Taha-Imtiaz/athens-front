@@ -114,21 +114,28 @@ export const updateUser = (data, userId, callback) => {
   };
 };
 
-export const createUser = async (data) => {
-  // return async (dispatch) => {
-  try {
-    const createdUser = await Axios.post("user", data);
-    // dispatch(showMessage(createdUser.data.message))
-    return createdUser;
-  } catch (error) { }
-  // }
-};
+export const createUser = (data, callback) => {
+  return async (dispatch) => {
+    try {
+      const response = await Axios.post("user", data);
+      if (response.data.status === 200) {
+        callback(response);
+      }
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  };
+}
 
-export const sendCode = async (data, callback) => {
+export const sendCode = (data, callback) => {
   return async (dispatch) => {
     try {
       const response = await Axios.post("user/forgot-password", data);
-      callback(response);
+      if (response.data.status === 200) {
+        callback(response);
+      }
+      dispatch(showMessage(response.data.message));
     } catch (err) {
       dispatch(showMessage(err.message));
     }

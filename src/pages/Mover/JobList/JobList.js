@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import style from "./JobList.module.css";
 import { Link } from "react-router-dom";
-import { getMover } from "../../../Redux/Mover/moverActions";
-import { updateJob } from "../../../Redux/Mover/moverActions";
+import { getMover, updateJob } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -44,12 +42,18 @@ const MoversJobList = (props) => {
     recentlyAdded: false,
     sortByStatus: false,
   });
-  // const [status,setStatus] = useState("completed")
-  const { moverJobs, user } = props;
+
   let { pageSize, currentPage } = state;
-  let totalCount = moverJobs?.total;
   const open = Boolean(state.anchorEl);
   const { classes } = props;
+
+  const { moverJobs } = props;
+  let totalCount = 0;
+  if (moverJobs) {
+    var { docs } = moverJobs;
+    totalCount = moverJobs.total;
+  }
+
 
   useEffect(() => {
     let { getMover } = props;
@@ -69,48 +73,16 @@ const MoversJobList = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   let { getMover } = props;
-
-  //   let moversObj = {
-  //     filters: {
-  //       jobStatus: "",
-  //       dates: null,
-  //       nearestDate: "",
-  //     },
-  //     sort: {
-  //       createdAt: null,
-  //     },
-  //     page: 1,
-  //   };
-  //   getMover(moversObj);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [moverJobs]);
-
-  // const handleJobUpdate = (id) => {
-  //   updateJob(id, { status: state.status });
-  // };
-
   const handleChange = (event) => {
     var newState = state;
     newState.status = event.target.value;
     setState(newState);
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   status:event.target.value
-    // }))
-    // setStatus("booked")
     filterJobByStatus(event.target.value);
   };
 
   const markComplete = (list) => {
-    updateJob(list._id, { status: "completed" }).then((res) => {
-      if (res.data.status === 200) {
-        let { getMover, showMessage } = props;
-        showMessage(res.data.message);
-        getMover();
-      }
-    });
+    let { getMover, updateJob } = props;
+    updateJob(list._id, { status: "completed" }, () => getMover())
   };
 
   const handleDatePopoverOpen = (event, id) => {
@@ -272,10 +244,6 @@ const MoversJobList = (props) => {
     getMover(fetchMoverJobs);
   };
 
-  if (user) {
-    getMover(user._id);
-  }
-  console.log(state.status);
   return (
     <div>
       <div className={style.toprow}>
@@ -339,7 +307,7 @@ const MoversJobList = (props) => {
         </div>
       </div>
 
-      {moverJobs?.docs?.length > 0 ? (
+      {docs && docs.length > 0 ? (
         <div className={style.jobListHeaderContainer}>
           <div className={style.jobListHeader}>
             <div>Title</div>
@@ -350,9 +318,9 @@ const MoversJobList = (props) => {
         </div>
       ) : null}
 
-      {moverJobs?.docs?.length > 0 ? (
+      {docs && docs.length > 0 ? (
         <div>
-          {moverJobs.docs.map((list, i) => {
+          {docs.map((list, i) => {
             return (
               <div className={style.listContainer} key={i}>
                 <div className={`${style.listContent}`}>
@@ -490,12 +458,12 @@ const MoversJobList = (props) => {
                           </div>
                         </div>
                       ) : (
-                        <div
-                          className={`${style.status} ${style.flex} ${style.item}`}
-                        >
-                          {list.status}
-                        </div>
-                      )}
+                          <div
+                            className={`${style.status} ${style.flex} ${style.item}`}
+                          >
+                            {list.status}
+                          </div>
+                        )}
                       <div></div>
                     </div>
                   </Link>
@@ -515,25 +483,21 @@ const MoversJobList = (props) => {
           </div>
         </div>
       ) : (
-        <div className="text-center">
-          <img src="/images/no-data-found.png" alt="" />
-        </div>
-      )}
+          <div className="text-center">
+            <img src="/images/no-data-found.png" alt="" />
+          </div>
+        )}
     </div>
   );
 };
 
 var mapStateToProps = (state) => ({
-  moverJobs: state.moverJobs?.jobList,
-  user: state.users.user,
+  moverJobs: state.moverJobs.jobList
 });
 
 var actions = {
   getMover,
-  showMessage,
+  updateJob
 };
 
-export default compose(
-  connect(mapStateToProps, actions),
-  withStyles(styles)
-)(MoversJobList);
+export default compose(connect(mapStateToProps, actions), withStyles(styles))(MoversJobList);

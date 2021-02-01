@@ -120,34 +120,36 @@ const DailySchedule = (props) => {
     if (e) {
       e.stopPropagation();
     }
-    let { loggedinUser, showMessage } = props;
+    let { loggedinUser, updateJob } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
     delete jobToUpdate.assignee;
     delete jobToUpdate.customer;
-    updateJob(jobToUpdate._id, jobToUpdate)
-      .then((res) => {
-        if (res.data.status === 200) {
-          showMessage(res.data.message);
-          getalljobs({
-            date: today,
-          });
-          getalljobsfiveday({
-            date: today,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+    updateJob(jobToUpdate._id, jobToUpdate, (res) => {
+      getalljobs({
+        date: today,
       });
+      getalljobsfiveday({
+        date: today,
+      });
+    })
+    // .then((res) => {
+    //   if (res.data.status === 200) {
+    //     showMessage(res.data.message);
+
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   };
 
   const removeAssignee = (e, job, assignee) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
-    let { loggedinUser, showMessage } = props;
+    let { loggedinUser, updateJob } = props;
     let jobToUpdate = cloneDeep(job);
     jobToUpdate.userId = loggedinUser._id;
     jobToUpdate.customerId = jobToUpdate.customer.email;
@@ -159,21 +161,14 @@ const DailySchedule = (props) => {
     jobToUpdate.assigneesId = assigneesId;
     delete jobToUpdate.assignee;
     delete jobToUpdate.customer;
-    updateJob(jobToUpdate._id, jobToUpdate)
-      .then((res) => {
-        if (res.data.status === 200) {
-          showMessage(res.data.message);
-          getalljobs({
-            date: today,
-          });
-          getalljobsfiveday({
-            date: today,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+    updateJob(jobToUpdate._id, jobToUpdate, (res) => {
+      getalljobs({
+        date: today,
       });
+      getalljobsfiveday({
+        date: today,
+      });
+    })
   };
 
   const toggleCollapse = (i) => {
@@ -633,5 +628,6 @@ var actions = {
   getalljobs,
   getalljobsfiveday,
   showMessage,
+  updateJob
 };
 export default connect(mapStateToProps, actions)(DailySchedule);

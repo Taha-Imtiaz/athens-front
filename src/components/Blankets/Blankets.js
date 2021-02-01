@@ -5,12 +5,9 @@ import { Link, withRouter } from "react-router-dom";
 import style from "./Blankets.module.css";
 import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
-
 import { updateDeposit } from "../../Redux/Deposit/depositActions";
-import { showMessage } from "../../Redux/Common/commonActions";
 import ActivitiesModal from "../ActivitiesModal/ActivitiesModal";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
-import { deleteBlanketDeposit } from "../../Redux/Deposit/depositActions";
 
 const Blankets = (props) => {
   const [blanketValue, setBlanketValue] = useState(props.items);
@@ -113,7 +110,6 @@ const Blankets = (props) => {
                 <div onDoubleClick={() => makeInputFieldsEditible(i)}>
                   <TextField
                     variant="outlined"
-                    // required
                     fullWidth
                     size="small"
                     onChange={(e) => handleInput(e, i)}
@@ -127,7 +123,6 @@ const Blankets = (props) => {
                 <div onDoubleClick={() => makeInputFieldsEditible(i)}>
                   <TextField
                     variant="outlined"
-                    // required
                     fullWidth
                     size="small"
                     onChange={(e) => changeCost(e, i)}
@@ -206,9 +201,7 @@ var mapStateToProps = (state) => ({
   user: state.users.user,
 });
 var actions = {
-  showMessage,
-  updateDeposit,
-  deleteBlanketDeposit,
+  updateDeposit
 };
 
 export default connect(mapStateToProps, actions)(withRouter(Blankets));

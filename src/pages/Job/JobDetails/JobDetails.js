@@ -6,14 +6,11 @@ import { connect } from "react-redux";
 import { getJob } from "../../../Redux/Job/jobActions";
 import { useEffect } from "react";
 import { useState } from "react";
-
 import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
-
 import parse from "html-react-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
-
 import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
 
@@ -78,14 +75,14 @@ const JobDetails = (props) => {
                   <div className="card-body">
                     <h5 className="card-title">Assignees</h5>
                     {job.assignee.length > 0 ? (
-                      job.assignee.map((assignee,i) => (
-                        <div key = {i} className={style.assigneehead}>
+                      job.assignee.map((assignee, i) => (
+                        <div key={i} className={style.assigneehead}>
                           <li> {assignee.name}</li>
                         </div>
                       ))
                     ) : (
-                      <div>Not Added</div>
-                    )}
+                        <div>Not Added</div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -126,8 +123,8 @@ const JobDetails = (props) => {
                 i === 0 ? (
                   <span key={i}>{x}</span>
                 ) : (
-                  <span key={i}> | {x} </span>
-                )
+                    <span key={i}> | {x} </span>
+                  )
               )}
             </div>
             <div className={style.service}>
@@ -156,20 +153,20 @@ const JobDetails = (props) => {
 
             {job.locations && (
               <div className={style.locations}>
-                {job.locations.map((list) =>
+                {job.locations.map((list, i) =>
                   list.type === "pickup" ? (
-                    <div>
+                    <div key={i}>
                       <FontAwesomeIcon icon={faDotCircle} />{" "}
                       <span>{`Pickup`} </span>{" "}
                       <div className={style.location}>{list.value}</div>
                     </div>
                   ) : (
-                    <div>
-                      <FontAwesomeIcon icon={faDotCircle} />{" "}
-                      <span>{`Dropoff`}</span>
-                      <div className={style.location}>{list.value}</div>
-                    </div>
-                  )
+                      <div key={i}>
+                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                        <span>{`Dropoff`}</span>
+                        <div className={style.location}>{list.value}</div>
+                      </div>
+                    )
                 )}
               </div>
             )}
@@ -201,8 +198,8 @@ const JobDetails = (props) => {
             activities={job.activities}
             handleClose={handleClose}
           />
-         
-          <JobConfirmationModal job = {job} show = {showBooking} handleCloseAndRefresh = {handleCloseAndRefresh} closeJobConfirmationModal = {closeJobConfirmationModal}/>
+
+          <JobConfirmationModal job={job} show={showBooking} handleCloseAndRefresh={handleCloseAndRefresh} closeJobConfirmationModal={closeJobConfirmationModal} />
         </div>
       ) : null}
     </div>

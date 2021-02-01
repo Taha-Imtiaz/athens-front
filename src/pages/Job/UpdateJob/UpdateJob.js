@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import style from "./UpdateJob.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-
 import { connect } from "react-redux";
 import { getJob, updateJob } from "../../../Redux/Job/jobActions";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -73,6 +71,26 @@ class UpdateJob extends Component {
       { id: 6, name: "Hot Tub" },
     ]
   };
+
+
+  //fetch job id on componentDidMount
+  componentDidMount() {
+    let {
+      getJob,
+      match: {
+        params: { jobId },
+      },
+    } = this.props;
+
+    getJob(jobId);
+  };
+
+  componentDidUpdate(prevProps) {
+    let { job } = this.props;
+    if (prevProps.job !== job) {
+      this.setInitialState(job);
+    }
+  }
   //onChange handler of date
   handleDateChange = (date, i) => {
     let newState = cloneDeep(this.state);
@@ -132,22 +150,7 @@ class UpdateJob extends Component {
       return true;
     }
   };
-  //fetch job id on componentDidMount
-  componentDidMount = async () => {
-    let {
-      getJob,
-      match: {
-        params: { jobId },
-      },
-    } = this.props;
 
-    await getJob(jobId);
-
-    let { job } = this.props;
-    if (job) {
-      this.setInitialState(job);
-    }
-  };
 
   setInitialState = (job) => {
     const contentBlock = htmlToDraft(job.description);
@@ -268,7 +271,6 @@ class UpdateJob extends Component {
       },
       history,
     } = this.props;
-    let { showMessage } = this.props;
     let stringDates = dates.map((x) => {
       if (typeof x === "number") {
         return new Date(x).toDateString();
@@ -277,7 +279,7 @@ class UpdateJob extends Component {
       }
     });
 
-    let { loggedinUser } = this.props;
+    let { loggedinUser, updateJob } = this.props;
     let updatedObj = {
       dates: stringDates,
       title,
@@ -294,14 +296,7 @@ class UpdateJob extends Component {
     //check if the fields are empty
     if (this.handleValidation()) {
       //update job
-      updateJob(jobId, updatedObj)
-        .then((res) => {
-          showMessage(res.data.message);
-          history.push("/job/detail/" + jobId);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      updateJob(jobId, updatedObj, (res) => history.push("/job/detail/" + jobId))
     }
   };
   //onChange handler of locations
@@ -803,8 +798,8 @@ class UpdateJob extends Component {
 }
 
 var actions = {
-  showMessage,
   getJob,
+  updateJob
 };
 
 var mapStateToProps = (state) => ({

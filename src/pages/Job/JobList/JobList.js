@@ -9,15 +9,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-
-
-import {
-  Button,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
+import { Button, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";

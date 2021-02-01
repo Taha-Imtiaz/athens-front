@@ -6,7 +6,6 @@ import style from "./HolidayCalendar.module.css";
 import { holidayCalendar } from "../../../Redux/Mover/moverActions";
 import { Modal } from "react-bootstrap";
 import { Button, TextareaAutosize } from "@material-ui/core";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
 
@@ -51,18 +50,13 @@ function RequestHolidays(props) {
   };
 
   const addNote = () => {
-    let { showMessage } = props;
+    let { holidayCalendar } = props;
     if (dates.length > 0 && note.length > 0) {
       let obj = {
         dates,
         reason: note,
       };
-      holidayCalendar(obj).then((res) => {
-        if (res.data.status === 200) {
-          setShow(false);
-          showMessage(res.data.message);
-        }
-      });
+      holidayCalendar(obj, res => setShow(false));
     } else if (note.length === 0) {
       setEmptyReasonError("Error");
     }
@@ -99,7 +93,7 @@ function RequestHolidays(props) {
         <Modal.Body>
           <div>
             <TextareaAutosize
-             
+
               id=""
               rows="5"
               name="note"
@@ -131,7 +125,7 @@ function RequestHolidays(props) {
   );
 }
 var actions = {
-  showMessage,
+  holidayCalendar,
 };
 
 export default connect(null, actions)(RequestHolidays);

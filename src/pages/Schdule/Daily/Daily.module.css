@@ -104,16 +104,18 @@
 .modalBtns .button:hover {
   background-color: #00adee;
 }
+
 .jobDetailHeader {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  font-weight: bold;
-}
-.jobDetailList {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   font-size: 0.9rem;
   color: #aaaaaa;
+  font-weight: bold;
+
+}
+.jobDetailList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .jobDescriptionHeader {
   margin: 0.5rem 0;

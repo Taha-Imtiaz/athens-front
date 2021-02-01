@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import style from "./navbar.module.css";
-// import logo from '/images/movers-logo.jpg'
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -55,7 +54,7 @@ const Navbar = (props) => {
                   <React.Fragment>
                     <li className={getNavLinkClass("/customers")}>
                       <Link className={`nav-link`} to="/customers">
-                        Customer
+                        Customers
                       </Link>
                     </li>
                     <li className={getNavLinkClass("/jobs")}>
@@ -102,36 +101,36 @@ const Navbar = (props) => {
                     </li>
                   </React.Fragment>
                 ) : (
-                  <React.Fragment>
-                    <li className={getNavLinkClass("/mover")}>
-                      <Link className="nav-link" to="/mover">
-                        Jobs
+                    <React.Fragment>
+                      <li className={getNavLinkClass("/mover")}>
+                        <Link className="nav-link" to="/mover">
+                          Jobs
                       </Link>
-                    </li>
-                    <li className={getNavLinkClass("/mover/calendar")}>
-                      <Link className="nav-link" to="/mover/calendar">
-                        Calendar
+                      </li>
+                      <li className={getNavLinkClass("/mover/calendar")}>
+                        <Link className="nav-link" to="/mover/calendar">
+                          Calendar
                       </Link>
-                    </li>
-                    <li className={style.logoutBtn}>
-                      <Button className={style.button} onClick={logOut}>
-                        Log Out
+                      </li>
+                      <li className={style.logoutBtn}>
+                        <Button className={style.button} onClick={logOut}>
+                          Log Out
                       </Button>
-                    </li>
-                  </React.Fragment>
-                )}
+                      </li>
+                    </React.Fragment>
+                  )}
               </ul>
             ) : (
-              <ul className="navbar-nav ml-auto">
-                <React.Fragment>
-                  <li className={getNavLinkClass("/")}>
-                    <Link className={`nav-link`} to="/">
-                      Sign In
+                <ul className="navbar-nav ml-auto">
+                  <React.Fragment>
+                    <li className={getNavLinkClass("/")}>
+                      <Link className={`nav-link`} to="/">
+                        Sign In
                     </Link>
-                  </li>
-                </React.Fragment>
-              </ul>
-            )}
+                    </li>
+                  </React.Fragment>
+                </ul>
+              )}
           </div>
         </nav>
       )}

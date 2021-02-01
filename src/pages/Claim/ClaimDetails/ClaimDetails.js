@@ -125,7 +125,7 @@ const ClaimDetails = (props) => {
 
             <div className={`card ${style.jobCard}`}>
               <div className="card-body">
-                <h5>Jobs</h5>
+                <h5>Job</h5>
                 {claims.job ? (
                   <div>
                     <Link

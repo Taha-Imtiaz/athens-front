@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
 import style from "./Payment.module.css";
 import { Button, TextField } from "@material-ui/core";
-
 import { payAmount } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
 
-const Payment = (props) =>  {
- const [state,setState] = useState({
-  number: "",
-  exp_month: "",
-  exp_year: "",
-  cvc: "",
-  amount: "",
- }) 
- useEffect(() => {
-  loadStripe();
-  const { history } = props;
-  if (!props.location.jobId) {
-    history.push("/mover");
-  }
+const Payment = (props) => {
+  const [state, setState] = useState({
+    number: "",
+    exp_month: "",
+    exp_year: "",
+    cvc: "",
+    amount: "",
+  })
+  useEffect(() => {
+    loadStripe();
+    const { history } = props;
+    if (!props.location.jobId) {
+      history.push("/mover");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-},[]) 
+  }, [])
 
-const changeHandler = (e) => {
+  const changeHandler = (e) => {
     let { name, value } = e.target;
-    setState({...state, [name]: value });
+    setState({ ...state, [name]: value });
   };
 
- const loadStripe = () => {
+  const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
       let s = window.document.createElement("script");
       s.id = "stripe-script";
@@ -42,11 +40,10 @@ const changeHandler = (e) => {
       window.document.body.appendChild(s);
     }
   };
-  
 
- const pay = (e) => {
+
+  const pay = (e) => {
     e.preventDefault();
-
     window.Stripe.card.createToken(
       {
         number: state.number,
@@ -62,111 +59,106 @@ const changeHandler = (e) => {
             amount: state.amount,
             jobId: props.location.jobId,
           };
-          payAmount(obj).then((res) => {
-            let { history, showMessage } = props;
-            if (res.data.status === 200) {
-              showMessage(res.data.message);
-              history.push("/mover");
-            }
-          });
+          let { history, payAmount } = props;
+          payAmount(obj, res => history.push("/mover"));
         }
       }
     );
   };
 
-  
-    return (
-      <div className={style.main}>
-        <div className={style.form}>
-          <div className={style.tophead}>
-            <h3>Credit Card Information</h3>
+
+  return (
+    <div className={style.main}>
+      <div className={style.form}>
+        <div className={style.tophead}>
+          <h3>Credit Card Information</h3>
+
+          <div>
+            <span className={style.logo}>
+              <i className="fa fa-cc-paypal"></i>
+            </span>
+            <span className={style.logo}>
+              <i className={`fa fa-cc-visa ${style.visaIcon}`}></i>
+            </span>
+            <span className={style.logo}>
+              <i className="fa fa-cc-mastercard"></i>
+            </span>
+          </div>
+        </div>
+        <form>
+          <TextField
+            variant="outlined"
+            fullWidth
+            className={style.styleFormFields}
+            size="small"
+            name="number"
+            label="Card Number"
+            onChange={changeHandler}
+          />
+
+          <p>Testing Card #: 4242424242424242</p>
+          <div className={style.styleCurrentYear}>
+            <div>
+              <TextField
+                variant="outlined"
+                className={style.styleFormFields}
+                fullWidth
+                size="small"
+                name="exp_month"
+                label="Month"
+                onChange={changeHandler}
+              />
+            </div>
 
             <div>
-              <span className={style.logo}>
-                <i className="fa fa-cc-paypal"></i>
-              </span>
-              <span className={style.logo}>
-                <i className={`fa fa-cc-visa ${style.visaIcon}`}></i>
-              </span>
-              <span className={style.logo}>
-                <i className="fa fa-cc-mastercard"></i>
-              </span>
+              <TextField
+                variant="outlined"
+                fullWidth
+                size="small"
+                className={style.styleFormFields}
+                name="exp_year"
+                label="Year"
+                onChange={changeHandler}
+              />
             </div>
           </div>
-          <form>
-            <TextField
-              variant="outlined"
-              fullWidth
-              className={style.styleFormFields}
-              size="small"
-              name="number"
-              label="Card Number"
-              onChange={changeHandler}
-            />
 
-            <p>Testing Card #: 4242424242424242</p>
-            <div className={style.styleCurrentYear}>
-              <div>
-                <TextField
-                  variant="outlined"
-                  className={style.styleFormFields}
-                  fullWidth
-                  size="small"
-                  name="exp_month"
-                  label="Month"
-                  onChange={changeHandler}
-                />
-              </div>
+          <TextField
+            variant="outlined"
+            fullWidth
+            size="small"
+            name="cvc"
+            label="CVC"
+            className={style.styleFormFields}
+            onChange={changeHandler}
+          />
 
-              <div>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  className={style.styleFormFields}
-                  name="exp_year"
-                  label="Year"
-                  onChange={changeHandler}
-                />
-              </div>
-            </div>
+          <TextField
+            type="number"
+            variant="outlined"
+            fullWidth
+            size="small"
+            id="amount"
+            className={style.styleFormFields}
+            label="Amount (Plus tip if any)"
+            name="amount"
+            onChange={changeHandler}
+          />
 
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              name="cvc"
-              label="CVC"
-              className={style.styleFormFields}
-              onChange={changeHandler}
-            />
-
-            <TextField
-              type="number"
-              variant="outlined"
-              fullWidth
-              size="small"
-              id="amount"
-              className={style.styleFormFields}
-              label="Amount (Plus tip if any)"
-              name="amount"
-              onChange={changeHandler}
-            />
-
-            <div className={style.flexEnd}>
-              <Button className={style.button} type="button" onClick={pay}>
-                Pay
+          <div className={style.flexEnd}>
+            <Button className={style.button} type="button" onClick={pay}>
+              Pay
               </Button>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
 
 var actions = {
-  showMessage,
+  payAmount
 };
 
 export default connect(null, actions)(Payment);

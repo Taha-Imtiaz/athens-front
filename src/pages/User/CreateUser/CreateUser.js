@@ -5,7 +5,6 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { createUser } from "../../../Redux/User/userActions";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
 import { TextField } from "@material-ui/core";
 
 const initialState = {
@@ -122,7 +121,7 @@ class CreateUser extends Component {
   mySubmitHandler = (event) => {
     event.preventDefault();
     const isValid = this.validate();
-    let { showMessage, history } = this.props;
+    let { createUser, history } = this.props;
 
     if (isValid) {
       let { name, phone, email, address, type, attributes } = this.state;
@@ -134,14 +133,7 @@ class CreateUser extends Component {
         role: type.name.toLowerCase(),
         attributes,
       };
-      createUser(createdUserObj)
-        .then((res) => {
-          showMessage(res.data.message);
-          history.push("/users");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      createUser(createdUserObj, () => history.push("/users"))
     }
   };
 
@@ -248,7 +240,7 @@ class CreateUser extends Component {
 }
 
 var actions = {
-  showMessage,
+  createUser
 };
 
 export default connect(null, actions)(CreateUser);

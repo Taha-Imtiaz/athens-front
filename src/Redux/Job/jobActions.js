@@ -34,15 +34,6 @@ export const getJob = (jobId) => {
   };
 };
 
-export const getAllMovers = async () => {
-  try {
-    let getMovers = await Axios.get("mover");
-    return getMovers;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const createJob = (newJobObj, callback) => {
   return async (dispatch) => {
     try {
@@ -59,12 +50,17 @@ export const createJob = (newJobObj, callback) => {
   };
 };
 
-export const updateJob = async (jobId, jobObj) => {
-  try {
-    let updatedJob = await Axios.put(`job/${jobId}`, jobObj);
-    return updatedJob;
-  } catch (error) {
-    console.log(error);
+export const updateJob = (jobId, jobObj, callback) => {
+  return async (dispatch) => {
+    try {
+      let response = await Axios.put(`job/${jobId}`, jobObj);
+      if (response.data.status === 200) {
+        callback(response);
+      }
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
   }
 };
 

@@ -73,6 +73,7 @@ class CreateClaim extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
+        selectedJob: ''
       });
     }
     //get all customers and all jobs

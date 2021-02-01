@@ -37,7 +37,6 @@ const CalendarApp = (props) => {
       }
       //fetch jobs of current month
       getJobsByDate(body, (res) => {
-        console.log(res)
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {

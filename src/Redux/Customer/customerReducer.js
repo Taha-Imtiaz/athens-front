@@ -11,13 +11,13 @@ const customerReducer = (state = initialState, action) => {
 
         case GET_CUSTOMERS:
 
-            return { ...state, customerList: payload.customers.data.data }
+            return { ...state, customerList: payload }
 
         case GET_CUSTOMER:
-            return { ...state, customer: payload.customer.data.data }
+            return { ...state, customer: payload }
 
         case DELETE_CUSTOMER:
-            return { ...state, customerList: payload.response.data.data }
+            return { ...state, customerList: payload }
         default:
             return state
     }

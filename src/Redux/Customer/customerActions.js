@@ -5,7 +5,7 @@ import { showMessage } from "../../Redux/Common/commonActions";
 export const getAllCustomers = (customersObj) => {
   return async (dispatch) => {
     try {
-      let getCustomersList = await Axios.post(
+      let response = await Axios.post(
         "customer/all",
         customersObj
       );
@@ -13,9 +13,8 @@ export const getAllCustomers = (customersObj) => {
       //update app's state
       dispatch({
         type: GET_CUSTOMERS,
-        payload: {
-          customers: getCustomersList,
-        },
+        payload:  response.data.data,
+        
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -26,12 +25,11 @@ export const getAllCustomers = (customersObj) => {
 export const getCustomer = (customerId) => {
   return async (dispatch) => {
     try {
-      let customer = await Axios.get(`customer/details/${customerId}`);
+      let response = await Axios.get(`customer/details/${customerId}`);
       dispatch({
         type: GET_CUSTOMER,
-        payload: {
-          customer: customer
-        },
+        payload:  response.data.data,
+        
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -92,9 +90,8 @@ export const deleteCustomer = (id, currentPage) => {
       if (response.data.status === 200) {
         dispatch({
           type: DELETE_CUSTOMER,
-          payload: {
-            response
-          }
+          payload: response.data.data
+          
         })
       }
       dispatch(showMessage(response.data.message))

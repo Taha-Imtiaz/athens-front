@@ -8,7 +8,7 @@ import {
 } from "../../../Redux/Unavailable/unavailableAction";
 
 import { connect } from "react-redux";
-import { showMessage } from "../../../Redux/Common/commonActions";
+
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -54,14 +54,14 @@ const UnavailableSchedule = (props) => {
     }
   };
   const approveRequests = () => {
-    let data = {
-      id: dates,
-    };
-    let { showMessage } = props;
-    approveRequest(data).then((res) => {
-      showMessage(res.data.message);
-      getAllData();
-    });
+    let {approveRequest} = props
+    if (dates.length > 0) {
+      let data = {
+        id: dates,
+      };
+
+      approveRequest(data)
+    }
   };
 
   return (
@@ -86,7 +86,9 @@ const UnavailableSchedule = (props) => {
             unavailable.map((list, i) => {
               return (
                 <div className={`list-group ${style.item}`} key={i}>
-                  <div className={`list-group-item list-group-item-action flex-column align-items-start `}>
+                  <div
+                    className={`list-group-item list-group-item-action flex-column align-items-start `}
+                  >
                     <div className={`d-flex w-100 justify-content-between`}>
                       <span>
                         <input
@@ -104,7 +106,11 @@ const UnavailableSchedule = (props) => {
                       </span>
                     </div>
                     <p className="mb-1">
-                      {list.dates.map((date, k) => <span className="mr-2" key={k}>{new Date(date).toDateString()}</span>)}
+                      {list.dates.map((date, k) => (
+                        <span className="mr-2" key={k}>
+                          {new Date(date).toDateString()}
+                        </span>
+                      ))}
                     </p>
                     <div>
                       <p className="mb-1">Reason: {list.reason}</p>
@@ -114,10 +120,10 @@ const UnavailableSchedule = (props) => {
               );
             })
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" alt="" />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -125,10 +131,10 @@ const UnavailableSchedule = (props) => {
 };
 
 var mapStateToProps = (state) => ({
-  unavailable: state.unavailable
+  unavailable: state.unavailable,
 });
 var actions = {
-  showMessage,
   getAllData,
+  approveRequest
 };
 export default connect(mapStateToProps, actions)(UnavailableSchedule);

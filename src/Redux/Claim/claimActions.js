@@ -1,5 +1,5 @@
 // import Axios from "axios"
-import { GET_CLAIMS, GET_CLAIMS_BY_ID, GET_CLAIM, DELETE_CLAIM } from "./claimConstants";
+import { GET_CLAIMS, GET_CLAIM, DELETE_CLAIM } from "./claimConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
@@ -10,15 +10,14 @@ export const getAllClaims = (data) => {
   };
   return async (dispatch) => {
     try {
-      let claims = await Axios.post("claim/" + data.status,
+      let response = await Axios.post("claim/" + data.status,
         body
       );
       //update app's state
       dispatch({
         type: GET_CLAIMS,
-        payload: {
-          claims: claims.data.data
-        },
+        payload: response.data.data
+      
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -26,21 +25,6 @@ export const getAllClaims = (data) => {
   };
 };
 
-export const getClaimsByID = (customerId) => {
-  return async (dispatch) => {
-    try {
-      let claims = await Axios.get(`customer/details/${customerId}`);
-      dispatch({
-        type: GET_CLAIMS_BY_ID,
-        payload: {
-          claims,
-        },
-      });
-    } catch (err) {
-      dispatch(showMessage(err.message));
-    }
-  }
-};
 
 export const addClaim = (data, callback) => {
   return async (dispatch) => {
@@ -86,12 +70,11 @@ export const getCustomersAndJobs = (callback) => {
 export const getClaim = (claimId) => {
   return async (dispatch) => {
     try {
-      let claim = await Axios.get(`claim/${claimId}`)
+      let response = await Axios.get(`claim/${claimId}`)
       dispatch({
         type: GET_CLAIM,
-        payload: {
-          claim: claim
-        }
+        payload:response.data.data
+        
       })
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -107,14 +90,13 @@ export const deleteClaim = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let getAllClaimsExceptDeleteOne = await Axios.delete(`claim`, { params: body })
-      if (getAllClaimsExceptDeleteOne.data.status === 200) {
-        dispatch(showMessage(getAllClaimsExceptDeleteOne.data.message))
+      let response = await Axios.delete(`claim`, { params: body })
+      if (response.data.status === 200) {
+        dispatch(showMessage(response.data.message))
         dispatch({
           type: DELETE_CLAIM,
-          payload: {
-            getAllClaimsExceptDeleteOne: getAllClaimsExceptDeleteOne.data.data
-          }
+          payload: response.data.data
+          
         })
       }
 

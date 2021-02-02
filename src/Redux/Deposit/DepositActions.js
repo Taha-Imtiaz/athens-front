@@ -1,25 +1,19 @@
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
-import {
-  EDIT_DEPOSIT,
-  GET_ALL_DEPOSITS,
-} from "./depositConstants";
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./depositConstants";
 
 export const getDeposits = (page) => {
   return async (dispatch) => {
     try {
       let body = {
-        page
-      }
-      let deposits = await Axios.post(`deposit/all`, body);
+        page,
+      };
+      let response = await Axios.post(`deposit/all`, body);
       dispatch({
         type: GET_ALL_DEPOSITS,
-        payload: {
-          deposits
-        },
+        payload: response.data.data,
       });
-    }
-    catch (err) {
+    } catch (err) {
       dispatch(showMessage(err.message));
     }
   };
@@ -30,14 +24,13 @@ export const addDeposit = (data, callback) => {
     try {
       let response = await Axios.post(`deposit`, data);
       if (response.data.status === 200) {
-        callback()
+        callback();
       }
-      dispatch(showMessage(response.data.message))
-    }
-    catch (err) {
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
+  };
 };
 
 export const deleteBlanketDeposit = (id, currentPage) => {
@@ -45,18 +38,16 @@ export const deleteBlanketDeposit = (id, currentPage) => {
     try {
       let body = {
         page: currentPage,
-        id
-      }
-      let deposits = await Axios.delete(`deposit`, { params: body });
+        id,
+      };
+      let response = await Axios.delete(`deposit`, { params: body });
+      console.log(response)
       dispatch({
         type: GET_ALL_DEPOSITS,
-        payload: {
-          deposits
-        },
+        payload: response,
       });
-      dispatch(showMessage(deposits.data.message))
-    }
-    catch (err) {
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
       dispatch(showMessage(err.message));
     }
   };
@@ -66,29 +57,15 @@ export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
       let response = await Axios.put(`deposit`, data);
-      console.log(response)
+      console.log(response);
       dispatch(showMessage(response.data.message));
       dispatch({
         type: EDIT_DEPOSIT,
-        payload: {
-          response
-        },
+        payload: response.data.data.blanketDeposit,
+        
       });
     } catch (err) {
       dispatch(showMessage(err.message));
     }
   };
 };
-
-// export const updateDeposit = async (data) => {
-//   return async (dispatch) => {
-//     try {
-//       let blanket = await Axios.put(
-//         `deposit`,
-//         data
-//       );
-//       return blanket;
-//     } catch (error) { 
-//     }
-//   }
-// };

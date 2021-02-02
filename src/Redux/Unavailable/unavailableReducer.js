@@ -7,7 +7,7 @@ const unavailableReducer = (state = initialState, action) => {
   switch (type) {
     case GET_UNAVAILABLE_LIST:
       // return [{...state, ...payload.unavailableList.data.data}];
-      return payload.unavailableList.data.data;
+      return payload;
 
     default:
       return state;

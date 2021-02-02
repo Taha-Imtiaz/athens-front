@@ -3,21 +3,19 @@ import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
 export const login = (data, callback) => {
-  return async (diaspatch) => {
+  return async (dispatch) => {
     try {
-      const user = await Axios.post("user/login", data);
-      if (user.data.status === 200) {
-        localStorage.setItem("athens-token", user.data.token);
-        diaspatch(showMessage(user.data.message));
-        diaspatch({
+      const response = await Axios.post("user/login", data);
+      if (response.data.status === 200) {
+        localStorage.setItem("athens-token", response.data.token);
+        dispatch(showMessage(response.data.message));
+        dispatch({
           type: LOGGEDIN_USER,
-          payload: {
-            user: user.data.data,
-          },
+          payload: response.data.data,
         });
         callback();
       } else {
-        diaspatch(showMessage(user.data.message));
+        dispatch(showMessage(response.data.message));
       }
     } catch (error) {
       console.log(error);
@@ -28,65 +26,42 @@ export const login = (data, callback) => {
 export const getLoginUser = () => {
   return async (dispatch) => {
     try {
-      let user = await Axios.get('/user', { config: { handlerEnabled: true } })
+      let response = await Axios.get("/user", {
+        config: { handlerEnabled: true },
+      });
       dispatch({
         type: LOGGEDIN_USER,
-        payload: {
-          user: user.data.data,
-        }
-      })
+        payload: response.data.data,
+      });
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
-  // return async (diaspatch) => {
-  //   try {
-  //     const token = localStorage.getItem("athens-token");
-  //     const config = {
-  //       headers: { Authorization: token },
-  //     };
-
-  //     const user = await Axios.get("user", config);
-
-  //     if (user.data.status === 200) {
-  //       diaspatch({
-  //         type: LOGGEDIN_USER,
-  //         payload: {
-  //           user: user.data.data,
-  //         },
-  //       });
-  //     } else {
-  //       diaspatch(showMessage(user.data.message));
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  };
 };
 
 export const resetPassword = (data, callback) => {
   return async (dispatch) => {
     try {
-      let user = await Axios.put("user", data, { config: { handlerEnabled: true } });
-      if (user.data.status === 200) {
-        dispatch(showMessage(user.data.message));
-        callback()
+      let response = await Axios.put("user", data, {
+        config: { handlerEnabled: true },
+      });
+      if (response.data.status === 200) {
+        dispatch(showMessage(response.data.message));
+        callback();
       }
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
-}
+  };
+};
 
 export const getUsers = (data) => {
-  return async (diaspatch) => {
+  return async (dispatch) => {
     try {
-      const getUsersList = await Axios.post("user/all", data);
-      diaspatch({
+      const response = await Axios.post("user/all", data);
+      dispatch({
         type: GET_USERS,
-        payload: {
-          getUsersList: getUsersList,
-        },
+        payload: response.data.data,
       });
     } catch (error) {
       console.log(error);
@@ -97,17 +72,15 @@ export const getUsers = (data) => {
 export const updateUser = (data, userId, callback) => {
   return async (dispatch) => {
     try {
-      const updatedUser = await Axios.put(`user/${userId}`, data);
-      if (updatedUser.data.status === 200) {
-        callback()
+      const response = await Axios.put(`user/${userId}`, data);
+      if (response.data.status === 200) {
+        callback();
         dispatch({
           type: LOGGEDIN_USER,
-          payload: {
-            user: updatedUser.data.data,
-          },
+          payload: response.data.data,
         });
       }
-      dispatch(showMessage(updatedUser.data.message));
+      dispatch(showMessage(response.data.message));
     } catch (err) {
       dispatch(showMessage(err.message));
     }
@@ -126,7 +99,7 @@ export const createUser = (data, callback) => {
       dispatch(showMessage(err.message));
     }
   };
-}
+};
 
 export const sendCode = (data, callback) => {
   return async (dispatch) => {
@@ -139,7 +112,7 @@ export const sendCode = (data, callback) => {
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
+  };
 };
 
 export const verifyCode = (data, callback) => {
@@ -149,15 +122,13 @@ export const verifyCode = (data, callback) => {
         headers: { Authorization: data.token },
       };
 
-      const verifyCode = await Axios.post("user/verify", data, config);
-      if (verifyCode.data.status === 200) {
-        localStorage.setItem("athens-token", verifyCode.data.token);
-        dispatch(showMessage(verifyCode.data.message));
+      const response = await Axios.post("user/verify", data, config);
+      if (response.data.status === 200) {
+        localStorage.setItem("athens-token", response.data.token);
+        dispatch(showMessage(response.data.message));
         dispatch({
           type: LOGGEDIN_USER,
-          payload: {
-            user: verifyCode.data.data,
-          },
+          payload: response.data.data,
         });
         callback();
       } else {
@@ -168,4 +139,3 @@ export const verifyCode = (data, callback) => {
     }
   };
 };
-

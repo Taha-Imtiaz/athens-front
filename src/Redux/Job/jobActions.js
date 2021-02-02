@@ -5,12 +5,10 @@ import { showMessage } from "../../Redux/Common/commonActions";
 export const getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      let getJobs = await Axios.post("job/all", jobObj);
+      let response = await Axios.post("job/all", jobObj);
       dispatch({
         type: GET_JOBS,
-        payload: {
-          getJobs: getJobs,
-        },
+        payload: response.data.data,
       });
     } catch (error) {
       console.log(error);
@@ -21,12 +19,10 @@ export const getAllJobs = (jobObj) => {
 export const getJob = (jobId) => {
   return async (dispatch) => {
     try {
-      let getJob = await Axios.get(`job/${jobId}`);
+      let response = await Axios.get(`job/${jobId}`);
       dispatch({
         type: GET_JOB,
-        payload: {
-          getJob: getJob,
-        },
+        payload: response.data.data,
       });
     } catch (error) {
       console.log(error);
@@ -61,7 +57,7 @@ export const updateJob = (jobId, jobObj, callback) => {
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
+  };
 };
 
 export const getAllJobsOnDate = async (date) => {
@@ -85,18 +81,17 @@ export const getJobsByDate = (body, callback) => {
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
+  };
 };
 
 export const filterJobsByDate = (date) => {
   return async (dispatch) => {
     try {
-      let dateFilter = await Axios.post("job/filter", date);
+      let response = await Axios.post("job/filter", date);
+      console.log(response, date);
       dispatch({
         type: GET_JOBS,
-        payload: {
-          getJobs: dateFilter,
-        },
+        payload: response.data.data,
       });
     } catch (error) {
       console.log(error);
@@ -107,15 +102,13 @@ export const filterJobsByDate = (date) => {
 export const confirmJob = (obj) => {
   return async (dispatch) => {
     try {
-      let getJob = await Axios.post(`job/book`, obj);
-      if (getJob.data.status === 200) {
-        dispatch(showMessage(getJob.data.message));
+      let response = await Axios.post(`job/book`, obj);
+      if (response.data.status === 200) {
+        dispatch(showMessage(response.data.message));
 
         dispatch({
           type: GET_JOB,
-          payload: {
-            getJob,
-          },
+          payload: response.data.data,
         });
       }
     } catch (error) {
@@ -131,16 +124,14 @@ export const deleteJob = (id, currentPage) => {
         page: currentPage,
         id,
       };
-      let getAllJobsExceptDeleteOne = await Axios.delete(`job`, {
+      let response = await Axios.delete(`job`, {
         params: body,
       });
-      if (getAllJobsExceptDeleteOne.data.status === 200) {
-        dispatch(showMessage(getAllJobsExceptDeleteOne.data.message));
+      if (response.data.status === 200) {
+        dispatch(showMessage(response.data.message));
         dispatch({
           type: DELETE_JOB,
-          payload: {
-            getAllJobsExceptDeleteOne: getAllJobsExceptDeleteOne,
-          },
+          payload: response.data.data,
         });
       }
     } catch (error) {

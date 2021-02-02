@@ -47,6 +47,7 @@ const JobDetails = (props) => {
   const closeJobConfirmationModal = () => {
     setShowBooking(false)
   }
+  console.log(job)
   return (
     <div className={style.jobEditContainer}>
       {job ? (

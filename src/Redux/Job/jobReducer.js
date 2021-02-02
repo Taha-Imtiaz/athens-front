@@ -10,15 +10,15 @@ let {type, payload} = action
 
 switch (type) {
     case GET_JOBS:
-        return {...state, jobList:payload.getJobs.data.data}
+        return {...state, jobList:payload}
         
         case GET_JOB:
-        return {...state,job: payload.getJob.data.data}
+        return {...state,job: payload}
         
 case FILTER_JOB:
     return {...payload.dateFilter}
     case DELETE_JOB:
-        return {jobList:payload.getAllJobsExceptDeleteOne.data.data}
+        return {jobList:payload}
     default:
         return state
 }

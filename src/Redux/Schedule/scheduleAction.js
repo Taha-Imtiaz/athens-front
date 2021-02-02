@@ -1,17 +1,15 @@
-import { GET_ALLJOBS, GET_ALLJOBS_FIVEDAYS } from "./scheduleConstant"
+import { GET_ALLJOBS, GET_ALLJOBS_FIVEDAYS } from "./scheduleConstant";
 import Axios from "axios";
 import { showMessage } from "../../Redux/Common/commonActions";
 
 export const getalljobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      const getJobs = await Axios.post("schedule/current-jobs", jobObj);
+      const response = await Axios.post("schedule/current-jobs", jobObj);
       //update app's state
       dispatch({
         type: GET_ALLJOBS,
-        payload: {
-          getJobs: getJobs
-        },
+        payload: response.data.data,
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -22,13 +20,11 @@ export const getalljobs = (jobObj) => {
 export const getalljobsfiveday = (jobObj) => {
   return async (dispatch) => {
     try {
-      const movers = await Axios.post("schedule/movers", jobObj);
+      const response = await Axios.post("schedule/movers", jobObj);
       //update app's state
       dispatch({
         type: GET_ALLJOBS_FIVEDAYS,
-        payload: {
-          getJobs: movers
-        },
+        payload: response.data.data,
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -44,5 +40,5 @@ export const getAllMover = (callback) => {
     } catch (err) {
       dispatch(showMessage(err.message));
     }
-  }
-}
+  };
+};

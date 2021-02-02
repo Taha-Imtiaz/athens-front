@@ -6,10 +6,10 @@ const depositReducer = (state = initialState, action) => {
     let { type, payload } = action
     switch (type) {
         case GET_ALL_DEPOSITS:
-            return { ...state, ...payload.deposits.data.data }
+            return { ...payload }
 
         case EDIT_DEPOSIT:
-            return { ...state, ...payload.response.data.data.blanketDeposit }
+            return { ...state, ...payload }
 
         default:
             return state

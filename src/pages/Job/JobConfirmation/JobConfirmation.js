@@ -131,12 +131,45 @@ function JobConfirmation(props) {
       setData(newState);
     }
   };
+
+  const handlePhoneNumberInput = (value, previousValue) => {
+    // return nothing if no value
+    if (!value) return value;
+
+    // only allows 0-9 inputs
+    const currentValue = value.replace(/[^\d]/g, '');
+    const cvLength = currentValue.length;
+
+    if (!previousValue || value.length > previousValue.length) {
+
+      // returns: "x", "xx", "xxx"
+      if (cvLength < 4) return currentValue;
+
+      // returns: "(xxx)", "(xxx) x", "(xxx) xx", "(xxx) xxx",
+      if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+
+      // returns: "(xxx) xxx-", (xxx) xxx-x", "(xxx) xxx-xx", "(xxx) xxx-xxx", "(xxx) xxx-xxxx"
+      return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+    }
+  }
+
+  const handleSubPhoneNumberInput = (value, previousState, i) => {
+    let customer = { ...previousState.customer };
+    let previousValue = customer.phone;
+    customer.phone = handlePhoneNumberInput(value, previousValue)
+    return customer
+  }
+
   //onChange handler of formField
   const handleFormInput = (event) => {
     let { name, value } = event.target;
     let updatedCustomer = cloneDeep(data);
-    updatedCustomer.customer[name] = value;
-    setData(updatedCustomer);
+    if (name === 'phone') {
+      setData(prevState => ({ ...updatedCustomer, customer: handleSubPhoneNumberInput(value, prevState) }))
+    } else {
+      updatedCustomer.customer[name] = value;
+      setData(updatedCustomer);
+    }
   };
   //onChange handler of location
   const hanldeLocationInput = (i, e) => {
@@ -202,8 +235,8 @@ function JobConfirmation(props) {
               data.locations[i].type === "pickup"
                 ? "Enter Pickup Point"
                 : data.locations[i].type === "dropoff"
-                ? "Enter DropOff Point"
-                : "Choose Type"
+                  ? "Enter DropOff Point"
+                  : "Choose Type"
             }
             name={data.locations[i].type}
             disabled={
@@ -215,8 +248,8 @@ function JobConfirmation(props) {
                 ? "Load only / IA"
                 : data.locations[i].type === "dropoff" &&
                   data.locations[i].default
-                ? "Unload only"
-                : data.locations[i].value
+                  ? "Unload only"
+                  : data.locations[i].value
             }
             onChange={(e) => hanldeLocationInput(i, e)}
           />
@@ -672,27 +705,27 @@ function JobConfirmation(props) {
           </Button>
         </div>
       ) : (
-        <div className={style.stepperContent}>
-          <div>{getStepContent(activeStep)}</div>
-          <div className={style.backAndSubmitBtn}>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={
-                activeStep === 0
-                  ? style.back
-                  : `${style.back} ${style.backStyles}`
-              }
-            >
-              Back
+          <div className={style.stepperContent}>
+            <div>{getStepContent(activeStep)}</div>
+            <div className={style.backAndSubmitBtn}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={
+                  activeStep === 0
+                    ? style.back
+                    : `${style.back} ${style.backStyles}`
+                }
+              >
+                Back
             </Button>
 
-            <Button onClick={handleNext} className={style.next}>
-              {activeStep === steps.length - 1 ? "Submit" : "Next"}
-            </Button>
+              <Button onClick={handleNext} className={style.next}>
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

@@ -251,7 +251,6 @@ const DailySchedule = (props) => {
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
         if (moverJobs) {
           let mover = movers.find((x) => x.mover._id === moverId);
-          console.log(mover)
           setMover(mover);
           let newAssigneeObj = {
             moverId,

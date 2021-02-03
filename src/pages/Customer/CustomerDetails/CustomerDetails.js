@@ -125,17 +125,6 @@ const CustomerDetails = (props) => {
       setClaimCount(newCount);
       setClaims(updatedClaims);
     })
-    // .then((res) => {
-    //   if (res.data.status === 200) {
-    //     let updatedCount = cloneDeep(claimCount)
-    //     let newCount = --updatedCount;
-    //     updatedClaims[i].updatedAt = res.data.data.updatedAt;
-    //     setClaimCount(newCount);
-    //     setClaims(updatedClaims);
-    //     showMessage(res.data.message);
-    //   }
-    // })
-    // .catch((err) => console.log(err));
   };
   const updateBlanket = (data) => {
     setBlanketValue(data);

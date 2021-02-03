@@ -85,7 +85,6 @@ const ClaimDetails = (props) => {
     setWaitTo(false);
   };
   const handleClaimInput = (e) => {
-    console.log(e.target.value);
     setClaimInput(e.target.value);
   };
 
@@ -232,11 +231,14 @@ const ClaimDetails = (props) => {
                 </TextField>
               </div>
               <div>
-                {waitTo === false && (
+                {waitTo === false ? (
                   <Button className={style.button} onClick={disableInput}>
                     Save
                 </Button>
-                )}
+                ) : <Button className={style.button} onClick={editInput}>
+                    Edit
+            </Button>
+                }
               </div>
             </div>
 

@@ -46,10 +46,42 @@ class UpdateCustomer extends Component {
     }
   }
 
+  handlePhoneNumberInput = (value, previousValue) => {
+    // return nothing if no value
+    if (!value) return value;
+
+    // only allows 0-9 inputs
+    const currentValue = value.replace(/[^\d]/g, '');
+    const cvLength = currentValue.length;
+
+    if (!previousValue || value.length > previousValue.length) {
+
+      // returns: "x", "xx", "xxx"
+      if (cvLength < 4) return currentValue;
+
+      // returns: "(xxx)", "(xxx) x", "(xxx) xx", "(xxx) xxx",
+      if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+
+      // returns: "(xxx) xxx-", (xxx) xxx-x", "(xxx) xxx-xx", "(xxx) xxx-xxx", "(xxx) xxx-xxxx"
+      return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+    }
+  }
+
+  handleSubPhoneNumberInput = (value, previousState, i) => {
+    let subContacts = previousState.subContacts.slice();
+    let previousValue = subContacts[i].phone;
+    subContacts[i].phone = this.handlePhoneNumberInput(value, previousValue)
+    return subContacts
+  }
+
   // form onChangeHandler
   handleFormInput = (event) => {
     let { name, value } = event.target;
-    this.setState({ [name]: value });
+    if (name === 'phone') {
+      this.setState(prevState => ({ phone: this.handlePhoneNumberInput(value, prevState.phone) }))
+    } else {
+      this.setState({ [name]: value });
+    }
     if (value === "") {
       this.setState({ [name + "Error"]: "Field Should not be empty" });
     } else {
@@ -58,10 +90,15 @@ class UpdateCustomer extends Component {
   };
 
   // alternateContact onChange handler
-  hanldeContactsInput = (e, i) => {
-    let updatedContacts = this.state.subContacts.slice();
-    updatedContacts[i][e.target.name] = e.target.value;
-    this.setState({ subContacts: updatedContacts });
+  hanldeContactsInput = (event, i) => {
+    const { name, value } = event.target;
+    if (name === 'phone') {
+      this.setState(prevState => ({ subContacts: this.handleSubPhoneNumberInput(value, prevState, i) }))
+    } else {
+      let updatedContacts = this.state.subContacts.slice();
+      updatedContacts[i][name] = value;
+      this.setState({ subContacts: updatedContacts });
+    }
   };
 
   // add alternateContacts (when no alternateContacts is added)
@@ -263,7 +300,6 @@ class UpdateCustomer extends Component {
                         fullWidth
                         className={style.styleFormFields}
                         size="small"
-                        type="number"
                         id="phone_number"
                         label="Phone Number"
                         name="phone"

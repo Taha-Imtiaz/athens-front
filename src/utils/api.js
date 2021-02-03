@@ -43,7 +43,6 @@ const Axios = () => {
   }, err => {
     store.dispatch({ type: 'FINISH_LOADING' })
     if (axios.isCancel(err)) {
-      console.log('Request canceled', err.message);
     } else {
       // handle error
       if (err.message === "Network Error") {

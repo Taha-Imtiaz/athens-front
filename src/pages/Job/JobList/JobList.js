@@ -689,7 +689,7 @@ const JobsList = (props) => {
       <DeleteConfirmation
         show={showDeleteModal}
         handleClose={closeDeleteModal}
-        type="Job"
+        type="job"
         deleteItem={removeJob}
       />
     </div>

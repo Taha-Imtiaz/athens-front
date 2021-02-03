@@ -17,9 +17,9 @@ const requestHandler = (request) => {
 }
 
 const Axios = () => {
-  axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
+  // axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
   // axios.defaults.baseURL = 'http://localhost:3001/api/';
-  // axios.defaults.baseURL = '/api/';
+  axios.defaults.baseURL = '/api/';
 
   // Request Interceptor
   axios.interceptors.request.use(req => {

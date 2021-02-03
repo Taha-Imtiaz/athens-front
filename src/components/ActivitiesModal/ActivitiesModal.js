@@ -5,9 +5,9 @@ import TimeAgo from "react-timeago";
 import { Button } from "@material-ui/core";
 
 const ActivitiesModal = ({ show, activities, handleClose }) => {
- 
+
   return (
-  
+
     <div>
       {/* Activities Modal */}
       <Modal
@@ -22,24 +22,29 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
           <Modal.Title>Activities</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className={style.modalHeader}>
-            <div>Performer</div>
-            <div>Message</div>
-            <div>Timestamp</div>
-          </div>
-
-          {activities && activities.map((activitiy, i) => (
-            <div key={i} className={style.modalContent}>
-              <div> {activitiy.performer.name}</div>
-              <div>
-                {activitiy.messageLogs.map((x, i) => (
-                  <label key={i}>* {x}</label>
-                ))}
+          {activities && activities.length > 0 ? (
+            <div>
+              <div className={style.modalHeader}>
+                <div>Performer</div>
+                <div>Message</div>
+                <div>Timestamp</div>
               </div>
 
-              <TimeAgo date={activitiy.timeStamp} />
+              {activities && activities.map((activitiy, i) => (
+                <div key={i} className={style.modalContent}>
+                  <div> {activitiy.performer.name}</div>
+                  <div>
+                    {activitiy.messageLogs.map((x, i) => (
+                      <label key={i}>* {x}</label>
+                    ))}
+                  </div>
+
+                  <TimeAgo date={activitiy.timeStamp} />
+                </div>
+              ))}
             </div>
-          ))}
+          ) : <h3 className="text-center">No activity yet.</h3>}
+
         </Modal.Body>
         <Modal.Footer>
           <div className={style.modalButtons}>

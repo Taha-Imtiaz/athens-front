@@ -377,7 +377,7 @@ const CustomerList = (props) => {
       <DeleteConfirmation
         show={show}
         handleClose={handleClose}
-        type="Customer"
+        type="customer"
         deleteItem={removeCustomer}
       />
     </div>

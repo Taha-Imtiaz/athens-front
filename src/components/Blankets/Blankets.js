@@ -189,7 +189,7 @@ const Blankets = (props) => {
         <DeleteConfirmation
           show={props.deleteModal}
           handleClose={props.closeDeleteModal}
-          type="Deposit"
+          type="deposit"
           deleteItem={props.deleteDeposit}
         />
       )}

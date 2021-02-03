@@ -92,7 +92,7 @@ const Claims = (props) => {
       <DeleteConfirmation
         show={show}
         handleClose={handleClose}
-        type="Claim"
+        type="claim"
         deleteItem={deleteClaim}
       />
     </div>

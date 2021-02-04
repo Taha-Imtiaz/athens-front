@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import style from "./Blankets.module.css";
 import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
-import { updateDeposit } from "../../Redux/Deposit/depositActions";
+import { updateDeposit } from "../../Redux/Deposit/DepositActions";
 import ActivitiesModal from "../ActivitiesModal/ActivitiesModal";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 
@@ -73,10 +73,13 @@ const Blankets = (props) => {
   let {
     location: { pathname },
   } = props;
-
+console.log(blanketValue)
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>
+      <div>
+          <h6>Customer</h6>
+        </div>
         <div>
           <h6>Job Id</h6>
         </div>
@@ -87,7 +90,7 @@ const Blankets = (props) => {
           <h6>Deposit</h6>
         </div>
 
-        <div>
+        <div className = {style.flex}>
           <h6>Last Updated</h6>
         </div>
 
@@ -101,6 +104,7 @@ const Blankets = (props) => {
           return (
             <div key={i} className={style.listContainer}>
               <div className={`${style.listContent} `}>
+                <div>{deposit.customer.firstName}</div>
                 <div>
                   <Link to={`/job/detail/${deposit.job._id}`}>
                     {deposit.job.jobId}
@@ -133,7 +137,7 @@ const Blankets = (props) => {
                   ></TextField>
                 </div>
 
-                <div>
+                <div className = {style.flex}>
                   <TimeAgo date={deposit.updatedAt} />
                 </div>
                 <div

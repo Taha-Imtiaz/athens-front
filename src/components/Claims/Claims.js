@@ -31,7 +31,8 @@ const Claims = (props) => {
     <div>
       <div className={style.claimListHeaderContainer}>
         <div className={style.claimListHeader}>
-          <div>Name</div>
+          <div>Customer</div>
+          <div>Job Id</div>
           <div>Status</div>
           <div> Waiting To</div>
           <div>Last Update</div>
@@ -41,6 +42,7 @@ const Claims = (props) => {
       <div>
         {
           items.map((x, i) => {
+            console.log(x)
             return (
               <div className={style.listContainer} key={i}>
                 <div className={`${style.listContent}`}>
@@ -55,6 +57,9 @@ const Claims = (props) => {
                     <div className={style.claimList}>
                       <div className={`${style.item} ${style.center}`}>
                         {x.customer.firstName} {x.customer.lastName}
+                      </div>
+                      <div className={`${style.item} ${style.center}`}>
+                      {x.job.jobId}
                       </div>
                       <div className={`${style.item} ${style.center}`}>
                         {x.status.toLocaleUpperCase()}

@@ -124,6 +124,7 @@ class CreateJob extends Component {
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
     location.push({ type: "", value: "", default: false });
+    console.log(location)
     this.setState({
       locations: location,
     });
@@ -159,9 +160,9 @@ class CreateJob extends Component {
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
-        prevState[i].type === "pickup" ? "Load Only / IA" : "Unload Only";
+        prevState[i].type === "pickup" ? prevState[i].value.concat(`(Load Only / IA)`) : prevState[i].value.concat(`(Unload Only)`);
     } else {
-      prevState[i].value = "";
+      prevState[i].value = prevState[i].value.split('(')[0]
     }
     this.setState({
       locations: prevState,
@@ -169,6 +170,7 @@ class CreateJob extends Component {
   };
   //function to show all locations
   showLocation = (i) => {
+    console.log(this.state.locations[i])
     return (
       <div className={style.locationInput} key = {i}>
         <div className={style.radioButtons}>
@@ -212,15 +214,7 @@ class CreateJob extends Component {
             }
             // label={'Pickup / dropoff point'}
             name={this.state.locations[i].type}
-            value={
-              this.state.locations[i].type === "pickup" &&
-                this.state.locations[i].default
-                ? "Load only / IA"
-                : this.state.locations[i].type === "dropoff" &&
-                  this.state.locations[i].default
-                  ? "Unload only"
-                  : this.state.locations[i].value
-            }
+            value={ this.state.locations[i].value}
             onChange={(e) => this.hanldeLocationInput(i, e)}
           // error={this.state.locationtoError ? true : false}
           />

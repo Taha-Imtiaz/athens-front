@@ -7,7 +7,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 import {
   deleteBlanketDeposit,
   getDeposits,
-} from "../../../Redux/Deposit/depositActions";
+} from "../../../Redux/Deposit/DepositActions";
 import Blankets from "../../../components/Blankets/Blankets";
 
 const DepositList = (props) => {

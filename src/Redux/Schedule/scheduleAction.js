@@ -5,7 +5,9 @@ import { showMessage } from "../../Redux/Common/commonActions";
 export const getalljobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post("schedule/current-jobs", jobObj);
+      const response = await Axios.post("schedule/current-jobs", jobObj, {
+        config: { handlerEnabled: true }
+      });
       //update app's state
       dispatch({
         type: GET_ALLJOBS,
@@ -20,7 +22,9 @@ export const getalljobs = (jobObj) => {
 export const getalljobsfiveday = (jobObj) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post("schedule/movers", jobObj);
+      const response = await Axios.post("schedule/movers", jobObj, {
+        config: { handlerEnabled: true }
+      });
       //update app's state
       dispatch({
         type: GET_ALLJOBS_FIVEDAYS,
@@ -35,7 +39,9 @@ export const getalljobsfiveday = (jobObj) => {
 export const getAllMover = (callback) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.get("mover");
+      const response = await Axios.get("mover", {
+        config: { handlerEnabled: true }
+      });
       callback(response);
     } catch (err) {
       dispatch(showMessage(err.message));

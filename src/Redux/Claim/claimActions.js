@@ -11,13 +11,14 @@ export const getAllClaims = (data) => {
   return async (dispatch) => {
     try {
       let response = await Axios.post("claim/" + data.status,
-        body
-      );
+        body, {
+        config: { handlerEnabled: true }
+      });
       //update app's state
       dispatch({
         type: GET_CLAIMS,
         payload: response.data.data
-      
+
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -29,7 +30,9 @@ export const getAllClaims = (data) => {
 export const addClaim = (data, callback) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.post(`claim`, data);
+      let response = await Axios.post(`claim`, data, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback(response)
       }
@@ -43,7 +46,9 @@ export const addClaim = (data, callback) => {
 export const updateClaim = (data, callback) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.put(`claim/${data._id}`, data);
+      let response = await Axios.put(`claim/${data._id}`, data, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback(response)
       }
@@ -57,7 +62,9 @@ export const updateClaim = (data, callback) => {
 export const getCustomersAndJobs = (callback) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.get(`customer/jobs`);
+      let response = await Axios.get(`customer/jobs`, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback(response)
       }
@@ -70,11 +77,13 @@ export const getCustomersAndJobs = (callback) => {
 export const getClaim = (claimId) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.get(`claim/${claimId}`)
+      let response = await Axios.get(`claim/${claimId}`, {
+        config: { handlerEnabled: true }
+      })
       dispatch({
         type: GET_CLAIM,
-        payload:response.data.data
-        
+        payload: response.data.data
+
       })
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -90,13 +99,13 @@ export const deleteClaim = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let response = await Axios.delete(`claim`, { params: body })
+      let response = await Axios.delete(`claim`, { params: body, handlerEnabled: true })
       if (response.data.status === 200) {
         dispatch(showMessage(response.data.message))
         dispatch({
           type: DELETE_CLAIM,
           payload: response.data.data
-          
+
         })
       }
 

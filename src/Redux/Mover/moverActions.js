@@ -26,7 +26,9 @@ export const getMover = (moversObj) => {
 export const updateJob = (jobId, status, callback) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.put(`job/status/${jobId}`, status);
+      const response = await Axios.put(`job/status/${jobId}`, status, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback();
       }
@@ -56,7 +58,9 @@ export const holidayCalendar = (obj, callback) => {
 export const setAvailability = (obj, _id) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.put(`mover/${_id}`, obj);
+      const response = await Axios.put(`mover/${_id}`, obj, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: LOGGEDIN_USER,
         payload: response.data.data,
@@ -71,7 +75,9 @@ export const setAvailability = (obj, _id) => {
 export const payAmount = (obj, callback) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post(`job/payment`, obj);
+      const response = await Axios.post(`job/payment`, obj, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback();
       }
@@ -85,7 +91,9 @@ export const payAmount = (obj, callback) => {
 export const getMoverJobDetail = (jobId) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.get(`job/${jobId}`);
+      const response = await Axios.get(`job/${jobId}`, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_MOVER_JOB_DETAIL,
         payload: response.data.data,

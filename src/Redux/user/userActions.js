@@ -23,6 +23,45 @@ export const login = (data, callback) => {
   };
 };
 
+export const sendCode = (data, callback) => {
+  return async (dispatch) => {
+    try {
+      const response = await Axios.post("user/forgot-password", data);
+      if (response.data.status === 200) {
+        callback(response);
+      }
+      dispatch(showMessage(response.data.message));
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  };
+};
+
+export const verifyCode = (data, callback) => {
+  return async (dispatch) => {
+    try {
+      const config = {
+        headers: { Authorization: data.token },
+      };
+
+      const response = await Axios.post("user/verify", data, config);
+      if (response.data.status === 200) {
+        localStorage.setItem("athens-token", response.data.token);
+        dispatch(showMessage(response.data.message));
+        dispatch({
+          type: LOGGEDIN_USER,
+          payload: response.data.data,
+        });
+        callback();
+      } else {
+        dispatch(showMessage(verifyCode.data.message));
+      }
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  };
+};
+
 export const getLoginUser = () => {
   return async (dispatch) => {
     try {
@@ -58,7 +97,9 @@ export const resetPassword = (data, callback) => {
 export const getUsers = (data) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post("user/all", data);
+      const response = await Axios.post("user/all", data, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_USERS,
         payload: response.data.data,
@@ -72,7 +113,9 @@ export const getUsers = (data) => {
 export const updateUser = (data, userId, callback) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.put(`user/${userId}`, data);
+      const response = await Axios.put(`user/${userId}`, data, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback();
         dispatch({
@@ -90,50 +133,13 @@ export const updateUser = (data, userId, callback) => {
 export const createUser = (data, callback) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post("user", data);
+      const response = await Axios.post("user", data, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback(response);
       }
       dispatch(showMessage(response.data.message));
-    } catch (err) {
-      dispatch(showMessage(err.message));
-    }
-  };
-};
-
-export const sendCode = (data, callback) => {
-  return async (dispatch) => {
-    try {
-      const response = await Axios.post("user/forgot-password", data);
-      if (response.data.status === 200) {
-        callback(response);
-      }
-      dispatch(showMessage(response.data.message));
-    } catch (err) {
-      dispatch(showMessage(err.message));
-    }
-  };
-};
-
-export const verifyCode = (data, callback) => {
-  return async (dispatch) => {
-    try {
-      const config = {
-        headers: { Authorization: data.token },
-      };
-
-      const response = await Axios.post("user/verify", data, config);
-      if (response.data.status === 200) {
-        localStorage.setItem("athens-token", response.data.token);
-        dispatch(showMessage(response.data.message));
-        dispatch({
-          type: LOGGEDIN_USER,
-          payload: response.data.data,
-        });
-        callback();
-      } else {
-        dispatch(showMessage(verifyCode.data.message));
-      }
     } catch (err) {
       dispatch(showMessage(err.message));
     }

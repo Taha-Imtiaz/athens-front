@@ -460,8 +460,8 @@ function JobConfirmation(props) {
                     );
                   })}
               </div>
-              <div onClick={addDate} className={style.addDateBtn}>
-                <Button className={style.button}>
+              <div className={style.addDateBtn}>
+                <Button onClick={addDate} className={style.button}>
                   {" "}
                   <i className="fa fa-plus"></i>
                   Add Date

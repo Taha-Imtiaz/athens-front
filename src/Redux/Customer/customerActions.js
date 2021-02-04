@@ -7,14 +7,16 @@ export const getAllCustomers = (customersObj) => {
     try {
       let response = await Axios.post(
         "customer/all",
-        customersObj
+        customersObj, {
+        config: { handlerEnabled: true }
+      }
       );
 
       //update app's state
       dispatch({
         type: GET_CUSTOMERS,
-        payload:  response.data.data,
-        
+        payload: response.data.data,
+
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -25,11 +27,13 @@ export const getAllCustomers = (customersObj) => {
 export const getCustomer = (customerId) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.get(`customer/details/${customerId}`);
+      let response = await Axios.get(`customer/details/${customerId}`, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_CUSTOMER,
-        payload:  response.data.data,
-        
+        payload: response.data.data,
+
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -42,7 +46,9 @@ export const addCustomer = (customerObj, callback) => {
     try {
       let response = await Axios.post(
         "customer",
-        customerObj
+        customerObj, {
+        config: { handlerEnabled: true }
+      }
       );
       if (response.data.status === 200) {
         callback(response);
@@ -66,7 +72,9 @@ export const updateCustomer = (updateCustomerObj, id, callback) => {
     try {
       let response = await Axios.put(
         "customer/" + id,
-        body
+        body, {
+        config: { handlerEnabled: true }
+      }
       );
       if (response.data.status === 200) {
         callback();
@@ -86,12 +94,12 @@ export const deleteCustomer = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let response = await Axios.delete(`customer`, { params: body })
+      let response = await Axios.delete(`customer`, { params: body, handlerEnabled: true })
       if (response.data.status === 200) {
         dispatch({
           type: DELETE_CUSTOMER,
           payload: response.data.data
-          
+
         })
       }
       dispatch(showMessage(response.data.message))

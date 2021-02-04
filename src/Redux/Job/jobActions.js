@@ -5,7 +5,9 @@ import { showMessage } from "../../Redux/Common/commonActions";
 export const getAllJobs = (jobObj) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.post("job/all", jobObj);
+      let response = await Axios.post("job/all", jobObj, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_JOBS,
         payload: response.data.data,
@@ -19,7 +21,9 @@ export const getAllJobs = (jobObj) => {
 export const getJob = (jobId) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.get(`job/${jobId}`);
+      let response = await Axios.get(`job/${jobId}`, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_JOB,
         payload: response.data.data,
@@ -33,7 +37,9 @@ export const getJob = (jobId) => {
 export const createJob = (newJobObj, callback) => {
   return async (dispatch) => {
     try {
-      let newJob = await Axios.post("job", newJobObj);
+      let newJob = await Axios.post("job", newJobObj, {
+        config: { handlerEnabled: true }
+      });
       if (newJob.data.status === 200) {
         callback(newJob);
         dispatch(showMessage(newJob.data.message));
@@ -49,7 +55,9 @@ export const createJob = (newJobObj, callback) => {
 export const updateJob = (jobId, jobObj, callback) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.put(`job/${jobId}`, jobObj);
+      let response = await Axios.put(`job/${jobId}`, jobObj, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback(response);
       }
@@ -65,7 +73,9 @@ export const getAllJobsOnDate = async (date) => {
     let data = {
       date: date.toString(),
     };
-    let currentDayJobs = await Axios.post("schedule/current-jobs", data);
+    let currentDayJobs = await Axios.post("schedule/current-jobs", data, {
+      config: { handlerEnabled: true }
+    });
 
     return currentDayJobs;
   } catch (error) {
@@ -76,7 +86,9 @@ export const getAllJobsOnDate = async (date) => {
 export const getJobsByDate = (body, callback) => {
   return async (dispatch) => {
     try {
-      let jobs = await Axios.post("job/monthly-jobs", body);
+      let jobs = await Axios.post("job/monthly-jobs", body, {
+        config: { handlerEnabled: true }
+      });
       callback(jobs);
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -87,7 +99,9 @@ export const getJobsByDate = (body, callback) => {
 export const filterJobsByDate = (date) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.post("job/filter", date);
+      let response = await Axios.post("job/filter", date, {
+        config: { handlerEnabled: true }
+      });
       console.log(response, date);
       dispatch({
         type: GET_JOBS,
@@ -102,7 +116,9 @@ export const filterJobsByDate = (date) => {
 export const confirmJob = (obj) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.post(`job/book`, obj);
+      let response = await Axios.post(`job/book`, obj, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         dispatch(showMessage(response.data.message));
 
@@ -126,6 +142,7 @@ export const deleteJob = (id, currentPage) => {
       };
       let response = await Axios.delete(`job`, {
         params: body,
+        handlerEnabled: true
       });
       if (response.data.status === 200) {
         dispatch(showMessage(response.data.message));
@@ -143,7 +160,9 @@ export const deleteJob = (id, currentPage) => {
 //fetch calendar currentDay Jobs
 export const getCurrentDayJob = async (jobId) => {
   try {
-    let getJob = await Axios.get(`job/${jobId}`);
+    let getJob = await Axios.get(`job/${jobId}`, {
+      config: { handlerEnabled: true }
+    });
     return getJob;
   } catch (error) {
     console.log(error);

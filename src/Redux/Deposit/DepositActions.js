@@ -8,7 +8,9 @@ export const getDeposits = (page) => {
       let body = {
         page,
       };
-      let response = await Axios.post(`deposit/all`, body);
+      let response = await Axios.post(`deposit/all`, body, {
+        config: { handlerEnabled: true }
+      });
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: response.data.data,
@@ -22,7 +24,9 @@ export const getDeposits = (page) => {
 export const addDeposit = (data, callback) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.post(`deposit`, data);
+      let response = await Axios.post(`deposit`, data, {
+        config: { handlerEnabled: true }
+      });
       if (response.data.status === 200) {
         callback();
       }
@@ -40,8 +44,7 @@ export const deleteBlanketDeposit = (id, currentPage) => {
         page: currentPage,
         id,
       };
-      let response = await Axios.delete(`deposit`, { params: body });
-      console.log(response)
+      let response = await Axios.delete(`deposit`, { params: body, handlerEnabled: true });
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: response,
@@ -56,13 +59,14 @@ export const deleteBlanketDeposit = (id, currentPage) => {
 export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.put(`deposit`, data);
-      console.log(response);
+      let response = await Axios.put(`deposit`, data, {
+        config: { handlerEnabled: true }
+      });
       dispatch(showMessage(response.data.message));
       dispatch({
         type: EDIT_DEPOSIT,
         payload: response.data.data.blanketDeposit,
-        
+
       });
     } catch (err) {
       dispatch(showMessage(err.message));

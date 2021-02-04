@@ -18,8 +18,9 @@ const requestHandler = (request) => {
 
 const Axios = () => {
   // axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
+  axios.defaults.baseURL = 'https://athens-297121.uc.r.appspot.com/api'
   // axios.defaults.baseURL = 'http://localhost:3001/api/';
-  axios.defaults.baseURL = '/api/';
+  // axios.defaults.baseURL = '/api/';
 
   // Request Interceptor
   axios.interceptors.request.use(req => {
@@ -27,7 +28,7 @@ const Axios = () => {
       requestHandler(req)
       store.dispatch({ type: 'START_LOADING' })
     } else {
-      store.dispatch(showMessage('Please check internet connection.'))
+      // 'Please check internet connection.'
       throw new axios.Cancel('Operation canceled due to disconnection of internet.');
     }
     return req

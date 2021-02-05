@@ -6,7 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import { resetDepositForm, setDepositForm } from "../../../Redux/PersistForms/formActions";
-import { addDeposit } from "../../../Redux/Deposit/depositActions";
+import { addDeposit } from "../../../Redux/Deposit/DepositActions";
 import { cloneDeep } from "lodash";
 
 class CreateDeposit extends Component {

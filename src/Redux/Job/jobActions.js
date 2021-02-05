@@ -142,7 +142,9 @@ export const deleteJob = (id, currentPage) => {
       };
       let response = await Axios.delete(`job`, {
         params: body,
-        handlerEnabled: true
+        config: {
+          handlerEnabled: true
+        }
       });
       if (response.data.status === 200) {
         dispatch(showMessage(response.data.message));

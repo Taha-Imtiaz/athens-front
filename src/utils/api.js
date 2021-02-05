@@ -9,6 +9,7 @@ const isHandlerEnabled = (config = {}) => {
 }
 
 const requestHandler = (request) => {
+  console.log(request.config)
   if (isHandlerEnabled(request.config)) {
     // Modify request here
     request.headers['Authorization'] = localStorage.getItem('athens-token')
@@ -17,8 +18,7 @@ const requestHandler = (request) => {
 }
 
 const Axios = () => {
-  // axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
-  axios.defaults.baseURL = 'https://athens-297121.uc.r.appspot.com/api'
+  axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
   // axios.defaults.baseURL = 'http://localhost:3001/api/';
   // axios.defaults.baseURL = '/api/';
 

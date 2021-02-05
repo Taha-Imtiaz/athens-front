@@ -99,7 +99,12 @@ export const deleteClaim = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let response = await Axios.delete(`claim`, { params: body, handlerEnabled: true })
+      let response = await Axios.delete(`claim`, {
+        params: body,
+        config: {
+          handlerEnabled: true
+        }
+      })
       if (response.data.status === 200) {
         dispatch(showMessage(response.data.message))
         dispatch({

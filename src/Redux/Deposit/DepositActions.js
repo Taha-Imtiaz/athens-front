@@ -44,7 +44,12 @@ export const deleteBlanketDeposit = (id, currentPage) => {
         page: currentPage,
         id,
       };
-      let response = await Axios.delete(`deposit`, { params: body, handlerEnabled: true });
+      let response = await Axios.delete(`deposit`, {
+        params: body,
+        config: {
+          handlerEnabled: true
+        }
+      });
       dispatch({
         type: GET_ALL_DEPOSITS,
         payload: response,

@@ -287,7 +287,7 @@ class UpdateJob extends Component {
       services,
       assigneeRequired,
       jobType,
-      locations: locations.filter((x) => x.value !== "" && x.type !== ""),
+      locations: locations && locations.filter((x) => x.value !== "" && x.type !== ""),
       status,
       userId: loggedinUser._id,
       customerId,
@@ -312,6 +312,7 @@ class UpdateJob extends Component {
   //add new location
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
+    location.push({ type: "", value: "", default: false });
     this.setState({
       locations: location,
     });
@@ -333,9 +334,9 @@ class UpdateJob extends Component {
     prevState[i].default = !prevState[i].default;
     if (prevState[i].default) {
       prevState[i].value =
-        prevState[i].type === "pickup" ? "Load Only / IA" : "Unload Only";
+      prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
     } else {
-      prevState[i].value = "";
+      prevState[i].value = prevState[i].value.split('(')[0]
     }
     this.setState({
       locations: prevState,
@@ -343,6 +344,7 @@ class UpdateJob extends Component {
   };
   //show Locations
   showLocation = (i) => {
+    console.log(i)
     return (
       <div className={style.locationInput}>
         <div className={style.radioButtons}>
@@ -385,15 +387,7 @@ class UpdateJob extends Component {
               this.state.locations[i].default
             }
             name={this.state.locations[i].type}
-            value={
-              this.state.locations[i].type === "pickup" &&
-                this.state.locations[i].default
-                ? "Load only / IA"
-                : this.state.locations[i].type === "dropoff" &&
-                  this.state.locations[i].default
-                  ? "Unload only"
-                  : this.state.locations[i].value
-            }
+            value={this.state.locations[i].value}
             onChange={(e) => this.hanldeLocationInput(i, e)}
           // error={this.state.locationtoError ? true : false}
           />

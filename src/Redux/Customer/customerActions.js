@@ -94,7 +94,12 @@ export const deleteCustomer = (id, currentPage) => {
         page: currentPage,
         id
       }
-      let response = await Axios.delete(`customer`, { params: body, handlerEnabled: true })
+      let response = await Axios.delete(`customer`, {
+        params: body,
+        config: {
+          handlerEnabled: true
+        }
+      })
       if (response.data.status === 200) {
         dispatch({
           type: DELETE_CUSTOMER,

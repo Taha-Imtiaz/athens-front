@@ -1,6 +1,6 @@
 .blanketHeader {
   display: grid;
-  grid-template-columns: 20fr repeat(2, 20fr) 20fr 20fr;
+  grid-template-columns:repeat(2,10fr) repeat(4,20fr);
   margin-top: 1rem;
   padding: 0 0.5rem;
 }
@@ -18,12 +18,12 @@
   /* background-color: aqua; */
   display: grid;
   /* margin: 2rem 0; */
-  grid-template-columns: 20fr repeat(2, 20fr) 20fr 20fr;
+  grid-template-columns:repeat(2,10fr) repeat(4,20fr);
 
   border: 1px solid rgba(0, 0, 0, 0.125);
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
-  column-gap: 0.2rem;
+  column-gap: 0.5rem;
   align-items: center;
   padding: 0 0.5rem;
 }
@@ -48,4 +48,9 @@
 }
 .depositBtn .button:hover, .customerDepositBtn .button:hover {
   background-color: #00adee;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

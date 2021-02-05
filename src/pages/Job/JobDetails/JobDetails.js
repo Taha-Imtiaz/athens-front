@@ -104,11 +104,11 @@ const JobDetails = (props) => {
               <h3>{job.title}</h3>
 
               <div>
-                {`Job Id:`}
+                {`Job Id: `}
                 {job.jobId}
               </div>
               <div>
-                {`Status:`}
+                {`Status: `}
                 <Chip
                   variant="outlined"
                   size="small"

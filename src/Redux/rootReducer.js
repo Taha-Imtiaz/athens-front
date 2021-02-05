@@ -8,7 +8,7 @@ import commonReducer from './Common/commanReducers'
 import unavailableReducer from './Unavailable/unavailableReducer';
 import scheduleReducer from './Schedule/scheduleReducer';
 import formsReducer from './PersistForms/formReducer';
-import depositReducer from './Deposit/depositReducer'
+import depositReducer from './Deposit/DepositReducer'
 
 const rootReducer = combineReducers({
     customers: customerReducer,

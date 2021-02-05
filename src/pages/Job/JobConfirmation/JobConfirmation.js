@@ -181,15 +181,15 @@ function JobConfirmation(props) {
   const changeCheckBoxState = (e, i) => {
     e.stopPropagation();
     let prevState = cloneDeep(data);
+    console.log(prevState.locations)
 
     prevState.locations[i].default = !prevState.locations[i].default;
     if (prevState.locations[i].default) {
       prevState.locations[i].value =
-        prevState.locations[i].type === "pickup"
-          ? "Load Only / IA"
-          : "Unload Only";
+      prevState.locations[i].type === "pickup" ? prevState.locations[i].value.concat(` (Load Only / IA)`) : prevState.locations[i].value.concat(` (Unload Only)`);
+
     } else {
-      prevState.locations[i].value = "";
+      prevState.locations[i].value = prevState.locations[i].value.split('(')[0]
     }
     setData(prevState);
   };
@@ -243,14 +243,7 @@ function JobConfirmation(props) {
               (data.locations[i].type ? false : true) ||
               data.locations[i].default
             }
-            value={
-              data.locations[i].type === "pickup" && data.locations[i].default
-                ? "Load only / IA"
-                : data.locations[i].type === "dropoff" &&
-                  data.locations[i].default
-                  ? "Unload only"
-                  : data.locations[i].value
-            }
+            value={data.locations[i].value}
             onChange={(e) => hanldeLocationInput(i, e)}
           />
         </div>

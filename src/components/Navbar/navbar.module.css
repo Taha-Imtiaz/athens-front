@@ -10,8 +10,14 @@
 
 .logo {
   margin-left: 50px !important;
+ 
+ 
 }
-
+.logoIcon {
+  /* width: 50%; */
+  height:9vh;
+  
+}
 .fixedNavBar {
   position: fixed;
   top: 0;

@@ -110,3 +110,13 @@ body {
 .DatePicker_dateLabel__GO7dX {
   font-size: 14px !important;
 }
+@media only screen and (max-width:1000px) {
+  html {
+    font-size: 75%;
+  }
+}
+@media only screen and (max-width:800px) {
+  html {
+    font-size: 70%;
+  }
+}

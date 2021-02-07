@@ -37,7 +37,7 @@ const Navbar = (props) => {
           className={`navbar navbar-expand-md navbar-light ${style.elevation} ${style.fixedNavBar} sticky-top sticky-top`}
         >
           <Link className={`navbar-brand ${style.logo}`} to="/">
-            <img src="/images/movers-logo.jpg" width="60px" alt="Logo"></img>
+            <img src="/images/movers-logo.jpg" className = {style.logoIcon} alt="Logo"></img>
           </Link>
           <button
             className="navbar-toggler"

@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import PrivateRoute from "./utils/private-routes";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -60,7 +60,6 @@ import MoversCalendar from "./pages/Mover/MoverCalendar/MoverCalendar";
 import Availability from "./pages/Mover/Availability/Availability";
 import RequestHolidays from "./pages/Mover/HolidayCalendar/HolidayCalendar";
 
-
 function App(props) {
   // To show server responses to user.
   const { totalRequest, showMessage } = props;
@@ -68,7 +67,7 @@ function App(props) {
     if (showMessage) {
       notify(showMessage);
     }
-  }, [showMessage])
+  }, [showMessage]);
   const notify = (message) => toast(message);
 
   const location = useLocation();
@@ -76,12 +75,11 @@ function App(props) {
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>
-      {totalRequest > 0 ?
+      {totalRequest > 0 ? (
         <div className="loader">
           <CircularProgress />
         </div>
-        : null
-      }
+      ) : null}
       <div className="navigation-menu">
         <Navbar />
       </div>
@@ -101,9 +99,15 @@ function App(props) {
 
             {/* Customer */}
             <PrivateRoute path="/customers" exact component={CustomerList} />
-            <PrivateRoute path="/customer/detail/:customerId" component={CustomerDetails} />
+            <PrivateRoute
+              path="/customer/detail/:customerId"
+              component={CustomerDetails}
+            />
             <PrivateRoute path="/customer/add" component={CreateCustomer} />
-            <PrivateRoute path="/customer/update/:customerId" component={UpdateCustomer} />
+            <PrivateRoute
+              path="/customer/update/:customerId"
+              component={UpdateCustomer}
+            />
 
             {/* Job */}
             <PrivateRoute path="/jobs" component={JobList} exact />
@@ -116,7 +120,11 @@ function App(props) {
 
             {/* Schedule */}
             <PrivateRoute path="/schedule" component={DailySchedule} exact />
-            <PrivateRoute path="/schedule/unavailable" component={UnavailableSchedule} exact />
+            <PrivateRoute
+              path="/schedule/unavailable"
+              component={UnavailableSchedule}
+              exact
+            />
             <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
 
             {/* User */}
@@ -128,7 +136,10 @@ function App(props) {
 
             {/* Claim */}
             <PrivateRoute path="/claims" component={ClaimList} />
-            <PrivateRoute path="/claim/detail/:claimId" component={ClaimDetails} />
+            <PrivateRoute
+              path="/claim/detail/:claimId"
+              component={ClaimDetails}
+            />
             <PrivateRoute path="/claim/add" component={CreateClaim} exact />
 
             {/* Deposit */}
@@ -137,11 +148,17 @@ function App(props) {
 
             {/* Mover */}
             <PrivateRoute path="/mover" component={MoversJobList} exact />
-            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoverJobDetails} />
+            <PrivateRoute
+              path="/mover/jobdetails/:jobId"
+              component={MoverJobDetails}
+            />
             <PrivateRoute path="/mover/payment" component={Payment} />
             <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
             <PrivateRoute path="/mover/availability" component={Availability} />
-            <PrivateRoute path="/mover/holidaycalendar" component={RequestHolidays} />
+            <PrivateRoute
+              path="/mover/holidaycalendar"
+              component={RequestHolidays}
+            />
           </ErrorBoundary>
         </Switch>
       </div>
@@ -151,7 +168,7 @@ function App(props) {
 
 const mapStateToProps = (state) => ({
   showMessage: state.common.displayMessage.message,
-  totalRequest: state.common.totalRequest
+  totalRequest: state.common.totalRequest,
 });
 
 export default connect(mapStateToProps, null)(App);

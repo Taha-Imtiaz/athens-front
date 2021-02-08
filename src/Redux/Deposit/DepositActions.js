@@ -9,7 +9,7 @@ export const getDeposits = (page) => {
         page,
       };
       let response = await Axios.post(`deposit/all`, body, {
-        config: { handlerEnabled: true }
+        config: { handlerEnabled: true },
       });
       dispatch({
         type: GET_ALL_DEPOSITS,
@@ -25,7 +25,7 @@ export const addDeposit = (data, callback) => {
   return async (dispatch) => {
     try {
       let response = await Axios.post(`deposit`, data, {
-        config: { handlerEnabled: true }
+        config: { handlerEnabled: true },
       });
       if (response.data.status === 200) {
         callback();
@@ -47,8 +47,8 @@ export const deleteBlanketDeposit = (id, currentPage) => {
       let response = await Axios.delete(`deposit`, {
         params: body,
         config: {
-          handlerEnabled: true
-        }
+          handlerEnabled: true,
+        },
       });
       dispatch({
         type: GET_ALL_DEPOSITS,
@@ -65,13 +65,12 @@ export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
       let response = await Axios.put(`deposit`, data, {
-        config: { handlerEnabled: true }
+        config: { handlerEnabled: true },
       });
       dispatch(showMessage(response.data.message));
       dispatch({
         type: EDIT_DEPOSIT,
         payload: response.data.data.blanketDeposit,
-
       });
     } catch (err) {
       dispatch(showMessage(err.message));

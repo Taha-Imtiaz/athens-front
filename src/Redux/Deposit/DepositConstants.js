@@ -1,2 +1,2 @@
-export const GET_ALL_DEPOSITS = "GET_ALL_DEPOSITS"
-export const EDIT_DEPOSIT = "EDIT_DEPOSIT"
+export const GET_ALL_DEPOSITS = "GET_ALL_DEPOSITS";
+export const EDIT_DEPOSIT = "EDIT_DEPOSIT";

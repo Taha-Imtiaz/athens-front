@@ -11,10 +11,11 @@
   grid-template-columns: 20fr 50fr repeat(2, 15fr);
 }
 
+
 .link {
   text-decoration: none !important;
 }
-.btnStyle{
+.btnStyle {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -24,7 +25,7 @@
   text-transform: none;
   color: #fff;
   font-family: sans-serif;
-  
+
   /* text-decoration: none; */
 }
 .btnStyle .btn:hover {

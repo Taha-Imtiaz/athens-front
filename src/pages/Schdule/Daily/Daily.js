@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import style from "./Daily.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
-import { getalljobs, getalljobsfiveday } from "../../../Redux/Schedule/scheduleAction";
+import {
+  getalljobs,
+  getalljobsfiveday,
+} from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
 import { updateJob } from "../../../Redux/Job/jobActions";
@@ -22,7 +25,6 @@ import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
-
 
 const DailySchedule = (props) => {
   let moverAssignedDate;
@@ -75,8 +77,8 @@ const DailySchedule = (props) => {
       },
     ];
 
-    let imgA = document.createElement('img');
-    imgA.src = '/images/movers-logo.jpg';
+    let imgA = document.createElement("img");
+    imgA.src = "/images/movers-logo.jpg";
     doc.addImage(imgA, "JPEG", 45, 10, 90, 90);
 
     doc.setFont("times").setFontSize(22).text(420, 40, "JOB DETAILS");
@@ -85,7 +87,10 @@ const DailySchedule = (props) => {
     doc.setFont("times").setFontSize(10).text(400, 85, "Job Id:");
     doc.setFont("times").setFontSize(10).text(490, 85, `${job.jobId}`);
     doc.setFont("times").setFontSize(10).text(400, 100, "Movers Required:");
-    doc.setFont("times").setFontSize(10).text(490, 100, `${job.assigneeRequired}`);
+    doc
+      .setFont("times")
+      .setFontSize(10)
+      .text(490, 100, `${job.assigneeRequired}`);
     doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
     doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
 
@@ -95,11 +100,21 @@ const DailySchedule = (props) => {
 
     doc.setFont("times").setFontSize(11).text(50, 260, services);
 
-    doc.setFont("times").setFontSize(11).text(50, 285, job.startTime ? formatAMPM(job.startTime) : "No Time Added");
+    doc
+      .setFont("times")
+      .setFontSize(11)
+      .text(
+        50,
+        285,
+        job.startTime ? formatAMPM(job.startTime) : "No Time Added"
+      );
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
 
-    doc.setFont("times").setFontSize(11).text(50, 375, htmlToText(job.description));
+    doc
+      .setFont("times")
+      .setFontSize(11)
+      .text(50, 375, htmlToText(job.description));
 
     doc.save(`${job.title}.pdf`);
   };
@@ -133,7 +148,7 @@ const DailySchedule = (props) => {
       getalljobsfiveday({
         date: today,
       });
-    })
+    });
   };
 
   const removeAssignee = (e, job, assignee) => {
@@ -159,7 +174,7 @@ const DailySchedule = (props) => {
       getalljobsfiveday({
         date: today,
       });
-    })
+    });
   };
 
   const toggleCollapse = (i) => {
@@ -245,7 +260,10 @@ const DailySchedule = (props) => {
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
         moverAssignedDate = movers[index].mover.jobs.filter((job) => {
-          return job.dates.some((date) => date === new Date(today).toDateString()) && job.status === 'pending'
+          return (
+            job.dates.some((date) => date === new Date(today).toDateString()) &&
+            job.status === "pending"
+          );
         });
 
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
@@ -289,39 +307,40 @@ const DailySchedule = (props) => {
               />
             </div>
             <hr className={style.styleLine}></hr>
-            {props.jobs && props.movers && <div className={style.moverAssigneeInfo}>
-              <div>
-                <h6>
-                  {`Total Jobs: `} <span>{props.jobs.length}</span>{" "}
-                </h6>
-              </div>
-              <div>
-                <h6>
-                  {`Movers Available:`} <span> {props.movers.length}</span>{" "}
-                </h6>
-              </div>
-              <div>
-                <h6>
-                  Movers Required:{" "}
-                  {props.jobs.length > 0 ? (
-                    props.jobs.reduce(
-                      (sum, currentValue) =>
-                        sum + currentValue.assigneeRequired,
-                      0
-                    )
-                  ) : (
+            {props.jobs && props.movers && (
+              <div className={style.moverAssigneeInfo}>
+                <div>
+                  <h6>
+                    {`Total Jobs: `} <span>{props.jobs.length}</span>{" "}
+                  </h6>
+                </div>
+                <div>
+                  <h6>
+                    {`Movers Available:`} <span> {props.movers.length}</span>{" "}
+                  </h6>
+                </div>
+                <div>
+                  <h6>
+                    Movers Required:{" "}
+                    {props.jobs.length > 0 ? (
+                      props.jobs.reduce(
+                        (sum, currentValue) =>
+                          sum + currentValue.assigneeRequired,
+                        0
+                      )
+                    ) : (
                       <span>0</span>
                     )}
-                </h6>
+                  </h6>
+                </div>
+                <div>
+                  <Button className={style.button} onClick={printAllJobs}>
+                    <i className="fa fa-print"></i>
+                    Print All
+                  </Button>
+                </div>
               </div>
-              <div>
-                <Button className={style.button} onClick={printAllJobs}>
-                  <i className="fa fa-print"></i>
-                  Print All
-                </Button>
-              </div>
-            </div>
-            }
+            )}
 
             <hr className={style.styleLine}></hr>
             {props.jobs && props.jobs.length > 0 && (
@@ -394,8 +413,8 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                                <div>N/A</div>
-                              )}
+                              <div>N/A</div>
+                            )}
                           </div>
 
                           <div>
@@ -413,56 +432,63 @@ const DailySchedule = (props) => {
                         >
                           <div className="card-body">
                             <h4>Job Details</h4>
-                           
-                             
-                          
-                           <div className={style.jobDetailHeader}> 
-                             <div className = {style.jobDetailHeaderTable}>
-                               <table>
-                              <tr>
-                              
-                                <td>
-                                <h6>Job Id</h6>
-                                </td>
-                             
-                              
-                           
-                                 <td><h6>Job Title</h6> </td>
-                              
-                                 <td><h6>Job Type</h6> </td>
-                              
-                                <td> <h6>Status</h6></td>
-                             
-                              </tr>
-                               </table>
+                            <div className={style.jobDetailHeader}>
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <h6>Job Id</h6>
+                                    </th>
+
+                                    <th>
+                                      <h6>Job Title</h6>{" "}
+                                    </th>
+
+                                    <th>
+                                      <h6>Job Type</h6>{" "}
+                                    </th>
+
+                                    <th>
+                                      {" "}
+                                      <h6>Status</h6>
+                                    </th>
+                                  </tr>
+                                </thead>
+                              </table>
                             </div>
-                           </div>
 
                             <div className={style.jobDetailList}>
-                            <div className = {style.jobDetailListTable}>
                               <table>
-                            <tr>
-                            
-                             <td> {list.jobId}</td>
-                              <td>{list.title}</td>
-                             
-                               <td> {list.jobType}</td>
-                             
-                             <td>  <Chip
-                                  label={list.status}
-                                  clickable
-                                  size="small"
-                                  color="primary"
-                                  variant="outlined"
-                                ></Chip>
-                                </td> 
-                              
-                            </tr>
+                                <thead>
+                                  <tr>
+                                    <td>
+                                      <h6> {list.jobId}</h6>
+                                    </td>{" "}
+                                    <td>
+                                      {" "}
+                                      <h6>{list.title} </h6>
+                                    </td>
+                                    <td>
+                                      {" "}
+                                      <h6>{list.jobType}</h6>
+                                    </td>
+                                    <td>
+                                      <h6>
+                                        {" "}
+                                        <Chip
+                                          label={list.status}
+                                          clickable
+                                          size="small"
+                                          color="primary"
+                                          variant="outlined"
+                                        ></Chip>
+                                      </h6>
+                                    </td>
+                                  </tr>
+                                </thead>
                               </table>
-                              </div>
                             </div>
-                            
-                           
+
                             <div className={style.jobDescriptionHeader}>
                               <h6>Job Description</h6>
                             </div>
@@ -472,23 +498,37 @@ const DailySchedule = (props) => {
                             <hr />
                             <h6>Customer Details</h6>
                             <div className={style.customerDetailHeader}>
-                              <div>
-                                <h6>Name</h6>
-                              </div>
-                              <div>
-                                <h6>Email</h6>
-                              </div>
-                              <div>
-                                <h6>Phone</h6>
-                              </div>
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <h6>Name</h6>
+                                    </th>
+                                    <th>
+                                      <h6>Email</h6>
+                                    </th>
+                                    <th>
+                                      <h6>Phone</h6>
+                                    </th>
+                                  </tr>
+                                </thead>
+                              </table>
                             </div>
                             <div className={style.customerDetailList}>
-                              <div>
-                                {list.customer.firstName}{" "}
-                                {list.customer.lastName}
-                              </div>
-                              <div>{list.customer.email}</div>
-                              <div>{list.customer.phone}</div>
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <td>
+                                      {" "}
+                                      {list.customer.firstName}{" "}
+                                      {list.customer.lastName}
+                                    </td>
+                                    <td>{list.customer.email}</td>
+                                    <td>{list.customer.phone}</td>
+                                  </tr>
+                                </thead>
+                              </table>
+                             
                             </div>
                           </div>
                         </div>
@@ -498,10 +538,10 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="" />
+              </div>
+            )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">
@@ -563,7 +603,9 @@ const DailySchedule = (props) => {
         onHide={(e) => Navigate(e)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Confirmation</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Confirmation
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {mover && (
@@ -571,7 +613,7 @@ const DailySchedule = (props) => {
               {mover.mover.name}{" "}
               <span className={style.styleText}>
                 has been assigned to these jobs:
-                                  </span>{" "}
+              </span>{" "}
             </h5>
           )}
 
@@ -582,19 +624,13 @@ const DailySchedule = (props) => {
                   className={style.styleLink}
                   href="/#"
                   onClick={() =>
-                    window.open(
-                      `/job/detail/${job._id}`,
-                      "_blank"
-                    )
+                    window.open(`/job/detail/${job._id}`, "_blank")
                   }
-                >&#42;{job.title}
+                >
+                  &#42;{job.title}
                 </a>
                 <Chip
-                  label={
-                    job.startTime
-                      ? formatAMPM(job.startTime)
-                      : "N/A"
-                  }
+                  label={job.startTime ? formatAMPM(job.startTime) : "N/A"}
                   clickable
                   color="primary"
                   variant="outlined"
@@ -606,12 +642,10 @@ const DailySchedule = (props) => {
           <div className={style.modalBtns}>
             <Button
               className={style.button}
-              onClick={(e) =>
-                updateJobAssigneeList(e, newAssignee)
-              }
+              onClick={(e) => updateJobAssigneeList(e, newAssignee)}
             >
               Confirm
-                                </Button>
+            </Button>
             <Button
               className={style.button}
               onClick={(e) => {
@@ -619,7 +653,7 @@ const DailySchedule = (props) => {
               }}
             >
               Close
-                                </Button>
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>
@@ -637,6 +671,6 @@ var actions = {
   getalljobs,
   getalljobsfiveday,
   showMessage,
-  updateJob
+  updateJob,
 };
 export default connect(mapStateToProps, actions)(DailySchedule);

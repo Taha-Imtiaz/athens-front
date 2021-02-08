@@ -8,18 +8,24 @@
 .calender {
   grid-area: calender;
   display: grid;
-  grid-template-columns: 75% 25%;
+  grid-template-columns: 75fr 25fr;
   grid-template-areas: "calenderContent sideContent";
   column-gap: 1rem;
   margin-top: 1rem;
 }
 
 .calenderContent {
-  grid-area: calenderContent;
+  grid-area: calenderContent; 
+  position: fixed;
+  /* background-color: #00adee; */
+  width: 60rem;
 }
 
 .sideContent {
   grid-area: sideContent;
+  
+ 
+  
 }
 
 .styleCalender {
@@ -50,4 +56,37 @@
   border-left: 5px solid #00adee;
   border-radius: 0.4rem;
   margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width:1300px) {
+ 
+    .calenderContent {
+      grid-area: calenderContent; 
+      position: fixed;
+      /* background-color: #00adee; */
+      width: 50rem;
+  
+}
+}
+@media only screen and (max-width:1200px) {
+ 
+  .calenderContent {
+    grid-area: calenderContent; 
+    position: fixed;
+    /* background-color: #00adee; */
+    width: 46rem;
+
+}
+
+}
+@media only screen and (max-width:1100px) {
+ 
+  .calenderContent {
+    grid-area: calenderContent; 
+    position: fixed;
+    /* background-color: #00adee; */
+    width: 41rem;
+
+}
+
 }

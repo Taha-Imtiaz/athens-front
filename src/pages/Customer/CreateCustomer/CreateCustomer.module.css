@@ -28,7 +28,7 @@
 }
 .styleAddBtn {
   display: grid;
-  grid-template-columns: 86.6fr 13.4fr;
+  grid-template-columns: 88fr 12fr;
   grid-template-areas: ". addBtn";
 }
 .styleAddBtn .addBtn {
@@ -75,3 +75,39 @@
 .resetButtons .formButton:hover {
     background-color: #00adee;
 }
+@media only screen and (max-width:1260px) {
+.styleAddBtn {
+  display: grid;
+  grid-template-columns: 85fr 15fr;
+  grid-template-areas: ". addBtn";
+}
+.modalAddBtn {
+  display: grid;
+  grid-template-columns: 82fr 18fr;
+  grid-template-areas: ". modalBtn";
+}
+}
+@media only screen and (max-width:1200px) {
+  .styleAddBtn {
+    display: grid;
+    grid-template-columns: 83fr 17fr;
+    grid-template-areas: ". addBtn";
+  }
+  .modalAddBtn {
+    display: grid;
+    grid-template-columns: 82fr 18fr;
+    grid-template-areas: ". modalBtn";
+  }
+  }
+  @media only screen and (max-width:1070px) {
+    .styleAddBtn {
+      display: grid;
+      grid-template-columns: 81.5fr 18.5fr;
+      grid-template-areas: ". addBtn";
+    }
+    .modalAddBtn {
+      display: grid;
+      grid-template-columns: 80fr 20fr;
+      grid-template-areas: ". modalBtn";
+    }
+    }

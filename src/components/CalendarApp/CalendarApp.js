@@ -193,10 +193,14 @@ const CalendarApp = (props) => {
         </div>
 
         <div className={style.sideContent}>
+       
           {state.currentDayJobs.length ? (
-            <div>
-              <h5 className={style.flex}>{state.date.toDateString()}</h5> <hr />
+           
+               <div > 
+              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5> <hr />
               {state.currentDayJobs.map((job, i) => (
+                
+               <div>
                 <div id="accordion" key={i}>
                   <div className={`card ${style.card}`}>
                     <div
@@ -267,22 +271,26 @@ const CalendarApp = (props) => {
                         </div>
                       </div>
                     </div>
+                     </div>
+                     </div>
                   </div>
-                </div>
+                
               ))}
-            </div>
+           </div>
           ) : (
               <div>
-                <h5 className={style.flex}>{state.date.toDateString()}</h5>
+                <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>
                 <hr />
                 <h5>
-                  <img src="/images/no-data-found.png" alt="" />
+                  <img src="/images/no-data-found.png" alt="" width = "100%" />
                 </h5>
               </div>
             )}
+          
         </div>
       </div>
-    </div>
+      </div>
+    // </div>
   );
 };
 var action = {

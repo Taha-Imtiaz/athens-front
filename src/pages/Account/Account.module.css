@@ -1,7 +1,7 @@
 .accountContainer {
   display: grid;
   grid-template-columns: 5fr 30fr 60fr 5fr;
-  grid-template-rows: 60vh 30vh;
+  grid-template-rows: 50vh 40vh;
 
   grid-template-areas:
     ". profile form  ."
@@ -14,6 +14,7 @@
   grid-area: form;
   border-radius: 0.4rem;
   background-color: #fff;
+  width: 100%;
   margin-top: 2rem;
   padding: 0 2rem;
 }
@@ -23,13 +24,14 @@
 
 .profile {
   grid-area: profile;
+  /* background-color: #00adee; */
   margin-top: 2rem;
   display: grid;
-  grid-template-rows: 50vh 10vh;
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   grid-template-areas:
     "content"
-    ".";
+   
 }
 .content {
   border-radius: 0.4rem;
@@ -38,7 +40,8 @@
   grid-area: content;
 
   display: grid;
-  grid-template-rows: 15fr 25fr repeat(2, 5fr) 38fr 10fr 2fr;
+  grid-template-rows: 15% 30% repeat(2, 10%) 20% 10% 5%;
+  grid-template-columns: 1fr;
 
   grid-template-areas:
     "."
@@ -117,4 +120,18 @@
 }
 .flexEnd .button:hover {
     background-color: #00adee;
+}
+@media only screen and (max-width:1250px) {
+  .accountContainer {
+    display: grid;
+    grid-template-columns: 5fr 30fr 60fr 5fr;
+    grid-template-rows: 55vh 35vh;
+  
+    grid-template-areas:
+      ". profile form  ."
+      ". . . .";
+    /* margin-top: 1rem; */
+    column-gap: 2rem;
+    background-color: #e9ecef;
+  }
 }

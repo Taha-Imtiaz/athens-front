@@ -166,7 +166,7 @@ class CreateUser extends Component {
   render() {
     return (
       <div className={style.userContainer}>
-        <div className={style.userForm}>
+        <div className={`${style.userForm}`}>
           <h3 className={style.head}>Create New User</h3>
 
           <div>

@@ -14,11 +14,17 @@
 .link {
   text-decoration: none !important;
 }
+.btnStyle{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 .btnStyle .btn {
   background-color: #00adee;
   text-transform: none;
   color: #fff;
   font-family: sans-serif;
+  
   /* text-decoration: none; */
 }
 .btnStyle .btn:hover {
@@ -43,6 +49,7 @@
   grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listContent .";
+  /* background-color: #00adee; */
 }
 .listContent {
   grid-area: listContent;

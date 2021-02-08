@@ -9,16 +9,19 @@
 .claimContainer {
   background-color: #e9ecef;
   display: grid;
-  grid-template-rows: minmax(90vh, min-content);
+  grid-template-rows: minmax(min-content,70vh) 20vh;
   grid-template-columns: 20fr 60fr 20fr;
-  grid-template-areas: ". form .";
-  padding: 2rem 0;
+  grid-template-areas: ". form ."
+                        ". . .";
+  /* padding: 2rem 0; */
 }
 .form {
   grid-area: form;
-  background-color: #fff;
-  padding: 2rem;
   border-radius: 0.4rem;
+  background-color: #fff;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0 2rem;
 }
 .protectionType {
   display: grid;

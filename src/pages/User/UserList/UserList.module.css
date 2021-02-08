@@ -14,6 +14,11 @@
 .link {
   text-decoration: none !important;
 }
+.btnStyle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 .btnStyle .btn {
   background-color: #00adee;
   text-transform: none;

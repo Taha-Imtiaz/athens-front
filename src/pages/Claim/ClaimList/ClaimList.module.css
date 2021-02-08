@@ -13,6 +13,11 @@
 .newClaimBtn .link {
   text-decoration: none;
 }
+.newClaimBtn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 .newClaimBtn .button {
   background: #00adee;
   text-transform: none;

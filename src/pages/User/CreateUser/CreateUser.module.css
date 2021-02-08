@@ -1,17 +1,20 @@
 .userContainer {
   display: grid;
   grid-template-columns: 20fr 60fr 20fr;
-  grid-template-rows: minmax(90vh, min-content);
-  grid-template-areas: ". userForm .";
+  grid-template-rows: minmax(75vh, min-content) 15vh;
+  grid-template-areas: ". userForm ."
+                        ". . .";
   background-color: #e9ecef;
 }
 
 .userForm {
   grid-area: userForm;
   background-color: #fff;
+  width: 100%;
   border-radius: 0.4rem;
-  margin: 2rem 0;
-  padding: 0 2rem;
+  margin: 2rem;
+  padding: 2rem;
+  
 }
 
 .head {

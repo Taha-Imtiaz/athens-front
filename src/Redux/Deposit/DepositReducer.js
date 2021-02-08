@@ -1,4 +1,4 @@
-import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./depositConstants"
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./DepositConstants"
 
 let initialState = null
 

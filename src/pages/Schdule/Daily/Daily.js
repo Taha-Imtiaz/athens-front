@@ -413,35 +413,56 @@ const DailySchedule = (props) => {
                         >
                           <div className="card-body">
                             <h4>Job Details</h4>
-                            <div className={style.jobDetailHeader}>
-                              <div>
+                           
+                             
+                          
+                           <div className={style.jobDetailHeader}> 
+                             <div className = {style.jobDetailHeaderTable}>
+                               <table>
+                              <tr>
+                              
+                                <td>
                                 <h6>Job Id</h6>
-                              </div>
-                              <div>
-                                <h6>Job Title</h6>
-                              </div>
-                              <div>
-                                <h6>Job Type</h6>
-                              </div>
-                              <div>
-                                <h6>Status</h6>
-                              </div>
+                                </td>
+                             
+                              
+                           
+                                 <td><h6>Job Title</h6> </td>
+                              
+                                 <td><h6>Job Type</h6> </td>
+                              
+                                <td> <h6>Status</h6></td>
+                             
+                              </tr>
+                               </table>
                             </div>
+                           </div>
 
                             <div className={style.jobDetailList}>
-                              <div>{list.jobId}</div>
-                              <div>{list.title}</div>
-                              <div>{list.jobType}</div>
-                              <div>
-                                <Chip
+                            <div className = {style.jobDetailListTable}>
+                              <table>
+                            <tr>
+                            
+                             <td> {list.jobId}</td>
+                              <td>{list.title}</td>
+                             
+                               <td> {list.jobType}</td>
+                             
+                             <td>  <Chip
                                   label={list.status}
                                   clickable
                                   size="small"
                                   color="primary"
                                   variant="outlined"
                                 ></Chip>
+                                </td> 
+                              
+                            </tr>
+                              </table>
                               </div>
                             </div>
+                            
+                           
                             <div className={style.jobDescriptionHeader}>
                               <h6>Job Description</h6>
                             </div>

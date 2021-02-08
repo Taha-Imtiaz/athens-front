@@ -107,16 +107,40 @@
 
 .jobDetailHeader {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   font-size: 0.9rem;
-  color: #aaaaaa;
+  grid-template-areas: "jobDetailHeaderTable";
   font-weight: bold;
 
 }
-.jobDetailList {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.jobDetailHeaderTable {
+grid-area: jobDetailHeaderTable;
+color: #fff;
+/* display: grid; */
+/* grid-template-columns: repeat(4,1fr); */
+background-color: #00adee;
 }
+table {
+  width: 100% !important;
+}
+tr {
+  border: 2px solid black;
+}
+
+.jobDetailList {
+  color: #aaaaaa;
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: 0.9rem;
+  grid-template-areas: "jobDetailListTable";
+  font-weight: bold;
+
+}
+.jobDetailListTable {
+grid-area: jobDetailListTable;
+background-color: #fff;
+}
+
 .jobDescriptionHeader {
   margin: 0.5rem 0;
 }
@@ -143,7 +167,7 @@
 }
 .scrollBar {
   width: 100% !important;
-  margin: 0 0.1rem;
+  margin: 0 0.6rem;
   /* background-color: #00adee; */
 
   overflow-x: hidden;
@@ -179,4 +203,14 @@
 .mov {
   padding-left: 4px;
   border-left: 1px solid rgb(223, 214, 214);
+}
+@media only screen and (max-width:1250px) {
+  .scrollBar {
+    width: 100% !important;
+    margin: 0 ;
+    /* background-color: #00adee; */
+  
+    overflow-x: hidden;
+    height: 75vh;
+  }
 }

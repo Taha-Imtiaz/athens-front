@@ -53,6 +53,7 @@
   grid-area: protectionRow;
   display: grid;
   grid-template-columns: 14fr 25fr 9fr 30fr repeat(2, 11fr);
+  /* width: 100%; */
   column-gap: 0.2rem;
  
 }
@@ -62,6 +63,7 @@
   text-transform: none;
   color: #fff;
   font-family: sans-serif;
+  width: 100%;
 }
 .protectionRow .button:hover,
 .waiting .button:hover {

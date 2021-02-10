@@ -8,7 +8,7 @@
 .depositForm {
   display: grid;
 
-  grid-template-rows: 50vh 40vh;
+  grid-template-rows: minmax(50vh,min-content) 40vh;
   grid-template-columns: 20fr 60fr 20fr;
   background-color: #e9ecef;
   grid-template-areas:
@@ -40,4 +40,16 @@
   width: 100%;
   margin-top: 2rem;
   padding: 0 2rem;
+}
+@media only screen and (max-width:1500px) {
+  .depositForm {
+    display: grid;
+  
+    grid-template-rows: minmax(57vh,min-content) 33vh;
+    grid-template-columns: 20fr 60fr 20fr;
+    background-color: #e9ecef;
+    grid-template-areas:
+      ". form ."
+      ". . .";
+  }
 }

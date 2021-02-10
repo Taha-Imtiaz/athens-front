@@ -129,7 +129,7 @@ const CustomerDetails = (props) => {
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
-
+console.log(blanketValue)
   return (
     <div className={style.customerDetailsContainer}>
       {customer && (
@@ -565,7 +565,9 @@ const CustomerDetails = (props) => {
             </div>
             <hr />
             {blanketValue && blanketValue.length > 0 ? (
-              <Blankets items={blanketValue} update={updateBlanket} />
+              <Blankets 
+              name = {customer.firstName}
+              items={blanketValue} update={updateBlanket} />
             ) : (
                 <div className="text-center">
                   <img src="/images/no-data-found.png" alt="Data not found" />

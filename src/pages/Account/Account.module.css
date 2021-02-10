@@ -121,11 +121,11 @@
 .flexEnd .button:hover {
     background-color: #00adee;
 }
-@media only screen and (max-width:1250px) {
+@media only screen and (max-width:1500px) {
   .accountContainer {
     display: grid;
     grid-template-columns: 5fr 30fr 60fr 5fr;
-    grid-template-rows: 55vh 35vh;
+    grid-template-rows: 57vh 33vh;
   
     grid-template-areas:
       ". profile form  ."

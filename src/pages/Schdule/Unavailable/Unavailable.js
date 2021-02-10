@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./Unavailable.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
-import { Button } from "@material-ui/core";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import {
   getAllData,
   approveRequest,
@@ -14,8 +14,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UnavailableSchedule = (props) => {
   const [dates, setDates] = useState([]);
+  const [value, setValue] = useState("pending");
 
   let { getAllData, unavailable } = props;
+  console.log(unavailable)
   const routes = [
     {
       title: "Daily Schedule",
@@ -40,7 +42,7 @@ const UnavailableSchedule = (props) => {
 
   useEffect(() => {
     const { getAllData } = props;
-    getAllData();
+    getAllData(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAllData]);
 
@@ -79,6 +81,48 @@ const UnavailableSchedule = (props) => {
             <Button className={style.button} onClick={approveRequests}>
               Approve
             </Button>
+           
+          </div>
+
+          <div className={style.approveBtn}>
+            <Button className={style.button} >
+            <i
+              className="fa fa-filter dropdown-toggle"
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            ></i>
+              Filter
+              
+
+           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value={value}
+                // onChange={(e) => getClaimsByStatus(e)}
+              >
+                <FormControlLabel
+                  value="pending"
+                  control={<Radio />}
+                  label="Pending"
+                  className="dropdown-item"
+                />
+                <FormControlLabel
+                  value="approved"
+                  control={<Radio />}
+                  label="Approved"
+                  className="dropdown-item"
+                />
+               
+              </RadioGroup>
+            </div>
+            </Button>
+           
           </div>
         </div>
         <div className={style.unavailableList}>
@@ -91,12 +135,13 @@ const UnavailableSchedule = (props) => {
                   >
                     <div className={`d-flex w-100 justify-content-between`}>
                       <span>
-                        <input
+                     {list &&  list.approved === false && <input
                           type="checkbox"
                           id="defaultCheck1"
                           value=""
                           onChange={() => handleChange(list)}
                         />
+                        }   
                         <label
                           className={`checkbox-inline ${style.checkBox}`}
                           htmlFor="defaultCheck1"

@@ -193,7 +193,7 @@ class CreateCustomer extends Component {
       <div className={this.props.isModal !== true && `${style.formStyle}`}>
         <div className={this.props.isModal !== true && `${style.form}`}>
           {this.props.isModal !== true && (
-            <h3 className={style.head}>Create New Customer</h3>
+            <h3 className={style.head}>Create Customer</h3>
           )}
           <div>
             <form onSubmit={this.mySubmitHandler}>

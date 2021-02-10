@@ -15,12 +15,14 @@
   margin-top: 1rem;
   grid-area: unavailableHeader;
   display: grid;
-  grid-template-columns: 85fr 15fr;
+  grid-template-columns: 80fr repeat(2,10fr);
+  column-gap: 0.2rem;
 }
 .approveBtn .button {
   background-color: #00adee;
   color: #fff;
   font-family: sans-serif;
+  width: 100%;
   text-transform: none;
 }
 .approveBtn .button:hover {
@@ -36,4 +38,7 @@
 }
 .item {
   margin-bottom: 5px;
+}
+.dropDownIcon {
+  /* margin: 0.02rem; */
 }

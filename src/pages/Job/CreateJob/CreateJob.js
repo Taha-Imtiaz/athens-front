@@ -502,7 +502,7 @@ class CreateJob extends Component {
       <div>
         <div className={`${style.createJob}`}>
           <div className={`${style.form}`}>
-            <h3 className={style.head}>Create New Job</h3>
+            <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               {this.state.customers.length > 0 ? (
                 <Autocomplete
@@ -765,7 +765,7 @@ class CreateJob extends Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Create New Customer</Modal.Title>
+            <Modal.Title>Create Customer</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <CreateCustomer isModal={true} close={this.populateNewCustomer} />

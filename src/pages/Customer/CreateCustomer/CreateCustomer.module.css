@@ -48,6 +48,7 @@
   color: #fff;
   font-family: sans-serif;
   margin-bottom: 0.5rem;
+  width: 100%;
 }
 .addBtn .button:hover ,.modalBtn .button:hover{
     background-color: #00adee;
@@ -75,7 +76,7 @@
 .resetButtons .formButton:hover {
     background-color: #00adee;
 }
-@media only screen and (max-width:1260px) {
+@media only screen and (max-width:1500px) {
 .styleAddBtn {
   display: grid;
   grid-template-columns: 85fr 15fr;

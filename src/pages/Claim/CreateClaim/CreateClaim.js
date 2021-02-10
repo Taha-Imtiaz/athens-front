@@ -212,7 +212,7 @@ class CreateClaim extends Component {
     return (
       <div className={style.claimContainer}>
         <div className={`${style.form}`}>
-          <h3 className={style.head}>New Claim</h3>
+          <h3 className={style.head}>Create Claim</h3>
           <form>
             {this.state.customers.length > 0 ? (
               <Autocomplete

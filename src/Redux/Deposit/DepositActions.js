@@ -52,7 +52,7 @@ export const deleteBlanketDeposit = (id, currentPage) => {
       });
       dispatch({
         type: GET_ALL_DEPOSITS,
-        payload: response,
+        payload: response.data.data,
       });
       dispatch(showMessage(response.data.message));
     } catch (err) {

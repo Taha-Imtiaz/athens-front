@@ -174,6 +174,7 @@ const JobsList = (props) => {
   //filter todays(onDate) jobs
   const filterOnDateJobs = (e) => {
     let { filterJobsByDate } = props;
+    console.log(state)
     setState({
       ...state,
       dates: e.target.value,

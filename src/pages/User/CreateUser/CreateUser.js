@@ -167,7 +167,7 @@ class CreateUser extends Component {
     return (
       <div className={style.userContainer}>
         <div className={`${style.userForm}`}>
-          <h3 className={style.head}>Create New User</h3>
+          <h3 className={style.head}>Create User</h3>
 
           <div>
             <form>

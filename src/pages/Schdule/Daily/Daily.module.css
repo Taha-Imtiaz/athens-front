@@ -131,7 +131,7 @@ tr {
 
 th,
 td {
-  padding: 15px;
+  padding: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -153,8 +153,8 @@ th:last-child {
 }
 
 td {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 
   color: #808080;
 }
@@ -189,7 +189,7 @@ tr:nth-child(even) td {
 }
 .scrollBar {
   width: 100% !important;
-  /* margin: 0 0.6rem; */
+  margin: 0 0.3rem;
   /* background-color: #00adee; */
 
   overflow-x: hidden;

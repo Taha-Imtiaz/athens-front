@@ -12,12 +12,12 @@ import { connect } from "react-redux";
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const UnavailableSchedule = (props) => {
+const UnavailableSchedule = (props) => { 
+  let { getAllData, unavailable } = props;
   const [dates, setDates] = useState([]);
   const [value, setValue] = useState("pending");
-
-  let { getAllData, unavailable } = props;
-  console.log(unavailable)
+  const [status, setStatus] = useState(false)
+  
   const routes = [
     {
       title: "Daily Schedule",
@@ -41,8 +41,9 @@ const UnavailableSchedule = (props) => {
   ];
 
   useEffect(() => {
+
     const { getAllData } = props;
-    getAllData(false);
+    getAllData(status);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAllData]);
 
@@ -66,6 +67,15 @@ const UnavailableSchedule = (props) => {
     }
   };
 
+
+  const changeStatus = (e) => {
+    let value = e.target.value
+    setValue(value)
+    console.log(value)
+    getAllData(!status)
+    setStatus(!status)
+  
+  }
   return (
     <div className={`${style.unavailableContainer}`}>
       <div className={style.sidebar}>
@@ -84,17 +94,17 @@ const UnavailableSchedule = (props) => {
            
           </div>
 
-          <div className={style.approveBtn}>
-            <Button className={style.button} >
+          <div className={`dropdown ${style.approveBtn}`}>
+            <Button 
+           
+            className={`dropdown-toggle ${style.button}`}
+            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+             >
             <i
-              className="fa fa-filter dropdown-toggle"
-              href="#"
-              role="button"
-              id="dropdownMenuLink"
-              
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+              className = {`fa fa-filter ${style.dropDownIcon}`} 
+             
+           
+            
             ></i>
               Filter
               
@@ -104,7 +114,7 @@ const UnavailableSchedule = (props) => {
                 aria-label="gender"
                 name="gender1"
                 value={value}
-                // onChange={(e) => getClaimsByStatus(e)}
+                onChange={(e) => changeStatus(e)}
               >
                 <FormControlLabel
                   value="pending"
@@ -140,14 +150,10 @@ const UnavailableSchedule = (props) => {
                           id="defaultCheck1"
                           value=""
                           onChange={() => handleChange(list)}
+                          className={`${style.checkBox}`}
                         />
-                        }   
-                        <label
-                          className={`checkbox-inline ${style.checkBox}`}
-                          htmlFor="defaultCheck1"
-                        >
-                          {list.applicant && list.applicant.name}
-                        </label>
+                        }
+                        {list.applicant && list.applicant.name}
                       </span>
                     </div>
                     <p className="mb-1">

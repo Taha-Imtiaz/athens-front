@@ -189,7 +189,7 @@ tr:nth-child(even) td {
 }
 .scrollBar {
   width: 100% !important;
-  margin: 0 0.3rem;
+  margin: 0 0.4rem;
   /* background-color: #00adee; */
 
   overflow-x: hidden;
@@ -225,10 +225,20 @@ tr:nth-child(even) td {
   padding-left: 4px;
   border-left: 1px solid rgb(223, 214, 214);
 }
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1450px) {
   .scrollBar {
     width: 100% !important;
-    margin: 0;
+    margin: 0.1rem;
+    /* background-color: #00adee; */
+
+    overflow-x: hidden;
+    height: 75vh;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .scrollBar {
+    width: 100% !important;
+    margin: 0rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;

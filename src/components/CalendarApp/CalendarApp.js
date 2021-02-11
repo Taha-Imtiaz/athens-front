@@ -20,6 +20,10 @@ const CalendarApp = (props) => {
     currentDayJobs: [],
     jobs: [],
   });
+  const [count, setCount] = useState({
+    job:'',
+    movers:''
+  })
   let { user, getJobsByDate } = props;
 
   useEffect(() => {
@@ -69,6 +73,7 @@ const CalendarApp = (props) => {
 
   //handler called when we change date
   const changeDate = (x) => {
+console.log("change date handler is called")
     let date = x;
     let { user } = props;
     let body;
@@ -109,6 +114,35 @@ const CalendarApp = (props) => {
       });
     });
   };
+  //get count of job and movers
+  const getCount = (e) => {
+
+    let jobs = cloneDeep(state.jobs);
+   
+    let currentDayJobs = [];
+    jobs.forEach((x) => {
+      x.dates.forEach((y) => {
+           console.log(new Date(y) , new Date(e.end))
+           console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
+        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
+     
+          currentDayJobs.push(x);
+         
+        }
+      });
+    });
+
+    setCount({
+      ...count,
+      job:currentDayJobs.length,
+      movers: currentDayJobs.reduce(
+        (sum, currentValue) =>
+          sum + currentValue.assigneeRequired,
+        0
+)
+
+    })
+  }
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
@@ -119,6 +153,7 @@ const CalendarApp = (props) => {
       currentDayJobs: [jobs[index]],
       date: new Date(jobs[index].dates),
     });
+    getCount(e)
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
@@ -128,6 +163,7 @@ const CalendarApp = (props) => {
       x.dates.forEach((y) => {
         if (y === e.end.toDateString()) {
           currentDayJobs.push(x);
+          console.log(currentDayJobs)
         }
       });
     });
@@ -136,6 +172,7 @@ const CalendarApp = (props) => {
       currentDayJobs,
       date: e.end
     });
+    getCount(e)
   };
 
   //coloured box(box-styling)
@@ -165,7 +202,7 @@ const CalendarApp = (props) => {
     let strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
-
+console.log(state.currentDayJobs)
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>
@@ -198,6 +235,12 @@ const CalendarApp = (props) => {
            
                <div > 
               <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5> <hr />
+              <div className = {style.jobInfo}>
+
+                <h6>Total Jobs: {count.job}</h6>
+                <h6>Total Movers :{count.movers}</h6>
+              </div>
+              
               {state.currentDayJobs.map((job, i) => (
                 
                <div>
@@ -280,10 +323,14 @@ const CalendarApp = (props) => {
           ) : (
               <div>
                 <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>
+                
                 <hr />
-                <h5>
+               <div className = {style.jobInfo}>
+                  <h6>Total Jobs: {state.currentDayJobs.length}</h6>
+                <h6>Total Movers:  0</h6>
+</div>
                   <img src="/images/no-data-found.png" alt="" width = "100%" />
-                </h5>
+               
               </div>
             )}
           

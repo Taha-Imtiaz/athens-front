@@ -34,11 +34,11 @@
 }
 
 .checkBox {
-  text-indent: 0.5rem;
+ margin-right: 0.5rem;
 }
 .item {
   margin-bottom: 5px;
 }
 .dropDownIcon {
-  /* margin: 0.02rem; */
+  padding-right: 0.4rem;
 }

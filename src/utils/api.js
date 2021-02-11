@@ -9,7 +9,6 @@ const isHandlerEnabled = (config = {}) => {
 }
 
 const requestHandler = (request) => {
-  console.log(request.config)
   if (isHandlerEnabled(request.config)) {
     // Modify request here
     request.headers['Authorization'] = localStorage.getItem('athens-token')
@@ -21,6 +20,9 @@ const Axios = () => {
   axios.defaults.baseURL = 'https://athens-backend.herokuapp.com/api/';
   // axios.defaults.baseURL = 'http://localhost:3001/api/';
   // axios.defaults.baseURL = '/api/';
+  // axios.defaults.baseURL = 'http://10.0.6.197:3000/api';
+
+
 
   // Request Interceptor
   axios.interceptors.request.use(req => {
@@ -50,6 +52,9 @@ const Axios = () => {
         // Server Is Down, Try Latter
         store.dispatch(showMessage('Server Is Down, Try Latter.'))
       }
+      // else if (err.message === "Request failed with status code 401") {
+      //   console.log(err)
+      // } 
     }
     return Promise.reject(err);
   })

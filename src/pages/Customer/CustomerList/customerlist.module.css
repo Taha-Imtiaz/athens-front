@@ -94,7 +94,7 @@
 }
 .email {
   grid-area: email;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .jobs {
   grid-area: jobs;

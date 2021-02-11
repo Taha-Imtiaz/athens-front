@@ -12,12 +12,12 @@ import { connect } from "react-redux";
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const UnavailableSchedule = (props) => { 
+const UnavailableSchedule = (props) => {
   let { getAllData, unavailable } = props;
   const [dates, setDates] = useState([]);
   const [value, setValue] = useState("pending");
-  const [status, setStatus] = useState(false)
-  
+  const [status, setStatus] = useState(false);
+
   const routes = [
     {
       title: "Daily Schedule",
@@ -41,7 +41,6 @@ const UnavailableSchedule = (props) => {
   ];
 
   useEffect(() => {
-
     const { getAllData } = props;
     getAllData(status);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,25 +56,23 @@ const UnavailableSchedule = (props) => {
     }
   };
   const approveRequests = () => {
-    let {approveRequest} = props
+    let { approveRequest } = props;
     if (dates.length > 0) {
       let data = {
         id: dates,
       };
 
-      approveRequest(data)
+      approveRequest(data);
     }
   };
 
-
   const changeStatus = (e) => {
-    let value = e.target.value
-    setValue(value)
-    console.log(value)
-    getAllData(!status)
-    setStatus(!status)
-  
-  }
+    let value = e.target.value;
+    setValue(value);
+    console.log(value);
+    getAllData(!status);
+    setStatus(!status);
+  };
   return (
     <div className={`${style.unavailableContainer}`}>
       <div className={style.sidebar}>
@@ -91,48 +88,41 @@ const UnavailableSchedule = (props) => {
             <Button className={style.button} onClick={approveRequests}>
               Approve
             </Button>
-           
           </div>
 
           <div className={`dropdown ${style.approveBtn}`}>
-            <Button 
-           
-            className={`dropdown-toggle ${style.button}`}
-            type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-             >
-            <i
-              className = {`fa fa-filter ${style.dropDownIcon}`} 
+            {/* <Button className={`${style.button}`}> */}
+              <i
+                className={`fa fa-filter dropdown-toggle ${style.flex} ${style.dropDownIcon}`}
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
              
-           
-            
-            ></i>
-              Filter
-              
-
-           <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={(e) => changeStatus(e)}
-              >
-                <FormControlLabel
-                  value="pending"
-                  control={<Radio />}
-                  label="Pending"
-                  className="dropdown-item"
-                />
-                <FormControlLabel
-                  value="approved"
-                  control={<Radio />}
-                  label="Approved"
-                  className="dropdown-item"
-                />
-               
-              </RadioGroup>
-            </div>
-            </Button>
-           
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={value}
+                  onChange={(e) => changeStatus(e)}
+                >
+                  <FormControlLabel
+                    value="pending"
+                    control={<Radio />}
+                    label="Pending"
+                    className="dropdown-item"
+                  />
+                  <FormControlLabel
+                    value="approved"
+                    control={<Radio />}
+                    label="Approved"
+                    className="dropdown-item"
+                  />
+                </RadioGroup>
+              </div>
+            {/* </Button> */}
           </div>
         </div>
         <div className={style.unavailableList}>
@@ -145,14 +135,15 @@ const UnavailableSchedule = (props) => {
                   >
                     <div className={`d-flex w-100 justify-content-between`}>
                       <span>
-                     {list &&  list.approved === false && <input
-                          type="checkbox"
-                          id="defaultCheck1"
-                          value=""
-                          onChange={() => handleChange(list)}
-                          className={`${style.checkBox}`}
-                        />
-                        }
+                        {list && list.approved === false && (
+                          <input
+                            type="checkbox"
+                            id="defaultCheck1"
+                            value=""
+                            onChange={() => handleChange(list)}
+                            className={`${style.checkBox}`}
+                          />
+                        )}
                         {list.applicant && list.applicant.name}
                       </span>
                     </div>
@@ -186,6 +177,6 @@ var mapStateToProps = (state) => ({
 });
 var actions = {
   getAllData,
-  approveRequest
+  approveRequest,
 };
 export default connect(mapStateToProps, actions)(UnavailableSchedule);

@@ -21,9 +21,9 @@ const CalendarApp = (props) => {
     jobs: [],
   });
   const [count, setCount] = useState({
-    job:'',
-    movers:''
-  })
+    job: "",
+    movers: "",
+  });
   let { user, getJobsByDate } = props;
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const CalendarApp = (props) => {
       }
       //fetch jobs of current month
       getJobsByDate(body, (res) => {
+        // console.log("inside useeffect")
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {
@@ -64,16 +65,43 @@ const CalendarApp = (props) => {
           myEventsList: jobs,
           currentDayJobs,
           jobs: res.data.data,
-
         });
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
+  //get count of job and movers
+  const getCount = (e) => {
+    let jobs = cloneDeep(state.jobs);
+
+    let currentDayJobs = [];
+    jobs.forEach((x) => {
+      x.dates.forEach((y) => {
+        //  console.log(new Date(y) , new Date(e.end))
+        //  console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
+        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
+          currentDayJobs.push(x);
+        }
+        else if (new Date(y).toDateString() === new Date(e).toDateString()){
+          currentDayJobs.push(x);
+        }
+      });
+    });
+
+    setCount({
+      ...count,
+      job: currentDayJobs.length,
+      movers: currentDayJobs.reduce(
+        (sum, currentValue) => sum + currentValue.assigneeRequired,
+        0
+      ),
+    });
+  };
+
   //handler called when we change date
   const changeDate = (x) => {
-console.log("change date handler is called")
+    // console.log(x);
     let date = x;
     let { user } = props;
     let body;
@@ -87,7 +115,7 @@ console.log("change date handler is called")
         date: date.toDateString(),
       };
     }
-
+    // console.log("inside change date")
     getJobsByDate(body, (res) => {
       let jobs = [];
       let currentDayJobs = [];
@@ -110,42 +138,15 @@ console.log("change date handler is called")
         myEventsList: jobs,
         currentDayJobs,
         jobs: res.data.data,
-        date: x
+        date: x,
       });
     });
+    getCount(x);
   };
-  //get count of job and movers
-  const getCount = (e) => {
-
-    let jobs = cloneDeep(state.jobs);
-   
-    let currentDayJobs = [];
-    jobs.forEach((x) => {
-      x.dates.forEach((y) => {
-           console.log(new Date(y) , new Date(e.end))
-           console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
-        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
-     
-          currentDayJobs.push(x);
-         
-        }
-      });
-    });
-
-    setCount({
-      ...count,
-      job:currentDayJobs.length,
-      movers: currentDayJobs.reduce(
-        (sum, currentValue) =>
-          sum + currentValue.assigneeRequired,
-        0
-)
-
-    })
-  }
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
+    // console.log(e);
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
     setState({
@@ -153,26 +154,27 @@ console.log("change date handler is called")
       currentDayJobs: [jobs[index]],
       date: new Date(jobs[index].dates),
     });
-    getCount(e)
+    getCount(e);
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
+    // console.log(e);
     let jobs = cloneDeep(state.jobs);
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
         if (y === e.end.toDateString()) {
           currentDayJobs.push(x);
-          console.log(currentDayJobs)
+          // console.log(currentDayJobs)
         }
       });
     });
     setState({
       ...state,
       currentDayJobs,
-      date: e.end
+      date: e.end,
     });
-    getCount(e)
+    getCount(e);
   };
 
   //coloured box(box-styling)
@@ -202,7 +204,7 @@ console.log("change date handler is called")
     let strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
-console.log(state.currentDayJobs)
+  // console.log(state.currentDayJobs)
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>
@@ -230,119 +232,112 @@ console.log(state.currentDayJobs)
         </div>
 
         <div className={style.sideContent}>
-       
           {state.currentDayJobs.length ? (
-           
-               <div > 
-              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5> <hr />
-              <div className = {style.jobInfo}>
-
+            <div>
+              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
+              <hr />
+              <div className={style.jobInfo}>
                 <h6>Total Jobs: {count.job}</h6>
                 <h6>Total Movers :{count.movers}</h6>
               </div>
-              
               {state.currentDayJobs.map((job, i) => (
-                
-               <div>
-                <div id="accordion" key={i}>
-                  <div className={`card ${style.card}`}>
-                    <div
-                      className={`card-header ${style.cardHeader}`}
-                      id="headingOne"
-                    >
+                <div>
+                  <div id="accordion" key={i}>
+                    <div className={`card ${style.card}`}>
                       <div
-                        className="collapsed"
-                        aria-expanded="false"
-                        data-toggle="collapse"
-                        data-target={`#collapse${i}`}
-                        aria-controls="collapse"
+                        className={`card-header ${style.cardHeader}`}
+                        id="headingOne"
                       >
-                        <div>
-                          <Link
-                            className={style.link}
-                            to={`/job/detail/${job._id}`}
-                          >
-                            &nbsp;
-                            {job.title}
-                          </Link>
-                        </div>
-                        <div>
-                          {job.startTime && (
-                            <Chip
-                              label={formatAMPM(job.startTime)}
-                              clickable
-                              color="primary"
-                              variant="outlined"
-                              size="small"
-                            />
-                          )}
+                        <div
+                          className="collapsed"
+                          aria-expanded="false"
+                          data-toggle="collapse"
+                          data-target={`#collapse${i}`}
+                          aria-controls="collapse"
+                        >
+                          <div>
+                            <Link
+                              className={style.link}
+                              to={`/job/detail/${job._id}`}
+                            >
+                              &nbsp;
+                              {job.title}
+                            </Link>
+                          </div>
+                          <div>
+                            {job.startTime && (
+                              <Chip
+                                label={formatAMPM(job.startTime)}
+                                clickable
+                                color="primary"
+                                variant="outlined"
+                                size="small"
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div
-                      id={`collapse${i}`}
-                      className={"collapse"}
-                      aria-labelledby="headingOne"
-                      data-parent="#accordion"
-                    >
-                      <div className="card-body">
-                        <div className={`card-text ${style.jobDescription}`}>
-                          {parse(job.description)}
-                        </div>
-                        <div>
-                          {job.services.map((service, i) => (
-                            <Chip
-                              key={i}
-                              label={service.name}
-                              size="small"
-                              clickable
-                              color="primary"
-                              variant="outlined"
-                            />
-                          ))}
-                        </div>
-                        <div className="card-text">
-                          Customer:
-                          <Link
-                            className={style.link}
-                            to={`/customer/detail/${job.customer._id}`}
-                          >
-                            &nbsp;
-                            {job.customer.email}
-                          </Link>
+                      <div
+                        id={`collapse${i}`}
+                        className={"collapse"}
+                        aria-labelledby="headingOne"
+                        data-parent="#accordion"
+                      >
+                        <div className="card-body">
+                          <div className={`card-text ${style.jobDescription}`}>
+                            {parse(job.description)}
+                          </div>
+                          <div>
+                            {job.services.map((service, i) => (
+                              <Chip
+                                key={i}
+                                label={service.name}
+                                size="small"
+                                clickable
+                                color="primary"
+                                variant="outlined"
+                              />
+                            ))}
+                          </div>
+                          <div className="card-text">
+                            Customer:
+                            <Link
+                              className={style.link}
+                              to={`/customer/detail/${job.customer._id}`}
+                            >
+                              &nbsp;
+                              {job.customer.email}
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
-                     </div>
-                     </div>
                   </div>
-                
+                </div>
               ))}
-           </div>
+            </div>
           ) : (
-              <div>
-                <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>
-                
-                <hr />
-               <div className = {style.jobInfo}>
-                  <h6>Total Jobs: {state.currentDayJobs.length}</h6>
-                <h6>Total Movers:  0</h6>
-</div>
-                  <img src="/images/no-data-found.png" alt="" width = "100%" />
-               
+            <div>
+              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>
+
+              <hr />
+              <div className={style.jobInfo}>
+                <h6>Total Jobs: {state.currentDayJobs.length}</h6>
+                <h6>Total Movers: 0</h6>
               </div>
-            )}
-          
+              <img src="/images/no-data-found.png" alt="" width="100%" />
+            </div>
+          )}
         </div>
       </div>
-      </div>
+    </div>
     // </div>
   );
 };
 var action = {
-  getJobsByDate
-}
+  getJobsByDate,
+};
 var mapStateToProps = (state) => ({
   user: state.users.user,
 });

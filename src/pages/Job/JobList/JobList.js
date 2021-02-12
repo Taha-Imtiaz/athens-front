@@ -77,12 +77,7 @@ const JobsList = (props) => {
       fetchJobsOnPageChange = {
         query: "",
         sort: {
-          startDate: null,
-          endDate: null,
           plainTitle: 1,
-          movedDate: null,
-          tag: null,
-          startYearMonth: null,
           assigneeRequired: null,
           createdAt: null,
         },
@@ -142,135 +137,132 @@ const JobsList = (props) => {
     }
     getAllJobs(fetchJobsOnPageChange);
   };
-  //sort the jobList by title
-  const handleSortByTitle = () => {
+
+
+  //sort the jobList by by title/recently added/assignee required
+  const handleSort = (e) => {
     let { getAllJobs } = props;
-    setState({
-      ...state,
-      sortByName: true,
-      assigneeRequired: false,
-      recentlyAdded: false,
-    });
-    let fetchJobsOnPageChange = {
-      query: "",
-      sort: {
-        startDate: null,
-        endDate: null,
-        plainTitle: 1,
-        movedDate: null,
-        tag: null,
-        startYearMonth: null,
-        assigneeRequired: null,
-        createdAt: null,
-      },
-      page: 1,
-    };
-    setState({
-      ...state,
-      currentPage: 1,
-    });
+    let fetchJobsOnPageChange
+    console.log(e.target.value)
+    if (e.target.value === "title") {
+      setState({
+        ...state,
+        sortByName: true,
+        assigneeRequired: false,
+        recentlyAdded: false,
+        currentPage: 1,
+      });
+
+      fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+
+          plainTitle: 1,
+          assigneeRequired: null,
+          createdAt: null,
+        },
+        page: 1,
+      };
+
+    }
+
+    else if (e.target.value === "recently added") {
+
+      setState({
+        ...state,
+        recentlyAdded: true,
+        sortByName: false,
+        assigneeRequired: false,
+        currentPage: 1,
+      });
+
+      fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          assigneeRequired: null,
+          plainTitle: "",
+          createdAt: -1,
+        },
+        page: 1,
+      };
+
+    }
+    else if (e.target.value === "assignee required") {
+      setState({
+        ...state,
+        assigneeRequired: true,
+        sortByName: false,
+        recentlyAdded: false,
+        currentPage: 1,
+      });
+      fetchJobsOnPageChange = {
+        query: "",
+        sort: {
+          assigneeRequired: -1,
+          plainTitle: "",
+          createdAt: null,
+        },
+        page: 1,
+      };
+
+    }
+
     getAllJobs(fetchJobsOnPageChange);
   };
-  //filter todays(onDate) jobs
-  const filterOnDateJobs = (e) => {
-    let { filterJobsByDate } = props;
-    console.log(state)
-    setState({
-      ...state,
-      dates: e.target.value,
-    });
 
-    let date = new Date(e.target.value);
-    let DateFilters = {
-      filters: {
-        dates: date.toString(),
-        movedDate: "",
-        startYearMonth: "",
-        nearestDate: null,
-        sortLast: null,
-      },
-      page: 1,
-    };
-    setState({
-      ...state,
-      currentPage: 1,
-    });
+ 
+  const handleDateFilter = (e) => {
+    let { filterJobsByDate } = props;
+    let {name,value} = e.target
+    console.log(name)
+    let date = new Date(value);
+    let DateFilters
+    
+    //filter todays(onDate) jobs
+    if (name === "dates") {
+      DateFilters = {
+        filters: {
+          dates: date.toDateString(),
+          movedDate: "",
+          startYearMonth: "",
+          nearestDate: null,
+          sortLast: null,
+        },
+        page: 1,
+      };
+      setState(state => ({
+        ...state,
+        dates: value,
+        currentPage: 1,
+      }))
+    }
+    
+    //filter upcoming jobs
+    else if(name === "nearestDate") {
+      DateFilters = {
+        filters: {
+          dates: "",
+          startYearMonth: "",
+          nearestDate: date.toDateString(),
+          sortLast: null,
+        },
+        page: 1,
+      };
+  
+      setState({
+        ...state,
+        nearestDate: e.target.value,
+        currentPage: 1,
+      });
+    }
+
+
     filterJobsByDate(DateFilters);
   };
 
-  //filter upcoming jobs
-  const filterUpComingJobs = (e) => {
-    let { filterJobsByDate } = props;
-    setState({
-      ...state,
-      nearestDate: e.target.value,
-    });
+  
+ 
 
-    let date = new Date(e.target.value);
-    let DateFilters = {
-      filters: {
-        dates: "",
-        startYearMonth: "",
-        nearestDate: date.toString(),
-        sortLast: null,
-      },
-      page: 1,
-    };
-    setState({
-      ...state,
-      currentPage: 1,
-    });
-    filterJobsByDate(DateFilters);
-  };
-  //sort jobList by recently added(when recentlyAdded is clicked)
-  const handleRecentlyAdded = () => {
-    let { getAllJobs } = props;
-    setState({
-      ...state,
-      recentlyAdded: true,
-      sortByName: false,
-      assigneeRequired: false,
-    });
-    let fetchJobsOnPageChange = {
-      query: "",
-      sort: {
-        assigneeRequired: null,
-        plainTitle: "",
-        createdAt: -1,
-      },
-      page: 1,
-    };
-    setState({
-      ...state,
-      currentPage: 1,
-    });
-    getAllJobs(fetchJobsOnPageChange);
-  };
-  //sort the jobList by assignee required(when assigneeRequired is clicked)
-  const handleAssigneeRequired = () => {
-    let { getAllJobs } = props;
-    setState({
-      ...state,
-      assigneeRequired: true,
-      sortByName: false,
-      recentlyAdded: false,
-    });
-
-    let fetchJobsOnPageChange = {
-      query: "",
-      sort: {
-        assigneeRequired: -1,
-        plainTitle: "",
-        createdAt: null,
-      },
-      page: 1,
-    };
-    setState({
-      ...state,
-      currentPage: 1,
-    });
-    getAllJobs(fetchJobsOnPageChange);
-  };
   //handle Service Popover open
   const handleServicePopoverOpen = (event, id) => {
     setState({
@@ -360,7 +352,6 @@ const JobsList = (props) => {
   let { classes } = props;
   const open = Boolean(state.anchorEl);
   let { showDeleteModal, dates, nearestDate, value } = state;
-
   return (
     <div>
       <div className={`${style.toprow}`}>
@@ -402,7 +393,7 @@ const JobsList = (props) => {
                   control={<Radio />}
                   label="Recently Added"
                   className="dropdown-item"
-                  onClick={handleRecentlyAdded}
+                  onClick={handleSort}
                 />
 
                 <FormControlLabel
@@ -410,14 +401,14 @@ const JobsList = (props) => {
                   control={<Radio />}
                   label="Title"
                   className="dropdown-item"
-                  onClick={handleSortByTitle}
+                  onClick={handleSort}
                 />
                 <FormControlLabel
                   value="assignee required"
                   control={<Radio />}
                   label="Assignee Required"
                   className="dropdown-item"
-                  onClick={handleAssigneeRequired}
+                  onClick={handleSort}
                 />
               </RadioGroup>
               <hr />
@@ -430,7 +421,7 @@ const JobsList = (props) => {
                 value={dates}
                 id=""
                 className={style.styleDates}
-                onChange={(e) => filterOnDateJobs(e)}
+                onChange={(e) => handleDateFilter(e)}
               />
               <h6 className="dropdown-item">Upcoming Jobs</h6>
               <input
@@ -439,7 +430,7 @@ const JobsList = (props) => {
                 value={nearestDate}
                 id=""
                 className={style.styleDates}
-                onChange={(e) => filterUpComingJobs(e)}
+                onChange={(e) => handleDateFilter(e)}
               />
             </div>
           </div>

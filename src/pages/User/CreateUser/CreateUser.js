@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import style from "./CreateUser.module.css";
 import { Button } from "@material-ui/core";
-import { Multiselect } from "multiselect-react-dropdown";
 import { createUser } from "../../../Redux/User/userActions";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const initialState = {
   name: "",
@@ -13,10 +13,10 @@ const initialState = {
   phone: "",
   address: "",
   type: "",
-  attributes: "",
+  attribute: "",
   nameError: "",
   emailError: "",
-  numberError: "",
+  phoneError: "",
   addressError: "",
   typeError: "",
   attributeError: "",
@@ -28,34 +28,30 @@ class CreateUser extends Component {
     { name: "Mover", id: 2 },
   ];
   attributeOptions = [
-    { name: "crew leaders  " },
-    { name: "movers" },
-    { name: "new movers" },
-    { name: "new Manager" },
+    { name: "Crew Leaders" },
+    { name: "Movers" },
+    { name: "New Movers" },
+    // { name: "new Manager" },
   ];
 
   constructor(props) {
     super(props);
 
     this.state = initialState;
-    this.style = {
-      multiselectContainer: {
-        margin: "1rem 0 ",
-      },
-    };
+    
   }
   onTypeSelect = (selectedList, selectedItem) => {
     this.setState({ type: selectedItem });
   };
 
   onAttributeSelect = (selectedList, selectedItem) => {
-    this.setState({ attributes: selectedItem });
+    this.setState({ attribute: selectedItem.name });
   };
 
   validate = () => {
     let nameError = "";
     let emailError = "";
-    let numberError = "";
+    let phoneError = "";
     let addressError = "";
     let typeError = "";
     let attributeError = "";
@@ -71,7 +67,7 @@ class CreateUser extends Component {
     }
 
     if (!this.state.phone) {
-      numberError = "Number should not be empty";
+      phoneError = "Number should not be empty";
     }
 
     if (!this.state.address) {
@@ -82,14 +78,14 @@ class CreateUser extends Component {
       typeError = "Type should not be empty";
     }
 
-    if (!this.state.attributes) {
+    if (!this.state.attribute) {
       attributeError = "Attribute should not be empty";
     }
 
     if (
       nameError ||
       emailError ||
-      numberError ||
+      phoneError ||
       addressError ||
       typeError ||
       attributeError
@@ -97,7 +93,7 @@ class CreateUser extends Component {
       this.setState({
         nameError,
         emailError,
-        numberError,
+        phoneError,
         addressError,
         typeError,
         attributeError,
@@ -137,6 +133,7 @@ class CreateUser extends Component {
     } else {
       this.setState({ [name]: value });
     }
+    console.log(value)
     if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
@@ -150,14 +147,14 @@ class CreateUser extends Component {
     let { createUser, history } = this.props;
 
     if (isValid) {
-      let { name, phone, email, address, type, attributes } = this.state;
+      let { name, phone, email, address, type, attribute } = this.state;
       let createdUserObj = {
         name,
         phone,
         address,
         email,
         role: type.name.toLowerCase(),
-        attributes,
+        attribute,
       };
       createUser(createdUserObj, () => history.push("/users"))
     }
@@ -210,7 +207,7 @@ class CreateUser extends Component {
                 name="phone"
                 value={this.state.phone}
                 onChange={this.handleFormInput}
-                error={this.state.numberError ? true : false}
+                error={this.state.phoneError ? true : false}
                 className={style.styleFormFields}
               />
 
@@ -228,7 +225,7 @@ class CreateUser extends Component {
                 className={style.styleAddress}
               />
 
-              <Multiselect
+              {/* <Multiselect
                 singleSelect={true}
                 options={this.typeOptions} // Options to display in the dropdown
                 onSelect={this.onTypeSelect} // Function will trigger on select event
@@ -238,9 +235,19 @@ class CreateUser extends Component {
                 placeholder="Select Type"
                 error={this.state.typeError ? true : false}
                 style={this.style}
-              />
+              /> */}
+               <Autocomplete
+      id="combo-box-demo"
+      options={this.typeOptions}
+      onChange={this.onTypeSelect} 
+      getOptionLabel={(option) => option.name}
+      className={style.styleMultiSelect}
+      size = "small"
+      renderInput={(params) => <TextField 
+        {...params} label="Select Type" variant="outlined" />}
+    />
 
-              <Multiselect
+              {/* <Multiselect
                 singleSelect={true}
                 options={this.attributeOptions} // Options to display in the dropdown
                 onSelect={this.onAttributeSelect} // Function will trigger on select event
@@ -250,7 +257,17 @@ class CreateUser extends Component {
                 placeholder="Select Attribute"
                 error={this.state.attributeError ? true : false}
                 style={this.style}
-              />
+              /> */}
+                 <Autocomplete
+      id="combo-box-demo"
+      options={this.attributeOptions}
+      onChange = {this.onAttributeSelect}
+      getOptionLabel={(option) => option.name}
+      className={style.styleMultiSelect}
+      size = "small"
+      renderInput={(params) => <TextField 
+        {...params} label="Select Attribute" variant="outlined" />}
+    />
 
               <div className={style.createBtn}>
                 <Button className={style.button} onClick={this.mySubmitHandler}>

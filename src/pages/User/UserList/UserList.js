@@ -153,9 +153,7 @@ const UserList = (props) => {
                             {usersDoc.name}
                           </div>
                           <div className={`${style.item} ${style.flex}`}>
-                            {usersDoc.attributes.map(
-                              (attribute) => attribute.name
-                            )}
+                            {usersDoc.attribute}
                           </div>
                           <div className={`${style.item} ${style.flex}`}>
                             {usersDoc.address}

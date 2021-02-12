@@ -42,3 +42,8 @@
 .createBtn .button:hover {
   background-color: #00adee;
 }
+
+
+.styleMultiSelect {
+  margin: 1rem 0;
+}

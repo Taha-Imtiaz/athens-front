@@ -15,7 +15,8 @@
   margin-top: 1rem;
   grid-area: moverHeader;
   display: grid;
-  grid-template-columns: 85fr 15fr;
+  grid-template-columns: 90fr 10fr;
+  /* background-color: aquamarine; */
 }
 .moverList {
   grid-area: moverList;
@@ -24,12 +25,16 @@
   display: grid;
   row-gap: 0.75rem;
 }
-.dropdown .button {
-  background-color: #00adee;
-  color: #fff;
-  font-family: sans-serif;
-  text-transform: none;
+.dropDownMenu {
+  border: 2px solid black;
+  padding: 0.5rem 0.75rem;
+  color: #00ADEE;
+  border-radius: 0.25rem;
+
 }
-.dropdown .button:hover {
-  background-color: #00adee;
+
+.flexEnd {
+  display: flex; 
+  justify-content: flex-start;
+  align-items: flex-start;
 }

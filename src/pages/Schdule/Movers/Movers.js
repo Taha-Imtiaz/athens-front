@@ -4,14 +4,19 @@ import SideBar from "../../../components/Sidebar/SideBar";
 import { getAllMover } from "../../../Redux/Schedule/scheduleAction";
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 const MoversSchedule = (props) => {
   const [allMovers, setAllMovers] = useState();
+  const [filteredMovers, setFilteredMovers] = useState();
+  const [dropDownMenu, setDropDownMenu] = useState('All')
   useEffect(() => {
     let { getAllMover } = props;
-    getAllMover(res => setAllMovers(res.data.data))
+    getAllMover(res => {
+      setAllMovers(res.data.data)
+      setFilteredMovers(res.data.data)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,7 +41,20 @@ const MoversSchedule = (props) => {
       icon: <FontAwesomeIcon icon={faUser} />,
     },
   ];
+
+  const handleDropDownMenu = (e) => {
+    let value = e.target.value
+    setDropDownMenu(value)
+    if(value === 'All') {
+      setFilteredMovers(allMovers)
+    } else {
+      let filteredMovers = allMovers.filter((mover) => mover.attribute && mover.attribute.toLowerCase() === value.toLowerCase())
+      setFilteredMovers(filteredMovers)
+    }
+  }
+
   return (
+  
     <div className={`${style.moversContainer}`}>
       <div className={style.sidebar}>
         <SideBar routes={routes} />
@@ -47,49 +65,75 @@ const MoversSchedule = (props) => {
             <h3>Movers</h3>
           </div>
 
-          <div className={`dropdown ${style.dropdown}`}>
-            <Button
-              className={style.button}
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Crew Leader
-            </Button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <p className="dropdown-item">
+          <div className={`dropdown ${style.flexEnd}`}>
+         
+            {/* <div className="dropdown-menu" aria-labelledby="dropdownMenuButton"> */}
+             {/* <select name = "dropDownMenu" value = {dropDownMenu} onChange = {handleDropDownMenu} className = {style.dropDownMenu}>
+             <option value = "Crew Leader">
                 Crew Leader
-              </p>
-              <p className="dropdown-item">
-                Crew Leader in training
-              </p>
-              <p className="dropdown-item">
+              </option>
+              
+              <option value = "Mover">
                 Mover
-              </p>
-              <p className="dropdown-item">
-                New Employee
-              </p>
-              <p className="dropdown-item">
-                On Vacation
-              </p>
-              <p className="dropdown-item">
-                Reserve
-              </p>
-            </div>
+              </option>
+              <option value = "New Mover">
+                New Mover
+              </option>
+             </select> */}
+            {/* </div> */}
+            <i
+                className={`fa fa-filter dropdown-toggle`}
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              ></i>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={dropDownMenu}
+                  onChange = {handleDropDownMenu}
+                >
+                  <FormControlLabel
+                    value="All"
+                    control={<Radio />}
+                    label="All"
+                    className="dropdown-item"
+                  />
+                  <FormControlLabel
+                    value="Crew Leader"
+                    control={<Radio />}
+                    label="Crew Leader"
+                    className="dropdown-item"
+                  />
+                  <FormControlLabel
+                    value="Mover"
+                    control={<Radio />}
+                    label="Mover"
+                    className="dropdown-item"
+                  />
+                   <FormControlLabel
+                    value="New Mover"
+                    control={<Radio />}
+                    label="New Mover"
+                    className="dropdown-item"
+                  />
+                </RadioGroup>
+              </div>
           </div>
         </div>
 
         <div className={`list-group ${style.moverList}`}>
           <div className={style.listContent}>
-            {allMovers && allMovers.length ? (
-              allMovers.map((list, i) => {
+            {filteredMovers && filteredMovers.length ? (
+              filteredMovers.map((list, i) => {
                 return (
                   <div key={i} className="list-group-item list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-between">
                       <h5 className={`mb-1 `}>{list.name}</h5>
-                      <small>{list.attributes[0].name}</small>
+                      <small>{list.attribute}</small>
                     </div>
                     <div>
                       {list.weeklySchedule

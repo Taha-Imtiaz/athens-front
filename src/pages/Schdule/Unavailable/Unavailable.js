@@ -68,6 +68,7 @@ const UnavailableSchedule = (props) => {
 
   const changeStatus = (e) => {
     let value = e.target.value;
+    console.log(value)
     setValue(value);
     console.log(value);
     getAllData(!status);
@@ -84,16 +85,16 @@ const UnavailableSchedule = (props) => {
           <div>
             <h5>Unavailable</h5>
           </div>
-          <div className={style.approveBtn}>
+         {value === "pending" ? <div className={style.approveBtn}>
             <Button className={style.button} onClick={approveRequests}>
               Approve
             </Button>
-          </div>
+          </div>:<div></div>}
 
-          <div className={`dropdown ${style.approveBtn}`}>
+          <div className={`dropdown ${style.flex} ${style.approveBtn}`}>
             {/* <Button className={`${style.button}`}> */}
               <i
-                className={`fa fa-filter dropdown-toggle ${style.flex} ${style.dropDownIcon}`}
+                className={`fa fa-filter dropdown-toggle  ${style.dropDownIcon}`}
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="dropdown"

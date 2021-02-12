@@ -43,7 +43,5 @@
   padding-right: 0.4rem;
 }
 .flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0 1rem;
 }

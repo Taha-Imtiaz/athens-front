@@ -73,7 +73,6 @@ const Blankets = (props) => {
   let {name,
     location: { pathname },
   } = props;
-console.log(blanketValue)
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>

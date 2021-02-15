@@ -53,7 +53,6 @@ const Axios = () => {
         store.dispatch(showMessage('Server Is Down, Try Latter.'))
       }
       else if (err.message === "Request failed with status code 401") {
-        console.log(err.message)
         localStorage.clear();
         window.location.reload();
       }

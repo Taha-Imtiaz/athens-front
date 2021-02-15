@@ -124,7 +124,6 @@ class CreateJob extends Component {
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
     location.push({ type: "", value: "", default: false });
-    console.log(location)
     this.setState({
       locations: location,
     });
@@ -170,7 +169,6 @@ class CreateJob extends Component {
   };
   //function to show all locations
   showLocation = (i) => {
-    console.log(this.state.locations[i])
     return (
       <div className={style.locationInput} key={i}>
         <div className={style.radioButtons}>

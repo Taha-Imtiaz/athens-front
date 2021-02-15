@@ -32,8 +32,6 @@ console.log("get movers called")
   let currentDayJobs = [];
   jobs.forEach((x) => {
     x.dates.forEach((y) => {
-      //  console.log(new Date(y) , new Date(e.end))
-      //  console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
       if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
         currentDayJobs.push(x);
       }
@@ -67,8 +65,6 @@ console.log("get movers called")
       }
       //fetch jobs of current month
       getJobsByDate(body, (res) => {
-        console.log(res.data.data)
-        
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {
@@ -106,7 +102,6 @@ console.log("get movers called")
 
   //handler called when we change date
   const changeDate = (x) => {
-    console.log(x);
     let date = x;
     let { user } = props;
     let body;
@@ -120,7 +115,6 @@ console.log("get movers called")
         date: date.toDateString(),
       };
     }
-    // console.log("inside change date")
     getJobsByDate(body, (res) => {
       let jobs = [];
       let currentDayJobs = [];
@@ -152,7 +146,6 @@ console.log("get movers called")
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
-    // console.log(e);
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
     setState({
@@ -164,14 +157,12 @@ console.log("get movers called")
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
-    // console.log(e);
     let jobs = cloneDeep(state.jobs);
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
         if (y === e.end.toDateString()) {
           currentDayJobs.push(x);
-          // console.log(currentDayJobs)
         }
       });
     });
@@ -210,7 +201,6 @@ console.log("get movers called")
     let strTime = hours + ":" + minutes + " " + ampm;
     return strTime;
   };
-  // console.log(state.currentDayJobs)
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>

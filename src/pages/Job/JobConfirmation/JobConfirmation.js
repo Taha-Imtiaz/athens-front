@@ -181,8 +181,6 @@ function JobConfirmation(props) {
   const changeCheckBoxState = (e, i) => {
     e.stopPropagation();
     let prevState = cloneDeep(data);
-    console.log(prevState.locations)
-
     prevState.locations[i].default = !prevState.locations[i].default;
     if (prevState.locations[i].default) {
       prevState.locations[i].value =

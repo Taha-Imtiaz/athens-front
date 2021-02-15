@@ -25,8 +25,6 @@ export const approveRequest = (data) => {
       const response = await Axios.put("schedule", data, {
         config: { handlerEnabled: true }
       });
-      console.log(response)
-      console.log(response.data.data)
       if (response.data.status === 200) {
 
         dispatch({

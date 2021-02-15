@@ -36,7 +36,7 @@ console.log("get movers called")
         currentDayJobs.push(x);
       }
       else if (new Date(y).toDateString() === new Date(e).toDateString()){
-        currentDayJobs.push(x);
+        currentDayJobs.push(x); 
       }
     });
   });

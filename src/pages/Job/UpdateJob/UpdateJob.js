@@ -344,7 +344,6 @@ class UpdateJob extends Component {
   };
   //show Locations
   showLocation = (i) => {
-    console.log(i)
     return (
       <div className={style.locationInput}>
         <div className={style.radioButtons}>

@@ -143,7 +143,6 @@ const JobsList = (props) => {
   const handleSort = (e) => {
     let { getAllJobs } = props;
     let fetchJobsOnPageChange
-    console.log(e.target.value)
     if (e.target.value === "title") {
       setState({
         ...state,
@@ -214,7 +213,6 @@ const JobsList = (props) => {
   const handleDateFilter = (e) => {
     let { filterJobsByDate } = props;
     let {name,value} = e.target
-    console.log(name)
     let date = new Date(value);
     let DateFilters
     

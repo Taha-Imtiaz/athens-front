@@ -133,7 +133,6 @@ class CreateUser extends Component {
     } else {
       this.setState({ [name]: value });
     }
-    console.log(value)
     if (value === "") {
       this.setState({ [name + "Error"]: "Should not be empty" });
     } else {

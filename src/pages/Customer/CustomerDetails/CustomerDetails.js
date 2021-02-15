@@ -129,7 +129,6 @@ const CustomerDetails = (props) => {
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
-console.log(blanketValue)
   return (
     <div className={style.customerDetailsContainer}>
       {customer && (

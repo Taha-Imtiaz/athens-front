@@ -68,9 +68,7 @@ const UnavailableSchedule = (props) => {
 
   const changeStatus = (e) => {
     let value = e.target.value;
-    console.log(value)
     setValue(value);
-    console.log(value);
     getAllData(!status);
     setStatus(!status);
   };

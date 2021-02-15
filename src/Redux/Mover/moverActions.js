@@ -30,7 +30,6 @@ export const updateJob = (jobId, status, callback) => {
       const response = await Axios.put(`job/status/${jobId}`, status, {
         config: { handlerEnabled: true }
       });
-      console.log(response.data.data)
       if (response.data.status === 200) {
        dispatch({
          type:GET_UPDATED_JOB_LIST,
@@ -115,7 +114,6 @@ export const moverSearchFilter = (searchObj) => {
       const response = await Axios.post(`mover/search`, searchObj, {
         config: { handlerEnabled: true },
       });
-      console.log(response.data.data);
       dispatch({
         type: SEARCH_FILTER,
         payload: response.data.data,

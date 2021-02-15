@@ -42,7 +42,6 @@ const Claims = (props) => {
       <div>
         {
           items.map((x, i) => {
-            console.log(x)
             return (
               <div className={style.listContainer} key={i}>
                 <div className={`${style.listContent}`}>

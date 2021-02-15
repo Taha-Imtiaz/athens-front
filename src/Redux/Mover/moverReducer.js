@@ -1,6 +1,7 @@
 import {
   GET_MOVER,
   GET_MOVER_JOB_DETAIL,
+  GET_UPDATED_JOB_LIST,
   SEARCH_FILTER,
 } from "./moverConstants";
 
@@ -12,7 +13,9 @@ const moverReducer = (state = initialState, action) => {
   switch (type) {
     case GET_MOVER:
       return { jobList: payload };
-
+      case GET_UPDATED_JOB_LIST:
+        return { jobList: payload };
+  
     case GET_MOVER_JOB_DETAIL:
       return { job: payload };
     case SEARCH_FILTER:

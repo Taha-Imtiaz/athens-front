@@ -18,6 +18,9 @@
   grid-template-columns: 80fr repeat(2,10fr);
   column-gap: 0.2rem;
 }
+.dropDownIcon {
+  width: 100%;
+}
 .approveBtn .button {
   background-color: #00adee;
   color: #fff;

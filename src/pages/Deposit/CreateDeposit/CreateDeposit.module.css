@@ -4,16 +4,22 @@
   align-items: center;
   margin-top: 0.5rem;
 }
-
+.depositFormContainer {
+  display: grid;
+  grid-template-rows: minmax(90vh,min-content);
+  grid-template-columns: 1fr;
+  grid-template-areas: "depositForm";
+}
 .depositForm {
   display: grid;
-
+grid-area: depositForm;
   grid-template-rows: minmax(50vh,min-content) 40vh;
   grid-template-columns: 20fr 60fr 20fr;
   background-color: #e9ecef;
   grid-template-areas:
     ". form ."
     ". . .";
+  
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;
@@ -35,21 +41,21 @@
 }
 .form {
   grid-area: form;
-  border-radius: 0.4rem;
   background-color: #fff;
   width: 100%;
-  margin-top: 2rem;
-  padding: 0 2rem;
+  border-radius: 0.4rem;
+  margin: 2rem;
+  padding: 2rem;
 }
-@media only screen and (max-width:1500px) {
+/* @media only screen and (max-width:1500px) {
   .depositForm {
     display: grid;
   
-    grid-template-rows: minmax(57vh,min-content) 33vh;
+    grid-template-rows: minmax(60vh,min-content) 30vh;
     grid-template-columns: 20fr 60fr 20fr;
     background-color: #e9ecef;
     grid-template-areas:
       ". form ."
       ". . .";
   }
-}
+} */

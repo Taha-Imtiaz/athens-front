@@ -145,6 +145,7 @@ class CreateDeposit extends Component {
   render() {
     let { quantity, cost } = this.state;
     return (
+      <div className  = {style.depositFormContainer}>
       <div className={style.depositForm}>
         <div className={`${style.form}`}>
           <form onSubmit={this.handleSubmit}>
@@ -268,6 +269,7 @@ class CreateDeposit extends Component {
             </div>
           </form>
         </div>
+      </div>
       </div>
     );
   }

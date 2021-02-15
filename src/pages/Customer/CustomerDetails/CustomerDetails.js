@@ -570,7 +570,7 @@ console.log(blanketValue)
               items={blanketValue} update={updateBlanket} />
             ) : (
                 <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
+                  <img src="/images/no-data-found.png" alt="Data not found"  />
                 </div>
               )}
           </TabPanel>

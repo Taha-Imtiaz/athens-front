@@ -37,9 +37,11 @@ function RequestHolidays(props) {
   const handleClose = () => {
     setEmptyReasonError("");
     setShow(false);
+    setNote('')
   };
   const handleDayClick = (e) => {
     let newDates = cloneDeep(dates);
+    console.log("handle click is called")
     let index = newDates.findIndex((x) => x === e.toString());
     if (index !== -1) {
       newDates.splice(index, 1);
@@ -56,7 +58,10 @@ function RequestHolidays(props) {
         dates,
         reason: note,
       };
-      holidayCalendar(obj, res => setShow(false));
+      holidayCalendar(obj, res =>{ 
+        setNote('')
+        setShow(false)
+      });
     } else if (note.length === 0) {
       setEmptyReasonError("Error");
     }

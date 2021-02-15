@@ -45,8 +45,8 @@
   /* background-color: aqua; */
   display: grid;
   /* margin: 2rem 0; */
-  grid-template-columns: 100fr;
-  grid-template-areas: "styleLink";
+  grid-template-columns: 75fr 25fr;
+  grid-template-areas: "styleLink jobStatus";
   border: 1px solid rgba(0, 0, 0, 0.125);
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
@@ -73,8 +73,8 @@
   grid-area: jobList;
   display: grid;
   /* background-color: blue; */
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: "title date assignee status";
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "title date assignee";
 }
 .title {
   grid-area: title;
@@ -94,11 +94,10 @@
   grid-area: assignee;
   padding: 0 0.5rem;
 }
-
-.status {
-  grid-area: status;
-  /* padding: 0 0.5rem; */
+.jobStatus {
+  grid-area: jobStatus;
 }
+
 .styleCheckBox {
   margin: 0 0.3rem;
 }

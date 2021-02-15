@@ -228,7 +228,7 @@ tr:nth-child(even) td {
 @media only screen and (max-width: 1450px) {
   .scrollBar {
     width: 100% !important;
-    margin: 0.1rem;
+    margin: 0rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;

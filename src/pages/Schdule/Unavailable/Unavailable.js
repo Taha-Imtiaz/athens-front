@@ -91,7 +91,7 @@ const UnavailableSchedule = (props) => {
             </Button>
           </div>:<div></div>}
 
-          <div className={`dropdown ${style.flex} ${style.approveBtn}`}>
+          <div className={`dropdown ${style.flex} ${style.dropDownMenu}`}>
             {/* <Button className={`${style.button}`}> */}
               <i
                 className={`fa fa-filter dropdown-toggle  ${style.dropDownIcon}`}

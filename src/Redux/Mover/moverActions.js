@@ -1,6 +1,7 @@
 import {
   GET_MOVER,
   GET_MOVER_JOB_DETAIL,
+  GET_UPDATED_JOB_LIST,
   SEARCH_FILTER,
 } from "./moverConstants";
 import Axios from "axios";
@@ -15,7 +16,7 @@ export const getMover = (moversObj) => {
       });
       dispatch({
         type: GET_MOVER,
-        payload: response.data.data,
+        payload: response.data.data.docs,
       });
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -29,8 +30,12 @@ export const updateJob = (jobId, status, callback) => {
       const response = await Axios.put(`job/status/${jobId}`, status, {
         config: { handlerEnabled: true }
       });
+      console.log(response.data.data)
       if (response.data.status === 200) {
-        callback();
+       dispatch({
+         type:GET_UPDATED_JOB_LIST,
+         payload: response.data.data
+       })
       }
       dispatch(showMessage(response.data.message));
     } catch (err) {

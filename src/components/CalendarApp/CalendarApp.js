@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Children } from "react";
-import { getJobsByDate } from "../../Redux/Job/jobActions";
+import {getJobsByDate } from "../../Redux/Job/jobActions";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { connect } from "react-redux";
@@ -25,7 +25,33 @@ const CalendarApp = (props) => {
     movers: "",
   });
   let { user, getJobsByDate } = props;
+//get count of job and movers
+const getCount = (e) => {
+  let jobs = cloneDeep(state.jobs);
 
+  let currentDayJobs = [];
+  jobs.forEach((x) => {
+    x.dates.forEach((y) => {
+      //  console.log(new Date(y) , new Date(e.end))
+      //  console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
+      if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
+        currentDayJobs.push(x);
+      }
+      else if (new Date(y).toDateString() === new Date(e).toDateString()){
+        currentDayJobs.push(x);
+      }
+    });
+  });
+
+  setCount({
+    ...count,
+    job: currentDayJobs.length,
+    movers: currentDayJobs.reduce(
+      (sum, currentValue) => sum + currentValue.assigneeRequired,
+      0
+    ),
+  });
+};
   useEffect(() => {
     let body;
     if (user) {
@@ -41,7 +67,8 @@ const CalendarApp = (props) => {
       }
       //fetch jobs of current month
       getJobsByDate(body, (res) => {
-        // console.log("inside useeffect")
+        console.log(res.data.data)
+        
         let jobs = [];
         let currentDayJobs = [];
         res.data.data.forEach((x) => {
@@ -65,43 +92,20 @@ const CalendarApp = (props) => {
           myEventsList: jobs,
           currentDayJobs,
           jobs: res.data.data,
+        date: new Date(),
+
         });
       });
     }
+    getCount(new Date())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  //get count of job and movers
-  const getCount = (e) => {
-    let jobs = cloneDeep(state.jobs);
-
-    let currentDayJobs = [];
-    jobs.forEach((x) => {
-      x.dates.forEach((y) => {
-        //  console.log(new Date(y) , new Date(e.end))
-        //  console.log(new Date(y).toDateString() === new Date(e.end).toDateString())
-        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
-          currentDayJobs.push(x);
-        }
-        else if (new Date(y).toDateString() === new Date(e).toDateString()){
-          currentDayJobs.push(x);
-        }
-      });
-    });
-
-    setCount({
-      ...count,
-      job: currentDayJobs.length,
-      movers: currentDayJobs.reduce(
-        (sum, currentValue) => sum + currentValue.assigneeRequired,
-        0
-      ),
-    });
-  };
+  
 
   //handler called when we change date
   const changeDate = (x) => {
-    // console.log(x);
+    console.log(x);
     let date = x;
     let { user } = props;
     let body;

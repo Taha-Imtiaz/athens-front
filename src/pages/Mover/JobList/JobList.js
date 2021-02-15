@@ -17,7 +17,6 @@ import { compose } from "redux";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Pagination from "../../../components/Pagination/Pagination";
 
-
 const styles = (theme) => ({
   popover: {
     pointerEvents: "none",
@@ -50,10 +49,9 @@ const MoversJobList = (props) => {
   const { moverJobs } = props;
   let totalCount = 0;
   if (moverJobs) {
-    var { docs } = moverJobs;
+    // var { docs } = moverJobs;
     totalCount = moverJobs.total;
   }
-
 
   useEffect(() => {
     let { getMover } = props;
@@ -81,8 +79,10 @@ const MoversJobList = (props) => {
   };
 
   const markComplete = (list) => {
-    let { getMover, updateJob } = props;
-    updateJob(list._id, { status: "completed" }, () => getMover())
+    let {updateJob } = props;
+    updateJob(list._id, { status: "completed" },
+    //  () => getMover()
+     );
   };
 
   const handleDatePopoverOpen = (event, id) => {
@@ -307,7 +307,7 @@ const MoversJobList = (props) => {
         </div>
       </div>
 
-      {docs && docs.length > 0 ? (
+      {moverJobs && moverJobs.length > 0 ? (
         <div className={style.jobListHeaderContainer}>
           <div className={style.jobListHeader}>
             <div>Title</div>
@@ -318,9 +318,9 @@ const MoversJobList = (props) => {
         </div>
       ) : null}
 
-      {docs && docs.length > 0 ? (
+      {moverJobs && moverJobs.length > 0 ? (
         <div>
-          {docs.map((list, i) => {
+          {moverJobs.map((list, i) => {
             return (
               <div className={style.listContainer} key={i}>
                 <div className={`${style.listContent}`}>
@@ -443,32 +443,33 @@ const MoversJobList = (props) => {
                           )}
                         </span>
                       </div>
-
-                      {list.status === "booked" ? (
-                        <div
-                          className={`${style.status} ${style.flex} ${style.item}`}
-                        >
-                          <input
-                            className={style.styleCheckBox}
-                            onClick={() => markComplete(list)}
-                            type="checkbox"
-                          ></input>
-                          <div onClick={() => markComplete(list)}>
-                            Mark Complete
-                          </div>
-                        </div>
-                      ) : (
-                          <div
-                            className={`${style.status} ${style.flex} ${style.item}`}
-                          >
-                            {list.status}
-                          </div>
-                        )}
-                      <div></div>
                     </div>
                   </Link>
+
+                 
+                    {list.status === "booked" ? (
+                      <div
+                        className={`${style.flex} ${style.jobStatus} ${style.item}`}
+                      >
+                        <input
+                          className={style.styleCheckBox}
+                          onClick={() => markComplete(list)}
+                          type="checkbox"
+                        ></input>
+                        <div>
+                          Mark Complete
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className={`${style.status} ${style.flex} ${style.item}`}
+                      >
+                        {list.status}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+            
             );
           })}
           <div className={style.stylePagination}>
@@ -483,21 +484,24 @@ const MoversJobList = (props) => {
           </div>
         </div>
       ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" alt="" />
-          </div>
-        )}
+        <div className="text-center">
+          <img src="/images/no-data-found.png" alt="" />
+        </div>
+      )}
     </div>
   );
 };
 
 var mapStateToProps = (state) => ({
-  moverJobs: state.moverJobs.jobList
+  moverJobs: state.moverJobs.jobList,
 });
 
 var actions = {
   getMover,
-  updateJob
+  updateJob,
 };
 
-export default compose(connect(mapStateToProps, actions), withStyles(styles))(MoversJobList);
+export default compose(
+  connect(mapStateToProps, actions),
+  withStyles(styles)
+)(MoversJobList);

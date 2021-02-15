@@ -21,10 +21,12 @@ export const getAllData = (status) => {
 export const approveRequest = (data) => {
   return async (dispatch) => {
     try {
+     
       const response = await Axios.put("schedule", data, {
         config: { handlerEnabled: true }
       });
       console.log(response)
+      console.log(response.data.data)
       if (response.data.status === 200) {
 
         dispatch({

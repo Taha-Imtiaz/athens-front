@@ -26,9 +26,9 @@ const CalendarApp = (props) => {
   });
   let { user, getJobsByDate } = props;
 //get count of job and movers
-const getCount = (e) => {
-  let jobs = cloneDeep(state.jobs);
-
+const getCount = (e, jobs) => {
+  // let jobs = cloneDeep(state.jobs);
+console.log("get movers called")
   let currentDayJobs = [];
   jobs.forEach((x) => {
     x.dates.forEach((y) => {
@@ -95,9 +95,10 @@ const getCount = (e) => {
         date: new Date(),
 
         });
+    getCount(new Date(), res.data.data)
+
       });
     }
-    getCount(new Date())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -144,8 +145,9 @@ const getCount = (e) => {
         jobs: res.data.data,
         date: x,
       });
+    getCount(x, res.data.data);
+
     });
-    getCount(x);
   };
 
   //get job details when we click a job of a particular date
@@ -158,7 +160,7 @@ const getCount = (e) => {
       currentDayJobs: [jobs[index]],
       date: new Date(jobs[index].dates),
     });
-    getCount(e);
+    getCount(e, jobs);
   };
   //get all jobs of a particular date(when we clicked a box)
   const getJobDetailsOnSlotClick = (e) => {
@@ -178,7 +180,7 @@ const getCount = (e) => {
       currentDayJobs,
       date: e.end,
     });
-    getCount(e);
+    getCount(e, jobs);
   };
 
   //coloured box(box-styling)

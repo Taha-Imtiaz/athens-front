@@ -267,7 +267,9 @@ const DailySchedule = (props) => {
         });
 
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
+      console.log(moverAssignedDate)
         if (moverJobs) {
+          
           let mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
           let newAssigneeObj = {
@@ -278,6 +280,7 @@ const DailySchedule = (props) => {
           setAssignee(newAssigneeObj);
           setModalShow(true);
         } else {
+          console.log("assignee job")
           assigneesId.push(moverId);
           jobToUpdate[0].assigneesId = assigneesId;
           let job = cloneDeep(jobToUpdate[0]);
@@ -286,7 +289,7 @@ const DailySchedule = (props) => {
       }
     }
   };
-
+console.log(mover)
   return (
     <div className={`${style.scheduleContainer}`}>
       <div className={style.sidebar}>

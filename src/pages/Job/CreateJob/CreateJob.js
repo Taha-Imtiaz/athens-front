@@ -388,6 +388,8 @@ class CreateJob extends Component {
         jobType,
       };
       createJob(createJobObj, (job) => {
+        //reset form to its original state
+        this.handleResetJob()
         history.push("/job/detail/" + job.data.data._id);
       });
     }

@@ -5,7 +5,10 @@ import { connect } from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
-import { resetDepositForm, setDepositForm } from "../../../Redux/PersistForms/formActions";
+import {
+  resetDepositForm,
+  setDepositForm,
+} from "../../../Redux/PersistForms/formActions";
 import { addDeposit } from "../../../Redux/Deposit/DepositActions";
 import { cloneDeep } from "lodash";
 
@@ -38,11 +41,11 @@ class CreateDeposit extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
-        selectedJob: ''
+        selectedJob: "",
       });
     }
     let { getCustomersAndJobs } = this.props;
-    getCustomersAndJobs(res => this.setState({ customers: res.data.data }))
+    getCustomersAndJobs((res) => this.setState({ customers: res.data.data }));
   };
 
   handleValidate = () => {
@@ -92,7 +95,11 @@ class CreateDeposit extends Component {
     };
     let { addDeposit, history } = this.props;
     if (this.handleValidate()) {
-      addDeposit(obj, () => history.push("/deposits"))
+      addDeposit(obj, () => {
+           //reset form to its original state
+        this.handleResetDeposit()
+        history.push("/deposits");
+      });
     }
   };
 
@@ -145,39 +152,76 @@ class CreateDeposit extends Component {
   render() {
     let { quantity, cost } = this.state;
     return (
-      <div className  = {style.depositFormContainer}>
-      <div className={style.depositForm}>
-        <div className={`${style.form}`}>
-          <form onSubmit={this.handleSubmit}>
-            <h3 className={style.head}>Blanket Deposit</h3>
-            {this.state.customers.length > 0 ? (
+      <div className={style.depositFormContainer}>
+        <div className={style.depositForm}>
+          <div className={`${style.form}`}>
+            <form onSubmit={this.handleSubmit}>
+              <h3 className={style.head}>Create Deposit</h3>
+              {this.state.customers.length > 0 ? (
+                <Autocomplete
+                  value={this.state.selectedCustomer}
+                  onChange={(event, newValue) => {
+                    this.getCustomerJobs(newValue); // Get the customer and get job
+                  }}
+                  id="country-select-demoq"
+                  size="small"
+                  options={this.state.customers}
+                  autoHighlight
+                  getOptionLabel={(option) =>
+                    option.firstName
+                      ? option.firstName + " " + option.lastName
+                      : option
+                  }
+                  renderOption={(option) => (
+                    <React.Fragment>
+                      {option.firstName} {option.lastName} ({option.email})
+                    </React.Fragment>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Choose a customer"
+                      fullWidth
+                      className={style.styleFormFields}
+                      variant="outlined"
+                      error={this.state.customerIdError ? true : false}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                    />
+                  )}
+                />
+              ) : null}
+
               <Autocomplete
-                value={this.state.selectedCustomer}
+                value={this.state.selectedJob}
                 onChange={(event, newValue) => {
-                  this.getCustomerJobs(newValue); // Get the customer and get job
+                  this.setState({
+                    selectedJob: newValue ? newValue : "",
+                    jobIdError: "",
+                  }); // Get the customer and get job
                 }}
-                id="country-select-demoq"
+                id="country-select-demo"
                 size="small"
-                options={this.state.customers}
+                options={this.state.jobs}
                 autoHighlight
                 getOptionLabel={(option) =>
-                  option.firstName
-                    ? option.firstName + " " + option.lastName
-                    : option
+                  option.title ? option.title : option
                 }
                 renderOption={(option) => (
                   <React.Fragment>
-                    {option.firstName} {option.lastName} ({option.email})
+                    {option.title} ({option.status})
                   </React.Fragment>
                 )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Choose a customer"
+                    label="Choose a job"
                     fullWidth
                     className={style.styleFormFields}
                     variant="outlined"
-                    error={this.state.customerIdError ? true : false}
+                    error={this.state.jobIdError ? true : false}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -185,91 +229,53 @@ class CreateDeposit extends Component {
                   />
                 )}
               />
-            ) : null}
 
-            <Autocomplete
-              value={this.state.selectedJob}
-              onChange={(event, newValue) => {
-                this.setState({
-                  selectedJob: newValue ? newValue : "",
-                  jobIdError: "",
-                }); // Get the customer and get job
-              }}
-              id="country-select-demo"
-              size="small"
-              options={this.state.jobs}
-              autoHighlight
-              getOptionLabel={(option) =>
-                option.title ? option.title : option
-              }
-              renderOption={(option) => (
-                <React.Fragment>
-                  {option.title} ({option.status})
-                </React.Fragment>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Choose a job"
-                  fullWidth
-                  className={style.styleFormFields}
-                  variant="outlined"
-                  error={this.state.jobIdError ? true : false}
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-password", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
+              <TextField
+                variant="outlined"
+                type="number"
+                size="small"
+                name="quantity"
+                value={quantity}
+                className={style.styleFormFields}
+                label="Blanket Quantity"
+                onChange={this.handleQuantityFormInput}
+                error={this.state.quantityError ? true : false}
+                fullWidth
+              />
 
-            <TextField
-              variant="outlined"
-              type="number"
-              size="small"
-              name="quantity"
-              value={quantity}
-              className={style.styleFormFields}
-              label="Blanket Quantity"
-              onChange={this.handleQuantityFormInput}
-              error={this.state.quantityError ? true : false}
-              fullWidth
-            />
+              <TextField
+                variant="outlined"
+                fullWidth
+                size="small"
+                name="cost"
+                className={style.styleFormFields}
+                type="number"
+                value={cost}
+                label="Cost in $"
+                onChange={this.handleCostFormInput}
+                error={this.state.costError ? true : false}
+              />
 
-            <TextField
-              variant="outlined"
-              fullWidth
-              size="small"
-              name="cost"
-              className={style.styleFormFields}
-              type="number"
-              value={cost}
-              label="Cost in $"
-              onChange={this.handleCostFormInput}
-              error={this.state.costError ? true : false}
+              <div className={style.depositBtn}>
+                <div>
+                  <Button
+                    className={style.button}
+                    onClick={this.handleResetDeposit}
+                    type="button"
+                  >
+                    Reset
+                  </Button>
+                </div>
 
-            />
-
-            <div className={style.depositBtn}>
-              <div>
-                <Button
-                  className={style.button}
-                  onClick={this.handleResetDeposit}
-                  type="button"
-                >
-                  Reset
-                </Button>
+                <div>
+                  <Button type="submit" className={style.button}>
+                    Submit
+                  </Button>
+                </div>
               </div>
-
-              <div>
-                <Button type="submit" className={style.button}>
-                  Submit
-                </Button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
     );
   }

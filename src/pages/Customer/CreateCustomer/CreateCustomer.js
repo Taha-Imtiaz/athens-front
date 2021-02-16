@@ -37,7 +37,7 @@ class CreateCustomer extends Component {
     let emailError = "";
     let firstNameError = "";
     let lastNameError = "";
-    let phoneError = "";
+    // let phoneError = "";
 
     const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -53,16 +53,15 @@ class CreateCustomer extends Component {
       lastNameError = "Last Name should not be empty";
     }
 
-    if (!this.state.phone) {
-      phoneError = "Phone Number should not be empty";
-    }
+    // if (!this.state.phone) {
+    //   phoneError = "Phone Number should not be empty";
+    // }
 
-    if (emailError || firstNameError || lastNameError || phoneError) {
+    if (emailError || firstNameError || lastNameError) {
       this.setState({
         firstNameError,
         lastNameError,
         emailError,
-        phoneError,
       });
       return false;
     }
@@ -153,7 +152,11 @@ class CreateCustomer extends Component {
         if (this.props.isModal) {
           this.props.close(res);
         } else {
+           //reset form to its original state
+          this.handleResetForm()
           history.push("/customer/detail/" + res.data.data._id);
+          
+          console.log(this.initialState)
         }
       });
     }
@@ -238,7 +241,7 @@ class CreateCustomer extends Component {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
-                error={this.state.phoneError ? true : false}
+                // error={this.state.phoneError ? true : false}
                 value={this.state.phone}
                 onChange={this.handleFormInput}
               />

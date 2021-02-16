@@ -158,6 +158,8 @@ class CreateClaim extends Component {
       };
       //call add Claim api to add a claim
       addClaim(data, (res) => {
+        //reset form to its original state
+       this.handleResetForm()
         history.push(`/claim/detail/${res.data.data}`);
       })
     }

@@ -179,10 +179,12 @@ class CreateJob extends Component {
   };
 
   //set the google location in the state
-  handleSetLocation = (choosenLocation) => {
-    console.log(choosenLocation) 
-    let location = cloneDeep(this.state.locations);
-   location.value = choosenLocation
+  handleSetLocation = (e,choosenLocation) => {
+    console.log(e.target.value, choosenLocation) 
+    let location = [...this.state.locations];
+    let searchLocationIndex = this.state.locations.findIndex(location => location.value === choosenLocation)
+    console.log(searchLocationIndex)
+   location[0].value = choosenLocation
    
 
     this.setState({

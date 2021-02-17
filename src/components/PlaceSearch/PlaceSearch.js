@@ -105,10 +105,10 @@ function loadScript(src, position, id) {
         filterSelectedOptions
         value={value}
         onChange={(event, newValue) => {
-            console.log(newValue)
+            console.log(event.target.innerHTML.toString(), newValue)
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);
-          handleSetLocation(newValue.description)
+          handleSetLocation(event,newValue.description)
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);

@@ -11,7 +11,6 @@
   grid-template-columns: 25fr 50fr repeat(2, 12.5fr);
 }
 
-
 .link {
   text-decoration: none !important;
 }

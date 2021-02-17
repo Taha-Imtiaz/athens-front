@@ -9,6 +9,7 @@ import {
   getDeposits,
 } from "../../../Redux/Deposit/DepositActions";
 import Blankets from "../../../components/Blankets/Blankets";
+import SearchBar from "../../../components/SearchBar/SearchBar";
 
 const DepositList = (props) => {
   let { blanketDeposit } = props;
@@ -58,6 +59,9 @@ const DepositList = (props) => {
               <h3>Blanket Deposit</h3>
             </div>
             <div>
+              <SearchBar/>
+            </div>
+            <div>
               <div className={style.btn}>
                 <Link className={style.link} to="/deposit/add">
                   {" "}
@@ -68,7 +72,7 @@ const DepositList = (props) => {
           </div>
 
           {docs && docs.length > 0 && pathname === "/deposits" ? (
-            <div>
+            <div className = {style.blanketContainer}>
               <Blankets
                 items={docs}
                 deleteDeposit={removeBlanketDeposit}

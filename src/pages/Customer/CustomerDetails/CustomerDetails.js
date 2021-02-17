@@ -565,7 +565,8 @@ const CustomerDetails = (props) => {
             <hr />
             {blanketValue && blanketValue.length > 0 ? (
               <Blankets 
-              name = {customer.firstName}
+              firstName = {customer.firstName} 
+              lastName = {customer.lastName}
               items={blanketValue} update={updateBlanket} />
             ) : (
                 <div className="text-center">

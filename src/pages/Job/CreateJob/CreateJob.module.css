@@ -1,5 +1,6 @@
 .createJob {
   display: grid;
+  /* grid-template-rows: minmax(83vh,min-content) 7vh; */
   grid-template-columns: 20fr 60fr 20fr;
   grid-template-areas: ". form .";
   background-color: #e9ecef;
@@ -66,9 +67,14 @@
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
-.movers {
+ .propertyTypeRow {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.5rem;
+}
+.movers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 0.5rem;
 }
 .addLocation {

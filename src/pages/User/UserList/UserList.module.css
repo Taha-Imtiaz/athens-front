@@ -8,7 +8,7 @@
   /* background-color: aqua; */
   display: grid;
   margin-top: 0.5rem;
-  grid-template-columns: 20fr 50fr repeat(2, 15fr);
+  grid-template-columns: 25fr 50fr repeat(2, 12.5fr);
 }
 
 .link {

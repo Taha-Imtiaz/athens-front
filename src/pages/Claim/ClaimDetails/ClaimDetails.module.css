@@ -52,7 +52,7 @@
 .protectionRow {
   grid-area: protectionRow;
   display: grid;
-  grid-template-columns: 14fr 25fr 9fr 30fr repeat(2, 11fr);
+  grid-template-columns: repeat(2,20fr) repeat(2,12fr) repeat(2, 18fr);
   /* width: 100%; */
   column-gap: 0.2rem;
  

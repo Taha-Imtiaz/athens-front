@@ -56,18 +56,27 @@ let initialState = {
         assigneeRequiredError: "",
         selectedDate: new Date(),
         newService: "",
+        newProperty: "",
         customers: [],
         selectedCustomer: "",
         newCustomer: "",
         showAddCustomer: false,
-        serviceOptions : [
+        propertyType: '',
+        price: "",
+        truck: "",
+        serviceOptions: [
             { id: 1, name: "Packaging" },
             { id: 2, name: "Loading" },
             { id: 3, name: "Unloading" },
             { id: 4, name: "Grand Piano" },
             { id: 5, name: "Baby" },
             { id: 6, name: "Hot Tub" },
-          ]
+        ],
+        propertyOptions: [
+            { id: 1, name: "House" },
+            { id: 2, name: "Town House" },
+            { id: 3, name: "Appartement" }
+        ],
     },
     addClaimForm: {
         customerId: "",
@@ -102,7 +111,7 @@ let initialState = {
         title: "",
         waitToError: "",
         waitTo: "",
-        
+
         customerClaims: false,
     },
     addDepositForm: {
@@ -128,23 +137,23 @@ const formsReducer = (state = initialState, action) => {
         case GET_CUSTOMER_FORM:
             return { ...payload.addCustomerForm };
         case RESET_CUSTOMER_FORM:
-            return {...state, addCustomerForm: initialState.addCustomerForm}
-       
-            // JOB
+            return { ...state, addCustomerForm: initialState.addCustomerForm }
+
+        // JOB
         case SET_JOB_FORM:
             return { ...state, addJobForm: payload };
         case GET_JOB_FORM:
             return { ...payload.addJobForm };
-            case RESET_JOB_FORM:
-                return {...state, addJobForm: initialState.addJobForm}
+        case RESET_JOB_FORM:
+            return { ...state, addJobForm: initialState.addJobForm }
 
         // CLAIM
         case SET_CLAIM_FORM:
             return { ...state, addClaimForm: payload };
         case GET_CLAIM_FORM:
             return { ...payload.addClaimForm };
-            case RESET_CLAIM_FORM:
-                return {...state, addClaimForm:initialState.addClaimForm}
+        case RESET_CLAIM_FORM:
+            return { ...state, addClaimForm: initialState.addClaimForm }
 
         // BLANKET
         case SET_DEPOSIT_FORM:
@@ -152,8 +161,8 @@ const formsReducer = (state = initialState, action) => {
         case GET_DEPOSIT_FORM:
             return { ...payload.addDepositForm };
 
-            case RESET_DEPOSIT_FORM:
-            return {...state, addDepositForm: initialState.addDepositForm}
+        case RESET_DEPOSIT_FORM:
+            return { ...state, addDepositForm: initialState.addDepositForm }
         default:
             return state;
     }

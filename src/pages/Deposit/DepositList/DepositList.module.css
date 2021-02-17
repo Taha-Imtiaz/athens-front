@@ -8,8 +8,9 @@
 }
 .toprow {
   display: grid;
-  grid-template-columns: 80fr 20fr;
-  margin-top: 1rem;
+  grid-template-columns: 25fr 50fr 25fr;
+  /* background-color: aquamarine; */
+  margin-top: 0.5rem;
 }
 .btn {
   display: flex;
@@ -28,10 +29,9 @@
 .btn .button:hover {
   background-color: #00adee;
 }
-
-
-
-
+.blanketContainer {
+  padding-top: 1rem;
+}
 .stylePagination {
   display: grid;
   grid-template-columns: 1fr;

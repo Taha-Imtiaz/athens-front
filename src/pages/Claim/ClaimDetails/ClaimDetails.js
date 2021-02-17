@@ -93,13 +93,14 @@ const ClaimDetails = (props) => {
     claims.waitTo = claimInput;
     setWaitTo(true);
     updateClaim(claims, () => { })
-    // .then((res) => {
-    //   if (res.data.status === 200) {
-    //     showMessage(res.data.message);
-    //   }
-    // })
-    // .catch((err) => console.log(err));
   };
+
+  const reopenClaim = () => {
+    let { claims } = props;
+    claims.status = 'open';
+    updateClaim(claims, () => { })
+  };
+
 
   return (
     <div>
@@ -192,13 +193,20 @@ const ClaimDetails = (props) => {
                     Close Claim
                 </Button>
                 ) : (
-                    <Chip
-                      label="Closed"
-                      clickable
-                      color="primary"
-                      variant="outlined"
-                      size="small"
-                    />
+                    // <Chip
+                    //   label="Closed"
+                    //   clickable
+                    //   color="primary"
+                    //   variant="outlined"
+                    //   size="small"
+                    // />
+                    <Button
+                    className={style.button}
+                    onClick = {reopenClaim}
+                    // onClick={() => handleCloseJob()}
+                  >
+                    Re-Open Claim
+                </Button>
                   )}
               </div>
             </div>

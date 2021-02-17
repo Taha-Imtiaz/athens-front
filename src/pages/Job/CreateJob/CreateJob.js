@@ -34,6 +34,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
 
 class CreateJob extends Component {
   //defining state
@@ -76,10 +77,14 @@ class CreateJob extends Component {
     assigneeRequiredError: "",
     selectedDate: new Date(),
     newService: "",
+    newProperty: "",
     customers: [],
     selectedCustomer: "",
     newCustomer: "",
     showAddCustomer: false,
+    propertyType: '',
+    price: "",
+    truck: "",
     serviceOptions: [
       { id: 1, name: "Packaging" },
       { id: 2, name: "Loading" },
@@ -87,6 +92,11 @@ class CreateJob extends Component {
       { id: 4, name: "Grand Piano" },
       { id: 5, name: "Baby" },
       { id: 6, name: "Hot Tub" },
+    ],
+    propertyOptions: [
+      { id: 1, name: "House" },
+      { id: 2, name: "Town House" },
+      { id: 3, name: "Appartement" }
     ],
   };
 
@@ -167,6 +177,20 @@ class CreateJob extends Component {
       locations: prevState,
     });
   };
+
+  //set the google location in the state
+  handleSetLocation = (choosenLocation) => {
+    console.log(choosenLocation) 
+    let location = cloneDeep(this.state.locations);
+   location.value = choosenLocation
+   
+
+    this.setState({
+      locations: location
+    })
+  }
+  
+  
   //function to show all locations
   showLocation = (i) => {
     return (
@@ -192,7 +216,7 @@ class CreateJob extends Component {
           </RadioGroup>
         </div>
         <div className={style.inputField}>
-          <TextField
+          {/* <TextField
             fullWidth
             variant="outlined"
             className={style.styleFormFields}
@@ -215,7 +239,8 @@ class CreateJob extends Component {
             value={this.state.locations[i].value}
             onChange={(e) => this.hanldeLocationInput(i, e)}
           // error={this.state.locationtoError ? true : false}
-          />
+          /> */}
+          <PlaceSearch handleSetLocation = {this.handleSetLocation}/>
         </div>
         {this.state.locations[i].type === "pickup" ? (
           <div
@@ -282,7 +307,7 @@ class CreateJob extends Component {
   //validate form (check if the fields are empty)
   validate = () => {
     let customerIdError = "";
-    let titleError = "";
+    // let titleError = "";
     // let descriptionError = "";
     let multiError = "";
     let locationfromError = "";
@@ -294,9 +319,9 @@ class CreateJob extends Component {
       customerIdError = "Customer should not be empty";
     }
 
-    if (!this.state.title) {
-      titleError = "Title should not be empty";
-    }
+    // if (!this.state.title) {
+    //   titleError = "Title should not be empty";
+    // }
 
     // if (!this.state.description) {
     //   descriptionError = "Description should not be empty";
@@ -316,7 +341,7 @@ class CreateJob extends Component {
 
     if (
       customerIdError ||
-      titleError ||
+      // titleError ||
       // descriptionError ||
       multiError ||
       locationfromError ||
@@ -326,7 +351,7 @@ class CreateJob extends Component {
     ) {
       this.setState({
         customerIdError,
-        titleError,
+        // titleError,
         // descriptionError,
         multiError,
         locationfromError,
@@ -365,6 +390,9 @@ class CreateJob extends Component {
         assigneesId,
         customerId,
         assigneeRequired,
+        propertyType,
+        price,
+        truck,
         jobType,
       } = this.state;
 
@@ -383,6 +411,9 @@ class CreateJob extends Component {
         note,
         assigneesId,
         assigneeRequired,
+        propertyType,
+        price,
+        truck,
         customerId,
         userId: loggedInUser._id,
         jobType,
@@ -430,6 +461,48 @@ class CreateJob extends Component {
       });
     }
   };
+
+  propertyChanged = (newValue) => {
+    // let arr = uniqBy(newValue, "id");
+    console.log(newValue)
+    if (newValue) {
+      this.setState({ propertyType: newValue.name });
+    }
+    else {
+      this.setState({ propertyType: "" });
+    }
+
+    // if (arr.length > 0) {
+    //   this.setState({ multiError: "" });
+    // }
+  };
+
+  addCustomPropertyType = (e) => {
+    e.preventDefault();
+    if (e.target.value) {
+      this.setState({
+        newProperty: e.target.value,
+      });
+      let propertyAdded = {
+        name: this.state.newProperty,
+        id: Math.random() * 10,
+      };
+      if (e.keyCode === 13 && e.target.value) {
+        let propertyOptions = cloneDeep(this.state.propertyOptions);
+        propertyOptions.push(propertyAdded);
+        this.setState({
+          propertyOptions,
+          propertyType: e.target.value,
+        });
+      }
+    } else {
+      this.setState({
+        newProperty: "",
+      });
+    }
+  }
+
+
   //add new customer
   addNewCustomer = (e) => {
     e.preventDefault();
@@ -498,6 +571,7 @@ class CreateJob extends Component {
   };
 
   render() {
+    console.log(this.state.locations)
     return (
       <div>
         <div className={`${style.createJob}`}>
@@ -606,7 +680,7 @@ class CreateJob extends Component {
                 <i className="fa fa-plus"></i>
               </div>
 
-              <div>
+              {/* <div>
                 <TextField
                   variant="outlined"
                   required
@@ -621,7 +695,7 @@ class CreateJob extends Component {
                   value={this.state.title}
                   onChange={this.handleFormInput}
                 />
-              </div>
+              </div> */}
 
               <div className={style.styleEditor}>
                 <Editor
@@ -667,6 +741,59 @@ class CreateJob extends Component {
                 />
               </div>
 
+              <div className={style.propertyTypeRow}>
+                <div>
+                  <Autocomplete
+                    noOptionsText={`Add '${this.state.newProperty}' to property type`}
+                    value={this.state.propertyType}
+                    onChange={(event, newValue) => {
+                      this.propertyChanged(newValue);
+                    }}
+                    limitTags={1}
+                    id="property-tag"
+                    options={
+                      this.state.propertyOptions && this.state.propertyOptions
+                    }
+                    getOptionLabel={(option) =>
+                      option.name ? option.name : option
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        required
+                        onKeyUp={(e) => this.addCustomPropertyType(e)}
+                        {...params}
+                        className={style.styleFormFields}
+                        variant="outlined"
+                        size="small"
+                        label="Property Type"
+                        placeholder="Property Type"
+                        error={this.state.multiError ? true : false}
+                      />
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormControl variant="outlined" margin="dense" fullWidth>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Job Type
+                    </InputLabel>
+                    <Select
+                      required
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={this.state.jobType}
+                      onChange={this.handleFormInput}
+                      label="Job Type"
+                      name="jobType"
+                    >
+                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                      <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+
+
               <div className={style.movers}>
                 <div>
                   <TextField
@@ -687,24 +814,42 @@ class CreateJob extends Component {
                   />
                 </div>
 
+
                 <div>
-                  <FormControl variant="outlined" margin="dense" fullWidth>
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Job Type
-                    </InputLabel>
-                    <Select
-                      required
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={this.state.jobType}
-                      onChange={this.handleFormInput}
-                      label="Job Type"
-                      name="jobType"
-                    >
-                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
-                      <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="dense"
+                    // required
+                    fullWidth
+                    size="small"
+                    id="price"
+                    label="Price"
+                    autoComplete="Price"
+                    name="price"
+                    value={this.state.price}
+                    className={style.styleFormFields}
+                    // error={this.state.assigneeRequiredError ? true : false}
+                    onChange={this.handleFormInput}
+                  />
+                </div>
+                <div>
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="dense"
+                    // required
+                    fullWidth
+                    size="small"
+                    id="truck"
+                    label="Trucks"
+                    autoComplete="Trucks"
+                    name="truck"
+                    value={this.state.truck}
+                    className={style.styleFormFields}
+                    // error={this.state.assigneeRequiredError ? true : false}
+                    onChange={this.handleFormInput}
+                  />
                 </div>
               </div>
 

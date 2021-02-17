@@ -50,6 +50,11 @@ export const updateClaim = (data, callback) => {
         config: { handlerEnabled: true }
       });
       if (response.data.status === 200) {
+        dispatch({
+          type: GET_CLAIM,
+          payload: response.data.data
+  
+        })
         callback(response)
       }
       dispatch(showMessage(response.data.message));

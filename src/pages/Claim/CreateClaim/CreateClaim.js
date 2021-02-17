@@ -159,7 +159,7 @@ class CreateClaim extends Component {
       //call add Claim api to add a claim
       addClaim(data, (res) => {
         //reset form to its original state
-       this.handleResetForm()
+        this.handleResetForm()
         history.push(`/claim/detail/${res.data.data}`);
       })
     }
@@ -212,38 +212,119 @@ class CreateClaim extends Component {
   render() {
     let { showClaimsDetails, customerName } = this.state;
     return (
-      <div className={style.claimContainer}>
-        <div className={`${style.form}`}>
-          <h3 className={style.head}>Create Claim</h3>
-          <form>
-            {this.state.customers.length > 0 ? (
+      <div className={style.claimContainerPage}>
+        <div className={style.claimContainer}>
+          <div className={`${style.form}`}>
+            <h3 className={style.head}>Create Claim</h3>
+            <form>
+              {this.state.customers.length > 0 ? (
+                <Autocomplete
+                  value={this.state.selectedCustomer}
+                  onChange={(event, newValue) => {
+                    this.getCustomerJobs(newValue); // Get the customer and get job
+                  }}
+                  id="country-select-demo"
+                  size="small"
+                  options={this.state.customers}
+                  autoHighlight
+                  getOptionLabel={(option) =>
+                    option.firstName
+                      ? option.firstName + " " + option.lastName
+                      : option
+                  }
+                  renderOption={(option) => (
+                    <React.Fragment>
+                      {option.firstName} {option.lastName} ({option.email})
+                    </React.Fragment>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Choose a customer"
+                      fullWidth
+                      className={style.styleFormFields}
+                      variant="outlined"
+                      error={this.state.customerIdError ? true : false}
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password", // disable autocomplete and autofill
+                      }}
+                    />
+                  )}
+                />
+              ) : null}
+              {this.state.customerClaims && (
+                <div>
+                  <Modal
+                    dialogClassName={`${style.modal}`}
+                    show={this.state.customerClaims}
+                    onHide={this.handleClose}
+                    // animation={false}
+                    centered
+                    scrollable
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>{`${customerName} Claims`}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className={style.claimHeader}>
+                        <div>Protection Type</div>
+                        <div>Status</div>
+                        <div>Last Update</div>
+                      </div>
+
+                      {showClaimsDetails.map((claim, i) => (
+                        <div className={style.claimContent} key={i}>
+                          <div> {claim.claimType}</div>
+                          <div>{claim.status}</div>
+                          <div>
+                            <TimeAgo date={claim.updatedAt} />
+                          </div>
+                        </div>
+                      ))}
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <div className={style.modalBtn}>
+                        <Button
+                          className={style.modalButton}
+                          onClick={this.handleClose}
+                        >
+                          Close
+                      </Button>
+                      </div>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              )}
+
               <Autocomplete
-                value={this.state.selectedCustomer}
+                value={this.state.selectedJob}
                 onChange={(event, newValue) => {
-                  this.getCustomerJobs(newValue); // Get the customer and get job
+                  this.setState({
+                    selectedJob: newValue ? newValue : "",
+                    jobIdError: "",
+                  }); // Get the customer and get job
                 }}
                 id="country-select-demo"
                 size="small"
-                options={this.state.customers}
+                options={this.state.jobs}
                 autoHighlight
                 getOptionLabel={(option) =>
-                  option.firstName
-                    ? option.firstName + " " + option.lastName
-                    : option
+                  option.title ? option.title : option
                 }
                 renderOption={(option) => (
                   <React.Fragment>
-                    {option.firstName} {option.lastName} ({option.email})
+                    {option.title} ({option.status})
                   </React.Fragment>
                 )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Choose a customer"
+                    label="Choose a job"
                     fullWidth
-                    className={style.styleFormFields}
                     variant="outlined"
-                    error={this.state.customerIdError ? true : false}
+                    error={this.state.jobIdError ? true : false}
+                    className={style.styleFormFields}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password", // disable autocomplete and autofill
@@ -251,172 +332,94 @@ class CreateClaim extends Component {
                   />
                 )}
               />
-            ) : null}
-            {this.state.customerClaims && (
-              <div>
-                <Modal
-                  dialogClassName={`${style.modal}`}
-                  show={this.state.customerClaims}
-                  onHide={this.handleClose}
-                  // animation={false}
-                  centered
-                  scrollable
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>{`${customerName} Claims`}</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <div className={style.claimHeader}>
-                      <div>Protection Type</div>
-                      <div>Status</div>
-                      <div>Last Update</div>
-                    </div>
 
-                    {showClaimsDetails.map((claim, i) => (
-                      <div className={style.claimContent} key={i}>
-                        <div> {claim.claimType}</div>
-                        <div>{claim.status}</div>
-                        <div>
-                          <TimeAgo date={claim.updatedAt} />
-                        </div>
-                      </div>
-                    ))}
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <div className={style.modalBtn}>
-                      <Button
-                        className={style.modalButton}
-                        onClick={this.handleClose}
-                      >
-                        Close
-                      </Button>
-                    </div>
-                  </Modal.Footer>
-                </Modal>
-              </div>
-            )}
+              <TextField
+                variant="outlined"
+                required
+                error={this.state.titleError ? true : false}
+                className={style.styleFormFields}
+                size="small"
+                id="title"
+                label="Title"
+                name="title"
+                value={this.state.title}
+                onChange={(e) => this.handleFormInput(e)}
+                fullWidth
+              />
 
-            <Autocomplete
-              value={this.state.selectedJob}
-              onChange={(event, newValue) => {
-                this.setState({
-                  selectedJob: newValue ? newValue : "",
-                  jobIdError: "",
-                }); // Get the customer and get job
-              }}
-              id="country-select-demo"
-              size="small"
-              options={this.state.jobs}
-              autoHighlight
-              getOptionLabel={(option) =>
-                option.title ? option.title : option
-              }
-              renderOption={(option) => (
-                <React.Fragment>
-                  {option.title} ({option.status})
-                </React.Fragment>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Choose a job"
-                  fullWidth
-                  variant="outlined"
-                  error={this.state.jobIdError ? true : false}
-                  className={style.styleFormFields}
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-password", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
+              <TextField
+                variant="outlined"
+                required
+                error={this.state.waitToError ? true : false}
+                className={style.styleFormFields}
+                size="small"
+                id="waitTo"
+                label="Waiting"
+                name="waitTo"
+                value={this.state.waitTo}
+                onChange={(e) => this.handleFormInput(e)}
+                fullWidth
+              />
 
-            <TextField
-              variant="outlined"
-              required
-              error={this.state.titleError ? true : false}
-              className={style.styleFormFields}
-              size="small"
-              id="title"
-              label="Title"
-              name="title"
-              value={this.state.title}
-              onChange={(e) => this.handleFormInput(e)}
-              fullWidth
-            />
-
-            <TextField
-              variant="outlined"
-              required
-              error={this.state.waitToError ? true : false}
-              className={style.styleFormFields}
-              size="small"
-              id="waitTo"
-              label="Waiting"
-              name="waitTo"
-              value={this.state.waitTo}
-              onChange={(e) => this.handleFormInput(e)}
-              fullWidth
-            />
-
-            <div className={style.protectionType}>
-              <div>
-                <FormControl variant="outlined" margin="dense" fullWidth>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Protection Type
+              <div className={style.protectionType}>
+                <div>
+                  <FormControl variant="outlined" margin="dense" fullWidth>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Protection Type
                   </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={this.state.claims.claimType}
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={this.state.claims.claimType}
+                      onChange={(e) => this.hanldeClaimsInput(e)}
+                      label="Claim Type"
+                      name="claimType"
+                    >
+                      <MenuItem value={"BVP"}>BVP</MenuItem>
+                      <MenuItem value={"FVP"}>FVP</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <div>
+                  <TextField
+                    variant="outlined"
+                    required
+                    margin="dense"
+                    fullWidth
+                    size="small"
+                    id="price"
+                    type="number"
+                    label="Total Cost"
+                    name="price"
+                    value={this.state.claims.price}
                     onChange={(e) => this.hanldeClaimsInput(e)}
-                    label="Claim Type"
-                    name="claimType"
-                  >
-                    <MenuItem value={"BVP"}>BVP</MenuItem>
-                    <MenuItem value={"FVP"}>FVP</MenuItem>
-                  </Select>
-                </FormControl>
+                  />
+                </div>
               </div>
-              <div>
-                <TextField
-                  variant="outlined"
-                  required
-                  margin="dense"
-                  fullWidth
-                  size="small"
-                  id="price"
-                  type="number"
-                  label="Total Cost"
-                  name="price"
-                  value={this.state.claims.price}
-                  onChange={(e) => this.hanldeClaimsInput(e)}
-                />
-              </div>
-            </div>
 
-            <TextareaAutosize
-              rowsMax={4}
-              id="description"
-              className={`${style.styleFormFields} ${style.styleTextArea}`}
-              placeholder="Item Description"
-              name="description"
-              value={this.state.claims.description}
-              onChange={(e) => this.hanldeClaimsInput(e)}
-              rows="3"
-            />
+              <TextareaAutosize
+                rowsMax={4}
+                id="description"
+                className={`${style.styleFormFields} ${style.styleTextArea}`}
+                placeholder="Item Description"
+                name="description"
+                value={this.state.claims.description}
+                onChange={(e) => this.hanldeClaimsInput(e)}
+                rows="3"
+              />
 
-            <div className={style.buttons}>
-              <Button className={style.button} onClick={this.handleResetForm}>
-                Reset
+              <div className={style.buttons}>
+                <Button className={style.button} onClick={this.handleResetForm}>
+                  Reset
               </Button>
 
-              <Button className={style.button} onClick={this.mySubmitHandler}>
-                Submit
+                <Button className={style.button} onClick={this.mySubmitHandler}>
+                  Submit
               </Button>
-            </div>
-          </form>
+              </div>
+
+            </form>
+          </div>
         </div>
       </div>
     );

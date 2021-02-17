@@ -27,13 +27,14 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
 
 const DailySchedule = (props) => {
-  let moverAssignedDate;
 
   const [newAssignee, setAssignee] = useState("");
   const [showIndex, setShowIndex] = useState(null);
   const [today, setToday] = useState(new Date().toString());
   const [modalShow, setModalShow] = useState(false);
   const [mover, setMover] = useState("");
+  const [moverAssignedJobs, setMoverAssignedJobs] = useState([]);
+
   const { getalljobs, getalljobsfiveday, movers, newDate } = props;
 
   const routes = [
@@ -259,19 +260,20 @@ const DailySchedule = (props) => {
         let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
-        moverAssignedDate = movers[index].mover.jobs.filter((job) => {
+        let moverAssignedDate = movers[index].mover.jobs.filter((job) => {
+          console.log(job)
           return (
             job.dates.some((date) => date === new Date(today).toDateString()) &&
-            job.status === "pending"
+            job.status === "booked"
           );
         });
 
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
-      console.log(moverAssignedDate)
         if (moverJobs) {
-          
           let mover = movers.find((x) => x.mover._id === moverId);
+          console.log(mover)
           setMover(mover);
+          setMoverAssignedJobs(moverAssignedDate)
           let newAssigneeObj = {
             moverId,
             assigneesId: assigneesId,
@@ -620,8 +622,8 @@ console.log(mover)
             </h5>
           )}
 
-          {mover &&
-            moverAssignedDate.map((job, i) => (
+          {moverAssignedJobs &&
+            moverAssignedJobs.map((job, i) => (
               <div key={i} className={style.styleModalBody}>
                 <a
                   className={style.styleLink}

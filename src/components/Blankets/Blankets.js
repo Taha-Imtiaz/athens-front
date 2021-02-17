@@ -70,9 +70,10 @@ const Blankets = (props) => {
   const handleClose = () => {
     setShow(false);
   };
-  let {name,
+  let {firstName, lastName,
     location: { pathname },
   } = props;
+  
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>
@@ -104,7 +105,7 @@ const Blankets = (props) => {
             <div key={i} className={style.listContainer}>
               <div className={`${style.listContent} `}>
                 <div>
-               {  pathname === `/deposits` ? deposit.customer.firstName : name}
+               {  pathname === `/deposits` ? `${deposit.customer.firstName} ${deposit.customer.lastName}` : `${firstName} ${lastName}`}
                   </div>
                 <div>
                   <Link to={`/job/detail/${deposit.job._id}`}>

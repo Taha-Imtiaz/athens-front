@@ -7,7 +7,7 @@
   grid-area: rowContent;
   display: grid;
   margin-top: 0.5rem;
-  grid-template-columns: 20fr 50fr repeat(2, 15fr);
+  grid-template-columns: 25fr 50fr repeat(2, 12.5fr);
 }
 .styleDates {
   margin: 0 1.5rem;

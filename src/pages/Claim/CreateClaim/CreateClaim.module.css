@@ -6,12 +6,22 @@
 
   /* background-color: rebeccapurple; */
 }
-.claimContainer {
+.claimContainerPage {
   background-color: #e9ecef;
   display: grid;
+  grid-template-rows: minmax(77vh,min-content) 13vh;
+  grid-template-areas: "claimContainer"
+                        ".";
+
+}
+.claimContainer {
+  grid-area: claimContainer;
+  /* background-color: #e9ecef; */
+  display: grid;
+  /* grid-template-rows: 80vh 10vh; */
   grid-template-columns: 20fr 60fr 20fr;
-  grid-template-areas: ". form .";
-                        /* ". . ."; */
+  grid-template-areas: ". form ."
+                        ". . .";
   /* padding: 2rem 0; */
 }
 .form {

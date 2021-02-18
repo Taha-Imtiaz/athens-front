@@ -113,31 +113,8 @@ justify-content: flex-end;
   font-family: sans-serif;
   width: 100%;
 }
-.locationInput {
-  display: grid;
-  grid-template-columns: 33fr repeat(2, 32fr) 3fr;
-  grid-template-areas: "radioButtons inputField checkBox TrashIcon";
-}
-.radioButtons {
-  grid-area: radioButtons;
-}
-.inputField {
-  grid-area: inputField;
-}
-.checkBox {
-  grid-area: checkBox;
-}
-.TrashIcon {
-  grid-area: TrashIcon;
-}
 
-.rowFlex {
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-}
-.styleRadio {
-  color: #00adee;
-}
+
 .flex {
   display: flex;
 }

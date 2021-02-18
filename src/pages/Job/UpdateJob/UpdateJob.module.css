@@ -82,7 +82,8 @@ justify-content: flex-end;
 }
 .inputField {
   grid-area: inputField;
-  margin-top: 0.7rem !important;
+  /* padding: 0 1.5rem !important; */
+  /* margin-top: 0.7rem !important; */
 }
 .checkBox {
   grid-area: checkBox;
@@ -92,9 +93,13 @@ justify-content: flex-end;
   grid-area: TrashIcon;
 }
 .styleRadio {
-  color: #00adee !important;
+  color: #00adee 
 }
-
+.propertyTypeRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0.5rem;
+}
 .rowFlex {
   flex-direction: row !important;
   flex-wrap: nowrap !important;

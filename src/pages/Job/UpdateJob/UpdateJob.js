@@ -34,6 +34,7 @@ import { ContentState, convertToRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
+import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
 
 class UpdateJob extends Component {
   //defining state
@@ -46,7 +47,7 @@ class UpdateJob extends Component {
     endDate: "",
     startTime: "",
     meetTime: "",
-    jobType: "Fixed",
+    jobType: "",
     title: "",
     titleError: "",
     descriptionError: "",
@@ -69,7 +70,12 @@ class UpdateJob extends Component {
       { id: 4, name: "Grand Piano" },
       { id: 5, name: "Baby" },
       { id: 6, name: "Hot Tub" },
-    ]
+    ],
+    propertyOptions: [
+      { id: 1, name: "House" },
+      { id: 2, name: "Town House" },
+      { id: 3, name: "Appartement" }
+    ],
   };
 
 
@@ -153,6 +159,7 @@ class UpdateJob extends Component {
 
 
   setInitialState = (job) => {
+    console.log(job)
     const contentBlock = htmlToDraft(job.description);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(
@@ -189,6 +196,11 @@ class UpdateJob extends Component {
       customerId: job.customer.email,
       assigneeRequired: job.assigneeRequired,
       services: job.services,
+      propertyType: job.propertyType,
+      price: job.price,
+      truck: job.truck,
+      newService: "",
+      newProperty: "",
     });
   }
   //show modal when addNote button is pressed
@@ -332,16 +344,36 @@ class UpdateJob extends Component {
   changeCheckBoxState = (i) => {
     let prevState = cloneDeep(this.state.locations);
     prevState[i].default = !prevState[i].default;
-    if (prevState[i].default) {
-      prevState[i].value =
-      prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
-    } else {
-      prevState[i].value = prevState[i].value.split('(')[0]
-    }
+    // if (prevState[i].default) {
+    //   prevState[i].value =
+    //   prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
+    // } else {
+    //   prevState[i].value = prevState[i].value.split('(')[0]
+    // }
     this.setState({
       locations: prevState,
     });
   };
+
+  //set the google location in the state
+  handleSetLocation = (choosenLocation, index) => {
+    // console.log(e.target.value, choosenLocation) 
+    let value = choosenLocation ? choosenLocation.description : ''
+    let location = [...this.state.locations];
+
+    location[index].value = value;
+    console.log(location)
+
+    //   let searchLocationIndex = this.state.locations.findIndex(location => location.value === choosenLocation)
+    //   console.log(searchLocationIndex)
+    //  location[0].value = choosenLocation
+
+
+    this.setState({
+      locations: location
+    })
+  }
+
   //show Locations
   showLocation = (i) => {
     return (
@@ -367,7 +399,8 @@ class UpdateJob extends Component {
           </RadioGroup>
         </div>
         <div>
-          <TextField
+          <PlaceSearch handleSetLocation={this.handleSetLocation} index={i} />
+          {/* <TextField
             fullWidth
             variant="outlined"
             required
@@ -389,7 +422,7 @@ class UpdateJob extends Component {
             value={this.state.locations[i].value}
             onChange={(e) => this.hanldeLocationInput(i, e)}
           // error={this.state.locationtoError ? true : false}
-          />
+          /> */}
         </div>
         {this.state.locations[i].type === "pickup" ? (
           <div
@@ -458,6 +491,22 @@ class UpdateJob extends Component {
     let arr = uniqBy(newValue, "id");
     this.setState({ services: arr });
   };
+//onChange handler of propertytype
+  propertyChanged = (newValue) => {
+    // let arr = uniqBy(newValue, "id");
+   
+    if (newValue) {
+      this.setState({ propertyType: newValue.name });
+    }
+    else {
+      this.setState({ propertyType: "" });
+    }
+
+    // if (arr.length > 0) {
+    //   this.setState({ multiError: "" });
+    // }
+  };
+
   //add custom service
   addCustomService = (e) => {
     e.preventDefault();
@@ -486,6 +535,31 @@ class UpdateJob extends Component {
       });
     }
   };
+   //add custom property
+  addCustomPropertyType = (e) => {
+    e.preventDefault();
+    if (e.target.value) {
+      this.setState({
+        newProperty: e.target.value,
+      });
+      let propertyAdded = {
+        name: this.state.newProperty,
+        id: Math.random() * 10,
+      };
+      if (e.keyCode === 13 && e.target.value) {
+        let propertyOptions = cloneDeep(this.state.propertyOptions);
+        propertyOptions.push(propertyAdded);
+        this.setState({
+          propertyOptions,
+          propertyType: e.target.value,
+        });
+      }
+    } else {
+      this.setState({
+        newProperty: "",
+      });
+    }
+  }
   //change editor's state
   onEditorStateChange = (e) => {
     this.setState({
@@ -643,8 +717,85 @@ class UpdateJob extends Component {
               <i className="fa fa-plus"></i>
             </div>
 
-            <div className={style.movers}>
+
+            <div className={style.propertyTypeRow}>
               <div>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                className={style.styleFormFields}
+                size="small"
+                id="startTime"
+                // label="Start Time"
+                type = "time"
+                name="startTime"
+                autoComplete="startTime"
+                autoFocus
+                value={this.state.startTime}
+                onChange={this.handleFormInput}
+                // error={this.state.titleError ? true : false}
+                />
+              </div>
+              <div>
+                <Autocomplete
+                  noOptionsText={`Add '${this.state.newProperty}' to property type`}
+                  value={this.state.propertyType}
+                  onChange={(event, newValue) => {
+                    this.propertyChanged(newValue);
+                  }}
+                  limitTags={1}
+                  id="property-tag"
+                  options={
+                    this.state.propertyOptions && this.state.propertyOptions
+                  }
+                  getOptionLabel={(option) =>
+                    option.name ? option.name : option
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      onKeyUp={(e) => this.addCustomPropertyType(e)}
+                      {...params}
+                      className={style.styleFormFields}
+                      variant="outlined"
+                      size="small"
+                      label="Property Type"
+                      placeholder="Property Type"
+                      error={this.state.multiError ? true : false}
+                    />
+                  )}
+                />
+              </div>
+            
+              <div>
+                <FormControl variant="outlined" margin="dense" fullWidth>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Job Type
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={this.state.jobType}
+                    onChange={this.handleFormInput}
+                    label="Job Type"
+                    name="jobType"
+                  >
+                    <MenuItem value={this.state.jobType}>
+                      {this.state && this.state.jobType}
+                    </MenuItem>
+                    {this.state.jobType === "Fixed" ? (
+                      <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
+                    ) : (
+                        <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                      )}
+                  </Select>
+                </FormControl>
+              </div>
+             
+            </div>
+            <div className={style.movers}>
+            <div>
                 <TextField
                   type="number"
                   variant="outlined"
@@ -662,30 +813,7 @@ class UpdateJob extends Component {
                 />
               </div>
 
-              <div>
-                <FormControl variant="outlined" margin="dense" fullWidth>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Job Type
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={this.state.jobType}
-                    onChange={this.handleFormInput}
-                    label="Job Type"
-                    name="jobType"
-                  >
-                    <MenuItem value={this.state.jobType}>
-                      {this.state.jobType}
-                    </MenuItem>
-                    {this.state.jobType === "Fixed" ? (
-                      <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
-                    ) : (
-                        <MenuItem value={"Fixed"}>Fixed</MenuItem>
-                      )}
-                  </Select>
-                </FormControl>
-              </div>
+            
             </div>
             {
               this.state.locations && <div>
@@ -797,7 +925,7 @@ var actions = {
 
 var mapStateToProps = (state) => ({
   loggedinUser: state.users.user,
-  job: state.jobs.job
+  job: state.jobs && state.jobs.job
 });
 
 export default connect(mapStateToProps, actions)(UpdateJob);

@@ -28,7 +28,6 @@ const CalendarApp = (props) => {
 //get count of job and movers
 const getCount = (e, jobs) => {
   // let jobs = cloneDeep(state.jobs);
-console.log("get movers called")
   let currentDayJobs = [];
   jobs.forEach((x) => {
     x.dates.forEach((y) => {

@@ -155,8 +155,6 @@ class CreateCustomer extends Component {
            //reset form to its original state
           this.handleResetForm()
           history.push("/customer/detail/" + res.data.data._id);
-          
-          console.log(this.initialState)
         }
       });
     }

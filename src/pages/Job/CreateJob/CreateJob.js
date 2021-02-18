@@ -11,10 +11,7 @@ import {
   Button,
   Select,
   TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Checkbox,
+
 } from "@material-ui/core";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
@@ -28,13 +25,14 @@ import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
-import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
+
+import AddLocation from "../../../components/AddLocation/AddLocation";
 
 class CreateJob extends Component {
   //defining state
@@ -45,13 +43,13 @@ class CreateJob extends Component {
 
   initialState = {
     editorState: EditorState.createEmpty(),
-    title: "",
+    // title: "",
     description: "",
     services: [],
     customerId: "",
     startDate: "",
     dates: [new Date()],
-    startTime: "",
+    startTime: new Date("2020-08-18T09:00:00"),
     anchorEl: "",
     meetTime: "",
     assigneeRequired: "",
@@ -67,7 +65,7 @@ class CreateJob extends Component {
     locationfromError: "",
     locationtoError: "",
     assigneeList: [],
-    jobType: "Fixed",
+    jobType: "Hourly Based",
     status: "pending",
     note: [],
     assigneesId: [],
@@ -115,21 +113,11 @@ class CreateJob extends Component {
     //get all customers and jobs
     let { getCustomersAndJobs } = this.props;
     getCustomersAndJobs(res => {
+    
       this.setState({ customers: res.data.data });
     });
   };
-  //onchange handler of radio buttons
-  handleInputChange = (e, i) => {
-    let { value } = e.target;
 
-    let updateLocation = cloneDeep(this.state.locations);
-    updateLocation[i].type = value;
-    updateLocation[i].value = "";
-    updateLocation[i].default = false;
-    this.setState({
-      locations: updateLocation,
-    });
-  };
   //handler to add location
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
@@ -162,143 +150,20 @@ class CreateJob extends Component {
     }
   };
 
-  //change the state of textbox
-  changeCheckBoxState = (e, i) => {
-    e.stopPropagation();
-    let prevState = cloneDeep(this.state.locations);
-    prevState[i].default = !prevState[i].default;
-    if (prevState[i].default) {
-      prevState[i].value =
-        prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`);
-    } else {
-      prevState[i].value = prevState[i].value.split('(')[0]
-    }
-    this.setState({
-      locations: prevState,
-    });
-  };
-
-  //set the google location in the state
-  handleSetLocation = (e,choosenLocation) => {
-    console.log(e.target.value, choosenLocation) 
-    let location = [...this.state.locations];
-    let searchLocationIndex = this.state.locations.findIndex(location => location.value === choosenLocation)
-    console.log(searchLocationIndex)
-   location[0].value = choosenLocation
-   
-
-    this.setState({
-      locations: location
-    })
-  }
-  
-  
-  //function to show all locations
-  showLocation = (i) => {
-    return (
-      <div className={style.locationInput} key={i}>
-        <div className={style.radioButtons}>
-          <RadioGroup
-            className={style.rowFlex}
-            value={this.state.locations[i].type}
-            onChange={(e) => this.handleInputChange(e, i)}
-          >
-            <FormControlLabel
-              value="pickup"
-              name="pickup"
-              control={<Radio className={style.styleRadio} />}
-              label="Pickup"
-            />
-            <FormControlLabel
-              value="dropoff"
-              name="dropoff"
-              control={<Radio className={style.styleRadio} />}
-              label="DropOff"
-            />
-          </RadioGroup>
-        </div>
-        <div className={style.inputField}>
-          {/* <TextField
-            fullWidth
-            variant="outlined"
-            className={style.styleFormFields}
-            required
-            size="small"
-            id="to"
-            label={
-              this.state.locations[i].type === "pickup"
-                ? "Enter Pickup Point"
-                : this.state.locations[i].type === "dropoff"
-                  ? "Enter DropOff Point"
-                  : "Choose Type"
-            }
-            disabled={
-              (this.state.locations[i].type ? false : true) ||
-              this.state.locations[i].default
-            }
-            // label={'Pickup / dropoff point'}
-            name={this.state.locations[i].type}
-            value={this.state.locations[i].value}
-            onChange={(e) => this.hanldeLocationInput(i, e)}
-          // error={this.state.locationtoError ? true : false}
-          /> */}
-          <PlaceSearch handleSetLocation = {this.handleSetLocation}/>
-        </div>
-        {this.state.locations[i].type === "pickup" ? (
-          <div
-            className={
-              this.state.locations[i].type === "pickup" ? style.checkBox : null
-            }
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={this.state.locations[i].default}
-                  // onChange={(e) => this.handleCheckBox(e, i)}
-                  onClick={(e) => this.changeCheckBoxState(e, i)}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Load only / IA"
-            />
-          </div>
-        ) : this.state.locations[i].type === "dropoff" ? (
-          <div className={this.state.locations[i].type === "dropoff" ? style.checkBox : null}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={this.state.locations[i].default}
-                  // onChange={(e) => this.handleCheckBox(e, i)}
-                  onClick={(e) => this.changeCheckBoxState(e, i)}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Unload Only"
-            />
-          </div>
-        ) : null}
-        <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
-          <FontAwesomeIcon
-            icon={faTrash}
-            onClick={() => this.removeLocation(i)}
-          ></FontAwesomeIcon>
-        </div>
-      </div>
-    );
-  };
   //remove location
-  removeLocation = (i) => {
-    let location = cloneDeep(this.state.locations);
-    location.splice(i, 1);
-    this.setState({
-      locations: location,
-    });
-  };
+  // removeLocation = (i) => {
+  //   let location = cloneDeep(this.state.locations);
+  //   console.log(location)
+  //   location.splice(i, 1);
+  //   console.log(location)
+  //   this.setState({
+  //     locations: location,
+  //   });
+  // };
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
+  
     this.setState({ [name]: value });
     if (value === "") {
       // this.setState({ [name + "Error"]: "Should not be empty" });
@@ -314,7 +179,7 @@ class CreateJob extends Component {
     let multiError = "";
     let locationfromError = "";
     let locationtoError = "";
-    let assigneeRequiredError = "";
+    // let assigneeRequiredError = "";
     let jobTypeError = "";
 
     if (!this.state.customerId) {
@@ -333,9 +198,9 @@ class CreateJob extends Component {
       multiError = "Services Should not be empty";
     }
 
-    if (!this.state.assigneeRequired) {
-      assigneeRequiredError = "Required count should not be empty";
-    }
+    // if (!this.state.assigneeRequired) {
+    //   assigneeRequiredError = "Required count should not be empty";
+    // }
 
     if (!this.state.jobType) {
       jobTypeError = "Job type is required.";
@@ -348,7 +213,7 @@ class CreateJob extends Component {
       multiError ||
       locationfromError ||
       locationtoError ||
-      assigneeRequiredError ||
+      // assigneeRequiredError ||
       jobTypeError
     ) {
       this.setState({
@@ -358,7 +223,7 @@ class CreateJob extends Component {
         multiError,
         locationfromError,
         locationtoError,
-        assigneeRequiredError,
+        // assigneeRequiredError,
         jobTypeError,
       });
       return false;
@@ -381,7 +246,7 @@ class CreateJob extends Component {
     const isValid = this.validate();
     if (isValid) {
       let {
-        title,
+        // title,
         description,
         services,
         dates,
@@ -397,13 +262,13 @@ class CreateJob extends Component {
         truck,
         jobType,
       } = this.state;
-
+     
       let stringDates = dates.map((x) =>
         x !== ("" || null) ? x.toDateString() : null
       );
       stringDates = stringDates.filter(Boolean);
       let createJobObj = {
-        title,
+        // title,
         description,
         services,
         dates: stringDates,
@@ -420,6 +285,7 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType,
       };
+      console.log(createJobObj)
       createJob(createJobObj, (job) => {
         //reset form to its original state
         this.handleResetJob()
@@ -466,7 +332,7 @@ class CreateJob extends Component {
 
   propertyChanged = (newValue) => {
     // let arr = uniqBy(newValue, "id");
-    console.log(newValue)
+   
     if (newValue) {
       this.setState({ propertyType: newValue.name });
     }
@@ -572,8 +438,14 @@ class CreateJob extends Component {
     this.setState({ ...this.initialState, customers });
   };
 
+  handleLocationChange = (locations) => {
+    this.setState({
+      locations
+    });
+  }
+
   render() {
-    console.log(this.state.locations)
+  
     return (
       <div>
         <div className={`${style.createJob}`}>
@@ -654,7 +526,7 @@ class CreateJob extends Component {
                                 inputVariant="outlined"
                                 fullWidth
                                 size="small"
-                                id="date-picker-dialog"
+                                id="date-picker-dialog" 
                                 className={style.styleFormFields}
                                 format="MM/dd/yyyy"
                                 value={this.state.dates[i]}
@@ -811,7 +683,7 @@ class CreateJob extends Component {
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
                     className={style.styleFormFields}
-                    error={this.state.assigneeRequiredError ? true : false}
+                    // error={this.state.assigneeRequiredError ? true : false}
                     onChange={this.handleFormInput}
                   />
                 </div>
@@ -867,17 +739,8 @@ class CreateJob extends Component {
 
               {this.state.locations.length > 0 && (
                 <div>
-                  {this.state.locations.map((location, i) =>
-                    this.showLocation(i)
-                  )}
-                </div>
-              )}
-              {this.state.locations.length > 0 && (
-                <div className={style.alignRight}>
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    onClick={this.addLocation}
-                  ></FontAwesomeIcon>
+                  <AddLocation locationArr={this.state.locations} removeLocation={this.removeLocation} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
+
                 </div>
               )}
 

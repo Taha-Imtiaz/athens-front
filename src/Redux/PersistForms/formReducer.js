@@ -46,7 +46,7 @@ let initialState = {
         locationfromError: "",
         locationtoError: "",
         assigneeList: [],
-        jobType: "Fixed",
+        jobType: "Hourly Based",
         status: "pending",
         note: [],
         assigneesId: [],

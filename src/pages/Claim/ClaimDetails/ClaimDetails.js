@@ -12,6 +12,7 @@ const ClaimDetails = (props) => {
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [waitTo, setWaitTo] = useState(true);
+  const [toggleClaim, setToggleClaim] = useState(false)
   const [claimInput, setClaimInput] = useState('');
 
   let {
@@ -40,13 +41,10 @@ const ClaimDetails = (props) => {
     let { claims } = props;
 
     claims.status = "closed";
+    console.log(claims)
     updateClaim(claims, () => { })
-    // .then((res) => {
-    //   if (res.data.status === 200) {
-    //     showMessage(res.data.message);
-    //   }
-    // })
-    // .catch((err) => console.log(err));
+    setToggleClaim(false)
+
   };
 
   const handleShow = () => {
@@ -69,15 +67,7 @@ const ClaimDetails = (props) => {
         setShow(false);
         setUpdate("");
       })
-      // .then((res) => {
-      //   if (res.data.status === 200) {
-      //     claims.updates = res.data.data.updates;
-      //     setShow(false);
-      //     setUpdate("");
-      //     showMessage(res.data.message);
-      //   }
-      // })
-      // .catch((err) => console.log(err));
+
     }
   };
 
@@ -99,6 +89,7 @@ const ClaimDetails = (props) => {
     let { claims } = props;
     claims.status = 'open';
     updateClaim(claims, () => { })
+    setToggleClaim(false)
   };
 
 
@@ -180,7 +171,7 @@ const ClaimDetails = (props) => {
                 {claims.status === "open" ? (
                   <Button className={style.button} onClick={() => handleShow()}>
                     Add Update
-                </Button>
+                  </Button>
                 ) : null}
               </div>
 
@@ -188,25 +179,21 @@ const ClaimDetails = (props) => {
                 {claims.status === "open" ? (
                   <Button
                     className={style.button}
-                    onClick={() => handleCloseJob()}
+                    onClick={() => setToggleClaim(true)}
+                  // onClick={() => handleCloseJob()}
                   >
                     Close Claim
-                </Button>
+                  </Button>
                 ) : (
-                    // <Chip
-                    //   label="Closed"
-                    //   clickable
-                    //   color="primary"
-                    //   variant="outlined"
-                    //   size="small"
-                    // />
+
                     <Button
-                    className={style.button}
-                    onClick = {reopenClaim}
+                      className={style.button}
+                      onClick={() => setToggleClaim(true)}
+                    // onClick = {reopenClaim}
                     // onClick={() => handleCloseJob()}
-                  >
-                    Re-Open Claim
-                </Button>
+                    >
+                      Re-Open Claim
+                    </Button>
                   )}
               </div>
             </div>
@@ -242,7 +229,7 @@ const ClaimDetails = (props) => {
                 {waitTo === false ? (
                   <Button className={style.button} onClick={disableInput}>
                     Save
-                </Button>
+                  </Button>
                 ) : <Button className={style.button} onClick={editInput}>
                     Edit
             </Button>
@@ -270,6 +257,36 @@ const ClaimDetails = (props) => {
             ) : null}
           </div>
         </div>
+
+        {/* modal for close and reopen claims */}
+        <Modal
+          show={toggleClaim}
+          onHide={() => setToggleClaim(false)}
+          scrollable
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {claims.status === 'open' ? `Do you want to close this claim ?` : `Do you want to reopen this claim ?`}
+          </Modal.Body>
+          <Modal.Footer>
+            <div className={style.flexEnd}>
+              <Button className={style.button} onClick={() => setToggleClaim(false)}>
+                Close
+            </Button>
+              {claims.status === 'open' ? <Button className={style.button} onClick={() => handleCloseJob()}>
+                Confirm
+            </Button>
+                : <Button className={style.button} onClick={reopenClaim}>
+                  Confirm
+            </Button>
+              }
+            </div>
+          </Modal.Footer>
+        </Modal>
+
         <Modal
           show={show}
           onHide={handleClose}

@@ -588,7 +588,7 @@ const JobsList = (props) => {
                           className={`${style.services} ${style.flex} ${style.item}`}
                         >
                           <div className={style.styleSpan}>
-                            {job.services ? job.services[0].name : null}
+                            {job.services.length > 0 ? job.services[0].name : "N/A"}
                             {job.services.length > 1 && (
                               <div>
                                 <Typography

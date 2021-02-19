@@ -68,6 +68,14 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
+  grid-template-areas: "styleLink";
+}
+.styleLink {
+  grid-area: styleLink;
+  display: grid;
+  text-decoration: none !important;
+  color: black !important;
+  grid-template-columns: 1fr;
   grid-template-areas: "userList";
 }
 .listContent:hover {

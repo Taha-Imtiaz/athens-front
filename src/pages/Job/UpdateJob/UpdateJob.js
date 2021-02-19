@@ -14,6 +14,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import { v4 as uuidv4 } from "uuid";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,10 +24,7 @@ import {
   Select,
   TextField,
   Button,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Checkbox,
+ 
   TextareaAutosize,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
@@ -34,7 +32,8 @@ import { ContentState, convertToRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
+
+import AddLocation from "../../../components/AddLocation/AddLocation";
 
 class UpdateJob extends Component {
   //defining state
@@ -45,9 +44,10 @@ class UpdateJob extends Component {
     startDate: "",
     dates: [""],
     endDate: "",
-    startTime: "",
+    // startTime: "",
     meetTime: "",
     jobType: "",
+    propertyType: '',
     title: "",
     titleError: "",
     descriptionError: "",
@@ -63,6 +63,8 @@ class UpdateJob extends Component {
     status: "",
     assigneeRequired: "",
     newService: "",
+    price: '',
+    truck: '',
     serviceOptions: [
       { id: 1, name: "Packaging" },
       { id: 2, name: "Loading" },
@@ -159,7 +161,7 @@ class UpdateJob extends Component {
 
 
   setInitialState = (job) => {
-    console.log(job)
+
     const contentBlock = htmlToDraft(job.description);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(
@@ -184,7 +186,7 @@ class UpdateJob extends Component {
       endDate: Date.parse(job.endDate),
       startDateInString: job.startDate,
       endDateInString: job.endDate,
-      startTime: job.startTime,
+      startTime: job.startTime.split('.')[0].toString(),
       locations: job.locations,
       jobType: job.jobType,
       description: job.description,
@@ -210,13 +212,13 @@ class UpdateJob extends Component {
     });
   };
   //remove location
-  removeLocation = (i) => {
-    let location = cloneDeep(this.state.locations);
-    location.splice(i, 1);
-    this.setState({
-      locations: location,
-    });
-  };
+  // removeLocation = (i) => {
+  //   let location = cloneDeep(this.state.locations);
+  //   location.splice(i, 1);
+  //   this.setState({
+  //     locations: location,
+  //   });
+  // };
   //close note modal
   handleClose = (notes) => {
     this.setState({
@@ -312,14 +314,14 @@ class UpdateJob extends Component {
     }
   };
   //onChange handler of locations
-  hanldeLocationInput = (i, e) => {
-    let updateLocation = cloneDeep(this.state.locations);
-    updateLocation[i].value = e.target.value;
-    this.setState({ locations: updateLocation });
-    if (e.target.value) {
-      this.setState({ locationfromError: "" });
-    }
-  };
+  // hanldeLocationInput = (i, e) => {
+  //   let updateLocation = cloneDeep(this.state.locations);
+  //   updateLocation[i].value = e.target.value;
+  //   this.setState({ locations: updateLocation });
+  //   if (e.target.value) {
+  //     this.setState({ locationfromError: "" });
+  //   }
+  // };
 
   //add new location
   addLocation = () => {
@@ -330,30 +332,30 @@ class UpdateJob extends Component {
     });
   };
   //onChange handler of radio buttons
-  handleInputChange = (e, i) => {
-    let { value } = e.target;
-    let updateLocation = cloneDeep(this.state.locations);
-    updateLocation[i].type = value;
-    updateLocation[i].value = "";
-    updateLocation[i].default = false;
-    this.setState({
-      locations: updateLocation,
-    });
-  };
+  // handleInputChange = (e, i) => {
+  //   let { value } = e.target;
+  //   let updateLocation = cloneDeep(this.state.locations);
+  //   updateLocation[i].type = value;
+  //   updateLocation[i].value = "";
+  //   updateLocation[i].default = false;
+  //   this.setState({
+  //     locations: updateLocation,
+  //   });
+  // };
   //change checkBox state
-  changeCheckBoxState = (i) => {
-    let prevState = cloneDeep(this.state.locations);
-    prevState[i].default = !prevState[i].default;
-    // if (prevState[i].default) {
-    //   prevState[i].value =
-    //   prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
-    // } else {
-    //   prevState[i].value = prevState[i].value.split('(')[0]
-    // }
-    this.setState({
-      locations: prevState,
-    });
-  };
+  // changeCheckBoxState = (i) => {
+  //   let prevState = cloneDeep(this.state.locations);
+  //   prevState[i].default = !prevState[i].default;
+  //   // if (prevState[i].default) {
+  //   //   prevState[i].value =
+  //   //   prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
+  //   // } else {
+  //   //   prevState[i].value = prevState[i].value.split('(')[0]
+  //   // }
+  //   this.setState({
+  //     locations: prevState,
+  //   });
+  // };
 
   //set the google location in the state
   handleSetLocation = (choosenLocation, index) => {
@@ -374,104 +376,7 @@ class UpdateJob extends Component {
     })
   }
 
-  //show Locations
-  showLocation = (i) => {
-    return (
-      <div className={style.locationInput}>
-        <div className={style.radioButtons}>
-          <RadioGroup
-            className={style.rowFlex}
-            value={this.state.locations[i].type}
-            onChange={(e) => this.handleInputChange(e, i)}
-          >
-            <FormControlLabel
-              value="pickup"
-              name="pickup"
-              control={<Radio className={style.styleRadio} />}
-              label="Pickup"
-            />
-            <FormControlLabel
-              value="dropoff"
-              name="dropoff"
-              control={<Radio className={style.styleRadio} />}
-              label="Dropoff"
-            />
-          </RadioGroup>
-        </div>
-        <div>
-          <PlaceSearch handleSetLocation={this.handleSetLocation} index={i} />
-          {/* <TextField
-            fullWidth
-            variant="outlined"
-            required
-            className={style.inputField}
-            size="small"
-            id="to"
-            label={
-              this.state.locations[i].type === "pickup"
-                ? "PickUp Location"
-                : this.state.locations[i].type === "dropoff"
-                  ? "Drop Off Location"
-                  : "Choose Location"
-            }
-            disabled={
-              (this.state.locations[i].type ? false : true) ||
-              this.state.locations[i].default
-            }
-            name={this.state.locations[i].type}
-            value={this.state.locations[i].value}
-            onChange={(e) => this.hanldeLocationInput(i, e)}
-          // error={this.state.locationtoError ? true : false}
-          /> */}
-        </div>
-        {this.state.locations[i].type === "pickup" ? (
-          <div
-            className={
-              this.state.locations[i].type === "pickup" ? style.checkBox : null
-            }
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={this.state.locations[i].default}
-                  // onChange={(e) => this.handleCheckBox(e, i)}
-                  onClick={() => this.changeCheckBoxState(i)}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Load only / IA"
-            />
-          </div>
-        ) : this.state.locations[i].type === "dropoff" ? (
-          <div
-            className={
-              this.state.locations[i].type === "dropoff" ? style.checkBox : null
-            }
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={this.state.locations[i].default}
-                  // onChange={(e) => this.handleCheckBox(e, i)}
-                  onClick={() => this.changeCheckBoxState(i)}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Unload Only"
-            />
-          </div>
-        ) : null}
-        <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
-          <FontAwesomeIcon
-            icon={faTrash}
-            onClick={() => this.removeLocation(i)}
-          ></FontAwesomeIcon>
-        </div>
-      </div>
-    );
-  };
+
   //add date on Clicking plus icon
   addDate = () => {
     if (this.state.dates[0]) {
@@ -491,10 +396,10 @@ class UpdateJob extends Component {
     let arr = uniqBy(newValue, "id");
     this.setState({ services: arr });
   };
-//onChange handler of propertytype
+  //onChange handler of propertytype
   propertyChanged = (newValue) => {
     // let arr = uniqBy(newValue, "id");
-   
+
     if (newValue) {
       this.setState({ propertyType: newValue.name });
     }
@@ -535,7 +440,7 @@ class UpdateJob extends Component {
       });
     }
   };
-   //add custom property
+  //add custom property
   addCustomPropertyType = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -567,6 +472,18 @@ class UpdateJob extends Component {
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
   };
+  handleTimeChange = (time) => {
+    this.setState({
+      startTime: time
+    })
+  }
+
+  handleLocationChange = (locations) => {
+    this.setState({
+      locations
+    });
+  }
+
   render() {
     let {
       note,
@@ -720,22 +637,22 @@ class UpdateJob extends Component {
 
             <div className={style.propertyTypeRow}>
               <div>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                size="small"
-                id="startTime"
-                // label="Start Time"
-                type = "time"
-                name="startTime"
-                autoComplete="startTime"
-                autoFocus
-                value={this.state.startTime}
-                onChange={this.handleFormInput}
-                // error={this.state.titleError ? true : false}
-                />
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid container justify="space-around">
+                    <KeyboardTimePicker
+                      // margin="normal"
+                      id="startTime"
+
+                      label="Start Time"
+                      value={this.state.startTime}
+                      onChange={this.handleTimeChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change time',
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
               </div>
               <div>
                 <Autocomplete
@@ -759,6 +676,7 @@ class UpdateJob extends Component {
                       {...params}
                       className={style.styleFormFields}
                       variant="outlined"
+                      // value={this.state.propertyType}
                       size="small"
                       label="Property Type"
                       placeholder="Property Type"
@@ -767,7 +685,7 @@ class UpdateJob extends Component {
                   )}
                 />
               </div>
-            
+
               <div>
                 <FormControl variant="outlined" margin="dense" fullWidth>
                   <InputLabel id="demo-simple-select-outlined-label">
@@ -784,18 +702,19 @@ class UpdateJob extends Component {
                     <MenuItem value={this.state.jobType}>
                       {this.state && this.state.jobType}
                     </MenuItem>
-                    {this.state.jobType === "Fixed" ? (
-                      <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
+                    {this.state.jobType !== "Fixed" ? (
+                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                     
                     ) : (
-                        <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                         <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
                       )}
                   </Select>
                 </FormControl>
               </div>
-             
+
             </div>
             <div className={style.movers}>
-            <div>
+              <div>
                 <TextField
                   type="number"
                   variant="outlined"
@@ -812,8 +731,42 @@ class UpdateJob extends Component {
                   onChange={this.handleFormInput}
                 />
               </div>
+              <div>
+                <TextField
+                  type="number"
+                  variant="outlined"
+                  required
+                  className={style.styleFormFields}
+                  fullWidth
+                  size="small"
+                  id="price"
+                  label="Price"
+                  autoComplete="Enter Price"
+                  name="price"
+                  value={this.state.price}
+                  error={this.state.assigneeRequiredError ? true : false}
+                  onChange={this.handleFormInput}
+                />
 
-            
+              </div>
+              <div>
+                <TextField
+                  type="number"
+                  variant="outlined"
+                  // required
+                  className={style.styleFormFields}
+                  fullWidth
+                  size="small"
+                  id="truck"
+                  label="Trucks"
+                  autoComplete="Enter Number Of Trucks"
+                  name="truck"
+                  value={this.state.truck}
+                  // error={this.state.assigneeRequiredError ? true : false}
+                  onChange={this.handleFormInput}
+                />
+              </div>
+
             </div>
             {
               this.state.locations && <div>
@@ -828,21 +781,10 @@ class UpdateJob extends Component {
                 )}
                 {this.state.locations.length > 0 && (
                   <div>
-                    {this.state.locations.map((location, i) =>
-                      this.showLocation(i)
-                    )}
+                    <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
                   </div>
                 )}
-                {this.state.locations.length > 0 && (
-                  <div className={style.alignRight}>
-                    <i
-                      className="fa fa-plus"
-                      name="Add Location"
-                      value="Add Location"
-                      onClick={this.addLocation}
-                    />
-                  </div>
-                )}
+               
               </div>
             }
           </form>

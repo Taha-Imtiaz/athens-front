@@ -42,6 +42,7 @@ const Claims = (props) => {
       <div>
         {
           items.map((x, i) => {
+            console.log(x)
             return (
               <div className={style.listContainer} key={i}>
                 <div className={`${style.listContent}`}>
@@ -58,7 +59,7 @@ const Claims = (props) => {
                         {x.customer.firstName} {x.customer.lastName}
                       </div>
                       <div className={`${style.item} ${style.center}`}>
-                      {x.job.jobId}
+                      {x.job && x.job.jobId}
                       </div>
                       <div className={`${style.item} ${style.center}`}>
                         {x.status.toLocaleUpperCase()}

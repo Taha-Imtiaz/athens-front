@@ -53,7 +53,7 @@ export const updateClaim = (data, callback) => {
         dispatch({
           type: GET_CLAIM,
           payload: response.data.data
-  
+
         })
         callback(response)
       }
@@ -79,11 +79,14 @@ export const getCustomersAndJobs = (callback) => {
   }
 };
 
-export const getClaim = (claimId) => {
+export const getClaim = (id) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.get(`claim/${claimId}`, {
-        config: { handlerEnabled: true }
+      let response = await Axios.get(`claim`, {
+        config: { handlerEnabled: true },
+        params: {
+          id
+        }
       })
       dispatch({
         type: GET_CLAIM,

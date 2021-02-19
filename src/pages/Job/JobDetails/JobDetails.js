@@ -158,13 +158,15 @@ const JobDetails = (props) => {
                     <div key={i}>
                       <FontAwesomeIcon icon={faDotCircle} />{" "}
                       <span>{`Pickup`} </span>{" "}
-                      <div className={style.location}>{list.value}</div>
+                      <div className={style.location}>
+                        {`${list.value} (Load Only / IA)`}
+                      </div>
                     </div>
                   ) : (
                       <div key={i}>
                         <FontAwesomeIcon icon={faDotCircle} />{" "}
                         <span>{`Dropoff`}</span>
-                        <div className={style.location}>{list.value}</div>
+                        <div className={style.location}>{`${list.value} (Unload Only)`}</div>
                       </div>
                     )
                 )}

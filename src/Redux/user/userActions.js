@@ -1,4 +1,4 @@
-import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
+import { GET_USER, GET_USERS, LOGGEDIN_USER } from "./userConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
@@ -145,3 +145,16 @@ export const createUser = (data, callback) => {
     }
   };
 };
+//get user on updateUser Page
+export const getUser = (data, userId) => {
+  
+  return async (dispatch) => {
+    let response = await Axios.put(`user/${userId}`, data, {
+      config: { handlerEnabled: true }
+    })
+dispatch({
+  type:GET_USER,
+  payload:response.data.data
+})
+  }
+}

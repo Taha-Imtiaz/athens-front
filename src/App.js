@@ -39,6 +39,7 @@ import MoversSchedule from "./pages/Schdule/Movers/Movers";
 /* User */
 import UserList from "./pages/User/UserList/UserList";
 import CreateUser from "./pages/User/CreateUser/CreateUser";
+import UpdateUser from "./pages/User/UpdateUser/UpdateUser";
 
 /* Account */
 import Account from "./pages/Account/Account";
@@ -59,6 +60,7 @@ import Payment from "./pages/Mover/Payment/Payment";
 import MoversCalendar from "./pages/Mover/MoverCalendar/MoverCalendar";
 import Availability from "./pages/Mover/Availability/Availability";
 import RequestHolidays from "./pages/Mover/HolidayCalendar/HolidayCalendar";
+
 
 function App(props) {
   // To show server responses to user.
@@ -130,6 +132,8 @@ function App(props) {
             {/* User */}
             <PrivateRoute path="/users" component={UserList} exact />
             <PrivateRoute path="/user/add" component={CreateUser} />
+            <PrivateRoute path="/user/update/:userId" component={UpdateUser} />
+
 
             {/* Account */}
             <PrivateRoute path="/account" component={Account} exact />

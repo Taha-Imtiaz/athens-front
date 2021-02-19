@@ -26,6 +26,8 @@ const CustomerDetails = (props) => {
   const [claimCount, setClaimCount] = useState(0);
   const [value, setValue] = useState(0);
   const [claims, setClaims] = useState([]);
+  const [toggleClaim, setToggleClaim] = useState(false)
+
 
   //get customerId from props
   let {
@@ -124,8 +126,27 @@ const CustomerDetails = (props) => {
       updatedClaims[i].updatedAt = res.data.data.updatedAt;
       setClaimCount(newCount);
       setClaims(updatedClaims);
+      setToggleClaim(false)
     })
   };
+
+  const reopenClaim = (i) => {
+    let { updateClaim } = props;
+    let updatedClaims = cloneDeep(claims);
+
+    updatedClaims[i].status = 'open';
+    console.log(updatedClaims[i])
+    updateClaim(updatedClaims[i], (res) => {
+      let updatedCount = cloneDeep(claimCount)
+      let newCount = ++updatedCount;
+      updatedClaims[i].updatedAt = res.data.data.updatedAt;
+      setClaimCount(newCount);
+      setClaims(updatedClaims);
+      setToggleClaim(false)
+    })
+
+
+  }
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
@@ -353,7 +374,7 @@ const CustomerDetails = (props) => {
                                 <FontAwesomeIcon icon={faDotCircle} />{" "}
                                 <span>{`Pickup`} </span>{" "}
                                 <div className={style.location}>
-                                  {list.value}
+                                  {`${list.value} (Load Only / IA)`}
                                 </div>
                               </div>
                             ) : (
@@ -361,7 +382,7 @@ const CustomerDetails = (props) => {
                                   <FontAwesomeIcon icon={faDotCircle} />{" "}
                                   <span>{`Dropoff`}</span>
                                   <div className={style.location}>
-                                    {list.value}
+                                    {`${list.value} (Unload Only)`}
                                   </div>
                                 </div>
                               )
@@ -386,7 +407,7 @@ const CustomerDetails = (props) => {
             ) : (
                 <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
                   No job added yet
-              </h4>
+                </h4>
               )}
           </TabPanel>
 
@@ -425,6 +446,7 @@ const CustomerDetails = (props) => {
             <div id="accordion">
               {claims.length > 0 ? (
                 claims.map((claim, i) => {
+
                   return (
                     <div key={i}>
                       <div
@@ -435,7 +457,7 @@ const CustomerDetails = (props) => {
                         aria-controls="collapse"
                         id="headingOne"
                       >
-                        <div>{claim.job.jobId}</div>
+                        <div>{claim.job && claim.job.jobId}</div>
 
                         <div>{claim.status}</div>
                         <div>
@@ -477,18 +499,19 @@ const CustomerDetails = (props) => {
                                 {claim.status === "open" ? (
                                   <Button
                                     className={style.button}
-                                    onClick={() => handleCloseClaim(i)}
+                                    onClick={() => setToggleClaim(true)}
+                                  // onClick={() => handleCloseClaim(i)}
                                   >
                                     Close Claim
                                   </Button>
                                 ) : (
-                                    <Chip
-                                      label="Closed"
-                                      clickable
-                                      color="primary"
-                                      variant="outlined"
-                                      size="small"
-                                    />
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => setToggleClaim(true)}
+                                    // onClick={() => handleCloseClaim(i)}
+                                    >
+                                      Reopen Claim
+                                    </Button>
                                   )}
                               </div>
                             </div>
@@ -530,8 +553,37 @@ const CustomerDetails = (props) => {
                           </div>
                         </div>
                       </div>
+                      {/* modal for close and reopen claims */}
+                      <Modal
+                        show={toggleClaim}
+                        onHide={() => setToggleClaim(false)}
+                        scrollable
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Confirmation</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {claim.status === 'open' ? `Do you want to close this claim ?` : `Do you want to reopen this claim ?`}
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <div className={style.flexEnd}>
+                            <Button className={style.button} onClick={() => setToggleClaim(false)}>
+                              Close
+                                </Button>
+                            {claim.status === 'open' ? <Button className={style.button} onClick={() => handleCloseClaim(i)}>
+                              Confirm
+                                </Button>
+                              : <Button className={style.button} onClick={() => reopenClaim(i)}>
+                                Confirm
+                                </Button>
+                            }
+                          </div>
+                        </Modal.Footer>
+                      </Modal>
                     </div>
-                  );
+                  )
+
                 })
               ) : (
                   <div className="text-center">
@@ -564,13 +616,13 @@ const CustomerDetails = (props) => {
             </div>
             <hr />
             {blanketValue && blanketValue.length > 0 ? (
-              <Blankets 
-              firstName = {customer.firstName} 
-              lastName = {customer.lastName}
-              items={blanketValue} update={updateBlanket} />
+              <Blankets
+                firstName={customer.firstName}
+                lastName={customer.lastName}
+                items={blanketValue} update={updateBlanket} />
             ) : (
                 <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found"  />
+                  <img src="/images/no-data-found.png" alt="Data not found" />
                 </div>
               )}
           </TabPanel>

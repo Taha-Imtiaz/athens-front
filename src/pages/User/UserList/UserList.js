@@ -85,18 +85,7 @@ const UserList = (props) => {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  {/* <p
-                    className="dropdown-item"
-                    onClick={() => handleFilter("mover")}
-                  >
-                    Movers
-                  </p>
-                  <p
-                    className="dropdown-item"
-                    onClick={() => handleFilter("manager")}
-                  >
-                    Managers
-                  </p> */}
+                
                   <RadioGroup
                     aria-label="Filter"
                     name="Filter"
@@ -145,10 +134,17 @@ const UserList = (props) => {
 
               <div>
                 {docs.map((usersDoc, i) => {
+                // console.log(usersDoc)
                   return (
                     <div className={style.listContainer} key={i}>
                       <div className={`${style.listContent} `}>
+                      <Link to ={ `/user/update/${usersDoc._id}`}
+                         key={i}
+                         className={style.styleLink}
+
+                      >
                         <div className={style.userList}>
+                        
                           <div className={`${style.item} ${style.flex}`}>
                             {usersDoc.name}
                           </div>
@@ -159,6 +155,7 @@ const UserList = (props) => {
                             {usersDoc.address}
                           </div>
                         </div>
+                        </Link>
                       </div>
                     </div>
                   );

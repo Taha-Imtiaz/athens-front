@@ -37,11 +37,11 @@
   border-radius: 4px !important;
   border: 1px solid rgba(0, 0, 0, 0.3) !important;
 }
-.movers {
+/* .movers {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
-  column-gap: 0.5rem !important;
-}
+  column-gap: 0.5rem !important; */
+/* } */
 .addLocation {
   display: grid;
   grid-template-columns: 87fr 13fr;
@@ -95,7 +95,7 @@ justify-content: flex-end;
 .styleRadio {
   color: #00adee 
 }
-.propertyTypeRow {
+.propertyTypeRow, .movers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 0.5rem;

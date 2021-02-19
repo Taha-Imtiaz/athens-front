@@ -30,7 +30,7 @@ let initialState = {
         customerId: "",
         startDate: "",
         dates: [new Date()],
-        startTime: "",
+        startTime: new Date("2020-08-18T09:00:00"),
         anchorEl: "",
         meetTime: "",
         assigneeRequired: "",

@@ -13,11 +13,9 @@ import { confirmJob } from "../../../Redux/Job/jobActions";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { connect } from "react-redux";
 import {
-  Checkbox,
-  FormControlLabel,
+ 
   Grid,
-  Radio,
-  RadioGroup,
+  
   TextField,
 } from "@material-ui/core";
 import style from "./JobConfirmation.module.css";
@@ -29,6 +27,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker, faTrash } from "@fortawesome/free-solid-svg-icons";
+import AddLocation from "../../../components/AddLocation/AddLocation";
 
 //material-ui styles
 const useStyles = makeStyles((theme) => ({
@@ -172,129 +171,33 @@ function JobConfirmation(props) {
     }
   };
   //onChange handler of location
-  const hanldeLocationInput = (i, e) => {
-    let job = cloneDeep(data);
-    job.locations[i].value = e.target.value;
-    setData(job);
-  };
+  // const hanldeLocationInput = (i, e) => {
+  //   let job = cloneDeep(data);
+  //   job.locations[i].value = e.target.value;
+  //   setData(job);
+  // };
   //handles checkBox state
-  const changeCheckBoxState = (e, i) => {
-    e.stopPropagation();
-    let prevState = cloneDeep(data);
-    prevState.locations[i].default = !prevState.locations[i].default;
-    if (prevState.locations[i].default) {
-      prevState.locations[i].value =
-      prevState.locations[i].type === "pickup" ? prevState.locations[i].value.concat(` (Load Only / IA)`) : prevState.locations[i].value.concat(` (Unload Only)`);
+  // const changeCheckBoxState = (e, i) => {
+  //   e.stopPropagation();
+  //   let prevState = cloneDeep(data);
+  //   prevState.locations[i].default = !prevState.locations[i].default;
+  //   if (prevState.locations[i].default) {
+  //     prevState.locations[i].value =
+  //       prevState.locations[i].type === "pickup" ? prevState.locations[i].value.concat(` (Load Only / IA)`) : prevState.locations[i].value.concat(` (Unload Only)`);
 
-    } else {
-      prevState.locations[i].value = prevState.locations[i].value.split('(')[0]
-    }
-    setData(prevState);
-  };
+  //   } else {
+  //     prevState.locations[i].value = prevState.locations[i].value.split('(')[0]
+  //   }
+  //   setData(prevState);
+  // };
   //remove date
   const removeDate = (i) => {
     let newData = cloneDeep(data);
     newData.dates.splice(i, 1);
     setData(newData);
   };
-  //show location
-  const showLocation = (e, i) => {
-    return (
-      <div className={style.locationInput}>
-        <div className={style.radioButtons}>
-          <RadioGroup
-            className={style.rowFlex}
-            value={data.locations[i].type}
-            onChange={(e) => handleInputChange(e, i)}
-          >
-            <FormControlLabel
-              value="pickup"
-              name="pickup"
-              control={<Radio className={style.styleRadio} />}
-              label="Pickup"
-            />
-            <FormControlLabel
-              value="dropoff"
-              name="dropoff"
-              control={<Radio className={style.styleRadio} />}
-              label="Dropoff"
-            />
-          </RadioGroup>
-        </div>
-        <div className={style.inputField}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            className={style.styleFormFields}
-            required
-            size="small"
-            id="to"
-            label={
-              data.locations[i].type === "pickup"
-                ? "Enter Pickup Point"
-                : data.locations[i].type === "dropoff"
-                  ? "Enter DropOff Point"
-                  : "Choose Type"
-            }
-            name={data.locations[i].type}
-            disabled={
-              (data.locations[i].type ? false : true) ||
-              data.locations[i].default
-            }
-            value={data.locations[i].value}
-            onChange={(e) => hanldeLocationInput(i, e)}
-          />
-        </div>
-        {data.locations[i].type === "pickup" ? (
-          <div
-            className={
-              data.locations[i].type === "pickup" ? style.checkBox : null
-            }
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={data.locations[i].default}
-                  onClick={(e) => {
-                    changeCheckBoxState(e, i);
-                  }}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Load only / IA"
-            />
-          </div>
-        ) : data.locations[i].type === "dropoff" ? (
-          <div
-            className={
-              data.locations[i].type === "dropoff" ? style.checkBox : null
-            }
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={data.locations[i].default}
-                  onClick={(e) => {
-                    changeCheckBoxState(e, i);
-                  }}
-                  name="checkboxStates"
-                  color="#00ADEE"
-                />
-              }
-              label="Unload only"
-            />
-          </div>
-        ) : null}
-        <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
-          <FontAwesomeIcon
-            icon={faTrash}
-            onClick={() => removeLocation(i)}
-          ></FontAwesomeIcon>
-        </div>
-      </div>
-    );
-  };
+
+
   //add location
   const addLocation = (e) => {
     e.stopPropagation();
@@ -303,22 +206,17 @@ function JobConfirmation(props) {
     newData.locations.push({ type: "", value: "", default: false });
     setData(newData);
   };
-  //remove location
-  const removeLocation = (i) => {
-    let newData = { ...data };
-    newData.locations.splice(i, 1);
-    setData(newData);
-  };
-  //on change handler of radio buttons
-  const handleInputChange = (e, i) => {
-    let { value } = e.target;
-    let updateLocation = { ...data };
-    updateLocation.locations[i].type = value;
-    updateLocation.locations[i].value = "";
-    updateLocation.locations[i].default = false;
 
-    setData(updateLocation);
-  };
+  //on change handler of radio buttons
+  // const handleInputChange = (e, i) => {
+  //   let { value } = e.target;
+  //   let updateLocation = { ...data };
+  //   updateLocation.locations[i].type = value;
+  //   updateLocation.locations[i].value = "";
+  //   updateLocation.locations[i].default = false;
+
+  //   setData(updateLocation);
+  // };
   //load stripe
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
@@ -405,8 +303,16 @@ function JobConfirmation(props) {
     setData(job);
     props.close();
   };
+  //reset locations
+
+  const handleLocationChange = (locations) => {
+    let newData = { ...data }
+    newData.locations = locations
+    setData(newData);
+  }
 
   const getStepContent = (step) => {
+    console.log(data)
     switch (step) {
       case 0:
         return (
@@ -416,7 +322,7 @@ function JobConfirmation(props) {
                 <h6>Dates:</h6>
               </div>
               <div className={style.flexDates}>
-                {data &&
+                {data && data.dates &&
                   data.dates.map((x, i) => {
                     return (
                       <div className={`${style.styleDate}`} key={i}>
@@ -465,7 +371,7 @@ function JobConfirmation(props) {
                 <h6>Time:</h6>
               </div>
               <div>
-                {data && (
+                {data && data.dates && (
                   <div>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid>
@@ -491,7 +397,7 @@ function JobConfirmation(props) {
       case 1:
         return (
           <form>
-            {data && (
+            {data && data.customer && (
               <div>
                 {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
                 <TextField
@@ -555,7 +461,7 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data.locations.length === 0 && (
+            {data.locations && data.locations.length === 0 && (
               <div className={`${style.locationBtn} ${style.flex}`}>
                 <Button
                   className={`${style.button}`}
@@ -570,14 +476,16 @@ function JobConfirmation(props) {
               </div>
             )}
 
-            {data.locations.length > 0 &&
-              data.locations.map((e, i) => showLocation(e, i))}
+            { data.locations && data.locations.length > 0 &&
+              // data.locations.map((e, i) => showLocation(e, i))
+              <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
+            }
 
-            {data.locations.length > 0 && (
+            {/* {data.locations.length > 0 && (
               <div className={style.flexEnd}>
                 <i className="fa fa-plus" onClick={(e) => addLocation(e)}></i>
               </div>
-            )}
+            )} */}
           </div>
         );
       case 3:

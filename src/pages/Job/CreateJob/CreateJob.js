@@ -140,15 +140,15 @@ class CreateJob extends Component {
       dates: datesArr,
     });
   };
-  //onChange handler for location
-  hanldeLocationInput = (i, e) => {
-    let updateLocation = cloneDeep(this.state.locations);
-    updateLocation[i].value = e.target.value;
-    this.setState({ locations: updateLocation });
-    if (e.target.value) {
-      this.setState({ locationfromError: "" });
-    }
-  };
+  // //onChange handler for location
+  // hanldeLocationInput = (i, e) => {
+  //   let updateLocation = cloneDeep(this.state.locations);
+  //   updateLocation[i].value = e.target.value;
+  //   this.setState({ locations: updateLocation });
+  //   if (e.target.value) {
+  //     this.setState({ locationfromError: "" });
+  //   }
+  // };
 
   //remove location
   // removeLocation = (i) => {
@@ -660,8 +660,9 @@ class CreateJob extends Component {
                       label="Job Type"
                       name="jobType"
                     >
-                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                    
                       <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
+                      <MenuItem value={"Fixed"}>Fixed</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -739,7 +740,7 @@ class CreateJob extends Component {
 
               {this.state.locations.length > 0 && (
                 <div>
-                  <AddLocation locationArr={this.state.locations} removeLocation={this.removeLocation} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
+                  <AddLocation locationArr={this.state.locations}  addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
 
                 </div>
               )}

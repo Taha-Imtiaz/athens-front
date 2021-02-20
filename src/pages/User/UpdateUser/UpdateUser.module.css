@@ -29,3 +29,19 @@
   .styleAddress {
     margin-top: 0.5rem !important;
   }
+
+  .updateBtn .button {
+    background-color: #00adee;
+    color: #fff;
+    font-family: sans-serif;
+    width: 100%;
+    text-transform: none;
+  }
+  .updateBtn .button:hover {
+    background-color: #00adee;
+  }
+  .flexEnd {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}

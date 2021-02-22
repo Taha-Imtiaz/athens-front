@@ -114,10 +114,12 @@
 .updateContentRow {
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(6vh, min-content));
-  border-bottom: 1px solid #dddbdb;
-  /* align-items: flex-end; */
-  grid-template-columns: 80fr 20fr;
+  /* border-bottom: 1px solid #dddbdb; */
+  
+  align-items: flex-end;
+  grid-template-columns: 85fr 15fr;
  margin: 1rem 0;
+ padding:  1rem;
 }
 
 .modal {

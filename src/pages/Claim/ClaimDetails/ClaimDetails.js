@@ -242,9 +242,9 @@ const ClaimDetails = (props) => {
                 <div className={style.updateHead}>
                   <h3>Updates</h3>
                 </div>
-                <div className={style.updateContent}>
+                <div className={ `${style.updateContent}`}>
                   {claims.updates.map((x, i) => (
-                    <div key={i} className={style.updateContentRow}>
+                    <div key={i} className={`card ${style.updateContentRow}`}>
                       {" "}
                       <div>{`${i + 1}.  ${x.value}`}</div>
                       <div>

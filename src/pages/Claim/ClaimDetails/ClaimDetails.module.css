@@ -7,7 +7,7 @@
   margin-top: 1.5rem;
   grid-area: claimDetails;
   display: grid;
-  grid-template-columns: 25fr minmax(75fr,min-content);
+  grid-template-columns: 25fr minmax(75fr, min-content);
   column-gap: 1rem;
   grid-template-areas: "cards claimDetail";
   /* background-color: blanchedalmond; */
@@ -52,10 +52,9 @@
 .protectionRow {
   grid-area: protectionRow;
   display: grid;
-  grid-template-columns: repeat(2,20fr) repeat(2,12fr) repeat(2, 18fr);
+  grid-template-columns: repeat(2, 20fr) repeat(2, 12fr) repeat(2, 18fr);
   /* width: 100%; */
   column-gap: 0.2rem;
- 
 }
 .protectionRow .button,
 .waiting .button {
@@ -74,21 +73,18 @@
   grid-template-columns: 14fr 86fr;
   display: grid;
   column-gap: 0.2rem;
-  
 }
 .description {
   grid-area: description;
   grid-template-columns: 14fr 86fr;
   display: grid;
   column-gap: 0.3rem;
-  
 }
 .waiting {
   grid-area: waiting;
   grid-template-columns: 14fr 75fr 11fr;
   display: grid;
   column-gap: 0.2rem;
-
 }
 .updates {
   grid-area: updates;
@@ -107,33 +103,30 @@
   grid-area: updateContent;
   row-gap: 1rem;
   display: grid;
-  
-
-  
 }
 .updateContentRow {
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(6vh, min-content));
   /* border-bottom: 1px solid #dddbdb; */
-  
+
   align-items: flex-end;
   grid-template-columns: 85fr 15fr;
- margin: 1rem 0;
- padding:  1rem;
+  margin: 1rem 0;
+  padding: 1rem;
 }
 
 .modal {
   max-width: 70vw;
 }
 .flexEnd .button {
-  background: #00ADEE;
+  background: #00adee;
   text-transform: none;
-  color: #FFF;
+  color: #fff;
   font-family: sans-serif;
   margin: 0 0.2rem;
 }
 .flexEnd .button:hover {
-  background-color: #00ADEE;
+  background-color: #00adee;
 }
 .styleTextArea {
   width: 100%;

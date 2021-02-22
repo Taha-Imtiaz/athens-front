@@ -5,6 +5,7 @@ import { getAllJobs } from "../../Redux/Job/jobActions";
 import { getUsers } from "../../Redux/User/userActions";
 import { moverSearchFilter } from "../../Redux/Mover/moverActions";
 import { getAllClaims } from "../../Redux/Claim/claimActions";
+import { getDeposits } from "../../Redux/Deposit/DepositActions";
 
 const SearchBar = (props) => {
   let {
@@ -13,6 +14,7 @@ const SearchBar = (props) => {
     getUsers,
     moverSearchFilter,
     getAllClaims,
+    getDeposits
   } = props;
 
   const [searchValue, setSearchValue] = useState("");
@@ -77,7 +79,8 @@ const SearchBar = (props) => {
         };
         getAllClaims(usersObj);
       }
-    } else if (props.type === "mover") {
+    } 
+    else if (props.type === "mover") {
       if (searchValue === "" || searchValue) {
         fetchJobsOnPageChange = {
           query: e.target.value,
@@ -91,7 +94,25 @@ const SearchBar = (props) => {
         };
       }
       moverSearchFilter(fetchJobsOnPageChange);
-    } else {
+    }
+
+    else if (props.type === "deposit") {
+      if (searchValue === "" || searchValue) {
+        fetchJobsOnPageChange = {
+          query: e.target.value,
+
+          page: 1,
+        };
+      } else {
+        fetchJobsOnPageChange = {
+          query: "",
+          page: 1,
+        };
+      }
+      getDeposits(fetchJobsOnPageChange);
+    }
+
+     else {
       if (searchValue === "" || searchValue) {
         fetchJobsOnPageChange = {
           query: e.target.value,
@@ -173,5 +194,6 @@ var actions = {
   getUsers,
   moverSearchFilter,
   getAllClaims,
+  getDeposits
 };
 export default connect(mapStateToProps, actions)(SearchBar);

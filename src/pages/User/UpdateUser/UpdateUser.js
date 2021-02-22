@@ -3,9 +3,8 @@ import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Switch } from "@material-ui/core";
-import { updateUser } from "../../../Redux/User/userActions";
+import { getUser, updateUser } from "../../../Redux/User/userActions";
 import style from "./UpdateUser.module.css";
-
 // import { connect } from 'react-redux'
 
 const UpdateUser = (props) => {
@@ -14,25 +13,28 @@ const UpdateUser = (props) => {
       params: { userId },
     },
   } = props;
-  let { user, updateUser } = props;
+  let { updateUser } = props;
 
-  let [state, setState] = useState('');
   let [userState, setUserState] = useState({
     name: "",
     email: "",
     phone: "",
     address: "",
+    activeStatus: ''
   });
   let [disabledFields, setDisabledFields] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      setUserState(user);
-      if (user.activeStatus) {
-        setState((state) => ({ ...state, activeStatus: user.activeStatus }));
-      }
-    }
-  }, [user]);
+
+    getUser(userId, (res) => {
+      // console.log(res.data.data)
+      setUserState(res.data.data);
+    
+
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handlePhoneNumberInput = (value, previousValue) => {
     // return nothing if no value
     if (!value) return value;
@@ -67,39 +69,33 @@ const UpdateUser = (props) => {
     } else {
       setUserState({ ...userState, [name]: value });
     }
-    // if (value === "") {
-    // setUserState({...userState,  [name + "Error"]: "Should not be empty" });
-    // } else {
-    // setUserState({...userState,  [name + "Error"]: "" });
-    // }
+    
   };
 
   //handler for switch
-  const handleChange = (event) => {
-    if (disabledFields === false) {
-      console.log(event.target.name, event.target.checked);
-      // setState(!user.activeStatus)
-      setState({ ...state, [event.target.name]: event.target.checked });
-    }
+  const handleChange = () => {
+   
+    setUserState({ ...userState, activeStatus: !userState.activeStatus })
+    
   };
   const updateUserData = () => {
     let userData = {
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      address: user.address,
-      activeStatus: state.activeStatus,
+      name: userState.name,
+      email: userState.email,
+      phone: userState.phone,
+      address: userState.address,
+      activeStatus: userState.activeStatus,
     };
     console.log(userData);
-    updateUser(userData, userId, () => setDisabledFields(true));
+    updateUser(userData, userId, 'admin', () => setDisabledFields(true));
   };
-  console.log(user, state);
+  console.log(userState)
   return (
     <div className={style.userContainer}>
       <div className={`${style.userForm}`}>
         <h3 className={style.head}>Update User</h3>
 
-        {user && (
+        {userState && (
           <div>
             <form>
               <TextField
@@ -162,9 +158,9 @@ const UpdateUser = (props) => {
                 disabled={disabledFields}
                 className={style.styleAddress}
               />
-              <div className = {style.flexEnd}>
+              <div className={style.flexEnd}>
                 <Switch
-                  checked={state.activeStatus}
+                  checked={userState.activeStatus}
                   onChange={handleChange}
                   color="primary"
                   name="activeStatus"
@@ -180,10 +176,10 @@ const UpdateUser = (props) => {
                     Edit
                   </Button>
                 ) : (
-                  <Button className={style.button} onClick={updateUserData}>
-                    Update
-                  </Button>
-                )}
+                    <Button className={style.button} onClick={updateUserData}>
+                      Update
+                    </Button>
+                  )}
               </div>
             </form>
           </div>
@@ -192,11 +188,10 @@ const UpdateUser = (props) => {
     </div>
   );
 };
-var mapStateToProps = (state) => ({
-  user: state.users.user,
-});
+
 var actions = {
   updateUser,
+  getUser
 };
 
-export default connect(mapStateToProps, actions)(UpdateUser);
+export default connect(null, actions)(UpdateUser);

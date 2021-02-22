@@ -1,4 +1,4 @@
-import {  GET_USERS, LOGGEDIN_USER } from "./userConstants";
+import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
@@ -93,7 +93,7 @@ export const resetPassword = (data, callback) => {
     }
   };
 };
-
+// get all users
 export const getUsers = (data) => {
   return async (dispatch) => {
     try {
@@ -109,8 +109,24 @@ export const getUsers = (data) => {
     }
   };
 };
+//get single user
+export const getUser = async (userId, callback) => {
 
-export const updateUser = (data, userId, callback) => {
+  try {
+    let response = await Axios.get(`user/${userId}`, {
+      config: { handlerEnabled: true }
+    })
+    if (response.data.status === 200) {
+      callback(response)
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export const updateUser = (data, userId, type, callback) => {
   return async (dispatch) => {
     try {
       const response = await Axios.put(`user/${userId}`, data, {
@@ -118,12 +134,20 @@ export const updateUser = (data, userId, callback) => {
       });
       if (response.data.status === 200) {
         callback();
-        dispatch({
-          type: LOGGEDIN_USER,
-          payload: response.data.data,
-        });
+        //for accounts page
+        if (type === 'user') {
+          dispatch({
+            type: LOGGEDIN_USER,
+            payload: response.data.data,
+          });
+          dispatch(showMessage(response.data.message));
+
+        } 
+        //(type === admin for other pages)
+        else {
+          dispatch(showMessage('User updated successfully'));
+        }
       }
-      dispatch(showMessage(response.data.message));
     } catch (err) {
       dispatch(showMessage(err.message));
     }

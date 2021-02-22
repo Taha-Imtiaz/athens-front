@@ -291,7 +291,6 @@ const DailySchedule = (props) => {
       }
     }
   };
-console.log(mover)
   return (
     <div className={`${style.scheduleContainer}`}>
       <div className={style.sidebar}>
@@ -334,8 +333,8 @@ console.log(mover)
                         0
                       )
                     ) : (
-                      <span>0</span>
-                    )}
+                        <span>0</span>
+                      )}
                   </h6>
                 </div>
                 <div>
@@ -357,13 +356,17 @@ console.log(mover)
                 <div>Action</div>
               </div>
             )}
+           
             {props.jobs && props.jobs.length > 0 ? (
+             
               props.jobs.map((list, i) => {
+                
                 return (
                   <Droppable
                     droppableId={list.jobId.toString()}
                     type="TASK"
                     key={i}
+                  
                   >
                     {(provided, snapshot) => (
                       <div
@@ -373,7 +376,7 @@ console.log(mover)
                         {...provided.droppableProps}
                       >
                         <div
-                          className={`card-header ${style.cardHeader}`}
+                          className={list.assignee.length < list.assigneeRequired ? `${style.cardHeader} card-header ${style.dangerClass}` : `card-header ${style.cardHeader}`}
                           aria-expanded="true"
                           data-toggle="collapse"
                           data-target={`#collapse${i}`}
@@ -418,8 +421,8 @@ console.log(mover)
                                 ))}
                               </div>
                             ) : (
-                              <div>N/A</div>
-                            )}
+                                <div>N/A</div>
+                              )}
                           </div>
 
                           <div>
@@ -533,7 +536,7 @@ console.log(mover)
                                   </tr>
                                 </thead>
                               </table>
-                             
+
                             </div>
                           </div>
                         </div>
@@ -543,10 +546,10 @@ console.log(mover)
                 );
               })
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="" />
+                </div>
+              )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">

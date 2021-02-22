@@ -1,4 +1,4 @@
-import {  GET_USERS, LOGGEDIN_USER } from "./userConstants";
+import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
 
 let initialState = {
   user: null,
@@ -11,10 +11,7 @@ const userReducer = (state = initialState, action) => {
   switch (type) {
     case GET_USERS:
       return { ...state, userList: payload };
-     
-
-
-    case LOGGEDIN_USER:
+          case LOGGEDIN_USER:
       return { ...state, user: payload };
 
     default:

@@ -2,12 +2,9 @@ import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./DepositConstants";
 
-export const getDeposits = (page) => {
+export const getDeposits = (body) => {
   return async (dispatch) => {
     try {
-      let body = {
-        page,
-      };
       let response = await Axios.post(`deposit/all`, body, {
         config: { handlerEnabled: true },
       });
@@ -64,8 +61,8 @@ export const deleteBlanketDeposit = (id, currentPage) => {
 export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.put(`deposit`, data, {
-        config: { handlerEnabled: true },
+      let response = await Axios.put(`deposit`, data,  {
+        config: { handlerEnabled: true }
       });
       dispatch(showMessage(response.data.message));
       dispatch({
@@ -77,3 +74,4 @@ export const updateDeposit = (data) => {
     }
   };
 };
+

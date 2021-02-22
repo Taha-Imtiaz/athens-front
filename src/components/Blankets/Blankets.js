@@ -10,7 +10,8 @@ import ActivitiesModal from "../ActivitiesModal/ActivitiesModal";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 
 const Blankets = (props) => {
-  const [blanketValue, setBlanketValue] = useState(props.items);
+  let [blanketValue, setBlanketValue] = useState(props.items);
+  console.log(props.items)
   const [show, setShow] = useState(false);
   const [depositValue, setDepositValue] = useState("");
 
@@ -73,7 +74,7 @@ const Blankets = (props) => {
   let {firstName, lastName,
     location: { pathname },
   } = props;
-  
+  // console.log(blanketValue)
   return (
     <div>
       <div className={` ${style.blanketHeader}`}>

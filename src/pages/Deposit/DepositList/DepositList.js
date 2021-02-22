@@ -13,9 +13,11 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 
 const DepositList = (props) => {
   let { blanketDeposit } = props;
+  console.log(blanketDeposit)
   let totalCount = 0;
   if (blanketDeposit) {
     var { docs } = blanketDeposit;
+    console.log(docs)
     totalCount = blanketDeposit.total;
   }
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,10 @@ const DepositList = (props) => {
 
   useEffect(() => {
     let { getDeposits } = props;
-    getDeposits(currentPage);
+    let obj = {
+      page: currentPage
+    }
+    getDeposits(obj);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, getDeposits]);
 
@@ -59,7 +64,7 @@ const DepositList = (props) => {
               <h3>Blanket Deposit</h3>
             </div>
             <div>
-              <SearchBar/>
+              <SearchBar type = "deposit" title = "Type customer name here"/>
             </div>
             <div>
               <div className={style.btn}>
@@ -74,7 +79,8 @@ const DepositList = (props) => {
           {docs && docs.length > 0 && pathname === "/deposits" ? (
             <div className = {style.blanketContainer}>
               <Blankets
-                items={docs}
+               items={docs }
+                
                 deleteDeposit={removeBlanketDeposit}
                 openDeleteModal={openDeleteModal}
                 deleteModal={deleteModal}
@@ -93,7 +99,17 @@ const DepositList = (props) => {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : blanketDeposit && blanketDeposit.length > 0 ? <div>
+             <Blankets
+               items={blanketDeposit}
+                
+                deleteDeposit={removeBlanketDeposit}
+                openDeleteModal={openDeleteModal}
+                deleteModal={deleteModal}
+                closeDeleteModal={closeDeleteModal}
+                page={currentPage}
+              />
+          </div> : (
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="No data found" />
               </div>

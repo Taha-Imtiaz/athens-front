@@ -156,7 +156,7 @@ const Account = (props) => {
         phone,
       };
       const { updateUser } = props;
-      updateUser(updatedUserObj, user._id, () => setDisabledForm(true))
+      updateUser(updatedUserObj, user._id, 'user', () => setDisabledForm(true))
     }
   };
   return (

@@ -1,4 +1,4 @@
-import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./DepositConstants"
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS} from "./DepositConstants"
 
 let initialState = null
 
@@ -10,6 +10,8 @@ const depositReducer = (state = initialState, action) => {
 
         case EDIT_DEPOSIT:
             return { ...state, ...payload }
+          
+
 
         default:
             return state

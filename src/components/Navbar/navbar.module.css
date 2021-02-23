@@ -29,7 +29,7 @@
   color: #ffffff;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   text-transform: none;
 }
 .logoutBtn .button:hover {

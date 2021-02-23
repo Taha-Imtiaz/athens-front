@@ -16,7 +16,8 @@ body {
 } */
 
 .app-without-nav {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-family-header);
+  font-weight: 400;
   display: grid;
   grid-template-rows: minmax(min-content, 100vh);
   grid-template-columns: 1fr;
@@ -28,7 +29,8 @@ body {
 }
 
 .app {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-family-header);
+  font-weight: 400;
   display: grid;
   grid-template-rows: 10vh minmax(90vh, min-content);
   grid-template-areas: "navigation-menu" "app-content-container";
@@ -114,6 +116,10 @@ body {
 
 .DatePicker_dateLabel__GO7dX {
   font-size: 14px !important;
+}
+:root {
+  --font-family-header: "Roboto", sans-serif;
+  --font-family-paragraph: "Open Sans", sans-serif;
 }
 @media only screen and (max-width:1000px) {
   html {

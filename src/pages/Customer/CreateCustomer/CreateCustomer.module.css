@@ -28,7 +28,7 @@
 }
 .styleAddBtn {
   display: grid;
-  grid-template-columns: 88fr 12fr;
+  grid-template-columns: 87fr 13fr;
   grid-template-areas: ". addBtn";
 }
 .styleAddBtn .addBtn {
@@ -46,7 +46,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   margin-bottom: 0.5rem;
   width: 100%;
 }
@@ -55,7 +55,7 @@
 }
 .resetButtons {
     display: grid;
-    grid-template-columns:  49fr 1fr 1fr 49fr;
+    grid-template-columns:  49.5fr 0.5fr 0.5fr 49.5fr;
     grid-template-areas: "formResetButton . . formSubmitButton";
 }
 .formResetButton {
@@ -70,7 +70,7 @@
     text-transform: none;
     color: #fff;
     /* margin: 0 0.2rem; */
-    font-family: sans-serif;
+    font-family: var(--font-family-paragraph);
     width: 100%;
 }
 .resetButtons .formButton:hover {
@@ -79,7 +79,7 @@
 @media only screen and (max-width:1500px) {
 .styleAddBtn {
   display: grid;
-  grid-template-columns: 85fr 15fr;
+  grid-template-columns: 84fr 16fr;
   grid-template-areas: ". addBtn";
 }
 .modalAddBtn {
@@ -91,7 +91,7 @@
 @media only screen and (max-width:1200px) {
   .styleAddBtn {
     display: grid;
-    grid-template-columns: 83fr 17fr;
+    grid-template-columns: 82.5fr 17.5fr;
     grid-template-areas: ". addBtn";
   }
   .modalAddBtn {
@@ -103,7 +103,7 @@
   @media only screen and (max-width:1070px) {
     .styleAddBtn {
       display: grid;
-      grid-template-columns: 81.5fr 18.5fr;
+      grid-template-columns: 80.5fr 19.5fr;
       grid-template-areas: ". addBtn";
     }
     .modalAddBtn {

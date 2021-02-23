@@ -106,7 +106,8 @@
   color: #ffffff;
 
   border-radius: 0.25rem;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   text-transform: none;
 }
 .locationBtn .button:hover, .addDateBtn .button:hover {
@@ -124,7 +125,8 @@
   color: #ffffff;
 
   border-radius: 0.25rem;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   text-transform: none;
 }
 .skipSubmitBtn .button:hover {
@@ -148,7 +150,8 @@
 
   text-transform: none;
 
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .backAndSubmitBtn .backStyles {
   background: #00adee;
@@ -161,7 +164,8 @@
 
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .backAndSubmitBtn .next:hover,
 .backAndSubmitBtn .back:hover {

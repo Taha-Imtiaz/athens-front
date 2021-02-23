@@ -23,7 +23,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .customerInfoHeader .button:hover {
   background-color: #00adee;
@@ -127,7 +128,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .newClaimBtn .button:hover {
   background-color: #00adee;
@@ -177,7 +179,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   width: 100%;
 }
 .protectionRow .button:hover,
@@ -236,7 +238,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+   font-family: var(--font-family-paragraph);
 }
 .btn .button:hover {
   background-color: #00adee;
@@ -245,7 +247,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+   font-family: var(--font-family-paragraph);
   margin: 0 0.2rem;
 }
 .flexEnd .button:hover {

@@ -3,6 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: var(--font-family-header);
+
 
   /* background-color: rebeccapurple; */
 }
@@ -44,10 +46,14 @@
   display: grid;
   grid-template-columns: 50fr 20fr 30fr;
   font-weight: bold;
+  font-family: var(--font-family-header) !important;
+
 }
 .claimContent {
   display: grid;
   grid-template-columns: 50fr 20fr 30fr;
+  font-family: var(--font-family-paragraph);
+
 }
 .styleTextArea {
   width: 100% !important;
@@ -66,7 +72,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .buttons .button:hover {
   background: #00adee;
@@ -75,7 +82,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .modalBtn .modalButton:hover {
   background-color: #00adee;

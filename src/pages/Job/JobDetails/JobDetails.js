@@ -99,7 +99,7 @@ const JobDetails = (props) => {
             </div>
           </div>{" "}
           {/* jobDetails section */}
-          <div className={`${style.jobDetail}`}>
+          <div className={` card ${style.jobDetail}`}>
             <div className={style.jobHeader}>
               <h3>{job.title}</h3>
 
@@ -152,7 +152,7 @@ const JobDetails = (props) => {
             )}
 
             {job.locations && (
-              <div className={style.locations}>
+              <div className={`card ${style.locations}`}>
                 {job.locations.map((list, i) =>
                   list.type === "pickup" ? (
                     <div key={i}>

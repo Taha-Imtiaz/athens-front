@@ -42,7 +42,8 @@
   background: #00ADEE;
   text-transform: none;
   color: #FFF;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .flexEnd .button:hover {
   background-color: #00ADEE;

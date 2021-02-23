@@ -91,7 +91,8 @@ justify-content: flex-end;
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   width: 100%;
 }
 .addLocationBtn .button:hover {
@@ -110,7 +111,7 @@ justify-content: flex-end;
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   width: 100%;
 }
 

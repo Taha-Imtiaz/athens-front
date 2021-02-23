@@ -155,7 +155,7 @@ const ClaimDetails = (props) => {
             </div>
           </div>
 
-          <div className={`${style.claimDetail} `}>
+          <div className={`card ${style.claimDetail} `}>
             <div className={`${style.protectionRow}`}>
               <div>
                 <h6>Protection Type : </h6>

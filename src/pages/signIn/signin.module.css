@@ -62,7 +62,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 
   width: 60%;
 }

@@ -58,7 +58,8 @@ justify-content: flex-end;
   text-transform: none;
   color: #fff;
   width: 100%;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .addLocationBtn .button:hover {
   background-color: #00adee;
@@ -119,7 +120,8 @@ justify-content: flex-end;
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   width: 100%;
 }
 .notesBtn .button:hover {
@@ -129,7 +131,8 @@ justify-content: flex-end;
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   margin: 0 0.15rem;
   /* width: 100%; */
 }

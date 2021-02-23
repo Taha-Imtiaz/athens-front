@@ -35,7 +35,7 @@
 .createBtn .button {
   background-color: #00adee;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   width: 100%;
   text-transform: none;
 }

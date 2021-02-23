@@ -23,7 +23,8 @@
   background-color: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 
   /* text-decoration: none; */
 }
@@ -35,7 +36,8 @@
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listheader .";
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: var(--font-family-header);
+
 }
 .listheader {
   grid-area: listheader;
@@ -49,6 +51,8 @@
   grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listContent .";
+  font-family: var(--font-family-paragraph);
+
   /* background-color: #00adee; */
 }
 .listContent {

@@ -25,7 +25,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 
   margin: 1rem 0rem;
 }
@@ -69,7 +70,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   margin: 0 0.2rem;
 }
 .modalBtn .button:hover {

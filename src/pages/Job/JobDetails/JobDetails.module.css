@@ -4,6 +4,7 @@
   /* grid-template-rows: minmax(90vh, min-content); */
   /* background-color: #00adee; */
   grid-template-areas: ". containerContent .";
+  background-color: #e9ecef;
 }
 .containerContent {
   grid-area: containerContent;
@@ -13,7 +14,7 @@
   /* background-color: #00ADEE; */
   grid-template-rows: 1fr;
   grid-template-columns: 25fr 75fr;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   column-gap: 2rem;
   grid-template-areas: "cards jobDetail";
 }
@@ -44,7 +45,8 @@
 
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .center {
   display: flex;
@@ -60,10 +62,14 @@
   /* background-color: #e9ecef; */
   display: grid;
   grid-template-rows:
-    10vh minmax(6vh, min-content) 5vh repeat(3, minmax(11vh, min-content))
+    minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
+      3,
+      minmax(11vh, min-content)
+    )
     min-content;
   border-radius: 0.4rem;
-  padding: 0 1rem;
+  margin-bottom: 1rem ;
+  padding: 0.5rem 1rem;
   /* background-color: #00adee; */
 }
 .jobHeader {
@@ -98,6 +104,7 @@
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
   grid-template-columns: repeat(3, 1fr);
+  padding: 0 0.6rem;
   /* background-color: aquamarine; */
   row-gap: 1.5rem;
 }
@@ -118,6 +125,7 @@
 }
 .jobEditBtn {
   grid-area: jobEditBtn;
+  
 }
 .jobEditBtns .link {
   text-decoration: none;
@@ -129,7 +137,8 @@
   text-transform: none;
   /* width: 100%; */
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .jobEditBtns .buttons:hover {
   background-color: #00adee;

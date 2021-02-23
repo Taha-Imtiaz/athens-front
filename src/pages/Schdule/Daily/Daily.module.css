@@ -43,7 +43,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
 }
 .moverAssigneeInfo .button:hover {
   background-color: #00adee;
@@ -103,7 +103,7 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   margin: 0 0.2rem;
 }
 .modalBtns .button:hover {

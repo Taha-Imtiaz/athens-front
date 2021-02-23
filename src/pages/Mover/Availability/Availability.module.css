@@ -46,7 +46,8 @@
   background: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
 }
 .saveBtn .button:hover {
   background-color: #00adee;

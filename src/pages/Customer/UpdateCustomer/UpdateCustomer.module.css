@@ -27,7 +27,7 @@
   margin: 0.75rem 0;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
 }
 .updateBtn .button:hover {
   background-color: #00adee;
@@ -44,7 +44,8 @@
 .alternateContact .btn {
   background: #00adee;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   text-transform: none;
 }
 .alternateContact .btn:hover {
@@ -62,7 +63,8 @@
 .anotherContact .btn {
   background: #00adee;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
+
   text-transform: none;
 }
 .anotherContact .btn:hover {

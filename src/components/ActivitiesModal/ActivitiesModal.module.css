@@ -26,19 +26,20 @@
     display: grid;
     grid-template-columns: 20fr 50fr 30fr;
     font-weight: bold;
-    font-family: sans-serif;
+    font-family: var(--font-family-header);
   }
   .modalContent {
     display: grid;
     grid-template-columns: 20fr 50fr 30fr;
-    /* font-family: sans-serif; */
+    font-family: var(--font-family-paragraph);
+
   }
   .modalButtons .button {
     background: #00adee;
   
     text-transform: none;
     color: #fff;
-    font-family: sans-serif;
+    font-family: var(--font-family-paragraph);
   }
   .modalButtons .button:hover {
     background: #00adee;

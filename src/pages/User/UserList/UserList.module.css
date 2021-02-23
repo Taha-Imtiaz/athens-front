@@ -23,7 +23,7 @@
   background-color: #00adee;
   text-transform: none;
   color: #fff;
-  font-family: sans-serif;
+  font-family: var(--font-family-paragraph);
   /* text-decoration: none; */
 }
 .btnStyle .btn:hover {
@@ -39,7 +39,8 @@
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listheader .";
   font-weight: bold;
-  font-family: sans-serif;
+  font-family: var(--font-family-header);
+
 }
 .listheader {
   grid-area: listheader;
@@ -52,6 +53,8 @@
 .listContainer {
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
+  font-family: var(--font-family-paragraph);
+
   /* align-self: center; */
   /* background-color: blue; */
   /* or grid-auto-rows: 10vh; */

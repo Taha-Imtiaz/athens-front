@@ -152,7 +152,7 @@ const JobDetails = (props) => {
             )}
 
             {job.locations && (
-              <div className={`card ${style.locations}`}>
+              <div className={ job.locations.length > 0 ?`card ${style.locations}` : `${style.locations}`}>
                 {job.locations.map((list, i) =>
                   list.type === "pickup" ? (
                     <div key={i}>

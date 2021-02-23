@@ -1,9 +1,10 @@
 .jobEditContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
-  /* grid-template-rows: minmax(90vh, min-content); */
+  grid-template-rows: minmax(60vh, min-content) minmax(30vh,min-content);
   /* background-color: #00adee; */
-  grid-template-areas: ". containerContent .";
+  grid-template-areas: ". containerContent ."
+                        ". . .";
   background-color: #e9ecef;
 }
 .containerContent {

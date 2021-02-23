@@ -76,6 +76,7 @@
 .jobHeader {
   display: grid;
   grid-template-columns: 60fr repeat(2, 20fr);
+  font-family: var(--font-family-paragraph);
 }
 .jobDates {
   display: grid;

@@ -101,7 +101,7 @@ const JobDetails = (props) => {
           {/* jobDetails section */}
           <div className={` card ${style.jobDetail}`}>
             <div className={style.jobHeader}>
-              <h3>{job.title}</h3>
+              <h5>{job.title}</h5>
 
               <div>
                 {`Job Id: `}

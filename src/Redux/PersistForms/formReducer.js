@@ -64,6 +64,7 @@ let initialState = {
         propertyType: '',
         price: "",
         truck: "",
+        truckSize: "None",
         serviceOptions: [
             { id: 1, name: "Packaging" },
             { id: 2, name: "Loading" },
@@ -75,7 +76,7 @@ let initialState = {
         propertyOptions: [
             { id: 1, name: "House" },
             { id: 2, name: "Town House" },
-            { id: 3, name: "Appartement" }
+            { id: 3, name: "Apartment" }
         ],
     },
     addClaimForm: {

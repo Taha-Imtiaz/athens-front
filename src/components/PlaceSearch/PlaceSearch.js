@@ -4,7 +4,8 @@ import { throttle } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import parse from 'autosuggest-highlight/parse';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-
+import { connect } from "react-redux";
+import { showMessage } from "../../Redux/Common/commonActions";
 
 function loadScript(src, position, id) {
   if (!position) {
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PlaceSearch = ({ handleSetLocation, index, locationValue }) => {
+const PlaceSearch = (props) => {
+  const { handleSetLocation, index, locationValue } = props;
   const classes = useStyles();
   const [value, setValue] = useState(locationValue);
   const [inputValue, setInputValue] = useState('');
@@ -78,7 +80,7 @@ const PlaceSearch = ({ handleSetLocation, index, locationValue }) => {
       return undefined;
     }
 
-    fetch({ input: inputValue }, (results) => {
+    fetch({ input: inputValue, componentRestrictions: { country: "us" } }, (results) => {
       if (active) {
         let newOptions = [];
 
@@ -109,9 +111,17 @@ const PlaceSearch = ({ handleSetLocation, index, locationValue }) => {
       filterSelectedOptions
       value={value}
       onChange={(event, newValue) => {
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-        handleSetLocation(newValue, index)
+        if (newValue && newValue.terms.length > 2) {
+          setOptions(newValue ? [newValue, ...options] : options);
+          setValue(newValue);
+          handleSetLocation(newValue, index)
+        } else {
+          let { showMessage } = props;
+          showMessage("Choose location icluding city.");
+          setOptions(options);
+          setValue('');
+          handleSetLocation('', index)
+        }
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
@@ -150,4 +160,8 @@ const PlaceSearch = ({ handleSetLocation, index, locationValue }) => {
   );
 }
 
-export default PlaceSearch
+var actions = {
+  showMessage
+};
+
+export default connect(null, actions)(PlaceSearch);

@@ -199,6 +199,7 @@ tr:nth-child(even) td {
 
   overflow-x: hidden;
   height: 75vh;
+  padding-top: 10px;
 }
 .scrollBar .scrollContent {
   height: 100%;
@@ -250,3 +251,5 @@ tr:nth-child(even) td {
     height: 75vh;
   }
 }
+
+

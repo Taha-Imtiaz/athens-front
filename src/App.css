@@ -131,3 +131,7 @@ body {
     font-size: 80%;
   }
 }
+
+.MuiBadge-badge {
+  right: -8px !important;
+}

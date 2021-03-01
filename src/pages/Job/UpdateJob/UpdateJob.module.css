@@ -96,9 +96,14 @@ justify-content: flex-end;
 .styleRadio {
   color: #00adee 
 }
-.propertyTypeRow, .movers {
+.propertyTypeRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  column-gap: 0.5rem;
+}
+.movers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   column-gap: 0.5rem;
 }
 .rowFlex {

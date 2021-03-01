@@ -83,6 +83,7 @@ class CreateJob extends Component {
     propertyType: '',
     price: "",
     truck: "",
+    truckSize: "None",
     serviceOptions: [
       { id: 1, name: "Packaging" },
       { id: 2, name: "Loading" },
@@ -94,7 +95,7 @@ class CreateJob extends Component {
     propertyOptions: [
       { id: 1, name: "House" },
       { id: 2, name: "Town House" },
-      { id: 3, name: "Appartement" }
+      { id: 3, name: "Apartment" }
     ],
   };
 
@@ -113,7 +114,7 @@ class CreateJob extends Component {
     //get all customers and jobs
     let { getCustomersAndJobs } = this.props;
     getCustomersAndJobs(res => {
-    
+
       this.setState({ customers: res.data.data });
     });
   };
@@ -163,7 +164,7 @@ class CreateJob extends Component {
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
-  
+
     this.setState({ [name]: value });
     if (value === "") {
       // this.setState({ [name + "Error"]: "Should not be empty" });
@@ -260,9 +261,10 @@ class CreateJob extends Component {
         propertyType,
         price,
         truck,
+        truckSize,
         jobType,
       } = this.state;
-     
+
       let stringDates = dates.map((x) =>
         x !== ("" || null) ? x.toDateString() : null
       );
@@ -281,6 +283,7 @@ class CreateJob extends Component {
         propertyType,
         price,
         truck,
+        truckSize,
         customerId,
         userId: loggedInUser._id,
         jobType,
@@ -332,7 +335,7 @@ class CreateJob extends Component {
 
   propertyChanged = (newValue) => {
     // let arr = uniqBy(newValue, "id");
-   
+
     if (newValue) {
       this.setState({ propertyType: newValue.name });
     }
@@ -445,7 +448,7 @@ class CreateJob extends Component {
   }
 
   render() {
-  
+
     return (
       <div>
         <div className={`${style.createJob}`}>
@@ -526,7 +529,7 @@ class CreateJob extends Component {
                                 inputVariant="outlined"
                                 fullWidth
                                 size="small"
-                                id="date-picker-dialog" 
+                                id="date-picker-dialog"
                                 className={style.styleFormFields}
                                 format="MM/dd/yyyy"
                                 value={this.state.dates[i]}
@@ -646,6 +649,7 @@ class CreateJob extends Component {
                     )}
                   />
                 </div>
+
                 <div>
                   <FormControl variant="outlined" margin="dense" fullWidth>
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -660,16 +664,13 @@ class CreateJob extends Component {
                       label="Job Type"
                       name="jobType"
                     >
-                    
+
                       <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
                       <MenuItem value={"Fixed"}>Fixed</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
-              </div>
 
-
-              <div className={style.movers}>
                 <div>
                   <TextField
                     type="number"
@@ -688,8 +689,9 @@ class CreateJob extends Component {
                     onChange={this.handleFormInput}
                   />
                 </div>
+              </div>
 
-
+              <div className={style.movers}>
                 <div>
                   <TextField
                     type="number"
@@ -726,6 +728,27 @@ class CreateJob extends Component {
                     onChange={this.handleFormInput}
                   />
                 </div>
+                <div>
+                  <FormControl variant="outlined" margin="dense" fullWidth>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Truck Size
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={this.state.truckSize}
+                      onChange={this.handleFormInput}
+                      label="Truck Size"
+                      name="truckSize"
+                    >
+
+                      <MenuItem value={"None"} disabled>None</MenuItem>
+                      <MenuItem value={"16ft"}>16ft</MenuItem>
+                      <MenuItem value={"20ft"}>20ft</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              
               </div>
 
               {this.state.locations.length === 0 && (
@@ -740,7 +763,7 @@ class CreateJob extends Component {
 
               {this.state.locations.length > 0 && (
                 <div>
-                  <AddLocation locationArr={this.state.locations}  addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
+                  <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
 
                 </div>
               )}

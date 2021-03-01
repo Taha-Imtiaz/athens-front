@@ -24,7 +24,7 @@ import {
   Select,
   TextField,
   Button,
- 
+
   TextareaAutosize,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
@@ -44,7 +44,7 @@ class UpdateJob extends Component {
     startDate: "",
     dates: [""],
     endDate: "",
-    // startTime: "",
+    startTime: "",
     meetTime: "",
     jobType: "",
     propertyType: '',
@@ -65,6 +65,7 @@ class UpdateJob extends Component {
     newService: "",
     price: '',
     truck: '',
+    truckSize: 'None',
     serviceOptions: [
       { id: 1, name: "Packaging" },
       { id: 2, name: "Loading" },
@@ -76,7 +77,7 @@ class UpdateJob extends Component {
     propertyOptions: [
       { id: 1, name: "House" },
       { id: 2, name: "Town House" },
-      { id: 3, name: "Appartement" }
+      { id: 3, name: "Apartment" }
     ],
   };
 
@@ -186,7 +187,7 @@ class UpdateJob extends Component {
       endDate: Date.parse(job.endDate),
       startDateInString: job.startDate,
       endDateInString: job.endDate,
-      startTime: job.startTime.split('.')[0].toString(),
+      startTime: new Date(job.startTime),
       locations: job.locations,
       jobType: job.jobType,
       description: job.description,
@@ -201,6 +202,7 @@ class UpdateJob extends Component {
       propertyType: job.propertyType,
       price: job.price,
       truck: job.truck,
+      truckSize: job.truckSize,
       newService: "",
       newProperty: "",
     });
@@ -276,7 +278,12 @@ class UpdateJob extends Component {
       jobType,
       assigneeRequired,
       customerId,
-      note
+      note,
+      startTime,
+      propertyType,
+      price,
+      truck,
+      truckSize
     } = this.state;
 
     let {
@@ -305,7 +312,12 @@ class UpdateJob extends Component {
       status,
       userId: loggedinUser._id,
       customerId,
-      note
+      note,
+      startTime,
+      propertyType,
+      price,
+      truck,
+      truckSize
     };
     //check if the fields are empty
     if (this.handleValidation()) {
@@ -473,6 +485,7 @@ class UpdateJob extends Component {
     });
   };
   handleTimeChange = (time) => {
+    console.log(time)
     this.setState({
       startTime: time
     })
@@ -513,7 +526,7 @@ class UpdateJob extends Component {
               />
             </div>
 
-            <div>
+            {/* <div>
               <TextField
                 variant="outlined"
                 required
@@ -530,6 +543,7 @@ class UpdateJob extends Component {
                 error={this.state.titleError ? true : false}
               />
             </div>
+           */}
             <div className={style.styleEditor}>
               <Editor
                 editorState={this.state.editorState}
@@ -634,17 +648,13 @@ class UpdateJob extends Component {
               <i className="fa fa-plus"></i>
             </div>
 
-
             <div className={style.propertyTypeRow}>
               <div>
-
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid container justify="space-around">
                     <KeyboardTimePicker
                       // margin="normal"
                       id="startTime"
-
-                      label="Start Time"
                       value={this.state.startTime}
                       onChange={this.handleTimeChange}
                       KeyboardButtonProps={{
@@ -704,9 +714,9 @@ class UpdateJob extends Component {
                     </MenuItem>
                     {this.state.jobType !== "Fixed" ? (
                       <MenuItem value={"Fixed"}>Fixed</MenuItem>
-                     
+
                     ) : (
-                         <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
+                        <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
                       )}
                   </Select>
                 </FormControl>
@@ -766,7 +776,26 @@ class UpdateJob extends Component {
                   onChange={this.handleFormInput}
                 />
               </div>
+              <div>
+                <FormControl variant="outlined" margin="dense" fullWidth>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Truck Size
+                    </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={this.state.truckSize}
+                    onChange={this.handleFormInput}
+                    label="Truck Size"
+                    name="truckSize"
+                  >
 
+                    <MenuItem value={"None"} disabled>None</MenuItem>
+                    <MenuItem value={"16ft"}>16ft</MenuItem>
+                    <MenuItem value={"20ft"}>20ft</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
             </div>
             {
               this.state.locations && <div>
@@ -784,7 +813,7 @@ class UpdateJob extends Component {
                     <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
                   </div>
                 )}
-               
+
               </div>
             }
           </form>

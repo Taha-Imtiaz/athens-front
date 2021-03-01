@@ -25,6 +25,7 @@ import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
+import Badge from '@material-ui/core/Badge';
 
 const DailySchedule = (props) => {
 
@@ -356,17 +357,17 @@ const DailySchedule = (props) => {
                 <div>Action</div>
               </div>
             )}
-           
+
             {props.jobs && props.jobs.length > 0 ? (
-             
+
               props.jobs.map((list, i) => {
-                
+
                 return (
                   <Droppable
                     droppableId={list.jobId.toString()}
                     type="TASK"
                     key={i}
-                  
+
                   >
                     {(provided, snapshot) => (
                       <div
@@ -583,7 +584,10 @@ const DailySchedule = (props) => {
                                       {" "}
                                       <h6 className={style.moverHeader} key={i}>
                                         <label>{i + 1}.</label>{" "}
-                                        {list.mover.name}{" "}
+                                        <Badge badgeContent={list.mover.todayJobs} color="primary">
+                                          {list.mover.name}
+                                        </Badge>
+                                        {" "}
                                         <span className={style.hideAssigneeId}>
                                           {list.mover._id}
                                         </span>

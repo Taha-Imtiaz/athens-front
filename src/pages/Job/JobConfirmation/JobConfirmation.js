@@ -13,9 +13,9 @@ import { confirmJob } from "../../../Redux/Job/jobActions";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { connect } from "react-redux";
 import {
- 
+
   Grid,
-  
+
   TextField,
 } from "@material-ui/core";
 import style from "./JobConfirmation.module.css";
@@ -89,8 +89,7 @@ function JobConfirmation(props) {
       typeof x === "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    let currentDate = new Date("2020-08-18T09:00:00");
-    job.startTime = currentDate;
+    job.startTime = new Date(job.startTime);
     setData(job);
   }, [props.data]);
 
@@ -262,7 +261,7 @@ function JobConfirmation(props) {
             paidInCash: false,
             stripeToken: response.id,
             amount: payment.amount,
-            jobbyId: data._id,
+            jobToUpdate: data._id,
             dates: stringDates,
             startTime: data.startTime,
             phone: data.customer.phone,
@@ -291,7 +290,7 @@ function JobConfirmation(props) {
     });
     let obj = {
       paidInCash: true,
-      jobbyId: data._id,
+      jobToUpdate: data._id,
       dates: stringDates,
       startTime: data.startTime.toString(),
       phone: data.customer.phone,
@@ -476,7 +475,7 @@ function JobConfirmation(props) {
               </div>
             )}
 
-            { data.locations && data.locations.length > 0 &&
+            {data.locations && data.locations.length > 0 &&
               // data.locations.map((e, i) => showLocation(e, i))
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
             }

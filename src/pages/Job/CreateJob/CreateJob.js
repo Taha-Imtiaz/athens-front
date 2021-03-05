@@ -33,6 +33,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
+import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
 
 class CreateJob extends Component {
   //defining state
@@ -456,42 +457,47 @@ class CreateJob extends Component {
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               {this.state.customers.length > 0 ? (
-                <Autocomplete
-                  noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
-                  value={this.state.selectedCustomer}
-                  onChange={(event, newValue) => {
-                    this.getCustomerJobs(newValue); // Get the customer and get job
-                  }}
-                  size="small"
-                  options={this.state.customers}
-                  autoHighlight
-                  getOptionLabel={(option) =>
-                    option.firstName
-                      ? option.firstName + " " + option.lastName
-                      : option
-                  }
-                  renderOption={(option) => (
-                    <React.Fragment>
-                      {option.firstName} {option.lastName} ({option.email})
-                    </React.Fragment>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      required
-                      autoFocus
-                      {...params}
-                      className={style.styleFormFields}
-                      onKeyUp={(e) => this.addNewCustomer(e)}
-                      label="Choose a customer"
-                      fullWidth
-                      variant="outlined"
-                      error={this.state.customerIdError ? true : false}
-                      inputProps={{
-                        ...params.inputProps,
-                        autoComplete: "new-password", // disable autocomplete and autofill
-                      }}
-                    />
-                  )}
+                // <Autocomplete
+                //   noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
+                //   value={this.state.selectedCustomer}
+                //   onChange={(event, newValue) => {
+                //     this.getCustomerJobs(newValue); // Get the customer and get job
+                //   }}
+                //   size="small"
+                //   options={this.state.customers}
+                //   autoHighlight
+                //   getOptionLabel={(option) =>
+                //     option.firstName
+                //       ? option.firstName + " " + option.lastName
+                //       : option
+                //   }
+                //   renderOption={(option) => (
+                //     <React.Fragment>
+                //       {option.firstName} {option.lastName} ({option.email})
+                //     </React.Fragment>
+                //   )}
+                //   renderInput={(params) => (
+                //     <TextField
+                //       required
+                //       autoFocus
+                //       {...params}
+                //       className={style.styleFormFields}
+                //       onKeyUp={(e) => this.addNewCustomer(e)}
+                //       label="Choose a customer"
+                //       fullWidth
+                //       variant="outlined"
+                //       error={this.state.customerIdError ? true : false}
+                //       inputProps={{
+                //         ...params.inputProps,
+                //         autoComplete: "new-password", // disable autocomplete and autofill
+                //       }}
+                //     />
+                //   )}
+                // />
+                <VirtualizedAutocomplete optionTextValue = {this.state.newCustomer}
+                value={this.state.selectedCustomer} options = {this.state.customers}
+                getCustomerJobs = {this.getCustomerJobs}
+                addNewCustomer= {this.addNewCustomer}
                 />
               ) : null}
 

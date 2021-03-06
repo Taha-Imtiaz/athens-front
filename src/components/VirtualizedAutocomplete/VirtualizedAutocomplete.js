@@ -1,102 +1,160 @@
-import { List } from 'react-virtualized';
-import React from 'react'
-import { Autocomplete } from '@material-ui/lab';
-import { TextField } from '@material-ui/core';
-
-const ListboxComponent = React.forwardRef((props, ref) => {
-    const { children, role, ...other } = props;
-    console.log(props)
-    const itemCount = Array.isArray(children) ? children.length : 0;
-    const itemSize = 36;
-  
-   
-    return (
-      <div ref={ref}>
-        <div {...other}>
-          <List
-            height={250}
-            width={850}
-            rowHeight={itemSize}
-            overscanCount={5}
-            rowCount={itemCount}
-            rowRenderer={(props) => {
-              return React.cloneElement(children[props.index], {
-                style: props.style
-              });
-            }}
-            role={role}
-            
-          />
-        </div>
-      </div>
-    );
-  });
-//   returns random element from the array
-  function random(length,option) {
-      console.log(length)
-    // const characters =
-    //   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.";
-    let result = "";
-  
-    for (let i = 0; i < length; i += 1) {
-      result += option;
-    }
-  console.log(result)
-    return result;
-  }
-  
+import { CellMeasurer, CellMeasurerCache, List } from "react-virtualized";
+import React, { useRef, useState } from "react";
+import { Autocomplete } from "@material-ui/lab";
+import { TextField } from "@material-ui/core";
+import style from "./VirtualizedAutocomplete.module.css"
 
 const VirtualizedAutocomplete = (props) => {
-    console.log(props)
-   
-    console.log(props.value)
+  const cache = useRef(
+    new CellMeasurerCache({
+      fixedWidth: true,
+      defaultHeight: 100,
+    })
+  );
+  const [virtualizedState, setVirtualizedState] = useState({
+    selection: "",
+    data: props.options,
+  });
+  const onSelect = (item) =>
+    setVirtualizedState((prevState) => ({ ...prevState, selection: item }));
+
+  const renderItem = (item) => {
     return (
+      <div>
+        {" "}
+        {item.firstName} {item.lastName} ({item.email})
+      </div>
+    );
+  };
+  const renderJob = (item) => {
+    return (
+      <div>
+        {item.title} ({item.status})
+      </div>
+    );
+  };
+
+  const renderMenu = (items, searchingFor, autocompleteStyle) => {
+    cache.clearAll();
+
+    const rowRenderer = ({ key, index, parent, style }) => {
+      const Item = items[index];
+      const onMouseDown = (e) => {
+        if (e.button === 0) {
+          Item.props.onClick(e);
+        }
+      };
+
+      return (
+        <CellMeasurer cache={cache} key={key} parent={parent} rowIndex={index}>
+          {React.cloneElement(Item, {
+            style: {
+              ...style,
+              height: "auto",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              borderBottom: "1px solid grey",
+              padding: "5px",
+              boxSizing: "border-box",
+            },
+            key: key,
+            onMouseEnter: null,
+            onMouseDown: onMouseDown,
+          })}
+        </CellMeasurer>
+      );
+    };
+
+    return (
+      <List
+        rowHeight={cache.rowHeight}
+        height={207}
+        rowCount={items.length}
+        rowRenderer={rowRenderer}
+        width={autocompleteStyle.minWidth || 0}
+        style={{
+          position: "absolute",
+          backgroundColor: "white",
+          border: "1px solid black",
+          height: "auto",
+          maxHeight: "207px",
+          overflowY: "scroll",
+          display: items.length ? "block" : "none",
+        }}
+      />
+    );
+  };
+  console.log(props.textField);
+  return (
+    <div>
+      {props.textField ? (
+        <Autocomplete
+          value={props.value}
+          size="small"
+          onSelect={onSelect}
+          renderMenu={renderMenu}
+          onChange={(event, newValue) => {
+            console.log(newValue);
+            props.setSelectedCustomerJobs(newValue); // Get the customer and get job
+          }}
+          options={props.options}
+          
+          autoHighlight
+          getOptionLabel={(option) => (option.title ? option.title : option)}
+          renderOption={renderJob}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Choose a job"
+              fullWidth
+              className={style.styleFormFields}
+              variant="outlined"
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: "new-password", // disable autocomplete and autofill
+              }}
+            />
+          )}
+        />
+      ) : (
         <Autocomplete
           id="virtualize-demo"
           noOptionsText={`Add '${props.optionTextValue}' as Customer`}
           disableListWrap
-          onChange = {(event, newValue) => {
-              console.log(newValue)
-                props.getCustomerJobs(newValue); // Get the customer and get job
-              }}
-          size = "small"
-          value = {props.value}
-          ListboxComponent={ListboxComponent}
-            // options={props.options}
-             options={Array.from(props.options).map(() =>
-        random(Math.ceil(Math.random() * 5),props.options)
-      )}
+          onChange={(event, newValue) => {
+            console.log(newValue);
+            props.getCustomerJobs(newValue); // Get the customer and get job
+          }}
+          size="small"
+          value={props.value}
+          onSelect={onSelect}
+          renderMenu={renderMenu}
+          options={props.options}
           autoHighlight
-        //   options={this.state.customers}
-            getOptionLabel={(option) =>
-              option.firstName
-                ? option.firstName + " " + option.lastName
-                : option
-            }
-            renderOption={(option) => (
-              <React.Fragment>
-                {option.firstName} {option.lastName} ({option.email})
-              </React.Fragment>
-            )}
-        
+          getOptionLabel={(option) =>
+            option.firstName ? option.firstName + " " + option.lastName : option
+          }
+          renderOption={renderItem}
           renderInput={(params) => (
             <TextField
-               required
-                autoFocus
+              required
+              autoFocus
               {...params}
-              onKeyUp = {props.addNewCustomer}
+              onKeyUp={props.addNewCustomer}
               variant="outlined"
               label="Choose a Customer"
-              size = "small"
+              size="small"
               fullWidth
               inputProps={{
-                        ...params.inputProps,
-                        autoComplete: "new-password", // disable autocomplete and autofill
-                      }}
+                ...params.inputProps,
+                autoComplete: "new-password", // disable autocomplete and autofill
+              }}
             />
           )}
         />
-      );
-}
+      )}
+    </div>
+  );
+};
 
-export default VirtualizedAutocomplete
+export default VirtualizedAutocomplete;

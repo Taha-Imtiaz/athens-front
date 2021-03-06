@@ -9,7 +9,7 @@ import {
   getCustomersAndJobs,
 } from "../../../Redux/Claim/claimActions";
 import { TextareaAutosize, TextField } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -20,6 +20,7 @@ import {
 } from "../../../Redux/PersistForms/formActions";
 import { cloneDeep } from "lodash";
 import TimeAgo from "react-timeago";
+import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
 
 class CreateClaim extends Component {
   //defining state
@@ -73,14 +74,14 @@ class CreateClaim extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
-        selectedJob: ''
+        selectedJob: "",
       });
     }
     //get all customers and all jobs
     let { getCustomersAndJobs } = this.props;
     getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
-    })
+    });
     // .then((res) => {
     //   this.setState({ customers: res.data.data });
     // });
@@ -159,9 +160,9 @@ class CreateClaim extends Component {
       //call add Claim api to add a claim
       addClaim(data, (res) => {
         //reset form to its original state
-        this.handleResetForm()
+        this.handleResetForm();
         history.push(`/claim/detail/${res.data.data}`);
-      })
+      });
     }
   };
   //onChange handler of claims(description,type, cost)
@@ -209,6 +210,12 @@ class CreateClaim extends Component {
     resetClaimForm();
     this.setState({ ...this.initialState, customers });
   };
+  setSelectedCustomerJobs = (newValue) => {
+    this.setState({
+      selectedJob: newValue ? newValue : "",
+      jobIdError: "",
+    })
+  }
   render() {
     let { showClaimsDetails, customerName } = this.state;
     return (
@@ -218,39 +225,47 @@ class CreateClaim extends Component {
             <h3 className={style.head}>Create Claim</h3>
             <form>
               {this.state.customers.length > 0 ? (
-                <Autocomplete
+                // <Autocomplete
+                //   value={this.state.selectedCustomer}
+                //   onChange={(event, newValue) => {
+                //     this.getCustomerJobs(newValue); // Get the customer and get job
+                //   }}
+                //   id="country-select-demo"
+                //   size="small"
+                //   options={this.state.customers}
+                //   autoHighlight
+                //   getOptionLabel={(option) =>
+                //     option.firstName
+                //       ? option.firstName + " " + option.lastName
+                //       : option
+                //   }
+                //   renderOption={(option) => (
+                //     <React.Fragment>
+                //       {option.firstName} {option.lastName} ({option.email})
+                //     </React.Fragment>
+                //   )}
+                //   renderInput={(params) => (
+                //     <TextField
+                //       {...params}
+                //       label="Choose a customer"
+                //       fullWidth
+                //       className={style.styleFormFields}
+                //       variant="outlined"
+                //       error={this.state.customerIdError ? true : false}
+                //       inputProps={{
+                //         ...params.inputProps,
+                //         autoComplete: "new-password", // disable autocomplete and autofill
+                //       }}
+                //     />
+                //   )}
+                // />
+
+                <VirtualizedAutocomplete
+                  optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
-                  onChange={(event, newValue) => {
-                    this.getCustomerJobs(newValue); // Get the customer and get job
-                  }}
-                  id="country-select-demo"
-                  size="small"
                   options={this.state.customers}
-                  autoHighlight
-                  getOptionLabel={(option) =>
-                    option.firstName
-                      ? option.firstName + " " + option.lastName
-                      : option
-                  }
-                  renderOption={(option) => (
-                    <React.Fragment>
-                      {option.firstName} {option.lastName} ({option.email})
-                    </React.Fragment>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Choose a customer"
-                      fullWidth
-                      className={style.styleFormFields}
-                      variant="outlined"
-                      error={this.state.customerIdError ? true : false}
-                      inputProps={{
-                        ...params.inputProps,
-                        autoComplete: "new-password", // disable autocomplete and autofill
-                      }}
-                    />
-                  )}
+                  getCustomerJobs={this.getCustomerJobs}
+                  addNewCustomer={this.addNewCustomer}
                 />
               ) : null}
               {this.state.customerClaims && (
@@ -290,13 +305,13 @@ class CreateClaim extends Component {
                           onClick={this.handleClose}
                         >
                           Close
-                      </Button>
+                        </Button>
                       </div>
                     </Modal.Footer>
                   </Modal>
                 </div>
               )}
-
+              {/* 
               <Autocomplete
                 value={this.state.selectedJob}
                 onChange={(event, newValue) => {
@@ -331,8 +346,13 @@ class CreateClaim extends Component {
                     }}
                   />
                 )}
-              />
+              /> */}
 
+              <VirtualizedAutocomplete textField = "Choose a job" 
+                value={this.state.selectedJob}
+                options={this.state.jobs}
+                setSelectedCustomerJobs={this.setSelectedCustomerJobs}
+              />
               <TextField
                 variant="outlined"
                 required
@@ -366,7 +386,7 @@ class CreateClaim extends Component {
                   <FormControl variant="outlined" margin="dense" fullWidth>
                     <InputLabel id="demo-simple-select-outlined-label">
                       Protection Type
-                  </InputLabel>
+                    </InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
@@ -411,13 +431,12 @@ class CreateClaim extends Component {
               <div className={style.buttons}>
                 <Button className={style.button} onClick={this.handleResetForm}>
                   Reset
-              </Button>
+                </Button>
 
                 <Button className={style.button} onClick={this.mySubmitHandler}>
                   Submit
-              </Button>
+                </Button>
               </div>
-
             </form>
           </div>
         </div>

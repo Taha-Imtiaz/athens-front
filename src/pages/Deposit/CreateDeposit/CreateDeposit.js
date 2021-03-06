@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import style from "./CreateDeposit.module.css";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import {
@@ -11,6 +11,7 @@ import {
 } from "../../../Redux/PersistForms/formActions";
 import { addDeposit } from "../../../Redux/Deposit/DepositActions";
 import { cloneDeep } from "lodash";
+import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
 
 class CreateDeposit extends Component {
   constructor(props) {
@@ -96,8 +97,8 @@ class CreateDeposit extends Component {
     let { addDeposit, history } = this.props;
     if (this.handleValidate()) {
       addDeposit(obj, () => {
-           //reset form to its original state
-        this.handleResetDeposit()
+        //reset form to its original state
+        this.handleResetDeposit();
         history.push("/deposits");
       });
     }
@@ -149,6 +150,12 @@ class CreateDeposit extends Component {
     resetDepositForm();
     this.setState({ ...this.initialState, customers });
   };
+  setSelectedCustomerJobs = (newValue) => {
+    this.setState({
+      selectedJob: newValue ? newValue : "",
+      jobIdError: "",
+    });
+  };
   render() {
     let { quantity, cost } = this.state;
     return (
@@ -158,42 +165,50 @@ class CreateDeposit extends Component {
             <form onSubmit={this.handleSubmit}>
               <h3 className={style.head}>Create Deposit</h3>
               {this.state.customers.length > 0 ? (
-                <Autocomplete
+                // <Autocomplete
+                //   value={this.state.selectedCustomer}
+                //   onChange={(event, newValue) => {
+                //     this.getCustomerJobs(newValue); // Get the customer and get job
+                //   }}
+                //   id="country-select-demoq"
+                //   size="small"
+                //   options={this.state.customers}
+                //   autoHighlight
+                //   getOptionLabel={(option) =>
+                //     option.firstName
+                //       ? option.firstName + " " + option.lastName
+                //       : option
+                //   }
+                //   renderOption={(option) => (
+                //     <React.Fragment>
+                //       {option.firstName} {option.lastName} ({option.email})
+                //     </React.Fragment>
+                //   )}
+                //   renderInput={(params) => (
+                //     <TextField
+                //       {...params}
+                //       label="Choose a customer"
+                //       fullWidth
+                //       className={style.styleFormFields}
+                //       variant="outlined"
+                //       error={this.state.customerIdError ? true : false}
+                //       inputProps={{
+                //         ...params.inputProps,
+                //         autoComplete: "new-password", // disable autocomplete and autofill
+                //       }}
+                //     />
+                //   )}
+                // />
+
+                <VirtualizedAutocomplete
+                  optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
-                  onChange={(event, newValue) => {
-                    this.getCustomerJobs(newValue); // Get the customer and get job
-                  }}
-                  id="country-select-demoq"
-                  size="small"
                   options={this.state.customers}
-                  autoHighlight
-                  getOptionLabel={(option) =>
-                    option.firstName
-                      ? option.firstName + " " + option.lastName
-                      : option
-                  }
-                  renderOption={(option) => (
-                    <React.Fragment>
-                      {option.firstName} {option.lastName} ({option.email})
-                    </React.Fragment>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Choose a customer"
-                      fullWidth
-                      className={style.styleFormFields}
-                      variant="outlined"
-                      error={this.state.customerIdError ? true : false}
-                      inputProps={{
-                        ...params.inputProps,
-                        autoComplete: "new-password", // disable autocomplete and autofill
-                      }}
-                    />
-                  )}
+                  getCustomerJobs={this.getCustomerJobs}
+                  addNewCustomer={this.addNewCustomer}
                 />
               ) : null}
-
+              {/* 
               <Autocomplete
                 value={this.state.selectedJob}
                 onChange={(event, newValue) => {
@@ -228,6 +243,12 @@ class CreateDeposit extends Component {
                     }}
                   />
                 )}
+              /> */}
+              <VirtualizedAutocomplete
+                textField="Choose a job"
+                value={this.state.selectedJob}
+                options={this.state.jobs}
+                setSelectedCustomerJobs={this.setSelectedCustomerJobs}
               />
 
               <TextField

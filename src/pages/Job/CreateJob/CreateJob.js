@@ -494,7 +494,8 @@ class CreateJob extends Component {
                 //     />
                 //   )}
                 // />
-                <VirtualizedAutocomplete optionTextValue = {this.state.newCustomer}
+
+                <VirtualizedAutocomplete optionTextValue = {this.state.newCustomer} 
                 value={this.state.selectedCustomer} options = {this.state.customers}
                 getCustomerJobs = {this.getCustomerJobs}
                 addNewCustomer= {this.addNewCustomer}

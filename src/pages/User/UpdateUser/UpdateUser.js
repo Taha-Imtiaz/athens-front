@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { Switch } from "@material-ui/core";
 import { getUser, updateUser } from "../../../Redux/User/userActions";
 import style from "./UpdateUser.module.css";
-// import { connect } from 'react-redux'
 
 const UpdateUser = (props) => {
   let {
@@ -27,7 +26,6 @@ const UpdateUser = (props) => {
   useEffect(() => {
 
     getUser(userId, (res) => {
-      // console.log(res.data.data)
       setUserState(res.data.data);
     
 
@@ -86,10 +84,8 @@ const UpdateUser = (props) => {
       address: userState.address,
       activeStatus: userState.activeStatus,
     };
-    console.log(userData);
     updateUser(userData, userId, 'admin', () => setDisabledFields(true));
   };
-  console.log(userState)
   return (
     <div className={style.userContainer}>
       <div className={`${style.userForm}`}>

@@ -169,26 +169,7 @@ function JobConfirmation(props) {
       setData(updatedCustomer);
     }
   };
-  //onChange handler of location
-  // const hanldeLocationInput = (i, e) => {
-  //   let job = cloneDeep(data);
-  //   job.locations[i].value = e.target.value;
-  //   setData(job);
-  // };
-  //handles checkBox state
-  // const changeCheckBoxState = (e, i) => {
-  //   e.stopPropagation();
-  //   let prevState = cloneDeep(data);
-  //   prevState.locations[i].default = !prevState.locations[i].default;
-  //   if (prevState.locations[i].default) {
-  //     prevState.locations[i].value =
-  //       prevState.locations[i].type === "pickup" ? prevState.locations[i].value.concat(` (Load Only / IA)`) : prevState.locations[i].value.concat(` (Unload Only)`);
-
-  //   } else {
-  //     prevState.locations[i].value = prevState.locations[i].value.split('(')[0]
-  //   }
-  //   setData(prevState);
-  // };
+ 
   //remove date
   const removeDate = (i) => {
     let newData = cloneDeep(data);
@@ -206,16 +187,7 @@ function JobConfirmation(props) {
     setData(newData);
   };
 
-  //on change handler of radio buttons
-  // const handleInputChange = (e, i) => {
-  //   let { value } = e.target;
-  //   let updateLocation = { ...data };
-  //   updateLocation.locations[i].type = value;
-  //   updateLocation.locations[i].value = "";
-  //   updateLocation.locations[i].default = false;
-
-  //   setData(updateLocation);
-  // };
+  
   //load stripe
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
@@ -311,7 +283,6 @@ function JobConfirmation(props) {
   }
 
   const getStepContent = (step) => {
-    console.log(data)
     switch (step) {
       case 0:
         return (
@@ -375,8 +346,6 @@ function JobConfirmation(props) {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid>
                         <KeyboardTimePicker
-                          // className = {style.styleFormFields}
-                          // fullWidth
                           id="time-picker"
                           value={data.startTime}
                           onChange={handleTimeSelect}
@@ -476,15 +445,10 @@ function JobConfirmation(props) {
             )}
 
             {data.locations && data.locations.length > 0 &&
-              // data.locations.map((e, i) => showLocation(e, i))
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
             }
 
-            {/* {data.locations.length > 0 && (
-              <div className={style.flexEnd}>
-                <i className="fa fa-plus" onClick={(e) => addLocation(e)}></i>
-              </div>
-            )} */}
+          
           </div>
         );
       case 3:

@@ -10,10 +10,7 @@ body {
   box-sizing: border-box;
   border: 0;
 }
-/* a {
-  text-decoration: none !important;
-  color: inherit;
-} */
+
 
 .app-without-nav {
   font-family: var(--font-family-header);
@@ -56,11 +53,7 @@ body {
   color: #00adee;
 }
 
-/* .btn-secondary:not(:disabled):not(.disabled).active,
-.btn-secondary:not(:disabled):not(.disabled):active,
-.show > .btn-secondary.dropdown-toggle {
-  background-color: #00adee !important;
-} */
+
 
 .page-item.active .page-link {
   background-color: #00adee !important;

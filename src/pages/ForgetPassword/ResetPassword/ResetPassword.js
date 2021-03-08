@@ -66,7 +66,6 @@ const ResetPassword = (props) => {
                 variant="outlined"
                 required
                 type="password"
-                // fullWidth
                 className={style.passwordField}
                 size="small"
                 id="password"
@@ -82,7 +81,6 @@ const ResetPassword = (props) => {
                 variant="outlined"
                 required
                 type="password"
-                // fullWidth
                 className={style.passwordField}
                 size="small"
                 id="cpassword"

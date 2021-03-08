@@ -7,7 +7,6 @@ import PlaceSearch from '../PlaceSearch/PlaceSearch';
 import style from "./AddLocation.module.css"
 
 const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
-    // const [locations, setLocations] = useState(locationArr)
 
     //set the google location in the state
     const handleSetLocation = (choosenLocation, index) => {
@@ -25,7 +24,6 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
 
         let updateLocation = cloneDeep(locationArr);
         updateLocation[i].type = value;
-        // updateLocation[i].value = "";
         updateLocation[i].default = false;
 
         handleLocationChange(updateLocation)
@@ -37,12 +35,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         e.stopPropagation();
         let prevState = cloneDeep(locationArr);
         prevState[i].default = !prevState[i].default;
-        // if (prevState[i].default) {
-        //   prevState[i].value =
-        //     prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`);
-        // } else {
-        //   prevState[i].value = prevState[i].value.split('(')[0]
-        // }
+        
         handleLocationChange(prevState)
 
     };
@@ -52,9 +45,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         let location = cloneDeep(locationArr);
         location.splice(i, 1);
         handleLocationChange(location)
-        //   this.setState({
-        //     locations: location,
-        //   });
+        
     }
 
     //function to show all locations

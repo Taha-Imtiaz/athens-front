@@ -102,7 +102,6 @@ export const filterJobsByDate = (date) => {
       let response = await Axios.post("job/filter", date, {
         config: { handlerEnabled: true }
       });
-      console.log(response, date);
       dispatch({
         type: GET_JOBS,
         payload: response.data.data,

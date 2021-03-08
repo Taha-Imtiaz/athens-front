@@ -327,7 +327,6 @@ const getCount = (e, jobs) => {
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 var action = {

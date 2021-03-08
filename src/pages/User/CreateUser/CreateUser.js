@@ -31,7 +31,6 @@ class CreateUser extends Component {
     { name: "Crew Leaders" },
     { name: "Movers" },
     { name: "New Movers" },
-    // { name: "new Manager" },
   ];
 
   constructor(props) {
@@ -224,17 +223,7 @@ class CreateUser extends Component {
                 className={style.styleAddress}
               />
 
-              {/* <Multiselect
-                singleSelect={true}
-                options={this.typeOptions} // Options to display in the dropdown
-                onSelect={this.onTypeSelect} // Function will trigger on select event
-                onRemove={this.onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                className={`form-control `}
-                placeholder="Select Type"
-                error={this.state.typeError ? true : false}
-                style={this.style}
-              /> */}
+           
                <Autocomplete
       id="combo-box-demo"
       options={this.typeOptions}
@@ -246,17 +235,7 @@ class CreateUser extends Component {
         {...params} label="Select Type" variant="outlined" />}
     />
 
-              {/* <Multiselect
-                singleSelect={true}
-                options={this.attributeOptions} // Options to display in the dropdown
-                onSelect={this.onAttributeSelect} // Function will trigger on select event
-                onRemove={this.onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                className={`form-control `}
-                placeholder="Select Attribute"
-                error={this.state.attributeError ? true : false}
-                style={this.style}
-              /> */}
+              
                  <Autocomplete
       id="combo-box-demo"
       options={this.attributeOptions}

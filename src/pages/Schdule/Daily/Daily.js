@@ -262,7 +262,6 @@ const DailySchedule = (props) => {
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
         let moverAssignedDate = movers[index].mover.jobs.filter((job) => {
-          console.log(job)
           return (
             job.dates.some((date) => date === new Date(today).toDateString()) &&
             job.status === "booked"
@@ -272,7 +271,6 @@ const DailySchedule = (props) => {
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
         if (moverJobs) {
           let mover = movers.find((x) => x.mover._id === moverId);
-          console.log(mover)
           setMover(mover);
           setMoverAssignedJobs(moverAssignedDate)
           let newAssigneeObj = {
@@ -283,7 +281,6 @@ const DailySchedule = (props) => {
           setAssignee(newAssigneeObj);
           setModalShow(true);
         } else {
-          console.log("assignee job")
           assigneesId.push(moverId);
           jobToUpdate[0].assigneesId = assigneesId;
           let job = cloneDeep(jobToUpdate[0]);
@@ -307,7 +304,7 @@ const DailySchedule = (props) => {
                   onSelectedDay(e);
                 }}
                 labelFormat={"MMMM yyyy"}
-                color={"#181F47"} // #00ADEE
+                color={"#181F47"} 
                 selectDate={newDate}
               />
             </div>

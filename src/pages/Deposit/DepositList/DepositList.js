@@ -13,11 +13,9 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 
 const DepositList = (props) => {
   let { blanketDeposit } = props;
-  console.log(blanketDeposit)
   let totalCount = 0;
   if (blanketDeposit) {
     var { docs } = blanketDeposit;
-    console.log(docs)
     totalCount = blanketDeposit.total;
   }
   const [currentPage, setCurrentPage] = useState(1);

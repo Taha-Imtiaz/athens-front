@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import style from "./CreateDeposit.module.css";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
-// import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import {
@@ -165,40 +164,7 @@ class CreateDeposit extends Component {
             <form onSubmit={this.handleSubmit}>
               <h3 className={style.head}>Create Deposit</h3>
               {this.state.customers.length > 0 ? (
-                // <Autocomplete
-                //   value={this.state.selectedCustomer}
-                //   onChange={(event, newValue) => {
-                //     this.getCustomerJobs(newValue); // Get the customer and get job
-                //   }}
-                //   id="country-select-demoq"
-                //   size="small"
-                //   options={this.state.customers}
-                //   autoHighlight
-                //   getOptionLabel={(option) =>
-                //     option.firstName
-                //       ? option.firstName + " " + option.lastName
-                //       : option
-                //   }
-                //   renderOption={(option) => (
-                //     <React.Fragment>
-                //       {option.firstName} {option.lastName} ({option.email})
-                //     </React.Fragment>
-                //   )}
-                //   renderInput={(params) => (
-                //     <TextField
-                //       {...params}
-                //       label="Choose a customer"
-                //       fullWidth
-                //       className={style.styleFormFields}
-                //       variant="outlined"
-                //       error={this.state.customerIdError ? true : false}
-                //       inputProps={{
-                //         ...params.inputProps,
-                //         autoComplete: "new-password", // disable autocomplete and autofill
-                //       }}
-                //     />
-                //   )}
-                // />
+             
 
                 <VirtualizedAutocomplete
                   optionTextValue={this.state.newCustomer}
@@ -208,42 +174,7 @@ class CreateDeposit extends Component {
                   addNewCustomer={this.addNewCustomer}
                 />
               ) : null}
-              {/* 
-              <Autocomplete
-                value={this.state.selectedJob}
-                onChange={(event, newValue) => {
-                  this.setState({
-                    selectedJob: newValue ? newValue : "",
-                    jobIdError: "",
-                  }); // Get the customer and get job
-                }}
-                id="country-select-demo"
-                size="small"
-                options={this.state.jobs}
-                autoHighlight
-                getOptionLabel={(option) =>
-                  option.title ? option.title : option
-                }
-                renderOption={(option) => (
-                  <React.Fragment>
-                    {option.title} ({option.status})
-                  </React.Fragment>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Choose a job"
-                    fullWidth
-                    className={style.styleFormFields}
-                    variant="outlined"
-                    error={this.state.jobIdError ? true : false}
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: "new-password", // disable autocomplete and autofill
-                    }}
-                  />
-                )}
-              /> */}
+             
               <VirtualizedAutocomplete
                 textField="Choose a job"
                 value={this.state.selectedJob}

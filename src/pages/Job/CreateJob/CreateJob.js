@@ -142,26 +142,7 @@ class CreateJob extends Component {
       dates: datesArr,
     });
   };
-  // //onChange handler for location
-  // hanldeLocationInput = (i, e) => {
-  //   let updateLocation = cloneDeep(this.state.locations);
-  //   updateLocation[i].value = e.target.value;
-  //   this.setState({ locations: updateLocation });
-  //   if (e.target.value) {
-  //     this.setState({ locationfromError: "" });
-  //   }
-  // };
-
-  //remove location
-  // removeLocation = (i) => {
-  //   let location = cloneDeep(this.state.locations);
-  //   console.log(location)
-  //   location.splice(i, 1);
-  //   console.log(location)
-  //   this.setState({
-  //     locations: location,
-  //   });
-  // };
+  
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
@@ -289,7 +270,6 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType,
       };
-      console.log(createJobObj)
       createJob(createJobObj, (job) => {
         //reset form to its original state
         this.handleResetJob()
@@ -335,7 +315,6 @@ class CreateJob extends Component {
   };
 
   propertyChanged = (newValue) => {
-    // let arr = uniqBy(newValue, "id");
 
     if (newValue) {
       this.setState({ propertyType: newValue.name });
@@ -344,9 +323,7 @@ class CreateJob extends Component {
       this.setState({ propertyType: "" });
     }
 
-    // if (arr.length > 0) {
-    //   this.setState({ multiError: "" });
-    // }
+   
   };
 
   addCustomPropertyType = (e) => {
@@ -457,43 +434,7 @@ class CreateJob extends Component {
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               {this.state.customers.length > 0 ? (
-                // <Autocomplete
-                //   noOptionsText={`Add '${this.state.newCustomer}' as Customer`}
-                //   value={this.state.selectedCustomer}
-                //   onChange={(event, newValue) => {
-                //     this.getCustomerJobs(newValue); // Get the customer and get job
-                //   }}
-                //   size="small"
-                //   options={this.state.customers}
-                //   autoHighlight
-                //   getOptionLabel={(option) =>
-                //     option.firstName
-                //       ? option.firstName + " " + option.lastName
-                //       : option
-                //   }
-                //   renderOption={(option) => (
-                //     <React.Fragment>
-                //       {option.firstName} {option.lastName} ({option.email})
-                //     </React.Fragment>
-                //   )}
-                //   renderInput={(params) => (
-                //     <TextField
-                //       required
-                //       autoFocus
-                //       {...params}
-                //       className={style.styleFormFields}
-                //       onKeyUp={(e) => this.addNewCustomer(e)}
-                //       label="Choose a customer"
-                //       fullWidth
-                //       variant="outlined"
-                //       error={this.state.customerIdError ? true : false}
-                //       inputProps={{
-                //         ...params.inputProps,
-                //         autoComplete: "new-password", // disable autocomplete and autofill
-                //       }}
-                //     />
-                //   )}
-                // />
+            
 
                 <VirtualizedAutocomplete optionTextValue = {this.state.newCustomer} 
                 value={this.state.selectedCustomer} options = {this.state.customers}

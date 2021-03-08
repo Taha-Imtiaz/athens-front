@@ -49,7 +49,6 @@ const MoversJobList = (props) => {
   const { moverJobs } = props;
   let totalCount = 0;
   if (moverJobs) {
-    // var { docs } = moverJobs;
     totalCount = moverJobs.total;
   }
 
@@ -81,7 +80,6 @@ const MoversJobList = (props) => {
   const markComplete = (list) => {
     let {updateJob } = props;
     updateJob(list._id, { status: "completed" },
-    //  () => getMover()
      );
   };
 

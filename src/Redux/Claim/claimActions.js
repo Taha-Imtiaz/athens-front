@@ -1,4 +1,3 @@
-// import Axios from "axios"
 import { GET_CLAIMS, GET_CLAIM, DELETE_CLAIM } from "./claimConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";

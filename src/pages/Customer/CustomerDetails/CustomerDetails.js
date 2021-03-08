@@ -135,7 +135,6 @@ const CustomerDetails = (props) => {
     let updatedClaims = cloneDeep(claims);
 
     updatedClaims[i].status = 'open';
-    console.log(updatedClaims[i])
     updateClaim(updatedClaims[i], (res) => {
       let updatedCount = cloneDeep(claimCount)
       let newCount = ++updatedCount;
@@ -500,7 +499,6 @@ const CustomerDetails = (props) => {
                                   <Button
                                     className={style.button}
                                     onClick={() => setToggleClaim(true)}
-                                  // onClick={() => handleCloseClaim(i)}
                                   >
                                     Close Claim
                                   </Button>
@@ -508,7 +506,6 @@ const CustomerDetails = (props) => {
                                     <Button
                                       className={style.button}
                                       onClick={() => setToggleClaim(true)}
-                                    // onClick={() => handleCloseClaim(i)}
                                     >
                                       Reopen Claim
                                     </Button>

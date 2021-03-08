@@ -134,7 +134,6 @@ const UserList = (props) => {
 
               <div>
                 {docs.map((usersDoc, i) => {
-                // console.log(usersDoc)
                   return (
                     <div className={style.listContainer} key={i}>
                       <div className={`${style.listContent} `}>

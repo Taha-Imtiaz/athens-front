@@ -62,12 +62,7 @@ const PlaceSearch = (props) => {
   useEffect(() => {
     let active = true;
     setValue(locationValue)
-    // var updatedLocationArr = locationValue.map((location) => location.value)
-    // console.log(updatedLocationArr)
-    // setValue(value => ({
-    //   ...value,
-    //   updatedLocationArr
-    // }))
+   
     if (!autocompleteService.current && window.google) {
       autocompleteService.current = new window.google.maps.places.AutocompleteService();
     }

@@ -170,7 +170,6 @@ const SearchBar = (props) => {
         />
         <div className="input-group-append">
           <button
-            // onClick={handleSearch}
             className="btn btn-secondary"
             type="button"
           >

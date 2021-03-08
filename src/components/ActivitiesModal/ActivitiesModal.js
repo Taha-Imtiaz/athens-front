@@ -14,7 +14,6 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
         dialogClassName={`${style.modal}`}
         show={show}
         onHide={handleClose}
-        // animation={false}
         centered
         scrollable
       >

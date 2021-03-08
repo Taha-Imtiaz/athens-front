@@ -213,14 +213,7 @@ class UpdateJob extends Component {
       show: true,
     });
   };
-  //remove location
-  // removeLocation = (i) => {
-  //   let location = cloneDeep(this.state.locations);
-  //   location.splice(i, 1);
-  //   this.setState({
-  //     locations: location,
-  //   });
-  // };
+  
   //close note modal
   handleClose = (notes) => {
     this.setState({
@@ -325,15 +318,7 @@ class UpdateJob extends Component {
       updateJob(jobId, updatedObj, (res) => history.push("/job/detail/" + jobId))
     }
   };
-  //onChange handler of locations
-  // hanldeLocationInput = (i, e) => {
-  //   let updateLocation = cloneDeep(this.state.locations);
-  //   updateLocation[i].value = e.target.value;
-  //   this.setState({ locations: updateLocation });
-  //   if (e.target.value) {
-  //     this.setState({ locationfromError: "" });
-  //   }
-  // };
+
 
   //add new location
   addLocation = () => {
@@ -343,44 +328,16 @@ class UpdateJob extends Component {
       locations: location,
     });
   };
-  //onChange handler of radio buttons
-  // handleInputChange = (e, i) => {
-  //   let { value } = e.target;
-  //   let updateLocation = cloneDeep(this.state.locations);
-  //   updateLocation[i].type = value;
-  //   updateLocation[i].value = "";
-  //   updateLocation[i].default = false;
-  //   this.setState({
-  //     locations: updateLocation,
-  //   });
-  // };
-  //change checkBox state
-  // changeCheckBoxState = (i) => {
-  //   let prevState = cloneDeep(this.state.locations);
-  //   prevState[i].default = !prevState[i].default;
-  //   // if (prevState[i].default) {
-  //   //   prevState[i].value =
-  //   //   prevState[i].type === "pickup" ? prevState[i].value.concat(` (Load Only / IA)`) : prevState[i].value.concat(` (Unload Only)`)
-  //   // } else {
-  //   //   prevState[i].value = prevState[i].value.split('(')[0]
-  //   // }
-  //   this.setState({
-  //     locations: prevState,
-  //   });
-  // };
+  
 
   //set the google location in the state
   handleSetLocation = (choosenLocation, index) => {
-    // console.log(e.target.value, choosenLocation) 
     let value = choosenLocation ? choosenLocation.description : ''
     let location = [...this.state.locations];
 
     location[index].value = value;
-    console.log(location)
 
-    //   let searchLocationIndex = this.state.locations.findIndex(location => location.value === choosenLocation)
-    //   console.log(searchLocationIndex)
-    //  location[0].value = choosenLocation
+    
 
 
     this.setState({
@@ -410,7 +367,6 @@ class UpdateJob extends Component {
   };
   //onChange handler of propertytype
   propertyChanged = (newValue) => {
-    // let arr = uniqBy(newValue, "id");
 
     if (newValue) {
       this.setState({ propertyType: newValue.name });
@@ -419,9 +375,7 @@ class UpdateJob extends Component {
       this.setState({ propertyType: "" });
     }
 
-    // if (arr.length > 0) {
-    //   this.setState({ multiError: "" });
-    // }
+   
   };
 
   //add custom service
@@ -485,7 +439,6 @@ class UpdateJob extends Component {
     });
   };
   handleTimeChange = (time) => {
-    console.log(time)
     this.setState({
       startTime: time
     })
@@ -653,7 +606,6 @@ class UpdateJob extends Component {
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid container justify="space-around">
                     <KeyboardTimePicker
-                      // margin="normal"
                       id="startTime"
                       value={this.state.startTime}
                       onChange={this.handleTimeChange}
@@ -686,7 +638,6 @@ class UpdateJob extends Component {
                       {...params}
                       className={style.styleFormFields}
                       variant="outlined"
-                      // value={this.state.propertyType}
                       size="small"
                       label="Property Type"
                       placeholder="Property Type"

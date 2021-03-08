@@ -41,7 +41,6 @@ const ClaimDetails = (props) => {
     let { claims } = props;
 
     claims.status = "closed";
-    console.log(claims)
     updateClaim(claims, () => { })
     setToggleClaim(false)
 
@@ -180,7 +179,6 @@ const ClaimDetails = (props) => {
                   <Button
                     className={style.button}
                     onClick={() => setToggleClaim(true)}
-                  // onClick={() => handleCloseJob()}
                   >
                     Close Claim
                   </Button>
@@ -189,8 +187,7 @@ const ClaimDetails = (props) => {
                     <Button
                       className={style.button}
                       onClick={() => setToggleClaim(true)}
-                    // onClick = {reopenClaim}
-                    // onClick={() => handleCloseJob()}
+                   
                     >
                       Re-Open Claim
                     </Button>

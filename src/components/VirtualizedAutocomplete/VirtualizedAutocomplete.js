@@ -84,7 +84,6 @@ const VirtualizedAutocomplete = (props) => {
       />
     );
   };
-  console.log(props.textField);
   return (
     <div>
       {props.textField ? (
@@ -94,7 +93,6 @@ const VirtualizedAutocomplete = (props) => {
           onSelect={onSelect}
           renderMenu={renderMenu}
           onChange={(event, newValue) => {
-            console.log(newValue);
             props.setSelectedCustomerJobs(newValue); // Get the customer and get job
           }}
           options={props.options}
@@ -122,7 +120,6 @@ const VirtualizedAutocomplete = (props) => {
           noOptionsText={`Add '${props.optionTextValue}' as Customer`}
           disableListWrap
           onChange={(event, newValue) => {
-            console.log(newValue);
             props.getCustomerJobs(newValue); // Get the customer and get job
           }}
           size="small"

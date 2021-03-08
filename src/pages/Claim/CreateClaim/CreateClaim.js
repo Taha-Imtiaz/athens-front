@@ -9,7 +9,6 @@ import {
   getCustomersAndJobs,
 } from "../../../Redux/Claim/claimActions";
 import { TextareaAutosize, TextField } from "@material-ui/core";
-// import Autocomplete from "@material-ui/lab/Autocomplete";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -82,9 +81,7 @@ class CreateClaim extends Component {
     getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
     });
-    // .then((res) => {
-    //   this.setState({ customers: res.data.data });
-    // });
+    
   };
   //onChange handler
   handleFormInput = (event) => {
@@ -225,41 +222,7 @@ class CreateClaim extends Component {
             <h3 className={style.head}>Create Claim</h3>
             <form>
               {this.state.customers.length > 0 ? (
-                // <Autocomplete
-                //   value={this.state.selectedCustomer}
-                //   onChange={(event, newValue) => {
-                //     this.getCustomerJobs(newValue); // Get the customer and get job
-                //   }}
-                //   id="country-select-demo"
-                //   size="small"
-                //   options={this.state.customers}
-                //   autoHighlight
-                //   getOptionLabel={(option) =>
-                //     option.firstName
-                //       ? option.firstName + " " + option.lastName
-                //       : option
-                //   }
-                //   renderOption={(option) => (
-                //     <React.Fragment>
-                //       {option.firstName} {option.lastName} ({option.email})
-                //     </React.Fragment>
-                //   )}
-                //   renderInput={(params) => (
-                //     <TextField
-                //       {...params}
-                //       label="Choose a customer"
-                //       fullWidth
-                //       className={style.styleFormFields}
-                //       variant="outlined"
-                //       error={this.state.customerIdError ? true : false}
-                //       inputProps={{
-                //         ...params.inputProps,
-                //         autoComplete: "new-password", // disable autocomplete and autofill
-                //       }}
-                //     />
-                //   )}
-                // />
-
+               
                 <VirtualizedAutocomplete
                   optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
@@ -274,7 +237,6 @@ class CreateClaim extends Component {
                     dialogClassName={`${style.modal}`}
                     show={this.state.customerClaims}
                     onHide={this.handleClose}
-                    // animation={false}
                     centered
                     scrollable
                   >
@@ -311,43 +273,7 @@ class CreateClaim extends Component {
                   </Modal>
                 </div>
               )}
-              {/* 
-              <Autocomplete
-                value={this.state.selectedJob}
-                onChange={(event, newValue) => {
-                  this.setState({
-                    selectedJob: newValue ? newValue : "",
-                    jobIdError: "",
-                  }); // Get the customer and get job
-                }}
-                id="country-select-demo"
-                size="small"
-                options={this.state.jobs}
-                autoHighlight
-                getOptionLabel={(option) =>
-                  option.title ? option.title : option
-                }
-                renderOption={(option) => (
-                  <React.Fragment>
-                    {option.title} ({option.status})
-                  </React.Fragment>
-                )}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Choose a job"
-                    fullWidth
-                    variant="outlined"
-                    error={this.state.jobIdError ? true : false}
-                    className={style.styleFormFields}
-                    inputProps={{
-                      ...params.inputProps,
-                      autoComplete: "new-password", // disable autocomplete and autofill
-                    }}
-                  />
-                )}
-              /> */}
-
+           
               <VirtualizedAutocomplete textField = "Choose a job" 
                 value={this.state.selectedJob}
                 options={this.state.jobs}

@@ -1,6 +1,7 @@
 .claimsDetailContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
+  grid-template-rows: minmax(90vh,min-content);
   grid-template-areas: ". claimDetails .";
   background-color: #e9ecef;
 }
@@ -8,117 +9,172 @@
   margin: 1.5rem 0;
   grid-area: claimDetails;
   display: grid;
-  grid-template-columns: 25fr minmax(75fr, min-content);
+  /* grid-template-rows: 1fr; */
+  /* grid-template-columns: 25fr minmax(75fr, min-content); */
+  grid-template-columns: 25fr 75fr;
   column-gap: 1rem;
   grid-template-areas: "cards claimDetail";
 }
 
 .cards .link {
   text-decoration: none;
+  text-transform: capitalize ;
 }
 
 .cards {
   grid-area: cards;
   display: grid;
-
   grid-template-rows: 25vh minmax(15vh, min-content) min-content;
   grid-template-areas:
     "customerCard"
     "jobCard"
-    ".";
+    "buttons";
   row-gap: 1rem;
 }
 .customerCard {
   grid-area: customerCard;
+  border-radius: 1rem; 
+  border: none;
 }
 .jobCard {
   grid-area: jobCard;
+  
+  border-radius: 1rem;
+  border: none; 
+}
+.claimButton{
+  grid-area: buttons;
+  background-color: white;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1rem .5rem;
+  border: none;
 }
 .claimDetail {
   grid-area: claimDetail;
+  background-color: rgb(20, 33, 71);
+  border:none;
   display: grid;
-  grid-template-rows: repeat(5, minmax(7vh, min-content));
+  grid-template-rows: repeat(4, minmax(7vh, min-content));
   grid-template-columns: 100fr;
-  /* background-color: aqua; */
   grid-template-areas:
     "protectionRow"
-    "title"
     "description"
     "waiting"
     "updates";
-  /* align-items: center;
-    justify-self: center; */
+  
   row-gap: 2rem;
-  background-color: white;
-  padding: 1rem 2rem;
+  background-color: transparent;
+  /* padding: 0 2rem; */
 }
 .protectionRow {
   grid-area: protectionRow;
-  display: grid;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  /* display: grid;
   grid-template-columns: repeat(2, 20fr) repeat(2, 12fr) repeat(2, 18fr);
   /* width: 100%; */
-  column-gap: 0.2rem;
+ /* column-gap: 0.2rem; */
+display: flex;
+/* gap: 1rem; */
+justify-content: space-around;
+text-align: center;
 }
+
+
+.claimButton .button,
 .protectionRow .button,
 .waiting .button {
   background: #00adee;
-  text-transform: none;
+  text-transform: uppercase;
   color: #fff;
   font-family: var(--font-family-paragraph);
   width: 100%;
+  outline: none;
 }
+.claimButton .button:hover,
 .protectionRow .button:hover,
 .waiting .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
-.title {
-  grid-area: title;
-  grid-template-columns: 14fr 86fr;
-  display: grid;
-  column-gap: 0.2rem;
-}
+
 .description {
+  /* background-color: white; */
   grid-area: description;
-  grid-template-columns: 14fr 86fr;
   display: grid;
   /* background-color: #00adee; */
   column-gap: 0.3rem;
 }
+.description > h6{
+  font-size: larger;
+  font-weight: 400;
+  padding: 0 .5rem;
+}
+.description > div{
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 0.8rem 0.5rem;
+  word-spacing: .2rem;
+}
 .waiting {
   grid-area: waiting;
-  grid-template-columns: 14fr 75fr 11fr;
-  display: grid;
-  column-gap: 0.2rem;
-  border-bottom: 1px solid #dddbdb;
+}
+.waiting > h6{
+  font-size: larger;
+  font-weight: 400;
+  padding: 0 .5rem;
+}
+.waitingInput{
+display: grid;
+grid-template-columns: .8fr .2fr;
+grid-gap: 1rem;
+align-items: center;
+
 }
 .updates {
   grid-area: updates;
   display: grid;
   grid-template-rows: 7vh min-content;
-  /* row-gap: 2rem; */
   grid-template-areas:
     "updateHead"
     "updateContent";
+    /* "time"; */
+    word-break: break-all;
 }
-.updateHead {
+.updateHead{
   grid-area: updateHead;
-  border-bottom: 1px solid #dddbdb;
+  padding: 0 .5rem;
 }
 .updateContent {
   grid-area: updateContent;
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   row-gap: 2rem;
   display: grid;
 }
 .updateContentRow {
+  border: none;
+  border-radius: 1rem;
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(6vh, min-content));
   /* border-bottom: 1px solid #dddbdb; */
-
+  padding: 0.8rem 0.5rem;
+  word-spacing: .2rem;
   align-items: flex-end;
-  grid-template-columns: 85fr 15fr;
+  /* grid-template-columns: 85fr 15fr; */
   /* margin: 1rem 0; */
   padding: 1rem;
+}
+.update___time{
+  /* background-color: red; */
+  /* grid-area: time;*/
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  gap: .5rem; 
 }
 
 .modal {

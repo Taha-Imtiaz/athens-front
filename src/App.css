@@ -36,7 +36,10 @@ body {
 .navigation-menu {
   grid-area: navigation-menu;
 }
-
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
 .app-content-container {
   grid-area: app-content-container;
 }
@@ -113,6 +116,11 @@ body {
 :root {
   --font-family-header: "Roboto", sans-serif;
   --font-family-paragraph: "Open Sans", sans-serif;
+  /*ahmed*/
+  --transition-one: all .6s ease-in-out;
+  --color-red:#F44336;
+  --color-blue:#00adee;
+  --hover-color-blue: #0597cc;
 }
 @media only screen and (max-width:1000px) {
   html {

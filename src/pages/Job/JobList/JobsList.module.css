@@ -22,7 +22,7 @@
   align-items: flex-end;
 }
 .btnStyle .btn {
-  background-color: #00adee;
+  background-color:var(--color-blue);
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
@@ -30,7 +30,7 @@
   /* text-decoration: none; */
 }
 .btnStyle .btn:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .jobListHeaderContainer {
   display: grid;
@@ -55,6 +55,7 @@
   /* or grid-auto-rows: 10vh; */
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listContent .";
+  
 }
 .listContent {
   grid-area: listContent;
@@ -66,6 +67,7 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
+  transition: var(--transition-one);
 }
 .listContent:hover {
   background-color: #cac7c7 !important;
@@ -84,6 +86,7 @@
 }
 .styleLink:hover {
   text-decoration: none;
+  color: black ;
 }
 .jobList {
   grid-area: jobList;
@@ -126,7 +129,11 @@
   grid-area: actions;
   /* padding: 0 0.5rem; */
 }
-
+.deleteButton:hover {
+  /*ahmed*/
+  background-color: var(--color-red) !important;
+  color: white;
+}
 .flex {
   display: flex;
   justify-content: flex-start;

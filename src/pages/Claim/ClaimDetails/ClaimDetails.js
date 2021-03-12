@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { updateClaim, getClaim } from "../../../Redux/Claim/claimActions";
 import style from "./ClaimDetails.module.css";
 import TimeAgo from "react-timeago";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarTimes, faEnvelope, faMobile, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const ClaimDetails = (props) => {
   const [show, setShow] = useState(false);
@@ -99,25 +101,33 @@ const ClaimDetails = (props) => {
           <div className={style.cards}>
             <div className={`card ${style.customerCard}`}>
               <div className="card-body">
-                <h5 className="card-title">Customer</h5>
+                <h5 className="card-title font-weight-bold">Customer</h5>
                 <h6 className="card-subtitle mb-2 text-muted">
                   <Link
                     className={style.link}
                     to={`/customer/detail/${claims.customer._id}`}
-                  >
+                  > <FontAwesomeIcon icon={faUser}/> {" "}
                     {claims.customer.firstName} {claims.customer.lastName}
                   </Link>
-                </h6>
-                <p className="card-text">{claims.customer.phone}</p>
-                <p className="card-text">{claims.customer.email}</p>
-              </div>
+                </h6> 
+                <div className="card-text mb-2">
+                <FontAwesomeIcon icon={faMobile}/> {" "}
+                {claims.customer.phone}</div>
+                
+                <div className="card-text mb-2">
+                <FontAwesomeIcon icon={faEnvelope}/> {" "}
+                {claims.customer.email}</div>
+                </div>
             </div>
 
             <div className={`card ${style.jobCard}`}>
-              <div className="card-body">
-                <h5>Job</h5>
+              <div className={`card-body `}>
+              <div>
+              <h5 className="font-weight-bold">Job</h5>
+              </div>
                 {claims.job ? (
                   <div>
+                    <div>
                     <Link
                       to={`/job/detail/${claims.job._id}`}
                       className="card-title"
@@ -125,47 +135,32 @@ const ClaimDetails = (props) => {
                       {" "}
                       {claims.job.title}
                     </Link>
+                    
+                    </div>
                     <div>
                       {claims.job.assignee.length > 0 ? (
                         claims.job.assignee.map((assignee, i) => (
                           <Chip key={i}
                             label={assignee.name}
                             clickable
-                            color="primary"
-                            variant="outlined"
                             size="small"
                           />
                         ))
                       ) : (
-                          <Chip
-                            label="Not Added"
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                          />
-                        )}
+                        <Chip
+                          label="Not Added"
+                          clickable
+                          size="small"
+                        />
+                      )}
                     </div>
                   </div>
                 ) : (
-                    <div>Not Added</div>
-                  )}
+                  <div>Not Added</div>
+                )}
               </div>
             </div>
-          </div>
-
-          <div className={`card ${style.claimDetail} `}>
-            <div className={`${style.protectionRow}`}>
-              <div>
-                <h6>Protection Type : </h6>
-              </div>
-              <div>{claims.claimType}</div>
-
-              <div>
-                <h6>{`Total: `}</h6>
-              </div>
-              <div>{`$${claims.price}`}</div>
-
+            <div className={`${style.claimButton}`}>
               <div>
                 {claims.status === "open" ? (
                   <Button className={style.button} onClick={() => handleShow()}>
@@ -173,7 +168,6 @@ const ClaimDetails = (props) => {
                   </Button>
                 ) : null}
               </div>
-
               <div>
                 {claims.status === "open" ? (
                   <Button
@@ -183,31 +177,42 @@ const ClaimDetails = (props) => {
                     Close Claim
                   </Button>
                 ) : (
-
-                    <Button
-                      className={style.button}
-                      onClick={() => setToggleClaim(true)}
-                   
-                    >
-                      Re-Open Claim
-                    </Button>
-                  )}
+                  <Button
+                    className={style.button}
+                    onClick={() => setToggleClaim(true)}
+                  >
+                    Re-Open Claim
+                  </Button>
+                )}
               </div>
             </div>
+          </div> 
 
-            <div className={`${style.title} `}>
-              <h6>Title:</h6> <div>{claims.title}</div>
+
+
+
+          <div className={`card ${style.claimDetail} `}>
+            <div className={`${style.protectionRow}`}>
+              <div>
+                <h6>{`Protection Type: `}</h6> <span>{claims.claimType}</span>
+              </div>
+              <div>
+                <h6>{`Total: `}</h6> <span>{claims.price}</span>
+              </div>
+              <div>
+                <h6>{`Title: `}</h6> <span>{claims.title}</span>
+              </div>              
             </div>
 
             <div className={style.description}>
-              <h6>Description:</h6> <span>{claims.description}</span>
+              <h6>Description:</h6>
+              <div>{claims.description}</div>
             </div>
 
             <div className={`${style.waiting}`}>
-              <div>
-                <h6>Waiting To : </h6>
-              </div>
-
+                <h6>Waiting To: </h6>
+              
+                  <div className={style.waitingInput}>
               <div onDoubleClick={editInput}>
                 <TextField
                   variant="outlined"
@@ -228,23 +233,25 @@ const ClaimDetails = (props) => {
                     Save
                   </Button>
                 ) : <Button className={style.button} onClick={editInput}>
-                    Edit
+                  Edit
             </Button>
                 }
+              </div>
               </div>
             </div>
 
             {claims.updates.length > 0 ? (
               <div className={style.updates}>
                 <div className={style.updateHead}>
-                  <h3>Updates</h3>
+                 <h3>{`Updates`}</h3>
                 </div>
-                <div className={ `${style.updateContent}`}>
+                <div className={`${style.updateContent}`}>
                   {claims.updates.map((x, i) => (
                     <div key={i} className={`card ${style.updateContentRow}`}>
                       {" "}
-                      <div>{`${i + 1}.  ${x.value}`}</div>
-                      <div>
+                      <div>{`${x.value}`}</div>
+                      <div className={`text-muted ${style.update___time}`}>
+                        <FontAwesomeIcon icon={faCalendarTimes}/>{" "}
                         <TimeAgo date={x.timestamp} />
                       </div>
                     </div>
@@ -252,7 +259,7 @@ const ClaimDetails = (props) => {
                 </div>
               </div>
             ) : null}
-          </div>
+          </div> 
         </div>
 
         {/* modal for close and reopen claims */}

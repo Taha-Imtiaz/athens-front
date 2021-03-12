@@ -13,7 +13,7 @@ import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarTimes, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import Blankets from "../../../components/Blankets/Blankets";
 
 const CustomerDetails = (props) => {
@@ -283,140 +283,225 @@ const CustomerDetails = (props) => {
               </div>
             ) : null}
 
-            {customer.jobs && customer.jobs.length > 0 ? (
-              <div>
-                <h3 className={`${style.job}`}>Jobs</h3>
-                {customer.jobs.map((job, i) => {
-                  return (
-                    <div key={i} className={style.jumbotron}>
-                      {/* show job Details */}
-                      <div className={style.jobDetails}>
-                        <div className={style.jobLink}>
-                          <Link
-                            className={style.link}
-                            to={{
-                              pathname: "/job/detail/" + job._id,
-                            }}
+            <div >
+              {customer.jobs && customer.jobs.length > 0 ? (
+                <div>
+                  <h3 className={`${style.job}`}>Jobs</h3>
+                  <div id="accordion">
+                    {customer.jobs.map((job, i) => {
+                      return (
+                        <div key={i} className={style.jumbotron} >
+                          <div
+                            className={`card-header ${style.jobCard}`}
+                            aria-expanded="true"
+                            data-toggle="collapse"
+                            data-target={`#jobCollapse${i}`}
+                            aria-controls="collapse"
+                            id="headingOne"
                           >
-                            <h5>{job.title}</h5>
-                          </Link>
-                        </div>
 
-                        {job.assignee.length > 0 ? (
-                          <div className={style.jobAssignee}>
-                            {job.assignee.map((assignee, i) =>
-                              i === 0 ? (
-                                <div key={i}>{assignee.name}</div>
-                              ) : (
-                                  <div key={i}>
-                                    <span className={style.spacing}>|</span>
-                                    {assignee.name}
-                                  </div>
-                                )
-                            )}
-                          </div>
-                        ) : (
-                            <div>No Assignee</div>
-                          )}
-
-                        <div className={style.jobService}>
-                          <Chip
-                            variant="outlined"
-                            size="small"
-                            label={job.status}
-                            clickable
-                            color="primary"
-                          />
-                        </div>
-                      </div>
-                      {/* show dates */}
-                      <div className={style.jobDates}>
-                        {job.dates.map((x, i) => (
-                          <div key={i}>
-                            {i === 0 ? (
-                              <div key={i}>{x}</div>
-                            ) : (
+                            <div className={style.jobDetails}>
+                              <div className={style.jobLink}>
+                                <Link
+                                  className={style.link}
+                                  to={{
+                                    pathname: "/job/detail/" + job._id,
+                                  }}
+                                >
+                                  <h5>{job.title}</h5>
+                                </Link>
+                              </div>
+                              <div className={style.jobService}>
+                                <span><Chip
+                                  size="medium"
+                                  label={job.jobId}
+                                  clickable
+                                  color="primary"
+                                /></span>
+                                <span><Chip
+                                  size="medium"
+                                  label={job.status}
+                                  clickable
+                                  color="primary"
+                                /></span>
+                              </div>
+                            </div>
+                            <div className={`${style.jobDates} text-muted`}>
+                              {job.dates.map((x, i) => (
                                 <div key={i}>
-                                  <span className={style.spacing}>|</span>
-                                  {x}
+                                  {i === 0 ? (
+                                    <div key={i}>{x}</div>
+                                  ) : (
+                                    <div key={i}>
+                                      <span className={style.spacing}>|</span>
+                                      {x}
+                                    </div>
+                                  )}
                                 </div>
-                              )}
-                          </div>
-                        ))}
-                      </div>
-                      {/* show services */}
-                      <div className={style.services}>
-                        {job.services.map((service, i) => (
-                          <div key={i}>
-                            <Chip
-                              variant="outlined"
-                              size="small"
-                              label={service.name}
-                              clickable
-                              color="primary"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      {/* show job Description */}
-                      <div className={style.jobDetailContainer}>
-                        <div className={style.jobDetail}>
-                          {parse(job.description)}
-                        </div>
-                      </div>
+                              ))}
+                            </div>
 
-                      {job.locations && (
-                        <div className={style.locations}>
-                          {job.locations.map((list, i) =>
-                            list.type === "pickup" ? (
-                              <div key={i}>
-                                <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                <span>{`Pickup`} </span>{" "}
-                                <div className={style.location}>
-                                  {`${list.value} (Load Only / IA)`}
+                          </div>
+
+                          <div
+                            id={`jobCollapse${i}`}
+                            className="collapse"
+                            aria-labelledby="headingOne"
+                            data-parent="#accordion"
+                          >
+                            <div className={`card-body ${style.cardBodyContainer}`}>
+
+                              {/* show services, type */}
+                              <div className={style.cardBody___sectionOne}>
+                                <div>
+                                  <div>{`Service: `}</div>
+                                  {job.services.map((service, i) => (
+                                    <Chip
+                                      key={i}
+                                      size="small"
+                                      label={service.name}
+                                      clickable
+                                      color="primary"
+                                      variant="outlined"
+                                    />
+                                  ))}</div>
+
+                                <div>
+                                  <div>{`Job Type: `}</div>
+                                  <Chip
+                                    clickable
+                                    size="small"
+                                    label={job.jobType}
+                                    color="primary"
+                                    variant="outlined"
+                                  /></div>
+                                <div>
+                                  <div>{`Property Type: `}</div>
+                                  <Chip
+                                    clickable
+                                    size="small"
+                                    label={job.propertyType}
+                                    color="primary"
+                                    variant="outlined"
+                                  /></div>
+                              </div>
+
+                              <div className={style.cardBodyContainerTwo}>
+                                <div>
+                                  {`Job Movers: `}
+                                  <Chip
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    label={job.assigneeRequired}
+                                  />
+                                </div>
+                                <div>
+                                  {`Price: `}
+                                  <Chip
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    label={job.price}
+                                  />
+                                </div>
+                                <div>
+                                  {`Required Trucks: `}
+                                  <Chip
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    label={job.truck}
+                                  />
                                 </div>
                               </div>
-                            ) : (
-                                <div key={i}>
-                                  <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                  <span>{`Dropoff`}</span>
-                                  <div className={style.location}>
-                                    {`${list.value} (Unload Only)`}
+                              <div>
+                                {job.assignee.length > 0 ? (
+                                  <div >
+                                    <h5>Assignees:</h5>
+                                    {job.assignee.map((assignee, i) =>
+                                      i === 0 ? (
+                                        <span key={i} className={style.jobAssignee}>
+                                          {assignee.name}
+                                        </span>
+                                      ) : (
+                                        <span key={i} className={style.jobAssignee}>
+                                          <span className={style.spacing}> | </span>
+                                          {assignee.name}
+                                        </span>
+                                      )
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div>No Assignee</div>
+                                )}
+                              </div>
+                              {/* show job Description */}
+                              <div className={style.jobDetailContainer}>
+                                <h5>Job Details:</h5>
+                                <div className={style.jobDetail}>
+                                  {parse(job.description)}
+                                </div>
+                              </div>
+                              {job.locations && (
+                                <div className={style.locations}>
+                                  {job.locations.map((list, i) =>
+                                    list.type === "pickup" ? (
+                                      <div key={i}>
+                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                        <span>{`Pickup`} </span>{" "}
+                                        <div className={style.location}>
+                                          {`${list.value} (Load Only / IA)`}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div key={i}>
+                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                        <span>{`Dropoff`}</span>
+                                        <div className={style.location}>
+                                          {`${list.value} (Unload Only)`}
+                                        </div>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              )}
+
+                              {job.note.length !== 0 && (
+                                <div className={style.notes}>
+                                  <div>
+                                    <h5>Notes:</h5>
+                                  </div>
+                                  <div className={style.notes___text}>
+                                    {job.note.map((x, i) => (
+                                      <div key={i}>{x.text}</div>
+                                    ))}
                                   </div>
                                 </div>
-                              )
-                          )}
-                        </div>
-                      )}
-
-                      {job.note.length !== 0 && (
-                        <div className={style.notes}>
-                          <div>
-                            <h5>Notes</h5>
+                              )}
+                            </div>
                           </div>
-                          {job.note.map((x, i) => (
-                            <div key={i}>{x.text}</div>
-                          ))}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
                 <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
                   No job added yet
                 </h4>
               )}
+            </div>
           </TabPanel>
-
           {/* Tab Panel of claim */}
           <TabPanel value={value} index={1}>
             <div className={style.claimTopRow}>
               <div>
                 <h3>Claims</h3>
               </div>
-
               <div className={style.newClaimBtn}>
                 <Link
                   className={style.link}
@@ -436,9 +521,9 @@ const CustomerDetails = (props) => {
             {claims.length > 0 && (
               <div className={style.claimListHeaderContainer}>
                 <div className={style.claimListHeader}>
-                  <div>JobId</div>
+                  <div>Job Id</div>
                   <div>Status</div>
-                  <div> Last Update</div>
+                  <div>Last Update</div>
                 </div>
               </div>
             )}
@@ -457,52 +542,59 @@ const CustomerDetails = (props) => {
                         id="headingOne"
                       >
                         <div>{claim.job && claim.job.jobId}</div>
-
                         <div>{claim.status}</div>
                         <div>
                           <TimeAgo date={claim.updatedAt} />
                         </div>
                       </div>
-
                       <div
                         id={`collapse${i}`}
                         className="collapse"
                         aria-labelledby="headingOne"
                         data-parent="#accordion"
                       >
-                        <div className={`card-body`}>
+                        <div className={`card-body ${style.claimBody}`}>
                           <div key={i} className={style.claimDetail}>
-                            <div className={`${style.protectionRow}`}>
-                              <div>
-                                <h6>Protection Type : </h6>
-                              </div>
-                              <div>{claim.claimType}</div>
+                            <div className={style.claimHead}>
 
-                              <div>
-                                <h6>{`Total: `}</h6>
-                              </div>
-                              <div>{`$${claim.price}`}</div>
+                              <div className={`${style.protectionRow}`}>
+                                <div className={style.protectionRow___colOne}>
+                                  <div>
+                                    <h6>{`Protection Type: `}</h6>
+                                    {claim.claimType}
+                                  </div>
+                                  <div>
+                                    <h6>{`Total: `}</h6>
+                                    {claim.price}
+                                  </div>
+                                  <div>
+                                    <h6>{`Title: `}</h6>
+                                    {claim.title}
+                                  </div>
+                                </div>
 
-                              <div>
-                                {claim.status === "open" ? (
-                                  <Button
-                                    className={style.button}
-                                    onClick={() => showUpdateModal(i)}
-                                  >
-                                    Add Update
-                                  </Button>
-                                ) : null}
-                              </div>
-
-                              <div>
-                                {claim.status === "open" ? (
-                                  <Button
-                                    className={style.button}
-                                    onClick={() => setToggleClaim(true)}
-                                  >
-                                    Close Claim
-                                  </Button>
-                                ) : (
+                                <div className={style.protectionRow___colTwo}>
+                                  <h6>{`Actions`}</h6>
+                                  <div className={style.protectionRow___buttons} >
+                                  <div>
+                                  {claim.status === "open" ? (
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => showUpdateModal(i)}
+                                    >
+                                      Add Update
+                                    </Button>
+                                  ) : null}
+                                </div>
+                                <div>
+                                  {claim.status === "open" ? (
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => setToggleClaim(true)}
+                                    >
+                                      Close Claim
+                                    </Button>
+                                  ) : (
                                     <Button
                                       className={style.button}
                                       onClick={() => setToggleClaim(true)}
@@ -510,37 +602,89 @@ const CustomerDetails = (props) => {
                                       Reopen Claim
                                     </Button>
                                   )}
+                                </div></div>
+
+                                </div>
+
                               </div>
+
+
+                              {/* <div className={style.description}> {" "}*/}
+
+
+                              {/* </div>
+                            <div className={`${style.waiting}`}> */}
+
+
+                              {/* <div className={style.description}>
+
+                                <span>
+                                  {claim.status === "open" ? (
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => showUpdateModal(i)}
+                                    >
+                                      Add Update
+                                    </Button>
+                                  ) : null}
+                                </span>
+                                <span>
+                                  {claim.status === "open" ? (
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => setToggleClaim(true)}
+                                    >
+                                      Close Claim
+                                    </Button>
+                                  ) : (
+                                    <Button
+                                      className={style.button}
+                                      onClick={() => setToggleClaim(true)}
+                                    >
+                                      Reopen Claim
+                                    </Button>
+                                  )}
+                                </span>
+
+                              </div> */}
+
                             </div>
-                            <div className={`${style.title} `}>
-                              <h6>Title:</h6> <div>{claim.title}</div>
+                            {/* Update Section */}
+                            {/* </div>
+                            <div className={`${style.waiting}`}> */}
+                            <div className={`${style.title}`}>
+                              <div className={style.titleOne}>
+                                <h6>Description:</h6>
+                                <div className={style.title___textOne}>
+                                  {claim.description}
+                                </div>
+                              </div>
+                              <div className={style.titleTwo}>
+                                <h6>Waiting To : </h6>
+                                <div className={style.title___textTwo}>
+                                  {claim.waitTo}
+                                </div>
+                              </div>
                             </div>
 
-                            <div className={style.description}>
-                              <h6>Description:</h6>{" "}
-                              <span>{claim.description}</span>
-                            </div>
-                            <div className={`${style.waiting}`}>
-                              <div>
-                                <h6>Waiting To : </h6>
-                              </div>
-                              <div>{claim.waitTo}</div>
-                            </div>
                             {claim.updates.length > 0 ? (
                               <div className={style.updates}>
                                 <div className={style.updateHead}>
-                                  <h3>Updates</h3>
+                                  <h3>Updates:</h3>
                                 </div>
                                 <div className={style.updateContent}>
                                   {claim.updates.map((x, i) => (
-                                    <div
-                                      key={i}
-                                      className={style.updateContentRow}
-                                    >
-                                      {" "}
-                                      <div>{`${i + 1}.  ${x.value}`}</div>
-                                      <div>
-                                        <TimeAgo date={x.timestamp} />
+                                    <div className={style.updateContentContainer}>
+                                      <div
+                                        key={i}
+                                        className={style.updateContentRow}
+                                      >
+                                        {/* {" "} */}
+                                        <div>{`${x.value}`}</div>
+                                        <div className={`text-muted ${style.timeStamp}`}>
+                                          <FontAwesomeIcon icon={faCalendarTimes} />
+                                          <TimeAgo date={x.timestamp} />
+                                        </div>
                                       </div>
                                     </div>
                                   ))}
@@ -583,10 +727,10 @@ const CustomerDetails = (props) => {
 
                 })
               ) : (
-                  <div className="text-center">
-                    <img src="/images/no-data-found.png" alt="Data not found" />
-                  </div>
-                )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="Data not found" />
+                </div>
+              )}
             </div>
           </TabPanel>
 
@@ -618,10 +762,10 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue} update={updateBlanket} />
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="Data not found" />
+              </div>
+            )}
           </TabPanel>
 
           <br />

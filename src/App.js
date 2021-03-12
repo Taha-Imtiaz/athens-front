@@ -11,7 +11,7 @@ import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 /* Auth */
-import SignIn from "./pages/SignIn/SignIn";
+import SignIn from "./pages/signIn/SignIn";
 import EmailVerification from "./pages/ForgetPassword/EmailVerification/EmailVerification";
 import CodeVerification from "./pages/ForgetPassword/CodeVerification/CodeVerification";
 import ResetPassword from "./pages/ForgetPassword/ResetPassword/ResetPassword";

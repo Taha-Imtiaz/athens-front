@@ -20,16 +20,18 @@
   align-items: flex-end;
 }
 .btnStyle .btn {
-  background-color: #00adee;
+  background-color: var(--color-blue);
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
-
-
+  transition: .3s ease-in-out;  /*AHMED*/
   /* text-decoration: none; */
 }
+
 .btnStyle .btn:hover {
-  background-color: #00adee;
+  /*background-color: #00adee; */
+  /*ahmed*/
+  background-color: var(--hover-color-blue);
 }
 .jumbotron {
   display: grid;
@@ -63,6 +65,7 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
+  transition: var(--transition-one);   /*AHMED 8-MAR*/
 }
 .listContent:hover {
   background-color: #cac7c7 !important;
@@ -112,10 +115,13 @@
 }
 
 .deleteButton:hover {
-  background-color: #00adee;
+  /*ahmed*/
+  background-color: var(--color-red) !important;
+  color: white;
 }
 .listContent:hover .item {
-  color: #fff;
+  /* color: #fff; */
+  color: #000;
 }
 
 .flex {

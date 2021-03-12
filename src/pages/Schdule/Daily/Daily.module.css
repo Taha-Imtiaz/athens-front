@@ -1,7 +1,7 @@
 .scheduleContainer {
   display: grid;
   grid-template-rows: minmax(90vh, min-content);
-  grid-template-columns: 15fr 85fr;
+  grid-template-columns: 12fr 88fr;
   grid-template-areas: "sidebar dragContent";
   column-gap: 0.75rem;
   /* background-color: aqua; */
@@ -12,7 +12,7 @@
 .dragContent {
   grid-area: dragContent;
   display: grid;
-  grid-template-columns: 80fr 20fr;
+  grid-template-columns: 75fr 25fr;
   grid-template-areas: "jobContent movers";
   column-gap: 0.75rem;
 }
@@ -36,7 +36,7 @@
   grid-template-columns: repeat(4, 1fr);
   height: 6vh;
   align-items: center;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
   /* background-color: rosybrown; */
 }
 .moverAssigneeInfo .button {
@@ -46,31 +46,33 @@
   font-family: var(--font-family-paragraph);
 }
 .moverAssigneeInfo .button:hover {
-  background-color: #00adee;
+  background-color: #0597cc;
 }
 .jobListHeader {
   display: grid;
-  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  grid-template-columns: 30fr repeat(2, 10fr) 30fr 10fr;
   font-weight: bold;
   padding: 0 0.5rem;
   height: 6vh;
   column-gap: 0.5rem;
   align-items: center;
+  /* text-align: center; */
 }
 
 .cardHeader {
   display: grid;
-  grid-template-columns: 30fr repeat(3, 20fr) 10fr;
+  grid-template-columns: 30fr repeat(2, 10fr) 30fr 10fr;
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
-
   align-items: center;
   column-gap: 0.5rem;
   margin-bottom: 0.75rem;
   border-radius: 0.25rem;
 }
 .dangerClass {
-  background-color: #f7aaa6 !important;
+  background-color: #ff4c4c !important;
+  /* text-align: center; */
+  color: white;
 }
 .hideJobId,
 .hideAssigneeId {
@@ -188,7 +190,9 @@ tr:nth-child(even) td {
 }
 .moverHeader {
   cursor: pointer;
+  font-weight: 100;
 }
+
 .scroll {
   position: fixed;
 }
@@ -229,12 +233,12 @@ tr:nth-child(even) td {
 
 .mov {
   padding-left: 4px;
-  border-left: 1px solid rgb(223, 214, 214);
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
 }
 @media only screen and (max-width: 1450px) {
   .scrollBar {
     width: 100% !important;
-    margin: 0rem;
+    /* margin: 0rem; */
     /* background-color: #00adee; */
 
     overflow-x: hidden;

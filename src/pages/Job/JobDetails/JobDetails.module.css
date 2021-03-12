@@ -1,18 +1,15 @@
 .jobEditContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
-  grid-template-rows: minmax(60vh, min-content) minmax(30vh,min-content);
-  /* background-color: #00adee; */
-  grid-template-areas: ". containerContent ."
-                        ". . .";
+  grid-template-rows: minmax(90vh, min-content);
+  grid-template-areas: ". containerContent .";
   background-color: #e9ecef;
+  /* background-color: #121212; */
 }
 .containerContent {
   grid-area: containerContent;
   margin-top: 1rem;
-
   display: grid;
-  /* background-color: #00ADEE; */
   grid-template-rows: 1fr;
   grid-template-columns: 25fr 75fr;
   font-family: var(--font-family-paragraph);
@@ -22,7 +19,6 @@
 .cards {
   grid-area: cards;
   display: grid;
-  /* background-color: aqua; */
   grid-template-rows: 25vh minmax(15vh, min-content) 6.6vh min-content;
   grid-template-areas:
     "customerCard"
@@ -30,104 +26,44 @@
     "activityBtn"
     ".";
   row-gap: 1rem;
+  
 }
+
 .customerCard {
   grid-area: customerCard;
+  border-radius: 1rem;
+  border: none;
 }
 .assigneeCard {
   grid-area: assigneeCard;
+  border-radius: 1rem;
+  border: none;
 }
-.activityBtn {
-  grid-area: activityBtn;
-  /* background-color: aqua; */
-}
-.activityBtn .button {
-  background: #00adee;
 
-  text-transform: none;
-  color: #fff;
-  font-family: var(--font-family-paragraph);
+/*-------------------------BUTTONS------------------------*/
 
-}
 .center {
   display: flex;
   justify-content: center;
+  gap: 0.5rem;
   align-items: center;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
 }
-.activityBtn .button:hover {
-  background: #00adee;
-}
-
-.jobDetail {
-  grid-area: jobDetail;
-  /* background-color: #e9ecef; */
-  display: grid;
-  grid-template-rows:
-    minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
-      3,
-      minmax(11vh, min-content)
-    )
-    min-content;
-  border-radius: 0.4rem;
-  margin-bottom: 1rem ;
-  padding: 0.5rem 1rem;
-  /* background-color: #00adee; */
-}
-.jobHeader {
-  display: grid;
-  grid-template-columns: 60fr repeat(2, 20fr);
+.activityBtn .button {
+  background: var(--color-blue);
+  text-transform: none;
+  color: #fff;
   font-family: var(--font-family-paragraph);
 }
-.jobDates {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
-  grid-template-rows: minmax(6vh, min-content);
-}
-.service {
-  display: grid;
-  grid-template-rows: 5vh;
-  grid-template-columns: repeat(auto-fit, minmax(10vh, min-content));
-}
-.jobDescription {
-  display: grid;
-  /* grid-template-rows: minmax(5vh, min-content); */
-}
-.notes {
-  margin: 1rem 0;
-  display: grid;
-  grid-template-rows: repeat(2, min-content);
-}
 
-.link {
-  text-decoration: none;
+.activityBtn .button:hover {
+  background: var(--hover-color-blue);
 }
-
-.locations {
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
-  grid-template-columns: repeat(3, 1fr);
-  padding: 0 0.6rem;
-  /* background-color: aquamarine; */
-  row-gap: 1.5rem;
-}
-.location {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-.jobEditBtns {
-  margin: 1rem 0;
-  display: grid;
-  grid-template-rows: 1fr;
-  column-gap: 0.3rem;
-  grid-template-columns: 80fr repeat(2, 1fr);
-  grid-template-areas: ". jobBookBtn jobEditBtn";
-}
-.jobBookBtn {
-  grid-area: jobBookBtn;
-}
-.jobEditBtn {
-  grid-area: jobEditBtn;
-  
+.jobEditBtns{
+  display: flex;
+  justify-content: space-around;
 }
 .jobEditBtns .link {
   text-decoration: none;
@@ -135,13 +71,106 @@
 }
 
 .jobEditBtns .buttons {
-  background: #00adee;
+  background: var(--color-blue);
   text-transform: none;
-  /* width: 100%; */
   color: #fff;
   font-family: var(--font-family-paragraph);
-
 }
 .jobEditBtns .buttons:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
+}
+
+
+/*------------JOB DETAILS------------*/
+.jobDetail {
+  grid-area: jobDetail;
+  background-color: #e9ecef;
+  display: grid;
+  grid-template-rows:
+    minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
+      3,
+      minmax(11vh, min-content)
+    )
+    min-content;
+  border: none;
+  /* margin-bottom: 1rem ; */
+  /* padding: 0.5rem 1rem; */
+}
+.jobHeader {
+  background-color: white;
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  font-family: var(--font-family-paragraph);
+  padding: 1rem 1rem;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+}
+.jobHeader > h5{
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.jobHeader___childs{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.jobDates { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
+  grid-template-rows: minmax(6vh, min-content);
+
+}
+.job___IdStatus{
+display:flex;
+justify-content: flex-end;
+gap: 1rem;
+}
+.service, .numbers{
+padding: .5rem; 
+display: flex;
+  justify-content: flex-start;
+  gap: 2.5rem;
+  align-items: center;
+margin-bottom: .5rem;  
+}
+.service > *, .numbers >*{
+  font-weight: 500;
+}
+.jobDescription, .notes{
+  margin-bottom: 1rem; /*this margin is just for demo*/
+}
+.jobDescription___title, .notes___title {
+  font-size: larger;
+  padding: .5rem;
+}
+.jobDescription___text, .notes___text{
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.8rem 0.5rem;
+}
+.link {
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.locations {
+background: transparent;
+  display: flex;
+  flex-direction: column;
+border: none;
+  padding: .5rem;
+}
+.location {
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: .8rem;
+}
+.location___type{
+  font-weight: 500;
+}
+.dropoff{
+  padding: .5rem;
+}
+.pickup{
+  padding: .5rem;
 }

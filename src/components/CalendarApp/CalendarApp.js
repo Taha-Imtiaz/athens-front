@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Children } from "react";
-import {getJobsByDate } from "../../Redux/Job/jobActions";
+import { getJobsByDate } from "../../Redux/Job/jobActions";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { connect } from "react-redux";
@@ -25,30 +25,30 @@ const CalendarApp = (props) => {
     movers: "",
   });
   let { user, getJobsByDate } = props;
-//get count of job and movers
-const getCount = (e, jobs) => {
-  // let jobs = cloneDeep(state.jobs);
-  let currentDayJobs = [];
-  jobs.forEach((x) => {
-    x.dates.forEach((y) => {
-      if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
-        currentDayJobs.push(x);
-      }
-      else if (new Date(y).toDateString() === new Date(e).toDateString()){
-        currentDayJobs.push(x); 
-      }
+  //get count of job and movers
+  const getCount = (e, jobs) => {
+    // let jobs = cloneDeep(state.jobs);
+    let currentDayJobs = [];
+    jobs.forEach((x) => {
+      x.dates.forEach((y) => {
+        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
+          currentDayJobs.push(x);
+        }
+        else if (new Date(y).toDateString() === new Date(e).toDateString()) {
+          currentDayJobs.push(x);
+        }
+      });
     });
-  });
 
-  setCount({
-    ...count,
-    job: currentDayJobs.length,
-    movers: currentDayJobs.reduce(
-      (sum, currentValue) => sum + currentValue.assigneeRequired,
-      0
-    ),
-  });
-};
+    setCount({
+      ...count,
+      job: currentDayJobs.length,
+      movers: currentDayJobs.reduce(
+        (sum, currentValue) => sum + currentValue.assigneeRequired,
+        0
+      ),
+    });
+  };
   useEffect(() => {
     let body;
     if (user) {
@@ -87,17 +87,17 @@ const getCount = (e, jobs) => {
           myEventsList: jobs,
           currentDayJobs,
           jobs: res.data.data,
-        date: new Date(),
+          date: new Date(),
 
         });
-    getCount(new Date(), res.data.data)
+        getCount(new Date(), res.data.data)
 
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  
+
 
   //handler called when we change date
   const changeDate = (x) => {
@@ -138,7 +138,7 @@ const getCount = (e, jobs) => {
         jobs: res.data.data,
         date: x,
       });
-    getCount(x, res.data.data);
+      getCount(x, res.data.data);
 
     });
   };
@@ -233,10 +233,11 @@ const getCount = (e, jobs) => {
               <hr />
               <div className={style.jobInfo}>
                 <h6>Total Jobs: {count.job}</h6>
-                <h6>Total Movers :{count.movers}</h6>
+                <h6>Total Movers: {count.movers}</h6>
               </div>
               {state.currentDayJobs.map((job, i) => (
                 <div>
+
                   <div id="accordion" key={i}>
                     <div className={`card ${style.card}`}>
                       <div
@@ -255,14 +256,13 @@ const getCount = (e, jobs) => {
                               className={style.link}
                               to={`/job/detail/${job._id}`}
                             >
-                              &nbsp;
                               {job.title}
                             </Link>
                           </div>
-                          <div>
-                            {job.startTime && (
+                          <div className={style.flexEnd}>
+                            {job.jobId && (
                               <Chip
-                                label={formatAMPM(job.startTime)}
+                                label={(job.jobId)}
                                 clickable
                                 color="primary"
                                 variant="outlined"
@@ -279,31 +279,29 @@ const getCount = (e, jobs) => {
                         aria-labelledby="headingOne"
                         data-parent="#accordion"
                       >
-                        <div className="card-body">
-                          <div className={`card-text ${style.jobDescription}`}>
-                            {parse(job.description)}
-                          </div>
-                          <div>
-                            {job.services.map((service, i) => (
-                              <Chip
-                                key={i}
-                                label={service.name}
-                                size="small"
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                              />
-                            ))}
-                          </div>
+                        <div className={`card-body ${style.cardBody}`}>
+
+
+
                           <div className="card-text">
-                            Customer:
+                            <div className={style.heading}>
+                              {`Customer Email: `}
+                            </div>
+                            <div className={style.customerMail}>
                             <Link
-                              className={style.link}
+                              
                               to={`/customer/detail/${job.customer._id}`}
                             >
-                              &nbsp;
                               {job.customer.email}
-                            </Link>
+                            </Link></div>
+                          </div>
+                          <div className={`card-text ${style.jobDescription}`}>
+                            <div className={style.heading}>
+                              {`Job Description: `}
+                            </div>
+                            <div className={style.jobText}>
+                              {parse(job.description)}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -314,7 +312,7 @@ const getCount = (e, jobs) => {
             </div>
           ) : (
             <div>
-              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>
+              <h5 className={`${style.flex}hahahaha `}>{state.date.toDateString()}</h5>
 
               <hr />
               <div className={style.jobInfo}>

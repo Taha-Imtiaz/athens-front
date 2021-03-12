@@ -646,6 +646,7 @@ const JobsList = (props) => {
                     {user && user.role === "admin" && (
                       <div className={`${style.actions} ${style.flex} `}>
                         <Button
+                        className={style.deleteButton}
                           onClick={() => openDeleteModal(i, job._id)}
                         >
                           Delete

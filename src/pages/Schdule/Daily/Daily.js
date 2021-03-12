@@ -304,7 +304,7 @@ const DailySchedule = (props) => {
                   onSelectedDay(e);
                 }}
                 labelFormat={"MMMM yyyy"}
-                color={"#181F47"} 
+                color={"#323232"} 
                 selectDate={newDate}
               />
             </div>

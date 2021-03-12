@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { faDotCircle, faEnvelope, faFemale, faHeadSideCough, faMapMarker, faMapMarkerAlt, faMobile, faMoneyBill, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
 
@@ -50,22 +50,27 @@ const JobDetails = (props) => {
   return (
     <div className={style.jobEditContainer}>
       {job ? (
-        // defining containerContent
+        // defining containerContent CUSTOMER
         <div className={style.containerContent}>
           <div className={style.cards}>
             <div className={`card ${style.customerCard}`}>
               <div className="card-body">
-                <h5 className="card-title">Customer</h5>
+                <h5 className="card-title font-weight-bold">Customer</h5>
                 <h6 className="card-subtitle mb-2 text-muted">
                   <Link
                     className={style.link}
                     to={`/customer/detail/${job.customer._id}`}
                   >
+                    <FontAwesomeIcon icon={faUser} />{" "}
                     {job.customer.firstName} {job.customer.lastName}
                   </Link>
                 </h6>
-                <div className="card-text">{job.customer.phone}</div>
-                <div className="card-text">{job.customer.email}</div>
+                <div className="card-text mb-2">
+                  <FontAwesomeIcon icon={faMobile} />{" "}
+                  {job.customer.phone}</div>
+                <div className="card-text mb-2">
+                  <FontAwesomeIcon icon={faEnvelope} />{" "}
+                  {job.customer.email}</div>
               </div>
             </div>
             <div>
@@ -73,7 +78,7 @@ const JobDetails = (props) => {
                 {/* assinee card */}
                 <div className={`card ${style.assigneeCard}`}>
                   <div className="card-body">
-                    <h5 className="card-title">Assignees</h5>
+                    <h5 className="card-title font-weight-bold">Assignees</h5>
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
                         <div key={i} className={style.assigneehead}>
@@ -81,119 +86,187 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                        <div>Not Added</div>
-                      )}
+                      <div>
+                        <FontAwesomeIcon icon={faUserShield} />{" "}
+                        {`Mover: `}
+
+                        {job.assigneeRequired}</div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
+
             {/* activity button and modal */}
             <div className={`${style.activityBtn}  ${style.center}`}>
               <Button
-                className={`${style.button}`}
+                className={style.button}
                 type="button"
                 onClick={handleShow}
               >
                 Activities
               </Button>
-            </div>
-          </div>{" "}
-          {/* jobDetails section */}
-          <div className={` card ${style.jobDetail}`}>
-            <div className={style.jobHeader}>
-              <h5>{job.title}</h5>
 
-              <div>
-                {`Job Id: `}
-                {job.jobId}
-              </div>
-              <div>
-                {`Status: `}
-                <Chip
-                  variant="outlined"
-                  size="small"
-                  label={job.status}
-                  clickable
-                  color="primary"
-                />
-              </div>
-            </div>
-            <div className={style.jobDates}>
-              {job.dates.map((x, i) =>
-                i === 0 ? (
-                  <span key={i}>{x}</span>
-                ) : (
-                    <span key={i}> | {x} </span>
-                  )
-              )}
-            </div>
-            <div className={style.service}>
-              {job.services.map((service, i) => (
-                <Chip
-                  key={i}
-                  variant="outlined"
-                  size="small"
-                  label={service.name}
-                  clickable
-                  color="primary"
-                />
-              ))}
-            </div>
-            <div className={style.jobDescription}>{parse(job.description)}</div>
-            {job.note.length !== 0 && (
-              <div className={style.notes}>
-                <div>
-                  <h5>Notes</h5>
-                </div>
-                {job.note.map((x) => (
-                  <div>{x.text}</div>
-                ))}
-              </div>
-            )}
-
-            {job.locations && (
-              <div className={ job.locations.length > 0 ?`card ${style.locations}` : `${style.locations}`}>
-                {job.locations.map((list, i) =>
-                  list.type === "pickup" ? (
-                    <div key={i}>
-                      <FontAwesomeIcon icon={faDotCircle} />{" "}
-                      <span>{`Pickup`} </span>{" "}
-                      <div className={style.location}>
-                        {`${list.value} (Load Only / IA)`}
-                      </div>
-                    </div>
-                  ) : (
-                      <div key={i}>
-                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                        <span>{`Dropoff`}</span>
-                        <div className={style.location}>{`${list.value} (Unload Only)`}</div>
-                      </div>
-                    )
-                )}
-              </div>
-            )}
-
-            <div className={style.jobEditBtns}>
-              <div className={style.jobEditBtn}>
-                <Link className={`${style.link}`} to={`/job/update/${jobId}`}>
-                  <Button className={style.buttons} type="button">
-                    Edit
+              <Link to={`/job/update/${jobId}`}>
+                <Button className={`${style.button}`} type="button">
+                  Edit
                   </Button>
-                </Link>
-              </div>
+              </Link>
+
 
               {job.status !== "booked" ? (
                 <div className={style.jobBookBtn}>
                   <Button
-                    className={style.buttons}
+                    className={style.button}
                     onClick={() => setShowBooking(true)}
-                    type="button"
-                  >
+                    type="button">
                     Book
                   </Button>
                 </div>
               ) : null}
             </div>
+
+          </div>{" "}
+
+          {/* jobDetails section */}
+          <div className={` card ${style.jobDetail}`}>
+            <div className={style.jobHeader}>
+              <h5>{job.title}</h5>
+              <div className={style.jobHeader___childs}>
+                <div className={style.jobDates} className="text-muted">
+                  {job.dates.map((x, i) =>
+                    i === 0 ? (
+                      <span key={i}>{x}</span>
+                    ) : (
+                      <span key={i}> | {x} </span>
+                    )
+                  )}
+                </div>
+                <div className={style.job___IdStatus}>
+                  <div>
+                    {`Job Id: `}
+                    <Chip
+                      size="small"
+                      label={job.jobId}
+                      clickable
+                      color="primary"
+                    />
+                  </div>
+                  <div>
+                    {`Status: `}
+                    <Chip
+                      size="small"
+                      label={job.status}
+                      clickable
+                      color="primary"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={style.service}>
+              <div>
+                <div>{`Service: `}</div>
+                {job.services.map((service, i) => (
+                  <Chip
+                    key={i}
+                    size="small"
+                    label={service.name}
+                    clickable
+                  />
+                ))}</div>
+                
+              <div>
+                <div>{`Job Type: `}</div>
+                <Chip
+                  clickable
+                  size="small"
+                  label={job.jobType}
+                /></div>
+              <div>
+                <div>{`Property Type: `}</div>
+                <Chip
+                  clickable
+                  size="small"
+                  label={job.propertyType}
+                /></div>
+            </div>
+
+            <div className={style.numbers}>
+              <div>
+                {`Job Movers: `}
+                <Chip
+                  clickable
+                  color="primary"
+                  variant="outlined"
+                  size="small"
+                  label={job.assigneeRequired}
+                />
+              </div>
+              <div>
+                {`Price: `}
+                <Chip
+                  clickable
+                  color="primary"
+                  variant="outlined"
+                  size="small"
+                  label={job.price}
+                />
+              </div>
+              <div>
+                {`Required Trucks: `}
+                <Chip
+                  clickable
+                  color="primary"
+                  variant="outlined"
+                  size="small"
+                  label={job.truck}
+                />
+              </div>
+            </div>
+
+            <div className={style.jobDescription}>
+              <div className={style.jobDescription___title}>
+                {`Job Description: `}
+              </div>
+              <div className={style.jobDescription___text}>
+                {parse(job.description)}
+              </div>
+            </div>
+
+            {job.locations && (
+              <div className={job.locations.length > 0 ? `card ${style.locations}` : `${style.locations}`}>
+                {job.locations.map((list, i) =>
+                  list.type === "pickup" ? (
+                    <div className={style.pickup} key={i}>
+                      <FontAwesomeIcon icon={faMapMarker} />{" "}
+                      <span className="location___type">{`Pickup: `} </span>{" "}
+                      <div className={style.location}>
+                        {`${list.value} (Load Only / IA)`}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={style.dropoff} key={i}>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                      <span className="location___type">{`Dropoff: `}</span>
+                      <div className={style.location}>{`${list.value} (Unload Only)`}</div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+            {job.note.length !== 0 && (
+              <div className={style.notes}>
+                <div className={style.notes___title}>
+                  <h5>Notes:</h5>
+                </div>
+                {job.note.map((x) => (
+                  <div className={style.notes___text}>{x.text}</div>
+                ))}
+              </div>
+            )}
+
           </div>
           <ActivitiesModal
             show={show}

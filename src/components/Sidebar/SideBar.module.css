@@ -1,13 +1,13 @@
 .sidebar {
   position: fixed;
-  background-color: #181f47;
+  background-color: #e9ecef;
   height: 100%;
-  width: 15%;
+  width: 12%;
 }
 
 .sidebar > .sidebarContent > a {
   grid-template-rows: repeat(auto-fit, minmax(10vh, 1fr));
-  color: white;
+  color: black;
   display: grid;
   grid-template-columns: 20fr 80fr;
  
@@ -25,9 +25,11 @@
 
 .sidebar .active {
   background-color: #00adee;
+  color: white !important;
 }
 
 .sidebar .sidebarContent > a:hover {
+  transition: .2s ease-in-out;
   color: white;
   background-color: #00adee;
   text-decoration: none;

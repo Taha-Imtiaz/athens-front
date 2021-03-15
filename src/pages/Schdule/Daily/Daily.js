@@ -3,8 +3,7 @@ import style from "./Daily.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  getalljobs,
-  getalljobsfiveday,
+  getalljobs, getalljobsfiveday
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
@@ -35,7 +34,6 @@ const DailySchedule = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [mover, setMover] = useState("");
   const [moverAssignedJobs, setMoverAssignedJobs] = useState([]);
-
   const { getalljobs, getalljobsfiveday, movers, newDate } = props;
 
   const routes = [
@@ -304,7 +302,7 @@ const DailySchedule = (props) => {
                   onSelectedDay(e);
                 }}
                 labelFormat={"MMMM yyyy"}
-                color={"#323232"} 
+                color={"#323232"}
                 selectDate={newDate}
               />
             </div>

@@ -86,12 +86,12 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                      <div>
-                        <FontAwesomeIcon icon={faUserShield} />{" "}
-                        {`Mover: `}
+                        <div>
+                          <FontAwesomeIcon icon={faUserShield} />{" "}
+                          {`Mover: `}
 
-                        {job.assigneeRequired}</div>
-                    )}
+                          {job.assigneeRequired}</div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -138,8 +138,8 @@ const JobDetails = (props) => {
                     i === 0 ? (
                       <span key={i}>{x}</span>
                     ) : (
-                      <span key={i}> | {x} </span>
-                    )
+                        <span key={i}> | {x} </span>
+                      )
                   )}
                 </div>
                 <div className={style.job___IdStatus}>
@@ -176,7 +176,7 @@ const JobDetails = (props) => {
                     clickable
                   />
                 ))}</div>
-                
+
               <div>
                 <div>{`Job Type: `}</div>
                 <Chip
@@ -211,7 +211,7 @@ const JobDetails = (props) => {
                   color="primary"
                   variant="outlined"
                   size="small"
-                  label={job.price}
+                  label={`${job.price} $`}
                 />
               </div>
               <div>
@@ -247,12 +247,12 @@ const JobDetails = (props) => {
                       </div>
                     </div>
                   ) : (
-                    <div className={style.dropoff} key={i}>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                      <span className="location___type">{`Dropoff: `}</span>
-                      <div className={style.location}>{`${list.value} (Unload Only)`}</div>
-                    </div>
-                  )
+                      <div className={style.dropoff} key={i}>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                        <span className="location___type">{`Dropoff: `}</span>
+                        <div className={style.location}>{`${list.value} (Unload Only)`}</div>
+                      </div>
+                    )
                 )}
               </div>
             )}

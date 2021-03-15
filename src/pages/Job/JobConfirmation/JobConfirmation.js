@@ -89,7 +89,7 @@ function JobConfirmation(props) {
       typeof x === "string" ? Date.parse(x) : x
     );
     job.dates = parsedDates;
-    job.startTime = new Date(job.startTime);
+    job.startTime = job.startTime ? new Date(job.startTime) : '';
     setData(job);
   }, [props.data]);
 
@@ -169,7 +169,7 @@ function JobConfirmation(props) {
       setData(updatedCustomer);
     }
   };
- 
+
   //remove date
   const removeDate = (i) => {
     let newData = cloneDeep(data);
@@ -187,7 +187,7 @@ function JobConfirmation(props) {
     setData(newData);
   };
 
-  
+
   //load stripe
   const loadStripe = () => {
     if (!window.document.getElementById("stripe-script")) {
@@ -301,6 +301,7 @@ function JobConfirmation(props) {
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                               <Grid>
                                 <KeyboardDatePicker
+                                  minDate={new Date()}
                                   inputVariant="outlined"
                                   className={style.styleFormFields}
                                   size="small"
@@ -448,7 +449,7 @@ function JobConfirmation(props) {
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
             }
 
-          
+
           </div>
         );
       case 3:

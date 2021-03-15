@@ -31,6 +31,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
@@ -50,7 +51,7 @@ class CreateJob extends Component {
     customerId: "",
     startDate: "",
     dates: [new Date()],
-    startTime: new Date("2020-08-18T09:00:00"),
+    startTime: "",
     anchorEl: "",
     meetTime: "",
     assigneeRequired: "",
@@ -86,7 +87,7 @@ class CreateJob extends Component {
     truck: "",
     truckSize: "None",
     serviceOptions: [
-      { id: 1, name: "Packaging" },
+      { id: 1, name: "Packing" },
       { id: 2, name: "Loading" },
       { id: 3, name: "Unloading" },
       { id: 4, name: "Grand Piano" },
@@ -142,7 +143,7 @@ class CreateJob extends Component {
       dates: datesArr,
     });
   };
-  
+
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
@@ -211,7 +212,6 @@ class CreateJob extends Component {
       });
       return false;
     }
-
     return true;
   };
   //onChange handler of dates
@@ -323,7 +323,7 @@ class CreateJob extends Component {
       this.setState({ propertyType: "" });
     }
 
-   
+
   };
 
   addCustomPropertyType = (e) => {
@@ -434,12 +434,12 @@ class CreateJob extends Component {
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               {this.state.customers.length > 0 ? (
-            
 
-                <VirtualizedAutocomplete optionTextValue = {this.state.newCustomer} 
-                value={this.state.selectedCustomer} options = {this.state.customers}
-                getCustomerJobs = {this.getCustomerJobs}
-                addNewCustomer= {this.addNewCustomer}
+
+                <VirtualizedAutocomplete optionTextValue={this.state.newCustomer}
+                  value={this.state.selectedCustomer} options={this.state.customers}
+                  getCustomerJobs={this.getCustomerJobs}
+                  addNewCustomer={this.addNewCustomer}
                 />
               ) : null}
 
@@ -451,6 +451,7 @@ class CreateJob extends Component {
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <Grid>
                             <KeyboardDatePicker
+                              minDate={new Date()}
                               inputVariant="outlined"
                               fullWidth
                               size="small"
@@ -474,6 +475,7 @@ class CreateJob extends Component {
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid>
                               <KeyboardDatePicker
+                                minDate={new Date()}
                                 inputVariant="outlined"
                                 fullWidth
                                 size="small"
@@ -648,13 +650,17 @@ class CreateJob extends Component {
                     // required
                     fullWidth
                     size="small"
-                    id="price"
+                    id="price$"
                     label="Price"
                     autoComplete="Price"
                     name="price"
                     value={this.state.price}
                     className={style.styleFormFields}
                     // error={this.state.assigneeRequiredError ? true : false}
+                    InputProps={{
+                      startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                    }}
+                    // startAdornment={}
                     onChange={this.handleFormInput}
                   />
                 </div>
@@ -696,7 +702,7 @@ class CreateJob extends Component {
                     </Select>
                   </FormControl>
                 </div>
-              
+
               </div>
 
               {this.state.locations.length === 0 && (

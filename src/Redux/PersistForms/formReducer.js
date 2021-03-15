@@ -30,7 +30,7 @@ let initialState = {
         customerId: "",
         startDate: "",
         dates: [new Date()],
-        startTime: new Date("2020-08-18T09:00:00"),
+        startTime: "",
         anchorEl: "",
         meetTime: "",
         assigneeRequired: "",
@@ -66,7 +66,7 @@ let initialState = {
         truck: "",
         truckSize: "None",
         serviceOptions: [
-            { id: 1, name: "Packaging" },
+            { id: 1, name: "Packing" },
             { id: 2, name: "Loading" },
             { id: 3, name: "Unloading" },
             { id: 4, name: "Grand Piano" },

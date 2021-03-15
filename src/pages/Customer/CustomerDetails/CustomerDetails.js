@@ -332,11 +332,11 @@ const CustomerDetails = (props) => {
                                   {i === 0 ? (
                                     <div key={i}>{x}</div>
                                   ) : (
-                                    <div key={i}>
-                                      <span className={style.spacing}>|</span>
-                                      {x}
-                                    </div>
-                                  )}
+                                      <div key={i}>
+                                        <span className={style.spacing}>|</span>
+                                        {x}
+                                      </div>
+                                    )}
                                 </div>
                               ))}
                             </div>
@@ -404,7 +404,7 @@ const CustomerDetails = (props) => {
                                     color="primary"
                                     variant="outlined"
                                     size="small"
-                                    label={job.price}
+                                    label={`${job.price} $`}
                                   />
                                 </div>
                                 <div>
@@ -428,16 +428,16 @@ const CustomerDetails = (props) => {
                                           {assignee.name}
                                         </span>
                                       ) : (
-                                        <span key={i} className={style.jobAssignee}>
-                                          <span className={style.spacing}> | </span>
-                                          {assignee.name}
-                                        </span>
-                                      )
+                                          <span key={i} className={style.jobAssignee}>
+                                            <span className={style.spacing}> | </span>
+                                            {assignee.name}
+                                          </span>
+                                        )
                                     )}
                                   </div>
                                 ) : (
-                                  <div>No Assignee</div>
-                                )}
+                                    <div>No Assignee</div>
+                                  )}
                               </div>
                               {/* show job Description */}
                               <div className={style.jobDetailContainer}>
@@ -458,14 +458,14 @@ const CustomerDetails = (props) => {
                                         </div>
                                       </div>
                                     ) : (
-                                      <div key={i}>
-                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                        <span>{`Dropoff`}</span>
-                                        <div className={style.location}>
-                                          {`${list.value} (Unload Only)`}
+                                        <div key={i}>
+                                          <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                          <span>{`Dropoff`}</span>
+                                          <div className={style.location}>
+                                            {`${list.value} (Unload Only)`}
+                                          </div>
                                         </div>
-                                      </div>
-                                    )
+                                      )
                                   )}
                                 </div>
                               )}
@@ -490,10 +490,10 @@ const CustomerDetails = (props) => {
                   </div>
                 </div>
               ) : (
-                <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
-                  No job added yet
+                  <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
+                    No job added yet
                 </h4>
-              )}
+                )}
             </div>
           </TabPanel>
           {/* Tab Panel of claim */}
@@ -565,7 +565,7 @@ const CustomerDetails = (props) => {
                                   </div>
                                   <div>
                                     <h6>{`Total: `}</h6>
-                                    {claim.price}
+                                    {claim.price} $
                                   </div>
                                   <div>
                                     <h6>{`Title: `}</h6>
@@ -576,33 +576,33 @@ const CustomerDetails = (props) => {
                                 <div className={style.protectionRow___colTwo}>
                                   <h6>{`Actions`}</h6>
                                   <div className={style.protectionRow___buttons} >
-                                  <div>
-                                  {claim.status === "open" ? (
-                                    <Button
-                                      className={style.button}
-                                      onClick={() => showUpdateModal(i)}
-                                    >
-                                      Add Update
+                                    <div>
+                                      {claim.status === "open" ? (
+                                        <Button
+                                          className={style.button}
+                                          onClick={() => showUpdateModal(i)}
+                                        >
+                                          Add Update
                                     </Button>
-                                  ) : null}
-                                </div>
-                                <div>
-                                  {claim.status === "open" ? (
-                                    <Button
-                                      className={style.button}
-                                      onClick={() => setToggleClaim(true)}
-                                    >
-                                      Close Claim
+                                      ) : null}
+                                    </div>
+                                    <div>
+                                      {claim.status === "open" ? (
+                                        <Button
+                                          className={style.button}
+                                          onClick={() => setToggleClaim(true)}
+                                        >
+                                          Close Claim
                                     </Button>
-                                  ) : (
-                                    <Button
-                                      className={style.button}
-                                      onClick={() => setToggleClaim(true)}
-                                    >
-                                      Reopen Claim
+                                      ) : (
+                                          <Button
+                                            className={style.button}
+                                            onClick={() => setToggleClaim(true)}
+                                          >
+                                            Reopen Claim
                                     </Button>
-                                  )}
-                                </div></div>
+                                        )}
+                                    </div></div>
 
                                 </div>
 
@@ -727,10 +727,10 @@ const CustomerDetails = (props) => {
 
                 })
               ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
-                </div>
-              )}
+                  <div className="text-center">
+                    <img src="/images/no-data-found.png" alt="Data not found" />
+                  </div>
+                )}
             </div>
           </TabPanel>
 
@@ -762,10 +762,10 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue} update={updateBlanket} />
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="Data not found" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="Data not found" />
+                </div>
+              )}
           </TabPanel>
 
           <br />

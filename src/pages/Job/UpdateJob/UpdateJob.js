@@ -26,6 +26,7 @@ import {
   Button,
 
   TextareaAutosize,
+  InputAdornment,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { ContentState, convertToRaw, EditorState } from "draft-js";
@@ -67,7 +68,7 @@ class UpdateJob extends Component {
     truck: '',
     truckSize: 'None',
     serviceOptions: [
-      { id: 1, name: "Packaging" },
+      { id: 1, name: "Packing" },
       { id: 2, name: "Loading" },
       { id: 3, name: "Unloading" },
       { id: 4, name: "Grand Piano" },
@@ -187,7 +188,7 @@ class UpdateJob extends Component {
       endDate: Date.parse(job.endDate),
       startDateInString: job.startDate,
       endDateInString: job.endDate,
-      startTime: new Date(job.startTime),
+      startTime: job.startTime ? new Date(job.startTime) : '',
       locations: job.locations,
       jobType: job.jobType,
       description: job.description,
@@ -213,7 +214,7 @@ class UpdateJob extends Component {
       show: true,
     });
   };
-  
+
   //close note modal
   handleClose = (notes) => {
     this.setState({
@@ -328,7 +329,7 @@ class UpdateJob extends Component {
       locations: location,
     });
   };
-  
+
 
   //set the google location in the state
   handleSetLocation = (choosenLocation, index) => {
@@ -337,7 +338,7 @@ class UpdateJob extends Component {
 
     location[index].value = value;
 
-    
+
 
 
     this.setState({
@@ -375,7 +376,7 @@ class UpdateJob extends Component {
       this.setState({ propertyType: "" });
     }
 
-   
+
   };
 
   //add custom service
@@ -550,6 +551,7 @@ class UpdateJob extends Component {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid>
                         <KeyboardDatePicker
+                          minDate={new Date()}
                           inputVariant="outlined"
                           size="small"
                           fullWidth
@@ -573,6 +575,7 @@ class UpdateJob extends Component {
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <Grid>
                         <KeyboardDatePicker
+                          minDate={new Date()}
                           inputVariant="outlined"
                           size="small"
                           fullWidth
@@ -707,6 +710,9 @@ class UpdateJob extends Component {
                   value={this.state.price}
                   error={this.state.assigneeRequiredError ? true : false}
                   onChange={this.handleFormInput}
+                  InputProps={{
+                    startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                  }}
                 />
 
               </div>

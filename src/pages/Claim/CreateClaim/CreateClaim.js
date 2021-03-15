@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import style from "./CreateClaim.module.css";
 import { Modal } from "react-bootstrap";
-import { Button } from "@material-ui/core";
+import { Button, InputAdornment } from "@material-ui/core";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import {
@@ -81,7 +81,7 @@ class CreateClaim extends Component {
     getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
     });
-    
+
   };
   //onChange handler
   handleFormInput = (event) => {
@@ -222,7 +222,7 @@ class CreateClaim extends Component {
             <h3 className={style.head}>Create Claim</h3>
             <form>
               {this.state.customers.length > 0 ? (
-               
+
                 <VirtualizedAutocomplete
                   optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
@@ -273,8 +273,8 @@ class CreateClaim extends Component {
                   </Modal>
                 </div>
               )}
-           
-              <VirtualizedAutocomplete textField = "Choose a job" 
+
+              <VirtualizedAutocomplete textField="Choose a job"
                 value={this.state.selectedJob}
                 options={this.state.jobs}
                 setSelectedCustomerJobs={this.setSelectedCustomerJobs}
@@ -339,6 +339,9 @@ class CreateClaim extends Component {
                     name="price"
                     value={this.state.claims.price}
                     onChange={(e) => this.hanldeClaimsInput(e)}
+                    InputProps={{
+                      startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                    }}
                   />
                 </div>
               </div>

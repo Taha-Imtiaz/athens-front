@@ -19,13 +19,14 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import { Autocomplete } from "@material-ui/lab";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -50,7 +51,7 @@ class CreateJob extends Component {
     services: [],
     customerId: "",
     startDate: "",
-    dates: [new Date()],
+    dates: [{ date: new Date(), time: new Date() }],
     startTime: "",
     anchorEl: "",
     meetTime: "",
@@ -131,8 +132,9 @@ class CreateJob extends Component {
   };
   //add new Date
   addDate = () => {
-    if (this.state.dates[0]) {
-      this.setState({ dates: [...this.state.dates, new Date()] });
+    if (this.state.dates[0].date && this.state.dates[0].time) {
+      console.log(this.state.dates)
+      this.setState({ dates: [...this.state.dates, { date: new Date(), time: new Date() }] });
     }
   };
   //remove the selected Date
@@ -217,16 +219,27 @@ class CreateJob extends Component {
   //onChange handler of dates
   handleStartDate = (date, i) => {
     let newState = cloneDeep(this.state);
-    newState.dates[i] = date;
+    newState.dates[i].date = date;
     this.setState({
       dates: newState.dates,
     });
   };
+
+  //onChange handler of time
+  handleTimeSelect = (date, i) => {
+    let newState = cloneDeep(this.state);
+    newState.dates[i].time = date;
+    this.setState({
+      dates: newState.dates,
+    });
+  };
+
   //submit form handler
   mySubmitHandler = (event) => {
     let { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
     const isValid = this.validate();
+    console.log(this.state)
     if (isValid) {
       let {
         // title,
@@ -248,7 +261,7 @@ class CreateJob extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x !== ("" || null) ? x.toDateString() : null
+        x.date !== ("" || null) ? x.date.toDateString() : null
       );
       stringDates = stringDates.filter(Boolean);
       let createJobObj = {
@@ -270,11 +283,11 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType,
       };
-      createJob(createJobObj, (job) => {
-        //reset form to its original state
-        this.handleResetJob()
-        history.push("/job/detail/" + job.data.data._id);
-      });
+      // createJob(createJobObj, (job) => {
+      //   //reset form to its original state
+      //   this.handleResetJob()
+      //   history.push("/job/detail/" + job.data.data._id);
+      // });
     }
   };
   //services changed
@@ -434,83 +447,116 @@ class CreateJob extends Component {
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
               {this.state.customers.length > 0 ? (
-
-
                 <VirtualizedAutocomplete optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer} options={this.state.customers}
                   getCustomerJobs={this.getCustomerJobs}
-                  addNewCustomer={this.addNewCustomer}
-                />
+                  addNewCustomer={this.addNewCustomer} />
               ) : null}
 
-              <div>
+              <div className={style.DateTimeInput}>
                 {this.state.dates.map((x, i) => {
-                  if (i === 0) {
-                    return (
-                      <div key={i}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                          <Grid>
-                            <KeyboardDatePicker
-                              minDate={new Date()}
-                              inputVariant="outlined"
-                              fullWidth
-                              size="small"
-                              id="date-picker-dialog"
-                              format="MM/dd/yyyy"
-                              className={style.styleFormFields}
-                              value={this.state.dates[i]}
-                              onChange={(e) => this.handleStartDate(e, i)}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div className={style.styleDate}>
-                        <div key={i}>
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid>
-                              <KeyboardDatePicker
-                                minDate={new Date()}
-                                inputVariant="outlined"
-                                fullWidth
-                                size="small"
-                                id="date-picker-dialog"
-                                className={style.styleFormFields}
-                                format="MM/dd/yyyy"
-                                value={this.state.dates[i]}
-                                onChange={(e) => this.handleStartDate(e, i)}
-                                KeyboardButtonProps={{
-                                  "aria-label": "change date",
-                                }}
-                              />
-                            </Grid>
-                          </MuiPickersUtilsProvider>
-                        </div>
-                        <div
-                          className={style.centeredIcon}
-                          onClick={() => this.removeDate(i)}
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                      </div>
-                    );
-                  }
+                  // if (i === 0) {
+                  return (
+                    <div className={style.mainDate} key={i}>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid>
+                          <KeyboardDatePicker
+                            minDate={new Date()}
+                            inputVariant="outlined"
+                            fullWidth
+                            // margin="normal"
+                            size="small"
+                            id="date-picker-dialog"
+                            format="MM/dd/yyyy"
+                            className={style.styleFormFields}
+                            value={this.state.dates[i].date}
+                            onChange={(e) => this.handleStartDate(e, i)}
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+
+                            }}
+                          />
+
+                          <KeyboardTimePicker
+                            // margin="normal"
+                            fullWidth
+                            inputVariant="outlined"
+                            id="time-picker"
+                            size="small"
+                            // className={style.styleFormFields}
+                            // label="Time picker"
+                            value={this.state.dates[i].time}
+                            onChange={(e) => this.handleTimeSelect(e, i)}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change time',
+                            }}
+                          />
+                          {i != 0 ?
+                            <div className={style.centeredIcon}
+                              onClick={() => this.removeDate(i)}>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </div> : null}
+                        </Grid>
+                      </MuiPickersUtilsProvider>
+
+                    </div>
+                  );
+
+                  // } else {
+                  //   return (
+                  //     <div className={style.styleDate}>
+                  //       <div key={i}>
+                  //         <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  //           <Grid>
+                  //             <KeyboardDatePicker
+                  //               minDate={new Date()}
+                  //               inputVariant="outlined"
+                  //               fullWidth
+                  //               size="small"
+                  //               id="date-picker-dialog"
+                  //               className={style.styleFormFields}
+                  //               format="MM/dd/yyyy"
+                  //               value={this.state.dates[i]}
+                  //               onChange={(e) => this.handleStartDate(e, i)}
+                  //               KeyboardButtonProps={{
+                  //                 "aria-label": "change date",
+                  //               }}
+                  //             />
+                  //             <KeyboardTimePicker
+                  //             // margin="normal"
+                  //             fullWidth
+                  //             inputVariant="outlined"
+                  //             id="time-picker"
+                  //             size="small"
+                  //             // className={style.styleFormFields}
+                  //             // label="Time picker"
+                  //             // value={selectedDate}
+                  //             onChange={(e) => this.handleTime(e, i)}
+                  //             KeyboardButtonProps={{
+                  //               'aria-label': 'change time',
+                  //             }}
+                  //           />
+                  //           </Grid>
+                  //         </MuiPickersUtilsProvider>
+                  //       </div>
+
+                  //       <div
+                  //         className={style.centeredIcon}
+                  //         onClick={() => this.removeDate(i)}>                         
+                  //         <FontAwesomeIcon icon={faTrash}/>
+                  //       </div>
+                  //     </div>
+                  //   );
+                  // }
                 })}
+                <div onClick={this.addDate} className={`${style.plusIcon} ${style.alignRight}`}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </div>
               </div>
-
-              <div onClick={this.addDate} className={style.alignRight}>
-                <i className="fa fa-plus"></i>
-              </div>
-
               {/* <div>
                 <TextField
                   variant="outlined"
-                  required
+                  required 
                   className={style.styleFormFields}
                   size="small"
                   id="title"
@@ -639,9 +685,6 @@ class CreateJob extends Component {
                     onChange={this.handleFormInput}
                   />
                 </div>
-              </div>
-
-              <div className={style.movers}>
                 <div>
                   <TextField
                     type="number"
@@ -664,24 +707,9 @@ class CreateJob extends Component {
                     onChange={this.handleFormInput}
                   />
                 </div>
-                <div>
-                  <TextField
-                    type="number"
-                    variant="outlined"
-                    margin="dense"
-                    // required
-                    fullWidth
-                    size="small"
-                    id="truck"
-                    label="Trucks"
-                    autoComplete="Trucks"
-                    name="truck"
-                    value={this.state.truck}
-                    className={style.styleFormFields}
-                    // error={this.state.assigneeRequiredError ? true : false}
-                    onChange={this.handleFormInput}
-                  />
-                </div>
+              </div>
+
+              <div className={style.movers}>
                 <div>
                   <FormControl variant="outlined" margin="dense" fullWidth>
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -702,7 +730,24 @@ class CreateJob extends Component {
                     </Select>
                   </FormControl>
                 </div>
-
+                <div>
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    margin="dense"
+                    // required
+                    fullWidth
+                    size="small"
+                    id="truck"
+                    label="Trucks"
+                    autoComplete="Trucks"
+                    name="truck"
+                    value={this.state.truck}
+                    className={style.styleFormFields}
+                    // error={this.state.assigneeRequiredError ? true : false}
+                    onChange={this.handleFormInput}
+                  />
+                </div>
               </div>
 
               {this.state.locations.length === 0 && (
@@ -723,12 +768,12 @@ class CreateJob extends Component {
               )}
 
               <div className={style.resetBtns}>
+
                 <div>
                   <Button
                     className={style.button}
                     type="button"
-                    onClick={this.handleResetJob}
-                  >
+                    onClick={this.handleResetJob}>
                     Reset
                   </Button>
                 </div>
@@ -737,8 +782,7 @@ class CreateJob extends Component {
                   <Button
                     className={style.button}
                     type="button"
-                    onClick={this.mySubmitHandler}
-                  >
+                    onClick={this.mySubmitHandler}>
                     Submit
                   </Button>
                 </div>

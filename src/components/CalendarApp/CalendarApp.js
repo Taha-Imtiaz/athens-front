@@ -232,8 +232,23 @@ const CalendarApp = (props) => {
               <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
               <hr />
               <div className={style.jobInfo}>
-                <h6>Total Jobs: {count.job}</h6>
-                <h6>Total Movers: {count.movers}</h6>
+                <h6>{`Total Jobs: `}
+                  <Chip
+                    label={count.job}
+                    clickable
+                    // color="primary"
+                    // variant="outlined"
+                    size="medium"
+                  /></h6>
+                <h6>{`Total Movers: `}
+                  <Chip
+                    label={count.movers}
+                    clickable
+                    // color="primary"
+                    // variant="outlined"
+                    size="medium"
+                  />
+                </h6>
               </div>
               {state.currentDayJobs.map((job, i) => (
                 <div>
@@ -288,12 +303,12 @@ const CalendarApp = (props) => {
                               {`Customer Email: `}
                             </div>
                             <div className={style.customerMail}>
-                            <Link
-                              
-                              to={`/customer/detail/${job.customer._id}`}
-                            >
-                              {job.customer.email}
-                            </Link></div>
+                              <Link
+
+                                to={`/customer/detail/${job.customer._id}`}
+                              >
+                                {job.customer.email}
+                              </Link></div>
                           </div>
                           <div className={`card-text ${style.jobDescription}`}>
                             <div className={style.heading}>
@@ -312,12 +327,28 @@ const CalendarApp = (props) => {
             </div>
           ) : (
             <div>
-              <h5 className={`${style.flex}hahahaha `}>{state.date.toDateString()}</h5>
+              <h5 className={`${style.flex} ${style.flexCenter}`}>{state.date.toDateString()}</h5>
 
               <hr />
               <div className={style.jobInfo}>
-                <h6>Total Jobs: {state.currentDayJobs.length}</h6>
-                <h6>Total Movers: 0</h6>
+                <h6>{`Total Jobs: `}
+                  <Chip
+                    label={state.currentDayJobs.length}
+                    clickable
+                    // color="primary"
+                    // variant="outlined"
+                    size="medium"
+                  />
+                </h6>
+                <h6>{`Total Movers: `}
+                  <Chip
+                    label="0"
+                    clickable
+                    // color="primary"
+                    // variant="outlined"
+                    size="medium"
+                  />
+                </h6>
               </div>
               <img src="/images/no-data-found.png" alt="" width="100%" />
             </div>

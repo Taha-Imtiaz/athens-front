@@ -13,16 +13,55 @@
   margin: 2rem;
   padding: 2rem;
 }
+.DateTimeInput{
+  /* background-color: springgreen; */
+  /* display: flex; */
+  flex-wrap: wrap;
+  align-items: center;
+}
+.mainDate{
+  flex-grow: 1;
+  /* display: flex; */
+  /* align-items: center; */
+  
+
+
+}
+.mainDate > div {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
 .centeredIcon {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  flex-grow: 0 !important;
   align-items: center;
+  color: tomato;
+  /* background-color: tomato; */
 }
 .alignRight {
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: center ;
+  align-items: center;
 }
+
+.plusIcon{
+  /* max-width: 25px; */
+  /* color: white; */
+  /* background-color: var(--color-blue); */
+  /* border-radius: 50%; */
+  
+  border: none;
+  margin-bottom: .5rem;
+  /* display: flex;*/
+  justify-content: flex-end; 
+  /* padding: .5rem; */
+}
+/* .plusIcon:hover{
+  background-color: var(--hover-color-blue);
+} */
 .modal {
   max-width: 50vw;
 }
@@ -69,15 +108,16 @@
 }
  .propertyTypeRow {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   column-gap: 0.5rem;
 }
 .movers {
+  border: 1px solid gray;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 0.5rem;
 }
-.addLocation {
+/* .addLocation {
   display: grid;
   grid-template-columns: 87fr 13fr;
   grid-template-areas: ". addLocationBtn";
@@ -85,21 +125,21 @@ justify-content: flex-end;
 }
 .addLocationBtn {
   grid-area: addLocationBtn;
-  /* background-color: #00adee; */
-}
+  
+} */
 .addLocationBtn .button {
   background: #00adee;
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
-
   width: 100%;
 }
 .addLocationBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;
+  /* width: 40% !important; */
 }
 .resetBtns {
   display: grid;
@@ -120,9 +160,9 @@ justify-content: flex-end;
   display: flex;
 }
 .resetBtns .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
-@media only screen and (max-width:1500px) {
+/* @media only screen and (max-width:1500px) {
   .addLocation {
     display: grid;
     grid-template-columns: 84fr 16fr;
@@ -146,4 +186,4 @@ justify-content: flex-end;
       grid-template-areas: ". addLocationBtn";
     
     }
-}
+} */

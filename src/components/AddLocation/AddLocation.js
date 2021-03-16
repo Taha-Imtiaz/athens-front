@@ -1,12 +1,29 @@
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Checkbox, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
 import { cloneDeep } from 'lodash';
-import React from 'react'
+import React, { useState } from 'react'
+// import Autocomplete from 'react-autocomplete';
 import PlaceSearch from '../PlaceSearch/PlaceSearch';
 import style from "./AddLocation.module.css"
+import { Autocomplete } from "@material-ui/lab";
 
 const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
+
+    const [state, setState] = useState({
+        newProperty: '',
+        propertyOptions: [
+            { id: 1, name: "House" },
+            { id: 2, name: "Condominium" },
+            { id: 3, name: "Duplex" },
+            { id: 4, name: "Trailer" },
+            { id: 5, name: "Office" },
+            { id: 6, name: "Indoor Storage" },
+            { id: 7, name: "Outdoor Storage" },
+            { id: 8, name: "Town House" },
+            { id: 9, name: "Apartment" }
+        ]
+    })
 
     //set the google location in the state
     const handleSetLocation = (choosenLocation, index) => {
@@ -35,7 +52,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         e.stopPropagation();
         let prevState = cloneDeep(locationArr);
         prevState[i].default = !prevState[i].default;
-        
+
         handleLocationChange(prevState)
 
     };
@@ -45,13 +62,93 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         let location = cloneDeep(locationArr);
         location.splice(i, 1);
         handleLocationChange(location)
-        
+
     }
+
+    const propertyChanged = (e, i) => {
+        if (e) {
+            // setState({ ...state, propertyType: newValue.name });
+            let prevState = cloneDeep(locationArr);
+            prevState[i].propertyType = e.name;
+            handleLocationChange(prevState)
+        }
+        else {
+            // setState({ ...state, propertyType: "" });
+            let prevState = cloneDeep(locationArr);
+            prevState[i].propertyType = '';
+            handleLocationChange(prevState)
+        }
+    };
+
+    const addCustomPropertyType = (e,i) => {
+        e.preventDefault();
+        if (e.target.value) {
+            setState({
+                ...state,
+                newProperty: e.target.value,
+            });
+            let propertyAdded = {
+                name: state.newProperty,
+                id: Math.random() * 10,
+            };
+            if (e.keyCode === 13 && e.target.value) {
+                let propertyOptions = cloneDeep(state.propertyOptions);
+                propertyOptions.push(propertyAdded);
+                setState({
+                    ...state,
+                    propertyOptions
+                });
+
+                let prevState = cloneDeep(locationArr);
+                prevState[i].propertyType = e.target.value;
+                handleLocationChange(prevState)
+            }
+        } else {
+            setState({
+                ...state,
+                newProperty: "",
+            });
+        }
+    }
+
 
     //function to show all locations
     const showLocation = (i) => {
         return (
             <div className={style.locationInput} key={i}>
+                {/* Property Type */}
+                <div>
+                    <Autocomplete
+                        noOptionsText={`Add '${state.newProperty}' to property type`}
+                        value={locationArr[i].propertyType}
+                        onChange={(event, newValue) => {
+                            propertyChanged(newValue, i);
+                        }}
+                        limitTags={1}
+                        id="property-tag"
+                        options={
+                            state.propertyOptions
+                        }
+                        getOptionLabel={(option) =>
+                            option.name ? option.name : option
+                        }
+                        renderInput={(params) => (
+                            <TextField
+                                required
+                                onKeyUp={(e) => addCustomPropertyType(e,i)}
+                                {...params}
+                                className={style.styleFormFields}
+                                variant="outlined"
+                                size="small"
+                                label="Property Type"
+                                placeholder="Property Type"
+                                error={state.multiError ? true : false}
+                            />
+                        )}
+                    />
+                </div>
+
+                {/* Radio Buttons */}
                 <div className={style.radioButtons}>
                     <RadioGroup
                         className={style.rowFlex}
@@ -72,9 +169,11 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                         />
                     </RadioGroup>
                 </div>
+                {/* Google Location */}
                 <div className={style.inputField}>
                     <PlaceSearch handleSetLocation={handleSetLocation} index={i} locationValue={locationArr[i].value} />
                 </div>
+                {/* Checkboxes */}
                 {locationArr[i].type === "pickup" ? (
                     <div
                         className={
@@ -85,13 +184,12 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                             control={
                                 <Checkbox
                                     checked={locationArr[i].default}
-
                                     onClick={(e) => changeCheckBoxState(e, i)}
                                     name="checkboxStates"
-
+                                    className={style.checkBoxTick}
                                 />
                             }
-                            label="Load only / IA"
+                            label="Load only/IA"
                         />
                     </div>
                 ) : locationArr[i].type === "dropoff" ? (
@@ -103,6 +201,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
 
                                     onClick={(e) => changeCheckBoxState(e, i)}
                                     name="checkboxStates"
+                                    className={style.checkBoxTick}
 
                                 />
                             }
@@ -110,6 +209,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                         />
                     </div>
                 ) : null}
+
                 <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
                     <FontAwesomeIcon
                         icon={faTrash}

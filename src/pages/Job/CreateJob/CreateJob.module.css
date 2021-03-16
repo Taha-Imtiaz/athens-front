@@ -52,7 +52,6 @@
   /* color: white; */
   /* background-color: var(--color-blue); */
   /* border-radius: 50%; */
-  
   border: none;
   margin-bottom: .5rem;
   /* display: flex;*/
@@ -108,14 +107,25 @@
 }
  .propertyTypeRow {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 0.5rem;
 }
 .movers {
-  border: 1px solid gray;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 0.5rem;
+  /* border: 1px solid gray; */
+  /* display: grid;
+  grid-template-columns: repeat(2, .45fr) .1fr;
+  column-gap: 0.5rem; */
+  flex-wrap: wrap;
+  align-items: center;
+}
+.moversChild{
+ flex-grow: 1;
+}
+.moversChild > div {
+  display: flex;  flex-grow: 1;
+  
+  /* align-items: center; */
+  gap: .5rem;
 }
 /* .addLocation {
   display: grid;

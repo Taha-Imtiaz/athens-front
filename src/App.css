@@ -45,7 +45,7 @@ a {
 }
 
 .btn:hover {
-  background-color: #00adee !important;
+  background-color: var(--hover-color-blue) !important;
   text-decoration: none;
 }
 
@@ -117,7 +117,7 @@ a {
   --font-family-header: "Roboto", sans-serif;
   --font-family-paragraph: "Open Sans", sans-serif;
   /*ahmed*/
-  --transition-one: all .6s ease-in-out;
+  --transition-one: all .3s ease-in-out;
   --color-red:#F44336;
   --color-blue:#00adee;
   --hover-color-blue: #0597cc;

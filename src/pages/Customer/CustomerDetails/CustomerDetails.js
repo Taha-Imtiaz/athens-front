@@ -330,11 +330,11 @@ const CustomerDetails = (props) => {
                               {job.dates.map((x, i) => (
                                 <div key={i}>
                                   {i === 0 ? (
-                                    <div key={i}>{x}</div>
+                                    <div key={i}>{x.date}</div>
                                   ) : (
                                       <div key={i}>
                                         <span className={style.spacing}>|</span>
-                                        {x}
+                                        {x.date}
                                       </div>
                                     )}
                                 </div>

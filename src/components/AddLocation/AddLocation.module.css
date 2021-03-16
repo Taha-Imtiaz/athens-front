@@ -1,29 +1,33 @@
 .locationInput {
     display: grid;
-    grid-template-columns: 32fr repeat(2, 33fr) 2fr;
-    grid-template-areas: "radioButtons inputField checkBox TrashIcon";
+    grid-template-columns: 1.3fr 2.5fr  2.5fr 1.8fr .2fr;
+    grid-template-areas: " radioButtons propertyField inputField checkBox TrashIcon";
     align-items: center;
+    gap: 0.2rem;
   }
   .rowFlex {
-    flex-direction: row !important;
+    /* flex-direction: column !important; */
     flex-wrap: nowrap !important;
   }
   .radioButtons {
     grid-area: radioButtons;
   }
-  .inputField {
-    grid-area: inputField;
-  }
   .checkBox {
     grid-area: checkBox;
   }
-  .TrashIcon {
-    grid-area: TrashIcon;
-    
+  .checkBoxTick{
+    color: #00adee !important;
+  }
+  .inputField {
+    grid-area: inputField;
   }
   
+  .TrashIcon {
+    grid-area: TrashIcon;
+    color: tomato;
+  }
   .styleRadio {
-    color: #00adee;
+    color: #00adee !important;
   }
   .alignRight {
     display: flex;

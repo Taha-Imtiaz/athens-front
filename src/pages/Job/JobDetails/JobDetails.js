@@ -136,9 +136,9 @@ const JobDetails = (props) => {
                 <div className={style.jobDates} className="text-muted">
                   {job.dates.map((x, i) =>
                     i === 0 ? (
-                      <span key={i}>{x}</span>
+                      <span key={i}>{x.date}</span>
                     ) : (
-                        <span key={i}> | {x} </span>
+                        <span key={i}> | {x.date} </span>
                       )
                   )}
                 </div>

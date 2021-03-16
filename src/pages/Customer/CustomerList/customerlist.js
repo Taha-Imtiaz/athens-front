@@ -11,7 +11,7 @@ import { useState } from "react";
 import Pagination from "../../../components/Pagination/Pagination";
 
 import Button from "@material-ui/core/Button";
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
 
 const CustomerList = (props) => {
@@ -275,7 +275,7 @@ const CustomerList = (props) => {
         {docs && docs.length > 0 ? (
           <div>
             <div className={` ${style.jumbotron}`}>
-              <div className={style.listheader}>
+              {/* <div className={style.listheader}>
                 <div>Name</div>
                 <div>Phone</div>
 
@@ -287,7 +287,7 @@ const CustomerList = (props) => {
                 {props.user && props.user.role === "admin" && (
                   <div>Actions</div>
                 )}
-              </div>
+              </div> */}
             </div>
             <div>
               <div>
@@ -304,28 +304,44 @@ const CustomerList = (props) => {
                             <div
                               className={`${style.name} ${style.item} ${style.flex}`}
                             >
-                              {doc.firstName} {doc.lastName}
+                              <div className={`text-muted ${style.heading}`}>{`Name:`}</div>
+                              <div className={`text-capitalize ${style.headingSub}`}>{doc.firstName} {doc.lastName}</div>                              
                             </div>
 
                             <div
                               className={`${style.phone} ${style.item} ${style.flex}`}
                             >
-                              {doc.phone}
+                              <div className={`text-muted ${style.heading}`}>{`Phone:`}</div>
+                              <div className={`${style.headingSub}`}>{doc.phone}</div>                              
+                            
+                              
                             </div>
                             <div
                               className={`${style.email} ${style.item} ${style.flex}`}
                             >
-                              {doc.email}
+                              <div className={`text-muted ${style.heading}`}>{`E-mail:`}</div>
+                              <div className={`${style.headingSub}`}>{doc.email}</div>                            
+                          
                             </div>
                             <div
                               className={`${style.jobs} ${style.item} ${style.flex}`}
                             >
-                              <div>{doc.jobs.length}</div>
+                              <div className={`text-muted ${style.heading}`}>{`Jobs:`}</div>
+                              <div className={`${style.headingSub}`}>
+                              <Chip 
+                              label={doc.jobs.length}
+                              />
+                                
+                              </div>                              
+                   
                             </div>
                             <div
                               className={`${style.activeClaims} ${style.item} ${style.flex}`}
                             >
-                              {doc.claim.length > 0 ? (
+                              <div className={`text-muted ${style.heading}`}>{`Claims:`}</div>
+                             <div className={style.headingSub}>
+                             <Chip
+                             label={doc.claim.length > 0 ? (
                                 <div>
                                   {
                                     doc.claim.filter(
@@ -336,6 +352,8 @@ const CustomerList = (props) => {
                               ) : (
                                   0
                                 )}
+                             /></div>
+                              
                             </div>
                           </div>
                         </Link>

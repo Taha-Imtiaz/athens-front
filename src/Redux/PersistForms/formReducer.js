@@ -29,7 +29,7 @@ let initialState = {
         services: [],
         customerId: "",
         startDate: "",
-        dates: [{date: new Date(), time: new Date()}],
+        dates: [{ date: new Date(), time: new Date() }],
         startTime: "",
         anchorEl: "",
         meetTime: "",
@@ -63,8 +63,9 @@ let initialState = {
         showAddCustomer: false,
         propertyType: '',
         price: "",
-        truck: "",
-        truckSize: "None",
+        trucks: [{ type: "", number: "" }],
+        // truck: "",
+        // truckSize: "None",
         serviceOptions: [
             { id: 1, name: "Packing" },
             { id: 2, name: "Loading" },
@@ -75,9 +76,23 @@ let initialState = {
         ],
         propertyOptions: [
             { id: 1, name: "House" },
-            { id: 2, name: "Town House" },
-            { id: 3, name: "Apartment" }
+            { id: 2, name: "Condominium" },
+            { id: 3, name: "Duplex" },
+            { id: 4, name: "Trailer" },
+            { id: 5, name: "Office" },
+            { id: 6, name: "Indoor Storage" },
+            { id: 7, name: "Outdoor Storage" },
+            { id: 8, name: "Town House" },
+            { id: 9, name: "Apartment" }
         ],
+        truckOptions: [
+            "Pickup Truck",
+            "Cargo Van",
+            "15 ft truck",
+            "17 ft truck",
+            "20 ft truck",
+            "26 ft truck"
+        ]
     },
     addClaimForm: {
         customerId: "",

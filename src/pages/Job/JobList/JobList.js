@@ -9,7 +9,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Button, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
+import { Button, Chip, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
@@ -442,7 +442,7 @@ const JobsList = (props) => {
 
       {docs && docs.length > 0 ? (
         <div>
-          <div className={style.jobListHeaderContainer}>
+          {/* <div className={style.jobListHeaderContainer}>
             <div className={style.jobListHeader}>
               <div>Title</div>
               <div>Date(s)</div>
@@ -451,7 +451,7 @@ const JobsList = (props) => {
               <div>Status</div>
               {user && user.role === "admin" && <div>Actions</div>}
             </div>
-          </div>
+          </div> */}
           <div>
             {docs.map((job, i) => {
               return (
@@ -467,20 +467,27 @@ const JobsList = (props) => {
                     >
                       <div className={`${style.jobList}`}>
                         <div
-                          className={`${style.title} ${style.flex} ${style.item}`}
+                          className={`${style.title}
+                          ${style.flex} 
+                          ${style.item}`}
                         >
-                          {job.title}
+                         <div className={`text-muted ${style.heading}`}>{`title: `}</div>
+                         <div className={style.headingSub}>{job.title}</div>
+                         
                         </div>
                         <div
-                          className={`${style.date} ${style.flex} ${style.item}`}
+                          className={`${style.date} 
+                          ${style.flex} 
+                          ${style.item}`}
                         >
-                          <FontAwesomeIcon
+                          {/* <FontAwesomeIcon
                             icon={faCalendarAlt}
                             className={style.icon}
-                          />{" "}
-                          <span className={style.styleSpan}>
+                          />{" "} */}
+                          <div className={`text-muted ${style.heading}`}>{`Date:`}</div>
+                          <span className={`${style.headingSub} ${style.styleSpan}`}>
                             {/* show 1st item of date array on jobList */}
-                            {job.dates[0]}
+                            {job.dates[0].date}
                             {job.dates.length > 1 && (
                               <div>
                                 <Typography
@@ -516,8 +523,8 @@ const JobsList = (props) => {
                                   }}
                                   disableRestoreFocus
                                 >
-                                  {job.dates.map((date, i) => (
-                                    <Typography key={i}>{date}</Typography>
+                                  {job.dates.map((dates, i) => (
+                                    <Typography key={i}>{dates.date}</Typography>
                                   ))}
                                 </Popover>
                               </div>
@@ -526,12 +533,13 @@ const JobsList = (props) => {
                         </div>
                         <div
                           className={`${style.assignee} ${style.flex}  ${style.item}`}
-                        >
-                          <span className={style.styleSpan}>
-                            <FontAwesomeIcon
+                        ><div className={`text-muted ${style.heading}`}>{`Assignee: `}</div>
+                          <span className={`${style.headingSub} ${style.styleSpan}`}>
+                            {/* <FontAwesomeIcon
                               icon={faUser}
                               className={style.icon}
-                            />
+                            /> */}
+                            
                             {job.assignee.length > 0
                               ? job.assignee[0].name
                               : "N/A"}
@@ -586,11 +594,13 @@ const JobsList = (props) => {
                         </div>
                         <div
                           className={`${style.services} ${style.flex} ${style.item}`}
-                        >
-                          <div className={style.styleSpan}>
+                        ><div className={`text-muted ${style.heading}`}>{`Services: `} </div>
+                          <div className={`${style.headingSub} ${style.styleSpan}`} >
                             {job.services.length > 0 ? job.services[0].name : "N/A"}
                             {job.services.length > 1 && (
+                              
                               <div>
+                                
                                 <Typography
                                   aria-owns={
                                     open ? "mouse-over-popover" : undefined
@@ -638,8 +648,15 @@ const JobsList = (props) => {
                         </div>
                         <div
                           className={`${style.status} ${style.flex} ${style.item}`}
-                        >
-                          {job.status}
+                        ><div className={`text-muted ${style.heading}`}>{`Status: `}</div>
+                         <Chip
+                         className={`${style.headingSub} ${style.styleSpan}`}
+                        //  color="red"
+                        //  variant="outlined"
+                         size="small"
+                         label={job.status}
+                         />
+                         
                         </div>
                       </div>
                     </Link>

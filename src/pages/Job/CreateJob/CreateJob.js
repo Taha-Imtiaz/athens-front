@@ -85,8 +85,9 @@ class CreateJob extends Component {
     showAddCustomer: false,
     propertyType: '',
     price: "",
-    truck: "",
-    truckSize: "None",
+    trucks: [{ type: "", number: "" }],
+    // truck: "",
+    // truckSize: "None",
     serviceOptions: [
       { id: 1, name: "Packing" },
       { id: 2, name: "Loading" },
@@ -97,10 +98,44 @@ class CreateJob extends Component {
     ],
     propertyOptions: [
       { id: 1, name: "House" },
-      { id: 2, name: "Town House" },
-      { id: 3, name: "Apartment" }
+      { id: 2, name: "Condominium" },
+      { id: 3, name: "Duplex" },
+      { id: 4, name: "Trailer" },
+      { id: 5, name: "Office" },
+      { id: 6, name: "Indoor Storage" },
+      { id: 7, name: "Outdoor Storage" },
+      { id: 8, name: "Town House" },
+      { id: 9, name: "Apartment" }
     ],
+    truckOptions: [
+      "Pickup Truck",
+      "Cargo Van",
+      "15 ft truck",
+      "17 ft truck",
+      "20 ft truck",
+      "26 ft truck"
+    ]
   };
+  /*
+  Property types hain yeh
+    
+    2. Condominium
+    3. Duplex
+    4. Trailer
+    
+    
+    7. Office
+    8. Indoor storage
+    9. Outdoor storage
+
+  TRUCK TYPE
+    1. Pickup Truck
+    2. Cargo Van
+    3. 15 ft truck
+    4. 17 ft truck
+    5. 20 ft truck
+    6. 26 ft truck    
+  */
 
   componentDidMount = () => {
     //fetch customer id name and jobs if navigate from customer page
@@ -125,7 +160,7 @@ class CreateJob extends Component {
   //handler to add location
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
-    location.push({ type: "", value: "", default: false });
+    location.push({ type: "", value: "", default: false, propertyType: '' });
     this.setState({
       locations: location,
     });
@@ -145,7 +180,34 @@ class CreateJob extends Component {
       dates: datesArr,
     });
   };
+  // add new truck
+  addTruck = () => {
+    if (this.state.trucks[0].type && this.state.trucks[0].number) {
+      console.log(this.state.trucks)
+      this.setState({ trucks: [...this.state.trucks, { type: "", number: "" }] });
+    }
+  };
+  // remove truck
+  removeTruck = (i) => {
+    let truckArr = cloneDeep(this.state.trucks);
+    truckArr.splice(i, 1);
+    this.setState({
+      trucks: truckArr,
+    });
+  };
 
+  // Handle trucks input change
+  handleTrucksInput = (e, i, inputType) => {
+    let trucks = cloneDeep(this.state.trucks);
+    let value = e.target.value;
+    trucks[i][inputType] = value;
+    if(inputType == 'type') {
+      trucks[i].number = 1;
+    }
+    this.setState({
+      trucks
+    });
+  }
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
@@ -253,16 +315,15 @@ class CreateJob extends Component {
         assigneesId,
         customerId,
         assigneeRequired,
-        propertyType,
         price,
-        truck,
-        truckSize,
+        trucks,
         jobType,
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x.date !== ("" || null) ? x.date.toDateString() : null
+        x.date !== ("" || null) ? {date: x.date.toDateString(), time: x.time} : null
       );
+
       stringDates = stringDates.filter(Boolean);
       let createJobObj = {
         // title,
@@ -270,24 +331,22 @@ class CreateJob extends Component {
         services,
         dates: stringDates,
         startTime,
-        locations: locations.filter((x) => x.value !== "" && x.type !== ""),
+        locations: locations.filter((x) => x.value !== "" && x.type !== "" && x.propertyType !== ''),
         status,
         note,
         assigneesId,
         assigneeRequired,
-        propertyType,
         price,
-        truck,
-        truckSize,
+        trucks,
         customerId,
         userId: loggedInUser._id,
-        jobType,
+        jobType
       };
-      // createJob(createJobObj, (job) => {
-      //   //reset form to its original state
-      //   this.handleResetJob()
-      //   history.push("/job/detail/" + job.data.data._id);
-      // });
+      createJob(createJobObj, (job) => {
+        //reset form to its original state
+        this.handleResetJob()
+        history.push("/job/detail/" + job.data.data._id);
+      });
     }
   };
   //services changed
@@ -452,7 +511,8 @@ class CreateJob extends Component {
                   getCustomerJobs={this.getCustomerJobs}
                   addNewCustomer={this.addNewCustomer} />
               ) : null}
-
+              {/* date and time */}
+              <hr />
               <div className={style.DateTimeInput}>
                 {this.state.dates.map((x, i) => {
                   // if (i === 0) {
@@ -553,6 +613,7 @@ class CreateJob extends Component {
                   <FontAwesomeIcon icon={faPlus} />
                 </div>
               </div>
+              <hr />
               {/* <div>
                 <TextField
                   variant="outlined"
@@ -605,6 +666,7 @@ class CreateJob extends Component {
                       {...params}
                       className={style.styleFormFields}
                       variant="outlined"
+                      fullWidth
                       size="small"
                       label="Services"
                       placeholder="Services"
@@ -615,7 +677,7 @@ class CreateJob extends Component {
               </div>
 
               <div className={style.propertyTypeRow}>
-                <div>
+                {/* <div>
                   <Autocomplete
                     noOptionsText={`Add '${this.state.newProperty}' to property type`}
                     value={this.state.propertyType}
@@ -644,7 +706,7 @@ class CreateJob extends Component {
                       />
                     )}
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <FormControl variant="outlined" margin="dense" fullWidth>
@@ -660,7 +722,6 @@ class CreateJob extends Component {
                       label="Job Type"
                       name="jobType"
                     >
-
                       <MenuItem value={"Hourly Based"}>Hourly Based</MenuItem>
                       <MenuItem value={"Fixed"}>Fixed</MenuItem>
                     </Select>
@@ -708,52 +769,67 @@ class CreateJob extends Component {
                   />
                 </div>
               </div>
-
+              {/* truck size and number */}
+              <hr />
               <div className={style.movers}>
-                <div>
-                  <FormControl variant="outlined" margin="dense" fullWidth>
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Truck Size
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={this.state.truckSize}
-                      onChange={this.handleFormInput}
-                      label="Truck Size"
-                      name="truckSize"
-                    >
+                {this.state.trucks.map((x, i) => {
+                  return (
+                    <div className={style.moversChild} key={i}>
+                      <div>
+                        <FormControl variant="outlined" margin="dense" fullWidth>
+                          <InputLabel id="demo-simple-select-outlined-label">
+                            Truck Type
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={this.state.trucks[i].type}
+                            onChange={(e) => this.handleTrucksInput(e, i, 'type')}
+                            label="Truck Size"
+                            name="truckSize"
+                          >
 
-                      <MenuItem value={"None"} disabled>None</MenuItem>
-                      <MenuItem value={"16ft"}>16ft</MenuItem>
-                      <MenuItem value={"20ft"}>20ft</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div>
-                  <TextField
-                    type="number"
-                    variant="outlined"
-                    margin="dense"
-                    // required
-                    fullWidth
-                    size="small"
-                    id="truck"
-                    label="Trucks"
-                    autoComplete="Trucks"
-                    name="truck"
-                    value={this.state.truck}
-                    className={style.styleFormFields}
-                    // error={this.state.assigneeRequiredError ? true : false}
-                    onChange={this.handleFormInput}
-                  />
+                            <MenuItem value={"None"} disabled>None</MenuItem>
+                            {this.state.truckOptions.map((x, i) => <MenuItem key = {i} value={x}>{x}</MenuItem>)}
+                          </Select>
+                        </FormControl>
+
+                        <TextField
+                          type="number"
+                          variant="outlined"
+                          margin="dense"
+                          // required
+                          fullWidth
+                          size="small"
+                          id="truck"
+                          label="No. of Trucks"
+                          autoComplete="Trucks"
+                          name="truck"
+                          value={this.state.trucks[i].number}
+                          className={style.styleFormFields}
+                          // error={this.state.assigneeRequiredError ? true : false}
+                          onChange={(e) => this.handleTrucksInput(e, i, 'number')}
+                        />
+
+                        {i != 0 ?
+                          <div className={style.centeredIcon}
+                            onClick={() => this.removeTruck(i)}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </div> : null}</div>
+                    </div>
+                  );
+                })}
+                <div onClick={this.addTruck} className={`${style.plusIcon} ${style.alignRight}`}>
+                  <FontAwesomeIcon icon={faPlus} />
                 </div>
               </div>
+              <hr />
 
               {this.state.locations.length === 0 && (
                 <div className={style.addLocation}>
                   <div className={style.addLocationBtn}>
-                    <Button onClick={this.addLocation} className={style.button}>
+                    <Button onClick={this.addLocation}
+                      className={style.button}>
                       Add Location
                     </Button>
                   </div>
@@ -762,7 +838,11 @@ class CreateJob extends Component {
 
               {this.state.locations.length > 0 && (
                 <div>
-                  <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
+                  <AddLocation
+                    locationArr={this.state.locations}
+                    addLocation={this.addLocation}
+                    handleLocationChange={this.handleLocationChange}
+                  />
 
                 </div>
               )}

@@ -50,7 +50,8 @@
   
 }
 .job {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
+  /* background-color: red; */
 }
 .jobCard {
   display: grid;
@@ -63,9 +64,11 @@
   /* background-color: #e9f2eb; */
   background-color: #f1f7f3;
 }
-.cardBody___sectionOne{
-    display: flex;
-    gap: 1rem;
+.cardBody___sectionOne, .cardBodyContainerTwo, .truckSection{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: .5rem;
+    font-weight: 500;
 }
 .jobDetails {
   grid-area: jobDetails;
@@ -96,12 +99,13 @@ text-transform: capitalize;
 .cardBodyContainer{
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
+
 .cardBodyContainerTwo{
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  gap: 2.5rem;
+  gap: 2.5rem; */
+
 }
 .jobService {
   grid-area: jobService;

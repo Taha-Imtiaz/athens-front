@@ -332,11 +332,11 @@ const CustomerDetails = (props) => {
                                   {i === 0 ? (
                                     <div key={i}>{x.date}</div>
                                   ) : (
-                                      <div key={i}>
-                                        <span className={style.spacing}>|</span>
-                                        {x.date}
-                                      </div>
-                                    )}
+                                    <div key={i}>
+                                      <span className={style.spacing}>|</span>
+                                      {x.date}
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </div>
@@ -354,7 +354,7 @@ const CustomerDetails = (props) => {
                               {/* show services, type */}
                               <div className={style.cardBody___sectionOne}>
                                 <div>
-                                  <div>{`Service: `}</div>
+                                  <h5>Service:</h5>
                                   {job.services.map((service, i) => (
                                     <Chip
                                       key={i}
@@ -367,7 +367,7 @@ const CustomerDetails = (props) => {
                                   ))}</div>
 
                                 <div>
-                                  <div>{`Job Type: `}</div>
+                                  <h5>Job Type:</h5>
                                   <Chip
                                     clickable
                                     size="small"
@@ -375,20 +375,12 @@ const CustomerDetails = (props) => {
                                     color="primary"
                                     variant="outlined"
                                   /></div>
-                                <div>
-                                  <div>{`Property Type: `}</div>
-                                  <Chip
-                                    clickable
-                                    size="small"
-                                    label={job.propertyType}
-                                    color="primary"
-                                    variant="outlined"
-                                  /></div>
+
                               </div>
 
                               <div className={style.cardBodyContainerTwo}>
                                 <div>
-                                  {`Job Movers: `}
+                                  <h5>Job Movers:</h5>
                                   <Chip
                                     clickable
                                     color="primary"
@@ -398,7 +390,7 @@ const CustomerDetails = (props) => {
                                   />
                                 </div>
                                 <div>
-                                  {`Price: `}
+                                  <h5>Price:</h5>
                                   <Chip
                                     clickable
                                     color="primary"
@@ -407,16 +399,36 @@ const CustomerDetails = (props) => {
                                     label={`${job.price} $`}
                                   />
                                 </div>
-                                <div>
-                                  {`Required Trucks: `}
-                                  <Chip
-                                    clickable
-                                    color="primary"
-                                    variant="outlined"
-                                    size="small"
-                                    label={job.truck}
-                                  />
-                                </div>
+
+                              </div>
+                              <div>
+                                <h5>Truck Details</h5>
+                                {job.trucks.map((x, i) =>
+                                  <div className={style.truckSection}>
+                                    <div>
+                                      {`Type: `}
+                                      <Chip
+                                        clickable
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
+                                        label={x.type}
+                                      />
+                                    </div>
+                                    <div>
+                                      {`No. Of Trucks: `}
+                                      <Chip
+                                        clickable
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
+                                        label={x.number}
+                                      />
+                                    </div>
+
+                                  </div>
+                                )}
+
                               </div>
                               <div>
                                 {job.assignee.length > 0 ? (
@@ -428,16 +440,16 @@ const CustomerDetails = (props) => {
                                           {assignee.name}
                                         </span>
                                       ) : (
-                                          <span key={i} className={style.jobAssignee}>
-                                            <span className={style.spacing}> | </span>
-                                            {assignee.name}
-                                          </span>
-                                        )
+                                        <span key={i} className={style.jobAssignee}>
+                                          <span className={style.spacing}> | </span>
+                                          {assignee.name}
+                                        </span>
+                                      )
                                     )}
                                   </div>
                                 ) : (
-                                    <div>No Assignee</div>
-                                  )}
+                                  <div>No Assignee</div>
+                                )}
                               </div>
                               {/* show job Description */}
                               <div className={style.jobDetailContainer}>
@@ -456,16 +468,34 @@ const CustomerDetails = (props) => {
                                         <div className={style.location}>
                                           {`${list.value} (Load Only / IA)`}
                                         </div>
+                                        <div>
+                                          {`Property Type: `}
+                                          <Chip
+                                            clickable
+                                            color="primary"
+                                            variant="outlined"
+                                            size="small"
+                                            label={list.propertyType}
+                                          /></div>
                                       </div>
                                     ) : (
-                                        <div key={i}>
-                                          <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                          <span>{`Dropoff`}</span>
-                                          <div className={style.location}>
-                                            {`${list.value} (Unload Only)`}
-                                          </div>
+                                      <div key={i}>
+                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                        <span>{`Dropoff`}</span>
+                                        <div className={style.location}>
+                                          {`${list.value} (Unload Only)`}
                                         </div>
-                                      )
+                                        <div>
+                                          {`Property Type: `}
+                                          <Chip
+                                            clickable
+                                            color="primary"
+                                            variant="outlined"
+                                            size="small"
+                                            label={list.propertyType}
+                                          /></div>
+                                      </div>
+                                    )
                                   )}
                                 </div>
                               )}
@@ -490,10 +520,10 @@ const CustomerDetails = (props) => {
                   </div>
                 </div>
               ) : (
-                  <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
-                    No job added yet
+                <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
+                  No job added yet
                 </h4>
-                )}
+              )}
             </div>
           </TabPanel>
           {/* Tab Panel of claim */}
@@ -583,7 +613,7 @@ const CustomerDetails = (props) => {
                                           onClick={() => showUpdateModal(i)}
                                         >
                                           Add Update
-                                    </Button>
+                                        </Button>
                                       ) : null}
                                     </div>
                                     <div>
@@ -593,15 +623,15 @@ const CustomerDetails = (props) => {
                                           onClick={() => setToggleClaim(true)}
                                         >
                                           Close Claim
-                                    </Button>
+                                        </Button>
                                       ) : (
-                                          <Button
-                                            className={style.button}
-                                            onClick={() => setToggleClaim(true)}
-                                          >
-                                            Reopen Claim
-                                    </Button>
-                                        )}
+                                        <Button
+                                          className={style.button}
+                                          onClick={() => setToggleClaim(true)}
+                                        >
+                                          Reopen Claim
+                                        </Button>
+                                      )}
                                     </div></div>
 
                                 </div>
@@ -727,10 +757,10 @@ const CustomerDetails = (props) => {
 
                 })
               ) : (
-                  <div className="text-center">
-                    <img src="/images/no-data-found.png" alt="Data not found" />
-                  </div>
-                )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="Data not found" />
+                </div>
+              )}
             </div>
           </TabPanel>
 
@@ -762,10 +792,10 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue} update={updateBlanket} />
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="Data not found" />
+              </div>
+            )}
           </TabPanel>
 
           <br />

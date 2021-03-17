@@ -36,6 +36,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
+import DateAndTime from "../../../components/DateAndTime/DateAndTime";
+import Truck from "../../../components/Truck/Truck";
 
 class CreateJob extends Component {
   //defining state
@@ -116,26 +118,6 @@ class CreateJob extends Component {
       "26 ft truck"
     ]
   };
-  /*
-  Property types hain yeh
-    
-    2. Condominium
-    3. Duplex
-    4. Trailer
-    
-    
-    7. Office
-    8. Indoor storage
-    9. Outdoor storage
-
-  TRUCK TYPE
-    1. Pickup Truck
-    2. Cargo Van
-    3. 15 ft truck
-    4. 17 ft truck
-    5. 20 ft truck
-    6. 26 ft truck    
-  */
 
   componentDidMount = () => {
     //fetch customer id name and jobs if navigate from customer page
@@ -165,21 +147,6 @@ class CreateJob extends Component {
       locations: location,
     });
   };
-  //add new Date
-  addDate = () => {
-    if (this.state.dates[0].date && this.state.dates[0].time) {
-      console.log(this.state.dates)
-      this.setState({ dates: [...this.state.dates, { date: new Date(), time: new Date() }] });
-    }
-  };
-  //remove the selected Date
-  removeDate = (i) => {
-    let datesArr = cloneDeep(this.state.dates);
-    datesArr.splice(i, 1);
-    this.setState({
-      dates: datesArr,
-    });
-  };
   // add new truck
   addTruck = () => {
     if (this.state.trucks[0].type && this.state.trucks[0].number) {
@@ -201,7 +168,7 @@ class CreateJob extends Component {
     let trucks = cloneDeep(this.state.trucks);
     let value = e.target.value;
     trucks[i][inputType] = value;
-    if(inputType == 'type') {
+    if (inputType == 'type') {
       trucks[i].number = 1;
     }
     this.setState({
@@ -278,23 +245,7 @@ class CreateJob extends Component {
     }
     return true;
   };
-  //onChange handler of dates
-  handleStartDate = (date, i) => {
-    let newState = cloneDeep(this.state);
-    newState.dates[i].date = date;
-    this.setState({
-      dates: newState.dates,
-    });
-  };
 
-  //onChange handler of time
-  handleTimeSelect = (date, i) => {
-    let newState = cloneDeep(this.state);
-    newState.dates[i].time = date;
-    this.setState({
-      dates: newState.dates,
-    });
-  };
 
   //submit form handler
   mySubmitHandler = (event) => {
@@ -321,7 +272,7 @@ class CreateJob extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x.date !== ("" || null) ? {date: x.date.toDateString(), time: x.time} : null
+        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time } : null
       );
 
       stringDates = stringDates.filter(Boolean);
@@ -342,6 +293,7 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType
       };
+      console.log(createJobObj)
       createJob(createJobObj, (job) => {
         //reset form to its original state
         this.handleResetJob()
@@ -497,6 +449,13 @@ class CreateJob extends Component {
     });
   }
 
+  setDates = (dates) => {
+    this.setState({
+      dates
+    })
+  }
+
+
   render() {
 
     return (
@@ -512,125 +471,7 @@ class CreateJob extends Component {
                   addNewCustomer={this.addNewCustomer} />
               ) : null}
               {/* date and time */}
-              <hr />
-              <div className={style.DateTimeInput}>
-                {this.state.dates.map((x, i) => {
-                  // if (i === 0) {
-                  return (
-                    <div className={style.mainDate} key={i}>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <Grid>
-                          <KeyboardDatePicker
-                            minDate={new Date()}
-                            inputVariant="outlined"
-                            fullWidth
-                            // margin="normal"
-                            size="small"
-                            id="date-picker-dialog"
-                            format="MM/dd/yyyy"
-                            className={style.styleFormFields}
-                            value={this.state.dates[i].date}
-                            onChange={(e) => this.handleStartDate(e, i)}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-
-                            }}
-                          />
-
-                          <KeyboardTimePicker
-                            // margin="normal"
-                            fullWidth
-                            inputVariant="outlined"
-                            id="time-picker"
-                            size="small"
-                            // className={style.styleFormFields}
-                            // label="Time picker"
-                            value={this.state.dates[i].time}
-                            onChange={(e) => this.handleTimeSelect(e, i)}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change time',
-                            }}
-                          />
-                          {i != 0 ?
-                            <div className={style.centeredIcon}
-                              onClick={() => this.removeDate(i)}>
-                              <FontAwesomeIcon icon={faTrash} />
-                            </div> : null}
-                        </Grid>
-                      </MuiPickersUtilsProvider>
-
-                    </div>
-                  );
-
-                  // } else {
-                  //   return (
-                  //     <div className={style.styleDate}>
-                  //       <div key={i}>
-                  //         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  //           <Grid>
-                  //             <KeyboardDatePicker
-                  //               minDate={new Date()}
-                  //               inputVariant="outlined"
-                  //               fullWidth
-                  //               size="small"
-                  //               id="date-picker-dialog"
-                  //               className={style.styleFormFields}
-                  //               format="MM/dd/yyyy"
-                  //               value={this.state.dates[i]}
-                  //               onChange={(e) => this.handleStartDate(e, i)}
-                  //               KeyboardButtonProps={{
-                  //                 "aria-label": "change date",
-                  //               }}
-                  //             />
-                  //             <KeyboardTimePicker
-                  //             // margin="normal"
-                  //             fullWidth
-                  //             inputVariant="outlined"
-                  //             id="time-picker"
-                  //             size="small"
-                  //             // className={style.styleFormFields}
-                  //             // label="Time picker"
-                  //             // value={selectedDate}
-                  //             onChange={(e) => this.handleTime(e, i)}
-                  //             KeyboardButtonProps={{
-                  //               'aria-label': 'change time',
-                  //             }}
-                  //           />
-                  //           </Grid>
-                  //         </MuiPickersUtilsProvider>
-                  //       </div>
-
-                  //       <div
-                  //         className={style.centeredIcon}
-                  //         onClick={() => this.removeDate(i)}>                         
-                  //         <FontAwesomeIcon icon={faTrash}/>
-                  //       </div>
-                  //     </div>
-                  //   );
-                  // }
-                })}
-                <div onClick={this.addDate} className={`${style.plusIcon} ${style.alignRight}`}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </div>
-              </div>
-              <hr />
-              {/* <div>
-                <TextField
-                  variant="outlined"
-                  required 
-                  className={style.styleFormFields}
-                  size="small"
-                  id="title"
-                  label="Job Title"
-                  name="title"
-                  autoComplete="title"
-                  fullWidth
-                  error={this.state.titleError ? true : false}
-                  value={this.state.title}
-                  onChange={this.handleFormInput}
-                />
-              </div> */}
-
+              <DateAndTime dates={this.state.dates} setDates={this.setDates} />
               <div className={style.styleEditor}>
                 <Editor
                   editorState={this.state.editorState}
@@ -677,37 +518,6 @@ class CreateJob extends Component {
               </div>
 
               <div className={style.propertyTypeRow}>
-                {/* <div>
-                  <Autocomplete
-                    noOptionsText={`Add '${this.state.newProperty}' to property type`}
-                    value={this.state.propertyType}
-                    onChange={(event, newValue) => {
-                      this.propertyChanged(newValue);
-                    }}
-                    limitTags={1}
-                    id="property-tag"
-                    options={
-                      this.state.propertyOptions && this.state.propertyOptions
-                    }
-                    getOptionLabel={(option) =>
-                      option.name ? option.name : option
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        required
-                        onKeyUp={(e) => this.addCustomPropertyType(e)}
-                        {...params}
-                        className={style.styleFormFields}
-                        variant="outlined"
-                        size="small"
-                        label="Property Type"
-                        placeholder="Property Type"
-                        error={this.state.multiError ? true : false}
-                      />
-                    )}
-                  />
-                </div> */}
-
                 <div>
                   <FormControl variant="outlined" margin="dense" fullWidth>
                     <InputLabel id="demo-simple-select-outlined-label">
@@ -769,6 +579,9 @@ class CreateJob extends Component {
                   />
                 </div>
               </div>
+              <hr/>
+              <Truck />
+              <hr/>
               {/* truck size and number */}
               <hr />
               <div className={style.movers}>
@@ -788,9 +601,8 @@ class CreateJob extends Component {
                             label="Truck Size"
                             name="truckSize"
                           >
-
                             <MenuItem value={"None"} disabled>None</MenuItem>
-                            {this.state.truckOptions.map((x, i) => <MenuItem key = {i} value={x}>{x}</MenuItem>)}
+                            {this.state.truckOptions.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
                           </Select>
                         </FormControl>
 

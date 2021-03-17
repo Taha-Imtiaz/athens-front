@@ -60,18 +60,23 @@
   /* or grid-auto-rows: 10vh; */
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listContent .";
+ 
 }
 .listContent {
+  border: none;
+  border-radius: .3rem;
   grid-area: listContent;
   /* background-color: aqua; */
   display: grid;
   /* margin: 2rem 0; */
   grid-template-columns: 100fr;
-
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1rem 0;
+  margin: .5rem 0;
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
   grid-template-areas: "styleLink";
+  transition: var(--transition-one);
 }
 .styleLink {
   grid-area: styleLink;
@@ -86,7 +91,7 @@
   text-decoration: none;
 }
 .listContent:hover .item {
-  color: #fff;
+  color: #000;
 }
 
 .userList {
@@ -99,7 +104,8 @@
 .flex {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 .stylePagination {
   display: grid;
@@ -111,4 +117,11 @@
   display: grid;
   justify-content: flex-end;
   margin: 1rem 0;
+}
+.listTitle{
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+.listDetail{
+  font-weight: bold;
 }

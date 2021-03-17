@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle, faEnvelope, faFemale, faHeadSideCough, faMapMarker, faMapMarkerAlt, faMobile, faMoneyBill, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
+import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 
 const JobDetails = (props) => {
   let { job } = props;
@@ -47,6 +48,9 @@ const JobDetails = (props) => {
   const closeJobConfirmationModal = () => {
     setShowBooking(false)
   }
+  // let truckArr = job.trucks.map((x,i)=>{
+  //   console.log(x.type)
+  // })
   return (
     <div className={style.jobEditContainer}>
       {job ? (
@@ -86,12 +90,12 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                        <div>
-                          <FontAwesomeIcon icon={faUserShield} />{" "}
-                          {`Mover: `}
+                      <div>
+                        <FontAwesomeIcon icon={faUserShield} />{" "}
+                        {`Mover: `}
 
-                          {job.assigneeRequired}</div>
-                      )}
+                        {job.assigneeRequired}</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -138,8 +142,8 @@ const JobDetails = (props) => {
                     i === 0 ? (
                       <span key={i}>{x.date}</span>
                     ) : (
-                        <span key={i}> | {x.date} </span>
-                      )
+                      <span key={i}> | {x.date} </span>
+                    )
                   )}
                 </div>
                 <div className={style.job___IdStatus}>
@@ -167,35 +171,33 @@ const JobDetails = (props) => {
 
             <div className={style.service}>
               <div>
-                <div>{`Service: `}</div>
+                <div><h5>Job Type:</h5></div>
+                <Chip
+                  clickable
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                  label={job.jobType}
+                /></div>
+              <div>
+                <div><h5>Service:</h5></div>
                 {job.services.map((service, i) => (
                   <Chip
                     key={i}
                     size="small"
+                    color="primary"
+                    variant="outlined"
                     label={service.name}
                     clickable
                   />
                 ))}</div>
 
-              <div>
-                <div>{`Job Type: `}</div>
-                <Chip
-                  clickable
-                  size="small"
-                  label={job.jobType}
-                /></div>
-              <div>
-                <div>{`Property Type: `}</div>
-                <Chip
-                  clickable
-                  size="small"
-                  label={job.propertyType}
-                /></div>
+
             </div>
 
             <div className={style.numbers}>
               <div>
-                {`Job Movers: `}
+                <h5>Job Movers:</h5>
                 <Chip
                   clickable
                   color="primary"
@@ -205,7 +207,7 @@ const JobDetails = (props) => {
                 />
               </div>
               <div>
-                {`Price: `}
+                <h5>Price:</h5>
                 <Chip
                   clickable
                   color="primary"
@@ -214,18 +216,38 @@ const JobDetails = (props) => {
                   label={`${job.price} $`}
                 />
               </div>
-              <div>
-                {`Required Trucks: `}
-                <Chip
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                  size="small"
-                  label={job.truck}
-                />
-              </div>
-            </div>
 
+            </div>
+            {/* Trucks */}
+            <div>
+              <h5>Truck Details:</h5>
+              {job.trucks.map((x, i) =>
+                <div className={style.truckSection}>
+                  <div>
+                    {`Type: `}
+                    <Chip
+                      className={style.truckSectionType}
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                      size="small"
+                      label={x.type}
+                    />
+                  </div>
+                  <div>
+                    {`No. Of Trucks: `}
+                    <Chip
+                      className={style.truckSectionNum}
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                      size="small"
+                      label={x.number}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
             <div className={style.jobDescription}>
               <div className={style.jobDescription___title}>
                 {`Job Description: `}
@@ -245,14 +267,32 @@ const JobDetails = (props) => {
                       <div className={style.location}>
                         {`${list.value} (Load Only / IA)`}
                       </div>
+                      <div>
+                        {`Property Type: `}
+                        <Chip
+                          clickable
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          label={list.propertyType}
+                        /></div>
                     </div>
                   ) : (
-                      <div className={style.dropoff} key={i}>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                        <span className="location___type">{`Dropoff: `}</span>
-                        <div className={style.location}>{`${list.value} (Unload Only)`}</div>
-                      </div>
-                    )
+                    <div className={style.dropoff} key={i}>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                      <span className="location___type">{`Dropoff: `}</span>
+                      <div className={style.location}>{`${list.value} (Unload Only)`}</div>
+                      <div>
+                        {`Property Type: `}
+                        <Chip
+                          clickable
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          label={list.propertyType}
+                        /></div>
+                    </div>
+                  )
                 )}
               </div>
             )}

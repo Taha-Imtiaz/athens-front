@@ -35,6 +35,7 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
+import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 
 class UpdateJob extends Component {
   //defining state
@@ -43,7 +44,7 @@ class UpdateJob extends Component {
     assignee: [],
     assigneeList: [],
     startDate: "",
-    dates: [""],
+    dates: [],
     endDate: "",
     startTime: "",
     meetTime: "",
@@ -86,15 +87,15 @@ class UpdateJob extends Component {
       { id: 7, name: "Outdoor Storage" },
       { id: 8, name: "Town House" },
       { id: 9, name: "Apartment" }
-  ],
-  truckOptions: [
+    ],
+    truckOptions: [
       "Pickup Truck",
       "Cargo Van",
       "15 ft truck",
       "17 ft truck",
       "20 ft truck",
       "26 ft truck"
-  ]
+    ]
   };
 
 
@@ -194,7 +195,12 @@ class UpdateJob extends Component {
       return { id: index + 1, name: service };
     });
 
-    let parsedDates = job.dates.map((x) => Date.parse(x));
+    let parsedDates = job.dates.map((x) => {
+      return {
+        date: Date.parse(x.date),
+        time: x.time
+      }
+    });
     this.setState({
       job: job,
       title: job.title,
@@ -262,26 +268,13 @@ class UpdateJob extends Component {
     let trucks = cloneDeep(this.state.trucks);
     let value = e.target.value;
     trucks[i][inputType] = value;
-    if(inputType == 'type') {
+    if (inputType == 'type') {
       trucks[i].number = 1;
     }
     this.setState({
       trucks
     });
   }
-  /*
-   handleTrucksInput = (e, i, inputType) => {
-    let trucks = cloneDeep(this.state.trucks);
-    let value = e.target.value;
-    trucks[i][inputType] = value;
-    if(inputType == 'type') {
-      trucks[i].number = 1;
-    }
-    this.setState({
-      trucks
-    });
-  }
-  */
   //close note modal
   handleClose = (notes) => {
     this.setState({
@@ -354,10 +347,10 @@ class UpdateJob extends Component {
       history,
     } = this.props;
     let stringDates = dates.map((x) => {
-      if (typeof x === "number") {
-        return new Date(x).toDateString();
+      if (typeof x.date === "number") {
+        return { date: new Date(x.date).toDateString(), time: x.time };
       } else {
-        return x.toDateString();
+        return { date: x.date.toDateString(), time: x.time };
       }
     });
 
@@ -412,22 +405,6 @@ class UpdateJob extends Component {
       locations: location
     })
   }
-
-
-  //add date on Clicking plus icon
-  addDate = () => {
-    if (this.state.dates[0]) {
-      this.setState({ dates: [...this.state.dates, new Date()] });
-    }
-  };
-  //remove date upon clicking remove icon
-  removeDate = (i) => {
-    let datesArr = cloneDeep(this.state.dates);
-    datesArr.splice(i, 1);
-    this.setState({
-      dates: datesArr,
-    });
-  };
   //onChange handler of services
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "id");
@@ -506,19 +483,15 @@ class UpdateJob extends Component {
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
   };
-  handleTimeChange = (time) => {
+
+  setDates = (dates) => {
     this.setState({
-      startTime: time
+      dates
     })
   }
 
-  handleLocationChange = (locations) => {
-    this.setState({
-      locations
-    });
-  }
-
   render() {
+    console.log(this.state.dates)
     let {
       note,
       show,
@@ -546,108 +519,8 @@ class UpdateJob extends Component {
                 disabled
               />
             </div>
-            <hr />
             {/* date and time  */}
-            <div className={style.DateTimeInput}>
-              {this.state.dates.map((x, i) => {
-                // if (i === 0) {
-                return (
-                  <div className={style.mainDate} key={i}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid>
-                        <KeyboardDatePicker
-                          minDate={new Date()}
-                          inputVariant="outlined"
-                          size="small"
-                          fullWidth
-                          className={style.styleFormFields}
-                          id="date-picker-dialog"
-                          format="MM/dd/yyyy"
-                          value={this.state.dates[i].date}
-                          onChange={(e) => this.handleDateChange(e, i)}
-                          KeyboardButtonProps={{
-                            "aria-label": "change date",
-                          }}
-                        />
-                        <KeyboardTimePicker
-                          // margin="normal"
-                          fullWidth
-                          inputVariant="outlined"
-                          id="time-picker"
-                          size="small"
-                          // className={style.styleFormFields}
-                          // label="Time picker"
-                          value={this.state.dates[i].time}
-                          onChange={(e) => this.handleTimeSelect(e, i)}
-                          KeyboardButtonProps={{
-                            'aria-label': 'change time',
-                          }}
-                        />
-                        {i != 0 ?
-                          <div className={style.centeredIcon}
-                            onClick={() => this.removeDate(i)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </div> : null}
-                      </Grid>
-                    </MuiPickersUtilsProvider>
-                  </div>
-                );
-                // } else {
-                //   return (
-                //     <div className={style.styleDate} key={i}>
-
-                //       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                //         <Grid>
-                //           <KeyboardDatePicker
-                //             minDate={new Date()}
-                //             inputVariant="outlined"
-                //             size="small"
-                //             fullWidth
-                //             id="date-picker-dialog"
-                //             format="MM/dd/yyyy"
-                //             value={this.state.dates[i]}
-                //             onChange={(e) => this.handleDateChange(e, i)}
-                //             KeyboardButtonProps={{
-                //               "aria-label": "change date",
-                //             }}
-                //           />
-                //         </Grid>
-                //       </MuiPickersUtilsProvider>
-
-                //       <div
-                //         className={style.centeredIcon}
-                //         onClick={() => this.removeDate(i)}
-                //       >
-                //         <FontAwesomeIcon icon={faTrash} />
-                //       </div>
-                //     </div>
-                //   );
-                // }
-              })
-              }
-              <div className={style.alignRight} onClick={this.addDate}>
-                <i className="fa fa-plus"></i>
-              </div>
-            </div>
-            <hr />
-            {/* <div>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                className={style.styleFormFields}
-                size="small"
-                id="title"
-                label="Job Title"
-                name="title"
-                autoComplete="title"
-                autoFocus
-                value={this.state.title}
-                onChange={this.handleFormInput}
-                error={this.state.titleError ? true : false}
-              />
-            </div>
-           */}
+            {this.state.dates.length > 0 && <DateAndTime dates={this.state.dates} setDates={this.setDates} />}
             <div className={style.styleEditor}>
               <Editor
                 editorState={this.state.editorState}
@@ -684,7 +557,7 @@ class UpdateJob extends Component {
                       onKeyUp={(e) => this.addCustomService(e)}
                       {...params}
                       variant="outlined"
-                      
+
                       fullWidth
                       className={style.styleFormFields}
                       label="Services"
@@ -696,22 +569,6 @@ class UpdateJob extends Component {
             </div>
 
             <div className={style.propertyTypeRow}>
-              {/* <div>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container justify="space-around">
-                    <KeyboardTimePicker
-                      id="startTime"
-                      value={this.state.startTime}
-                      onChange={this.handleTimeChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change time',
-                      }}
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
-              </div> */}
-
-
               <div>
                 <FormControl variant="outlined" margin="dense" fullWidth>
                   <InputLabel id="demo-simple-select-outlined-label">
@@ -790,16 +647,16 @@ class UpdateJob extends Component {
                           id="demo-simple-select-outlined"
                           value={this.state.trucks[i].type}
                           onChange={(e) => this.handleTrucksInput(e, i, 'type')}
-                          label="Truck Typr"
+                          label="Truck Type"
                           name="truckSize"
                         >
 
                           <MenuItem value={"None"} disabled>None</MenuItem>
-                          {this.state.truckOptions.map((x, i) => <MenuItem key = {i} value={x}>{x}</MenuItem>)}
-                          
+                          {this.state.truckOptions.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
+
                         </Select>
                       </FormControl>
-                    
+
                       <TextField
                         type="number"
                         variant="outlined"

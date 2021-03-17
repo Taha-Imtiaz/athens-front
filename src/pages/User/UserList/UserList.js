@@ -124,13 +124,13 @@ const UserList = (props) => {
           </div>
           {docs && docs.length > 0 ? (
             <div>
-              <div className={style.jumbotron}>
+              {/* <div className={style.jumbotron}>
                 <div className={style.listheader}>
                   <div>Name</div>
                   <div>Attribute</div>
                   <div>Address</div>
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 {docs.map((usersDoc, i) => {
@@ -145,13 +145,16 @@ const UserList = (props) => {
                         <div className={style.userList}>
                         
                           <div className={`${style.item} ${style.flex}`}>
-                            {usersDoc.name}
+                            <div className={`text-muted ${style.listTitle}`}>Name:</div>
+                            <div className={style.listDetail}>{usersDoc.name}</div>
                           </div>
                           <div className={`${style.item} ${style.flex}`}>
-                            {usersDoc.attribute}
+                          <div className={`text-muted ${style.listTitle}`}>Attribute:</div>
+                            <div className={style.listDetail}>{usersDoc.attribute}</div>
                           </div>
                           <div className={`${style.item} ${style.flex}`}>
-                            {usersDoc.address}
+                          <div className={`text-muted ${style.listTitle}`}>Address:</div>
+                            <div className={style.listDetail}>{usersDoc.address}</div>
                           </div>
                         </div>
                         </Link>

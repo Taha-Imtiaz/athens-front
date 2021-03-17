@@ -1,0 +1,36 @@
+.DateAndTime{
+    
+}
+.DateTimeInput{
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .mainDate{
+    flex-grow: 1;
+  }
+  .styleFormFields {
+    margin: 0.5rem 0 !important;
+  }
+  .mainDate > div {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .centeredIcon {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 0 !important;
+    align-items: center;
+    color: tomato;
+  }
+  .alignRight {
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+  }
+  .plusIcon{
+    border: none;
+    margin-bottom: .5rem;
+    justify-content: flex-end;
+}

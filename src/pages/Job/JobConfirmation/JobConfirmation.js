@@ -28,6 +28,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AddLocation from "../../../components/AddLocation/AddLocation";
+import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 
 //material-ui styles
 const useStyles = makeStyles((theme) => ({
@@ -287,80 +288,7 @@ function JobConfirmation(props) {
       case 0:
         return (
           <form>
-            <div className={style.dateContainer}>
-              <div className={style.dateHeader}>
-                <h6>Dates:</h6>
-              </div>
-              <div className={style.flexDates}>
-                {data && data.dates &&
-                  data.dates.map((x, i) => {
-                    return (
-                      <div className={`${style.styleDate}`} key={i}>
-                        <div className={`${style.dates} `}>
-                          <div>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                              <Grid>
-                                <KeyboardDatePicker
-                                  minDate={new Date()}
-                                  inputVariant="outlined"
-                                  className={style.styleFormFields}
-                                  size="small"
-                                  fullWidth
-                                  id="date-picker-dialog"
-                                  format="MM/dd/yyyy"
-                                  value={data.dates[i]}
-                                  onChange={(e) => handleStartDate(e, i)}
-                                  KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                  }}
-                                />
-                              </Grid>
-                            </MuiPickersUtilsProvider>
-                          </div>
-                          <div className={style.flex}>
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={() => removeDate(i)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-              <div className={style.addDateBtn}>
-                <Button onClick={addDate} className={style.button}>
-                  {" "}
-                  <i className="fa fa-plus"></i>
-                  Add Date
-                </Button>
-              </div>
-            </div>
-            <hr />
-            <div className={style.time}>
-              <div className={style.timeHeader}>
-                <h6>Time:</h6>
-              </div>
-              <div>
-                {data && data.dates && (
-                  <div>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <Grid>
-                        <KeyboardTimePicker
-                          id="time-picker"
-                          value={data.startTime}
-                          onChange={handleTimeSelect}
-                          KeyboardButtonProps={{
-                            "aria-label": "change time",
-                          }}
-                          keyboardIcon={<AccessTimeIcon />}
-                        />
-                      </Grid>
-                    </MuiPickersUtilsProvider>
-                  </div>
-                )}
-              </div>
-            </div>
+            {data ? <DateAndTime dates={data.dates} /> : null}
           </form>
         );
       case 1:
@@ -568,27 +496,27 @@ function JobConfirmation(props) {
           </Button>
         </div>
       ) : (
-          <div className={style.stepperContent}>
-            <div>{getStepContent(activeStep)}</div>
-            <div className={style.backAndSubmitBtn}>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={
-                  activeStep === 0
-                    ? style.back
-                    : `${style.back} ${style.backStyles}`
-                }
-              >
-                Back
+        <div className={style.stepperContent}>
+          <div>{getStepContent(activeStep)}</div>
+          <div className={style.backAndSubmitBtn}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={
+                activeStep === 0
+                  ? style.back
+                  : `${style.back} ${style.backStyles}`
+              }
+            >
+              Back
             </Button>
 
-              <Button onClick={handleNext} className={style.next}>
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
+            <Button onClick={handleNext} className={style.next}>
+              {activeStep === steps.length - 1 ? "Submit" : "Next"}
+            </Button>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 }

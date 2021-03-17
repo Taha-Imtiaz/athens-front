@@ -125,17 +125,20 @@ display:flex;
 justify-content: flex-end;
 gap: 1rem;
 }
-.service, .numbers{
+.service, .numbers, .truckSection {
 padding: .5rem; 
-display: flex;
-  justify-content: flex-start;
-  gap: 2.5rem;
-  align-items: center;
-margin-bottom: .5rem;  
+  display: grid;
+  grid-template-columns: 25fr 75fr;
 }
-.service > *, .numbers >*{
+.service > *, .numbers >*, .truckSection>*, .propertySection >*{
   font-weight: 500;
 }
+.propertySection{
+padding: .5rem;
+  display: grid;
+grid-template-columns: 17fr 23fr 60fr;
+}
+
 .jobDescription, .notes{
   margin-bottom: 1rem; /*this margin is just for demo*/
 }
@@ -160,6 +163,7 @@ background: transparent;
 border: none;
   padding: .5rem;
 }
+
 .location {
   display: grid;
   grid-template-columns: 1fr;
@@ -174,3 +178,15 @@ border: none;
 .pickup{
   padding: .5rem;
 }
+/* .truckSection{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "type number .";
+  padding: .5rem;
+}
+.truckSectionType{
+  grid-area : type;
+}
+.truckSectionNum{
+  grid-area: number;
+} */

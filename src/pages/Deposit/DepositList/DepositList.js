@@ -100,7 +100,6 @@ const DepositList = (props) => {
           ) : blanketDeposit && blanketDeposit.length > 0 ? <div>
              <Blankets
                items={blanketDeposit}
-                
                 deleteDeposit={removeBlanketDeposit}
                 openDeleteModal={openDeleteModal}
                 deleteModal={deleteModal}
@@ -124,7 +123,7 @@ var actions = {
 };
 
 var mapStateToProps = (state) => ({
-  blanketDeposit: state.blankets,
+  blanketDeposit: state.blankets.depositList,
 });
 
 export default connect(mapStateToProps, actions)(DepositList);

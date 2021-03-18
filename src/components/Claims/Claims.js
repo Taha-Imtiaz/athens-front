@@ -29,7 +29,7 @@ const Claims = (props) => {
 
   return (
     <div>
-      <div className={style.claimListHeaderContainer}>
+      {/* <div className={style.claimListHeaderContainer}>
         <div className={style.claimListHeader}>
           <div>Customer</div>
           <div>Job Id</div>
@@ -38,7 +38,7 @@ const Claims = (props) => {
           <div>Last Update</div>
           {user && user.role === "admin" && <div>Actions</div>}
         </div>
-      </div>
+      </div> */}
       <div>
         {
           items.map((x, i) => {
@@ -56,20 +56,29 @@ const Claims = (props) => {
                     {" "}
                     <div className={style.claimList}>
                       <div className={`${style.item} ${style.center}`}>
-                        {x.customer.firstName} {x.customer.lastName}
+                        <div className={`text-muted ${style.title}`}>{`Name:`}</div>
+                        <div className={`text-capitalize ${style.text}`}>{x.customer.firstName} {x.customer.lastName}</div>
+                        
                       </div>
                       <div className={`${style.item} ${style.center}`}>
-                      {x.job && x.job.jobId}
+                        <div className={`text-muted ${style.title}`}>{`Job ID:`}</div>
+                        <div className={`text-capitalize ${style.text}`}>{x.job && x.job.jobId}</div>
+                      
                       </div>
                       <div className={`${style.item} ${style.center}`}>
-                        {x.status.toLocaleUpperCase()}
+                        <div  className={`text-muted ${style.title}`}>{`Status:`}</div>
+                        <div className={`text-capitalize ${style.text}`}>{x.status.toLocaleUpperCase()}</div>
+                        
                       </div>
                       <div className={`${style.item} ${style.center}`}>
-                        {x.waitTo}
+                        <div className={`text-muted ${style.title}`}>{`Waiting To:`}</div>
+                        <div className={`text-capitalize ${style.text}`}>{x.waitTo}</div>
+                        
                       </div>
 
                       <div className={`${style.item} ${style.center}`}>
-                        {x.updates.length > 0 ? (
+                        <div className={`text-muted ${style.title}`}>{`Last Updates`}</div>
+                        <div className={`text-capitalize ${style.text}`}>{x.updates.length > 0 ? (
                           <div>
                             {<TimeAgo date={x.updates[0].timestamp} />}
                           </div>
@@ -78,13 +87,15 @@ const Claims = (props) => {
                               <TimeAgo date={x.createdAt} />
                             </div>
                           )}
+                          </div>
+                        
                       </div>
                     </div>
                   </Link>
 
                   {user && user.role === "admin" && (
                     <div className={`${style.center} ${style.actions}`}>
-                      <Button onClick={() => handleShow(x._id)}>
+                      <Button className={style.deleteBtn} onClick={() => handleShow(x._id)}>
                         Delete
                 </Button>
                     </div>

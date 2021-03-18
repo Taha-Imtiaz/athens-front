@@ -36,6 +36,7 @@ import htmlToDraft from "html-to-draftjs";
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import DateAndTime from "../../../components/DateAndTime/DateAndTime";
+import Truck from "../../../components/Truck/Truck";
 
 class UpdateJob extends Component {
   //defining state
@@ -66,7 +67,7 @@ class UpdateJob extends Component {
     assigneeRequired: "",
     newService: "",
     price: '',
-    trucks: [{ type: "", number: "" }],
+    trucks: [],
     // truck: '',
     // truckSize: 'None',
     serviceOptions: [
@@ -225,6 +226,7 @@ class UpdateJob extends Component {
       price: job.price,
       truck: job.truck,
       truckSize: job.truckSize,
+      trucks:job.trucks,
       newService: "",
       newProperty: "",
     });
@@ -236,21 +238,6 @@ class UpdateJob extends Component {
     });
   };
 
-  // add new truck
-  addTruck = () => {
-    if (this.state.trucks[0].type && this.state.trucks[0].number) {
-      console.log(this.state.trucks)
-      this.setState({ trucks: [...this.state.trucks, { type: "", number: "" }] });
-    }
-  };
-  // remove truck
-  removeTruck = (i) => {
-    let truckArr = cloneDeep(this.state.trucks);
-    truckArr.splice(i, 1);
-    this.setState({
-      trucks: truckArr,
-    });
-  };
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
@@ -263,18 +250,6 @@ class UpdateJob extends Component {
     }
   };
 
-  // Handle trucks input change
-  handleTrucksInput = (e, i, inputType) => {
-    let trucks = cloneDeep(this.state.trucks);
-    let value = e.target.value;
-    trucks[i][inputType] = value;
-    if (inputType == 'type') {
-      trucks[i].number = 1;
-    }
-    this.setState({
-      trucks
-    });
-  }
   //close note modal
   handleClose = (notes) => {
     this.setState({
@@ -337,7 +312,8 @@ class UpdateJob extends Component {
       propertyType,
       price,
       truck,
-      truckSize
+      truckSize,
+      trucks
     } = this.state;
 
     let {
@@ -371,11 +347,13 @@ class UpdateJob extends Component {
       propertyType,
       price,
       truck,
-      truckSize
+      truckSize,
+      trucks
     };
     //check if the fields are empty
     if (this.handleValidation()) {
       //update job
+      // console.log(updatedObj)
       updateJob(jobId, updatedObj, (res) => history.push("/job/detail/" + jobId))
     }
   };
@@ -489,6 +467,11 @@ class UpdateJob extends Component {
       dates
     })
   }
+  setTrucks = (trucks) => {
+    this.setState({
+      trucks
+    })
+  }
 
   render() {
     console.log(this.state.dates)
@@ -521,6 +504,7 @@ class UpdateJob extends Component {
             </div>
             {/* date and time  */}
             {this.state.dates.length > 0 && <DateAndTime dates={this.state.dates} setDates={this.setDates} />}
+            
             <div className={style.styleEditor}>
               <Editor
                 editorState={this.state.editorState}
@@ -632,62 +616,9 @@ class UpdateJob extends Component {
                 />
               </div>
             </div>
-            <hr />
-            <div className={style.movers}>
-              {this.state.trucks.map((x, i) => {
-                return (
-                  <div className={style.moversChild} key={i}>
-                    <div>
-                      <FormControl variant="outlined" margin="dense" fullWidth>
-                        <InputLabel id="demo-simple-select-outlined-label">
-                          Truck Type
-                    </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          id="demo-simple-select-outlined"
-                          value={this.state.trucks[i].type}
-                          onChange={(e) => this.handleTrucksInput(e, i, 'type')}
-                          label="Truck Type"
-                          name="truckSize"
-                        >
-
-                          <MenuItem value={"None"} disabled>None</MenuItem>
-                          {this.state.truckOptions.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
-
-                        </Select>
-                      </FormControl>
-
-                      <TextField
-                        type="number"
-                        variant="outlined"
-                        margin="dense"
-                        // required
-                        className={style.styleFormFields}
-                        fullWidth
-                        size="small"
-                        id="truck"
-                        label="No. Of Trucks"
-                        // autoComplete="Enter Number Of Trucks"
-                        name="truck"
-                        value={this.state.trucks[i].number}
-                        // error={this.state.assigneeRequiredError ? true : false}
-                        onChange={(e) => this.handleTrucksInput(e, i, 'number')}
-                      />
-                      {i != 0 ?
-                        <div className={style.centeredIcon}
-                          onClick={() => this.removeTruck(i)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </div> : null}
-                    </div>
-                  </div>
-                );
-              })}
-              <div onClick={this.addTruck} className={`${style.plusIcon} ${style.alignRight}`}>
-                <FontAwesomeIcon icon={faPlus} />
-              </div>
-
-            </div>
-            <hr />
+            {/* Truck Component */}
+            {this.state.trucks.length > 0 && <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />}
+           
             {
               this.state.locations && <div>
                 {this.state.locations.length === 0 && (

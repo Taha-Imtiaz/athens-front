@@ -147,34 +147,7 @@ class CreateJob extends Component {
       locations: location,
     });
   };
-  // add new truck
-  addTruck = () => {
-    if (this.state.trucks[0].type && this.state.trucks[0].number) {
-      console.log(this.state.trucks)
-      this.setState({ trucks: [...this.state.trucks, { type: "", number: "" }] });
-    }
-  };
-  // remove truck
-  removeTruck = (i) => {
-    let truckArr = cloneDeep(this.state.trucks);
-    truckArr.splice(i, 1);
-    this.setState({
-      trucks: truckArr,
-    });
-  };
 
-  // Handle trucks input change
-  handleTrucksInput = (e, i, inputType) => {
-    let trucks = cloneDeep(this.state.trucks);
-    let value = e.target.value;
-    trucks[i][inputType] = value;
-    if (inputType == 'type') {
-      trucks[i].number = 1;
-    }
-    this.setState({
-      trucks
-    });
-  }
   //onChange handler of forms
   handleFormInput = (event) => {
     let { name, value } = event.target;
@@ -293,12 +266,14 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType
       };
-      console.log(createJobObj)
+      // console.log(createJobObj)
+      // Submit Form API
       createJob(createJobObj, (job) => {
         //reset form to its original state
         this.handleResetJob()
         history.push("/job/detail/" + job.data.data._id);
       });
+      // Submit Form API
     }
   };
   //services changed
@@ -455,6 +430,12 @@ class CreateJob extends Component {
     })
   }
 
+  setTrucks = (trucks) => {
+    this.setState({
+      trucks
+    })
+  }
+
 
   render() {
 
@@ -472,6 +453,7 @@ class CreateJob extends Component {
               ) : null}
               {/* date and time */}
               <DateAndTime dates={this.state.dates} setDates={this.setDates} />
+              
               <div className={style.styleEditor}>
                 <Editor
                   editorState={this.state.editorState}
@@ -579,64 +561,9 @@ class CreateJob extends Component {
                   />
                 </div>
               </div>
-              <hr/>
-              <Truck />
-              <hr/>
               {/* truck size and number */}
-              <hr />
-              <div className={style.movers}>
-                {this.state.trucks.map((x, i) => {
-                  return (
-                    <div className={style.moversChild} key={i}>
-                      <div>
-                        <FormControl variant="outlined" margin="dense" fullWidth>
-                          <InputLabel id="demo-simple-select-outlined-label">
-                            Truck Type
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={this.state.trucks[i].type}
-                            onChange={(e) => this.handleTrucksInput(e, i, 'type')}
-                            label="Truck Size"
-                            name="truckSize"
-                          >
-                            <MenuItem value={"None"} disabled>None</MenuItem>
-                            {this.state.truckOptions.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
-                          </Select>
-                        </FormControl>
-
-                        <TextField
-                          type="number"
-                          variant="outlined"
-                          margin="dense"
-                          // required
-                          fullWidth
-                          size="small"
-                          id="truck"
-                          label="No. of Trucks"
-                          autoComplete="Trucks"
-                          name="truck"
-                          value={this.state.trucks[i].number}
-                          className={style.styleFormFields}
-                          // error={this.state.assigneeRequiredError ? true : false}
-                          onChange={(e) => this.handleTrucksInput(e, i, 'number')}
-                        />
-
-                        {i != 0 ?
-                          <div className={style.centeredIcon}
-                            onClick={() => this.removeTruck(i)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </div> : null}</div>
-                    </div>
-                  );
-                })}
-                <div onClick={this.addTruck} className={`${style.plusIcon} ${style.alignRight}`}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </div>
-              </div>
-              <hr />
-
+              <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
+              
               {this.state.locations.length === 0 && (
                 <div className={style.addLocation}>
                   <div className={style.addLocationBtn}>

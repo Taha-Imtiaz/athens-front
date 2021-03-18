@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
-import { EDIT_DEPOSIT, GET_ALL_DEPOSITS } from "./DepositConstants";
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS, GET_DEPOSIT } from "./DepositConstants";
 
 export const getDeposits = (body) => {
   return async (dispatch) => {
@@ -10,6 +10,22 @@ export const getDeposits = (body) => {
       });
       dispatch({
         type: GET_ALL_DEPOSITS,
+        payload: response.data.data,
+      });
+    } catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  };
+};
+
+export const getDeposit = (id) => {
+  return async (dispatch) => {
+    try {
+      let response = await Axios.get(`deposit/${id}`, {
+        config: { handlerEnabled: true },
+      });
+      dispatch({
+        type: GET_DEPOSIT,
         payload: response.data.data,
       });
     } catch (err) {
@@ -61,7 +77,7 @@ export const deleteBlanketDeposit = (id, currentPage) => {
 export const updateDeposit = (data) => {
   return async (dispatch) => {
     try {
-      let response = await Axios.put(`deposit`, data,  {
+      let response = await Axios.put(`deposit`, data, {
         config: { handlerEnabled: true }
       });
       dispatch(showMessage(response.data.message));

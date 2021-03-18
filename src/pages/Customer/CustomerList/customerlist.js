@@ -13,6 +13,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 import Button from "@material-ui/core/Button";
 import { Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+import BackButton from "../../../components/BackButton/BackButton";
 
 const CustomerList = (props) => {
   //defining variables
@@ -209,6 +210,7 @@ const CustomerList = (props) => {
 
   return (
     <div>
+      {/* <BackButton/> */}
       <div>
         <div className={`${style.toprow}`}>
           <div className={style.rowContent}>

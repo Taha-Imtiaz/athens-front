@@ -52,6 +52,7 @@ import CreateClaim from "./pages/Claim/CreateClaim/CreateClaim";
 /* Deposit */
 import DepositList from "./pages/Deposit/DepositList/DepositList";
 import CreateDeposit from "./pages/Deposit/CreateDeposit/CreateDeposit";
+import DepositDetails from "./pages/Deposit/DepositDetails/DepositDetails"
 
 /* Mover */
 import MoversJobList from "./pages/Mover/JobList/JobList";
@@ -60,6 +61,8 @@ import Payment from "./pages/Mover/Payment/Payment";
 import MoversCalendar from "./pages/Mover/MoverCalendar/MoverCalendar";
 import Availability from "./pages/Mover/Availability/Availability";
 import RequestHolidays from "./pages/Mover/HolidayCalendar/HolidayCalendar";
+import BackButton from "./components/BackButton/BackButton";
+
 
 
 function App(props) {
@@ -84,6 +87,7 @@ function App(props) {
       ) : null}
       <div className="navigation-menu">
         <Navbar />
+        <BackButton/>
       </div>
       <div
         className={
@@ -148,6 +152,10 @@ function App(props) {
 
             {/* Deposit */}
             <PrivateRoute path="/deposits" exact component={DepositList} />
+            <PrivateRoute
+              path="/deposit/detail/:depositId"
+              component={DepositDetails}
+            />
             <PrivateRoute path="/deposit/add" component={CreateDeposit} />
 
             {/* Mover */}

@@ -70,6 +70,9 @@
     padding: .5rem;
     font-weight: 500;
 }
+.cardBodyContainerThree{
+  padding: .5rem;
+}
 .jobDetails {
   grid-area: jobDetails;
   display: grid;
@@ -145,7 +148,7 @@ text-transform: capitalize;
   row-gap: 1.5rem;
 }
 .locations > * span{
-  font-weight: 800;
+  font-weight: bold;
 }
 .location {
   display: grid;

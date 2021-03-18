@@ -1,3 +1,3 @@
 export const GET_ALL_DEPOSITS = "GET_ALL_DEPOSITS";
+export const GET_DEPOSIT = "GET_DEPOSIT";
 export const EDIT_DEPOSIT = "EDIT_DEPOSIT";
-

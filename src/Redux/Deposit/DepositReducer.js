@@ -1,16 +1,22 @@
-import { EDIT_DEPOSIT, GET_ALL_DEPOSITS} from "./DepositConstants"
+import { EDIT_DEPOSIT, GET_ALL_DEPOSITS, GET_DEPOSIT } from "./DepositConstants"
 
-let initialState = null
+let initialState = {
+    depositList: [],
+    deposit: null
+}
 
 const depositReducer = (state = initialState, action) => {
     let { type, payload } = action
     switch (type) {
         case GET_ALL_DEPOSITS:
-            return { ...payload }
+            return { ...state, depositList: payload }
+
+        case GET_DEPOSIT:
+            return { ...state, deposit: payload }
 
         case EDIT_DEPOSIT:
-            return { ...state, ...payload }
-          
+            return { ...state, depositList: payload }
+
 
 
         default:

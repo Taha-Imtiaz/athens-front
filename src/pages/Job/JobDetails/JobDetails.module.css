@@ -167,10 +167,10 @@ border: none;
 .location {
   display: grid;
   grid-template-columns: 1fr;
-  font-size: .8rem;
+  /* font-size: .8rem; */
 }
-.location___type{
-  font-weight: 500;
+.locationType{
+  font-weight: bold
 }
 .dropoff{
   padding: .5rem;

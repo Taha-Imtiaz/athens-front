@@ -29,9 +29,9 @@
 .btn .button:hover {
   background-color: #00adee;
 }
-.blanketContainer {
+/* .blanketContainer {
   padding-top: 1rem;
-}
+} */
 .stylePagination {
   display: grid;
   grid-template-columns: 1fr;

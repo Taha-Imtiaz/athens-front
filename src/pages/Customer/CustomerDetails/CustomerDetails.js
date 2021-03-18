@@ -380,7 +380,7 @@ const CustomerDetails = (props) => {
 
                               <div className={style.cardBodyContainerTwo}>
                                 <div>
-                                  <h5>Job Movers:</h5>
+                                  <h5>Movers Required:</h5>
                                   <Chip
                                     clickable
                                     color="primary"
@@ -401,7 +401,7 @@ const CustomerDetails = (props) => {
                                 </div>
 
                               </div>
-                              <div>
+                              <div className={style.cardBodyContainerThree}>
                                 <h5>Truck Details</h5>
                                 {job.trucks.map((x, i) =>
                                   <div className={style.truckSection}>
@@ -430,10 +430,11 @@ const CustomerDetails = (props) => {
                                 )}
 
                               </div>
-                              <div>
+                              <div className={style.cardBodyContainerThree}>
+                                <h5>Assignees:</h5>
                                 {job.assignee.length > 0 ? (
                                   <div >
-                                    <h5>Assignees:</h5>
+
                                     {job.assignee.map((assignee, i) =>
                                       i === 0 ? (
                                         <span key={i} className={style.jobAssignee}>
@@ -448,7 +449,9 @@ const CustomerDetails = (props) => {
                                     )}
                                   </div>
                                 ) : (
-                                  <div>No Assignee</div>
+
+                                  <div>
+                                    {`Not Assigned`}</div>
                                 )}
                               </div>
                               {/* show job Description */}
@@ -468,7 +471,7 @@ const CustomerDetails = (props) => {
                                         <div className={style.location}>
                                           {`${list.value} (Load Only / IA)`}
                                         </div>
-                                        <div>
+                                        <div className="text-muted">
                                           {`Property Type: `}
                                           <Chip
                                             clickable
@@ -485,7 +488,7 @@ const CustomerDetails = (props) => {
                                         <div className={style.location}>
                                           {`${list.value} (Unload Only)`}
                                         </div>
-                                        <div>
+                                        <div className="text-muted">
                                           {`Property Type: `}
                                           <Chip
                                             clickable

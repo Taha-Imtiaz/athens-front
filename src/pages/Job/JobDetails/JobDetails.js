@@ -86,15 +86,13 @@ const JobDetails = (props) => {
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
                         <div key={i} className={style.assigneehead}>
+                         <FontAwesomeIcon icon={faUserShield} />
                           <li> {assignee.name}</li>
                         </div>
                       ))
                     ) : (
                       <div>
-                        <FontAwesomeIcon icon={faUserShield} />{" "}
-                        {`Mover: `}
-
-                        {job.assigneeRequired}</div>
+                        {`Not Assigned`}</div>
                     )}
                   </div>
                 </div>
@@ -197,7 +195,7 @@ const JobDetails = (props) => {
 
             <div className={style.numbers}>
               <div>
-                <h5>Job Movers:</h5>
+                <h5>Movers Required:</h5>
                 <Chip
                   clickable
                   color="primary"
@@ -263,11 +261,11 @@ const JobDetails = (props) => {
                   list.type === "pickup" ? (
                     <div className={style.pickup} key={i}>
                       <FontAwesomeIcon icon={faMapMarker} />{" "}
-                      <span className="location___type">{`Pickup: `} </span>{" "}
+                      <span className={style.locationType}>{`Pickup: `} </span>{" "}
                       <div className={style.location}>
                         {`${list.value} (Load Only / IA)`}
                       </div>
-                      <div>
+                      <div className="text-muted">
                         {`Property Type: `}
                         <Chip
                           clickable
@@ -280,9 +278,9 @@ const JobDetails = (props) => {
                   ) : (
                     <div className={style.dropoff} key={i}>
                       <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                      <span className="location___type">{`Dropoff: `}</span>
+                      <span className={style.locationType}>{`Dropoff: `}</span>
                       <div className={style.location}>{`${list.value} (Unload Only)`}</div>
-                      <div>
+                      <div className="text-muted">
                         {`Property Type: `}
                         <Chip
                           clickable

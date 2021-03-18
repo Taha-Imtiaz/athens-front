@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import style from "./Truck.module.css";
-import { cloneDeep, uniqBy } from "lodash";
+import { cloneDeep } from "lodash";
 import FormControl from "@material-ui/core/FormControl";
 import {
     InputLabel,
@@ -8,50 +8,52 @@ import {
     Button,
     Select,
     TextField,
-  } from "@material-ui/core";
-  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-  import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+} from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Truck = () => {
+const Truck = (props) => {
 
     // truck options initial state
     const truckOptions = ["Pickup Truck", "Cargo Van", "15 ft truck", "17 ft truck", "20 ft truck", "26 ft truck"]
     const [truckOption, setTruckOption] = useState(truckOptions)
+    const [trucks, setTrucks] = useState(props.trucks)
 
     // add new truck
     const addTruck = () => {
-        if (this.state.trucks[0].type && this.state.trucks[0].number) {
-            console.log(this.state.trucks)
-            this.setState({ trucks: [...this.state.trucks, { type: "", number: "" }] });
+        if (trucks[0].type && trucks[0].number) {
+            console.log(trucks)
+            setTrucks([...trucks, { type: "", number: "" }]);
+            props.setTrucks([...trucks, { type: "", number: "" }])
         }
     };
     // remove truck
     const removeTruck = (i) => {
-        let truckArr = cloneDeep(this.state.trucks);
+        let truckArr = cloneDeep(trucks);
         truckArr.splice(i, 1);
-        this.setState({
-            trucks: truckArr,
-        });
+        setTrucks(trucks);
+        props.setTrucks(trucks)
     };
 
     // Handle trucks input change
-   const handleTrucksInput = (e, i, inputType) => {
-        let trucks = cloneDeep(this.state.trucks);
+    const handleTrucksInput = (e, i, inputType) => {
+        console.log(inputType, i)
+        let updatedTrucks = cloneDeep(trucks);
         let value = e.target.value;
-        trucks[i][inputType] = value;
+        updatedTrucks[i][inputType] = value;
         if (inputType == 'type') {
-            trucks[i].number = 1;
+            updatedTrucks[i].number = 1;
         }
-        this.setState({
-            trucks
-        });
+        setTrucks(updatedTrucks);
+        props.setTrucks(updatedTrucks)
+
     }
 
     return (
         <div>
             <hr />
             <div className={style.movers}>
-                {truckOption && truckOption.map((x, i) => {
+                {trucks && trucks.map((x, i) => {
                     return (
                         <div className={style.moversChild} key={i}>
                             <div>
@@ -62,13 +64,13 @@ const Truck = () => {
                                     <Select
                                         labelId="demo-simple-select-outlined-label"
                                         id="demo-simple-select-outlined"
-                                        value={truckOption[i].type}
-                                        onChange={(e) => this.handleTrucksInput(e, i, 'type')}
+                                        value={trucks[i].type}
+                                        onChange={(e) => handleTrucksInput(e, i, 'type')}
                                         label="Truck Size"
                                         name="truckSize"
                                     >
                                         <MenuItem value={"None"} disabled>None</MenuItem>
-                                        {truckOptions.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
+                                        {truckOption.map((x, i) => <MenuItem key={i} value={x}>{x}</MenuItem>)}
                                     </Select>
                                 </FormControl>
 
@@ -83,7 +85,7 @@ const Truck = () => {
                                     label="No. of Trucks"
                                     autoComplete="Trucks"
                                     name="truck"
-                                    value={truckOption[i].number}
+                                    value={trucks[i].number}
                                     className={style.styleFormFields}
                                     // error={this.state.assigneeRequiredError ? true : false}
                                     onChange={(e) => handleTrucksInput(e, i, 'number')}
@@ -97,8 +99,11 @@ const Truck = () => {
                         </div>
                     );
                 })}
-                <div onClick={addTruck} className={`${style.plusIcon} ${style.alignRight}`}>
-                    <FontAwesomeIcon icon={faPlus} />
+                <div onClick={addTruck}
+                    className={`${style.plusIcon} 
+                    ${style.alignRight}`}>
+                    <FontAwesomeIcon
+                        icon={faPlus} />
                 </div>
             </div>
             <hr />

@@ -1,0 +1,68 @@
+.depositDetailsContainer{
+    display: grid;
+    grid-template-columns: 5fr 90fr 5fr;
+    grid-template-rows: minmax(90vh,min-content);
+    grid-template-areas: ". claimDetails .";
+    background-color: #e9ecef;
+}
+.depositDetails{
+    margin: 1.5rem 0;
+    grid-area: claimDetails;
+    display: grid;
+    /* grid-template-rows: 1fr; */
+    /* grid-template-columns: 25fr minmax(75fr, min-content); */
+    grid-template-columns: 25fr 75fr;
+    column-gap: 1rem;
+    grid-template-areas: "cards claimDetail";
+}
+.cards .link {
+    text-decoration: none;
+    text-transform: capitalize ;
+  }
+  
+  .cards {
+    grid-area: cards;
+    display: grid;
+    grid-template-rows: 25vh minmax(15vh, min-content) min-content;
+    grid-template-areas:
+      "customerCard"
+      "jobCard"
+      "buttons";
+    row-gap: 1rem;
+  }
+  .customerCard {
+    grid-area: customerCard;
+    border-radius: 1rem; 
+    border: none;
+  }
+  .jobCard {
+    grid-area: jobCard;
+    
+    border-radius: 1rem;
+    border: none; 
+  }
+  .claimButton{
+    grid-area: buttons;
+    background-color: white;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding: 1rem .5rem;
+    border: none;
+  }
+  .claimButton .button,
+.protectionRow .button,
+.waiting .button {
+  background: #00adee;
+  text-transform: uppercase;
+  color: #fff;
+  font-family: var(--font-family-paragraph);
+  width: max-content;
+  outline: none;
+}
+.claimButton .button:hover,
+.protectionRow .button:hover,
+.waiting .button:hover {
+  background-color: var(--hover-color-blue);
+}

@@ -4,7 +4,7 @@
   grid-template-areas: ". rowContent .";
 }
 .rowContent {
-  grid-area: rowContent;
+  grid-area: rowContent; 
   display: grid;
   margin-top: 0.5rem;
   grid-template-columns: 25fr 50fr repeat(2, 12.5fr);

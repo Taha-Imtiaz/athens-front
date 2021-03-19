@@ -45,7 +45,7 @@
 .listheader {
   grid-area: listheader;
   display: grid;
-  margin: 1rem 0;
+  margin: .5rem 0;
   grid-template-columns: repeat(2, 25fr) 50fr;
   padding: 0 0.5rem;
   /* background-color: #00adee; */
@@ -70,7 +70,7 @@
   display: grid;
   /* margin: 2rem 0; */
   grid-template-columns: 100fr;
-  padding: 1rem 0;
+  padding: .5rem 0;
   margin: .5rem 0;
   /* border: 1px solid rgba(0, 0, 0, 0.125); */
   background: rgba(0, 0, 0, 0.03);

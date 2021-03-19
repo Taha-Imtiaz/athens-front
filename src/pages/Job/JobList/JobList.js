@@ -661,7 +661,7 @@ const JobsList = (props) => {
                       </div>
                     </Link>
                     {user && user.role === "admin" && (
-                      <div className={`${style.actions} ${style.flex} `}>
+                      <div className={`${style.actions} `}>
                         <Button
                         className={style.deleteButton}
                           onClick={() => openDeleteModal(i, job._id)}

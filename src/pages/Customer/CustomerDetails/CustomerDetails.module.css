@@ -199,10 +199,28 @@ text-transform: capitalize;
   padding: 0 0.5rem;
 }
 .cardHeader {
-  height: 3.5rem;
+  /* height: 3.5rem; */
   cursor: pointer;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid #cac7c7;
+  border-radius: .3rem;
+  /* background-color: red; */
+  transition: var(--transition-one);
+  /* margin: .5rem 0; */
+  /* padding: 1rem 0;   */
+  
+}
+.cardHeader:hover{
+  background-color: #cac7c7;
+  text-decoration: none;
+}
+.heading{  
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+.headingSub{
+  font-weight: 900;
 }
 .claimBody{
   background-color: #e9ecef;

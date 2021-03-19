@@ -211,7 +211,7 @@ const JobDetails = (props) => {
                   color="primary"
                   variant="outlined"
                   size="small"
-                  label={`${job.price} $`}
+                  label={`$${job.price}`}
                 />
               </div>
 

@@ -77,7 +77,7 @@ const Claims = (props) => {
                       </div>
 
                       <div className={`${style.item} ${style.center}`}>
-                        <div className={`text-muted ${style.title}`}>{`Last Updates`}</div>
+                        <div className={`text-muted ${style.title}`}>{`Last Updated:`}</div>
                         <div className={`text-capitalize ${style.text}`}>{x.updates.length > 0 ? (
                           <div>
                             {<TimeAgo date={x.updates[0].timestamp} />}

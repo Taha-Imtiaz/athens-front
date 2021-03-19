@@ -61,7 +61,7 @@
   grid-area: listContent;
   display: grid;
   margin: .5rem 0;
-  padding: 1rem 0;
+  padding: .5rem .5rem;
   grid-template-columns: 90fr 10fr;
   grid-template-areas: "styleLink actions";
   /* border: 1px solid rgba(0, 0, 0, 0.125); */
@@ -96,11 +96,11 @@
 
 .name {
   grid-area: name;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .phone {
   grid-area: phone;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .email {
   grid-area: email;
@@ -108,11 +108,11 @@
 }
 .jobs {
   grid-area: jobs;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .activeClaims {
   grid-area: activeClaims;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .actions {
   grid-area: actions;

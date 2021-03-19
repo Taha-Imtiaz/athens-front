@@ -9,20 +9,9 @@
   grid-template-rows: repeat(auto-fit, minmax(8vh, 1fr));
   column-gap: 0.5rem;
   align-items: center;
-  /* align-self: center; */
-  /* background-color: blue; */
-  /* or grid-auto-rows: 10vh; */
-  /* grid-template-columns: 1fr; */
-  /* grid-template-columns: 90fr 10fr; */
-  /* grid-template-areas: "listContent button"; */
-  /* background-color: red; */
-  /* border: none; */
-  /* background-color: red; */
   
 }
 .listContent {
-  /* grid-area: listContent; */
-  /* background-color: aqua !important; */
   display: grid;
   margin: .5rem 0;
   grid-template-columns: 90fr 10fr;
@@ -37,7 +26,7 @@
   transition: var(--transition-one);
 }
 .listContent:hover {
-  color: black;
+  
   background-color: #cac7c7 !important;
   text-decoration: none;
 }
@@ -46,6 +35,9 @@
   grid-area:listContentItem ;
   grid-template-columns:1fr repeat(5,15fr)  1fr;
   grid-template-areas: ". name id quantity deposit time .";
+}
+.listContentItems:hover{
+  color: black;
 }
 .customerName{
   grid-area: name;
@@ -70,26 +62,18 @@
 }
 .depositBtn {
   grid-area: Button;
-  /* display: grid; */
-  /* background-color: aqua; */
-  /* grid-template-columns: repeat(3, 1fr); */
-  /* column-gap: 0.2rem; */
-/* grid-area: action; */
 }
 .customerDepositBtn {
   display: grid;
-  /* background-color: aqua; */
   grid-template-columns: repeat(2, 1fr);
   column-gap: 0.2rem;
 }
 .depositBtn .button , .customerDepositBtn .button{
-  /* background: #00adee; */
   text-transform: none;
   color: #000;
   font-family: var(--font-family-paragraph);
   width: 50%;
   font-weight: 600;
-  /* font-size: 1rem; */
 }
 .customerDepositBtn .button:hover {
   background-color: var(--hover-color-blue);

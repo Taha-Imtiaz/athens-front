@@ -195,6 +195,7 @@ tr:nth-child(even) td {
 
 .scroll {
   position: fixed;
+  /* width: 100%; */
 }
 .scrollBar {
   width: 100% !important;

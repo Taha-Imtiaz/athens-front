@@ -80,7 +80,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         }
     };
 
-    const addCustomPropertyType = (e,i) => {
+    const addCustomPropertyType = (e, i) => {
         e.preventDefault();
         if (e.target.value) {
             setState({
@@ -135,7 +135,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                         renderInput={(params) => (
                             <TextField
                                 required
-                                onKeyUp={(e) => addCustomPropertyType(e,i)}
+                                onKeyUp={(e) => addCustomPropertyType(e, i)}
                                 {...params}
                                 className={style.styleFormFields}
                                 variant="outlined"

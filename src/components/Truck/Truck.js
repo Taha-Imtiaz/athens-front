@@ -76,6 +76,11 @@ const Truck = (props) => {
 
                                 <TextField
                                     type="number"
+                                    InputProps={{
+                                        inputProps: {
+                                            min: 1
+                                        }
+                                    }}
                                     variant="outlined"
                                     margin="dense"
                                     // required

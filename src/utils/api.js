@@ -50,7 +50,7 @@ const Axios = () => {
       // handle error
       if (err.message === "Network Error") {
         // Server Is Down, Try Latter
-        store.dispatch(showMessage('Server Is Down, Try Latter.'))
+        // store.dispatch(showMessage('Server Is Down, Try Latter.'))
       }
       else if (err.message === "Request failed with status code 401") {
         localStorage.clear();

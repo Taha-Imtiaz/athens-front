@@ -59,7 +59,8 @@ const DailySchedule = (props) => {
   const generatePDF = (e, job) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    let dates = job.dates.join(" | ");
+    let dates = job.dates.map(x => x.date).join(" | ");
+    console.log(dates)
     let services = job.services.map((e) => e.name).join(" | ");
 
     const doc = new jsPDF("p", "pt");
@@ -94,7 +95,7 @@ const DailySchedule = (props) => {
     doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
     doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
 
-    doc.setFont("times").setFontSize(18).text(50, 200, job.title);
+    doc.setFont("times").setFontSize(15).text(50, 200, job.title);
 
     doc.setFont("times").setFontSize(11).text(50, 235, dates);
 
@@ -106,7 +107,7 @@ const DailySchedule = (props) => {
       .text(
         50,
         285,
-        job.startTime ? formatAMPM(job.startTime) : "No Time Added"
+        job.dates[0].time ? formatAMPM(job.dates[0].time) : "No Time Added"
       );
 
     doc.autoTable(columns, items, { margin: { top: 310 } });
@@ -116,7 +117,11 @@ const DailySchedule = (props) => {
       .setFontSize(11)
       .text(50, 375, htmlToText(job.description));
 
-    doc.save(`${job.title}.pdf`);
+    // doc.save(`${job.title}.pdf`);
+
+    doc.autoPrint();
+    //This is a key for printing
+    doc.output('dataurlnewwindow');
   };
 
   const formatAMPM = (startTime) => {

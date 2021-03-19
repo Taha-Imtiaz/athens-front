@@ -62,7 +62,7 @@ const PlaceSearch = (props) => {
   useEffect(() => {
     let active = true;
     setValue(locationValue)
-   
+
     if (!autocompleteService.current && window.google) {
       autocompleteService.current = new window.google.maps.places.AutocompleteService();
     }
@@ -106,6 +106,7 @@ const PlaceSearch = (props) => {
       filterSelectedOptions
       value={value}
       onChange={(event, newValue) => {
+        console.log(newValue)
         if (newValue && newValue.terms.length > 2) {
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);

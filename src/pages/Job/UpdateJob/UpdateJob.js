@@ -473,6 +473,12 @@ class UpdateJob extends Component {
     })
   }
 
+  handleLocationChange = (locations) => {
+    this.setState({
+      locations
+    });
+  }
+
   render() {
     console.log(this.state.dates)
     let {

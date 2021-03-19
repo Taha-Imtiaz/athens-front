@@ -31,10 +31,10 @@ const CalendarApp = (props) => {
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
-        if (new Date(y).toDateString() === new Date(e.end).toDateString()) {
+        if (new Date(y.date).toDateString() === new Date(e.end).toDateString()) {
           currentDayJobs.push(x);
         }
-        else if (new Date(y).toDateString() === new Date(e).toDateString()) {
+        else if (new Date(y.date).toDateString() === new Date(e).toDateString()) {
           currentDayJobs.push(x);
         }
       });
@@ -70,14 +70,14 @@ const CalendarApp = (props) => {
           // Set Calendar Jobs
           x.dates.forEach((y) => {
             let obj = {
-              start: y,
-              end: y,
+              start: y.date,
+              end: y.date,
               title: x.title,
               id: x._id,
             };
             jobs.push(obj);
             // Set Current Date Jobs
-            if (y === new Date().toDateString()) {
+            if (y.date === new Date().toDateString()) {
               currentDayJobs.push(x);
             }
           });
@@ -120,13 +120,13 @@ const CalendarApp = (props) => {
       res.data.data.forEach((x) => {
         x.dates.forEach((y) => {
           let obj = {
-            start: y,
-            end: y,
+            start: y.date,
+            end: y.date,
             title: x.title,
             id: x._id,
           };
           jobs.push(obj);
-          if (y === date.toDateString()) {
+          if (y.date === date.toDateString()) {
             currentDayJobs.push(x);
           }
         });
@@ -145,12 +145,13 @@ const CalendarApp = (props) => {
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
+    console.log(e)
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
     setState({
       ...state,
       currentDayJobs: [jobs[index]],
-      date: new Date(jobs[index].dates),
+      date: new Date(e.end),
     });
     getCount(e, jobs);
   };
@@ -160,7 +161,7 @@ const CalendarApp = (props) => {
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
-        if (y === e.end.toDateString()) {
+        if (y.date === e.end.toDateString()) {
           currentDayJobs.push(x);
         }
       });
@@ -189,17 +190,17 @@ const CalendarApp = (props) => {
     });
   };
   //format time
-  const formatAMPM = (startTime) => {
-    let date = new Date(startTime);
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    let strTime = hours + ":" + minutes + " " + ampm;
-    return strTime;
-  };
+  // const formatAMPM = (startTime) => {
+  //   let date = new Date(startTime);
+  //   let hours = date.getHours();
+  //   let minutes = date.getMinutes();
+  //   let ampm = hours >= 12 ? "pm" : "am";
+  //   hours = hours % 12;
+  //   hours = hours ? hours : 12; // the hour '0' should be '12'
+  //   minutes = minutes < 10 ? "0" + minutes : minutes;
+  //   let strTime = hours + ":" + minutes + " " + ampm;
+  //   return strTime;
+  // };
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>
@@ -326,33 +327,33 @@ const CalendarApp = (props) => {
               ))}
             </div>
           ) : (
-            <div>
-              <h5 className={`${style.flex} ${style.flexCenter}`}>{state.date.toDateString()}</h5>
+              <div>
+                <h5 className={`${style.flex} ${style.flexCenter}`}>{state.date.toDateString()}</h5>
 
-              <hr />
-              <div className={style.jobInfo}>
-                <h6>{`Total Jobs: `}
-                  <Chip
-                    label={state.currentDayJobs.length}
-                    clickable
-                    // color="primary"
-                    // variant="outlined"
-                    size="medium"
-                  />
-                </h6>
-                <h6>{`Total Movers: `}
-                  <Chip
-                    label="0"
-                    clickable
-                    // color="primary"
-                    // variant="outlined"
-                    size="medium"
-                  />
-                </h6>
+                <hr />
+                <div className={style.jobInfo}>
+                  <h6>{`Total Jobs: `}
+                    <Chip
+                      label={state.currentDayJobs.length}
+                      clickable
+                      // color="primary"
+                      // variant="outlined"
+                      size="medium"
+                    />
+                  </h6>
+                  <h6>{`Total Movers: `}
+                    <Chip
+                      label="0"
+                      clickable
+                      // color="primary"
+                      // variant="outlined"
+                      size="medium"
+                    />
+                  </h6>
+                </div>
+                <img src="/images/no-data-found.png" alt="" width="100%" />
               </div>
-              <img src="/images/no-data-found.png" alt="" width="100%" />
-            </div>
-          )}
+            )}
         </div>
       </div>
     </div>

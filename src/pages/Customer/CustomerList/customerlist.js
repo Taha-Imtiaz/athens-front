@@ -307,55 +307,55 @@ const CustomerList = (props) => {
                               className={`${style.name} ${style.item} ${style.flex}`}
                             >
                               <div className={`text-muted ${style.heading}`}>{`Name:`}</div>
-                              <div className={`text-capitalize ${style.headingSub}`}>{doc.firstName} {doc.lastName}</div>                              
+                              <div className={`text-capitalize ${style.headingSub}`}>{doc.firstName} {doc.lastName}</div>
                             </div>
 
                             <div
                               className={`${style.phone} ${style.item} ${style.flex}`}
                             >
                               <div className={`text-muted ${style.heading}`}>{`Phone:`}</div>
-                              <div className={`${style.headingSub}`}>{doc.phone}</div>                              
-                            
-                              
+                              <div className={`${style.headingSub}`}>{doc.phone}</div>
+
+
                             </div>
                             <div
                               className={`${style.email} ${style.item} ${style.flex}`}
                             >
                               <div className={`text-muted ${style.heading}`}>{`E-mail:`}</div>
-                              <div className={`${style.headingSub}`}>{doc.email}</div>                            
-                          
+                              <div className={`${style.headingSub}`}>{doc.email}</div>
+
                             </div>
                             <div
                               className={`${style.jobs} ${style.item} ${style.flex}`}
                             >
                               <div className={`text-muted ${style.heading}`}>{`Jobs:`}</div>
                               <div className={`${style.headingSub}`}>
-                              <Chip 
-                              label={doc.jobs.length}
-                              />
-                                
-                              </div>                              
-                   
+                                <Chip
+                                  label={doc.jobs.length}
+                                />
+
+                              </div>
+
                             </div>
                             <div
                               className={`${style.activeClaims} ${style.item} ${style.flex}`}
                             >
                               <div className={`text-muted ${style.heading}`}>{`Claims:`}</div>
-                             <div className={style.headingSub}>
-                             <Chip
-                             label={doc.claim.length > 0 ? (
-                                <div>
-                                  {
-                                    doc.claim.filter(
-                                      (claim) => claim.status === "open"
-                                    ).length
-                                  }
-                                </div>
-                              ) : (
-                                  0
-                                )}
-                             /></div>
-                              
+                              <div className={style.headingSub}>
+                                <Chip
+                                  label={doc.claim.length > 0 ? (
+                                    <div>
+                                      {
+                                        doc.claim.filter(
+                                          (claim) => claim.status === "open"
+                                        ).length
+                                      }
+                                    </div>
+                                  ) : (
+                                      0
+                                    )}
+                                /></div>
+
                             </div>
                           </div>
                         </Link>

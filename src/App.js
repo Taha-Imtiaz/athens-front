@@ -87,7 +87,7 @@ function App(props) {
       ) : null}
       <div className="navigation-menu">
         <Navbar />
-        <BackButton/>
+        <BackButton />
       </div>
       <div
         className={

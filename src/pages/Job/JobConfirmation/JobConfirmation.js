@@ -86,9 +86,12 @@ function JobConfirmation(props) {
     let job = cloneDeep(props.data);
     //load stripe
     loadStripe();
-    let parsedDates = job.dates.map((x) =>
-      typeof x === "string" ? Date.parse(x) : x
-    );
+    let parsedDates = job.dates.map((x) => {
+      return {
+        date: Date.parse(x.date),
+        time: x.time
+      }
+    });
     job.dates = parsedDates;
     job.startTime = job.startTime ? new Date(job.startTime) : '';
     setData(job);
@@ -224,10 +227,11 @@ function JobConfirmation(props) {
       (status, response) => {
         if (status === 200) {
           let stringDates = data.dates.map((x) => {
-            if (typeof x == "number") {
-              return new Date(x).toDateString();
+            console.log(x)
+            if (typeof x.date === "number") {
+              return { date: new Date(x.date).toDateString(), time: x.time };
             } else {
-              return x.toDateString();
+              return { date: x.date.toDateString(), time: x.time };
             }
           });
           let obj = {
@@ -235,7 +239,7 @@ function JobConfirmation(props) {
             stripeToken: response.id,
             amount: payment.amount,
             jobToUpdate: data._id,
-            dates: stringDates,
+            dates: stringDates.filter(Boolean),
             startTime: data.startTime,
             phone: data.customer.phone,
             locations: data.locations.filter(
@@ -255,16 +259,17 @@ function JobConfirmation(props) {
   const handleSubmitWithoutPay = () => {
     let { confirmJob, job } = props;
     let stringDates = data.dates.map((x) => {
-      if (typeof x == "number") {
-        return new Date(x).toDateString();
+      console.log(x)
+      if (typeof x.date === "number") {
+        return { date: new Date(x.date).toDateString(), time: x.time };
       } else {
-        return x.toDateString();
+        return { date: x.date.toDateString(), time: x.time };
       }
     });
     let obj = {
       paidInCash: true,
       jobToUpdate: data._id,
-      dates: stringDates,
+      dates: stringDates.filter(Boolean),
       startTime: data.startTime.toString(),
       phone: data.customer.phone,
       locations: data.locations.filter((x) => x.value !== "" && x.type !== ""),
@@ -283,12 +288,18 @@ function JobConfirmation(props) {
     setData(newData);
   }
 
+  const setDates = (dates) => {
+    let newData = cloneDeep(data);
+    newData.dates = dates;
+    setData(newData);
+  }
+
   const getStepContent = (step) => {
     switch (step) {
       case 0:
         return (
           <form>
-            {data ? <DateAndTime dates={data.dates} /> : null}
+            {data ? <DateAndTime dates={data.dates} setDates={setDates} /> : null}
           </form>
         );
       case 1:
@@ -496,27 +507,27 @@ function JobConfirmation(props) {
           </Button>
         </div>
       ) : (
-        <div className={style.stepperContent}>
-          <div>{getStepContent(activeStep)}</div>
-          <div className={style.backAndSubmitBtn}>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={
-                activeStep === 0
-                  ? style.back
-                  : `${style.back} ${style.backStyles}`
-              }
-            >
-              Back
+          <div className={style.stepperContent}>
+            <div>{getStepContent(activeStep)}</div>
+            <div className={style.backAndSubmitBtn}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={
+                  activeStep === 0
+                    ? style.back
+                    : `${style.back} ${style.backStyles}`
+                }
+              >
+                Back
             </Button>
 
-            <Button onClick={handleNext} className={style.next}>
-              {activeStep === steps.length - 1 ? "Submit" : "Next"}
-            </Button>
+              <Button onClick={handleNext} className={style.next}>
+                {activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

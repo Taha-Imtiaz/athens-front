@@ -329,8 +329,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                        <span>0</span>
-                      )}
+                      <span>0</span>
+                    )}
                   </h6>
                 </div>
                 <div>
@@ -343,7 +343,7 @@ const DailySchedule = (props) => {
             )}
 
             <hr className={style.styleLine}></hr>
-            {props.jobs && props.jobs.length > 0 && (
+            {/* {props.jobs && props.jobs.length > 0 && (
               <div className={style.jobListHeader}>
                 <div>Title</div>
                 <div>Movers Req.</div>
@@ -351,7 +351,7 @@ const DailySchedule = (props) => {
                 <div>Assignee</div>
                 <div>Action</div>
               </div>
-            )}
+            )} */}
 
             {props.jobs && props.jobs.length > 0 ? (
 
@@ -372,7 +372,7 @@ const DailySchedule = (props) => {
                         {...provided.droppableProps}
                       >
                         <div
-                          className={list.assignee.length < list.assigneeRequired ? `${style.cardHeader} card-header ${style.dangerClass}` : `card-header ${style.cardHeader}`}
+                          className={list.assignee.length < list.assigneeRequired ? `${style.cardHeader} card-header ${style.dangerClass} ${style.flex}` : `card-header ${style.cardHeader} ${style.flex}`}
                           aria-expanded="true"
                           data-toggle="collapse"
                           data-target={`#collapse${i}`}
@@ -381,25 +381,36 @@ const DailySchedule = (props) => {
                           onClick={() => toggleCollapse(i)}
                           onDoubleClick={() => jobDetailsNavigate(list._id)}
                         >
-                          <div>{list.title}</div>
+                          <div>
+                            <div className={style.heading}>{`Title:`}</div>
+                            <div className={style.content}>{list.title}</div>
+                          </div>
 
                           <div>
-                            {list.assigneeRequired}
+                            <div className={style.heading}>{`Movers Req:`}</div>
+                            <div className={style.content}>{list.assigneeRequired}</div>
+
                             <span className={style.hideJobId}>
                               {list.jobId}
                             </span>
                           </div>
 
                           <div>
-                            {list.startTime
+                            <div className={style.heading}>{`Time:`}</div>
+                            <div className={style.content}>{list.startTime
                               ? formatAMPM(list.startTime)
-                              : "N/A"}
+                              : "N/A"}</div>
                           </div>
+
                           <div>
-                            {list.assignee.length > 0 ? (
+                            <div className={style.heading}>{`Assignee:`}</div>
+                            <div className={style.content}>{list.assignee.length > 0 ? (
+
                               <div>
+
                                 {list.assignee.map((assignee, i) => (
                                   <div key={i} className={style.assignee}>
+
                                     <div className={style.assigneeName}>
                                       {assignee.name}
                                     </div>
@@ -417,14 +428,15 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                                <div>N/A</div>
-                              )}
+                              <div>N/A</div>
+                            )}</div>
+                            
                           </div>
 
                           <div>
-                            <Button onClick={(e) => generatePDF(e, list)}>
+                            <Button className={style.deleteButton} onClick={(e) => generatePDF(e, list)}>
                               <i className="fa fa-print"></i>
-                              Print
+                              {` Print`}
                             </Button>
                           </div>
                         </div>
@@ -542,10 +554,10 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="" />
+              </div>
+            )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">

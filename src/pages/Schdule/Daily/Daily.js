@@ -237,6 +237,7 @@ const DailySchedule = (props) => {
     let { showMessage } = props;
     let moverId = source.droppableId;
     if (!destination) {
+      console.log('destination not found')
       showMessage("Please drop on job item.");
       return;
     }
@@ -435,7 +436,7 @@ const DailySchedule = (props) => {
                             ) : (
                               <div>N/A</div>
                             )}</div>
-                            
+
                           </div>
 
                           <div>
@@ -451,105 +452,66 @@ const DailySchedule = (props) => {
                           aria-labelledby="headingOne"
                           data-parent="#accordion"
                         >
-                          <div className="card-body">
+                          <div className={`card-body ${style.cardBody}`}>
                             <h4>Job Details</h4>
-                            <div className={style.jobDetailHeader}>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>
-                                      <h6>Job Id</h6>
-                                    </th>
-
-                                    <th>
-                                      <h6>Job Title</h6>{" "}
-                                    </th>
-
-                                    <th>
-                                      <h6>Job Type</h6>{" "}
-                                    </th>
-
-                                    <th>
-                                      {" "}
-                                      <h6>Status</h6>
-                                    </th>
-                                  </tr>
-                                </thead>
-                              </table>
-                            </div>
-
                             <div className={style.jobDetailList}>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <td>
-                                      <h6> {list.jobId}</h6>
-                                    </td>{" "}
-                                    <td>
-                                      {" "}
-                                      <h6>{list.title} </h6>
-                                    </td>
-                                    <td>
-                                      {" "}
-                                      <h6>{list.jobType}</h6>
-                                    </td>
-                                    <td>
-                                      <h6>
-                                        {" "}
-                                        <Chip
-                                          label={list.status}
-                                          clickable
-                                          size="small"
-                                          color="primary"
-                                          variant="outlined"
-                                        ></Chip>
-                                      </h6>
-                                    </td>
-                                  </tr>
-                                </thead>
-                              </table>
+                              <div className={style.jobTitle}>
+                                <div className={`text-muted ${style.heading}`}>{`Job Title:`}</div>
+                                <div className={style.content}>{list.title} </div>
+                              </div>
+                              <div className={style.jobsId}>
+                                <div className={`text-muted ${style.heading}`}>{`Job ID:`}</div>
+                                <div className={style.content}>{list.jobId}</div>
+                              </div>
+
+                              <div className={style.jobTypee}>
+                                <div className={`text-muted ${style.heading}`}>{`Job Type:`}</div>
+                                <div className={style.content}>{list.jobType}</div>
+                              </div>
+                              <div className={style.jobStatus}>
+                                
+                                  <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
+                                  <Chip
+                                   className={style.content}
+                                    label={list.status}
+                                    clickable
+                                    size="small"
+                                    color="primary"
+                                    variant="outlined"
+                                  ></Chip>
+                                </div>
+                              
                             </div>
 
                             <div className={style.jobDescriptionHeader}>
-                              <h6>Job Description</h6>
+                              <h4>Job Description</h4>
                             </div>
                             <div className={style.jobDescription}>
-                              <span>{parse(list.description)}</span>
+                              <span className={style.jobDescriptionText}>{parse(list.description)}</span>
                             </div>
                             <hr />
-                            <h6>Customer Details</h6>
-                            <div className={style.customerDetailHeader}>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>
-                                      <h6>Name</h6>
-                                    </th>
-                                    <th>
-                                      <h6>Email</h6>
-                                    </th>
-                                    <th>
-                                      <h6>Phone</h6>
-                                    </th>
-                                  </tr>
-                                </thead>
-                              </table>
-                            </div>
-                            <div className={style.customerDetailList}>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <td>
-                                      {" "}
-                                      {list.customer.firstName}{" "}
+                            <div className={style.customerDetailContainer}>
+                              <h4>Customer Details</h4>
+                              <div className={style.customerDetailList}>
+                                <div className={style.customerDetailListContent}>
+                                  <div>
+                                    <div className={`text-muted ${style.heading}`}>{`Name:`}</div>
+                                    <div className={style.content}>
+                                      {list.customer.firstName}
                                       {list.customer.lastName}
-                                    </td>
-                                    <td>{list.customer.email}</td>
-                                    <td>{list.customer.phone}</td>
-                                  </tr>
-                                </thead>
-                              </table>
+                                    </div>
+                                  </div>
 
+                                  <div>
+                                    <div className={`text-muted ${style.heading}`}>{`E-Mail:`}</div>
+                                    <div className={style.contentMail}>{list.customer.email}</div>
+                                  </div>
+                                  <div>
+                                    <div className={`text-muted ${style.heading}`}>{`Phone:`}</div>
+                                    <div className={style.content}>{list.customer.phone}</div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>

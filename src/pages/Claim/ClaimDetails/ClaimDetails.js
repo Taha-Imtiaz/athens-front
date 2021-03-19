@@ -197,7 +197,7 @@ const ClaimDetails = (props) => {
                 <h6>{`Protection Type: `}</h6> <span>{claims.claimType}</span>
               </div>
               <div>
-                <h6>{`Total: `}</h6> <span>{claims.price} $</span>
+                <h6>{`Total: `}</h6> <span>${claims.price}</span>
               </div>
               <div>
                 <h6>{`Title: `}</h6> <span>{claims.title}</span>

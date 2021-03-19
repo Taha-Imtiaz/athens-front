@@ -396,7 +396,7 @@ const CustomerDetails = (props) => {
                                     color="primary"
                                     variant="outlined"
                                     size="small"
-                                    label={`${job.price} $`}
+                                    label={`$${job.price}`}
                                   />
                                 </div>
 
@@ -551,7 +551,7 @@ const CustomerDetails = (props) => {
               </div>
             </div>
             <hr />
-            {claims.length > 0 && (
+            {/* {claims.length > 0 && (
               <div className={style.claimListHeaderContainer}>
                 <div className={style.claimListHeader}>
                   <div>Job Id</div>
@@ -559,7 +559,7 @@ const CustomerDetails = (props) => {
                   <div>Last Update</div>
                 </div>
               </div>
-            )}
+            )} */}
             <div id="accordion">
               {claims.length > 0 ? (
                 claims.map((claim, i) => {
@@ -574,10 +574,19 @@ const CustomerDetails = (props) => {
                         aria-controls="collapse"
                         id="headingOne"
                       >
-                        <div>{claim.job && claim.job.jobId}</div>
-                        <div>{claim.status}</div>
                         <div>
-                          <TimeAgo date={claim.updatedAt} />
+                          <div className={`text-muted ${style.heading}`}>Job ID</div>
+                          <div className={style.headingSub}>{claim.job && claim.job.jobId}</div>
+                          
+                        </div>
+                        <div>
+                          <div className={`text-muted ${style.heading}`}>Status</div>
+                          <div  className={`text-capitalize ${style.headingSub}`}>{claim.status}</div>
+                          
+                        </div>
+                        <div>
+                          <div className={`text-muted ${style.heading}`}>Last Updated</div>
+                          <TimeAgo  className={`text-capitalize ${style.headingSub}`} date={claim.updatedAt} />
                         </div>
                       </div>
                       <div
@@ -598,7 +607,7 @@ const CustomerDetails = (props) => {
                                   </div>
                                   <div>
                                     <h6>{`Total: `}</h6>
-                                    {claim.price} $
+                                    ${claim.price}
                                   </div>
                                   <div>
                                     <h6>{`Title: `}</h6>

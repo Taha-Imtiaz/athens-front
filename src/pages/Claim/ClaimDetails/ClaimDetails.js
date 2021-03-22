@@ -14,8 +14,9 @@ const ClaimDetails = (props) => {
   const [show, setShow] = useState(false);
   const [update, setUpdate] = useState("");
   const [waitTo, setWaitTo] = useState(true);
-  const [toggleClaim, setToggleClaim] = useState(false)
   const [claimInput, setClaimInput] = useState('');
+  const [toggleClaim, setToggleClaim] = useState(false)
+
 
   let {
     match: {
@@ -106,36 +107,36 @@ const ClaimDetails = (props) => {
                   <Link
                     className={style.link}
                     to={`/customer/detail/${claims.customer._id}`}
-                  > <FontAwesomeIcon icon={faUser}/> {" "}
+                  > <FontAwesomeIcon icon={faUser} /> {" "}
                     {claims.customer.firstName} {claims.customer.lastName}
                   </Link>
-                </h6> 
+                </h6>
                 <div className="card-text mb-2">
-                <FontAwesomeIcon icon={faMobile}/> {" "}
-                {claims.customer.phone}</div>
-                
+                  <FontAwesomeIcon icon={faMobile} /> {" "}
+                  {claims.customer.phone}</div>
+
                 <div className="card-text mb-2">
-                <FontAwesomeIcon icon={faEnvelope}/> {" "}
-                {claims.customer.email}</div>
-                </div>
+                  <FontAwesomeIcon icon={faEnvelope} /> {" "}
+                  {claims.customer.email}</div>
+              </div>
             </div>
 
             <div className={`card ${style.jobCard}`}>
               <div className={`card-body `}>
-              <div>
-              <h5 className="font-weight-bold">Job</h5>
-              </div>
+                <div>
+                  <h5 className="font-weight-bold">Job</h5>
+                </div>
                 {claims.job ? (
                   <div>
                     <div>
-                    <Link
-                      to={`/job/detail/${claims.job._id}`}
-                      className="card-title"
-                    >
-                      {" "}
-                      {claims.job.title}
-                    </Link>
-                    
+                      <Link
+                        to={`/job/detail/${claims.job._id}`}
+                        className="card-title"
+                      >
+                        {" "}
+                        {claims.job.title}
+                      </Link>
+
                     </div>
                     <div>
                       {claims.job.assignee.length > 0 ? (
@@ -186,7 +187,7 @@ const ClaimDetails = (props) => {
                 )}
               </div>
             </div>
-          </div> 
+          </div>
 
 
 
@@ -201,7 +202,7 @@ const ClaimDetails = (props) => {
               </div>
               <div>
                 <h6>{`Title: `}</h6> <span>{claims.title}</span>
-              </div>              
+              </div>
             </div>
 
             <div className={style.description}>
@@ -210,40 +211,40 @@ const ClaimDetails = (props) => {
             </div>
 
             <div className={`${style.waiting}`}>
-                <h6>Waiting To: </h6>
-              
-                  <div className={style.waitingInput}>
-              <div onDoubleClick={editInput}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  size="small"
-                  name="claimInput"
-                  value={claimInput}
-                  onChange={(e) => handleClaimInput(e)}
-                  disabled={waitTo}
-                >
-                  {" "}
-                </TextField>
-              </div>
-              <div>
-                {waitTo === false ? (
-                  <Button className={style.button} onClick={disableInput}>
-                    Save
-                  </Button>
-                ) : <Button className={style.button} onClick={editInput}>
-                  Edit
+              <h6>Waiting To: </h6>
+
+              <div className={style.waitingInput}>
+                <div onDoubleClick={editInput}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    size="small"
+                    name="claimInput"
+                    value={claimInput}
+                    onChange={(e) => handleClaimInput(e)}
+                    disabled={waitTo}
+                  >
+                    {" "}
+                  </TextField>
+                </div>
+                <div>
+                  {waitTo === false ? (
+                    <Button className={style.button} onClick={disableInput}>
+                      Save
+                    </Button>
+                  ) : <Button className={style.button} onClick={editInput}>
+                    Edit
             </Button>
-                }
-              </div>
+                  }
+                </div>
               </div>
             </div>
 
             {claims.updates.length > 0 ? (
               <div className={style.updates}>
                 <div className={style.updateHead}>
-                 <h3>{`Updates`}</h3>
+                  <h3>{`Updates`}</h3>
                 </div>
                 <div className={`${style.updateContent}`}>
                   {claims.updates.map((x, i) => (
@@ -251,7 +252,7 @@ const ClaimDetails = (props) => {
                       {" "}
                       <div>{`${x.value}`}</div>
                       <div className={`text-muted ${style.update___time}`}>
-                        <FontAwesomeIcon icon={faCalendarTimes}/>{" "}
+                        <FontAwesomeIcon icon={faCalendarTimes} />{" "}
                         <TimeAgo date={x.timestamp} />
                       </div>
                     </div>
@@ -259,7 +260,7 @@ const ClaimDetails = (props) => {
                 </div>
               </div>
             ) : null}
-          </div> 
+          </div>
         </div>
 
         {/* modal for close and reopen claims */}

@@ -4,10 +4,21 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarTimes, faEnvelope, faMobile, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Button, Chip, TextareaAutosize, TextField } from "@material-ui/core";
-import { getDeposit } from '../../../Redux/Deposit/DepositActions'
+import { getDeposit, updateDeposit } from '../../../Redux/Deposit/DepositActions'
 import { connect } from "react-redux";
+import ActivitiesModal from '../../../components/ActivitiesModal/ActivitiesModal';
 
 const DepositDetails = (props) => {
+
+    let { getDeposit, updateDeposit, deposit } = props;
+
+    const [show, setShow] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false)
+    const [updatedDeposit, setUpdatedDeposit] = useState({
+        quantity: 0,
+        cost: 0
+    })
+
 
     let {
         match: {
@@ -15,17 +26,37 @@ const DepositDetails = (props) => {
         },
     } = props;
 
-    let { getDeposit, deposit } = props;
-    const [show, setShow] = useState(false);
-    const [toggleClaim, setToggleClaim] = useState(false)
-
     useEffect(() => {
         getDeposit(depositId)
     }, [])
 
+    useEffect(() => {
+
+        if (deposit) {
+            console.log(deposit.quantity, updatedDeposit)
+            setUpdatedDeposit({
+                quantity: deposit.quantity,
+                cost: deposit.cost
+            })
+        }
+    }, [deposit])
+
     const handleShow = () => {
         setShow(true);
     };
+
+    const handleOnChange = (e) => {
+        let { name, value } = e.target;
+        setUpdatedDeposit({ ...updatedDeposit, [name]: value })
+    }
+    const update = () => {
+        let obj = {
+            ...updatedDeposit,
+            id: deposit._id,
+        }
+        updateDeposit(obj)
+        setToggleEdit(false)
+    }
 
     return (
         <div>{deposit &&
@@ -96,39 +127,71 @@ const DepositDetails = (props) => {
                             </div>
                         </div>
                         <div className={`${style.claimButton}`}>
-                            <div>
-                                <Button
-                                    onClick={() => handleShow(deposit)}
-                                    className={style.button}
-                                >
-                                    Activities
+                            <Button
+                                onClick={handleShow}
+                                className={style.button}
+                            >
+                                Activities
                                 </Button>
-                                {/* {deposit.status === "open" ? (
-                                    <Button className={style.button} onClick={() => handleShow()}>
-                                        Add Update
-                                    </Button>
-                                ) : null} */}
-                            </div>
-                            <div>
-                                {/* {claims.status === "open" ? (
-                                    <Button
-                                        className={style.button}
-                                        onClick={() => setToggleClaim(true)}
+                        </div>
+                    </div>
+
+                    <div className={`card ${style.claimDetail} `}>
+                        <div className={`${style.pricing}`}>
+
+
+                            <div className={style.pricingInput}>
+                                <div>
+                                    <h6>Quantity: </h6>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        size="small"
+                                        name="quantity"
+                                        value={updatedDeposit.quantity}
+                                        onChange={(e) => handleOnChange(e)}
+                                        disabled={!toggleEdit}
                                     >
-                                        Close Claim
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        className={style.button}
-                                        onClick={() => setToggleClaim(true)}
+                                        {" "}
+                                    </TextField>
+                                </div>
+                                <div>
+                                    <h6>Deposit: </h6>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        size="small"
+                                        name="cost"
+                                        value={updatedDeposit.cost}
+                                        onChange={(e) => handleOnChange(e)}
+                                        disabled={!toggleEdit}
                                     >
-                                        Re-Open Claim
-                                    </Button>
-                                )} */}
+                                        {" "}
+                                    </TextField>
+                                </div>
+
                             </div>
+
+                        </div>
+                        <div className={style.editButon}>
+                            {toggleEdit ? (
+                                <Button className={style.button} onClick={update}>
+                                    Save
+                                </Button>
+                            ) : <Button className={style.button} onClick={() => setToggleEdit(true)}>
+                                Edit
+                                </Button>
+                            }
                         </div>
                     </div>
                 </div>
+                <ActivitiesModal
+                    show={show}
+                    activities={deposit.activities}
+                    handleClose={() => setShow(false)}
+                />
             </div>
         }
         </div>
@@ -140,7 +203,8 @@ var mapStateToProps = (state) => ({
 });
 
 var actions = {
-    getDeposit
+    getDeposit,
+    updateDeposit
 };
 
 export default connect(mapStateToProps, actions)(DepositDetails)

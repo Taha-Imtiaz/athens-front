@@ -81,7 +81,7 @@ const UnavailableSchedule = (props) => {
       <div className={style.unavailableContent}>
         <div className={style.unavailableHeader}>
           <div>
-            <h5>Unavailable</h5>
+            <h3>Unavailable</h3>
           </div>
          {value === "pending" ? <div className={style.approveBtn}>
             <Button className={style.button} onClick={approveRequests}>

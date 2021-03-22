@@ -14,19 +14,10 @@ import {
 
 } from "@material-ui/core";
 import "date-fns";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-} from "@material-ui/pickers";
 import { Autocomplete } from "@material-ui/lab";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
 import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";

@@ -1,4 +1,4 @@
-import { Button, TextField, Chip } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
@@ -171,78 +171,3 @@ var actions = {
 };
 
 export default connect(mapStateToProps, actions)(withRouter(Blankets));
-{/* <div onDoubleClick={() => makeInputFieldsEditible(i)}>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        onChange={(e) => handleInput(e, i)}
-                        disabled={deposit.edit}
-                        type="number"
-                        className="form-control input-number"
-                        value={deposit.quantity}
-                      ></TextField>
-                    </div> */}
-
-{/* <div onDoubleClick={() => makeInputFieldsEditible(i)}>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        onChange={(e) => changeCost(e, i)}
-                        disabled={deposit.edit}
-                        type="number"
-                        className="form-control input-number"
-                        value={deposit.cost}
-                      ></TextField>
-                    </div> */}
-{/* {deposit.edit ? (
-                        <Button
-                          onClick={() => closeEdit(i, "edit")}
-                          className={style.button}
-                        >
-                          {" "}
-                          <i className="fa fa-edit"></i> Edit{" "}
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() => closeEdit(i, "save")}
-                          className={style.button}
-                        >
-                          {" "}
-                          <i className="fa fa-save"></i> Save
-                        </Button>
-                      )} */}
-{/* <Button
-                        onClick={() => handleShow(deposit)}
-                        className={style.button}
-                      >
-                        Activities
-                  </Button> */}
-{/* <div className={` ${style.blanketHeader}`}>
-        <div>
-          <h6>Customer</h6>
-        </div>
-        <div>
-          <h6>Job Id</h6>
-        </div>
-        <div>
-          <h6>Quantity</h6>
-        </div>
-        <div>
-          <h6>Deposit</h6>
-        </div>
-
-        <div className={style.flex}>
-          <h6>Last Updated</h6>
-        </div>
-
-        <div>
-          <h6>Actions</h6>
-        </div>
-      </div> */}
-      // className={style.depositBtn
-                        // pathname === "/deposits"
-                        //   ? style.depositBtn
-                        //   : style.customerDepositBtn
-                      // }

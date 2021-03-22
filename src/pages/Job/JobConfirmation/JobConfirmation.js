@@ -10,23 +10,13 @@ import Typography from "@material-ui/core/Typography";
 import { cloneDeep } from "lodash";
 
 import { confirmJob } from "../../../Redux/Job/jobActions";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { connect } from "react-redux";
 import {
-
-  Grid,
-
   TextField,
 } from "@material-ui/core";
 import style from "./JobConfirmation.module.css";
-import {
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarker, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 
@@ -97,12 +87,6 @@ function JobConfirmation(props) {
     setData(job);
   }, [props.data]);
 
-  //onChange handler of time
-  const handleTimeSelect = (date) => {
-    let newData = { ...data };
-    newData.startTime = date;
-    setData(newData);
-  };
   //handler calls when next button is clicked
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -118,20 +102,6 @@ function JobConfirmation(props) {
 
   const handleReset = () => {
     setActiveStep(0);
-  };
-  //onChange handler of Date
-  const handleStartDate = (date, i) => {
-    let newState = cloneDeep(data);
-    newState.dates[i] = date;
-    setData(newState);
-  };
-  //handler to add date
-  const addDate = () => {
-    if (data.dates[0]) {
-      let newState = cloneDeep(data);
-      newState.dates.push(new Date());
-      setData(newState);
-    }
   };
 
   const handlePhoneNumberInput = (value, previousValue) => {
@@ -174,18 +144,9 @@ function JobConfirmation(props) {
     }
   };
 
-  //remove date
-  const removeDate = (i) => {
-    let newData = cloneDeep(data);
-    newData.dates.splice(i, 1);
-    setData(newData);
-  };
-
-
   //add location
   const addLocation = (e) => {
     e.stopPropagation();
-
     let newData = { ...data };
     newData.locations.push({ type: "", value: "", default: false });
     setData(newData);

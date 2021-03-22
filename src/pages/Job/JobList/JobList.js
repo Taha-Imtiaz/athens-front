@@ -7,8 +7,6 @@ import { getAllJobs, filterJobsByDate, deleteJob } from "../../../Redux/Job/jobA
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Popover from "@material-ui/core/Popover";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Button, Chip, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";

@@ -37,10 +37,14 @@
   border: none;
 }
 .jobCard {
-  grid-area: jobCard;
-  
+  grid-area: jobCard;  
   border-radius: 1rem;
   border: none; 
+  overflow: hidden;
+}
+.assigneehead{
+  text-decoration: none;
+  list-style: none;
 }
 .claimButton{
   grid-area: buttons;
@@ -73,13 +77,14 @@
   grid-area: protectionRow;
   background-color: white;
   border-radius: 1rem;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   /* display: grid;
   grid-template-columns: repeat(2, 20fr) repeat(2, 12fr) repeat(2, 18fr);
   /* width: 100%; */
  /* column-gap: 0.2rem; */
+ /* gap: 1rem; */
 display: flex;
-/* gap: 1rem; */
+
 justify-content: space-around;
 text-align: center;
 }
@@ -111,7 +116,7 @@ text-align: center;
 .description > h6{
   font-size: larger;
   font-weight: 400;
-  padding: 0 .5rem;
+  /* padding: 0 .5rem; */
 }
 .description > div{
   background-color: #fff;
@@ -125,7 +130,7 @@ text-align: center;
 .waiting > h6{
   font-size: larger;
   font-weight: 400;
-  padding: 0 .5rem;
+  /* padding: 0 .5rem; */
 }
 .waitingInput{
 display: grid;
@@ -146,26 +151,26 @@ align-items: center;
 }
 .updateHead{
   grid-area: updateHead;
-  padding: 0 .5rem;
+  /* padding: 0 .5rem; */
 }
 .updateContent {
   grid-area: updateContent;
   padding-top: 1.5rem;
-  row-gap: 2rem;
+  row-gap: .5rem;
   display: grid;
 }
 .updateContentRow {
   border: none;
   border-radius: 1rem;
   display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(6vh, min-content));
+  /* grid-template-rows: repeat(auto-fit, minmax(6vh, min-content)); */
   /* border-bottom: 1px solid #dddbdb; */
   padding: 0.8rem 0.5rem;
   word-spacing: .2rem;
   align-items: flex-end;
   /* grid-template-columns: 85fr 15fr; */
   /* margin: 1rem 0; */
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 .update___time{
   /* background-color: red; */

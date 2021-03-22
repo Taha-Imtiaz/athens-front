@@ -34,7 +34,7 @@ class UpdateCustomer extends Component {
 
   componentDidUpdate(prevProps) {
     let { customer } = this.props;
-    if (customer !== this.state.customer) {
+    if (customer && customer !== this.state.customer) {
       this.setState({
         customer,
         firstName: customer.firstName,
@@ -115,11 +115,6 @@ class UpdateCustomer extends Component {
   };
   // add another alternate contact (when atleast alternateContact already exists)
   addContacts = () => {
-    if (
-      this.state.subContacts[0].name &&
-      this.state.subContacts[0].phone &&
-      this.state.subContacts[0].email
-    ) {
       this.setState({
         subContacts: [
           ...this.state.subContacts,
@@ -130,7 +125,6 @@ class UpdateCustomer extends Component {
           },
         ],
       });
-    }
   };
   // validate if the form fields are empty or not
   validate = () => {

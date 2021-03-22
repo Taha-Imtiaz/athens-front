@@ -39,6 +39,10 @@
   border-radius: 1rem;
   border: none;
 }
+.assigneehead{
+  text-decoration: none;
+  list-style: none;
+}
 
 /*-------------------------BUTTONS------------------------*/
 
@@ -112,12 +116,12 @@
 }
 .jobHeader___childs{
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 75fr 25fr;
 }
 .jobDates { 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
-  grid-template-rows: minmax(6vh, min-content);
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
+  grid-template-rows: minmax(6vh, min-content); */
 
 }
 .job___IdStatus{

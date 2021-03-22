@@ -85,8 +85,8 @@ const JobDetails = (props) => {
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
                         <div key={i} className={style.assigneehead}>
-                          <FontAwesomeIcon icon={faUserShield} />
-                          <li> {assignee.name}</li>
+                          
+                          <li><FontAwesomeIcon icon={faUserShield} />{" "}{assignee.name}</li>
                         </div>
                       ))
                     ) : (

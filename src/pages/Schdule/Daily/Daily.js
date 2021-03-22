@@ -25,6 +25,7 @@ import parse from "html-react-parser";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
 import Badge from '@material-ui/core/Badge';
+import { getTime } from "date-fns";
 
 
 
@@ -211,8 +212,8 @@ const DailySchedule = (props) => {
       pointerEvents: "none",
     },
     badge: {
-      backgroundColor:"#00adee",
-      color:"white"
+      backgroundColor: "#00adee",
+      color: "white"
     }
   }));
 
@@ -300,6 +301,14 @@ const DailySchedule = (props) => {
       }
     }
   };
+
+
+  // const getDateTime = (job) => { 
+  //   let obj = job.dates.find(x => x.date == new Date(today).toDateString())
+  //   console.log(obj)
+  //   return formatAMPM(obj.time)
+  //  };
+
   return (
     <div className={`${style.scheduleContainer}`}>
       <div className={style.sidebar}>
@@ -398,9 +407,14 @@ const DailySchedule = (props) => {
 
                           <div>
                             <div className={style.heading}>{`Time:`}</div>
-                            <div className={style.content}>{list.startTime
-                              ? formatAMPM(list.startTime)
-                              : "N/A"}</div>
+                            <div className={style.content}>
+                              {
+                                formatAMPM(list.dates[0].time)
+                              }
+                              {
+                                // getDateTime(list)
+                              }
+                            </div>
                           </div>
 
                           <div>
@@ -436,7 +450,7 @@ const DailySchedule = (props) => {
 
                           <div>
                             <Button className={list.assignee.length < list.assigneeRequired ? `${style.deleteButtonTwo}` : ` ${style.deleteButtonOne}`}
-                             onClick={(e) => generatePDF(e, list)}>
+                              onClick={(e) => generatePDF(e, list)}>
                               <i className="fa fa-print"></i>
                               {` Print`}
                             </Button>

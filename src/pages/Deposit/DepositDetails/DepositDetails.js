@@ -104,21 +104,11 @@ const DepositDetails = (props) => {
 
                                         </div>
                                         <div>
-                                            {deposit.job.assignee.length > 0 ? (
-                                                deposit.job.assignee.map((assignee, i) => (
-                                                    <Chip key={i}
-                                                        // label={assignee.name}
-                                                        clickable
-                                                        size="small"
-                                                    />
-                                                ))
-                                            ) : (
-                                                <Chip
-                                                    label="Not Added"
-                                                    clickable
-                                                    size="small"
-                                                />
-                                            )}
+                                            <Chip
+                                                label={deposit.job.status}
+                                                clickable
+                                                size="small"
+                                            />
                                         </div>
                                     </div>
                                 ) : (

@@ -236,6 +236,7 @@ const DailySchedule = (props) => {
     const { destination, source } = result;
     let { showMessage } = props;
     let moverId = source.droppableId;
+    console.log(destination, source, moverId)
     if (!destination) {
       console.log('destination not found')
       showMessage("Please drop on job item.");
@@ -335,8 +336,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                      <span>0</span>
-                    )}
+                        <span>0</span>
+                      )}
                   </h6>
                 </div>
                 <div>
@@ -349,20 +350,8 @@ const DailySchedule = (props) => {
             )}
 
             <hr className={style.styleLine}></hr>
-            {/* {props.jobs && props.jobs.length > 0 && (
-              <div className={style.jobListHeader}>
-                <div>Title</div>
-                <div>Movers Req.</div>
-                <div>Time</div>
-                <div>Assignee</div>
-                <div>Action</div>
-              </div>
-            )} */}
-
             {props.jobs && props.jobs.length > 0 ? (
-
               props.jobs.map((list, i) => {
-
                 return (
                   <Droppable
                     droppableId={list.jobId.toString()}
@@ -434,8 +423,8 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                              <div>N/A</div>
-                            )}</div>
+                                <div>N/A</div>
+                              )}</div>
 
                           </div>
 
@@ -469,18 +458,18 @@ const DailySchedule = (props) => {
                                 <div className={style.content}>{list.jobType}</div>
                               </div>
                               <div className={style.jobStatus}>
-                                
-                                  <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
-                                  <Chip
-                                   className={style.content}
-                                    label={list.status}
-                                    clickable
-                                    size="small"
-                                    color="primary"
-                                    variant="outlined"
-                                  ></Chip>
-                                </div>
-                              
+
+                                <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
+                                <Chip
+                                  className={style.content}
+                                  label={list.status}
+                                  clickable
+                                  size="small"
+                                  color="primary"
+                                  variant="outlined"
+                                ></Chip>
+                              </div>
+
                             </div>
 
                             <div className={style.jobDescriptionHeader}>
@@ -521,10 +510,10 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="" />
+                </div>
+              )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">
@@ -555,13 +544,10 @@ const DailySchedule = (props) => {
                                       {...provided.dragHandleProps}
                                       ref={provided.innerRef}
                                     >
-                                      {" "}
                                       <h6 className={style.moverHeader} key={i}>
-                                        <label>{i + 1}.</label>{" "}
                                         <Badge badgeContent={list.mover.todayJobs} color="primary">
-                                          {list.mover.name}
+                                          {i + 1}. {list.mover.name}
                                         </Badge>
-                                        {" "}
                                         <span className={style.hideAssigneeId}>
                                           {list.mover._id}
                                         </span>

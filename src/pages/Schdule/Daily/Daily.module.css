@@ -215,6 +215,7 @@ border-radius: .3rem;
 }
 .scrollBar .scrollContent {
   height: 100%;
+  width: 20% !important;
 }
 .scrollBar::-webkit-scrollbar {
   width: 8px !important;

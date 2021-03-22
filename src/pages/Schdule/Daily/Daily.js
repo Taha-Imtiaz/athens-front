@@ -26,6 +26,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
 import Badge from '@material-ui/core/Badge';
 
+
+
 const DailySchedule = (props) => {
 
   const [newAssignee, setAssignee] = useState("");
@@ -208,9 +210,13 @@ const DailySchedule = (props) => {
     popover: {
       pointerEvents: "none",
     },
+    badge: {
+      backgroundColor:"#00adee",
+      color:"white"
+    }
   }));
 
-  useStyles();
+  const classes = useStyles();
 
   const printAllJobs = (e) => {
     for (var job of props.jobs) {
@@ -309,7 +315,7 @@ const DailySchedule = (props) => {
                   onSelectedDay(e);
                 }}
                 labelFormat={"MMMM yyyy"}
-                color={"#323232"}
+                color={"#2d2926"}
                 selectDate={newDate}
               />
             </div>
@@ -336,8 +342,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                        <span>0</span>
-                      )}
+                      <span>0</span>
+                    )}
                   </h6>
                 </div>
                 <div>
@@ -423,13 +429,14 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                                <div>N/A</div>
-                              )}</div>
+                              <div>N/A</div>
+                            )}</div>
 
                           </div>
 
                           <div>
-                            <Button className={style.deleteButton} onClick={(e) => generatePDF(e, list)}>
+                            <Button className={list.assignee.length < list.assigneeRequired ? `${style.deleteButtonTwo}` : ` ${style.deleteButtonOne}`}
+                             onClick={(e) => generatePDF(e, list)}>
                               <i className="fa fa-print"></i>
                               {` Print`}
                             </Button>
@@ -510,10 +517,10 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="" />
+              </div>
+            )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">
@@ -545,7 +552,7 @@ const DailySchedule = (props) => {
                                       ref={provided.innerRef}
                                     >
                                       <h6 className={style.moverHeader} key={i}>
-                                        <Badge badgeContent={list.mover.todayJobs} color="primary">
+                                        <Badge badgeContent={list.mover.todayJobs} classes={{ badge: classes.badge }}>
                                           {i + 1}. {list.mover.name}
                                         </Badge>
                                         <span className={style.hideAssigneeId}>

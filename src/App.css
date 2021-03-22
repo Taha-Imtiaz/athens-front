@@ -136,3 +136,10 @@ a {
 .MuiBadge-badge {
   right: -8px !important;
 }
+
+
+.DatePicker_button {
+  color: red !important;
+  background-color: red !important;
+
+}

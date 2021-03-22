@@ -76,14 +76,23 @@ text-transform: capitalize;
   background-color: #e94b3cff !important;
   color: white;
 }
-.deleteButton{
+.deleteButtonTwo{
   background-color: #2d2926ff !important;;
   color: white !important;
   font-weight: bold;
   text-transform: capitalize;
 }
-.deleteButton:hover{
+.deleteButtonOne{
+  color: white !important;
+  background: #00adee !important;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.deleteButtonTwo:hover{
   background-color: rgb(37, 37, 37) !important;
+}
+.deleteButtonOne:hover{
+background: var(--hover-color-blue) !important;
 }
 .hideJobId,
 .hideAssigneeId {
@@ -134,10 +143,7 @@ text-transform: capitalize;
   padding: .5rem 0;
   transition: var(--transition-one);
 }
-.jobDetailList:hover{
-  background-color: #cac7c7;
-  text-decoration: none;
-}
+
 .jobTitle{
   grid-area: title;
 }
@@ -189,7 +195,7 @@ text-transform: capitalize;
   display: grid;
   grid-template-columns: 1fr 98fr 1fr;
 grid-template-areas: ". listContent .";
-background:rgba(0, 0, 0, 0.03);
+background:#e9ecef;
 border-radius: .3rem;
 }
 .customerDetailListContent {

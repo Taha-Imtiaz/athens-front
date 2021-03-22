@@ -229,6 +229,7 @@ class UpdateJob extends Component {
       trucks:job.trucks,
       newService: "",
       newProperty: "",
+      assigneesId: job.assignee.map(x => x._id)
     });
   }
   //show modal when addNote button is pressed
@@ -313,7 +314,8 @@ class UpdateJob extends Component {
       price,
       truck,
       truckSize,
-      trucks
+      trucks,
+      assigneesId
     } = this.state;
 
     let {
@@ -348,7 +350,8 @@ class UpdateJob extends Component {
       price,
       truck,
       truckSize,
-      trucks
+      trucks,
+      assigneesId
     };
     //check if the fields are empty
     if (this.handleValidation()) {

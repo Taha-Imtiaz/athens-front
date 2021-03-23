@@ -85,7 +85,7 @@ const JobDetails = (props) => {
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
                         <div key={i} className={style.assigneehead}>
-                          
+
                           <li><FontAwesomeIcon icon={faUserShield} />{" "}{assignee.name}</li>
                         </div>
                       ))
@@ -177,7 +177,7 @@ const JobDetails = (props) => {
                   label={job.jobType}
                 /></div>
               <div>
-                <div><h5>Service:</h5></div>
+                <div><h5>Services:</h5></div>
                 {job.services.map((service, i) => (
                   <Chip
                     key={i}
@@ -262,7 +262,7 @@ const JobDetails = (props) => {
                       <FontAwesomeIcon icon={faMapMarker} />{" "}
                       <span className={style.locationType}>{`Pickup: `} </span>{" "}
                       <div className={style.location}>
-                        {`${list.value} (Load Only / IA)`}
+                        {list.value} {list.default ? '(Load Only / IA)' : null}
                       </div>
                       <div className="text-muted">
                         {`Property Type: `}
@@ -278,7 +278,7 @@ const JobDetails = (props) => {
                       <div className={style.dropoff} key={i}>
                         <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
                         <span className={style.locationType}>{`Dropoff: `}</span>
-                        <div className={style.location}>{`${list.value} (Unload Only)`}</div>
+                        <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
                         <div className="text-muted">
                           {`Property Type: `}
                           <Chip

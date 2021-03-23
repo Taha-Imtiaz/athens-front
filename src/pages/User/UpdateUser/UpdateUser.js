@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { TextField, FormControlLabel } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
@@ -27,7 +27,7 @@ const UpdateUser = (props) => {
 
     getUser(userId, (res) => {
       setUserState(res.data.data);
-    
+
 
     })
 
@@ -67,14 +67,14 @@ const UpdateUser = (props) => {
     } else {
       setUserState({ ...userState, [name]: value });
     }
-    
+
   };
 
   //handler for switch
   const handleChange = () => {
-   
+
     setUserState({ ...userState, activeStatus: !userState.activeStatus })
-    
+
   };
   const updateUserData = () => {
     let userData = {
@@ -155,12 +155,19 @@ const UpdateUser = (props) => {
                 className={style.styleAddress}
               />
               <div className={style.flexEnd}>
-                <Switch
-                  checked={userState.activeStatus}
-                  onChange={handleChange}
-                  color="primary"
-                  name="activeStatus"
-                  inputProps={{ "aria-label": "primary checkbox" }}
+
+
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={userState.activeStatus}
+                      onChange={handleChange}
+                      color="primary"
+                      name="activeStatus"
+                      inputProps={{ "aria-label": "primary checkbox" }}
+                    />
+                  }
+                  label={userState.activeStatus ? 'Active' : 'In Active'}
                 />
               </div>
               <div className={`${style.styleFormFields} ${style.updateBtn}`}>

@@ -112,8 +112,8 @@ const DepositDetails = (props) => {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div>Not Added</div>
-                                )}
+                                        <div>Not Added</div>
+                                    )}
                             </div>
                         </div>
                         <div className={`${style.claimButton}`}>
@@ -142,6 +142,7 @@ const DepositDetails = (props) => {
                                         value={updatedDeposit.quantity}
                                         onChange={(e) => handleOnChange(e)}
                                         disabled={!toggleEdit}
+                                        onDoubleClick={() => setToggleEdit(true)}
                                     >
                                         {" "}
                                     </TextField>
@@ -157,6 +158,7 @@ const DepositDetails = (props) => {
                                         value={updatedDeposit.cost}
                                         onChange={(e) => handleOnChange(e)}
                                         disabled={!toggleEdit}
+                                        onDoubleClick={() => setToggleEdit(true)}
                                     >
                                         {" "}
                                     </TextField>
@@ -171,7 +173,7 @@ const DepositDetails = (props) => {
                                     Save
                                 </Button>
                             ) : <Button className={style.button} onClick={() => setToggleEdit(true)}>
-                                Edit
+                                    Edit
                                 </Button>
                             }
                         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import style from "./Daily.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -308,6 +308,84 @@ const DailySchedule = (props) => {
   //   console.log(obj)
   //   return formatAMPM(obj.time)
   //  };
+  const moverListItem = (mover) => {
+    return (
+      <div key={mover._id.toString()}>
+        <Droppable
+          droppableId={mover._id.toString()}
+          type="TASK"
+        >
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              <Draggable
+                draggableId={mover._id.toString()}
+                index={mover._id}
+              >
+                {(provided, snapshot) => (
+                  <div
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                  >
+                    <h6 className={style.moverHeader} key={mover._id.toString()}>
+                      <Badge badgeContent={mover.todayJobs} classes={{ badge: classes.badge }}>
+                        {mover.name}
+                      </Badge>
+                      <span className={style.hideAssigneeId}>
+                        {mover._id}
+                      </span>
+                    </h6>
+                  </div>
+                )}
+              </Draggable>
+            </div>
+          )}
+        </Droppable>
+      </div>
+    );
+  }
+
+  const moversList = (list) => {
+    let movers = []
+    let crewLeaders = []
+    let newMovers = [];
+    list.map(x => {
+      console.log(x.mover.attribute)
+      switch (x.mover.attribute) {
+        case 'Movers':
+          // code block
+          movers.push(x.mover)
+          break;
+        case 'Crew Leaders':
+          // code block
+          crewLeaders.push(x.mover)
+          break;
+        case 'New Movers':
+          // code block
+          newMovers.push(x.mover)
+          break;
+        default:
+        // code block
+      }
+    })
+    console.log(movers, crewLeaders, newMovers)
+    return (
+      <Fragment>
+        <h5>Crew Leaders</h5>
+        <hr />
+        {crewLeaders.map(x => moverListItem(x))}
+        <h5>Movers</h5>
+        <hr />
+        {movers.map(x => moverListItem(x))}
+        <h5>New Movers</h5>
+        <hr />
+        {newMovers.map(x => moverListItem(x))}
+      </Fragment>
+    )
+  }
 
   return (
     <div className={`${style.scheduleContainer}`}>
@@ -351,8 +429,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                      <span>0</span>
-                    )}
+                        <span>0</span>
+                      )}
                   </h6>
                 </div>
                 <div>
@@ -372,7 +450,6 @@ const DailySchedule = (props) => {
                     droppableId={list.jobId.toString()}
                     type="TASK"
                     key={i}
-
                   >
                     {(provided, snapshot) => (
                       <div
@@ -443,8 +520,8 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                              <div>N/A</div>
-                            )}</div>
+                                <div>N/A</div>
+                              )}</div>
 
                           </div>
 
@@ -531,57 +608,18 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="" />
+                </div>
+              )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">
             <div className={` ${style.scroll}`}>
-              <h4 className={`  ${style.movehead}`}>Movers</h4>
+              {/* <h4 className={`  ${style.movehead}`}>Movers</h4> */}
               <div className={`${style.scrollBar}`}>
                 <div className={`  ${style.scrollContent}`}>
-                  {movers &&
-                    movers.map((list, i) => {
-                      return (
-                        <div key={i}>
-                          <Droppable
-                            droppableId={list.mover._id.toString()}
-                            type="TASK"
-                          >
-                            {(provided, snapshot) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                              >
-                                <Draggable
-                                  draggableId={list.mover._id.toString()}
-                                  index={i}
-                                >
-                                  {(provided, snapshot) => (
-                                    <div
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      ref={provided.innerRef}
-                                    >
-                                      <h6 className={style.moverHeader} key={i}>
-                                        <Badge badgeContent={list.mover.todayJobs} classes={{ badge: classes.badge }}>
-                                          {i + 1}. {list.mover.name}
-                                        </Badge>
-                                        <span className={style.hideAssigneeId}>
-                                          {list.mover._id}
-                                        </span>
-                                      </h6>
-                                    </div>
-                                  )}
-                                </Draggable>
-                              </div>
-                            )}
-                          </Droppable>
-                        </div>
-                      );
-                    })}
+                  {movers && moversList(movers)}
                 </div>
               </div>
             </div>

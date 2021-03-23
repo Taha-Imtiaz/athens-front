@@ -82,8 +82,8 @@ export const updateDeposit = (data) => {
       });
       dispatch(showMessage(response.data.message));
       dispatch({
-        type: EDIT_DEPOSIT,
-        payload: response.data.data.blanketDeposit,
+        type: GET_DEPOSIT,
+        payload: response.data.data,
       });
     } catch (err) {
       dispatch(showMessage(err.message));

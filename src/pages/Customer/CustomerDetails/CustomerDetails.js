@@ -332,11 +332,11 @@ const CustomerDetails = (props) => {
                                   {i === 0 ? (
                                     <div key={i}>{x.date}</div>
                                   ) : (
-                                    <div key={i}>
-                                      <span className={style.spacing}>|</span>
-                                      {x.date}
-                                    </div>
-                                  )}
+                                      <div key={i}>
+                                        <span className={style.spacing}>|</span>
+                                        {x.date}
+                                      </div>
+                                    )}
                                 </div>
                               ))}
                             </div>
@@ -441,18 +441,18 @@ const CustomerDetails = (props) => {
                                           {assignee.name}
                                         </span>
                                       ) : (
-                                        <span key={i} className={style.jobAssignee}>
-                                          <span className={style.spacing}> | </span>
-                                          {assignee.name}
-                                        </span>
-                                      )
+                                          <span key={i} className={style.jobAssignee}>
+                                            <span className={style.spacing}> | </span>
+                                            {assignee.name}
+                                          </span>
+                                        )
                                     )}
                                   </div>
                                 ) : (
 
-                                  <div>
-                                    {`Not Assigned`}</div>
-                                )}
+                                    <div>
+                                      {`Not Assigned`}</div>
+                                  )}
                               </div>
                               {/* show job Description */}
                               <div className={style.jobDetailContainer}>
@@ -469,7 +469,7 @@ const CustomerDetails = (props) => {
                                         <FontAwesomeIcon icon={faDotCircle} />{" "}
                                         <span>{`Pickup`} </span>{" "}
                                         <div className={style.location}>
-                                          {`${list.value} (Load Only / IA)`}
+                                          {list.value} {list.default ? '(Load Only / IA)' : null}
                                         </div>
                                         <div className="text-muted">
                                           {`Property Type: `}
@@ -482,23 +482,23 @@ const CustomerDetails = (props) => {
                                           /></div>
                                       </div>
                                     ) : (
-                                      <div key={i}>
-                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
-                                        <span>{`Dropoff`}</span>
-                                        <div className={style.location}>
-                                          {`${list.value} (Unload Only)`}
+                                        <div key={i}>
+                                          <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                          <span>{`Dropoff`}</span>
+                                          <div className={style.location}>
+                                            {list.value} {list.default ? '(Unload Only)' : null}
+                                          </div>
+                                          <div className="text-muted">
+                                            {`Property Type: `}
+                                            <Chip
+                                              clickable
+                                              color="primary"
+                                              variant="outlined"
+                                              size="small"
+                                              label={list.propertyType}
+                                            /></div>
                                         </div>
-                                        <div className="text-muted">
-                                          {`Property Type: `}
-                                          <Chip
-                                            clickable
-                                            color="primary"
-                                            variant="outlined"
-                                            size="small"
-                                            label={list.propertyType}
-                                          /></div>
-                                      </div>
-                                    )
+                                      )
                                   )}
                                 </div>
                               )}
@@ -523,10 +523,10 @@ const CustomerDetails = (props) => {
                   </div>
                 </div>
               ) : (
-                <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
-                  No job added yet
+                  <h4 className={`${style.flex} ${style.styleEmptyJobs}`}>
+                    No job added yet
                 </h4>
-              )}
+                )}
             </div>
           </TabPanel>
           {/* Tab Panel of claim */}
@@ -577,16 +577,16 @@ const CustomerDetails = (props) => {
                         <div>
                           <div className={`text-muted ${style.heading}`}>Job ID</div>
                           <div className={style.headingSub}>{claim.job && claim.job.jobId}</div>
-                          
+
                         </div>
                         <div>
                           <div className={`text-muted ${style.heading}`}>Status</div>
-                          <div  className={`text-capitalize ${style.headingSub}`}>{claim.status}</div>
-                          
+                          <div className={`text-capitalize ${style.headingSub}`}>{claim.status}</div>
+
                         </div>
                         <div>
                           <div className={`text-muted ${style.heading}`}>Last Updated</div>
-                          <TimeAgo  className={`text-capitalize ${style.headingSub}`} date={claim.updatedAt} />
+                          <TimeAgo className={`text-capitalize ${style.headingSub}`} date={claim.updatedAt} />
                         </div>
                       </div>
                       <div
@@ -637,13 +637,13 @@ const CustomerDetails = (props) => {
                                           Close Claim
                                         </Button>
                                       ) : (
-                                        <Button
-                                          className={style.button}
-                                          onClick={() => setToggleClaim(true)}
-                                        >
-                                          Reopen Claim
+                                          <Button
+                                            className={style.button}
+                                            onClick={() => setToggleClaim(true)}
+                                          >
+                                            Reopen Claim
                                         </Button>
-                                      )}
+                                        )}
                                     </div></div>
 
                                 </div>
@@ -769,10 +769,10 @@ const CustomerDetails = (props) => {
 
                 })
               ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="Data not found" />
-                </div>
-              )}
+                  <div className="text-center">
+                    <img src="/images/no-data-found.png" alt="Data not found" />
+                  </div>
+                )}
             </div>
           </TabPanel>
 
@@ -804,10 +804,10 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue} update={updateBlanket} />
             ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="Data not found" />
-              </div>
-            )}
+                <div className="text-center">
+                  <img src="/images/no-data-found.png" alt="Data not found" />
+                </div>
+              )}
           </TabPanel>
 
           <br />

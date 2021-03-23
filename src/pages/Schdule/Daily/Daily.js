@@ -355,15 +355,15 @@ const DailySchedule = (props) => {
     list.map(x => {
       console.log(x.mover.attribute)
       switch (x.mover.attribute) {
-        case 'Movers':
+        case 'mover':
           // code block
           movers.push(x.mover)
           break;
-        case 'Crew Leaders':
+        case 'crew leader':
           // code block
           crewLeaders.push(x.mover)
           break;
-        case 'New Movers':
+        case 'new mover':
           // code block
           newMovers.push(x.mover)
           break;

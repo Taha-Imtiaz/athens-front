@@ -28,23 +28,23 @@ class CreateUser extends Component {
     { name: "Mover", id: 2 },
   ];
   attributeOptions = [
-    { name: "Crew Leaders" },
-    { name: "Movers" },
-    { name: "New Movers" },
+    { name: "Crew Leaders", value: 'crew leader' },
+    { name: "Movers", value: 'mover' },
+    { name: "New Movers", value: 'new mover' }
   ];
 
   constructor(props) {
     super(props);
 
     this.state = initialState;
-    
+
   }
   onTypeSelect = (selectedList, selectedItem) => {
     this.setState({ type: selectedItem });
   };
 
   onAttributeSelect = (selectedList, selectedItem) => {
-    this.setState({ attribute: selectedItem.name });
+    this.setState({ attribute: selectedItem.value });
   };
 
   validate = () => {
@@ -223,29 +223,29 @@ class CreateUser extends Component {
                 className={style.styleAddress}
               />
 
-           
-               <Autocomplete
-      id="combo-box-demo"
-      options={this.typeOptions}
-      onChange={this.onTypeSelect} 
-      getOptionLabel={(option) => option.name}
-      className={style.styleMultiSelect}
-      size = "small"
-      renderInput={(params) => <TextField 
-        {...params} label="Select Type" variant="outlined" />}
-    />
 
-              
-                 <Autocomplete
-      id="combo-box-demo"
-      options={this.attributeOptions}
-      onChange = {this.onAttributeSelect}
-      getOptionLabel={(option) => option.name}
-      className={style.styleMultiSelect}
-      size = "small"
-      renderInput={(params) => <TextField 
-        {...params} label="Select Attribute" variant="outlined" />}
-    />
+              <Autocomplete
+                id="combo-box-demo"
+                options={this.typeOptions}
+                onChange={this.onTypeSelect}
+                getOptionLabel={(option) => option.name}
+                className={style.styleMultiSelect}
+                size="small"
+                renderInput={(params) => <TextField
+                  {...params} label="Select Type" variant="outlined" />}
+              />
+
+
+              <Autocomplete
+                id="combo-box-demo"
+                options={this.attributeOptions}
+                onChange={this.onAttributeSelect}
+                getOptionLabel={(option) => option.name}
+                className={style.styleMultiSelect}
+                size="small"
+                renderInput={(params) => <TextField
+                  {...params} label="Select Attribute" variant="outlined" />}
+              />
 
               <div className={style.createBtn}>
                 <Button className={style.button} onClick={this.mySubmitHandler}>

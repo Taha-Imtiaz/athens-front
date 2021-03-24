@@ -1,20 +1,18 @@
 .jobEditContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
-  /* grid-template-rows: minmax(90vh, min-content); */
+  grid-template-rows: minmax(90vh, min-content);
   /* background-color: #00adee; */
+  background-color: #e9ecef;
   grid-template-areas: ". containerContent .";
 }
 .containerContent {
   grid-area: containerContent;
   margin-top: 1rem;
-
   display: grid;
-  /* background-color: #00ADEE; */
   grid-template-rows: 1fr;
   grid-template-columns: 25fr 75fr;
   font-family: var(--font-family-paragraph);
-
   column-gap: 2rem;
   grid-template-areas: "cards jobDetail";
 }
@@ -26,14 +24,26 @@
   grid-template-areas:
     "customerCard"
     "assigneeCard"
+    "activityBtn"
     ".";
   row-gap: 1rem;
 }
 .customerCard {
   grid-area: customerCard;
+  border-radius: 1rem;
+  border: none;
 }
 .assigneeCard {
   grid-area: assigneeCard;
+  border-radius: 1rem;
+  border: none;
+}
+.assigneehead{
+  text-decoration: none;
+  text-transform: capitalize;
+}
+.assigneehead > li{
+  list-style: none;
 }
 
 .center {
@@ -44,32 +54,67 @@
 
 .jobDetail {
   grid-area: jobDetail;
-  /* background-color: #e9ecef; */
+  background-color: #e9ecef;
   display: grid;
   grid-template-rows:
-    10vh minmax(6vh, min-content) 5vh repeat(3, minmax(11vh, min-content))
+  minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
+      3,
+      minmax(11vh, min-content)
+    )
     min-content;
-  border-radius: 0.4rem;
-  padding: 0 1rem;
+    border: none;
+  /* border-radius: 0.4rem; */
+  /* padding: 0 1rem; */
   /* background-color: #00adee; */
 }
 .jobHeader {
+  background-color: white;
+  border-radius: 1rem;
   display: grid;
-  grid-template-columns: 80fr 20fr;
+  grid-template-columns: 1fr;
+  font-family: var(--font-family-paragraph);
+  padding: 1rem 1rem;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+}
+.jobHeader > h5{
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.jobHeader___childs{
+  display: grid;
+  grid-template-columns: 75fr 25fr;
 }
 .jobDates {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
-  grid-template-rows: minmax(6vh, min-content);
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
+  grid-template-rows: minmax(6vh, min-content); */
 }
+.job___IdStatus{
+  display:flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  }
 .service {
+  padding: .5rem; 
   display: grid;
-  grid-template-rows: 5vh;
-  grid-template-columns: repeat(auto-fit, minmax(10vh, min-content));
+  grid-template-columns: 25fr 75fr;
+}
+.service >*{
+  font-weight: 500;
 }
 .jobDescription {
-  display: grid;
+  /* display: grid; */
   /* grid-template-rows: minmax(5vh, min-content); */
+}
+.jobDescription___title, .notes___title {
+  font-size: larger;
+  padding: .5rem;
+}
+.jobDescription___text, .notes___text{
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.8rem 0.5rem;
 }
 .notes {
   margin: 1rem 0;
@@ -82,26 +127,37 @@
 }
 
 .locations {
-  display: grid;
+  /* display: grid;
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
   grid-template-columns: repeat(3, 1fr);
   /* background-color: aquamarine; */
-  row-gap: 1.5rem;
+  /* row-gap: 1.5rem;  */
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+border: none;
+  padding: .5rem;
 }
 .location {
   display: grid;
   grid-template-columns: 1fr;
 }
+.locationType{
+  font-weight: bold;
+}
 .payBtns {
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
   display: grid;
-  grid-template-rows: 1fr;
-  column-gap: 0.3rem;
-  grid-template-columns: 75fr repeat(2, 12.5fr);
-  grid-template-areas: ". payOnlineBtn payCashBtn";
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  /* column-gap: 1rem; */
+  /* grid-template-columns: 5fr repeat(2, 90fr) 5fr; */
+  grid-template-areas: ". payOnlineBtn payCashBtn .";
 }
 .payOnlineBtn {
-  grid-area: payOnlineBtn;
+  grid-area: payOnlineBtn;  
 }
 .payCashBtn {
   grid-area: payCashBtn;
@@ -110,15 +166,13 @@
   text-decoration: none;
   color: #fff;
 }
-
 .payBtns .buttons {
   background: #00adee;
   text-transform: none;
-  width: 100%;
+  width: max-content;
   color: #fff;
   font-family: var(--font-family-paragraph);
-
 }
 .payBtns .buttons:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }

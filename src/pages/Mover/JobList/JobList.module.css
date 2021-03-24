@@ -44,20 +44,29 @@
 }
 .listContent {
   grid-area: listContent;
-  /* background-color: aqua; */
+  /* background-color: aqua !important; */
   display: grid;
-  /* margin: 2rem 0; */
+  margin: .5rem 0;
   grid-template-columns: 75fr 25fr;
   grid-template-areas: "styleLink jobStatus";
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: none;
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
+  border-radius: .3rem;
+  transition: var(--transition-one);
+  padding: .5rem .5rem;
 }
 .listContent:hover {
   background-color: #cac7c7 !important;
   /* text-decoration: none; */
 }
-
+.heading{  
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+.headingSub{
+  font-weight: 900;
+}
 .styleLink {
   grid-area: styleLink;
   color: black;
@@ -75,26 +84,26 @@
   grid-area: jobList;
   display: grid;
   /* background-color: blue; */
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 5fr 2.5fr 2.5fr;
   grid-template-areas: "title date assignee";
 }
 .title {
   grid-area: title;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .date {
   grid-area: date;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
-.icon {
+/* .icon {
   margin-right: 0.4rem;
-}
+} */
 .styleSpan {
   display: flex;
 }
 .assignee {
   grid-area: assignee;
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
 }
 .jobStatus {
   grid-area: jobStatus;
@@ -106,10 +115,11 @@
 .flex {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction:column;
 }
 .listContent:hover .item {
-  color: #fff;
+  color: #000;
 }
 .filter {
   cursor: pointer;

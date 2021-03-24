@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  Chip
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
@@ -78,9 +79,9 @@ const MoversJobList = (props) => {
   };
 
   const markComplete = (list) => {
-    let {updateJob } = props;
+    let { updateJob } = props;
     updateJob(list._id, { status: "completed" },
-     );
+    );
   };
 
   const handleDatePopoverOpen = (event, id) => {
@@ -247,7 +248,7 @@ const MoversJobList = (props) => {
       <div className={style.toprow}>
         <div className={style.rowContent}>
           <div>
-            <h3>Job List </h3>
+            <h3>Jobs List</h3>
           </div>
           <div>
             <SearchBar type="mover" title="Type title or services" />
@@ -305,7 +306,7 @@ const MoversJobList = (props) => {
         </div>
       </div>
 
-      {moverJobs && moverJobs.length > 0 ? (
+      {/* {moverJobs && moverJobs.length > 0 ? (
         <div className={style.jobListHeaderContainer}>
           <div className={style.jobListHeader}>
             <div>Title</div>
@@ -314,7 +315,7 @@ const MoversJobList = (props) => {
             <div>Status</div>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
 
       {moverJobs && moverJobs.length > 0 ? (
         <div>
@@ -328,19 +329,19 @@ const MoversJobList = (props) => {
                   >
                     <div className={`${style.jobList}`}>
                       <div
-                        className={`${style.title} ${style.flex} ${style.item}`}
+                        className={`${style.title} 
+                        ${style.flex} 
+                        ${style.item}`}
                       >
-                        {list.title}
+                        <div className={`text-muted ${style.heading}`}>{`title: `}</div>
+                        <div className={`text-capitalize ${style.headingSub}`}>{list.title}</div>
                       </div>
                       <div
                         className={`${style.date} ${style.flex} ${style.item}`}
                       >
-                        <FontAwesomeIcon
-                          icon={faCalendarAlt}
-                          className={style.icon}
-                        />{" "}
-                        <span className={style.styleSpan}>
-                          {list.dates[0]}
+                        <div className={`text-muted ${style.heading}`}>{`Date:`}</div>
+                        <span className={`${style.headingSub} ${style.styleSpan}`}>
+                          {list.dates[0].date}
                           {list.dates.length > 1 && (
                             <div>
                               <Typography
@@ -375,8 +376,8 @@ const MoversJobList = (props) => {
                                 onClose={handleDatePopoverClose}
                                 disableRestoreFocus
                               >
-                                {list.dates.map((date) => (
-                                  <Typography>{date}</Typography>
+                                {list.dates.map((dates, i) => (
+                                  <Typography key={i}>{dates.date}</Typography>
                                 ))}
                               </Popover>
                             </div>
@@ -386,12 +387,12 @@ const MoversJobList = (props) => {
 
                       <div
                         className={`${style.assignee} ${style.flex}  ${style.item}`}
-                      >
-                        <span className={style.styleSpan}>
-                          <FontAwesomeIcon
+                      ><div className={`text-muted ${style.heading}`}>{`Assignee: `}</div>
+                        <span className={`text-capitalize ${style.headingSub} ${style.styleSpan}`}>
+                          {/* <FontAwesomeIcon
                             icon={faUser}
                             className={style.icon}
-                          />{" "}
+                          />{" "} */}
                           {list.assignee.length > 0
                             ? list.assignee[0].name
                             : "No Assignees"}
@@ -444,30 +445,37 @@ const MoversJobList = (props) => {
                     </div>
                   </Link>
 
-                 
-                    {list.status === "booked" ? (
-                      <div
-                        className={`${style.flex} ${style.jobStatus} ${style.item}`}
-                      >
+
+                  {list.status === "booked" ? (
+                    <div className={`${style.flex} ${style.jobStatus}  ${style.item}`}>
+                      <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
+
+                      <div className={`text-capitalize ${style.headingSub}`}>
                         <input
                           className={style.styleCheckBox}
                           onClick={() => markComplete(list)}
                           type="checkbox"
                         ></input>
-                        <div>
-                          Mark Complete
-                        </div>
+                        <Chip
+                          size="small"
+                          label={`Mark Complete`} />
                       </div>
-                    ) : (
-                      <div
-                        className={`${style.status} ${style.flex} ${style.item}`}
-                      >
-                        {list.status}
+
+                    </div>
+                  ) : (
+                    <div className={`${style.status} ${style.flex} ${style.item}`}>
+                      <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
+                      <div className={`text-capitalize ${style.headingSub}`}>
+                        <Chip
+                          size="small"
+                          label={list.status}
+                        />
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-            
+              </div>
+
             );
           })}
           <div className={style.stylePagination}>

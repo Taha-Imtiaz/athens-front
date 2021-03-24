@@ -1,7 +1,7 @@
 .moversContainer {
   display: grid;
   grid-template-rows: minmax(90vh, min-content);
-  grid-template-columns: 15fr 85fr;
+  grid-template-columns: 12fr 88fr;
 }
 .moversContent {
   display: grid;
@@ -15,21 +15,34 @@
   margin-top: 1rem;
   grid-area: moverHeader;
   display: grid;
-  grid-template-columns: 90fr 10fr;
+  grid-template-columns: 85fr 15fr;
   /* background-color: aquamarine; */
 }
 .moverList {
   grid-area: moverList;
+  /* background-color: red; */
 }
 .listContent {
   display: grid;
+  /* background-color: red; */
   row-gap: 0.75rem;
+}
+.list{
+  /* background-color: #e9ecef; */
+  border: none;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: .3rem;
+  transition: var(--transition-one);
+}
+.list:hover {
+  background-color: #cac7c7 !important;
+  /* text-decoration: none; */
 }
 .dropDownMenu {
   border:none;
   padding: 0.5rem 0.75rem;
   color: #00ADEE;
-  border-radius: 0.25rem;
+  border-radius: 0.3rem;
 
 }
 

@@ -130,9 +130,9 @@ const UnavailableSchedule = (props) => {
               return (
                 <div className={`list-group ${style.item}`} key={i}>
                   <div
-                    className={`list-group-item list-group-item-action flex-column align-items-start `}
+                    className={`text-capitalize list-group-item list-group-item-action flex-column align-items-start `}
                   >
-                    <div className={`d-flex w-100 justify-content-between`}>
+                    <div className={`d-flex w-100 justify-content-between mb-1`}>
                       <span>
                         {list && list.approved === false && (
                           <input
@@ -143,18 +143,19 @@ const UnavailableSchedule = (props) => {
                             className={`${style.checkBox}`}
                           />
                         )}
-                        {list.applicant && list.applicant.name}
+                        <span className="font-weight-bold">{list.applicant && list.applicant.name}</span>
+                        
                       </span>
                     </div>
                     <p className="mb-1">
                       {list.dates.map((date, k) => (
-                        <span className="mr-2" key={k}>
+                        <span className="mr-2 " key={k}>
                           {new Date(date).toDateString()}
                         </span>
                       ))}
                     </p>
                     <div>
-                      <p className="mb-1">Reason: {list.reason}</p>
+                      <p className="mb-1"><span className="font-weight-bold">{`Reason: `}</span>{list.reason}</p>
                     </div>
                   </div>
                 </div>

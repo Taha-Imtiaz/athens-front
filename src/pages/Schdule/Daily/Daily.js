@@ -375,14 +375,11 @@ const DailySchedule = (props) => {
     return (
       <Fragment>
         <h5>Crew Leaders</h5>
-        <hr />
-        {crewLeaders.map(x => moverListItem(x))}
+        {crewLeaders.map(x => moverListItem(x))}<hr />
         <h5>Movers</h5>
-        <hr />
-        {movers.map(x => moverListItem(x))}
+        {movers.map(x => moverListItem(x))}<hr />
         <h5>New Movers</h5>
-        <hr />
-        {newMovers.map(x => moverListItem(x))}
+        {newMovers.map(x => moverListItem(x))}<hr />
       </Fragment>
     )
   }
@@ -429,8 +426,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                        <span>0</span>
-                      )}
+                      <span>0</span>
+                    )}
                   </h6>
                 </div>
                 <div>
@@ -520,8 +517,8 @@ const DailySchedule = (props) => {
                                 ))}
                               </div>
                             ) : (
-                                <div>N/A</div>
-                              )}</div>
+                              <div>N/A</div>
+                            )}</div>
 
                           </div>
 
@@ -608,10 +605,10 @@ const DailySchedule = (props) => {
                 );
               })
             ) : (
-                <div className="text-center">
-                  <img src="/images/no-data-found.png" alt="" />
-                </div>
-              )}
+              <div className="text-center">
+                <img src="/images/no-data-found.png" alt="" />
+              </div>
+            )}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">

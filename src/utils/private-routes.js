@@ -2,24 +2,24 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
-function PrivateRoute({ component: Component, ...rest }) {
+function PrivateRoute({ user, roles, component: Component, ...rest }) {
     const isAuthenticated = (props) => {
         let token = localStorage.getItem('athens-token')
-        if (token) {
-            return true;
+        if (token && user) {
+            return roles.includes(user.role)
         }
         return false;
     };
-
     return (
         <Route
             {...rest}
             render={props => {
+                console.log(props)
                 return isAuthenticated(props) ? (
                     <Component {...props} />
                 ) : (
-                        <Redirect to="/" />
-                    )
+                    user && user.role == 'mover' ? <Redirect to="/mover" /> : <Redirect to="/customers" />
+                )
             }
             }
         />
@@ -29,5 +29,4 @@ function PrivateRoute({ component: Component, ...rest }) {
 var mapStateToProps = (state) => ({
     user: state.users.user
 });
-
 export default connect(mapStateToProps, null)(PrivateRoute);

@@ -77,6 +77,12 @@ function App(props) {
 
   const location = useLocation();
   let { pathname } = location;
+  let appRoles = ["mover", "admin"]
+  let moverRoles = ["mover"]
+  let adminRoles = ["admin"]
+const notFound = () =>{
+  return  <h1>Not Found</h1>
+}
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>
@@ -98,79 +104,63 @@ function App(props) {
         <Switch>
           <ErrorBoundary>
             {/* Auth */}
-            <Route path="/" exact component={SignIn} />
-            <Route path="/email-verification" component={EmailVerification} />
-            <Route path="/verifycode" component={CodeVerification} />
-            <PrivateRoute path="/rest-password" component={ResetPassword} />
+            <Route path="/" exact component={SignIn} roles={appRoles} />
+            <Route path="/email-verification" component={EmailVerification} roles={appRoles} />
+            <Route path="/verifycode" component={CodeVerification} roles={appRoles} />
+            <PrivateRoute path="/rest-password" component={ResetPassword} roles={appRoles} />
 
             {/* Customer */}
-            <PrivateRoute path="/customers" exact component={CustomerList} />
-            <PrivateRoute
-              path="/customer/detail/:customerId"
-              component={CustomerDetails}
-            />
-            <PrivateRoute path="/customer/add" component={CreateCustomer} />
-            <PrivateRoute
-              path="/customer/update/:customerId"
-              component={UpdateCustomer}
-            />
+            <PrivateRoute path="/customers" exact component={CustomerList} roles={adminRoles} />
+            <PrivateRoute path="/customer/detail/:customerId" component={CustomerDetails} roles={adminRoles} />
+            <PrivateRoute path="/customer/add" component={CreateCustomer} roles={adminRoles} />
+            <PrivateRoute path="/customer/update/:customerId" component={UpdateCustomer} roles={adminRoles} />
 
             {/* Job */}
-            <PrivateRoute path="/jobs" component={JobList} exact />
-            <PrivateRoute path="/job/detail/:jobId" component={JobDetails} />
-            <PrivateRoute path="/job/add" component={CreateJob} />
-            <PrivateRoute path="/job/update/:jobId" component={UpdateJob} />
+            <PrivateRoute path="/jobs" component={JobList} exact roles={adminRoles} />
+            <PrivateRoute path="/job/detail/:jobId" component={JobDetails} roles={adminRoles} />
+            <PrivateRoute path="/job/add" component={CreateJob} roles={adminRoles} />
+            <PrivateRoute path="/job/update/:jobId" component={UpdateJob} roles={adminRoles} />
 
             {/* Calendar */}
-            <PrivateRoute path="/calendar" component={Calendar} />
+            <PrivateRoute path="/calendar" component={Calendar} roles={adminRoles} />
 
             {/* Schedule */}
-            <PrivateRoute path="/schedule" component={DailySchedule} exact />
-            <PrivateRoute
-              path="/schedule/unavailable"
-              component={UnavailableSchedule}
-              exact
-            />
-            <PrivateRoute path="/schedule/movers" component={MoversSchedule} />
+            <PrivateRoute path="/schedule" component={DailySchedule} exact roles={adminRoles} />
+            <PrivateRoute path="/schedule/unavailable" component={UnavailableSchedule} exact roles={adminRoles} />
+            <PrivateRoute path="/schedule/movers" component={MoversSchedule} roles={adminRoles} />
 
             {/* User */}
-            <PrivateRoute path="/users" component={UserList} exact />
-            <PrivateRoute path="/user/add" component={CreateUser} />
-            <PrivateRoute path="/user/update/:userId" component={UpdateUser} />
+            <PrivateRoute path="/users" component={UserList} exact roles={adminRoles} />
+            <PrivateRoute path="/user/add" component={CreateUser} roles={adminRoles} />
+            <PrivateRoute path="/user/update/:userId" component={UpdateUser} roles={adminRoles} />
 
 
             {/* Account */}
-            <PrivateRoute path="/account" component={Account} exact />
+            <PrivateRoute path="/account" component={Account} exact roles={adminRoles} />
 
             {/* Claim */}
-            <PrivateRoute path="/claims" component={ClaimList} />
-            <PrivateRoute
-              path="/claim/detail/:claimId"
-              component={ClaimDetails}
-            />
-            <PrivateRoute path="/claim/add" component={CreateClaim} exact />
+            <PrivateRoute path="/claims" component={ClaimList} roles={adminRoles} />
+            <PrivateRoute path="/claim/detail/:claimId" component={ClaimDetails} roles={adminRoles} />
+            <PrivateRoute path="/claim/add" component={CreateClaim} exact roles={adminRoles} />
 
             {/* Deposit */}
-            <PrivateRoute path="/deposits" exact component={DepositList} />
+            <PrivateRoute path="/deposits" exact component={DepositList} roles={adminRoles} />
             <PrivateRoute
               path="/deposit/detail/:depositId"
-              component={DepositDetails}
+              component={DepositDetails} roles={adminRoles}
             />
-            <PrivateRoute path="/deposit/add" component={CreateDeposit} />
+            <PrivateRoute path="/deposit/add" component={CreateDeposit} roles={adminRoles} />
 
             {/* Mover */}
-            <PrivateRoute path="/mover" component={MoversJobList} exact />
-            <PrivateRoute
-              path="/mover/jobdetails/:jobId"
-              component={MoverJobDetails}
-            />
-            <PrivateRoute path="/mover/payment" component={Payment} />
-            <PrivateRoute path="/mover/calendar" component={MoversCalendar} />
-            <PrivateRoute path="/mover/availability" component={Availability} />
-            <PrivateRoute
-              path="/mover/holidaycalendar"
-              component={RequestHolidays}
-            />
+            <PrivateRoute path="/mover" component={MoversJobList} exact roles={moverRoles} />
+            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoverJobDetails}  roles={moverRoles} />
+            <PrivateRoute path="/mover/payment" component={Payment} roles={moverRoles} />
+            <PrivateRoute path="/mover/calendar" component={MoversCalendar} roles={moverRoles} />
+            <PrivateRoute path="/mover/availability" component={Availability} roles={moverRoles} />
+            <PrivateRoute path="/mover/holidaycalendar" component={RequestHolidays} roles={moverRoles} />
+          
+            {/* Default Page */}
+            {/* <Route path="/**" exact component={notFound}/> */}
           </ErrorBoundary>
         </Switch>
       </div>

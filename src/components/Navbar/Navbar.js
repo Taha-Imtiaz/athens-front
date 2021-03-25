@@ -27,7 +27,6 @@ const Navbar = (props) => {
   };
   let logOut = () => {
     localStorage.clear();
-
     window.location.reload(false);
   };
   return (

@@ -56,16 +56,17 @@
   grid-area: jobDetail;
   background-color: #e9ecef;
   display: grid;
-  grid-template-rows:
-  minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
-      3,
-      minmax(11vh, min-content)
-    )
+  grid-template-rows: 
+    minmax(10vh, min-content)
+    minmax(6vh, min-content) 
+    minmax(5vh, min-content) 
+    minmax(11vh, min-content)
     min-content;
-    border: none;
+  border: none;
   /* border-radius: 0.4rem; */
   /* padding: 0 1rem; */
   /* background-color: #00adee; */
+  gap: 1rem;
 }
 .jobHeader {
   background-color: white;
@@ -75,7 +76,7 @@
   font-family: var(--font-family-paragraph);
   padding: 1rem 1rem;
   text-transform: capitalize;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 .jobHeader > h5{
   font-weight: 400;
@@ -131,7 +132,7 @@
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
   grid-template-columns: repeat(3, 1fr);
   /* background-color: aquamarine; */
-  /* row-gap: 1.5rem;  */
+  row-gap: 1rem; 
   background: transparent;
   display: flex;
   flex-direction: column;

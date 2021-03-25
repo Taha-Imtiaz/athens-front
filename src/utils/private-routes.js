@@ -6,6 +6,7 @@ function PrivateRoute({ user, roles, component: Component, ...rest }) {
     const isAuthenticated = (props) => {
         let token = localStorage.getItem('athens-token')
         if (token && user) {
+            console.log(user.role)
             return roles.includes(user.role)
         }
         return false;
@@ -18,7 +19,7 @@ function PrivateRoute({ user, roles, component: Component, ...rest }) {
                 return isAuthenticated(props) ? (
                     <Component {...props} />
                 ) : (
-                    user && user.role == 'mover' ? <Redirect to="/mover" /> : <Redirect to="/customers" />
+                    user ? (user.role == 'mover' ? <Redirect to="/mover" /> : <Redirect to="/customers" />) : <Redirect to="/" />
                 )
             }
             }

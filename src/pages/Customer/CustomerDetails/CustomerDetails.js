@@ -149,6 +149,14 @@ const CustomerDetails = (props) => {
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
+
+  const closeClaim = (e) => {
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();  
+    setToggleClaim(true)
+
+  }
   return (
     <div className={style.customerDetailsContainer}>
       {customer && (
@@ -551,15 +559,6 @@ const CustomerDetails = (props) => {
               </div>
             </div>
             <hr />
-            {/* {claims.length > 0 && (
-              <div className={style.claimListHeaderContainer}>
-                <div className={style.claimListHeader}>
-                  <div>Job Id</div>
-                  <div>Status</div>
-                  <div>Last Update</div>
-                </div>
-              </div>
-            )} */}
             <div id="accordion">
               {claims.length > 0 ? (
                 claims.map((claim, i) => {
@@ -622,7 +621,8 @@ const CustomerDetails = (props) => {
                                       {claim.status === "open" ? (
                                         <Button
                                           className={style.button}
-                                          onClick={() => showUpdateModal(i)}
+                                          onClick={() => showUpdateModal(i)}                                         
+                                          
                                         >
                                           Add Update
                                         </Button>
@@ -631,8 +631,9 @@ const CustomerDetails = (props) => {
                                     <div>
                                       {claim.status === "open" ? (
                                         <Button
+                                        type = "button"
                                           className={style.button}
-                                          onClick={() => setToggleClaim(true)}
+                                          onClick={(e) => closeClaim(e)}
                                         >
                                           Close Claim
                                         </Button>
@@ -738,6 +739,7 @@ const CustomerDetails = (props) => {
                       </div>
                       {/* modal for close and reopen claims */}
                       <Modal
+                      
                         show={toggleClaim}
                         onHide={() => setToggleClaim(false)}
                         scrollable

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import PrivateRoute from "./utils/private-routes";
@@ -9,6 +9,7 @@ import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import DefaultRoute from './DefaultRoute'
 
 /* Auth */
 import SignIn from "./pages/SignIn/SignIn";
@@ -63,8 +64,6 @@ import Availability from "./pages/Mover/Availability/Availability";
 import RequestHolidays from "./pages/Mover/HolidayCalendar/HolidayCalendar";
 import BackButton from "./components/BackButton/BackButton";
 
-
-
 function App(props) {
   // To show server responses to user.
   const { totalRequest, showMessage } = props;
@@ -80,9 +79,6 @@ function App(props) {
   let appRoles = ["mover", "admin"]
   let moverRoles = ["mover"]
   let adminRoles = ["admin"]
-const notFound = () =>{
-  return  <h1>Not Found</h1>
-}
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>
@@ -103,6 +99,7 @@ const notFound = () =>{
         <ToastContainer position="bottom-right" />
         <Switch>
           <ErrorBoundary>
+
             {/* Auth */}
             <Route path="/" exact component={SignIn} roles={appRoles} />
             <Route path="/email-verification" component={EmailVerification} roles={appRoles} />
@@ -145,22 +142,21 @@ const notFound = () =>{
 
             {/* Deposit */}
             <PrivateRoute path="/deposits" exact component={DepositList} roles={adminRoles} />
-            <PrivateRoute
-              path="/deposit/detail/:depositId"
-              component={DepositDetails} roles={adminRoles}
-            />
+            <PrivateRoute path="/deposit/detail/:depositId" component={DepositDetails} roles={adminRoles} />
             <PrivateRoute path="/deposit/add" component={CreateDeposit} roles={adminRoles} />
 
             {/* Mover */}
             <PrivateRoute path="/mover" component={MoversJobList} exact roles={moverRoles} />
-            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoverJobDetails}  roles={moverRoles} />
+            <PrivateRoute path="/mover/jobdetails/:jobId" component={MoverJobDetails} roles={moverRoles} />
             <PrivateRoute path="/mover/payment" component={Payment} roles={moverRoles} />
             <PrivateRoute path="/mover/calendar" component={MoversCalendar} roles={moverRoles} />
             <PrivateRoute path="/mover/availability" component={Availability} roles={moverRoles} />
             <PrivateRoute path="/mover/holidaycalendar" component={RequestHolidays} roles={moverRoles} />
-          
-            {/* Default Page */}
-            {/* <Route path="/**" exact component={notFound}/> */}
+
+            {/* <PrivateRoute path="/:id" component={()=><h4>not found </h4>} roles={appRoles}/>   */}
+            {/* <Redirect exact to="/"/> */}
+            {/* <Route path = "*" component={DefaultRoute}/> */}
+
           </ErrorBoundary>
         </Switch>
       </div>

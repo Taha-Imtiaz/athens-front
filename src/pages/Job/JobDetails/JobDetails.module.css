@@ -91,14 +91,16 @@
   background-color: #e9ecef;
   display: grid;
   grid-template-rows:
-    minmax(10vh, min-content) minmax(6vh, min-content) minmax(5vh, min-content) repeat(
-      3,
-      minmax(11vh, min-content)
-    )
+    minmax(10vh, min-content) 
+    minmax(6vh, min-content) 
+    minmax(5vh, min-content)
+    minmax(11vh, min-content)
+    
     min-content;
   border: none;
   /* margin-bottom: 1rem ; */
   /* padding: 0.5rem 1rem; */
+  gap: 1rem;
 }
 .jobHeader {
   background-color: white;
@@ -108,7 +110,7 @@
   font-family: var(--font-family-paragraph);
   padding: 1rem 1rem;
   text-transform: capitalize;
-  margin-bottom: 1rem;
+  
 }
 .jobHeader > h5{
   font-weight: 400;
@@ -130,9 +132,12 @@ justify-content: flex-end;
 gap: 1rem;
 }
 .service, .numbers, .truckSection {
-padding: .5rem; 
+ 
   display: grid;
   grid-template-columns: 25fr 75fr;
+}
+.truckSection{
+padding: .5rem;
 }
 .service > *, .numbers >*, .truckSection>*, .propertySection >*{
   font-weight: 500;
@@ -144,7 +149,7 @@ grid-template-columns: 17fr 23fr 60fr;
 }
 
 .jobDescription, .notes{
-  margin-bottom: 1rem; /*this margin is just for demo*/
+  /* margin-bottom: 1rem; this margin is just for demo */
 }
 .jobDescription___title, .notes___title {
   font-size: larger;

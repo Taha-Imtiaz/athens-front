@@ -31,12 +31,11 @@ const DepositDetails = (props) => {
     }, [])
 
     useEffect(() => {
-
         if (deposit) {
-            console.log(deposit.quantity, updatedDeposit)
+            console.log("useeffect:;",deposit.quantity, updatedDeposit)
             setUpdatedDeposit({
                 quantity: deposit.quantity,
-                cost: deposit.cost
+                cost: deposit.cost,
             })
         }
     }, [deposit])
@@ -47,7 +46,12 @@ const DepositDetails = (props) => {
 
     const handleOnChange = (e) => {
         let { name, value } = e.target;
-        setUpdatedDeposit({ ...updatedDeposit, [name]: value })
+        if(name == 'quantity') {
+            setUpdatedDeposit({ ...updatedDeposit, [name]: value, cost: value * 15 })
+        } else {
+            setUpdatedDeposit({ ...updatedDeposit, [name]: value })
+        }
+        console.log("name:: ",value)
     }
     const update = () => {
         let obj = {
@@ -136,6 +140,7 @@ const DepositDetails = (props) => {
                                     <TextField
                                         variant="outlined"
                                         required
+                                        type="number"
                                         fullWidth
                                         size="small"
                                         name="quantity"
@@ -151,6 +156,7 @@ const DepositDetails = (props) => {
                                     <h6>Deposit: </h6>
                                     <TextField
                                         variant="outlined"
+                                        type="number"
                                         required
                                         fullWidth
                                         size="small"

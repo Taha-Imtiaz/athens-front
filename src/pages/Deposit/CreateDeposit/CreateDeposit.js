@@ -163,9 +163,8 @@ class CreateDeposit extends Component {
           <div className={`${style.form}`}>
             <form onSubmit={this.handleSubmit}>
               <h3 className={style.head}>Create Deposit</h3>
+              
               {this.state.customers.length > 0 ? (
-             
-
                 <VirtualizedAutocomplete
                   optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
@@ -175,12 +174,22 @@ class CreateDeposit extends Component {
                 />
               ) : null}
              
-              <VirtualizedAutocomplete
+             {this.state.jobs.length > 0 ? (
+               <VirtualizedAutocomplete
                 textField="Choose a job"
                 value={this.state.selectedJob}
                 options={this.state.jobs}
                 setSelectedCustomerJobs={this.setSelectedCustomerJobs}
+                
               />
+             ) : null }
+              {/* <VirtualizedAutocomplete
+                textField="Choose a job"
+                value={this.state.selectedJob}
+                options={this.state.jobs}
+                setSelectedCustomerJobs={this.setSelectedCustomerJobs}
+                
+              /> */}
 
               <TextField
                 variant="outlined"

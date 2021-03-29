@@ -232,7 +232,9 @@ class CreateUser extends Component {
                 className={style.styleMultiSelect}
                 size="small"
                 renderInput={(params) => <TextField
-                  {...params} label="Select Type" variant="outlined" />}
+                 required {...params} label="Select Type" variant="outlined"
+                 error={this.state.typeError ? true : false}
+                 />}
               />
 
 
@@ -244,7 +246,9 @@ class CreateUser extends Component {
                 className={style.styleMultiSelect}
                 size="small"
                 renderInput={(params) => <TextField
-                  {...params} label="Select Attribute" variant="outlined" />}
+                 required {...params} label="Select Attribute" variant="outlined"
+                 error={this.state.attributeError ? true : false}
+                 />}
               />
 
               <div className={style.createBtn}>

@@ -314,6 +314,7 @@ class CreateClaim extends Component {
                       Protection Type
                     </InputLabel>
                     <Select
+                    required
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
                       value={this.state.claims.claimType}
@@ -347,6 +348,7 @@ class CreateClaim extends Component {
               </div>
 
               <TextareaAutosize
+              required
                 rowsMax={4}
                 id="description"
                 className={`${style.styleFormFields} ${style.styleTextArea}`}

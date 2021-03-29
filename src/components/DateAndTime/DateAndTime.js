@@ -65,6 +65,7 @@ const DateAndTime = (props) => {
                                     <KeyboardDatePicker
                                         minDate={new Date()}
                                         inputVariant="outlined"
+                                        required
                                         fullWidth
                                         // margin="normal"
                                         size="small"
@@ -79,6 +80,7 @@ const DateAndTime = (props) => {
                                     />
                                     <KeyboardTimePicker
                                         // margin="normal"
+                                        required
                                         fullWidth
                                         inputVariant="outlined"
                                         id="time-picker"

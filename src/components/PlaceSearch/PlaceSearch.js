@@ -96,7 +96,7 @@ const PlaceSearch = (props) => {
     };
   }, [value, inputValue, fetch, locationValue]);
   return (
-    <Autocomplete
+    <Autocomplete    
       id="google-map-demo"
       getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
       filterOptions={(x) => x}

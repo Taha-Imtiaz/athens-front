@@ -57,6 +57,7 @@ class CreateJob extends Component {
     multiError: "",
     dateError: "",
     timeError: "",
+    // priceError:"",
     assigneeError: "",
     locationfromError: "",
     locationtoError: "",
@@ -120,6 +121,7 @@ class CreateJob extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
+
       });
     }
     //get all customers and jobs
@@ -152,16 +154,18 @@ class CreateJob extends Component {
   };
   //validate form (check if the fields are empty)
   validate = () => {
+    let { selectedCustomer, selectedJob } = this.state;
     let customerIdError = "";
     // let titleError = "";
-    // let descriptionError = "";
+    let descriptionError = "";
     let multiError = "";
     let locationfromError = "";
     let locationtoError = "";
-    // let assigneeRequiredError = "";
+    let assigneeRequiredError = "";
+    // let priceError="";
     let jobTypeError = "";
 
-    if (!this.state.customerId) {
+    if (selectedCustomer === "") {
       customerIdError = "Customer should not be empty";
     }
 
@@ -169,17 +173,22 @@ class CreateJob extends Component {
     //   titleError = "Title should not be empty";
     // }
 
-    // if (!this.state.description) {
-    //   descriptionError = "Description should not be empty";
-    // }
-
+    if (this.state.description === "") {
+      descriptionError = "Description should not be empty";
+    }
     if (this.state.services.length === 0) {
       multiError = "Services Should not be empty";
     }
 
-    // if (!this.state.assigneeRequired) {
-    //   assigneeRequiredError = "Required count should not be empty";
-    // }
+    if (!this.state.assigneeRequired) {
+      assigneeRequiredError = "Required count should not be empty";
+    }
+    if (this.state.locations.length === 0) {
+      locationfromError = "Location must not be empty";
+    }
+    // if (!this.state.price) {
+    //   priceError = "Price should not be empty";
+    // }    
 
     if (!this.state.jobType) {
       jobTypeError = "Job type is required.";
@@ -188,21 +197,23 @@ class CreateJob extends Component {
     if (
       customerIdError ||
       // titleError ||
-      // descriptionError ||
+      descriptionError ||
       multiError ||
       locationfromError ||
       locationtoError ||
-      // assigneeRequiredError ||
+      assigneeRequiredError ||
+      // priceError ||
       jobTypeError
     ) {
       this.setState({
         customerIdError,
         // titleError,
-        // descriptionError,
+        descriptionError,
         multiError,
         locationfromError,
         locationtoError,
-        // assigneeRequiredError,
+        assigneeRequiredError,
+        // priceError,
         jobTypeError,
       });
       return false;
@@ -257,12 +268,12 @@ class CreateJob extends Component {
         userId: loggedInUser._id,
         jobType
       };
-      // console.log(createJobObj)
+      console.log(createJobObj)
       // Submit Form API
       createJob(createJobObj, (job) => {
         //reset form to its original state
-        this.handleResetJob()
-        history.push("/job/detail/" + job.data.data._id);
+        // this.handleResetJob()
+        // history.push("/job/detail/" + job.data.data._id);
       });
       // Submit Form API
     }
@@ -436,15 +447,26 @@ class CreateJob extends Component {
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
+
+              {/*Name Field*/}
               {this.state.customers.length > 0 ? (
-                <VirtualizedAutocomplete optionTextValue={this.state.newCustomer}
-                  value={this.state.selectedCustomer} options={this.state.customers}
+                <VirtualizedAutocomplete
+                  optionTextValue={this.state.newCustomer}
+                  value={this.state.selectedCustomer}
+                  options={this.state.customers}
                   getCustomerJobs={this.getCustomerJobs}
-                  addNewCustomer={this.addNewCustomer} />
-              ) : null}
+                  addNewCustomer={this.addNewCustomer}
+                // required={true}            
+                // error={this.state.customerIdError ? true : false}
+                />
+              ) : null
+                // this.state.customerId ? true : false
+              }
+
+
               {/* date and time */}
               <DateAndTime dates={this.state.dates} setDates={this.setDates} />
-              
+
               <div className={style.styleEditor}>
                 <Editor
                   editorState={this.state.editorState}
@@ -454,6 +476,7 @@ class CreateJob extends Component {
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
                   placeholder="Job Description"
+                // error={this.state.descriptionError ? true : false}
                 />
               </div>
 
@@ -525,7 +548,7 @@ class CreateJob extends Component {
                     name="assigneeRequired"
                     value={this.state.assigneeRequired}
                     className={style.styleFormFields}
-                    // error={this.state.assigneeRequiredError ? true : false}
+                    error={this.state.assigneeRequiredError ? true : false}
                     onChange={this.handleFormInput}
                   />
                 </div>
@@ -543,7 +566,7 @@ class CreateJob extends Component {
                     name="price"
                     value={this.state.price}
                     className={style.styleFormFields}
-                    // error={this.state.assigneeRequiredError ? true : false}
+                    // error={this.state.priceError ? true : false}
                     InputProps={{
                       startAdornment: (<InputAdornment position="start">$</InputAdornment>)
                     }}
@@ -554,7 +577,7 @@ class CreateJob extends Component {
               </div>
               {/* truck size and number */}
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
-              
+
               {this.state.locations.length === 0 && (
                 <div className={style.addLocation}>
                   <div className={style.addLocationBtn}>
@@ -572,6 +595,8 @@ class CreateJob extends Component {
                     locationArr={this.state.locations}
                     addLocation={this.addLocation}
                     handleLocationChange={this.handleLocationChange}
+
+                  // error={this.state.locationfromError ? true : false}
                   />
 
                 </div>

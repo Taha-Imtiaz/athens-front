@@ -12,13 +12,13 @@
 }
 .depositForm {
   display: grid;
-grid-area: depositForm;
-  grid-template-rows: minmax(50vh,min-content) 40vh;
+  grid-area: depositForm;
+  grid-template-rows: minmax(50vh,min-content);
   grid-template-columns: 20fr 60fr 20fr;
   background-color: #e9ecef;
   grid-template-areas:
-    ". form ."
-    ". . .";
+    ". form .";
+    
   
 }
 .styleFormFields {
@@ -30,7 +30,7 @@ grid-area: depositForm;
   column-gap: 0.2rem;
 }
 .depositBtn .button {
-  background: #00adee;
+  background: var(--color-blue);
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
@@ -38,7 +38,7 @@ grid-area: depositForm;
   width: 100%;
 }
 .depositBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .form {
   grid-area: form;

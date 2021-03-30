@@ -101,11 +101,12 @@ class CreateClaim extends Component {
 
     let titleError = "";
     let waitToError = "";
+    let descriptionError = "";
 
     if (this.state.selectedCustomer.length === 0) {
       customerIdError = "Customer Id should not be empty";
     }
-
+  
     if (!this.state.selectedJob) {
       jobIdError = "Error! should not be empty";
     }
@@ -119,9 +120,12 @@ class CreateClaim extends Component {
     if (!this.state.waitTo) {
       waitToError = "Error! should not be empty";
     }
+    if (this.state.claims.description === ""){
+      descriptionError = "Desctiption must not be empoty.";
+    }
 
     if (
-      (customerIdError || jobIdError || priceError || titleError, waitToError)
+      (customerIdError || jobIdError || priceError || titleError, waitToError || descriptionError)
     ) {
       this.setState({
         customerIdError,
@@ -129,6 +133,7 @@ class CreateClaim extends Component {
         priceError,
         titleError,
         waitToError,
+        descriptionError,
       });
       return false;
     }
@@ -348,7 +353,8 @@ class CreateClaim extends Component {
               </div>
 
               <TextareaAutosize
-              required
+              required              
+              error={this.state.descriptionError ? true : false}
                 rowsMax={4}
                 id="description"
                 className={`${style.styleFormFields} ${style.styleTextArea}`}

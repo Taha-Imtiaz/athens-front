@@ -17,12 +17,14 @@ const Truck = (props) => {
     // truck options initial state
     const truckOptions = ["Pickup Truck", "Cargo Van", "15 ft truck", "17 ft truck", "20 ft truck", "26 ft truck"]
     const [truckOption, setTruckOption] = useState(truckOptions)
-    const [trucks, setTrucks] = useState(props.trucks)
-
+   
+    const initialState = props.trucks;
+    const [trucks, setTrucks] = useState(initialState)
+    
     // add new truck
     const addTruck = () => {
         if (trucks[0].type && trucks[0].number) {
-            console.log(trucks)
+            
             setTrucks([...trucks, { type: "", number: "" }]);
             props.setTrucks([...trucks, { type: "", number: "" }])
         }
@@ -31,13 +33,13 @@ const Truck = (props) => {
     const removeTruck = (i) => {
         let truckArr = cloneDeep(trucks);
         truckArr.splice(i, 1);
-        setTrucks(trucks);
-        props.setTrucks(trucks)
+        setTrucks(truckArr);
+        props.setTrucks(truckArr)
     };
 
     // Handle trucks input change
     const handleTrucksInput = (e, i, inputType) => {
-        console.log(inputType, i)
+        
         let updatedTrucks = cloneDeep(trucks);
         let value = e.target.value;
         updatedTrucks[i][inputType] = value;
@@ -54,13 +56,14 @@ const Truck = (props) => {
             <hr />
             <div className={style.movers}>
                 {trucks && trucks.map((x, i) => {
+                    
                     return (
                         <div className={style.moversChild} key={i}>
-                            <div>
-                                <FormControl variant="outlined" margin="dense" fullWidth>
+                            <div className={style.styleFormFields}>
+                                <FormControl variant="outlined" size="small" fullWidth>
                                     <InputLabel id="demo-simple-select-outlined-label">
                                         Truck Type
-                          </InputLabel>
+                                    </InputLabel>
                                     <Select
                                         labelId="demo-simple-select-outlined-label"
                                         id="demo-simple-select-outlined"
@@ -82,7 +85,7 @@ const Truck = (props) => {
                                         }
                                     }}
                                     variant="outlined"
-                                    margin="dense"
+
                                     // required
                                     fullWidth
                                     size="small"
@@ -91,24 +94,26 @@ const Truck = (props) => {
                                     autoComplete="Trucks"
                                     name="truck"
                                     value={trucks[i].number}
-                                    className={style.styleFormFields}
+
                                     // error={this.state.assigneeRequiredError ? true : false}
                                     onChange={(e) => handleTrucksInput(e, i, 'number')}
                                 />
-
-                                {i != 0 ?
+                                <div>{i != 0 ?
                                     <div className={style.centeredIcon}
                                         onClick={() => removeTruck(i)}>
                                         <FontAwesomeIcon icon={faTrash} />
-                                    </div> : null}</div>
+                                    </div> : null}
+                                </div>
+
+                            </div>
                         </div>
                     );
                 })}
-                <div onClick={addTruck}
-                    className={`${style.plusIcon} 
-                    ${style.alignRight}`}>
-                    <FontAwesomeIcon
-                        icon={faPlus} />
+                <div className="d-flex justify-content-end">
+                    <div onClick={addTruck}
+                        className={`${style.plusIcon} ${style.alignRight}`}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
                 </div>
             </div>
             <hr />

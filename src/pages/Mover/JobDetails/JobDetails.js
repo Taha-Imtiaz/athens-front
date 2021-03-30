@@ -37,7 +37,7 @@ const MoverJobDetails = (props) => {
                   <h5 className="card-title font-weight-bold">Customer</h5>
                   <h6 className="card-subtitle mb-2 text-capitalize">
                     <FontAwesomeIcon icon={faUser} />{" "}
-                    {job.customer.firstName}
+                    {job.customer.firstName} {job.customer.lastName}
                   </h6>
                   <div className="card-text mb-2">
                     <FontAwesomeIcon icon={faMobile} />{" "}

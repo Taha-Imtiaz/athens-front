@@ -145,7 +145,6 @@ const CalendarApp = (props) => {
 
   //get job details when we click a job of a particular date
   const getJobDetails = (e) => {
-    console.log(e)
     let jobs = cloneDeep(state.jobs);
     let index = jobs.findIndex((x) => x._id === e.id);
     setState({

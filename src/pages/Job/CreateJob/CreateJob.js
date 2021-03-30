@@ -44,7 +44,7 @@ class CreateJob extends Component {
     services: [],
     customerId: "",
     startDate: "",
-    dates: [{ date: new Date(), time: new Date() }],
+    dates: [{ date: new Date(), time: new Date().setHours(9,0,0,0) }],
     startTime: "",
     anchorEl: "",
     meetTime: "",
@@ -166,14 +166,13 @@ class CreateJob extends Component {
     let jobTypeError = "";
 
     if (selectedCustomer === "") {
-      customerIdError = "Customer should not be empty";
+      customerIdError = "Customer Id should not be empty";
     }
 
     // if (!this.state.title) {
     //   titleError = "Title should not be empty";
     // }
-
-    if (this.state.description === "") {
+    if (!this.state.editorState.getCurrentContent().hasText()) {
       descriptionError = "Description should not be empty";
     }
     if (this.state.services.length === 0) {
@@ -210,7 +209,7 @@ class CreateJob extends Component {
         // titleError,
         descriptionError,
         multiError,
-        locationfromError,
+        locationfromError,  
         locationtoError,
         assigneeRequiredError,
         // priceError,
@@ -227,7 +226,7 @@ class CreateJob extends Component {
     let { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
     const isValid = this.validate();
-    console.log(this.state)
+    
     if (isValid) {
       let {
         // title,
@@ -263,17 +262,17 @@ class CreateJob extends Component {
         assigneesId,
         assigneeRequired,
         price,
-        trucks,
+        // trucks,
+        trucks: trucks.filter((x)=> x.type !== "" && x.number !== ""),
         customerId,
         userId: loggedInUser._id,
         jobType
       };
-      console.log(createJobObj)
       // Submit Form API
       createJob(createJobObj, (job) => {
         //reset form to its original state
-        // this.handleResetJob()
-        // history.push("/job/detail/" + job.data.data._id);
+        this.handleResetJob()
+        history.push("/job/detail/" + job.data.data._id);
       });
       // Submit Form API
     }
@@ -467,7 +466,7 @@ class CreateJob extends Component {
               {/* date and time */}
               <DateAndTime dates={this.state.dates} setDates={this.setDates} />
 
-              <div className={style.styleEditor}>
+              <div className={this.state.descriptionError ? style.styleEditorInValid : style.styleEditorValid}>
                 <Editor
                   editorState={this.state.editorState}
                   toolbarClassName="toolbarClassName"

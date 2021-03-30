@@ -166,10 +166,10 @@ grid-template-columns: 17fr 23fr 60fr;
 }
 
 .locations {
-background: transparent;
+  background: transparent;
   display: flex;
   flex-direction: column;
-border: none;
+  border: none;
   padding: .5rem;
 }
 

@@ -32,7 +32,6 @@ const DepositDetails = (props) => {
 
     useEffect(() => {
         if (deposit) {
-            console.log("useeffect:;",deposit.quantity, updatedDeposit)
             setUpdatedDeposit({
                 quantity: deposit.quantity,
                 cost: deposit.cost,
@@ -51,7 +50,6 @@ const DepositDetails = (props) => {
         } else {
             setUpdatedDeposit({ ...updatedDeposit, [name]: value })
         }
-        console.log("name:: ",value)
     }
     const update = () => {
         let obj = {

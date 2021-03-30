@@ -9,6 +9,9 @@
     /* flex-direction: column !important; */
     flex-wrap: nowrap !important;
   }
+  .propertyType{
+    grid-area: propertyField;
+  }
   .radioButtons {
     grid-area: radioButtons;
   }
@@ -23,8 +26,13 @@
   }
   
   .TrashIcon {
+    cursor: pointer;
     grid-area: TrashIcon;
-    color: tomato;
+    color: white;
+    background-color: tomato;
+    width: min-content;
+    border-radius: 50%;
+    padding: .5rem;
   }
   .styleRadio {
     color: #00adee !important;
@@ -34,3 +42,13 @@
     justify-content: flex-end;
     align-items: center;
   }
+  .plusIcon{
+    cursor: pointer;
+    border: none;
+    /* margin-bottom: .5rem; */
+    color: white;
+    border-radius: 50%;
+    padding: .5rem;
+    background-color: var(--color-blue);
+    width: min-content;
+}

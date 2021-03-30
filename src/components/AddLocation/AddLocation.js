@@ -24,6 +24,22 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
             { id: 9, name: "Apartment" }
         ]
     })
+    const initialState = {
+        multiError: ""
+    }
+    const validate = () => {
+        let multiError = ""
+        if (this.state.locationArr.length === 0) {
+            multiError = "Location must not be empty"
+        }
+        if (multiError) {
+            setState({
+                multiError
+            });
+            return false
+        }
+        return true;
+    }
 
     //set the google location in the state
     const handleSetLocation = (choosenLocation, index) => {
@@ -37,14 +53,10 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
     //onchange handler of radio buttons
     const handleInputChange = (e, i) => {
         let { value } = e.target;
-
-
         let updateLocation = cloneDeep(locationArr);
         updateLocation[i].type = value;
         updateLocation[i].default = false;
-
         handleLocationChange(updateLocation)
-
     };
 
     //change the state of textbox
@@ -52,9 +64,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         e.stopPropagation();
         let prevState = cloneDeep(locationArr);
         prevState[i].default = !prevState[i].default;
-
         handleLocationChange(prevState)
-
     };
 
 
@@ -62,7 +72,6 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         let location = cloneDeep(locationArr);
         location.splice(i, 1);
         handleLocationChange(location)
-
     }
 
     const propertyChanged = (e, i) => {
@@ -117,7 +126,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
         return (
             <div className={style.locationInput} key={i}>
                 {/* Property Type */}
-                <div>
+                <div className={style.propertyType}>
                     <Autocomplete
                         noOptionsText={`Add '${state.newProperty}' to property type`}
                         value={locationArr[i].propertyType}
@@ -133,10 +142,9 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                             option.name ? option.name : option
                         }
                         renderInput={(params) => (
-                            <TextField
-                                required
-                                onKeyUp={(e) => addCustomPropertyType(e, i)}
+                            <TextField onKeyUp={(e) => addCustomPropertyType(e, i)}
                                 {...params}
+                                required
                                 className={style.styleFormFields}
                                 variant="outlined"
                                 size="small"
@@ -209,13 +217,15 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                         />
                     </div>
                 ) : null}
-
-                <div className={`${style.TrashIcon} ${style.centeredIcon}`}>
-                    <FontAwesomeIcon
-                        icon={faTrash}
-                        onClick={() => removeLocation(i)}
-                    ></FontAwesomeIcon>
+                <div className="d-flex justify-content-end">
+                    <div className={`${style.TrashIcon} ${style.alignRight}`}>
+                        <FontAwesomeIcon
+                            icon={faTrash}
+                            onClick={() => removeLocation(i)}
+                        ></FontAwesomeIcon>
+                    </div>
                 </div>
+
             </div>
         );
     };
@@ -227,14 +237,15 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                 showLocation(i)
             )}
             {locationArr.length > 0 && (
-                <div className={style.alignRight}>
-                    <FontAwesomeIcon
-                        icon={faPlus}
-                        onClick={addLocation}
-                    ></FontAwesomeIcon>
+                <div className="d-flex justify-content-end">
+                    <div onClick={addLocation}
+                        className={`${style.plusIcon} ${style.alignRight}`}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
                 </div>
-            )}
+            )} <hr/>
         </div>
+       
     )
 }
 

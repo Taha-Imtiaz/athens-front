@@ -123,7 +123,6 @@ export const deleteClaim = (id, currentPage) => {
 
     }
     catch (error) {
-      console.log(error)
     }
   }
 

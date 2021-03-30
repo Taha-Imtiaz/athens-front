@@ -5,7 +5,8 @@ import { getAllMover } from "../../../Redux/Schedule/scheduleAction";
 import { faUser, faClock, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
-import { Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Button, Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const MoversSchedule = (props) => {
   const [allMovers, setAllMovers] = useState();
@@ -64,9 +65,14 @@ const MoversSchedule = (props) => {
           <div>
             <h3>Movers</h3>
           </div>
-          <div className={`dropdown ${style.flexEnd}`}>            
+          <div className={style.approveBtn}>
+            <Link to="/user/add">
+              <Button className={style.button}>Create New</Button>
+            </Link>
+          </div>
+          <div className={`dropdown ${style.flexEnd}`}>
             <i
-              className={`fa fa-filter dropdown-toggle`}
+              className={`fa fa-filter dropdown-toggle ${style.dropDownIcon}`}
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"

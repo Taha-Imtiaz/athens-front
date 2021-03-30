@@ -96,7 +96,7 @@ const PlaceSearch = (props) => {
     };
   }, [value, inputValue, fetch, locationValue]);
   return (
-    <Autocomplete    
+    <Autocomplete
       id="google-map-demo"
       getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
       filterOptions={(x) => x}
@@ -106,7 +106,6 @@ const PlaceSearch = (props) => {
       filterSelectedOptions
       value={value}
       onChange={(event, newValue) => {
-        console.log(newValue)
         if (newValue && newValue.terms.length > 2) {
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);
@@ -123,7 +122,11 @@ const PlaceSearch = (props) => {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" variant="outlined" size="small"
+        <TextField
+          {...params}
+          label="Add a location"
+          variant="outlined"
+          size="small"
           fullWidth />
       )}
       renderOption={(option) => {

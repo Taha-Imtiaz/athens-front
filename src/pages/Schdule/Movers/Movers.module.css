@@ -15,7 +15,8 @@
   margin-top: 1rem;
   grid-area: moverHeader;
   display: grid;
-  grid-template-columns: 85fr 15fr;
+  grid-template-columns: 70fr 15fr 15fr;
+  column-gap: 0.2rem;
   /* background-color: aquamarine; */
 }
 .moverList {
@@ -45,9 +46,22 @@
   border-radius: 0.3rem;
 
 }
+.dropDownIcon{
+  padding: .5rem;
+}
 
 .flexEnd {
   display: flex; 
   justify-content: flex-start;
   align-items: flex-start;
+}
+.approveBtn .button {
+  background-color: #00adee;
+  color: #fff;
+  font-family: var(--font-family-paragraph);
+  width: 100%;
+  text-transform: none;
+}
+.approveBtn:hover .button:hover {
+  background-color: #00adee;
 }

@@ -13,7 +13,7 @@ export const getAllJobs = (jobObj) => {
         payload: response.data.data,
       });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -29,7 +29,7 @@ export const getJob = (jobId) => {
         payload: response.data.data,
       });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -47,7 +47,7 @@ export const createJob = (newJobObj, callback) => {
         dispatch(showMessage(newJob.data.message));
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -79,7 +79,7 @@ export const getAllJobsOnDate = async (date) => {
 
     return currentDayJobs;
   } catch (error) {
-    console.log(error);
+    
   }
 };
 
@@ -107,7 +107,7 @@ export const filterJobsByDate = (date) => {
         payload: response.data.data,
       });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -127,7 +127,7 @@ export const confirmJob = (obj) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -153,7 +153,7 @@ export const deleteJob = (id, currentPage) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -166,6 +166,6 @@ export const getCurrentDayJob = async (jobId) => {
     });
     return getJob;
   } catch (error) {
-    console.log(error);
+    
   }
 };

@@ -19,12 +19,10 @@ const DateAndTime = (props) => {
     const initialState = props.dates;
     console.log(initialState)
     const [dates, setDates] = useState(initialState)
-    // console.log(dates)
     //add new Date
     const addDate = () => {
-        console.log(dates, dates[0].date, dates[0].time)
         if (dates[0].date && dates[0].time) {
-            setDates([...dates, { date: new Date(), time: new Date() }]);
+            setDates([...dates, { date: new Date(), time: new Date().setHours(9, 0, 0, 0) }]);
             setParentDates([...dates, { date: new Date(), time: new Date() }])
         }
     };
@@ -37,7 +35,6 @@ const DateAndTime = (props) => {
     };
     //onChange handler of dates
     const handleStartDate = (date, i) => {
-        console.log(date, i)
         let newState = cloneDeep(dates);
         newState[i].date = date;
         setDates(newState);
@@ -104,11 +101,13 @@ const DateAndTime = (props) => {
                         </div>
                     );
                 })}
-                <div onClick={addDate}
-                    className={`${style.plusIcon} 
-                    ${style.alignRight}`}>
-                    <FontAwesomeIcon icon={faPlus} />
+                <div className="d-flex justify-content-end">
+                    <div onClick={addDate}
+                        className={`${style.plusIcon} ${style.alignRight}`}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </div>
                 </div>
+
             </div>
             <hr />
         </div>

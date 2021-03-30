@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMapMarker, faMapMarkerAlt, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
+import { Fragment } from "react";
 
 const JobDetails = (props) => {
   let { job } = props;
@@ -48,7 +49,6 @@ const JobDetails = (props) => {
     setShowBooking(false)
   }
   // let truckArr = job.trucks.map((x,i)=>{
-  //   console.log(x.type)
   // })
   return (
     <div className={style.jobEditContainer}>
@@ -59,7 +59,7 @@ const JobDetails = (props) => {
             <div className={`card ${style.customerCard}`}>
               <div className="card-body">
                 <h5 className="card-title font-weight-bold">Customer</h5>
-                <h6 className="card-subtitle mb-2 text-muted">
+                <h6 className="card-subtitle mb-2 text-capitalize">
                   <Link
                     className={style.link}
                     to={`/customer/detail/${job.customer._id}`}
@@ -80,7 +80,7 @@ const JobDetails = (props) => {
               <div>
                 {/* assinee card */}
                 <div className={`card ${style.assigneeCard}`}>
-                  <div className="card-body">
+                  <div className="card-body text-capitalize">
                     <h5 className="card-title font-weight-bold">Assignees</h5>
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
@@ -90,9 +90,9 @@ const JobDetails = (props) => {
                         </div>
                       ))
                     ) : (
-                        <div>
-                          {`Not Assigned`}</div>
-                      )}
+                      <div>
+                        {`Not Assigned`}</div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -139,8 +139,8 @@ const JobDetails = (props) => {
                     i === 0 ? (
                       <span key={i}>{x.date}</span>
                     ) : (
-                        <span key={i}> | {x.date} </span>
-                      )
+                      <span key={i}> | {x.date} </span>
+                    )
                   )}
                 </div>
                 <div className={style.job___IdStatus}>
@@ -217,33 +217,35 @@ const JobDetails = (props) => {
             </div>
             {/* Trucks */}
             <div>
-              <h5>Truck Details:</h5>
-              {job.trucks.map((x, i) =>
-                <div className={style.truckSection} key={i}>
-                  <div>
-                    {`Type: `}
-                    <Chip
-                      className={style.truckSectionType}
-                      clickable
-                      color="primary"
-                      variant="outlined"
-                      size="small"
-                      label={x.type}
-                    />
+              {job.trucks.length > 0 ? <Fragment><h5>Truck Details:</h5>
+                {job.trucks.map((x, i) =>
+                  <div className={style.truckSection} key={i}>
+                    <div>
+
+                      {`Type: `}
+                      <Chip
+                        className={style.truckSectionType}
+                        clickable
+                        color="primary"
+                        variant="outlined"
+                        size="small"
+                        label={x.type}
+                      />
+                    </div>
+                    <div>
+                      {`No. Of Trucks: `}
+                      <Chip
+                        className={style.truckSectionNum}
+                        clickable
+                        color="primary"
+                        variant="outlined"
+                        size="small"
+                        label={x.number}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    {`No. Of Trucks: `}
-                    <Chip
-                      className={style.truckSectionNum}
-                      clickable
-                      color="primary"
-                      variant="outlined"
-                      size="small"
-                      label={x.number}
-                    />
-                  </div>
-                </div>
-              )}
+                )}
+              </Fragment> : null}
             </div>
             <div className={style.jobDescription}>
               <div className={style.jobDescription___title}>
@@ -275,21 +277,21 @@ const JobDetails = (props) => {
                         /></div>
                     </div>
                   ) : (
-                      <div className={style.dropoff} key={i}>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                        <span className={style.locationType}>{`Dropoff: `}</span>
-                        <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
-                        <div className="text-muted">
-                          {`Property Type: `}
-                          <Chip
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                            label={list.propertyType}
-                          /></div>
-                      </div>
-                    )
+                    <div className={style.dropoff} key={i}>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                      <span className={style.locationType}>{`Dropoff: `}</span>
+                      <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
+                      <div className="text-muted">
+                        {`Property Type: `}
+                        <Chip
+                          clickable
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          label={list.propertyType}
+                        /></div>
+                    </div>
+                  )
                 )}
               </div>
             )}

@@ -63,7 +63,7 @@ const DailySchedule = (props) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     let dates = job.dates.map(x => x.date).join(" | ");
-    console.log(dates)
+    
     let services = job.services.map((e) => e.name).join(" | ");
 
     const doc = new jsPDF("p", "pt");
@@ -243,9 +243,7 @@ const DailySchedule = (props) => {
     const { destination, source } = result;
     let { showMessage } = props;
     let moverId = source.droppableId;
-    console.log(destination, source, moverId)
     if (!destination) {
-      console.log('destination not found')
       showMessage("Please drop on job item.");
       return;
     }
@@ -305,7 +303,6 @@ const DailySchedule = (props) => {
 
   // const getDateTime = (job) => { 
   //   let obj = job.dates.find(x => x.date == new Date(today).toDateString())
-  //   console.log(obj)
   //   return formatAMPM(obj.time)
   //  };
   const moverListItem = (mover) => {
@@ -353,7 +350,6 @@ const DailySchedule = (props) => {
     let crewLeaders = []
     let newMovers = [];
     list.map(x => {
-      console.log(x.mover.attribute)
       switch (x.mover.attribute) {
         case 'mover':
           // code block
@@ -371,7 +367,6 @@ const DailySchedule = (props) => {
         // code block
       }
     })
-    console.log(movers, crewLeaders, newMovers)
     return (
       <Fragment>
         <h5>Crew Leaders</h5>

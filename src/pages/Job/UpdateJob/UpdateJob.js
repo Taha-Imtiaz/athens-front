@@ -226,7 +226,7 @@ class UpdateJob extends Component {
       price: job.price,
       truck: job.truck,
       truckSize: job.truckSize,
-      trucks:job.trucks,
+      trucks: job.trucks.length > 0 ? job.trucks : [{ type: "", number: "" }],
       newService: "",
       newProperty: "",
       assigneesId: job.assignee.map(x => x._id)
@@ -348,15 +348,14 @@ class UpdateJob extends Component {
       startTime,
       propertyType,
       price,
-      truck,
-      truckSize,
-      trucks,
+      // truck,
+      // truckSize,
+      trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
       assigneesId
     };
     //check if the fields are empty
     if (this.handleValidation()) {
       //update job
-      // console.log(updatedObj)
       updateJob(jobId, updatedObj, (res) => history.push("/job/detail/" + jobId))
     }
   };
@@ -483,7 +482,6 @@ class UpdateJob extends Component {
   }
 
   render() {
-    console.log(this.state.dates)
     let {
       note,
       show,
@@ -513,7 +511,7 @@ class UpdateJob extends Component {
             </div>
             {/* date and time  */}
             {this.state.dates.length > 0 && <DateAndTime dates={this.state.dates} setDates={this.setDates} />}
-            
+
             <div className={style.styleEditor}>
               <Editor
                 editorState={this.state.editorState}
@@ -627,7 +625,9 @@ class UpdateJob extends Component {
             </div>
             {/* Truck Component */}
             {this.state.trucks.length > 0 && <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />}
-           
+
+            {/* <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} /> */}
+
             {
               this.state.locations && <div>
                 {this.state.locations.length === 0 && (

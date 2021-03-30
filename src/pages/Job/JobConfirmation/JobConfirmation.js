@@ -188,7 +188,7 @@ function JobConfirmation(props) {
       (status, response) => {
         if (status === 200) {
           let stringDates = data.dates.map((x) => {
-            console.log(x)
+            
             if (typeof x.date === "number") {
               return { date: new Date(x.date).toDateString(), time: x.time };
             } else {
@@ -220,7 +220,7 @@ function JobConfirmation(props) {
   const handleSubmitWithoutPay = () => {
     let { confirmJob, job } = props;
     let stringDates = data.dates.map((x) => {
-      console.log(x)
+     
       if (typeof x.date === "number") {
         return { date: new Date(x.date).toDateString(), time: x.time };
       } else {

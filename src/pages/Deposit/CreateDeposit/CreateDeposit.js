@@ -45,7 +45,8 @@ class CreateDeposit extends Component {
       });
     }
     let { getCustomersAndJobs } = this.props;
-    getCustomersAndJobs((res) => this.setState({ customers: res.data.data }));
+    getCustomersAndJobs((res) => 
+    this.setState({ customers: res.data.data }));
   };
 
   handleValidate = () => {

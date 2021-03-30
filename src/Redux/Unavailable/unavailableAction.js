@@ -13,7 +13,7 @@ export const getAllData = (status) => {
         payload: response.data.data,
       });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -34,7 +34,7 @@ export const approveRequest = (data) => {
       }
       dispatch(showMessage(response.data.message));
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };

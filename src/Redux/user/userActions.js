@@ -18,7 +18,7 @@ export const login = (data, callback) => {
         dispatch(showMessage(response.data.message));
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -105,7 +105,7 @@ export const getUsers = (data) => {
         payload: response.data.data,
       });
     } catch (error) {
-      console.log(error);
+      
     }
   };
 };
@@ -121,7 +121,6 @@ export const getUser = async (userId, callback) => {
     }
 
   } catch (error) {
-    console.log(error)
   }
 }
 

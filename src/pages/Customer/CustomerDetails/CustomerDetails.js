@@ -52,6 +52,7 @@ const CustomerDetails = (props) => {
         ).length;
         setClaimCount(openClaims);
       } else {
+        setClaims([])
         setClaimCount(0);
       }
       //set the blanket value to the total # of blankets
@@ -362,6 +363,16 @@ const CustomerDetails = (props) => {
                               {/* show services, type */}
                               <div className={style.cardBody___sectionOne}>
                                 <div>
+                                  <h5>Job Type:</h5>
+                                  <Chip
+                                    clickable
+                                    size="small"
+                                    label={job.jobType}
+                                    color="primary"
+                                    variant="outlined"
+                                  /></div>
+                                  <div>
+                                  
                                   <h5>Service:</h5>
                                   {job.services.map((service, i) => (
                                     <Chip
@@ -374,15 +385,7 @@ const CustomerDetails = (props) => {
                                     />
                                   ))}</div>
 
-                                <div>
-                                  <h5>Job Type:</h5>
-                                  <Chip
-                                    clickable
-                                    size="small"
-                                    label={job.jobType}
-                                    color="primary"
-                                    variant="outlined"
-                                  /></div>
+                                
 
                               </div>
 

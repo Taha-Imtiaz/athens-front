@@ -93,9 +93,8 @@
   grid-template-rows:
     minmax(10vh, min-content) 
     minmax(6vh, min-content) 
-    minmax(5vh, min-content)
+    /* minmax(5vh, min-content) */
     minmax(11vh, min-content)
-    
     min-content;
   border: none;
   /* margin-bottom: 1rem ; */
@@ -147,9 +146,8 @@ padding: .5rem;
   display: grid;
 grid-template-columns: 17fr 23fr 60fr;
 }
-
-.jobDescription, .notes{
-  /* margin-bottom: 1rem; this margin is just for demo */
+ .notes{
+   margin-bottom: 1rem; /*this margin is just for demo */
 }
 .jobDescription___title, .notes___title {
   font-size: larger;

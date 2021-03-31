@@ -25,7 +25,6 @@ import parse from "html-react-parser";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
 import Badge from '@material-ui/core/Badge';
-import { getTime } from "date-fns";
 
 
 
@@ -427,8 +426,8 @@ const DailySchedule = (props) => {
                 </div>
                 <div>
                   <Button className={style.button} onClick={printAllJobs}>
-                    <i className="fa fa-print"></i>
-                    Print All
+                    <i className="fa fa-print mr-2"></i>
+                    <div className="text-uppercase font-weight-bold ">{`Print All`}</div>
                   </Button>
                 </div>
               </div>
@@ -520,8 +519,8 @@ const DailySchedule = (props) => {
                           <div>
                             <Button className={list.assignee.length < list.assigneeRequired ? `${style.deleteButtonTwo}` : ` ${style.deleteButtonOne}`}
                               onClick={(e) => generatePDF(e, list)}>
-                              <i className="fa fa-print"></i>
-                              {` Print`}
+                              <i className="fa fa-print mr-2"></i>
+                              {`Print`}
                             </Button>
                           </div>
                         </div>

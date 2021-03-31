@@ -292,7 +292,7 @@ const CalendarApp = (props) => {
                         id={`collapse${i}`}
                         className={"collapse"}
                         aria-labelledby="headingOne"
-                        data-parent="#accordion"
+                        data-parent="#accordion"                        
                       >
                         <div className={`card-body ${style.cardBody}`}>
 

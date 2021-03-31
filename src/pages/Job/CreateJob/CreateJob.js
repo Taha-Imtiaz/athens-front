@@ -246,7 +246,7 @@ class CreateJob extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time } : null
+        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time.toLocaleString() } : null
       );
 
       stringDates = stringDates.filter(Boolean);
@@ -446,7 +446,6 @@ class CreateJob extends Component {
           <div className={`${style.form}`}>
             <h3 className={style.head}>Create Job</h3>
             <form onSubmit={this.mySubmitHandler}>
-
               {/*Name Field*/}
               {this.state.customers.length > 0 ? (
                 <VirtualizedAutocomplete

@@ -24,6 +24,7 @@ const VirtualizedAutocomplete = (props) => {
         {" "}
         {item.firstName} {item.lastName} ({item.email})
       </div>
+      
     );
   };
   const renderJob = (item) => {

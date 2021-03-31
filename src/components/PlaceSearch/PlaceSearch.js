@@ -112,7 +112,7 @@ const PlaceSearch = (props) => {
           handleSetLocation(newValue, index)
         } else {
           let { showMessage } = props;
-          showMessage("Choose location icluding city.");
+          showMessage("Choose location that includes city.");
           setOptions(options);
           setValue('');
           handleSetLocation('', index)

@@ -119,8 +119,6 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
             });
         }
     }
-
-
     //function to show all locations
     const showLocation = (i) => {
         return (

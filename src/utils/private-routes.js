@@ -3,6 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
 function PrivateRoute({ user, roles, component: Component, ...rest }) {
+    
+        
     const isAuthenticated = (props) => {
         let token = localStorage.getItem('athens-token')
         if (token && user) {
@@ -17,7 +19,7 @@ function PrivateRoute({ user, roles, component: Component, ...rest }) {
                 return isAuthenticated(props) ? (
                     <Component {...props} />
                 ) : (
-                    user ? (user.role == 'mover' ? <Redirect to="/mover" /> : <Redirect to="/customers" />) : <Redirect to="/" />
+                    user ? (user.role == 'admin' ? <Redirect to="/customers" /> : <Redirect to="/movers" />) : <Redirect to="/" />
                 )
             }
             }

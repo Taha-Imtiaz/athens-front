@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import style from "./CreateUser.module.css";
-import { Button } from "@material-ui/core";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { createUser } from "../../../Redux/User/userActions";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
@@ -9,17 +9,18 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const initialState = {
   name: "",
+  type: "",
   email: "",
   phone: "",
   address: "",
-  type: "",
   attribute: "",
   nameError: "",
+  typeError: "",
   emailError: "",
   phoneError: "",
   addressError: "",
-  typeError: "",
   attributeError: "",
+  attributeOptions: []
 };
 
 class CreateUser extends Component {
@@ -27,11 +28,32 @@ class CreateUser extends Component {
     { name: "Manager", id: 1 },
     { name: "Mover", id: 2 },
   ];
+
   attributeOptions = [
     { name: "Crew Leaders", value: 'crew leader' },
     { name: "Movers", value: 'mover' },
-    { name: "New Movers", value: 'new mover' }
+    { name: "New Movers", value: 'new mover' },
   ];
+
+  roleOptions = [
+    {
+      name: "Manager",
+      id: 1,
+      options: [
+        { type: "Manager" },
+        { type: "New Manager" }
+      ]
+    },
+    {
+      name: "Mover",
+      id: 2,
+      options: [
+        { type: "Crew Leader" },
+        { type: "Mover" },
+        { type: "New Mover" }
+      ]
+    }
+  ]
 
   constructor(props) {
     super(props);
@@ -39,12 +61,20 @@ class CreateUser extends Component {
     this.state = initialState;
 
   }
-  onTypeSelect = (selectedList, selectedItem) => {
-    this.setState({ type: selectedItem });
+  onTypeSelect = (e) => {
+    console.log(e.target.value)
+    let value = e.target.value
+    if (value == 'Mover') {
+      this.setState({ attributeOptions: this.roleOptions[1].options, type: this.roleOptions[1].name, attribute:"" })
+    } else {
+      this.setState({ attributeOptions: this.roleOptions[0].options, type: this.roleOptions[0].name, attribute:"" })
+    }
+    // this.setState({ type: selectedItem });
   };
 
-  onAttributeSelect = (selectedList, selectedItem) => {
-    this.setState({ attribute: selectedItem.value });
+  onAttributeSelect = (e) => {
+    let { value } = e.target;
+    this.setState({ attribute: value });
   };
 
   validate = () => {
@@ -151,8 +181,8 @@ class CreateUser extends Component {
         phone,
         address,
         email,
-        role: type.name.toLowerCase(),
-        attribute,
+        role: type.toLowerCase(),
+        attribute: attribute.toLowerCase(),
       };
       createUser(createdUserObj, () => history.push("/users"))
     }
@@ -224,7 +254,7 @@ class CreateUser extends Component {
               />
 
 
-              <Autocomplete
+              {/* <Autocomplete
                 id="combo-box-demo"
                 options={this.typeOptions}
                 onChange={this.onTypeSelect}
@@ -232,12 +262,10 @@ class CreateUser extends Component {
                 className={style.styleMultiSelect}
                 size="small"
                 renderInput={(params) => <TextField
-                 required {...params} label="Select Type" variant="outlined"
-                 error={this.state.typeError ? true : false}
-                 />}
+                  required {...params} label="Select Type" variant="outlined"
+                  error={this.state.typeError ? true : false}
+                />}
               />
-
-
               <Autocomplete
                 id="combo-box-demo"
                 options={this.attributeOptions}
@@ -246,10 +274,45 @@ class CreateUser extends Component {
                 className={style.styleMultiSelect}
                 size="small"
                 renderInput={(params) => <TextField
-                 required {...params} label="Select Attribute" variant="outlined"
-                 error={this.state.attributeError ? true : false}
-                 />}
-              />
+
+                  required {...params} label="Select Attribute" variant="outlined"
+                  error={this.state.attributeError ? true : false}
+                />}
+              /> */}
+
+
+              <FormControl variant="outlined" margin="dense" fullWidth>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Role *
+              </InputLabel>
+                <Select
+                  required
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={this.state.type}
+                  onChange={this.onTypeSelect}
+                  label="Role"
+                  name="type"
+                >
+                  {this.roleOptions.map((x, i) => <MenuItem value={x.name}>{x.name}</MenuItem>)}
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined" margin="dense" fullWidth>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Role Type*
+              </InputLabel>
+                <Select
+                  required
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  // value={}
+                  onChange={this.onAttributeSelect}
+                  label="Role Type"
+                  name="attribute"
+                >
+                  {this.state.attributeOptions.map((y, i) => <MenuItem value={y.type}>{y.type}</MenuItem>)}
+                </Select>
+              </FormControl>
 
               <div className={style.createBtn}>
                 <Button className={style.button} onClick={this.mySubmitHandler}>

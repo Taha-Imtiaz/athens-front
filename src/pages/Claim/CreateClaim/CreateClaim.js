@@ -324,7 +324,7 @@ class CreateClaim extends Component {
                       id="demo-simple-select-outlined"
                       value={this.state.claims.claimType}
                       onChange={(e) => this.hanldeClaimsInput(e)}
-                      label="Claim Type"
+                      label="Protection Type"
                       name="claimType"
                     >
                       <MenuItem value={"BVP"}>BVP</MenuItem>

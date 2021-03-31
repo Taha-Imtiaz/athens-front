@@ -43,6 +43,7 @@ const DateAndTime = (props) => {
 
     //onChange handler of time
     const handleTimeSelect = (date, i) => {
+        console.log(date)
         let newState = cloneDeep(dates);
         newState[i].time = date;
         setDates(newState);

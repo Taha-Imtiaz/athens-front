@@ -68,7 +68,7 @@ const DepositDetails = (props) => {
                         <div className={`card ${style.customerCard}`}>
                             <div className="card-body">
                                 <h5 className="card-title font-weight-bold">Customer</h5>
-                                <h6 className="card-subtitle mb-2 text-muted">
+                                <h6 className="card-subtitle mb-2">
                                     <Link
                                         className={style.link}
                                         to={`/customer/detail/${deposit.customer._id}`}

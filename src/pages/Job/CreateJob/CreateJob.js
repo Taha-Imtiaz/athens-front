@@ -37,6 +37,14 @@ class CreateJob extends Component {
     this.state = { ...props.jobForm };
   }
 
+  getDefaultTime = () => {
+    let date = new Date()
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    console.log(date.toString())
+    return date.toString();
+  }
   initialState = {
     editorState: EditorState.createEmpty(),
     // title: "",
@@ -44,7 +52,7 @@ class CreateJob extends Component {
     services: [],
     customerId: "",
     startDate: "",
-    dates: [{ date: new Date(), time: new Date().setHours(9,0,0,0) }],
+    dates: [{ date: new Date(), time: this.getDefaultTime() }],
     startTime: "",
     anchorEl: "",
     meetTime: "",
@@ -67,7 +75,7 @@ class CreateJob extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: [],
+    locations: [{ type: "", value: "", default: false, propertyType: '' }],
     fromTo: [],
     assigneeRequiredError: "",
     selectedDate: new Date(),
@@ -132,6 +140,8 @@ class CreateJob extends Component {
     });
   };
 
+
+
   //handler to add location
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
@@ -182,7 +192,10 @@ class CreateJob extends Component {
     if (!this.state.assigneeRequired) {
       assigneeRequiredError = "Required count should not be empty";
     }
-    if (this.state.locations.length === 0) {
+
+    let locations = this.state.locations.map(x => x.value != '')
+    locations = locations.filter(Boolean);
+    if (locations.length === 0) {
       locationfromError = "Location must not be empty";
     }
     // if (!this.state.price) {
@@ -209,7 +222,7 @@ class CreateJob extends Component {
         // titleError,
         descriptionError,
         multiError,
-        locationfromError,  
+        locationfromError,
         locationtoError,
         assigneeRequiredError,
         // priceError,
@@ -226,7 +239,7 @@ class CreateJob extends Component {
     let { createJob, history, loggedInUser } = this.props;
     event.preventDefault();
     const isValid = this.validate();
-    
+
     if (isValid) {
       let {
         // title,
@@ -256,14 +269,15 @@ class CreateJob extends Component {
         services,
         dates: stringDates,
         startTime,
-        locations: locations.filter((x) => x.value !== "" && x.type !== "" && x.propertyType !== ''),
+        // locations: locations.filter((x) => x.value !== "" && x.type !== "" && x.propertyType !== ''),
+        locations: locations.filter((x) => x.value !== ""),
         status,
         note,
         assigneesId,
         assigneeRequired,
         price,
         // trucks,
-        trucks: trucks.filter((x)=> x.type !== "" && x.number !== ""),
+        trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
         customerId,
         userId: loggedInUser._id,
         jobType
@@ -407,6 +421,7 @@ class CreateJob extends Component {
   //onChange handler of editor
   onEditorStateChange = (e) => {
     this.setState({
+      descriptionError: e.getCurrentContent() ? '' : 'Description should not be empty',
       editorState: e,
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
@@ -454,11 +469,8 @@ class CreateJob extends Component {
                   options={this.state.customers}
                   getCustomerJobs={this.getCustomerJobs}
                   addNewCustomer={this.addNewCustomer}
-                // required={true}            
-                // error={this.state.customerIdError ? true : false}
                 />
               ) : null
-                // this.state.customerId ? true : false
               }
 
 
@@ -467,6 +479,9 @@ class CreateJob extends Component {
 
               <div className={this.state.descriptionError ? style.styleEditorInValid : style.styleEditorValid}>
                 <Editor
+                  onChange={() => {
+
+                  }}
                   editorState={this.state.editorState}
                   toolbarClassName="toolbarClassName"
                   className={style.styleFormFields}
@@ -576,7 +591,7 @@ class CreateJob extends Component {
               {/* truck size and number */}
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
 
-              {this.state.locations.length === 0 && (
+              {/* {this.state.locations.length === 0 && (
                 <div className={style.addLocation}>
                   <div className={style.addLocationBtn}>
                     <Button onClick={this.addLocation}
@@ -585,9 +600,9 @@ class CreateJob extends Component {
                     </Button>
                   </div>
                 </div>
-              )}
+              )} */}
 
-              {this.state.locations.length > 0 && (
+              {this.state.locations.length > 0 ? (
                 <div>
                   <AddLocation
                     locationArr={this.state.locations}
@@ -598,7 +613,7 @@ class CreateJob extends Component {
                   />
 
                 </div>
-              )}
+              ) : null}
 
               <div className={style.resetBtns}>
 

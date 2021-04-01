@@ -104,6 +104,7 @@ const VirtualizedAutocomplete = (props) => {
           renderInput={(params) => (
             <TextField
               {...params}
+              required
               label="Choose a job"
               fullWidth
               className={style.styleFormFields}

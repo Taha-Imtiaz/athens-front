@@ -97,7 +97,7 @@
   gap: 1rem;
   }
 .service {
-  padding: .5rem; 
+  /* padding: .5rem;  */
   display: grid;
   grid-template-columns: 25fr 75fr;
 }
@@ -118,7 +118,7 @@
   padding: 0.8rem 0.5rem;
 }
 .notes {
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
   display: grid;
   grid-template-rows: repeat(2, min-content);
 }

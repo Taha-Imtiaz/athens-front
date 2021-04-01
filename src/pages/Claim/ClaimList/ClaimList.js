@@ -121,10 +121,10 @@ const CustomerClaims = (props) => {
       </div>
       {docs && docs.length > 0 ? (
         <Claims items={docs} user={user} delete={removeClaim} />
-      ) : (
+      ) : ( docs && docs.length == 0 ?
           <div className="text-center">
             <img src="/images/no-data-found.png" alt="No data found" />
-          </div>
+          </div> : null
         )}
       <div className={style.stylePagination}>
         <div className={style.pagination}>

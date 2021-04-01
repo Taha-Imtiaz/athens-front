@@ -20,25 +20,25 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
         <Modal.Header closeButton>
           <Modal.Title>Activities</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={"bg-light"}>
           {activities && activities.length > 0 ? (
-            <div>
-              <div className={style.modalHeader}>
+            <div className={style.modalBody}>
+              <div className={`text-muted ${style.modalHeader}`}>
                 <div>Performer</div>
                 <div>Message</div>
                 <div>Timestamp</div>
               </div>
 
               {activities && activities.map((activitiy, i) => (
-                <div key={i} className={style.modalContent}>
-                  <div> {activitiy.performer.name}</div>
+                <div key={i} className={`font-weight-bold ${style.modalContent}`}>
+                  <div className={"text-capitalize"}> {activitiy.performer.name}</div>
                   <div>
                     {activitiy.messageLogs.map((x, i) => (
                       <label key={i}>* {x}</label>
                     ))}
                   </div>
 
-                  <TimeAgo date={activitiy.timeStamp} />
+                  <TimeAgo className={"text-muted text-capitalize"} date={activitiy.timeStamp} />
                 </div>
               ))}
             </div>

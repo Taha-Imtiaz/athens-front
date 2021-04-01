@@ -330,7 +330,7 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {data.locations && data.locations.length === 0 && (
+            {/* {data.locations && data.locations.length === 0 && (
               <div className={`${style.locationBtn} ${style.flex}`}>
                 <Button
                   className={`${style.button}`}
@@ -343,11 +343,12 @@ function JobConfirmation(props) {
                   Add Location
                 </Button>
               </div>
-            )}
+            )} */}
 
-            {data.locations && data.locations.length > 0 &&
+            {/* {data.locations && data.locations.length > 0 &&
+            } */}
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
-            }
+
 
 
           </div>

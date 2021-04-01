@@ -629,8 +629,9 @@ class UpdateJob extends Component {
             {/* <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} /> */}
 
             {
-              this.state.locations && <div>
-                {this.state.locations.length === 0 && (
+              this.state.locations &&
+              <div>
+                {/* {this.state.locations.length === 0 && (
                   <div className={style.addLocation}>
                     <div className={style.addLocationBtn}>
                       <Button onClick={this.addLocation} className={style.button}>
@@ -638,12 +639,12 @@ class UpdateJob extends Component {
                   </Button>
                     </div>
                   </div>
-                )}
-                {this.state.locations.length > 0 && (
+                )} */}
+                {this.state.locations.length > 0 ? (
                   <div>
                     <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
                   </div>
-                )}
+                ) :null}
 
               </div>
             }

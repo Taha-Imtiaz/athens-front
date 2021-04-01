@@ -11,7 +11,6 @@ body {
   border: 0;
 }
 
-
 .app-without-nav {
   font-family: var(--font-family-header);
   font-weight: 400;
@@ -116,7 +115,6 @@ a {
 :root {
   --font-family-header: "Roboto", sans-serif;
   --font-family-paragraph: "Open Sans", sans-serif;
-  /*ahmed*/
   --transition-one: all .3s ease-in-out;
   --color-red:#F44336;
   --color-blue:#00adee;
@@ -132,12 +130,9 @@ a {
     font-size: 80%;
   }
 }
-
 .MuiBadge-badge {
   right: -8px !important;
 }
-
-
 .DatePicker_button {
   color: red !important;
   background-color: red !important;

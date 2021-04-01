@@ -1,5 +1,7 @@
 .modal {
     max-width: 70vw;
+    /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.644); */
+  /* border-radius: 10px; */
   }
   
   .modal ::-webkit-scrollbar {
@@ -8,7 +10,7 @@
   
   /* Track */
   .modal ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
+    /* box-shadow: inset 0 0 5px red; */
     border-radius: 10px;
   }
   
@@ -22,15 +24,21 @@
   .modal ::-webkit-scrollbar-thumb:hover {
     background: #00adee;
   }
+  .modalBody{
+    /* background-color: red ; */
+  }
   .modalHeader {
+    font-size: 1.2rem;
     display: grid;
-    grid-template-columns: 20fr 50fr 30fr;
-    font-weight: bold;
+    grid-template-columns: 20fr 60fr 20fr;
+    margin-bottom: .5rem;
+    gap: 1rem;
     font-family: var(--font-family-header);
   }
   .modalContent {
     display: grid;
-    grid-template-columns: 20fr 50fr 30fr;
+    gap: 1rem;
+    grid-template-columns: 20fr 60fr 20fr;
     font-family: var(--font-family-paragraph);
 
   }

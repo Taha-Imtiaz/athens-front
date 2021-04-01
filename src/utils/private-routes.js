@@ -20,6 +20,17 @@ function PrivateRoute({ user, roles, component: Component, ...rest }) {
                     <Component {...props} />
                 ) : (
                     user ? (user.role == 'admin' ? <Redirect to="/customers" /> : <Redirect to="/movers" />) : <Redirect to="/" />
+                   
+                    /* if(user.role == "admin"){
+                        redirect to="/customer"
+                    } else if(user.role == "mover"){
+                        redirect to="/movers"
+                    }
+                    else{
+                        redirect to="/"
+                    }
+                     */
+                    
                 )
             }
             }

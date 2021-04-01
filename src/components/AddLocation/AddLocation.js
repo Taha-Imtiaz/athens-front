@@ -123,6 +123,30 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
     const showLocation = (i) => {
         return (
             <div className={style.locationInput} key={i}>
+                
+
+                {/* Radio Buttons */}
+                <div className={style.radioButtons}>
+                    <RadioGroup
+                        className={style.rowFlex}
+                        value={locationArr[i].type}
+                        onChange={(e) => handleInputChange(e, i)}
+                    >
+                        <FormControlLabel
+                            value="pickup"
+                            name="pickup"
+                            control={<Radio className={style.styleRadio} />}
+                            label="Pickup"
+                        />
+                        <FormControlLabel
+                            value="dropoff"
+                            name="dropoff"
+                            control={<Radio className={style.styleRadio} />}
+                            label="DropOff"
+                        />
+                    </RadioGroup>
+                </div>
+
                 {/* Property Type */}
                 <div className={style.propertyType}>
                     <Autocomplete
@@ -152,28 +176,6 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
                             />
                         )}
                     />
-                </div>
-
-                {/* Radio Buttons */}
-                <div className={style.radioButtons}>
-                    <RadioGroup
-                        className={style.rowFlex}
-                        value={locationArr[i].type}
-                        onChange={(e) => handleInputChange(e, i)}
-                    >
-                        <FormControlLabel
-                            value="pickup"
-                            name="pickup"
-                            control={<Radio className={style.styleRadio} />}
-                            label="Pickup"
-                        />
-                        <FormControlLabel
-                            value="dropoff"
-                            name="dropoff"
-                            control={<Radio className={style.styleRadio} />}
-                            label="DropOff"
-                        />
-                    </RadioGroup>
                 </div>
                 {/* Google Location */}
                 <div className={style.inputField}>

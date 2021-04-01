@@ -161,10 +161,10 @@ const UnavailableSchedule = (props) => {
                 </div>
               );
             })
-          ) : (
+          ) : ( unavailable && unavailable.length == 0 ?
             <div className="text-center">
               <img src="/images/no-data-found.png" alt="" />
-            </div>
+            </div> : null
           )}
         </div>
       </div>

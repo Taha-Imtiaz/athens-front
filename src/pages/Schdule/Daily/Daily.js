@@ -598,10 +598,10 @@ const DailySchedule = (props) => {
                   </Droppable>
                 );
               })
-            ) : (
+            ) : (props.jobs && props.jobs.length == 0 ?
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="" />
-              </div>
+              </div> : null
             )}
           </div>
 

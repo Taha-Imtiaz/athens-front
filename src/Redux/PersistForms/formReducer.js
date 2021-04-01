@@ -51,7 +51,7 @@ let initialState = {
         note: [],
         assigneesId: [],
         add: 1,
-        locations: [],
+        locations: [{ type: "", value: "", default: false, propertyType: '' }],
         fromTo: [],
         assigneeRequiredError: "",
         selectedDate: new Date(),

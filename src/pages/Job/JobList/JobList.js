@@ -685,11 +685,10 @@ const JobsList = (props) => {
             </div>
           </div>
         </div>
-      ) : (
-          <div className="text-center">
-            <img src="/images/no-data-found.png" alt="No Data Found" />
-          </div>
-        )}
+      ) : (docs && docs.length == 0 ? <div className="text-center">
+      <img src="/images/no-data-found.png" alt="No data found" />
+    </div> : null
+    )}
       {/* Modal for delete job */}
 
       <DeleteConfirmation

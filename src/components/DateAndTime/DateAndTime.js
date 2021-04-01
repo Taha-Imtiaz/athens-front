@@ -22,7 +22,12 @@ const DateAndTime = (props) => {
     //add new Date
     const addDate = () => {
         if (dates[0].date && dates[0].time) {
-            setDates([...dates, { date: new Date(), time: new Date().setHours(9, 0, 0, 0) }]);
+            let defaulTime = new Date()
+            defaulTime.setHours(9);
+            defaulTime.setMinutes(0);
+            defaulTime.setSeconds(0);
+            defaulTime = defaulTime.toString()
+            setDates([...dates, { date: new Date(), time: defaulTime }]);
             setParentDates([...dates, { date: new Date(), time: new Date() }])
         }
     };

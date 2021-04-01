@@ -266,7 +266,8 @@ const JobDetails = (props) => {
                       <div className={style.location}>
                         {list.value} {list.default ? '(Load Only / IA)' : null}
                       </div>
-                      <div className="text-muted">
+                      {list.propertyType ?
+                      (<div className="text-muted">
                         {`Property Type: `}
                         <Chip
                           clickable
@@ -274,14 +275,16 @@ const JobDetails = (props) => {
                           variant="outlined"
                           size="small"
                           label={list.propertyType}
-                        /></div>
+                        /></div>): null
+                      } 
                     </div>
-                  ) : (
+                  ) : list.type === "dropoff" ? (
                     <div className={style.dropoff} key={i}>
                       <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
                       <span className={style.locationType}>{`Dropoff: `}</span>
                       <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
-                      <div className="text-muted">
+                      {list.propertyType ?
+                      (<div className="text-muted">
                         {`Property Type: `}
                         <Chip
                           clickable
@@ -289,10 +292,16 @@ const JobDetails = (props) => {
                           variant="outlined"
                           size="small"
                           label={list.propertyType}
-                        /></div>
+                        /></div>): null
+                      } 
+                      
+                    
                     </div>
-                  )
+                  ) : <div className="font-weight-bold">
+                    {`City: `}{list.value}                    
+                  </div>
                 )}
+                
               </div>
             )}
             {job.note.length !== 0 && (

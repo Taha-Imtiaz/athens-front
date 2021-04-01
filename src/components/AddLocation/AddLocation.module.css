@@ -9,11 +9,14 @@
     /* flex-direction: column !important; */
     flex-wrap: nowrap !important;
   }
+  .radioButtons {
+    grid-area: radioButtons;
+  }
   .propertyType{
     grid-area: propertyField;
   }
-  .radioButtons {
-    grid-area: radioButtons;
+  .inputField {
+    grid-area: inputField;
   }
   .checkBox {
     grid-area: checkBox;
@@ -21,9 +24,7 @@
   .checkBoxTick{
     color: #00adee !important;
   }
-  .inputField {
-    grid-area: inputField;
-  }
+  
   
   .TrashIcon {
     cursor: pointer;

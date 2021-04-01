@@ -188,18 +188,6 @@ const CalendarApp = (props) => {
       },
     });
   };
-  //format time
-  // const formatAMPM = (startTime) => {
-  //   let date = new Date(startTime);
-  //   let hours = date.getHours();
-  //   let minutes = date.getMinutes();
-  //   let ampm = hours >= 12 ? "pm" : "am";
-  //   hours = hours % 12;
-  //   hours = hours ? hours : 12; // the hour '0' should be '12'
-  //   minutes = minutes < 10 ? "0" + minutes : minutes;
-  //   let strTime = hours + ":" + minutes + " " + ampm;
-  //   return strTime;
-  // };
   return (
     <div className={style.calenderContainer}>
       <div className={style.calender}>
@@ -227,11 +215,9 @@ const CalendarApp = (props) => {
         </div>
 
         <div className={style.sideContent}>
-          {state.currentDayJobs.length ? (
-            <div>
-              <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
+          <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
               <hr />
-              <div className={style.jobInfo}>
+          <div className={style.jobInfo}>
                 <h6>{`Total Jobs: `}
                   <Chip
                     label={count.job}
@@ -250,6 +236,10 @@ const CalendarApp = (props) => {
                   />
                 </h6>
               </div>
+          {state.currentDayJobs.length ? (
+            <div>
+              
+              
               {state.currentDayJobs.map((job, i) => (
                 <div>
 
@@ -325,33 +315,10 @@ const CalendarApp = (props) => {
                 </div>
               ))}
             </div>
-          ) : (
-              <div>
-                <h5 className={`${style.flex} ${style.flexCenter}`}>{state.date.toDateString()}</h5>
-
-                <hr />
-                <div className={style.jobInfo}>
-                  <h6>{`Total Jobs: `}
-                    <Chip
-                      label={state.currentDayJobs.length}
-                      clickable
-                      // color="primary"
-                      // variant="outlined"
-                      size="medium"
-                    />
-                  </h6>
-                  <h6>{`Total Movers: `}
-                    <Chip
-                      label="0"
-                      clickable
-                      // color="primary"
-                      // variant="outlined"
-                      size="medium"
-                    />
-                  </h6>
-                </div>
+          ) : ( state.currentDayJobs.length == 0 ?
+              <div>                
                 <img src="/images/no-data-found.png" alt="" width="100%" />
-              </div>
+              </div> : null
             )}
         </div>
       </div>

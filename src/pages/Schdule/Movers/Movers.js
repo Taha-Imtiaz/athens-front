@@ -142,10 +142,10 @@ const MoversSchedule = (props) => {
                   </div>
                 );
               })
-            ) : (
+            ) : ( filteredMovers && filteredMovers.length ?
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="" />
-              </div>
+              </div> : null
             )}
           </div>
         </div>

@@ -352,8 +352,8 @@ const CustomerList = (props) => {
                                       }
                                     </div>
                                   ) : (
-                                      0
-                                    )}
+                                    0
+                                  )}
                                 /></div>
 
                             </div>
@@ -387,11 +387,10 @@ const CustomerList = (props) => {
               </div>
             </div>
           </div>
-        ) : (
-            <div className="text-center">
-              <img src="/images/no-data-found.png" alt="No data found" />
-            </div>
-          )}
+        ) : (docs && docs.length == 0 ? <div className="text-center">
+          <img src="/images/no-data-found.png" alt="No data found" />
+        </div> : null
+        )}
       </div>
 
       <DeleteConfirmation

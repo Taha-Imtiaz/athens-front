@@ -14,18 +14,11 @@
   padding: 2rem;
 }
 .DateTimeInput{
-  /* background-color: springgreen; */
-  /* display: flex; */
   flex-wrap: wrap;
   align-items: center;
 }
 .mainDate{
   flex-grow: 1;
-  /* display: flex; */
-  /* align-items: center; */
-  
-
-
 }
 .mainDate > div {
   flex-grow: 1;
@@ -39,7 +32,6 @@
   flex-grow: 0 !important;
   align-items: center;
   color: tomato;
-  /* background-color: tomato; */
 }
 .alignRight {
   display: flex;

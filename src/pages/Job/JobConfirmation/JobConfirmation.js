@@ -204,7 +204,7 @@ function JobConfirmation(props) {
             startTime: data.startTime,
             phone: data.customer.phone,
             locations: data.locations.filter(
-              (x) => x.value !== "" && x.type !== ""
+              (x) => x.value !== ""
             ),
             email: data.customer.email,
             customerId: data.customer._id,
@@ -233,7 +233,7 @@ function JobConfirmation(props) {
       dates: stringDates.filter(Boolean),
       startTime: data.startTime.toString(),
       phone: data.customer.phone,
-      locations: data.locations.filter((x) => x.value !== "" && x.type !== ""),
+      locations: data.locations.filter((x) => x.value !== ""),
       email: data.customer.email,
       customerId: data.customer._id,
     };

@@ -47,9 +47,11 @@
     cursor: pointer;
     border: none;
     /* margin-bottom: .5rem; */
-    color: white;
-    border-radius: 50%;
-    padding: .5rem;
-    background-color: var(--color-blue);
+    font-size: 1.8rem;
+    /* margin-bottom: .5rem; */
+    color:var(--color-blue);
+    /* border-radius: 50%; */
+    /* padding: .5rem; */
+    /* background-color: ; */
     width: min-content;
 }

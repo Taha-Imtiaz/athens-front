@@ -150,7 +150,7 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.jobId}
                       clickable
-                      color="primary"
+                      style={{color:"white" ,backgroundColor:"var(--color-blue)"}}
                     />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.status}
                       clickable
-                      color="primary"
+                      style={{color:"white" ,backgroundColor:"var(--color-blue)"}}
                     />
                   </div>
                 </div>
@@ -297,8 +297,9 @@ const JobDetails = (props) => {
                       
                     
                     </div>
-                  ) : <div className="font-weight-bold">
-                    {`City: `}{list.value}                    
+                  ) : <div className={style.locations}>
+                    
+                    <div className="font-weight-bold ">{`Location: `}</div> {list.value}                   
                   </div>
                 )}
                 

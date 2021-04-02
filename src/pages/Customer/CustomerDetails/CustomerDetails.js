@@ -13,7 +13,7 @@ import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarTimes, faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarTimes, faDotCircle, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Blankets from "../../../components/Blankets/Blankets";
 
 const CustomerDetails = (props) => {
@@ -152,7 +152,7 @@ const CustomerDetails = (props) => {
   };
 
   const closeClaim = (e) => {
-    
+
     e.preventDefault();
     e.stopPropagation();
     setToggleClaim(true)
@@ -325,13 +325,13 @@ const CustomerDetails = (props) => {
                                   size="medium"
                                   label={job.jobId}
                                   clickable
-                                  color="primary"
+                                  style={{ color: "white", backgroundColor: "var(--color-blue)" }}
                                 /></span>
                                 <span><Chip
                                   size="medium"
                                   label={job.status}
                                   clickable
-                                  color="primary"
+                                  style={{ color: "white", backgroundColor: "var(--color-blue)" }}
                                 /></span>
                               </div>
                             </div>
@@ -371,8 +371,8 @@ const CustomerDetails = (props) => {
                                     color="primary"
                                     variant="outlined"
                                   /></div>
-                                  <div>
-                                  
+                                <div>
+
                                   <h5>Service:</h5>
                                   {job.services.map((service, i) => (
                                     <Chip
@@ -385,7 +385,7 @@ const CustomerDetails = (props) => {
                                     />
                                   ))}</div>
 
-                                
+
 
                               </div>
 
@@ -413,9 +413,10 @@ const CustomerDetails = (props) => {
 
                               </div>
                               <div className={style.cardBodyContainerThree}>
-                                <h5>Truck Details</h5>
+                               
                                 {job.trucks.map((x, i) =>
                                   <div className={style.truckSection}>
+                                     <h5>Truck Details</h5>
                                     <div>
                                       {`Type: `}
                                       <Chip
@@ -477,7 +478,7 @@ const CustomerDetails = (props) => {
                                   {job.locations.map((list, i) =>
                                     list.type === "pickup" ? (
                                       <div key={i}>
-                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                        <FontAwesomeIcon icon={faMapMarker} />{" "}
                                         <span>{`Pickup`} </span>{" "}
                                         <div className={style.location}>
                                           {list.value} {list.default ? '(Load Only / IA)' : null}
@@ -492,9 +493,9 @@ const CustomerDetails = (props) => {
                                             label={list.propertyType}
                                           /></div>
                                       </div>
-                                    ) : (
+                                    ) : list.type === "dropoff" ? (
                                       <div key={i}>
-                                        <FontAwesomeIcon icon={faDotCircle} />{" "}
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
                                         <span>{`Dropoff`}</span>
                                         <div className={style.location}>
                                           {list.value} {list.default ? '(Unload Only)' : null}
@@ -509,7 +510,9 @@ const CustomerDetails = (props) => {
                                             label={list.propertyType}
                                           /></div>
                                       </div>
-                                    )
+                                    ) : <div className={style.location}>
+                                      <span>{`Location: `}</span> {list.value}
+                                    </div>
                                   )}
                                 </div>
                               )}

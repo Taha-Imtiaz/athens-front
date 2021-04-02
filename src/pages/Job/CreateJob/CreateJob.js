@@ -52,7 +52,7 @@ class CreateJob extends Component {
     services: [],
     customerId: "",
     startDate: "",
-    dates: [{ date: new Date(), time: this.getDefaultTime() }],
+    dates: [{ date: new Date(), time: new Date('2014-08-18T09:00:00') }],
     startTime: "",
     anchorEl: "",
     meetTime: "",
@@ -259,7 +259,7 @@ class CreateJob extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time.toLocaleString() } : null
+        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time } : null
       );
 
       stringDates = stringDates.filter(Boolean);

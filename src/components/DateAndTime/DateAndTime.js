@@ -10,7 +10,7 @@ import {
     KeyboardTimePicker,
 } from "@material-ui/pickers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 const DateAndTime = (props) => {
@@ -26,7 +26,6 @@ const DateAndTime = (props) => {
             defaulTime.setHours(9);
             defaulTime.setMinutes(0);
             defaulTime.setSeconds(0);
-            defaulTime = defaulTime.toString()
             setDates([...dates, { date: new Date(), time: defaulTime }]);
             setParentDates([...dates, { date: new Date(), time: new Date() }])
         }
@@ -110,7 +109,7 @@ const DateAndTime = (props) => {
                 <div className="d-flex justify-content-end">
                     <div onClick={addDate}
                         className={`${style.plusIcon} ${style.alignRight}`}>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faPlusCircle} />
                     </div>
                 </div>
 

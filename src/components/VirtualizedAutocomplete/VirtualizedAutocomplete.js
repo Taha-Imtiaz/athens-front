@@ -89,6 +89,7 @@ const VirtualizedAutocomplete = (props) => {
     <div>
       {props.textField ? (
         <Autocomplete
+        
           value={props.value}
           size="small"
           onSelect={onSelect}
@@ -111,7 +112,7 @@ const VirtualizedAutocomplete = (props) => {
               variant="outlined"
               inputProps={{
                 ...params.inputProps,
-                autoComplete: "new-password", // disable autocomplete and autofill
+                autoComplete: "off", // disable autocomplete and autofill
               }}
             />
           )}
@@ -146,7 +147,7 @@ const VirtualizedAutocomplete = (props) => {
               fullWidth
               inputProps={{
                 ...params.inputProps,
-                autoComplete: "new-password", // disable autocomplete and autofill
+                autoComplete: "off", // disable autocomplete and autofill
               }}
             />
           )}

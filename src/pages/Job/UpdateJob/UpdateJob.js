@@ -11,11 +11,6 @@ import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-} from "@material-ui/pickers";
 import { v4 as uuidv4 } from "uuid";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -340,7 +335,7 @@ class UpdateJob extends Component {
       services,
       assigneeRequired,
       jobType,
-      locations: locations && locations.filter((x) => x.value !== "" && x.type !== ""),
+      locations: locations && locations.filter((x) => x.value !== ""),
       status,
       userId: loggedinUser._id,
       customerId,

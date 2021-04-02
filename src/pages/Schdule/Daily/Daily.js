@@ -475,7 +475,7 @@ const DailySchedule = (props) => {
 
                           <div>
                             <div className={style.heading}>{`Time:`}</div>
-                            <div className={style.content}>
+                            <div className={`text-uppercase ${style.content}`}>
                               {
                                 formatAMPM(list.dates[0].time)
                               }

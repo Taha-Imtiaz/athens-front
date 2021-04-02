@@ -10,7 +10,7 @@ import {
     TextField,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Truck = (props) => {
 
@@ -112,7 +112,7 @@ const Truck = (props) => {
                 <div className="d-flex justify-content-end">
                     <div onClick={addTruck}
                         className={`${style.plusIcon} ${style.alignRight}`}>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faPlusCircle} />
                     </div>
                 </div>
             </div>

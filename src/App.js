@@ -101,7 +101,7 @@ function App(props) {
           <ErrorBoundary>
 
             {/* Auth */}
-            <Route path="/" exact component={SignIn} roles={appRoles} />
+            <Route path="/" exact={true} component={SignIn} roles={appRoles} />
             <Route path="/email-verification" component={EmailVerification} roles={appRoles} />
             <Route path="/verifycode" component={CodeVerification} roles={appRoles} />
             <PrivateRoute path="/rest-password" component={ResetPassword} roles={appRoles} />
@@ -155,7 +155,7 @@ function App(props) {
 
             {/* <PrivateRoute path="/:id" component={()=><h4>not found </h4>} roles={appRoles}/>   */}
             {/* <Redirect exact to="/"/> */}
-            {/* <Route path = "*" component={DefaultRoute}/> */}
+            {/* <Route component={DefaultRoute}/> */}
 
           </ErrorBoundary>
         </Switch>

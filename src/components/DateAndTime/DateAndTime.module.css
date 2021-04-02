@@ -40,10 +40,11 @@
   .plusIcon{
     cursor: pointer;
     border: none;
+    font-size: 1.8rem;
     /* margin-bottom: .5rem; */
-    color: white;
-    border-radius: 50%;
-    padding: .5rem;
-    background-color: var(--color-blue);
+    color:var(--color-blue);
+    /* border-radius: 50%; */
+    /* padding: .5rem; */
+    /* background-color: ; */
     width: min-content;
 }

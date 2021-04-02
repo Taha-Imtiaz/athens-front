@@ -29,7 +29,7 @@ let initialState = {
         services: [],
         customerId: "",
         startDate: "",
-        dates: [{ date: new Date(), time: new Date().setHours(9,0,0,0) }],
+        dates: [{ date: new Date(), time: new Date('2014-08-18T09:00:00') }],
         startTime: "",
         anchorEl: "",
         meetTime: "",

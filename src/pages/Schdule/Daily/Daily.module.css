@@ -68,6 +68,10 @@ text-transform: capitalize;
 font-weight: bold;
 text-transform: capitalize;
 }
+.jobDate{
+  display: flex;
+  flex-direction: row;
+}
 .contentMail{
   font-weight: bold;
   text-transform: lowercase;
@@ -134,8 +138,8 @@ background: var(--hover-color-blue) !important;
  .jobDetailList {
   display: grid;
   min-width: 100%;
-  grid-template-columns: 1fr 40fr 13fr 15fr 20fr 1fr;
-  grid-template-areas: ". title id type status .";
+  grid-template-columns: 1fr 13fr 15fr 20fr 40fr 1fr;
+  grid-template-areas: ". id type status title .";
   column-gap: .5rem;
   background: #e9ecef;
   font-size: 1rem;

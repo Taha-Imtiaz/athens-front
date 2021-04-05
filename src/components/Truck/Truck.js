@@ -5,18 +5,17 @@ import FormControl from "@material-ui/core/FormControl";
 import {
     InputLabel,
     MenuItem,
-    Button,
     Select,
     TextField,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Truck = (props) => {
 
     // truck options initial state
-    const truckOptions = ["Pickup Truck", "Cargo Van", "15 ft truck", "17 ft truck", "20 ft truck", "26 ft truck"]
-    const [truckOption, setTruckOption] = useState(truckOptions)
+    const truckOption = ["Pickup Truck", "Cargo Van", "15 ft truck", "17 ft truck", "20 ft truck", "26 ft truck"]
+    // const [truckOption, setTruckOption] = useState(truckOptions)
    
     const initialState = props.trucks;
     const [trucks, setTrucks] = useState(initialState)
@@ -43,7 +42,7 @@ const Truck = (props) => {
         let updatedTrucks = cloneDeep(trucks);
         let value = e.target.value;
         updatedTrucks[i][inputType] = value;
-        if (inputType == 'type') {
+        if (inputType === 'type') {
             updatedTrucks[i].number = 1;
         }
         setTrucks(updatedTrucks);
@@ -98,7 +97,7 @@ const Truck = (props) => {
                                     // error={this.state.assigneeRequiredError ? true : false}
                                     onChange={(e) => handleTrucksInput(e, i, 'number')}
                                 />
-                                <div>{i != 0 ?
+                                <div>{i !== 0 ?
                                     <div className={style.centeredIcon}
                                         onClick={() => removeTruck(i)}>
                                         <FontAwesomeIcon icon={faTrash} />

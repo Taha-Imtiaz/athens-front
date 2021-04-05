@@ -8,7 +8,7 @@ import { updateClaim, getClaim } from "../../../Redux/Claim/claimActions";
 import style from "./ClaimDetails.module.css";
 import TimeAgo from "react-timeago";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarTimes, faEnvelope, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarTimes, faEnvelope, faMobile, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const ClaimDetails = (props) => {
   const [show, setShow] = useState(false);

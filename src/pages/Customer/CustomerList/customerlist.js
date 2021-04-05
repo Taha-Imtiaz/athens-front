@@ -13,7 +13,6 @@ import Pagination from "../../../components/Pagination/Pagination";
 import Button from "@material-ui/core/Button";
 import { Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
-import BackButton from "../../../components/BackButton/BackButton";
 
 const CustomerList = (props) => {
   //defining variables
@@ -387,7 +386,7 @@ const CustomerList = (props) => {
               </div>
             </div>
           </div>
-        ) : (docs && docs.length == 0 ? <div className="text-center">
+        ) : (docs && docs.length === 0 ? <div className="text-center">
           <img src="/images/no-data-found.png" alt="No data found" />
         </div> : null
         )}

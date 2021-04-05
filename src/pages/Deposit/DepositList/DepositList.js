@@ -106,7 +106,7 @@ const DepositList = (props) => {
                 closeDeleteModal={closeDeleteModal}
                 page={currentPage}
               />
-          </div> : ( docs && docs.length == 0 ?
+          </div> : ( docs && docs.length === 0 ?
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="No data found" />
               </div> : null

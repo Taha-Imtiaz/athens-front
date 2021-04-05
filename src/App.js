@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import {  Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import PrivateRoute from "./utils/private-routes";
@@ -9,7 +9,7 @@ import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-import DefaultRoute from './DefaultRoute'
+// import DefaultRoute from './DefaultRoute'
 
 /* Auth */
 import SignIn from "./pages/SignIn/SignIn";

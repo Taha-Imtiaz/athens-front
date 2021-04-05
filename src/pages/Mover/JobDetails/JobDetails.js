@@ -6,7 +6,7 @@ import { getMoverJobDetail, updateJob } from "../../../Redux/Mover/moverActions"
 import { connect } from "react-redux";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
-import { faDotCircle, faEnvelope, faMapMarkedAlt, faMapMarker, faMapMarkerAlt, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
+import {  faEnvelope,  faMapMarker, faMapMarkerAlt, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MoverJobDetails = (props) => {

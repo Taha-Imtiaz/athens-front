@@ -297,7 +297,7 @@ const JobDetails = (props) => {
                       
                     
                     </div>
-                  ) : <div className={style.locations}>
+                  ) : <div key={i} className={style.locations}>
                     
                     <div className="font-weight-bold ">{`Location: `}</div> {list.value}                   
                   </div>

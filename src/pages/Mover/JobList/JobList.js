@@ -3,8 +3,6 @@ import style from "./JobList.module.css";
 import { Link } from "react-router-dom";
 import { getMover, updateJob } from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import {
   FormControlLabel,
   Popover,
@@ -306,17 +304,6 @@ const MoversJobList = (props) => {
         </div>
       </div>
 
-      {/* {moverJobs && moverJobs.length > 0 ? (
-        <div className={style.jobListHeaderContainer}>
-          <div className={style.jobListHeader}>
-            <div>Title</div>
-            <div>Date</div>
-            <div>Assignee</div>
-            <div>Status</div>
-          </div>
-        </div>
-      ) : null} */}
-
       {moverJobs && moverJobs.length > 0 ? (
         <div>
           {moverJobs.map((list, i) => {
@@ -489,7 +476,7 @@ const MoversJobList = (props) => {
             </div>
           </div>
         </div>
-      ) : ( moverJobs && moverJobs.length == 0 ?
+      ) : ( moverJobs && moverJobs.length === 0 ?
         <div className="text-center">
           <img src="/images/no-data-found.png" alt="" />
         </div> : null

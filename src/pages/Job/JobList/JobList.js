@@ -685,7 +685,7 @@ const JobsList = (props) => {
             </div>
           </div>
         </div>
-      ) : (docs && docs.length == 0 ? <div className="text-center">
+      ) : (docs && docs.length === 0 ? <div className="text-center">
       <img src="/images/no-data-found.png" alt="No data found" />
     </div> : null
     )}

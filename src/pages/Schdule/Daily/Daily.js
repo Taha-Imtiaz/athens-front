@@ -3,7 +3,8 @@ import style from "./Daily.module.css";
 import SideBar from "../../../components/Sidebar/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  getalljobs, getalljobsfiveday
+  getalljobs,
+  getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
@@ -24,12 +25,9 @@ import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { htmlToText } from "html-to-text";
-import Badge from '@material-ui/core/Badge';
-
-
+import Badge from "@material-ui/core/Badge";
 
 const DailySchedule = (props) => {
-
   const [newAssignee, setAssignee] = useState("");
   const [showIndex, setShowIndex] = useState(null);
   const [today, setToday] = useState(new Date().toString());
@@ -61,8 +59,8 @@ const DailySchedule = (props) => {
   const generatePDF = (e, job) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    let dates = job.dates.map(x => x.date).join(" | ");
-    
+    let dates = job.dates.map((x) => x.date).join(" | ");
+
     let services = job.services.map((e) => e.name).join(" | ");
 
     const doc = new jsPDF("p", "pt");
@@ -123,7 +121,7 @@ const DailySchedule = (props) => {
 
     doc.autoPrint();
     //This is a key for printing
-    doc.output('dataurlnewwindow');
+    doc.output("dataurlnewwindow");
   };
 
   const formatAMPM = (startTime) => {
@@ -212,8 +210,8 @@ const DailySchedule = (props) => {
     },
     badge: {
       backgroundColor: "#00adee",
-      color: "white"
-    }
+      color: "white",
+    },
   }));
 
   const classes = useStyles();
@@ -281,7 +279,7 @@ const DailySchedule = (props) => {
         if (moverJobs) {
           let mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
-          setMoverAssignedJobs(moverAssignedDate)
+          setMoverAssignedJobs(moverAssignedDate);
           let newAssigneeObj = {
             moverId,
             assigneesId: assigneesId,
@@ -299,40 +297,34 @@ const DailySchedule = (props) => {
     }
   };
 
-
-  // const getDateTime = (job) => { 
+  // const getDateTime = (job) => {
   //   let obj = job.dates.find(x => x.date == new Date(today).toDateString())
   //   return formatAMPM(obj.time)
   //  };
   const moverListItem = (mover) => {
     return (
       <div key={mover._id.toString()}>
-        <Droppable
-          droppableId={mover._id.toString()}
-          type="TASK"
-        >
+        <Droppable droppableId={mover._id.toString()} type="TASK">
           {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              <Draggable
-                draggableId={mover._id.toString()}
-                index={mover._id}
-              >
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              <Draggable draggableId={mover._id.toString()} index={mover._id}>
                 {(provided, snapshot) => (
                   <div
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                   >
-                    <h6 className={style.moverHeader} key={mover._id.toString()}>
-                      <Badge badgeContent={mover.todayJobs} classes={{ badge: classes.badge }}>
+                    <h6
+                      className={style.moverHeader}
+                      key={mover._id.toString()}
+                    >
+                      <Badge
+                        badgeContent={mover.todayJobs}
+                        classes={{ badge: classes.badge }}
+                      >
                         {mover.name}
                       </Badge>
-                      <span className={style.hideAssigneeId}>
-                        {mover._id}
-                      </span>
+                      <span className={style.hideAssigneeId}>{mover._id}</span>
                     </h6>
                   </div>
                 )}
@@ -342,41 +334,43 @@ const DailySchedule = (props) => {
         </Droppable>
       </div>
     );
-  }
+  };
 
   const moversList = (list) => {
-    let movers = []
-    let crewLeaders = []
+    let movers = [];
+    let crewLeaders = [];
     let newMovers = [];
-    list.map(x => {
-      switch (x.mover.attribute) {
-        case 'mover':
+    for (let i = 0; i < list.length; i++) {
+      switch (list[i].mover.attribute) {
+        case "mover":
           // code block
-          movers.push(x.mover)
+          movers.push(list[i].mover);
           break;
-        case 'crew leader':
+        case "crew leader":
           // code block
-          crewLeaders.push(x.mover)
+          crewLeaders.push(list[i].mover);
           break;
-        case 'new mover':
+        case "new mover":
           // code block
-          newMovers.push(x.mover)
+          newMovers.push(list[i].mover);
           break;
         default:
-        // code block
       }
-    })
+    }
     return (
       <Fragment>
         <h5>Crew Leaders</h5>
-        {crewLeaders.map(x => moverListItem(x))}<hr />
+        {crewLeaders.map((x) => moverListItem(x))}
+        <hr />
         <h5>Movers</h5>
-        {movers.map(x => moverListItem(x))}<hr />
+        {movers.map((x) => moverListItem(x))}
+        <hr />
         <h5>New Movers</h5>
-        {newMovers.map(x => moverListItem(x))}<hr />
+        {newMovers.map((x) => moverListItem(x))}
+        <hr />
       </Fragment>
-    )
-  }
+    );
+  };
 
   return (
     <div className={`${style.scheduleContainer}`}>
@@ -450,7 +444,11 @@ const DailySchedule = (props) => {
                         {...provided.droppableProps}
                       >
                         <div
-                          className={list.assignee.length < list.assigneeRequired ? `${style.cardHeader} card-header ${style.dangerClass} ${style.flex}` : `card-header ${style.cardHeader} ${style.flex}`}
+                          className={
+                            list.assignee.length < list.assigneeRequired
+                              ? `${style.cardHeader} card-header ${style.dangerClass} ${style.flex}`
+                              : `card-header ${style.cardHeader} ${style.flex}`
+                          }
                           aria-expanded="true"
                           data-toggle="collapse"
                           data-target={`#collapse${i}`}
@@ -466,7 +464,9 @@ const DailySchedule = (props) => {
 
                           <div>
                             <div className={style.heading}>{`Movers Req:`}</div>
-                            <div className={style.content}>{list.assigneeRequired}</div>
+                            <div className={style.content}>
+                              {list.assigneeRequired}
+                            </div>
 
                             <span className={style.hideJobId}>
                               {list.jobId}
@@ -476,9 +476,7 @@ const DailySchedule = (props) => {
                           <div>
                             <div className={style.heading}>{`Time:`}</div>
                             <div className={`text-uppercase ${style.content}`}>
-                              {
-                                formatAMPM(list.dates[0].time)
-                              }
+                              {formatAMPM(list.dates[0].time)}
                               {
                                 // getDateTime(list)
                               }
@@ -487,38 +485,46 @@ const DailySchedule = (props) => {
 
                           <div>
                             <div className={style.heading}>{`Assignee:`}</div>
-                            <div className={style.content}>{list.assignee.length > 0 ? (
+                            <div className={style.content}>
+                              {list.assignee.length > 0 ? (
+                                <div>
+                                  {list.assignee.map((assignee, i) => (
+                                    <div key={i} className={style.assignee}>
+                                      <div className={style.assigneeName}>
+                                        {assignee.name}
+                                      </div>
 
-                              <div>
-
-                                {list.assignee.map((assignee, i) => (
-                                  <div key={i} className={style.assignee}>
-
-                                    <div className={style.assigneeName}>
-                                      {assignee.name}
+                                      <div className={style.closeIcon}>
+                                        <FontAwesomeIcon
+                                          onClick={(e) =>
+                                            removeAssignee(
+                                              e,
+                                              list,
+                                              assignee._id
+                                            )
+                                          }
+                                          icon={faTimes}
+                                          size="1x"
+                                        />
+                                      </div>
                                     </div>
-
-                                    <div className={style.closeIcon}>
-                                      <FontAwesomeIcon
-                                        onClick={(e) =>
-                                          removeAssignee(e, list, assignee._id)
-                                        }
-                                        icon={faTimes}
-                                        size="1x"
-                                      />
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : (
-                              <div>N/A</div>
-                            )}</div>
-
+                                  ))}
+                                </div>
+                              ) : (
+                                <div>N/A</div>
+                              )}
+                            </div>
                           </div>
 
                           <div>
-                            <Button className={list.assignee.length < list.assigneeRequired ? `${style.deleteButtonTwo}` : ` ${style.deleteButtonOne}`}
-                              onClick={(e) => generatePDF(e, list)}>
+                            <Button
+                              className={
+                                list.assignee.length < list.assigneeRequired
+                                  ? `${style.deleteButtonTwo}`
+                                  : ` ${style.deleteButtonOne}`
+                              }
+                              onClick={(e) => generatePDF(e, list)}
+                            >
                               <i className="fa fa-print mr-2"></i>
                               {`Print`}
                             </Button>
@@ -534,21 +540,38 @@ const DailySchedule = (props) => {
                             <h4>Job Details</h4>
                             <div className={style.jobDetailList}>
                               <div className={style.jobTitle}>
-                                <div className={`text-muted ${style.heading}`}>{`Job Title:`}</div>
-                                <div className={style.content}>{list.title} </div>
+                                <div
+                                  className={`text-muted ${style.heading}`}
+                                >{`Job Dates:`}</div>
+                              {list.dates.map((x,i)=>{
+                                return(
+                                  <div key={i} className={`${style.jobDate} ${style.content}`}>
+                                  {x.date}{" "}
+                                </div>
+                                )
+                              })}                                
                               </div>
                               <div className={style.jobsId}>
-                                <div className={`text-muted ${style.heading}`}>{`Job ID:`}</div>
-                                <div className={style.content}>{list.jobId}</div>
+                                <div
+                                  className={`text-muted ${style.heading}`}
+                                >{`Job ID:`}</div>
+                                <div className={style.content}>
+                                  {list.jobId}
+                                </div>
                               </div>
 
                               <div className={style.jobTypee}>
-                                <div className={`text-muted ${style.heading}`}>{`Job Type:`}</div>
-                                <div className={style.content}>{list.jobType}</div>
+                                <div
+                                  className={`text-muted ${style.heading}`}
+                                >{`Job Type:`}</div>
+                                <div className={style.content}>
+                                  {list.jobType}
+                                </div>
                               </div>
                               <div className={style.jobStatus}>
-
-                                <div className={`text-muted ${style.heading}`}>{`Status:`}</div>
+                                <div
+                                  className={`text-muted ${style.heading}`}
+                                >{`Status:`}</div>
                                 <Chip
                                   className={style.content}
                                   label={list.status}
@@ -558,22 +581,27 @@ const DailySchedule = (props) => {
                                   variant="outlined"
                                 ></Chip>
                               </div>
-
                             </div>
 
                             <div className={style.jobDescriptionHeader}>
-                              <h4>Job Description</h4>
+                              <h5>Job Description</h5>
                             </div>
                             <div className={style.jobDescription}>
-                              <span className={style.jobDescriptionText}>{parse(list.description)}</span>
+                              <span className={style.jobDescriptionText}>
+                                {parse(list.description)}
+                              </span>
                             </div>
                             <hr />
                             <div className={style.customerDetailContainer}>
                               <h4>Customer Details</h4>
                               <div className={style.customerDetailList}>
-                                <div className={style.customerDetailListContent}>
+                                <div
+                                  className={style.customerDetailListContent}
+                                >
                                   <div>
-                                    <div className={`text-muted ${style.heading}`}>{`Name:`}</div>
+                                    <div
+                                      className={`text-muted ${style.heading}`}
+                                    >{`Name:`}</div>
                                     <div className={style.content}>
                                       {list.customer.firstName}
                                       {list.customer.lastName}
@@ -581,12 +609,20 @@ const DailySchedule = (props) => {
                                   </div>
 
                                   <div>
-                                    <div className={`text-muted ${style.heading}`}>{`E-Mail:`}</div>
-                                    <div className={style.contentMail}>{list.customer.email}</div>
+                                    <div
+                                      className={`text-muted ${style.heading}`}
+                                    >{`E-Mail:`}</div>
+                                    <div className={style.contentMail}>
+                                      {list.customer.email}
+                                    </div>
                                   </div>
                                   <div>
-                                    <div className={`text-muted ${style.heading}`}>{`Phone:`}</div>
-                                    <div className={style.content}>{list.customer.phone}</div>
+                                    <div
+                                      className={`text-muted ${style.heading}`}
+                                    >{`Phone:`}</div>
+                                    <div className={style.content}>
+                                      {list.customer.phone}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -598,11 +634,11 @@ const DailySchedule = (props) => {
                   </Droppable>
                 );
               })
-            ) : (props.jobs && props.jobs.length == 0 ?
+            ) : props.jobs && props.jobs.length === 0 ? (
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="" />
-              </div> : null
-            )}
+              </div>
+            ) : null}
           </div>
 
           <div className={`${style.movers}  ${style.mov}`} id="mov">

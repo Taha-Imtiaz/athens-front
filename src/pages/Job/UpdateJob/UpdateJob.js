@@ -5,12 +5,10 @@ import { connect } from "react-redux";
 import { getJob, updateJob } from "../../../Redux/Job/jobActions";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {  faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cloneDeep, uniqBy } from "lodash";
 import "date-fns";
-import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
-import DateFnsUtils from "@date-io/date-fns";
 import { v4 as uuidv4 } from "uuid";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -307,8 +305,6 @@ class UpdateJob extends Component {
       startTime,
       propertyType,
       price,
-      truck,
-      truckSize,
       trucks,
       assigneesId
     } = this.state;

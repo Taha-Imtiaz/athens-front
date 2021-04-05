@@ -1,5 +1,5 @@
 import { CellMeasurer, CellMeasurerCache, List } from "react-virtualized";
-import React, { useRef, useState } from "react";
+import React, { useRef} from "react";
 import { Autocomplete } from "@material-ui/lab";
 import { TextField } from "@material-ui/core";
 import style from "./VirtualizedAutocomplete.module.css"
@@ -11,12 +11,12 @@ const VirtualizedAutocomplete = (props) => {
       defaultHeight: 100,
     })
   );
-  const [virtualizedState, setVirtualizedState] = useState({
-    selection: "",
-    data: props.options,
-  });
-  const onSelect = (item) =>
-    setVirtualizedState((prevState) => ({ ...prevState, selection: item }));
+  // const [virtualizedState, setVirtualizedState] = useState({
+  //   selection: "",
+  //   data: props.options,
+  // });
+  // const onSelect = (item) =>
+  //   setVirtualizedState((prevState) => ({ ...prevState, selection: item }));
 
   const renderItem = (item) => {
     return (
@@ -37,7 +37,6 @@ const VirtualizedAutocomplete = (props) => {
 
   const renderMenu = (items, searchingFor, autocompleteStyle) => {
     cache.clearAll();
-
     const rowRenderer = ({ key, index, parent, style }) => {
       const Item = items[index];
       const onMouseDown = (e) => {
@@ -88,11 +87,10 @@ const VirtualizedAutocomplete = (props) => {
   return (
     <div>
       {props.textField ? (
-        <Autocomplete
-        
+        <Autocomplete        
           value={props.value}
           size="small"
-          onSelect={onSelect}
+          // onSelect={onSelect}
           renderMenu={renderMenu}
           onChange={(event, newValue) => {
             props.setSelectedCustomerJobs(newValue); // Get the customer and get job
@@ -127,7 +125,7 @@ const VirtualizedAutocomplete = (props) => {
           }}
           size="small"
           value={props.value}
-          onSelect={onSelect}
+          // onSelect={onSelect}
           renderMenu={renderMenu}
           options={props.options}
           autoHighlight

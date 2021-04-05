@@ -15,7 +15,6 @@ function PrivateRoute({ user, roles, component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) => {
-        console.log(props);
         return isAuthenticated(props) ? (
           user &&
             (roles.includes(user.role) ? (

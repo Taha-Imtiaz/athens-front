@@ -121,7 +121,7 @@ const CustomerClaims = (props) => {
       </div>
       {docs && docs.length > 0 ? (
         <Claims items={docs} user={user} delete={removeClaim} />
-      ) : ( docs && docs.length == 0 ?
+      ) : ( docs && docs.length === 0 ?
           <div className="text-center">
             <img src="/images/no-data-found.png" alt="No data found" />
           </div> : null

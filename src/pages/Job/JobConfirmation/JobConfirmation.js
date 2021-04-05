@@ -15,8 +15,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import style from "./JobConfirmation.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 

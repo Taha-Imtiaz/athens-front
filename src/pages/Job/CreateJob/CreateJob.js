@@ -42,7 +42,6 @@ class CreateJob extends Component {
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
-    console.log(date.toString())
     return date.toString();
   }
   initialState = {
@@ -164,7 +163,7 @@ class CreateJob extends Component {
   };
   //validate form (check if the fields are empty)
   validate = () => {
-    let { selectedCustomer, selectedJob } = this.state;
+    let { selectedCustomer } = this.state;
     let customerIdError = "";
     // let titleError = "";
     let descriptionError = "";
@@ -193,7 +192,7 @@ class CreateJob extends Component {
       assigneeRequiredError = "Required count should not be empty";
     }
 
-    let locations = this.state.locations.map(x => x.value != '')
+    let locations = this.state.locations.map(x => x.value !== '')
     locations = locations.filter(Boolean);
     if (locations.length === 0) {
       locationfromError = "Location must not be empty";

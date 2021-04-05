@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
-import { EDIT_DEPOSIT, GET_ALL_DEPOSITS, GET_DEPOSIT } from "./DepositConstants";
+import { GET_ALL_DEPOSITS, GET_DEPOSIT } from "./DepositConstants";
 
 export const getDeposits = (body) => {
   return async (dispatch) => {

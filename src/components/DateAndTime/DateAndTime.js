@@ -10,14 +10,13 @@ import {
     KeyboardTimePicker,
 } from "@material-ui/pickers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 const DateAndTime = (props) => {
 
     let setParentDates = props.setDates;
     const initialState = props.dates;
-    console.log(initialState)
     const [dates, setDates] = useState(initialState)
     //add new Date
     const addDate = () => {
@@ -47,7 +46,6 @@ const DateAndTime = (props) => {
 
     //onChange handler of time
     const handleTimeSelect = (date, i) => {
-        console.log(date)
         let newState = cloneDeep(dates);
         newState[i].time = date;
         setDates(newState);
@@ -95,7 +93,7 @@ const DateAndTime = (props) => {
                                             'aria-label': 'change time',
                                         }}
                                     />
-                                    {i != 0 ?
+                                    {i !== 0 ?
                                         <div className={style.centeredIcon}
                                             onClick={() => removeDate(i)}>
                                             <FontAwesomeIcon icon={faTrash} />

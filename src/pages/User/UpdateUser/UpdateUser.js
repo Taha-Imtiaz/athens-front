@@ -19,7 +19,7 @@ const UpdateUser = (props) => {
     email: "",
     phone: "",
     address: "",
-    activeStatus: ''
+    activeStatus: false
   });
   let [disabledFields, setDisabledFields] = useState(true);
 
@@ -155,8 +155,6 @@ const UpdateUser = (props) => {
                 className={style.styleAddress}
               />
               <div className={style.flexEnd}>
-
-
                 <FormControlLabel
                   control={
                     <Switch

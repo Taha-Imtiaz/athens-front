@@ -5,7 +5,6 @@ import { createUser } from "../../../Redux/User/userActions";
 import "react-toastify/dist/ReactToastify.css";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const initialState = {
   name: "",
@@ -62,9 +61,8 @@ class CreateUser extends Component {
 
   }
   onTypeSelect = (e) => {
-    console.log(e.target.value)
     let value = e.target.value
-    if (value == 'Mover') {
+    if (value === 'Mover') {
       this.setState({ attributeOptions: this.roleOptions[1].options, type: this.roleOptions[1].name, attribute:"" })
     } else {
       this.setState({ attributeOptions: this.roleOptions[0].options, type: this.roleOptions[0].name, attribute:"" })

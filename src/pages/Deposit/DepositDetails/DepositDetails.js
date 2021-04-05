@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import style from './DepositDetails.module.css'
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarTimes, faEnvelope, faMobile, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Button, Chip, TextareaAutosize, TextField } from "@material-ui/core";
+import {  faEnvelope, faMobile, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Button, Chip, TextField } from "@material-ui/core";
 import { getDeposit, updateDeposit } from '../../../Redux/Deposit/DepositActions'
 import { connect } from "react-redux";
 import ActivitiesModal from '../../../components/ActivitiesModal/ActivitiesModal';
@@ -28,6 +28,7 @@ const DepositDetails = (props) => {
 
     useEffect(() => {
         getDeposit(depositId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const DepositDetails = (props) => {
 
     const handleOnChange = (e) => {
         let { name, value } = e.target;
-        if(name == 'quantity') {
+        if(name === 'quantity') {
             setUpdatedDeposit({ ...updatedDeposit, [name]: value, cost: value * 15 })
         } else {
             setUpdatedDeposit({ ...updatedDeposit, [name]: value })
@@ -68,14 +69,13 @@ const DepositDetails = (props) => {
                         <div className={`card ${style.customerCard}`}>
                             <div className="card-body">
                                 <h5 className="card-title font-weight-bold">Customer</h5>
-                                <h6 className="card-subtitle mb-2">
+                                <div className="card-subtitle mb-2 text-capitalize">
                                     <Link
-                                        className={style.link}
                                         to={`/customer/detail/${deposit.customer._id}`}
                                     > <FontAwesomeIcon icon={faUser} /> {" "}
                                         {deposit.customer.firstName} {deposit.customer.lastName}
                                     </Link>
-                                </h6>
+                                </div>
                                 <div className="card-text mb-2">
                                     <FontAwesomeIcon icon={faMobile} /> {" "}
                                     {deposit.customer.phone}
@@ -99,9 +99,7 @@ const DepositDetails = (props) => {
                                             <Link
                                                 to={`/job/detail/${deposit.job._id}`}
                                                 className="card-title"
-                                            >
-                                                {" "}
-                                                {deposit.job.title}
+                                            ><span className="text-capitalize">{deposit.job.title}</span>
                                             </Link>
 
                                         </div>

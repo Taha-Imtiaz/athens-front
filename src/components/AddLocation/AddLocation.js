@@ -1,5 +1,4 @@
 import {
-  faPlus,
   faPlusCircle,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import React, { useState } from "react";
-// import Autocomplete from 'react-autocomplete';
 import PlaceSearch from "../PlaceSearch/PlaceSearch";
 import style from "./AddLocation.module.css";
 import { Autocomplete } from "@material-ui/lab";
@@ -33,22 +31,23 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
       { id: 9, name: "Apartment" },
     ],
   });
-  const initialState = {
-    multiError: "",
-  };
-  const validate = () => {
-    let multiError = "";
-    if (this.state.locationArr.length === 0) {
-      multiError = "Location must not be empty";
-    }
-    if (multiError) {
-      setState({
-        multiError,
-      });
-      return false;
-    }
-    return true;
-  };
+
+  // const initialState = {
+  //   multiError: "",
+  // };
+  // const validate = () => {
+  //   let multiError = "";
+  //   if (this.state.locationArr.length === 0) {
+  //     multiError = "Location must not be empty";
+  //   }
+  //   if (multiError) {
+  //     setState({
+  //       multiError,
+  //     });
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   //set the google location in the state
   const handleSetLocation = (choosenLocation, index) => {
@@ -222,7 +221,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
             />
           </div>
         ) : null}
-        {i != 0 ?
+        {i !== 0 ?
         <div className="d-flex justify-content-end">
           <div className={`${style.TrashIcon} ${style.alignRight}`}>
             <FontAwesomeIcon

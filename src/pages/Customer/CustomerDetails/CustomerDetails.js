@@ -13,7 +13,7 @@ import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarTimes, faDotCircle, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarTimes, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Blankets from "../../../components/Blankets/Blankets";
 
 const CustomerDetails = (props) => {
@@ -415,7 +415,7 @@ const CustomerDetails = (props) => {
                               <div className={style.cardBodyContainerThree}>
                                
                                 {job.trucks.map((x, i) =>
-                                  <div className={style.truckSection}>
+                                  <div key={i} className={style.truckSection}>
                                      <h5>Truck Details</h5>
                                     <div>
                                       {`Type: `}
@@ -510,7 +510,7 @@ const CustomerDetails = (props) => {
                                             label={list.propertyType}
                                           /></div>
                                       </div>
-                                    ) : <div className={style.location}>
+                                    ) : <div key={i} className={style.location}>
                                       <span>{`Location: `}</span> {list.value}
                                     </div>
                                   )}
@@ -678,11 +678,8 @@ const CustomerDetails = (props) => {
                                 </div>
                                 <div className={style.updateContent}>
                                   {claim.updates.map((x, i) => (
-                                    <div className={style.updateContentContainer}>
-                                      <div
-                                        key={i}
-                                        className={style.updateContentRow}
-                                      >
+                                    <div key={i} className={style.updateContentContainer}>
+                                      <div  className={style.updateContentRow}>
                                         {/* {" "} */}
                                         <div>{`${x.value}`}</div>
                                         <div className={`text-muted ${style.timeStamp}`}>

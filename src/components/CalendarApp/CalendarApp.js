@@ -241,7 +241,7 @@ const CalendarApp = (props) => {
               
               
               {state.currentDayJobs.map((job, i) => (
-                <div>
+                <div key={i}>
 
                   <div id="accordion" key={i}>
                     <div className={`card ${style.card}`}>
@@ -315,7 +315,7 @@ const CalendarApp = (props) => {
                 </div>
               ))}
             </div>
-          ) : ( state.currentDayJobs.length == 0 ?
+          ) : ( state.currentDayJobs.length === 0 ?
               <div>                
                 <img src="/images/no-data-found.png" alt="" width="100%" />
               </div> : null

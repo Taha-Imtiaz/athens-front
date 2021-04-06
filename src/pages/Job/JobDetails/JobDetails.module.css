@@ -136,7 +136,7 @@ gap: 1rem;
   grid-template-columns: 25fr 75fr;
 }
 .truckSection{
-padding: .5rem;
+padding: 0 .5rem;
 }
 .service > *, .numbers >*, .truckSection>*, .propertySection >*{
   font-weight: 500;
@@ -151,7 +151,7 @@ grid-template-columns: 17fr 23fr 60fr;
 }
 .jobDescription___title, .notes___title {
   font-size: larger;
-  padding: .5rem;
+  /* padding: .5rem; */
 }
 .jobDescription___text, .notes___text{
   background: #fff;

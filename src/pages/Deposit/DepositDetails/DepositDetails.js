@@ -103,7 +103,7 @@ const DepositDetails = (props) => {
                                             </Link>
 
                                         </div>
-                                        <div>
+                                        <div className="text-capitalize font-weight-bold">
                                             <Chip
                                                 label={deposit.job.status}
                                                 clickable

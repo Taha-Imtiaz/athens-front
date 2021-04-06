@@ -84,7 +84,7 @@
 }
 .jobHeader___childs{
   display: grid;
-  grid-template-columns: 75fr 25fr;
+  grid-template-columns: 70fr 30fr;
 }
 .jobDates {
   display: flex;

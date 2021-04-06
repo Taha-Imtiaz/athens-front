@@ -581,6 +581,21 @@ const DailySchedule = (props) => {
                                   variant="outlined"
                                 ></Chip>
                               </div>
+                              <div className={style.jobPrice}>
+                                <div
+                                  className={`text-muted ${style.heading}`}
+                                >{`Price:`}</div>
+                                <div className={style.content}>
+                                <Chip
+                                  className={style.content}
+                                  label={`$${list.price}`}
+                                  clickable
+                                  size="small"
+                                  color="primary"
+                                  variant="outlined"
+                                ></Chip>
+                                </div>
+                              </div>
                             </div>
 
                             <div className={style.jobDescriptionHeader}>
@@ -602,8 +617,8 @@ const DailySchedule = (props) => {
                                     <div
                                       className={`text-muted ${style.heading}`}
                                     >{`Name:`}</div>
-                                    <div className={style.content}>
-                                      {list.customer.firstName}
+                                    <div className={`text-capitalize ${style.content}`}>
+                                      {list.customer.firstName}{" "}
                                       {list.customer.lastName}
                                     </div>
                                   </div>

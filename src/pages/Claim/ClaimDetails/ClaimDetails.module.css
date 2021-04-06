@@ -14,6 +14,7 @@
   grid-template-columns: 25fr 75fr;
   column-gap: 2rem;
   grid-template-areas: "cards claimDetail";
+  font-family: var(--font-family-paragraph);
 }
 
 .cards .link {

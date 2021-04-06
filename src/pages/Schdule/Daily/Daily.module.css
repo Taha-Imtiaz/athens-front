@@ -138,8 +138,8 @@ background: var(--hover-color-blue) !important;
  .jobDetailList {
   display: grid;
   min-width: 100%;
-  grid-template-columns: 1fr 13fr 15fr 20fr 40fr 1fr;
-  grid-template-areas: ". id type status title .";
+  grid-template-columns: .5fr repeat(5, 2fr) .5fr;
+  grid-template-areas: ". id type status price title .";
   column-gap: .5rem;
   background: #e9ecef;
   font-size: 1rem;
@@ -159,6 +159,9 @@ background: var(--hover-color-blue) !important;
 }
 .jobStatus{
   grid-area: status;
+}
+.jobPrice{
+  grid-area: price;
 }
 .customerDetailHeader table , .customerDetailList table {
   display: grid;

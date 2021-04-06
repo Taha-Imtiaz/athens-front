@@ -249,7 +249,7 @@ const JobDetails = (props) => {
             </div>
             <div className={style.jobDescription}>
               <div className={style.jobDescription___title}>
-                {`Job Description: `}
+                <h5>Job Description:</h5>
               </div>
               <div className={style.jobDescription___text}>
                 {parse(job.description)}

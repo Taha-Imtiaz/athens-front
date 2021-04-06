@@ -103,14 +103,14 @@ const ClaimDetails = (props) => {
             <div className={`card ${style.customerCard}`}>
               <div className="card-body">
                 <h5 className="card-title font-weight-bold">Customer</h5>
-                <h6 className="card-subtitle mb-2 text-capitalize">
+                <div className="card-subtitle mb-2 text-capitalize">
                   <Link
                     className={style.link}
                     to={`/customer/detail/${claims.customer._id}`}
                   > <FontAwesomeIcon icon={faUser} /> {" "}
                     {claims.customer.firstName} {claims.customer.lastName}
                   </Link>
-                </h6>
+                </div>
                 <div className="card-text mb-2">
                   <FontAwesomeIcon icon={faMobile} /> {" "}
                   {claims.customer.phone}</div>
@@ -138,7 +138,7 @@ const ClaimDetails = (props) => {
                       </Link>
 
                     </div>
-                    <div>
+                    <div className="text-capitalize font-weight-bold">
                       <Chip
                         label={claims.job.status}
                         clickable

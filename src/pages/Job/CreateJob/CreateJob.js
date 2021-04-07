@@ -11,24 +11,29 @@ import {
   Button,
   Select,
   TextField,
-
 } from "@material-ui/core";
 import "date-fns";
 import { Autocomplete } from "@material-ui/lab";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
-import { Modal } from "react-bootstrap";
+// import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
-import { resetJobForm, setJobForm } from "../../../Redux/PersistForms/formActions";
+import {
+  resetJobForm,
+  setJobForm,
+} from "../../../Redux/PersistForms/formActions";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
-import InputAdornment from '@material-ui/core/InputAdornment';
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import AddLocation from "../../../components/AddLocation/AddLocation";
 import VirtualizedAutocomplete from "../../../components/VirtualizedAutocomplete/VirtualizedAutocomplete";
 import DateAndTime from "../../../components/DateAndTime/DateAndTime";
 import Truck from "../../../components/Truck/Truck";
+import { Modal } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 class CreateJob extends Component {
   //defining state
@@ -38,12 +43,12 @@ class CreateJob extends Component {
   }
 
   getDefaultTime = () => {
-    let date = new Date()
+    let date = new Date();
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
     return date.toString();
-  }
+  };
   initialState = {
     editorState: EditorState.createEmpty(),
     // title: "",
@@ -51,7 +56,7 @@ class CreateJob extends Component {
     services: [],
     customerId: "",
     startDate: "",
-    dates: [{ date: new Date(), time: new Date('2014-08-18T09:00:00') }],
+    dates: [{ date: new Date(), time: new Date("2014-08-18T09:00:00") }],
     startTime: "",
     anchorEl: "",
     meetTime: "",
@@ -74,7 +79,7 @@ class CreateJob extends Component {
     note: [],
     assigneesId: [],
     add: 1,
-    locations: [{ type: "", value: "", default: false, propertyType: '' }],
+    locations: [{ type: "", value: "", default: false, propertyType: "" }],
     fromTo: [],
     assigneeRequiredError: "",
     selectedDate: new Date(),
@@ -84,7 +89,7 @@ class CreateJob extends Component {
     selectedCustomer: "",
     newCustomer: "",
     showAddCustomer: false,
-    propertyType: '',
+    propertyType: "",
     price: "",
     trucks: [{ type: "", number: "" }],
     // truck: "",
@@ -106,7 +111,7 @@ class CreateJob extends Component {
       { id: 6, name: "Indoor Storage" },
       { id: 7, name: "Outdoor Storage" },
       { id: 8, name: "Town House" },
-      { id: 9, name: "Apartment" }
+      { id: 9, name: "Apartment" },
     ],
     truckOptions: [
       "Pickup Truck",
@@ -114,8 +119,8 @@ class CreateJob extends Component {
       "15 ft truck",
       "17 ft truck",
       "20 ft truck",
-      "26 ft truck"
-    ]
+      "26 ft truck",
+    ],
   };
 
   componentDidMount = () => {
@@ -128,23 +133,19 @@ class CreateJob extends Component {
         customerId: this.props.location.customerId,
         selectedCustomer: this.props.location.customerName,
         jobs: this.props.location.jobs,
-
       });
     }
     //get all customers and jobs
     let { getCustomersAndJobs } = this.props;
-    getCustomersAndJobs(res => {
-
+    getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
     });
   };
 
-
-
   //handler to add location
   addLocation = () => {
     let location = cloneDeep(this.state.locations);
-    location.push({ type: "", value: "", default: false, propertyType: '' });
+    location.push({ type: "", value: "", default: false, propertyType: "" });
     this.setState({
       locations: location,
     });
@@ -192,14 +193,14 @@ class CreateJob extends Component {
       assigneeRequiredError = "Required count should not be empty";
     }
 
-    let locations = this.state.locations.map(x => x.value !== '')
+    let locations = this.state.locations.map((x) => x.value !== "");
     locations = locations.filter(Boolean);
     if (locations.length === 0) {
       locationfromError = "Location must not be empty";
     }
     // if (!this.state.price) {
     //   priceError = "Price should not be empty";
-    // }    
+    // }
 
     if (!this.state.jobType) {
       jobTypeError = "Job type is required.";
@@ -232,7 +233,6 @@ class CreateJob extends Component {
     return true;
   };
 
-
   //submit form handler
   mySubmitHandler = (event) => {
     let { createJob, history, loggedInUser } = this.props;
@@ -258,7 +258,9 @@ class CreateJob extends Component {
       } = this.state;
 
       let stringDates = dates.map((x) =>
-        x.date !== ("" || null) ? { date: x.date.toDateString(), time: x.time } : null
+        x.date !== ("" || null)
+          ? { date: x.date.toDateString(), time: x.time }
+          : null
       );
 
       stringDates = stringDates.filter(Boolean);
@@ -279,12 +281,12 @@ class CreateJob extends Component {
         trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
         customerId,
         userId: loggedInUser._id,
-        jobType
+        jobType,
       };
       // Submit Form API
       createJob(createJobObj, (job) => {
         //reset form to its original state
-        this.handleResetJob()
+        this.handleResetJob();
         history.push("/job/detail/" + job.data.data._id);
       });
       // Submit Form API
@@ -328,15 +330,11 @@ class CreateJob extends Component {
   };
 
   propertyChanged = (newValue) => {
-
     if (newValue) {
       this.setState({ propertyType: newValue.name });
-    }
-    else {
+    } else {
       this.setState({ propertyType: "" });
     }
-
-
   };
 
   addCustomPropertyType = (e) => {
@@ -362,8 +360,7 @@ class CreateJob extends Component {
         newProperty: "",
       });
     }
-  }
-
+  };
 
   //add new customer
   addNewCustomer = (e) => {
@@ -420,7 +417,9 @@ class CreateJob extends Component {
   //onChange handler of editor
   onEditorStateChange = (e) => {
     this.setState({
-      descriptionError: e.getCurrentContent() ? '' : 'Description should not be empty',
+      descriptionError: e.getCurrentContent()
+        ? ""
+        : "Description should not be empty",
       editorState: e,
       description: draftToHtml(convertToRaw(e.getCurrentContent())),
     });
@@ -435,25 +434,23 @@ class CreateJob extends Component {
 
   handleLocationChange = (locations) => {
     this.setState({
-      locations
+      locations,
     });
-  }
+  };
 
   setDates = (dates) => {
     this.setState({
-      dates
-    })
-  }
+      dates,
+    });
+  };
 
   setTrucks = (trucks) => {
     this.setState({
-      trucks
-    })
-  }
-
+      trucks,
+    });
+  };
 
   render() {
-
     return (
       <div>
         <div className={`${style.createJob}`}>
@@ -469,18 +466,20 @@ class CreateJob extends Component {
                   getCustomerJobs={this.getCustomerJobs}
                   addNewCustomer={this.addNewCustomer}
                 />
-              ) : null
-              }
-
+              ) : null}
 
               {/* date and time */}
               <DateAndTime dates={this.state.dates} setDates={this.setDates} />
 
-              <div className={this.state.descriptionError ? style.styleEditorInValid : style.styleEditorValid}>
+              <div
+                className={
+                  this.state.descriptionError
+                    ? style.styleEditorInValid
+                    : style.styleEditorValid
+                }
+              >
                 <Editor
-                  onChange={() => {
-
-                  }}
+                  onChange={() => {}}
                   editorState={this.state.editorState}
                   toolbarClassName="toolbarClassName"
                   className={style.styleFormFields}
@@ -488,7 +487,7 @@ class CreateJob extends Component {
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
                   placeholder="Job Description"
-                // error={this.state.descriptionError ? true : false}
+                  // error={this.state.descriptionError ? true : false}
                 />
               </div>
 
@@ -580,7 +579,9 @@ class CreateJob extends Component {
                     className={style.styleFormFields}
                     // error={this.state.priceError ? true : false}
                     InputProps={{
-                      startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
                     }}
                     // startAdornment={}
                     onChange={this.handleFormInput}
@@ -608,19 +609,18 @@ class CreateJob extends Component {
                     addLocation={this.addLocation}
                     handleLocationChange={this.handleLocationChange}
 
-                  // error={this.state.locationfromError ? true : false}
+                    // error={this.state.locationfromError ? true : false}
                   />
-
                 </div>
               ) : null}
 
               <div className={style.resetBtns}>
-
                 <div>
                   <Button
                     className={style.button}
                     type="button"
-                    onClick={this.handleResetJob}>
+                    onClick={this.handleResetJob}
+                  >
                     Reset
                   </Button>
                 </div>
@@ -629,7 +629,8 @@ class CreateJob extends Component {
                   <Button
                     className={style.button}
                     type="button"
-                    onClick={this.mySubmitHandler}>
+                    onClick={this.mySubmitHandler}
+                  >
                     Submit
                   </Button>
                 </div>
@@ -638,6 +639,30 @@ class CreateJob extends Component {
           </div>
         </div>
         <Modal
+          open={this.state.showAddCustomer}
+          onClose={() => this.setState({ showAddCustomer: false })}
+          // scrollable
+          // centered
+          className={style.modal}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.showAddCustomer}>
+            <div className={"bg-light p-3"}>
+              <h3>Create Customer</h3>
+              <div>
+                <CreateCustomer
+                  isModal={true}
+                  close={this.populateNewCustomer}
+                />
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+        {/* <Modal
           dialogClassName={`${style.modal}`}
           show={this.state.showAddCustomer}
           onHide={() => this.setState({ showAddCustomer: false })}
@@ -649,7 +674,7 @@ class CreateJob extends Component {
           <Modal.Body>
             <CreateCustomer isModal={true} close={this.populateNewCustomer} />
           </Modal.Body>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }
@@ -659,7 +684,7 @@ var actions = {
   createJob,
   setJobForm,
   resetJobForm,
-  getCustomersAndJobs
+  getCustomersAndJobs,
 };
 
 var mapStateToProps = (state) => ({

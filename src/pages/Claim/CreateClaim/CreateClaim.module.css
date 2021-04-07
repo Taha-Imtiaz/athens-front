@@ -40,18 +40,21 @@
   column-gap: 0.5rem;
 }
 .modal {
-  max-width: 70vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .claimHeader {
   display: grid;
-  grid-template-columns: 50fr 20fr 30fr;
+  grid-template-columns: 40fr 30fr 30fr;
   font-weight: bold;
   font-family: var(--font-family-header) !important;
 
 }
 .claimContent {
   display: grid;
-  grid-template-columns: 50fr 20fr 30fr;
+  grid-template-columns: 40fr 30fr 30fr;
   font-family: var(--font-family-paragraph);
 
 }
@@ -77,6 +80,11 @@
 }
 .buttons .button:hover {
   background: #00adee;
+}
+.modalBtn{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .modalBtn .modalButton {
   background: #00adee;

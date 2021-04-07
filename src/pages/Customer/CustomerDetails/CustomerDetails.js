@@ -3,18 +3,26 @@ import style from "./CustomerDetails.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
-import { Modal } from "react-bootstrap";
+// import {  } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import parse from "html-react-parser";
+import { Modal } from "@material-ui/core";
 import { AppBar, Box, Tab, Tabs, TextareaAutosize } from "@material-ui/core";
 import { updateClaim } from "../../../Redux/Claim/claimActions";
 import Badge from "@material-ui/core/Badge";
 import TimeAgo from "react-timeago";
 import { cloneDeep } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarTimes, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarTimes,
+  faMapMarker,
+  faMapMarkerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import Blankets from "../../../components/Blankets/Blankets";
+
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 const CustomerDetails = (props) => {
   let { customer, getCustomer } = props;
@@ -26,8 +34,7 @@ const CustomerDetails = (props) => {
   const [claimCount, setClaimCount] = useState(0);
   const [value, setValue] = useState(0);
   const [claims, setClaims] = useState([]);
-  const [toggleClaim, setToggleClaim] = useState(false)
-
+  const [toggleClaim, setToggleClaim] = useState(false);
 
   //get customerId from props
   let {
@@ -52,7 +59,7 @@ const CustomerDetails = (props) => {
         ).length;
         setClaimCount(openClaims);
       } else {
-        setClaims([])
+        setClaims([]);
         setClaimCount(0);
       }
       //set the blanket value to the total # of blankets
@@ -79,7 +86,7 @@ const CustomerDetails = (props) => {
       setClaims(newData);
       setShow(false);
       setUpdate("");
-    })
+    });
   };
 
   //onChange handler of textarea of modal
@@ -97,8 +104,6 @@ const CustomerDetails = (props) => {
     setUpdateIndex(i);
     setShow(true);
   };
-
-
 
   //tabPanel of material ui
   const TabPanel = (props) => {
@@ -122,42 +127,38 @@ const CustomerDetails = (props) => {
     let updatedClaims = cloneDeep(claims);
     updatedClaims[i].status = "closed";
     updateClaim(updatedClaims[i], (res) => {
-      let updatedCount = cloneDeep(claimCount)
+      let updatedCount = cloneDeep(claimCount);
       let newCount = --updatedCount;
       updatedClaims[i].updatedAt = res.data.data.updatedAt;
       setClaimCount(newCount);
       setClaims(updatedClaims);
-      setToggleClaim(false)
-    })
+      setToggleClaim(false);
+    });
   };
 
   const reopenClaim = (i) => {
     let { updateClaim } = props;
     let updatedClaims = cloneDeep(claims);
 
-    updatedClaims[i].status = 'open';
+    updatedClaims[i].status = "open";
     updateClaim(updatedClaims[i], (res) => {
-      let updatedCount = cloneDeep(claimCount)
+      let updatedCount = cloneDeep(claimCount);
       let newCount = ++updatedCount;
       updatedClaims[i].updatedAt = res.data.data.updatedAt;
       setClaimCount(newCount);
       setClaims(updatedClaims);
-      setToggleClaim(false)
-    })
-
-
-  }
+      setToggleClaim(false);
+    });
+  };
   const updateBlanket = (data) => {
     setBlanketValue(data);
   };
 
   const closeClaim = (e) => {
-
     e.preventDefault();
     e.stopPropagation();
-    setToggleClaim(true)
-
-  }
+    setToggleClaim(true);
+  };
   return (
     <div className={style.customerDetailsContainer}>
       {customer && (
@@ -280,7 +281,9 @@ const CustomerDetails = (props) => {
                             <div>{x.length !== 0 && <h6>Phone</h6>}</div>
                           </div>
                           <div className={style.cardBodyContent}>
-                            <div className="text-capitalize">{x.name !== "" ? x.name : "N/A"}</div>
+                            <div className="text-capitalize">
+                              {x.name !== "" ? x.name : "N/A"}
+                            </div>
                             <div>{x.email !== "" ? x.email : "N/A"}</div>
                             <div>{x.phone !== "" ? x.phone : "N/A"}</div>
                           </div>
@@ -292,14 +295,14 @@ const CustomerDetails = (props) => {
               </div>
             ) : null}
 
-            <div >
+            <div>
               {customer.jobs && customer.jobs.length > 0 ? (
                 <div>
                   <h3 className={`${style.job}`}>Jobs</h3>
                   <div id="accordion">
                     {customer.jobs.map((job, i) => {
                       return (
-                        <div key={i} className={style.jumbotron} >
+                        <div key={i} className={style.jumbotron}>
                           <div
                             className={`card-header ${style.jobCard}`}
                             aria-expanded="true"
@@ -308,7 +311,6 @@ const CustomerDetails = (props) => {
                             aria-controls="collapse"
                             id="headingOne"
                           >
-
                             <div className={style.jobDetails}>
                               <div className={style.jobLink}>
                                 <Link
@@ -321,18 +323,28 @@ const CustomerDetails = (props) => {
                                 </Link>
                               </div>
                               <div className={style.jobService}>
-                                <span><Chip
-                                  size="medium"
-                                  label={job.jobId}
-                                  clickable
-                                  style={{ color: "white", backgroundColor: "var(--color-blue)" }}
-                                /></span>
-                                <span><Chip
-                                  size="medium"
-                                  label={job.status}
-                                  clickable
-                                  style={{ color: "white", backgroundColor: "var(--color-blue)" }}
-                                /></span>
+                                <span>
+                                  <Chip
+                                    size="medium"
+                                    label={job.jobId}
+                                    clickable
+                                    style={{
+                                      color: "white",
+                                      backgroundColor: "var(--color-blue)",
+                                    }}
+                                  />
+                                </span>
+                                <span>
+                                  <Chip
+                                    size="medium"
+                                    label={job.status}
+                                    clickable
+                                    style={{
+                                      color: "white",
+                                      backgroundColor: "var(--color-blue)",
+                                    }}
+                                  />
+                                </span>
                               </div>
                             </div>
                             <div className={`${style.jobDates} text-muted`}>
@@ -349,7 +361,6 @@ const CustomerDetails = (props) => {
                                 </div>
                               ))}
                             </div>
-
                           </div>
 
                           <div
@@ -358,8 +369,9 @@ const CustomerDetails = (props) => {
                             aria-labelledby="headingOne"
                             data-parent="#accordion"
                           >
-                            <div className={`card-body ${style.cardBodyContainer}`}>
-
+                            <div
+                              className={`card-body ${style.cardBodyContainer}`}
+                            >
                               {/* show services, type */}
                               <div className={style.cardBody___sectionOne}>
                                 <div>
@@ -370,9 +382,9 @@ const CustomerDetails = (props) => {
                                     label={job.jobType}
                                     color="primary"
                                     variant="outlined"
-                                  /></div>
+                                  />
+                                </div>
                                 <div>
-
                                   <h5>Service:</h5>
                                   {job.services.map((service, i) => (
                                     <Chip
@@ -383,10 +395,8 @@ const CustomerDetails = (props) => {
                                       color="primary"
                                       variant="outlined"
                                     />
-                                  ))}</div>
-
-
-
+                                  ))}
+                                </div>
                               </div>
 
                               <div className={style.cardBodyContainerTwo}>
@@ -410,13 +420,11 @@ const CustomerDetails = (props) => {
                                     label={`$${job.price}`}
                                   />
                                 </div>
-
                               </div>
                               <div className={style.cardBodyContainerThree}>
-                               
-                                {job.trucks.map((x, i) =>
+                                {job.trucks.map((x, i) => (
                                   <div key={i} className={style.truckSection}>
-                                     <h5>Truck Details</h5>
+                                    <h5>Truck Details</h5>
                                     <div>
                                       {`Type: `}
                                       <Chip
@@ -437,33 +445,37 @@ const CustomerDetails = (props) => {
                                         label={x.number}
                                       />
                                     </div>
-
                                   </div>
-                                )}
-
+                                ))}
                               </div>
                               <div className={style.cardBodyContainerThree}>
                                 <h5>Assignees:</h5>
                                 {job.assignee.length > 0 ? (
-                                  <div className="text-capitalize" >
-
+                                  <div className="text-capitalize">
                                     {job.assignee.map((assignee, i) =>
                                       i === 0 ? (
-                                        <span key={i} className={style.jobAssignee}>
+                                        <span
+                                          key={i}
+                                          className={style.jobAssignee}
+                                        >
                                           {assignee.name}
                                         </span>
                                       ) : (
-                                        <span key={i} className={style.jobAssignee}>
-                                          <span className={style.spacing}> | </span>
+                                        <span
+                                          key={i}
+                                          className={style.jobAssignee}
+                                        >
+                                          <span className={style.spacing}>
+                                            {" "}
+                                            |{" "}
+                                          </span>
                                           {assignee.name}
                                         </span>
                                       )
                                     )}
                                   </div>
                                 ) : (
-
-                                  <div>
-                                    {`Not Assigned`}</div>
+                                  <div>{`Not Assigned`}</div>
                                 )}
                               </div>
                               {/* show job Description */}
@@ -481,7 +493,10 @@ const CustomerDetails = (props) => {
                                         <FontAwesomeIcon icon={faMapMarker} />{" "}
                                         <span>{`Pickup`} </span>{" "}
                                         <div className={style.location}>
-                                          {list.value} {list.default ? '(Load Only / IA)' : null}
+                                          {list.value}{" "}
+                                          {list.default
+                                            ? "(Load Only / IA)"
+                                            : null}
                                         </div>
                                         <div className="text-muted">
                                           {`Property Type: `}
@@ -491,14 +506,20 @@ const CustomerDetails = (props) => {
                                             variant="outlined"
                                             size="small"
                                             label={list.propertyType}
-                                          /></div>
+                                          />
+                                        </div>
                                       </div>
                                     ) : list.type === "dropoff" ? (
                                       <div key={i}>
-                                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                                        <FontAwesomeIcon
+                                          icon={faMapMarkerAlt}
+                                        />{" "}
                                         <span>{`Dropoff`}</span>
                                         <div className={style.location}>
-                                          {list.value} {list.default ? '(Unload Only)' : null}
+                                          {list.value}{" "}
+                                          {list.default
+                                            ? "(Unload Only)"
+                                            : null}
                                         </div>
                                         <div className="text-muted">
                                           {`Property Type: `}
@@ -508,11 +529,14 @@ const CustomerDetails = (props) => {
                                             variant="outlined"
                                             size="small"
                                             label={list.propertyType}
-                                          /></div>
+                                          />
+                                        </div>
                                       </div>
-                                    ) : <div key={i} className={style.location}>
-                                      <span>{`Location: `}</span> {list.value}
-                                    </div>
+                                    ) : (
+                                      <div key={i} className={style.location}>
+                                        <span>{`Location: `}</span> {list.value}
+                                      </div>
+                                    )
                                   )}
                                 </div>
                               )}
@@ -568,7 +592,6 @@ const CustomerDetails = (props) => {
             <div id="accordion">
               {claims.length > 0 ? (
                 claims.map((claim, i) => {
-
                   return (
                     <div key={i}>
                       <div
@@ -580,18 +603,31 @@ const CustomerDetails = (props) => {
                         id="headingOne"
                       >
                         <div>
-                          <div className={`text-muted ${style.heading}`}>Job ID</div>
-                          <div className={style.headingSub}>{claim.job && claim.job.jobId}</div>
-
+                          <div className={`text-muted ${style.heading}`}>
+                            Job ID
+                          </div>
+                          <div className={style.headingSub}>
+                            {claim.job && claim.job.jobId}
+                          </div>
                         </div>
                         <div>
-                          <div className={`text-muted ${style.heading}`}>Status</div>
-                          <div className={`text-capitalize ${style.headingSub}`}>{claim.status}</div>
-
+                          <div className={`text-muted ${style.heading}`}>
+                            Status
+                          </div>
+                          <div
+                            className={`text-capitalize ${style.headingSub}`}
+                          >
+                            {claim.status}
+                          </div>
                         </div>
                         <div>
-                          <div className={`text-muted ${style.heading}`}>Last Updated</div>
-                          <TimeAgo className={`text-capitalize ${style.headingSub}`} date={claim.updatedAt} />
+                          <div className={`text-muted ${style.heading}`}>
+                            Last Updated
+                          </div>
+                          <TimeAgo
+                            className={`text-capitalize ${style.headingSub}`}
+                            date={claim.updatedAt}
+                          />
                         </div>
                       </div>
                       <div
@@ -610,8 +646,7 @@ const CustomerDetails = (props) => {
                                     {claim.claimType}
                                   </div>
                                   <div>
-                                    <h6>{`Total: `}</h6>
-                                    ${claim.price}
+                                    <h6>{`Total: `}</h6>${claim.price}
                                   </div>
                                   <div>
                                     <h6>{`Title: `}</h6>
@@ -621,13 +656,14 @@ const CustomerDetails = (props) => {
 
                                 <div className={style.protectionRow___colTwo}>
                                   <h6>{`Actions`}</h6>
-                                  <div className={style.protectionRow___buttons} >
+                                  <div
+                                    className={style.protectionRow___buttons}
+                                  >
                                     <div>
                                       {claim.status === "open" ? (
                                         <Button
                                           className={style.button}
                                           onClick={() => showUpdateModal(i)}
-
                                         >
                                           Add Update
                                         </Button>
@@ -678,12 +714,19 @@ const CustomerDetails = (props) => {
                                 </div>
                                 <div className={style.updateContent}>
                                   {claim.updates.map((x, i) => (
-                                    <div key={i} className={style.updateContentContainer}>
-                                      <div  className={style.updateContentRow}>
+                                    <div
+                                      key={i}
+                                      className={style.updateContentContainer}
+                                    >
+                                      <div className={style.updateContentRow}>
                                         {/* {" "} */}
                                         <div>{`${x.value}`}</div>
-                                        <div className={`text-muted ${style.timeStamp}`}>
-                                          <FontAwesomeIcon icon={faCalendarTimes} />
+                                        <div
+                                          className={`text-muted ${style.timeStamp}`}
+                                        >
+                                          <FontAwesomeIcon
+                                            icon={faCalendarTimes}
+                                          />
                                           <TimeAgo date={x.timestamp} />
                                         </div>
                                       </div>
@@ -697,17 +740,66 @@ const CustomerDetails = (props) => {
                       </div>
                       {/* modal for close and reopen claims */}
                       <Modal
-
-                        show={toggleClaim}
-                        onHide={() => setToggleClaim(false)}
-                        scrollable
-                        centered
+                        open={toggleClaim}
+                        onClose={() => setToggleClaim(false)}
+                        // scrollable
+                        // centered
+                        className={style.modal}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                          timeout: 500,
+                        }}
                       >
+                        <Fade in={toggleClaim}>
+                          <div className={"bg-light p-3"}>
+                            <h3>Confirmation</h3>
+                            <hr />
+                            <h6>
+                              {claim.status === "open"
+                                ? `Do you want to close this claim ?`
+                                : `Do you want to reopen this claim ?`}
+                            </h6>
+                            <hr />
+                            <div className={style.flexEnd}>
+                              <Button
+                                className={style.button}
+                                onClick={() => setToggleClaim(false)}
+                              >
+                                Close
+                              </Button>
+                              {claim.status === "open" ? (
+                                <Button
+                                  className={style.button}
+                                  onClick={() => handleCloseClaim(i)}
+                                >
+                                  Confirm
+                                </Button>
+                              ) : (
+                                <Button
+                                  className={style.button}
+                                  onClick={() => reopenClaim(i)}
+                                >
+                                  Confirm
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </Fade>
+                      </Modal>
+                      {/* <Modal
+
+                        open={toggleClaim}
+                        onClose={() => setToggleClaim(false)}
+                        // scrollable
+                        // centered
+                      >
+
                         <Modal.Header closeButton>
                           <Modal.Title>Confirmation</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          {claim.status === 'open' ? `Do you want to close this claim ?` : `Do you want to reopen this claim ?`}
+                          
                         </Modal.Body>
                         <Modal.Footer>
                           <div className={style.flexEnd}>
@@ -723,10 +815,9 @@ const CustomerDetails = (props) => {
                             }
                           </div>
                         </Modal.Footer>
-                      </Modal>
+                      </Modal> */}
                     </div>
-                  )
-
+                  );
                 })
               ) : (
                 <div className="text-center">
@@ -762,7 +853,9 @@ const CustomerDetails = (props) => {
               <Blankets
                 firstName={customer.firstName}
                 lastName={customer.lastName}
-                items={blanketValue} update={updateBlanket} />
+                items={blanketValue}
+                update={updateBlanket}
+              />
             ) : (
               <div className="text-center">
                 <img src="/images/no-data-found.png" alt="Data not found" />
@@ -774,6 +867,45 @@ const CustomerDetails = (props) => {
         </div>
       )}
       <Modal
+        open={show}
+        onClose={handleClose}
+        // scrollable
+        // centered
+        className={style.modal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={show}>
+          <div className={"bg-light p-3"}>
+            <h3>Add Update</h3><hr/>
+            <TextareaAutosize
+              id=""
+              cols="65"
+              rows="5"
+              name="Note"
+              value={update}
+              onChange={handleAddUpdate}
+              className={style.styleTextArea}
+            ></TextareaAutosize>
+            <div className={style.flexEnd}>
+              <Button className={style.button} onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                className={style.button}
+                type="button"
+                onClick={updateClaimData}
+              >
+                Add
+              </Button>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
+      {/* <Modal
         show={show}
         onHide={handleClose}
         dialogClassName={style.modal}
@@ -808,7 +940,7 @@ const CustomerDetails = (props) => {
             </Button>
           </div>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

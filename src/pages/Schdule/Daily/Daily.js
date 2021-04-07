@@ -7,7 +7,7 @@ import {
   getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
-import { Modal } from "react-bootstrap";
+// import {  } from "react-bootstrap";
 import { updateJob } from "../../../Redux/Job/jobActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
@@ -15,7 +15,9 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
 import Chip from "@material-ui/core/Chip";
-import { Button } from "@material-ui/core";
+import { Button, Modal } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -268,14 +270,16 @@ const DailySchedule = (props) => {
         let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
+        console.log(index, movers, movers[index])
         let moverAssignedDate = movers[index].mover.jobs.filter((job) => {
+          console.log(job)
           return (
-            job.dates.some((date) => date === new Date(today).toDateString()) &&
-            job.status === "booked"
+            job.dates.some((date) => date.date === new Date(today).toDateString()) && job.status === "booked"
           );
         });
-
+console.log( "assign date: "+ moverAssignedDate)
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
+        console.log(moverJobs)
         if (moverJobs) {
           let mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
@@ -321,6 +325,7 @@ const DailySchedule = (props) => {
                       <Badge
                         badgeContent={mover.todayJobs}
                         classes={{ badge: classes.badge }}
+                        className="text-capitalize"
                       >
                         {mover.name}
                       </Badge>
@@ -543,13 +548,16 @@ const DailySchedule = (props) => {
                                 <div
                                   className={`text-muted ${style.heading}`}
                                 >{`Job Dates:`}</div>
-                              {list.dates.map((x,i)=>{
-                                return(
-                                  <div key={i} className={`${style.jobDate} ${style.content}`}>
-                                  {x.date}{" "}
-                                </div>
-                                )
-                              })}                                
+                                {list.dates.map((x, i) => {
+                                  return (
+                                    <div
+                                      key={i}
+                                      className={`${style.jobDate} ${style.content}`}
+                                    >
+                                      {x.date}{" "}
+                                    </div>
+                                  );
+                                })}
                               </div>
                               <div className={style.jobsId}>
                                 <div
@@ -586,14 +594,14 @@ const DailySchedule = (props) => {
                                   className={`text-muted ${style.heading}`}
                                 >{`Price:`}</div>
                                 <div className={style.content}>
-                                <Chip
-                                  className={style.content}
-                                  label={`$${list.price}`}
-                                  clickable
-                                  size="small"
-                                  color="primary"
-                                  variant="outlined"
-                                ></Chip>
+                                  <Chip
+                                    className={style.content}
+                                    label={`$${list.price}`}
+                                    clickable
+                                    size="small"
+                                    color="primary"
+                                    variant="outlined"
+                                  ></Chip>
                                 </div>
                               </div>
                             </div>
@@ -617,7 +625,9 @@ const DailySchedule = (props) => {
                                     <div
                                       className={`text-muted ${style.heading}`}
                                     >{`Name:`}</div>
-                                    <div className={`text-capitalize ${style.content}`}>
+                                    <div
+                                      className={`text-capitalize ${style.content}`}
+                                    >
                                       {list.customer.firstName}{" "}
                                       {list.customer.lastName}
                                     </div>
@@ -669,6 +679,69 @@ const DailySchedule = (props) => {
         </DragDropContext>
       </div>
       <Modal
+        open={modalShow}
+        onClose={(e) => Navigate(e)}
+        // scrollable
+        // centered
+        className={style.modal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={modalShow}>
+          <div className={"bg-light p-3"}>
+            <h3>Confirmation</h3><hr/>
+            {mover && (
+            <h5>
+             <span className={style.styleText}> 
+                {mover.mover.name}{" "}
+                </span>
+                  has been assigned to these jobs:
+                {" "}
+              </h5>
+            )}
+
+            {moverAssignedJobs &&
+              moverAssignedJobs.map((job, i) => (
+                <div key={i} className={style.styleModalBody}>
+                  <a
+                    className={style.styleLink}
+                    onClick={() =>
+                      window.open(`/job/detail/${job._id}`, "_blank")
+                    }
+                  >
+                    &#42;{job.title}
+                  </a>
+                  <Chip
+                    label={job.dates[0].time ? formatAMPM(job.dates[0].time) : "N/A"}
+                    clickable
+                    color="primary"
+                    variant="outlined"
+                  ></Chip>
+                </div>
+              ))}<hr/>
+            <div className={style.modalBtns}>
+              <Button
+                className={style.button}
+                onClick={(e) => updateJobAssigneeList(e, newAssignee)}
+              >
+                Confirm
+              </Button>
+              <Button
+                className={style.button}
+                onClick={(e) => {
+                  Navigate(e);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
+      {/* <Modal
         show={modalShow}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -729,7 +802,7 @@ const DailySchedule = (props) => {
             </Button>
           </div>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

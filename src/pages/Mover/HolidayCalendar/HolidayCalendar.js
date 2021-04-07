@@ -4,10 +4,12 @@ import "react-day-picker/lib/style.css";
 import style from "./HolidayCalendar.module.css";
 
 import { holidayCalendar } from "../../../Redux/Mover/moverActions";
-import { Modal } from "react-bootstrap";
-import { Button, TextareaAutosize } from "@material-ui/core";
+// import {  } from "react-bootstrap";
+import { Button, TextareaAutosize, Modal } from "@material-ui/core";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 function renderDay(day) {
   const date = day.getDate();
@@ -37,7 +39,7 @@ function RequestHolidays(props) {
   const handleClose = () => {
     setEmptyReasonError("");
     setShow(false);
-    setNote('')
+    setNote("");
   };
   const handleDayClick = (e) => {
     let newDates = cloneDeep(dates);
@@ -57,9 +59,9 @@ function RequestHolidays(props) {
         dates,
         reason: note,
       };
-      holidayCalendar(obj, res =>{ 
-        setNote('')
-        setShow(false)
+      holidayCalendar(obj, (res) => {
+        setNote("");
+        setShow(false);
       });
     } else if (note.length === 0) {
       setEmptyReasonError("Error");
@@ -85,6 +87,50 @@ function RequestHolidays(props) {
         />
       </div>
       <Modal
+        open={show}
+        onClose={handleClose}
+        // scrollable
+        // centered
+        className={style.modal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={show}>
+          <div className={"bg-light p-3"}>
+            <h3>Add Reason</h3><hr/>
+            <div>
+              <TextareaAutosize
+                id=""
+                cols="65"
+                  rows="5"
+                name="note"
+                value={note}
+                className={
+                  emptyReasonError !== "" ? style.redBorder : style.blackBorder
+                }
+                onChange={handleAddNote}
+              ></TextareaAutosize>
+            </div>
+            <div className={style.modalBtn}>
+              <Button
+                className={style.button}
+                type="button"
+                onClick={handleClose}
+              >
+                Close
+              </Button>
+
+              <Button className={style.button} type="button" onClick={addNote}>
+                Send Request
+              </Button>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
+      {/* <Modal
         dialogClassName={`${style.modal}`}
         show={show}
         onHide={handleClose}
@@ -124,7 +170,7 @@ function RequestHolidays(props) {
             </Button>
           </div>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

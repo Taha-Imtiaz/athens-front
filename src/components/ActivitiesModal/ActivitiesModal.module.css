@@ -30,9 +30,8 @@
   .modal ::-webkit-scrollbar-thumb:hover {
     background: #00adee;
   }
-  .modalBody{
-    /* background-color: red ; */
-  }
+  /* .modalBody{
+  } */
   .modalHeader {
     font-size: 1.2rem;
     display: grid;

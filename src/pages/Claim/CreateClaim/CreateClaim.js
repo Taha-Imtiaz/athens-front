@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import style from "./CreateClaim.module.css";
-import { Modal } from "react-bootstrap";
-import { Button, InputAdornment } from "@material-ui/core";
+// import {  } from "react-bootstrap";
+import { Button, InputAdornment, Modal } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import {
@@ -81,7 +83,6 @@ class CreateClaim extends Component {
     getCustomersAndJobs((res) => {
       this.setState({ customers: res.data.data });
     });
-
   };
   //onChange handler
   handleFormInput = (event) => {
@@ -106,7 +107,7 @@ class CreateClaim extends Component {
     if (this.state.selectedCustomer.length === 0) {
       customerIdError = "Customer Id should not be empty";
     }
-  
+
     if (!this.state.selectedJob) {
       jobIdError = "Error! should not be empty";
     }
@@ -120,12 +121,13 @@ class CreateClaim extends Component {
     if (!this.state.waitTo) {
       waitToError = "Error! should not be empty";
     }
-    if (this.state.claims.description === ""){
+    if (this.state.claims.description === "") {
       descriptionError = "Desctiption must not be empoty.";
     }
 
     if (
-      (customerIdError || jobIdError || priceError || titleError, waitToError || descriptionError)
+      (customerIdError || jobIdError || priceError || titleError,
+      waitToError || descriptionError)
     ) {
       this.setState({
         customerIdError,
@@ -216,8 +218,8 @@ class CreateClaim extends Component {
     this.setState({
       selectedJob: newValue ? newValue : "",
       jobIdError: "",
-    })
-  }
+    });
+  };
   render() {
     let { showClaimsDetails, customerName } = this.state;
     return (
@@ -227,7 +229,6 @@ class CreateClaim extends Component {
             <h3 className={style.head}>Create Claim</h3>
             <form>
               {this.state.customers.length > 0 ? (
-
                 <VirtualizedAutocomplete
                   optionTextValue={this.state.newCustomer}
                   value={this.state.selectedCustomer}
@@ -239,6 +240,48 @@ class CreateClaim extends Component {
               {this.state.customerClaims && (
                 <div>
                   <Modal
+                    open={this.state.customerClaims}
+                    onClose={this.handleClose}
+                    // scrollable
+                    // centered
+                    className={style.modal}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
+                  >
+                    <Fade in={this.state.customerClaims}>
+                      <div className={"bg-light p-3"}>
+                        <h3 className="text-capitalize">{`${customerName} Claims`}</h3><hr/>
+                        <div>
+                          <div className={style.claimHeader}>
+                          <div>Protection Type</div>
+                          <div>Status</div>
+                          <div>Last Update</div>
+                        </div>
+                        {showClaimsDetails.map((claim, i) => (
+                        <div className={style.claimContent} key={i}>
+                          <div> {claim.claimType}</div>
+                          <div>{claim.status}</div>
+                          <div>
+                            <TimeAgo date={claim.updatedAt} />
+                          </div>
+                        </div>
+                      ))}
+                      </div><hr/>
+                      <div className={style.modalBtn}>
+                        <Button
+                          className={style.modalButton}
+                          onClick={this.handleClose}
+                        >
+                          Close
+                        </Button>
+                      </div>
+                      </div>
+                    </Fade>
+                  </Modal>
+                  {/* <Modal
                     dialogClassName={`${style.modal}`}
                     show={this.state.customerClaims}
                     onHide={this.handleClose}
@@ -275,11 +318,12 @@ class CreateClaim extends Component {
                         </Button>
                       </div>
                     </Modal.Footer>
-                  </Modal>
+                  </Modal> */}
                 </div>
               )}
 
-              <VirtualizedAutocomplete textField="Choose a job"
+              <VirtualizedAutocomplete
+                textField="Choose a job"
                 value={this.state.selectedJob}
                 options={this.state.jobs}
                 setSelectedCustomerJobs={this.setSelectedCustomerJobs}
@@ -319,7 +363,7 @@ class CreateClaim extends Component {
                       Protection Type
                     </InputLabel>
                     <Select
-                    required
+                      required
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
                       value={this.state.claims.claimType}
@@ -346,15 +390,17 @@ class CreateClaim extends Component {
                     value={this.state.claims.price}
                     onChange={(e) => this.hanldeClaimsInput(e)}
                     InputProps={{
-                      startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
                     }}
                   />
                 </div>
               </div>
 
               <TextareaAutosize
-              required              
-              error={this.state.descriptionError ? true : false}
+                required
+                error={this.state.descriptionError ? true : false}
                 rowsMax={4}
                 id="description"
                 className={`${style.styleFormFields} ${style.styleTextArea}`}

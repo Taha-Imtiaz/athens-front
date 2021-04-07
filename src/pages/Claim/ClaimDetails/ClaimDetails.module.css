@@ -1,7 +1,7 @@
 .claimsDetailContainer {
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
-  grid-template-rows: minmax(90vh,min-content);
+  grid-template-rows: minmax(90vh, min-content);
   grid-template-areas: ". claimDetails .";
   background-color: #e9ecef;
 }
@@ -19,7 +19,7 @@
 
 .cards .link {
   text-decoration: none;
-  text-transform: capitalize ;
+  text-transform: capitalize;
 }
 
 .cards {
@@ -34,33 +34,33 @@
 }
 .customerCard {
   grid-area: customerCard;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   border: none;
 }
 .jobCard {
-  grid-area: jobCard;  
+  grid-area: jobCard;
   border-radius: 1rem;
-  border: none; 
+  border: none;
   overflow: hidden;
 }
-.assigneehead{
+.assigneehead {
   text-decoration: none;
   list-style: none;
 }
-.claimButton{
+.claimButton {
   grid-area: buttons;
   background-color: white;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
-  gap: .5rem;
-  padding: 1rem .5rem;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
   border: none;
 }
 .claimDetail {
   grid-area: claimDetail;
   background-color: rgb(20, 33, 71);
-  border:none;
+  border: none;
   display: grid;
   grid-template-rows: repeat(4, minmax(7vh, min-content));
   grid-template-columns: 100fr;
@@ -69,7 +69,7 @@
     "description"
     "waiting"
     "updates";
-  
+
   row-gap: 2rem;
   background-color: transparent;
   /* padding: 0 2rem; */
@@ -82,14 +82,13 @@
   /* display: grid;
   grid-template-columns: repeat(2, 20fr) repeat(2, 12fr) repeat(2, 18fr);
   /* width: 100%; */
- /* column-gap: 0.2rem; */
- /* gap: 1rem; */
-display: flex;
+  /* column-gap: 0.2rem; */
+  /* gap: 1rem; */
+  display: flex;
 
-justify-content: space-around;
-text-align: center;
+  justify-content: space-around;
+  text-align: center;
 }
-
 
 .claimButton .button,
 .protectionRow .button,
@@ -114,31 +113,30 @@ text-align: center;
   /* background-color: #00adee; */
   column-gap: 0.3rem;
 }
-.description > h6{
+.description > h6 {
   font-size: larger;
   font-weight: 400;
   /* padding: 0 .5rem; */
 }
-.description > div{
+.description > div {
   background-color: #fff;
   border-radius: 1rem;
   padding: 0.8rem 0.5rem;
-  word-spacing: .2rem;
+  word-spacing: 0.2rem;
 }
 .waiting {
   grid-area: waiting;
 }
-.waiting > h6{
+.waiting > h6 {
   font-size: larger;
   font-weight: 400;
   /* padding: 0 .5rem; */
 }
-.waitingInput{
-display: grid;
-grid-template-columns: .8fr .2fr;
-grid-gap: 1rem;
-align-items: center;
-
+.waitingInput {
+  display: grid;
+  grid-template-columns: 0.8fr 0.2fr;
+  grid-gap: 1rem;
+  align-items: center;
 }
 .updates {
   grid-area: updates;
@@ -147,17 +145,17 @@ align-items: center;
   grid-template-areas:
     "updateHead"
     "updateContent";
-    /* "time"; */
-    word-break: break-all;
+  /* "time"; */
+  word-break: break-all;
 }
-.updateHead{
+.updateHead {
   grid-area: updateHead;
   /* padding: 0 .5rem; */
 }
 .updateContent {
   grid-area: updateContent;
   padding-top: 1.5rem;
-  row-gap: .5rem;
+  row-gap: 0.5rem;
   display: grid;
 }
 .updateContentRow {
@@ -167,31 +165,35 @@ align-items: center;
   /* grid-template-rows: repeat(auto-fit, minmax(6vh, min-content)); */
   /* border-bottom: 1px solid #dddbdb; */
   padding: 0.8rem 0.5rem;
-  word-spacing: .2rem;
+  word-spacing: 0.2rem;
   align-items: flex-end;
   /* grid-template-columns: 85fr 15fr; */
   /* margin: 1rem 0; */
   /* padding: 1rem; */
 }
-.update___time{
+.update___time {
   /* background-color: red; */
   /* grid-area: time;*/
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  
-  gap: .5rem; 
+
+  gap: 0.5rem;
 }
 
-.modal {
+/* .modal {
   max-width: 70vw;
+} */
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .flexEnd .button {
   background: #00adee;
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
-
   margin: 0 0.2rem;
 }
 .flexEnd .button:hover {
@@ -201,4 +203,15 @@ align-items: center;
   width: 100%;
   border: 1px solid black;
   border-radius: 0.4rem;
+}
+.modal {
+  max-width: 100%;
+  /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.644); */
+  /* border-radius: 10px; */
+  /* border-radius: 10px; */
+  /* padding: 1rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1rem solid green; */
 }

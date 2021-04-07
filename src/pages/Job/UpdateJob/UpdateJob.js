@@ -3,9 +3,9 @@ import style from "./UpdateJob.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { getJob, updateJob } from "../../../Redux/Job/jobActions";
-import { Modal } from "react-bootstrap";
+// import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cloneDeep, uniqBy } from "lodash";
 import "date-fns";
 import FormControl from "@material-ui/core/FormControl";
@@ -17,10 +17,12 @@ import {
   Select,
   TextField,
   Button,
-
+  Modal,
   TextareaAutosize,
   InputAdornment,
 } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import { Autocomplete } from "@material-ui/lab";
 import { ContentState, convertToRaw, EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -43,7 +45,7 @@ class UpdateJob extends Component {
     startTime: "",
     meetTime: "",
     jobType: "",
-    propertyType: '',
+    propertyType: "",
     title: "",
     titleError: "",
     descriptionError: "",
@@ -59,7 +61,7 @@ class UpdateJob extends Component {
     status: "",
     assigneeRequired: "",
     newService: "",
-    price: '',
+    price: "",
     trucks: [],
     // truck: '',
     // truckSize: 'None',
@@ -80,7 +82,7 @@ class UpdateJob extends Component {
       { id: 6, name: "Indoor Storage" },
       { id: 7, name: "Outdoor Storage" },
       { id: 8, name: "Town House" },
-      { id: 9, name: "Apartment" }
+      { id: 9, name: "Apartment" },
     ],
     truckOptions: [
       "Pickup Truck",
@@ -88,10 +90,9 @@ class UpdateJob extends Component {
       "15 ft truck",
       "17 ft truck",
       "20 ft truck",
-      "26 ft truck"
-    ]
+      "26 ft truck",
+    ],
   };
-
 
   //fetch job id on componentDidMount
   componentDidMount() {
@@ -103,7 +104,7 @@ class UpdateJob extends Component {
     } = this.props;
 
     getJob(jobId);
-  };
+  }
 
   componentDidUpdate(prevProps) {
     let { job } = this.props;
@@ -171,9 +172,7 @@ class UpdateJob extends Component {
     }
   };
 
-
   setInitialState = (job) => {
-
     const contentBlock = htmlToDraft(job.description);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(
@@ -192,8 +191,8 @@ class UpdateJob extends Component {
     let parsedDates = job.dates.map((x) => {
       return {
         date: Date.parse(x.date),
-        time: x.time
-      }
+        time: x.time,
+      };
     });
     this.setState({
       job: job,
@@ -203,7 +202,7 @@ class UpdateJob extends Component {
       endDate: Date.parse(job.endDate),
       startDateInString: job.startDate,
       endDateInString: job.endDate,
-      startTime: job.startTime ? new Date(job.startTime) : '',
+      startTime: job.startTime ? new Date(job.startTime) : "",
       locations: job.locations,
       jobType: job.jobType,
       description: job.description,
@@ -222,9 +221,9 @@ class UpdateJob extends Component {
       trucks: job.trucks.length > 0 ? job.trucks : [{ type: "", number: "" }],
       newService: "",
       newProperty: "",
-      assigneesId: job.assignee.map(x => x._id)
+      assigneesId: job.assignee.map((x) => x._id),
     });
-  }
+  };
   //show modal when addNote button is pressed
   handleShow = () => {
     this.setState({
@@ -245,16 +244,17 @@ class UpdateJob extends Component {
   };
 
   //close note modal
-  handleClose = (notes) => {
+  handleClose = () => {
     this.setState({
       show: false,
-      note: notes,
+      newNote: "",
     });
   };
   //add note when add note button of modal is pressed
   AddNote = () => {
     let { newNote, note } = this.state;
-    if (note) {
+    console.log("new note: "+newNote,"note: "+ note);
+    if (newNote) {
       let notes = [...this.state.note];
       notes.push({ uid: uuidv4(), text: newNote });
       this.setState({
@@ -262,6 +262,9 @@ class UpdateJob extends Component {
         note: notes,
         newNote: "",
       });
+    }
+    else{
+      alert("Please Enter Note")
     }
   };
   //onChange handler of form
@@ -306,7 +309,7 @@ class UpdateJob extends Component {
       propertyType,
       price,
       trucks,
-      assigneesId
+      assigneesId,
     } = this.state;
 
     let {
@@ -342,15 +345,16 @@ class UpdateJob extends Component {
       // truck,
       // truckSize,
       trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
-      assigneesId
+      assigneesId,
     };
     //check if the fields are empty
     if (this.handleValidation()) {
       //update job
-      updateJob(jobId, updatedObj, (res) => history.push("/job/detail/" + jobId))
+      updateJob(jobId, updatedObj, (res) =>
+        history.push("/job/detail/" + jobId)
+      );
     }
   };
-
 
   //add new location
   addLocation = () => {
@@ -361,21 +365,17 @@ class UpdateJob extends Component {
     });
   };
 
-
   //set the google location in the state
   handleSetLocation = (choosenLocation, index) => {
-    let value = choosenLocation ? choosenLocation.description : ''
+    let value = choosenLocation ? choosenLocation.description : "";
     let location = [...this.state.locations];
 
     location[index].value = value;
 
-
-
-
     this.setState({
-      locations: location
-    })
-  }
+      locations: location,
+    });
+  };
   //onChange handler of services
   servicesChanged = (newValue) => {
     let arr = uniqBy(newValue, "id");
@@ -383,15 +383,11 @@ class UpdateJob extends Component {
   };
   //onChange handler of propertytype
   propertyChanged = (newValue) => {
-
     if (newValue) {
       this.setState({ propertyType: newValue.name });
-    }
-    else {
+    } else {
       this.setState({ propertyType: "" });
     }
-
-
   };
 
   //add custom service
@@ -446,7 +442,7 @@ class UpdateJob extends Component {
         newProperty: "",
       });
     }
-  }
+  };
   //change editor's state
   onEditorStateChange = (e) => {
     this.setState({
@@ -457,26 +453,23 @@ class UpdateJob extends Component {
 
   setDates = (dates) => {
     this.setState({
-      dates
-    })
-  }
+      dates,
+    });
+  };
   setTrucks = (trucks) => {
     this.setState({
-      trucks
-    })
-  }
+      trucks,
+    });
+  };
 
   handleLocationChange = (locations) => {
     this.setState({
-      locations
+      locations,
     });
-  }
+  };
 
   render() {
-    let {
-      note,
-      show,
-    } = this.state;
+    let { note, show } = this.state;
     return (
       <div className={`${style.formStyle}`}>
         <div className={`${style.form}`}>
@@ -501,7 +494,9 @@ class UpdateJob extends Component {
               />
             </div>
             {/* date and time  */}
-            {this.state.dates.length > 0 && <DateAndTime dates={this.state.dates} setDates={this.setDates} />}
+            {this.state.dates.length > 0 && (
+              <DateAndTime dates={this.state.dates} setDates={this.setDates} />
+            )}
 
             <div className={style.styleEditor}>
               <Editor
@@ -539,7 +534,6 @@ class UpdateJob extends Component {
                       onKeyUp={(e) => this.addCustomService(e)}
                       {...params}
                       variant="outlined"
-
                       fullWidth
                       className={style.styleFormFields}
                       label="Services"
@@ -569,7 +563,6 @@ class UpdateJob extends Component {
                     </MenuItem>
                     {this.state.jobType !== "Fixed" ? (
                       <MenuItem value={"Fixed"}>Fixed</MenuItem>
-
                     ) : (
                       <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
                     )}
@@ -609,18 +602,21 @@ class UpdateJob extends Component {
                   error={this.state.assigneeRequiredError ? true : false}
                   onChange={this.handleFormInput}
                   InputProps={{
-                    startAdornment: (<InputAdornment position="start">$</InputAdornment>)
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
                   }}
                 />
               </div>
             </div>
             {/* Truck Component */}
-            {this.state.trucks.length > 0 && <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />}
+            {this.state.trucks.length > 0 && (
+              <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
+            )}
 
             {/* <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} /> */}
 
-            {
-              this.state.locations &&
+            {this.state.locations && (
               <div>
                 {/* {this.state.locations.length === 0 && (
                   <div className={style.addLocation}>
@@ -633,28 +629,32 @@ class UpdateJob extends Component {
                 )} */}
                 {this.state.locations.length > 0 ? (
                   <div>
-                    <AddLocation locationArr={this.state.locations} addLocation={this.addLocation} handleLocationChange={this.handleLocationChange} />
+                    <AddLocation
+                      locationArr={this.state.locations}
+                      addLocation={this.addLocation}
+                      handleLocationChange={this.handleLocationChange}
+                    />
                   </div>
-                ) :null}
-
+                ) : null}
               </div>
-            }
+            )}
           </form>
 
           <div>
             {note && note.length > 0 && <h3>Notes</h3>}
-            {note && note.map((note) => (
-              <div className={style.notesStyle}>
-                <div>{note.text}</div>
-                <div>
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    size="1x"
-                    onClick={() => this.handleDeleteNote(note)}
-                  />
+            {note &&
+              note.map((note) => (
+                <div className={style.notesStyle}>
+                  <div>{note.text}</div>
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      size="1x"
+                      onClick={() => this.handleDeleteNote(note)}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
           <div className={style.notesBtn}>
             <div>
@@ -676,8 +676,45 @@ class UpdateJob extends Component {
               </Button>
             </div>
           </div>
-
           <Modal
+            open={show}
+            onClose={this.handleClose}
+            // scrollable
+            // centered
+            className={style.modal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={show}>
+              <div className={"bg-light p-3"}>
+                <h3>Add Note</h3>
+                <TextareaAutosize
+                  className={style.styleTextArea}
+                  id=""
+                  cols="65"
+                  rows="5"
+                  name="Note"
+                  value={this.state.newNote}
+                  onChange={this.handleAddNote}
+                ></TextareaAutosize>
+                <div className={style.modalBtns}>
+                  <Button
+                    className={style.modalButtons}
+                    onClick={this.handleClose}
+                  >
+                    Close
+                  </Button>
+                  <Button className={style.modalButtons} onClick={this.AddNote}>
+                    Add Note
+                  </Button>
+                </div>
+              </div>
+            </Fade>
+          </Modal>
+          {/* <Modal
             show={show}
             onHide={this.handleClose}
             animation={false}
@@ -705,7 +742,7 @@ class UpdateJob extends Component {
                 Add Note
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </div>
       </div>
     );
@@ -714,12 +751,12 @@ class UpdateJob extends Component {
 
 var actions = {
   getJob,
-  updateJob
+  updateJob,
 };
 
 var mapStateToProps = (state) => ({
   loggedinUser: state.users.user,
-  job: state.jobs && state.jobs.job
+  job: state.jobs && state.jobs.job,
 });
 
 export default connect(mapStateToProps, actions)(UpdateJob);

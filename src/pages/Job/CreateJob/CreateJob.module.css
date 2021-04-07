@@ -54,7 +54,10 @@
   background-color: var(--hover-color-blue);
 } */
 .modal {
-  max-width: 50vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal ::-webkit-scrollbar {

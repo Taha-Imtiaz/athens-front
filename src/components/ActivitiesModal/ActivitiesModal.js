@@ -4,9 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { Modal } from "react-bootstrap";
 import TimeAgo from "react-timeago";
 import { Button, Modal } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
-  modal: {    
+  modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -18,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  buttonClass:{
-    textAlign:"end",
-  }
+  buttonClass: {
+    textAlign: "end",
+  },
 }));
 
 const ActivitiesModal = ({ show, activities, handleClose }) => {
@@ -34,8 +36,14 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
         // dialogClassName={`${style.modal}`}
         open={show}
         onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <div className={`bg-light p-3`}>
+        <Fade in={show}>
+          <div className={`bg-light p-3`}>
             <h3 className="text-center">Activities</h3>
             {activities && activities.length > 0 ? (
               <div className={style.modalBody}>
@@ -70,14 +78,14 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
               </div>
             ) : (
               <h3 className="text-center">No activity yet.</h3>
-            )}
+            )}<hr/>
             <div className={`text-right ${style.modalButtons}`}>
               <Button className={` ${style.button}`} onClick={handleClose}>
                 Close
               </Button>
             </div>
-          
-        </div>
+          </div>
+        </Fade>
 
         {/* <Modal.Header closeButton>
           <Modal.Title>Activities</Modal.Title>

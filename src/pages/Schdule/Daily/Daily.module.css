@@ -115,15 +115,31 @@ background: var(--hover-color-blue) !important;
   /* color: #a8a8a8; */
 }
 .styleText {
-  font-weight: normal;
+  text-transform: capitalize;
 }
 .styleModalBody {
   display: grid;
   grid-template-columns: 90fr 10fr;
 }
+.modal {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.644); */
+/* border-radius: 10px; */
+  /* border-radius: 10px; */
+  /* padding: 1rem; */  
+  /* border: 1rem solid green; */
+}
 .styleModalBody .styleLink {
   text-decoration: none;
   cursor: pointer;
+}
+.modalBtns{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .modalBtns .button {
   background: #00adee;

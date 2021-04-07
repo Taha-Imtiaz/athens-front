@@ -1,27 +1,46 @@
-import React from 'react'
-import style from "./JobConfirmationModal.module.css"
-import { Modal } from "react-bootstrap";
-import JobConfirmation from '../../pages/Job/JobConfirmation/JobConfirmation';
+import React from "react";
+import style from "./JobConfirmationModal.module.css";
+import { Modal } from "@material-ui/core";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import JobConfirmation from "../../pages/Job/JobConfirmation/JobConfirmation";
 
-const JobConfirmationModal = ({job,show,handleCloseAndRefresh,closeJobConfirmationModal}) => {
-    return (
-        <div>
-                {/* Confirmtation Modal */}
-          <Modal
-            dialogClassName={`${style.modal}`}
-            show={show}
-            onHide={closeJobConfirmationModal}
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Booking Confirmation</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <JobConfirmation data={job} close={handleCloseAndRefresh} />
-            </Modal.Body>
-          </Modal>
+const JobConfirmationModal = ({
+  job,
+  show,
+  handleCloseAndRefresh,
+  closeJobConfirmationModal,
+}) => {
+  return (
+    <div>
+      {/* Confirmtation Modal */}
+      <Modal
+        className={`${style.modal}`}
+        open={show}
+        onClose={closeJobConfirmationModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      ><Fade in={show}>
+        <div className={`bg-white p-3`}>
+          {/* <Modal.Header closeButton>
+          <Modal.Title></Modal.Title>
+        </Modal.Header> */}<h3>Booking Confirmation</h3>
+        {/* <Modal.Body>
+          <JobConfirmation data={job} close={handleCloseAndRefresh} />
+        </Modal.Body> */}
+        <div >
+          <JobConfirmation data={job} close={handleCloseAndRefresh} />          
         </div>
-    )
-}
+        </div>
+      </Fade>
+        
+        
+      </Modal>
+    </div>
+  );
+};
 
-export default JobConfirmationModal
+export default JobConfirmationModal;

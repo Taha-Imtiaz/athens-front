@@ -19,20 +19,22 @@
 .cards {
   grid-area: cards;
   display: grid;
-  grid-template-rows: 25vh minmax(15vh, min-content) 6.6vh min-content;
+  grid-template-rows: minmax(25vh, min-content) minmax(15vh, min-content) 6.6vh min-content;
   grid-template-areas:
     "customerCard"
     "assigneeCard"
     "activityBtn"
     ".";
   row-gap: 1rem;
-  
 }
 
 .customerCard {
   grid-area: customerCard;
   border-radius: 1rem;
   border: none;
+}
+.customreCardEmail{
+  word-break: break-all;
 }
 .assigneeCard {
   grid-area: assigneeCard;
@@ -133,7 +135,7 @@ gap: 1rem;
 .service, .numbers, .truckSection {
  
   display: grid;
-  grid-template-columns: 25fr 75fr;
+  grid-template-columns: 35fr 65fr;
 }
 .truckSection{
 padding: 0 .5rem;

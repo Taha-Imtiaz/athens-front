@@ -33,11 +33,7 @@
   text-align: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* height: 6vh; */
-  /* background-color: red; */
   align-items: center;
-  /* padding: 0 0.5rem; */
-  /* background-color: rosybrown; */
 }
 .moverAssigneeInfo .button {
   background: #00adee;
@@ -240,7 +236,7 @@ border-radius: .3rem;
   width: 100% !important;
   margin: 0 0.4rem;
   overflow-x: hidden;
-  height: 75vh;
+  height: 100vh;
   padding-top: 10px;
 }
 .scrollBar .scrollContent {
@@ -281,7 +277,7 @@ border-radius: .3rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;
-    height: 75vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1300px) {
@@ -291,6 +287,6 @@ border-radius: .3rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;
-    height: 75vh;
+    height: 100vh;
   }
 }

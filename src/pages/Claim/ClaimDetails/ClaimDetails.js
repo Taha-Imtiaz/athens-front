@@ -126,7 +126,7 @@ const ClaimDetails = (props) => {
                     <FontAwesomeIcon icon={faMobile} /> {claims.customer.phone}
                   </div>
 
-                  <div className="card-text mb-2">
+                  <div className={`${style.customerCardEmail} card-text mb-2`}>
                     <FontAwesomeIcon icon={faEnvelope} />{" "}
                     {claims.customer.email}
                   </div>
@@ -196,13 +196,25 @@ const ClaimDetails = (props) => {
             <div className={`card ${style.claimDetail} `}>
               <div className={`${style.protectionRow}`}>
                 <div>
-                  <h6>{`Title: `}</h6> <span>{claims.title}</span>
+                  <h6 className="text-muted">{`Title: `}</h6> <span>{claims.title}</span>
                 </div>
                 <div>
-                  <h6>{`Protection Type: `}</h6> <span>{claims.claimType}</span>
+                  <h6 className="text-muted">{`Protection Type: `}</h6>
+                  <Chip
+                  className="font-weight-bold"
+                    label={claims.claimType}
+                    clickable
+                    size="small"
+                  />
                 </div>
                 <div>
-                  <h6>{`Total: `}</h6> <span>${claims.price}</span>
+                  <h6 className="text-muted">{`Total: `}</h6>
+                  <Chip
+                  className="font-weight-bold"
+                    label={`$${claims.price}`}
+                    clickable
+                    size="small"
+                  />
                 </div>
 
               </div>
@@ -247,7 +259,7 @@ const ClaimDetails = (props) => {
               {claims.updates.length > 0 ? (
                 <div className={style.updates}>
                   <div className={style.updateHead}>
-                    <h3>{`Updates`}</h3>
+                    <h6>{`Updates`}</h6>
                   </div>
                   <div className={`${style.updateContent}`}>
                     {claims.updates.map((x, i) => (

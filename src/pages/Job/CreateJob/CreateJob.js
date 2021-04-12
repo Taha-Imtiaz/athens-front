@@ -15,7 +15,6 @@ import {
 import "date-fns";
 import { Autocomplete } from "@material-ui/lab";
 import { getCustomersAndJobs } from "../../../Redux/Claim/claimActions";
-// import { Modal } from "react-bootstrap";
 import CreateCustomer from "../../Customer/CreateCustomer/CreateCustomer";
 import {
   resetJobForm,

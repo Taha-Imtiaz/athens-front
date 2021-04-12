@@ -6,7 +6,6 @@ import {
   Modal,
 } from "@material-ui/core";
 import { cloneDeep } from "lodash";
-// import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
@@ -56,7 +55,7 @@ const ClaimDetails = (props) => {
     let { claims } = props;
 
     claims.status = "closed";
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
     setToggleClaim(false);
   };
 
@@ -94,13 +93,13 @@ const ClaimDetails = (props) => {
     let { claims } = props;
     claims.waitTo = claimInput;
     setWaitTo(true);
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
   };
 
   const reopenClaim = () => {
     let { claims } = props;
     claims.status = "open";
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
     setToggleClaim(false);
   };
 
@@ -197,14 +196,15 @@ const ClaimDetails = (props) => {
             <div className={`card ${style.claimDetail} `}>
               <div className={`${style.protectionRow}`}>
                 <div>
+                  <h6>{`Title: `}</h6> <span>{claims.title}</span>
+                </div>
+                <div>
                   <h6>{`Protection Type: `}</h6> <span>{claims.claimType}</span>
                 </div>
                 <div>
                   <h6>{`Total: `}</h6> <span>${claims.price}</span>
                 </div>
-                <div>
-                  <h6>{`Title: `}</h6> <span>{claims.title}</span>
-                </div>
+
               </div>
 
               <div className={style.description}>
@@ -280,14 +280,13 @@ const ClaimDetails = (props) => {
             }}
           >
             <Fade in={toggleClaim}>
-              <div className={"bg-light p-3"}>
+              <div className={"bg-light p-3 w-50"}>
                 <h3>Confirmation</h3>
                 <h6>
                   {claims.status === "open"
                     ? `Do you want to close this claim ?`
                     : `Do you want to reopen this claim ?`}
                 </h6>
-                <hr/>
                 <div className={style.flexEnd}>
                   <Button
                     className={style.button}
@@ -328,22 +327,22 @@ const ClaimDetails = (props) => {
               <div className={"bg-light p-3"}>
                 <h3>Add update</h3>
                 <TextareaAutosize
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={update}
-                onChange={handleAddUpdate}
-                className={style.styleTextArea}
-              ></TextareaAutosize>
-              <div className={style.flexEnd}>
-                <Button className={style.button} onClick={handleClose}>
-                  Close
+                  id=""
+                  cols="65"
+                  rows="5"
+                  name="Note"
+                  value={update}
+                  onChange={handleAddUpdate}
+                  className={style.styleTextArea}
+                ></TextareaAutosize>
+                <div className={style.flexEnd}>
+                  <Button className={style.button} onClick={handleClose}>
+                    Close
                 </Button>
-                <Button className={style.button} onClick={updateClaimData}>
-                  Add
+                  <Button className={style.button} onClick={updateClaimData}>
+                    Add
                 </Button>
-              </div>
+                </div>
               </div>
             </Fade>
           </Modal>

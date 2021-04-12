@@ -310,8 +310,8 @@ const JobDetails = (props) => {
                 <div className={style.notes___title}>
                   <h5>Notes:</h5>
                 </div>
-                {job.note.map((x) => (
-                  <div className={style.notes___text}>{x.text}</div>
+                {job.note.map((x,i ) => (
+                  <div key={i} className={style.notes___text}>{x.text}</div>
                 ))}
               </div>
             )}

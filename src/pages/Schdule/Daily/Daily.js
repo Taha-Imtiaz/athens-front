@@ -7,7 +7,6 @@ import {
   getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
-// import {  } from "react-bootstrap";
 import { updateJob } from "../../../Redux/Job/jobActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
@@ -692,7 +691,7 @@ console.log( "assign date: "+ moverAssignedDate)
       >
         <Fade in={modalShow}>
           <div className={"bg-light p-3"}>
-            <h3>Confirmation</h3><hr/>
+            <h3>Confirmation</h3>
             {mover && (
             <h5>
              <span className={style.styleText}> 

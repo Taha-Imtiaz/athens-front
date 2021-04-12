@@ -190,7 +190,7 @@ class UpdateCustomer extends Component {
         lastName,
         phone,
         email,
-        subContacts,
+        subContacts : subContacts.filter((x) => x.name !== "" && x.phone !== "" && x.email),
       };
 
       updateCustomer(updateCustomerObj, customerId, () => {

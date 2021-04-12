@@ -40,6 +40,15 @@
     gap: 1rem;
     font-family: var(--font-family-header);
   }
+  .modalContainer{
+    max-width: 60%;
+  }
+  .abcClass{
+/* background-color: rebeccapurple; */
+/* max-height: 180px; */
+max-height:15em;
+overflow: hidden scroll;
+  }
   .modalContent {
     display: grid;
     gap: 1rem;

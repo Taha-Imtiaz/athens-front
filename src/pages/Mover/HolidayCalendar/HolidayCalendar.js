@@ -4,7 +4,6 @@ import "react-day-picker/lib/style.css";
 import style from "./HolidayCalendar.module.css";
 
 import { holidayCalendar } from "../../../Redux/Mover/moverActions";
-// import {  } from "react-bootstrap";
 import { Button, TextareaAutosize, Modal } from "@material-ui/core";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
@@ -100,7 +99,7 @@ function RequestHolidays(props) {
       >
         <Fade in={show}>
           <div className={"bg-light p-3"}>
-            <h3>Add Reason</h3><hr/>
+            <h3>Add Reason</h3>
             <div>
               <TextareaAutosize
                 id=""

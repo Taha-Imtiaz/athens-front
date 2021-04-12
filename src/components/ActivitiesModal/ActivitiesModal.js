@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./ActivitiesModal.module.css";
 import { makeStyles } from "@material-ui/core/styles";
-// import { Modal } from "react-bootstrap";
 import TimeAgo from "react-timeago";
 import { Button, Modal } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -43,8 +42,8 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
         }}
       >
         <Fade in={show}>
-          <div className={`bg-light p-3`}>
-            <h3 className="text-center">Activities</h3>
+          <div className={`bg-light p-3 ${style.modalContainer}`}>
+            <h3>Activities</h3><hr />
             {activities && activities.length > 0 ? (
               <div className={style.modalBody}>
                 <div className={`text-muted ${style.modalHeader}`}>
@@ -52,33 +51,35 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
                   <div>Message</div>
                   <div>Timestamp</div>
                 </div>
+                <div className={style.abcClass}>
+                  {activities &&
+                    activities.map((activitiy, i) => (
+                      <div
+                        key={i}
+                        className={`font-weight-bold ${style.modalContent}`}
+                      >
+                        <div className={"text-capitalize"}>
+                          {" "}
+                          {activitiy.performer.name}
+                        </div>
+                        <div>
+                          {activitiy.messageLogs.map((x, i) => (
+                            <label key={i}>* {x}</label>
+                          ))}
+                        </div>
 
-                {activities &&
-                  activities.map((activitiy, i) => (
-                    <div
-                      key={i}
-                      className={`font-weight-bold ${style.modalContent}`}
-                    >
-                      <div className={"text-capitalize"}>
-                        {" "}
-                        {activitiy.performer.name}
+                        <TimeAgo
+                          className={"text-muted text-capitalize"}
+                          date={activitiy.timeStamp}
+                        />
                       </div>
-                      <div>
-                        {activitiy.messageLogs.map((x, i) => (
-                          <label key={i}>* {x}</label>
-                        ))}
-                      </div>
+                    ))}
+                </div>
 
-                      <TimeAgo
-                        className={"text-muted text-capitalize"}
-                        date={activitiy.timeStamp}
-                      />
-                    </div>
-                  ))}
               </div>
             ) : (
               <h3 className="text-center">No activity yet.</h3>
-            )}<hr/>
+            )}<hr />
             <div className={`text-right ${style.modalButtons}`}>
               <Button className={` ${style.button}`} onClick={handleClose}>
                 Close

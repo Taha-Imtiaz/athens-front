@@ -1,12 +1,13 @@
 .calenderContainer {
   display: grid;
-  grid-template-rows: minmax(min-content, 90vh);
+  grid-template-rows: 80vh;
   grid-template-columns: 3fr 94fr 3fr;
   grid-template-areas: ". calender .";
 }
 
 .calender {
   grid-area: calender;
+  
   display: grid;
   grid-template-columns: 78fr 22fr;
   grid-template-areas: "calenderContent sideContent";
@@ -15,8 +16,8 @@
 }
 
 .calenderContent {
-  grid-area: calenderContent; 
-  position: fixed;
+  grid-area: calenderContent;
+  /* position: fixed; */
   /* background-color: #00adee; */
   width: 72%;
 }
@@ -24,20 +25,24 @@
 .sideContent {
   grid-area: sideContent;
   /* background-color: red; */
-  
 }
-.flexCenter{
+.flexCenter {
   text-align: center;
 }
 .jobInfo {
   display: grid;
-grid-template-columns: repeat(2,1fr);
-column-gap: 0.5rem;
-margin-bottom: 1rem;
-text-align: center;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.styleCalender{
+.styleCalenderMover {
+  width: 100%;
+  height: 75vh !important;
+}
+
+.styleCalenderAdmin {
   width: 100%;
   height: 85vh !important;
 }
@@ -45,32 +50,33 @@ text-align: center;
 .flex {
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 .link {
   text-decoration: none;
   text-transform: capitalize;
   font-weight: 600;
 }
-.flexEnd{
-    display: flex;
-    justify-content: flex-end;
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
 }
-.cardBody{
+.cardBody {
   background-color: #e9ecef;
 }
 .jobDescription {
   /* white-space: pre-line; */
   text-transform: capitalize;
 }
-.heading{
+.heading {
   font-weight: 600;
 }
-.jobText, .customerMail{
+.jobText,
+.customerMail {
   background-color: white;
   border-radius: 1rem;
   border: none;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .cardHeader {
@@ -84,81 +90,64 @@ text-align: center;
   border-radius: 0.4rem;
   margin-bottom: 1.5rem;
 }
-@media only screen and (min-width:2300px){
-  .styleCalender{
-    /* height: 48rem !important; */
-  }
-}
 
-@media only screen and (max-width:2300px) { 
+@media only screen and (max-width: 2300px) {
   .calenderContent {
-    grid-area: calenderContent; 
+    grid-area: calenderContent;
     position: fixed;
     /* background-color: #00adee; */
     /* width: 80rem; */
   }
-  .styleCalender{
+  .styleCalender {
     /* height: 45rem !important; */
   }
 }
-@media only screen and (max-width:1900px) {
- 
+@media only screen and (max-width: 1900px) {
   .calenderContent {
-    grid-area: calenderContent; 
+    grid-area: calenderContent;
     position: fixed;
     /* background-color: #00adee; */
     /* width: 65rem; */
-    
+  }
+  .styleCalender {
+    /* height: 34rem !important; */
+  }
 }
-.styleCalender{
-  /* height: 34rem !important; */
-}
-}
-@media only screen and (max-width:1500px) {
- 
-    .calenderContent {
-      grid-area: calenderContent; 
-      position: fixed;
-      /* background-color: #00adee; */
-      /* width: 55rem; */
-      
-  
-}
-.styleCalender{
-  /* height: 31rem !important; */
-}
-}
-@media only screen and (max-width:1300px) {
- 
+@media only screen and (max-width: 1500px) {
   .calenderContent {
-    grid-area: calenderContent; 
+    grid-area: calenderContent;
+    position: fixed;
+    /* background-color: #00adee; */
+    /* width: 55rem; */
+  }
+  .styleCalender {
+    /* height: 31rem !important; */
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .calenderContent {
+    grid-area: calenderContent;
     position: fixed;
     /* background-color: #00adee; */
     /* width: 48rem; */
+  }
+  .styleCalender {
+    /* height: 29rem !important; */
+  }
 }
-.styleCalender{
-  /* height: 29rem !important; */
-}
-
-}
-@media only screen and (max-width:1200px) {
- 
+@media only screen and (max-width: 1200px) {
   .calenderContent {
-    grid-area: calenderContent; 
+    grid-area: calenderContent;
     position: fixed;
     /* background-color: #00adee; */
     /* width: 46rem; */
-
+  }
 }
-}
-@media only screen and (max-width:1100px) {
- 
+@media only screen and (max-width: 1100px) {
   .calenderContent {
-    grid-area: calenderContent; 
+    grid-area: calenderContent;
     position: fixed;
     /* background-color: #00adee; */
     /* width: 41rem; */
-
-}
-
+  }
 }

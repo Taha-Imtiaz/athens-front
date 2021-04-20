@@ -43,7 +43,7 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
         }}
       >
         <Fade in={show}>
-          <div className={`bg-light p-3`}>
+          <div className={`${style.modalContainer} bg-light p-3`}>
             <h3 className="text-center">Activities</h3>
             {activities && activities.length > 0 ? (
               <div className={style.modalBody}>

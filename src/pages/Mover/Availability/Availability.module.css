@@ -30,7 +30,7 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   grid-template-areas: ". checkbox dayName .";
-  border: 2px solid black;
+  border:  4px solid rgba(0, 0, 0, 0.1);
   align-items: center;
 }
 .checkbox {
@@ -50,7 +50,7 @@
 
 }
 .saveBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .flex {
   display: flex;

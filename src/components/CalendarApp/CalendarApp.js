@@ -31,10 +31,13 @@ const CalendarApp = (props) => {
     let currentDayJobs = [];
     jobs.forEach((x) => {
       x.dates.forEach((y) => {
-        if (new Date(y.date).toDateString() === new Date(e.end).toDateString()) {
+        if (
+          new Date(y.date).toDateString() === new Date(e.end).toDateString()
+        ) {
           currentDayJobs.push(x);
-        }
-        else if (new Date(y.date).toDateString() === new Date(e).toDateString()) {
+        } else if (
+          new Date(y.date).toDateString() === new Date(e).toDateString()
+        ) {
           currentDayJobs.push(x);
         }
       });
@@ -88,16 +91,12 @@ const CalendarApp = (props) => {
           currentDayJobs,
           jobs: res.data.data,
           date: new Date(),
-
         });
-        getCount(new Date(), res.data.data)
-
+        getCount(new Date(), res.data.data);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
-
 
   //handler called when we change date
   const changeDate = (x) => {
@@ -139,7 +138,6 @@ const CalendarApp = (props) => {
         date: x,
       });
       getCount(x, res.data.data);
-
     });
   };
 
@@ -193,7 +191,11 @@ const CalendarApp = (props) => {
       <div className={style.calender}>
         <div className={style.calenderContent}>
           <Calendar
-            className={style.styleCalender}
+            className={
+              user && user.role == "mover"
+                ? style.styleCalenderMover
+                : style.styleCalenderAdmin
+            }
             selectable={true}
             localizer={localizer}
             events={state.myEventsList}
@@ -216,33 +218,33 @@ const CalendarApp = (props) => {
 
         <div className={style.sideContent}>
           <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
-              <hr />
+          <hr />
           <div className={style.jobInfo}>
-                <h6>{`Total Jobs: `}
-                  <Chip
-                    label={count.job}
-                    clickable
-                    // color="primary"
-                    // variant="outlined"
-                    size="medium"
-                  /></h6>
-                <h6>{`Total Movers: `}
-                  <Chip
-                    label={count.movers}
-                    clickable
-                    // color="primary"
-                    // variant="outlined"
-                    size="medium"
-                  />
-                </h6>
-              </div>
+            <h6>
+              {`Total Jobs: `}
+              <Chip
+                label={count.job}
+                clickable
+                // color="primary"
+                // variant="outlined"
+                size="medium"
+              />
+            </h6>
+            <h6>
+              {`Total Movers: `}
+              <Chip
+                label={count.movers}
+                clickable
+                // color="primary"
+                // variant="outlined"
+                size="medium"
+              />
+            </h6>
+          </div>
           {state.currentDayJobs.length ? (
             <div>
-              
-              
               {state.currentDayJobs.map((job, i) => (
                 <div key={i}>
-
                   <div id="accordion" key={i}>
                     <div className={`card ${style.card}`}>
                       <div
@@ -267,7 +269,7 @@ const CalendarApp = (props) => {
                           <div className={style.flexEnd}>
                             {job.jobId && (
                               <Chip
-                                label={(job.jobId)}
+                                label={job.jobId}
                                 clickable
                                 color="primary"
                                 variant="outlined"
@@ -282,23 +284,18 @@ const CalendarApp = (props) => {
                         id={`collapse${i}`}
                         className={"collapse"}
                         aria-labelledby="headingOne"
-                        data-parent="#accordion"                        
+                        data-parent="#accordion"
                       >
                         <div className={`card-body ${style.cardBody}`}>
-
-
-
                           <div className="card-text">
                             <div className={style.heading}>
                               {`Customer Email: `}
                             </div>
                             <div className={style.customerMail}>
-                              <Link
-
-                                to={`/customer/detail/${job.customer._id}`}
-                              >
+                              <Link to={`/customer/detail/${job.customer._id}`}>
                                 {job.customer.email}
-                              </Link></div>
+                              </Link>
+                            </div>
                           </div>
                           <div className={`card-text ${style.jobDescription}`}>
                             <div className={style.heading}>
@@ -315,11 +312,11 @@ const CalendarApp = (props) => {
                 </div>
               ))}
             </div>
-          ) : ( state.currentDayJobs.length === 0 ?
-              <div>                
-                <img src="/images/no-data-found.png" alt="" width="100%" />
-              </div> : null
-            )}
+          ) : state.currentDayJobs.length === 0 ? (
+            <div>
+              <img src="/images/no-data-found.png" alt="" width="100%" />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

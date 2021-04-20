@@ -691,7 +691,7 @@ console.log( "assign date: "+ moverAssignedDate)
         }}
       >
         <Fade in={modalShow}>
-          <div className={"bg-light p-3"}>
+          <div className={"bg-light p-3 w-50"}>
             <h3>Confirmation</h3><hr/>
             {mover && (
             <h5>

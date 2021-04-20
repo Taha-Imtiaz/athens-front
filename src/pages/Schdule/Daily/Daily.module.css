@@ -240,7 +240,7 @@ border-radius: .3rem;
   width: 100% !important;
   margin: 0 0.4rem;
   overflow-x: hidden;
-  height: 75vh;
+  height: 85vh;
   padding-top: 10px;
 }
 .scrollBar .scrollContent {
@@ -281,7 +281,7 @@ border-radius: .3rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;
-    height: 75vh;
+    height: 85vh;
   }
 }
 @media only screen and (max-width: 1300px) {
@@ -291,6 +291,6 @@ border-radius: .3rem;
     /* background-color: #00adee; */
 
     overflow-x: hidden;
-    height: 75vh;
+    height: 85vh;
   }
 }

@@ -51,7 +51,7 @@ const ActivitiesModal = ({ show, activities, handleClose }) => {
                   <div>Message</div>
                   <div>Timestamp</div>
                 </div>
-                <div className={style.abcClass}>
+                <div className={style.modalContentContainer}>
                   {activities &&
                     activities.map((activitiy, i) => (
                       <div

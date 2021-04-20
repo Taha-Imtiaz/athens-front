@@ -18,7 +18,7 @@
 .buttons {
   grid-area: buttons;
   display: grid; column-gap: 0.5rem;
-  grid-template-columns: repeat(2, 12.5fr) 75fr ;
+  grid-template-columns: repeat(2, 15fr) 70fr ;
   grid-template-areas: "button button .";
   margin-top: 1rem; 
   position: fixed;

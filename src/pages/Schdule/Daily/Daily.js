@@ -7,7 +7,6 @@ import {
   getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
-// import {  } from "react-bootstrap";
 import { updateJob } from "../../../Redux/Job/jobActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";

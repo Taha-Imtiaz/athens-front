@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import style from "./CreateClaim.module.css";
-// import {  } from "react-bootstrap";
 import { Button, InputAdornment, Modal } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -252,8 +251,8 @@ class CreateClaim extends Component {
                     }}
                   >
                     <Fade in={this.state.customerClaims}>
-                      <div className={"bg-light p-3"}>
-                        <h3 className="text-capitalize">{`${customerName} Claims`}</h3><hr/>
+                      <div className={"bg-light p-3 w-50"}>
+                        <h3 className="text-capitalize">{`${customerName} Claims`}</h3>
                         <div>
                           <div className={style.claimHeader}>
                           <div>Protection Type</div>
@@ -269,7 +268,7 @@ class CreateClaim extends Component {
                           </div>
                         </div>
                       ))}
-                      </div><hr/>
+                      </div>
                       <div className={style.modalBtn}>
                         <Button
                           className={style.modalButton}

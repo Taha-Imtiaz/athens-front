@@ -3,7 +3,6 @@ import style from "./UpdateJob.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { getJob, updateJob } from "../../../Redux/Job/jobActions";
-// import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cloneDeep, uniqBy } from "lodash";

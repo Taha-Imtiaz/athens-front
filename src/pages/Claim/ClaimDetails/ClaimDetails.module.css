@@ -25,7 +25,7 @@
 .cards {
   grid-area: cards;
   display: grid;
-  grid-template-rows: 25vh minmax(15vh, min-content) min-content;
+  grid-template-rows: minmax(25vh, min-content) minmax(15vh, min-content) min-content;
   grid-template-areas:
     "customerCard"
     "jobCard"
@@ -36,6 +36,9 @@
   grid-area: customerCard;
   border-radius: 1rem;
   border: none;
+}
+.customerCardEmail{
+  word-break: break-all;
 }
 .jobCard {
   grid-area: jobCard;
@@ -62,15 +65,16 @@
   background-color: rgb(20, 33, 71);
   border: none;
   display: grid;
-  grid-template-rows: repeat(4, minmax(7vh, min-content));
+  grid-template-rows: repeat(4, minmax(7vh, min-content)) 1vh;
   grid-template-columns: 100fr;
   grid-template-areas:
     "protectionRow"
     "description"
     "waiting"
-    "updates";
+    "updates"
+    " . ";
 
-  row-gap: 2rem;
+  row-gap: 1rem;
   background-color: transparent;
   /* padding: 0 2rem; */
 }
@@ -78,16 +82,11 @@
   grid-area: protectionRow;
   background-color: white;
   border-radius: 1rem;
-  padding: 1rem 0;
+  padding:.5rem .8rem ;
    display: grid;
-  grid-template-columns: repeat(2, 25fr) 50fr;
- /* /* width: 100%; */
-  /* column-gap: 0.2rem; */
-  /* gap: 1rem; */
-  /* display: flex; */
-
-  /* justify-content: space-around; */
-  text-align: center;
+  grid-template-columns: 60fr 25fr 15fr;
+  column-gap: 1.5rem;
+  justify-content: flex-start;   
 }
 
 .claimButton .button,
@@ -113,11 +112,6 @@
   /* background-color: #00adee; */
   column-gap: 0.3rem;
 }
-.description > h6 {
-  font-size: larger;
-  font-weight: 400;
-  /* padding: 0 .5rem; */
-}
 .description > div {
   background-color: #fff;
   border-radius: 1rem;
@@ -127,10 +121,9 @@
 .waiting {
   grid-area: waiting;
 }
-.waiting > h6 {
-  font-size: larger;
-  font-weight: 400;
-  /* padding: 0 .5rem; */
+.description >h6, .waiting >h6 , .protectionRow >div>h6 {
+  font-size: 1.1rem;
+  font-weight: bold
 }
 .waitingInput {
   display: grid;
@@ -141,20 +134,20 @@
 .updates {
   grid-area: updates;
   display: grid;
-  grid-template-rows: 7vh min-content;
+  grid-template-rows: 4vh min-content 5vh min-content;
   grid-template-areas:
     "updateHead"
     "updateContent";
-  /* "time"; */
   word-break: break-all;
 }
 .updateHead {
   grid-area: updateHead;
+  font-weight: bold;
   /* padding: 0 .5rem; */
 }
 .updateContent {
   grid-area: updateContent;
-  padding-top: 1.5rem;
+  /* padding-top: 1.5rem; */
   row-gap: 0.5rem;
   display: grid;
 }

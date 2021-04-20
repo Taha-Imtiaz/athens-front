@@ -3,7 +3,6 @@ import style from "./CustomerDetails.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCustomer } from "../../../Redux/Customer/customerActions";
-// import {  } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import parse from "html-react-parser";
@@ -641,17 +640,17 @@ const CustomerDetails = (props) => {
                             <div className={style.claimHead}>
                               <div className={`${style.protectionRow}`}>
                                 <div className={style.protectionRow___colOne}>
-                                  <div>
+                                  <span>
                                     <h6>{`Protection Type: `}</h6>
                                     {claim.claimType}
-                                  </div>
-                                  <div>
+                                  </span>
+                                  <span>
                                     <h6>{`Total: `}</h6>${claim.price}
-                                  </div>
-                                  <div>
+                                  </span>
+                                  <span>
                                     <h6>{`Title: `}</h6>
                                     {claim.title}
-                                  </div>
+                                  </span>
                                 </div>
 
                                 <div className={style.protectionRow___colTwo}>
@@ -752,15 +751,13 @@ const CustomerDetails = (props) => {
                         }}
                       >
                         <Fade in={toggleClaim}>
-                          <div className={"bg-light p-3"}>
-                            <h3>Confirmation</h3>
-                            <hr />
+                          <div className={"bg-light p-3 w-50"}>
+                            <h3>Confirmation</h3>                            
                             <h6>
                               {claim.status === "open"
                                 ? `Do you want to close this claim ?`
                                 : `Do you want to reopen this claim ?`}
-                            </h6>
-                            <hr />
+                            </h6>                            
                             <div className={style.flexEnd}>
                               <Button
                                 className={style.button}
@@ -855,6 +852,7 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue}
                 update={updateBlanket}
+                
               />
             ) : (
               <div className="text-center">
@@ -880,7 +878,7 @@ const CustomerDetails = (props) => {
       >
         <Fade in={show}>
           <div className={"bg-light p-3"}>
-            <h3>Add Update</h3><hr/>
+            <h3>Add Update</h3>
             <TextareaAutosize
               id=""
               cols="65"

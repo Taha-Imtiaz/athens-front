@@ -33,7 +33,7 @@
 .listContentItems{
   display: grid;
   grid-area:listContentItem ;
-  grid-template-columns:1fr repeat(5,15fr)  1fr;
+  grid-template-columns:1fr 30fr repeat(4, 17fr) 1fr;
   grid-template-areas: ". name id quantity deposit time .";
 }
 .listContentItems:hover{

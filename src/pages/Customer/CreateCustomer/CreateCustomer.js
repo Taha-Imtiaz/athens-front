@@ -145,7 +145,7 @@ class CreateCustomer extends Component {
         lastName,
         phone,
         email,
-        subContacts,
+        subContacts : subContacts.filter((x) => x.name !== "" && x.phone !== "" && x.email),
       };
       //Call addCustomer Api
       addCustomer(addCustomerObj, (res) => {

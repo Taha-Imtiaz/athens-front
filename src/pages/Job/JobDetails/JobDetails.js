@@ -70,10 +70,12 @@ const JobDetails = (props) => {
                 </h6>
                 <div className="card-text mb-2">
                   <FontAwesomeIcon icon={faMobile} />{" "}
-                  {job.customer.phone}</div>
-                <div className="card-text mb-2">
+                  {job.customer.phone}
+                </div>
+                <div className={`${style.customreCardEmail} card-text mb-2`}>
                   <FontAwesomeIcon icon={faEnvelope} />{" "}
-                  {job.customer.email}</div>
+                  {job.customer.email}
+                </div>
               </div>
             </div>
             <div>
@@ -150,7 +152,7 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.jobId}
                       clickable
-                      style={{color:"white" ,backgroundColor:"var(--color-blue)"}}
+                      style={{ color: "white", backgroundColor: "var(--color-blue)" }}
                     />
                   </div>
                   <div>
@@ -159,7 +161,7 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.status}
                       clickable
-                      style={{color:"white" ,backgroundColor:"var(--color-blue)"}}
+                      style={{ color: "white", backgroundColor: "var(--color-blue)" }}
                     />
                   </div>
                 </div>
@@ -267,16 +269,16 @@ const JobDetails = (props) => {
                         {list.value} {list.default ? '(Load Only / IA)' : null}
                       </div>
                       {list.propertyType ?
-                      (<div className="text-muted">
-                        {`Property Type: `}
-                        <Chip
-                          clickable
-                          color="primary"
-                          variant="outlined"
-                          size="small"
-                          label={list.propertyType}
-                        /></div>): null
-                      } 
+                        (<div className="text-muted">
+                          {`Property Type: `}
+                          <Chip
+                            clickable
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            label={list.propertyType}
+                          /></div>) : null
+                      }
                     </div>
                   ) : list.type === "dropoff" ? (
                     <div className={style.dropoff} key={i}>
@@ -284,25 +286,25 @@ const JobDetails = (props) => {
                       <span className={style.locationType}>{`Dropoff: `}</span>
                       <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
                       {list.propertyType ?
-                      (<div className="text-muted">
-                        {`Property Type: `}
-                        <Chip
-                          clickable
-                          color="primary"
-                          variant="outlined"
-                          size="small"
-                          label={list.propertyType}
-                        /></div>): null
-                      } 
-                      
-                    
+                        (<div className="text-muted">
+                          {`Property Type: `}
+                          <Chip
+                            clickable
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            label={list.propertyType}
+                          /></div>) : null
+                      }
+
+
                     </div>
                   ) : <div key={i} className={style.locations}>
-                    
-                    <div className="font-weight-bold ">{`Location: `}</div> {list.value}                   
+
+                    <div className="font-weight-bold ">{`Location: `}</div> {list.value}
                   </div>
                 )}
-                
+
               </div>
             )}
             {job.note.length !== 0 && (
@@ -310,8 +312,8 @@ const JobDetails = (props) => {
                 <div className={style.notes___title}>
                   <h5>Notes:</h5>
                 </div>
-                {job.note.map((x) => (
-                  <div className={style.notes___text}>{x.text}</div>
+                {job.note.map((x, i) => (
+                  <div key={i} className={style.notes___text}>{x.text}</div>
                 ))}
               </div>
             )}

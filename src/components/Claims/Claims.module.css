@@ -56,7 +56,7 @@
   grid-area: claimList;
   display: grid;
   color: black;
-  grid-template-columns: 20fr repeat(2,15fr) 30fr 20fr ;
+  grid-template-columns: 30fr repeat(2,15fr) 20fr 20fr ;
   padding: 0 0.5rem;
   /* column-gap: .5rem; */
 }

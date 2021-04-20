@@ -24,7 +24,7 @@ const JobConfirmationModal = ({
           timeout: 500,
         }}
       ><Fade in={show}>
-        <div className={`bg-white p-3`}>
+        <div className={`bg-white p-3 w-75`}>
           {/* <Modal.Header closeButton>
           <Modal.Title></Modal.Title>
         </Modal.Header> */}<h3>Booking Confirmation</h3>

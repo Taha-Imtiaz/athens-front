@@ -29,16 +29,6 @@ const Claims = (props) => {
 
   return (
     <div>
-      {/* <div className={style.claimListHeaderContainer}>
-        <div className={style.claimListHeader}>
-          <div>Customer</div>
-          <div>Job Id</div>
-          <div>Status</div>
-          <div> Waiting To</div>
-          <div>Last Update</div>
-          {user && user.role === "admin" && <div>Actions</div>}
-        </div>
-      </div> */}
       <div>
         {
           items.map((x, i) => {

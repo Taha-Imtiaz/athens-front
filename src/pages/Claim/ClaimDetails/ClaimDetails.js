@@ -6,7 +6,6 @@ import {
   Modal,
 } from "@material-ui/core";
 import { cloneDeep } from "lodash";
-// import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
@@ -56,7 +55,7 @@ const ClaimDetails = (props) => {
     let { claims } = props;
 
     claims.status = "closed";
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
     setToggleClaim(false);
   };
 
@@ -94,13 +93,13 @@ const ClaimDetails = (props) => {
     let { claims } = props;
     claims.waitTo = claimInput;
     setWaitTo(true);
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
   };
 
   const reopenClaim = () => {
     let { claims } = props;
     claims.status = "open";
-    updateClaim(claims, () => {});
+    updateClaim(claims, () => { });
     setToggleClaim(false);
   };
 
@@ -127,7 +126,7 @@ const ClaimDetails = (props) => {
                     <FontAwesomeIcon icon={faMobile} /> {claims.customer.phone}
                   </div>
 
-                  <div className="card-text mb-2">
+                  <div className={`${style.customerCardEmail} card-text mb-2`}>
                     <FontAwesomeIcon icon={faEnvelope} />{" "}
                     {claims.customer.email}
                   </div>
@@ -197,14 +196,27 @@ const ClaimDetails = (props) => {
             <div className={`card ${style.claimDetail} `}>
               <div className={`${style.protectionRow}`}>
                 <div>
-                  <h6>{`Protection Type: `}</h6> <span>{claims.claimType}</span>
+                  <h6 className="text-muted">{`Title: `}</h6> <span>{claims.title}</span>
                 </div>
                 <div>
-                  <h6>{`Total: `}</h6> <span>${claims.price}</span>
+                  <h6 className="text-muted">{`Protection Type: `}</h6>
+                  <Chip
+                  className="font-weight-bold"
+                    label={claims.claimType}
+                    clickable
+                    size="small"
+                  />
                 </div>
                 <div>
-                  <h6>{`Title: `}</h6> <span>{claims.title}</span>
+                  <h6 className="text-muted">{`Total: `}</h6>
+                  <Chip
+                  className="font-weight-bold"
+                    label={`$${claims.price}`}
+                    clickable
+                    size="small"
+                  />
                 </div>
+
               </div>
 
               <div className={style.description}>
@@ -247,7 +259,7 @@ const ClaimDetails = (props) => {
               {claims.updates.length > 0 ? (
                 <div className={style.updates}>
                   <div className={style.updateHead}>
-                    <h3>{`Updates`}</h3>
+                    <h6>{`Updates`}</h6>
                   </div>
                   <div className={`${style.updateContent}`}>
                     {claims.updates.map((x, i) => (
@@ -280,14 +292,13 @@ const ClaimDetails = (props) => {
             }}
           >
             <Fade in={toggleClaim}>
-              <div className={"bg-light p-3"}>
+              <div className={"bg-light p-3 w-50"}>
                 <h3>Confirmation</h3>
                 <h6>
                   {claims.status === "open"
                     ? `Do you want to close this claim ?`
                     : `Do you want to reopen this claim ?`}
                 </h6>
-                <hr/>
                 <div className={style.flexEnd}>
                   <Button
                     className={style.button}
@@ -328,22 +339,22 @@ const ClaimDetails = (props) => {
               <div className={"bg-light p-3"}>
                 <h3>Add update</h3>
                 <TextareaAutosize
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={update}
-                onChange={handleAddUpdate}
-                className={style.styleTextArea}
-              ></TextareaAutosize>
-              <div className={style.flexEnd}>
-                <Button className={style.button} onClick={handleClose}>
-                  Close
+                  id=""
+                  cols="65"
+                  rows="5"
+                  name="Note"
+                  value={update}
+                  onChange={handleAddUpdate}
+                  className={style.styleTextArea}
+                ></TextareaAutosize>
+                <div className={style.flexEnd}>
+                  <Button className={style.button} onClick={handleClose}>
+                    Close
                 </Button>
-                <Button className={style.button} onClick={updateClaimData}>
-                  Add
+                  <Button className={style.button} onClick={updateClaimData}>
+                    Add
                 </Button>
-              </div>
+                </div>
               </div>
             </Fade>
           </Modal>

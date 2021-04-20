@@ -4,7 +4,6 @@ import { Button, TextField, Modal } from "@material-ui/core";
 import { resetPassword, updateUser } from "../../Redux/User/userActions";
 import { useState } from "react";
 import { connect } from "react-redux";
-// import { Modal } from "react-bootstrap";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
@@ -269,62 +268,62 @@ const Account = (props) => {
       </div>
       }
       <Modal
-            open={showModal}
-            onClose={() => setShowModal(false)}
-            // scrollable
-            // centered
-            className={style.modal}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={showModal}>
-              <div className={"bg-light p-3"}>
-                <h3>Reset Password</h3>
-              <TextField
-            variant="outlined"
-            required
-            fullWidth
-            size="small"
-            type="password"
-            id="password"
-            label="Enter Password"
-            name="password"
-            value={editAccount.password}
-            onChange={handleFormInput}
-            error={editAccount.passwordError ? true : false}
-            className={style.styleFormFields}
-          />
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            size="small"
-            type="password"
-            id="confirmPassword"
-            label="Confirm Password"
-            name="confirmPassword"
-            value={editAccount.confirmPassword}
-            onChange={handleFormInput}
-            error={editAccount.confirmPasswordError ? true : false}
-            className={style.styleFormFields}
-          />
-           <div className={`${style.flexEnd}`}>
-            <Button className={style.button} onClick={handleModalInput}>
-              Confirm
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        // scrollable
+        // centered
+        className={style.modal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={showModal}>
+          <div className={"bg-light p-3 w-50"}>
+            <h3>Reset Password</h3>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              size="small"
+              type="password"
+              id="password"
+              label="Enter Password"
+              name="password"
+              value={editAccount.password}
+              onChange={handleFormInput}
+              error={editAccount.passwordError ? true : false}
+              className={style.styleFormFields}
+            />
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              size="small"
+              type="password"
+              id="confirmPassword"
+              label="Confirm Password"
+              name="confirmPassword"
+              value={editAccount.confirmPassword}
+              onChange={handleFormInput}
+              error={editAccount.confirmPasswordError ? true : false}
+              className={style.styleFormFields}
+            /><hr/>
+            <div className={`${style.flexEnd}`}>
+              <Button className={style.button} onClick={handleModalInput}>
+                Confirm
             </Button>
-            <Button
-              className={style.button}
-              onClick={() => setShowModal(false)}
-            >
-              Cancel
+              <Button
+                className={style.button}
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
             </Button>
+            </div>
           </div>
-	      </div>
-            </Fade>
-          </Modal>
+        </Fade>
+      </Modal>
 
       {/* <Modal
         show={showModal}

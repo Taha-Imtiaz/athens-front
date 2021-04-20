@@ -1,4 +1,3 @@
-// import { Modal } from "react-bootstrap";
 import React from "react";
 import style from "./DeleteConfirmation.module.css";
 import { Button, Modal } from "@material-ui/core";
@@ -19,14 +18,9 @@ const DeleteConfirmation = ({ show, handleClose, type, deleteItem }) => {
         }}
       >
         <Fade in={show}>
-          <div className={`bg-light p-3`}>
-            {/* <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header> */}
+          <div className={`bg-light p-3 w-50`}>
             <h3>Confirmation</h3>
-            {/* <Modal.Body>{`Are you sure you want to delete ${type}`}?</Modal.Body> */}
             <h6>{`Are you sure you want to delete ${type}`}?</h6>
-            <hr/>
             {/* <Modal.Footer> */}
             <div className={style.modalButtons}>
               <Button className={style.button} onClick={handleClose}>

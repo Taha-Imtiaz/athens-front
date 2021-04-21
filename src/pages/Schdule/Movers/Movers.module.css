@@ -63,5 +63,5 @@
   text-transform: none;
 }
 .approveBtn:hover .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }

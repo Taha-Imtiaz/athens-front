@@ -46,5 +46,5 @@
 
 }
 .flexEnd .button:hover {
-  background-color: #00ADEE;
+  background-color: var(--hover-color-blue);
 }

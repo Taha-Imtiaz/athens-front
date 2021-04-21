@@ -251,14 +251,15 @@ class CreateClaim extends Component {
                     }}
                   >
                     <Fade in={this.state.customerClaims}>
-                      <div className={"bg-light p-3 w-50"}>
-                        <h3 className="text-capitalize">{`${customerName} Claims`}</h3>
+                      <div className={`bg-light p-3 w-50`}>
+                        <h3 className="text-capitalize">{`${customerName} Claims`}</h3><hr/>
                         <div>
                           <div className={style.claimHeader}>
                           <div>Protection Type</div>
                           <div>Status</div>
                           <div>Last Update</div>
                         </div>
+                        <div className={style.modalContentContainer}>
                         {showClaimsDetails.map((claim, i) => (
                         <div className={style.claimContent} key={i}>
                           <div> {claim.claimType}</div>
@@ -267,8 +268,8 @@ class CreateClaim extends Component {
                             <TimeAgo date={claim.updatedAt} />
                           </div>
                         </div>
-                      ))}
-                      </div>
+                      ))}</div>
+                      </div><hr/>
                       <div className={style.modalBtn}>
                         <Button
                           className={style.modalButton}

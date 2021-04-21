@@ -31,6 +31,6 @@
 .sidebar .sidebarContent > a:hover {
   transition: .2s ease-in-out;
   color: white;
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
   text-decoration: none;
 }

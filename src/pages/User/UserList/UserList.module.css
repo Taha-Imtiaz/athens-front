@@ -27,7 +27,7 @@
   /* text-decoration: none; */
 }
 .btnStyle .btn:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .filter {
   cursor: pointer;

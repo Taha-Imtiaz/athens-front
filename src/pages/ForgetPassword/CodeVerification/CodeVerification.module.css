@@ -42,7 +42,7 @@
   width: 25vw;
 }
 .submitCodeBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .flex {
   display: flex;

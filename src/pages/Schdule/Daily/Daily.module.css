@@ -42,7 +42,7 @@
   font-family: var(--font-family-paragraph);
 }
 .moverAssigneeInfo .button:hover {
-  background-color: #0597cc;
+  background-color: var(--hover-color-blue);
 }
 .cardHeader {
   display: grid;

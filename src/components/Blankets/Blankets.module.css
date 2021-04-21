@@ -35,6 +35,7 @@
   grid-area:listContentItem ;
   grid-template-columns:1fr 30fr repeat(4, 17fr) 1fr;
   grid-template-areas: ". name id quantity deposit time .";
+  gap: .5rem;
 }
 .listContentItems:hover{
   color: black;

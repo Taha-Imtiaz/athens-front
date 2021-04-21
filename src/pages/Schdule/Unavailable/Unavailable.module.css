@@ -30,7 +30,7 @@
   text-transform: none;
 }
 .approveBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 
 .unavailableList {

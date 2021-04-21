@@ -31,7 +31,7 @@
   margin: 1rem 0rem;
 }
 .buttons .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .dateStyle {
   position: absolute;
@@ -82,5 +82,5 @@
   margin: 0 0.2rem;
 }
 .modalBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }

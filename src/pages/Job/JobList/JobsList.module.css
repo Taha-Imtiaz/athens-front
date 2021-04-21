@@ -105,6 +105,7 @@
   /* background-color: blue; */
   grid-template-columns: 30fr 20fr 15fr 15fr 10fr;
   grid-template-areas: "title date assignee services status";
+  gap: .5rem;
 }
 .title {
   grid-area: title;

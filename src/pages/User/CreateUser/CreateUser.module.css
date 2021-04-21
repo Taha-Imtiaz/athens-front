@@ -40,7 +40,7 @@
   text-transform: none;
 }
 .createBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 
 

@@ -276,7 +276,6 @@ const DailySchedule = (props) => {
             job.dates.some((date) => date.date === new Date(today).toDateString()) && job.status === "booked"
           );
         });
-console.log( "assign date: "+ moverAssignedDate)
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
         console.log(moverJobs)
         if (moverJobs) {

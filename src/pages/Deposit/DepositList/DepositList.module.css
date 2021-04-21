@@ -27,7 +27,7 @@
   font-family: var(--font-family-paragraph);
 }
 .btn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 /* .blanketContainer {
   padding-top: 1rem;

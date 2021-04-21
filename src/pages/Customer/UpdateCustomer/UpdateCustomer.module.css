@@ -30,7 +30,7 @@
   font-family: var(--font-family-paragraph);
 }
 .updateBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .alternateContactBtn {
   display: grid;
@@ -49,7 +49,7 @@
   text-transform: none;
 }
 .alternateContact .btn:hover {
-  background: #00adee;
+  background: var(--hover-color-blue);
 }
 .anotherContactBtn {
   display: grid;
@@ -68,7 +68,7 @@
   text-transform: none;
 }
 .anotherContact .btn:hover {
-  background: #00adee;
+  background: var(--hover-color-blue);
 }
 .updateBtn {
   display: grid;

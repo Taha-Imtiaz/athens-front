@@ -51,7 +51,7 @@
   width: 100%;
 }
 .addBtn .button:hover ,.modalBtn .button:hover{
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
 }
 .resetButtons {
     display: grid;
@@ -74,7 +74,7 @@
     width: 100%;
 }
 .resetButtons .formButton:hover {
-    background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 @media only screen and (max-width:1500px) {
 .styleAddBtn {

@@ -28,7 +28,7 @@
 
 /* Handle on hover */
 .modal ::-webkit-scrollbar-thumb:hover {
-  background: #00adee;
+  background: var(--hover-color-blue);
 }
 /* .modalBody{
   } */
@@ -70,5 +70,5 @@
   font-family: var(--font-family-paragraph);
 }
 .modalButtons .button:hover {
-  background: #00adee;
+  background: var(--hover-color-blue);
 }

@@ -28,7 +28,7 @@
 
 }
 .customerInfoHeader .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .customerInfoHeadings {
   display: grid;
@@ -184,7 +184,7 @@ text-transform: capitalize;
 
 }
 .newClaimBtn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .claimListHeaderContainer {
   display: grid;
@@ -455,7 +455,7 @@ grid-column: 2/-1;
    font-family: var(--font-family-paragraph);
 }
 .btn .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .flexEnd{
   display: flex;
@@ -470,7 +470,7 @@ grid-column: 2/-1;
   margin: 0 0.2rem;
 }
 .flexEnd .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 
 .modal {
@@ -502,7 +502,7 @@ grid-column: 2/-1;
 
 /* Handle on hover */
 .modal ::-webkit-scrollbar-thumb:hover {
-  background: #00adee;
+  background: var(--hover-color-blue);
 }
 .styleTextArea {
   width: 100% !important;

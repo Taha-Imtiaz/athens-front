@@ -190,7 +190,7 @@
   margin: 0 0.2rem;
 }
 .flexEnd .button:hover {
-  background-color: #00adee;
+  background-color: var(--hover-color-blue);
 }
 .styleTextArea {
   width: 100%;

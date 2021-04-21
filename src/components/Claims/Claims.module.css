@@ -58,7 +58,7 @@
   color: black;
   grid-template-columns: 30fr repeat(2,15fr) 20fr 20fr ;
   padding: 0 0.5rem;
-  /* column-gap: .5rem; */
+  gap: .5rem;
 }
 .center {
   display: flex;

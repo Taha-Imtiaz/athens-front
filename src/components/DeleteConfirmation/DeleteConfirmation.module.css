@@ -23,5 +23,5 @@
     margin: 0 0.1rem;
   }
   .modalButtons .button:hover {
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
   }

@@ -39,7 +39,7 @@
     text-transform: none;
   }
   .updateBtn .button:hover {
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
   }
   .flexEnd {
     display: flex;

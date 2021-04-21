@@ -63,10 +63,13 @@
 }
 .accountHolderName {
   grid-area: accountHolderName;
+  font-weight: bold;
+  text-transform: capitalize;
   /* background-color: aqua; */
 }
 .accountHolderRole {
   grid-area: accountHolderRole;
+  text-transform: uppercase;
 }
 .editButton {
   grid-area: editButton;
@@ -83,10 +86,10 @@
   font-family: var(--font-family-paragraph);
 }
 .editButton .button:hover {
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
 }
 .btn .button:hover {
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
 }
 .btn .button {
   width: 100%;
@@ -119,7 +122,7 @@
     margin: 0 0.2rem;
 }
 .flexEnd .button:hover {
-    background-color: #00adee;
+    background-color: var(--hover-color-blue);
 }
 /* @media only screen and (max-width:1500px) {
   .accountContainer {

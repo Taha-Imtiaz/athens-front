@@ -24,7 +24,7 @@
   .cards {
     grid-area: cards;
     display: grid;
-    grid-template-rows: 25vh minmax(15vh, min-content) min-content;
+    grid-template-rows: minmax(25vh, min-content) minmax(15vh, min-content) min-content;
     grid-template-areas:
       "customerCard"
       "jobCard"

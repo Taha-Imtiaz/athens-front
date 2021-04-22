@@ -192,7 +192,7 @@ const CalendarApp = (props) => {
         <div className={style.calenderContent}>
           <Calendar
             className={
-              user && user.role == "mover"
+              user && user.role === "mover"
                 ? style.styleCalenderMover
                 : style.styleCalenderAdmin
             }
@@ -217,7 +217,8 @@ const CalendarApp = (props) => {
         </div>
 
         <div className={style.sideContent}>
-          <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
+          <div className={style.sideContentHeader}>
+            <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
           <hr />
           <div className={style.jobInfo}>
             <h6>
@@ -241,7 +242,9 @@ const CalendarApp = (props) => {
               />
             </h6>
           </div>
-          {state.currentDayJobs.length ? (
+          </div>
+          <div className={style.sideContentDetails}>
+            {state.currentDayJobs.length ? (
             <div>
               {state.currentDayJobs.map((job, i) => (
                 <div key={i}>
@@ -317,6 +320,8 @@ const CalendarApp = (props) => {
               <img src="/images/no-data-found.png" alt="" width="100%" />
             </div>
           ) : null}
+          </div>
+          
         </div>
       </div>
     </div>

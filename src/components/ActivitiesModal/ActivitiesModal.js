@@ -1,32 +1,12 @@
 import React from "react";
 import style from "./ActivitiesModal.module.css";
-import { makeStyles } from "@material-ui/core/styles";
 import TimeAgo from "react-timeago";
 import { Button, Modal } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10px",
-  },
-  paper: {
-    backgroundColor: "white",
-    border: "none",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  buttonClass: {
-    textAlign: "end",
-  },
-}));
 
 const ActivitiesModal = ({ show, activities, handleClose }) => {
-  const classes = useStyles();
-
   return (
     <div>
       {/* Activities Modal */}

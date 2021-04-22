@@ -739,68 +739,7 @@ const DailySchedule = (props) => {
           </div>
         </Fade>
       </Modal>
-      {/* <Modal
-        show={modalShow}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        onHide={(e) => Navigate(e)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Confirmation
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {mover && (
-            <h5>
-              {mover.mover.name}{" "}
-              <span className={style.styleText}>
-                has been assigned to these jobs:
-              </span>{" "}
-            </h5>
-          )}
-
-          {moverAssignedJobs &&
-            moverAssignedJobs.map((job, i) => (
-              <div key={i} className={style.styleModalBody}>
-                <a
-                  className={style.styleLink}
-                  href="/#"
-                  onClick={() =>
-                    window.open(`/job/detail/${job._id}`, "_blank")
-                  }
-                >
-                  &#42;{job.title}
-                </a>
-                <Chip
-                  label={job.startTime ? formatAMPM(job.startTime) : "N/A"}
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                ></Chip>
-              </div>
-            ))}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={style.modalBtns}>
-            <Button
-              className={style.button}
-              onClick={(e) => updateJobAssigneeList(e, newAssignee)}
-            >
-              Confirm
-            </Button>
-            <Button
-              className={style.button}
-              onClick={(e) => {
-                Navigate(e);
-              }}
-            >
-              Close
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal> */}
+     
     </div>
   );
 };

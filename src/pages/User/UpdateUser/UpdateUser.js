@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { Switch } from "@material-ui/core";
 import { getUser, updateUser } from "../../../Redux/User/userActions";
 import style from "./UpdateUser.module.css";
+import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+
 
 const UpdateUser = (props) => {
   let {
@@ -69,6 +71,7 @@ const UpdateUser = (props) => {
     }
 
   };
+  
 
   //handler for switch
   const handleChange = () => {

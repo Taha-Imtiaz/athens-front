@@ -133,7 +133,7 @@ function App(props) {
 
 
             {/* Account */}
-            <PrivateRoute path="/account" component={Account} exact roles={adminRoles} />
+            <PrivateRoute path="/account" component={Account} exact roles={appRoles} />
 
             {/* Claim */}
             <PrivateRoute path="/claims" component={ClaimList} roles={adminRoles} />

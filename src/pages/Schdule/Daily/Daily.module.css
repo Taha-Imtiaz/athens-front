@@ -244,7 +244,7 @@ border-radius: .3rem;
   width: 20% !important;
 }
 .scrollBar::-webkit-scrollbar {
-  width: 8px !important;
+  width: 10px !important;
 }
 /* Track */
 .scrollBar::-webkit-scrollbar-track {

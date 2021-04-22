@@ -25,6 +25,42 @@
 .sideContent {
   grid-area: sideContent;
   /* background-color: red; */
+  display: grid; 
+   grid-template-rows: 17vh 63vh;
+  grid-template-areas: 
+  "heading"
+  "content";
+}
+.sideContentHeader{
+  grid-area: heading;
+  /* background-color: red; */
+  position: fixed;
+  /* z-index: 1000; */
+}
+.sideContentDetails{
+grid-area: content;
+overflow-y: scroll;
+/* background-color: maroon; */
+}
+.sideContent ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.sideContent ::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px red; */
+  border-radius: 10px;
+}
+
+/* Handle */
+.sideContent ::-webkit-scrollbar-thumb {
+  background: #00adee;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.sideContent ::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-color-blue);
 }
 .flexCenter {
   text-align: center;
@@ -80,17 +116,15 @@
 }
 
 .cardHeader {
-  background-color: #e9ecef;
+  background-color: #efe9e9;
   padding: 0.6rem;
-  gap: 1rem;
 }
 
 .card {
   border-left: 5px solid #00adee;
-  border-radius: 0.4rem;
-  margin-bottom: 1.5rem;
+  border-radius: 0.4rem;margin-bottom: 1rem;
+  
 }
-
 @media only screen and (max-width: 2300px) {
   .calenderContent {
     grid-area: calenderContent;

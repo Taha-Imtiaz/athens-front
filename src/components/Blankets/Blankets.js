@@ -1,5 +1,4 @@
 import { Button, Chip } from "@material-ui/core";
-// import { cloneDeep } from "lodash";
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import style from "./Blankets.module.css";
@@ -19,52 +18,6 @@ const Blankets = (props) => {
   useEffect(() => {
     setBlanketValue(props.items);
   }, [props.items]);
-
-  // const handleShow = (deposit) => {
-  //   setDepositValue(deposit);
-  //   setShow(true);
-  // };
-
-  // const closeEdit = (i, type) => {
-  //   let newData = cloneDeep(blanketValue);
-  //   newData[i].edit = !newData[i].edit;
-  //   setBlanketValue(newData);
-  //   if (type === "save") {
-  //     // Call Api
-  //     let obj = {
-  //       id: newData[i]._id,
-  //       userId: user._id,
-  //       quantity: newData[i].quantity,
-  //       cost: newData[i].cost,
-  //       page: props.page,
-  //     };
-  //     let { updateDeposit } = props;
-  //     updateDeposit(obj)
-  //   }
-  // };
-
-  // const makeInputFieldsEditible = (i) => {
-  //   let newData = cloneDeep(blanketValue);
-  //   newData.map((data) => (data.edit = true));
-  //   newData[i].edit = !newData[i].edit;
-  //   setBlanketValue(newData);
-  // };
-
-  // const handleInput = (e, i) => {
-  //   let newData = cloneDeep(blanketValue);
-  //   if (newData[i].edit === false) {
-  //     newData[i].quantity = e.target.value;
-  //     newData[i].cost = parseInt(e.target.value) * 15;
-  //     setBlanketValue(newData);
-  //   }
-  // };
-
-  // const changeCost = (e, i) => {
-  //   let { value } = e.target;
-  //   let newData = cloneDeep(blanketValue);
-  //   newData[i].cost = value;
-  //   setBlanketValue(newData);
-  // };
 
   // close activities modal
   const handleClose = () => {

@@ -440,16 +440,6 @@ const JobsList = (props) => {
 
       {docs && docs.length > 0 ? (
         <div>
-          {/* <div className={style.jobListHeaderContainer}>
-            <div className={style.jobListHeader}>
-              <div>Title</div>
-              <div>Date(s)</div>
-              <div>Assignee</div>
-              <div>Services</div>
-              <div>Status</div>
-              {user && user.role === "admin" && <div>Actions</div>}
-            </div>
-          </div> */}
           <div>
             {docs.map((job, i) => {
               return (

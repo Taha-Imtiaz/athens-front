@@ -36,7 +36,11 @@ const Navbar = (props) => {
           className={`navbar navbar-expand-md navbar-light ${style.elevation} ${style.fixedNavBar} sticky-top sticky-top`}
         >
           <Link className={`navbar-brand ${style.logo}`} to="/">
-            <img src="/images/movers-logo.jpg" className = {style.logoIcon} alt="Logo"></img>
+            <img
+              src="/images/movers-logo.jpg"
+              className={style.logoIcon}
+              alt="Logo"
+            ></img>
           </Link>
           <button
             className="navbar-toggler"
@@ -100,36 +104,41 @@ const Navbar = (props) => {
                     </li>
                   </React.Fragment>
                 ) : (
-                    <React.Fragment>
-                      <li className={getNavLinkClass("/mover")}>
-                        <Link className="nav-link" to="/mover">
-                          Jobs
-                      </Link>
-                      </li>
-                      <li className={getNavLinkClass("/mover/calendar")}>
-                        <Link className="nav-link" to="/mover/calendar">
-                          Calendar
-                      </Link>
-                      </li>
-                      <li className={style.logoutBtn}>
-                        <Button className={style.button} onClick={logOut}>
-                          Log Out
-                      </Button>
-                      </li>
-                    </React.Fragment>
-                  )}
-              </ul>
-            ) : (
-                <ul className="navbar-nav ml-auto">
                   <React.Fragment>
-                    <li className={getNavLinkClass("/")}>
-                      <Link className={`nav-link`} to="/">
-                        Sign In
-                    </Link>
+                    <li className={getNavLinkClass("/mover")}>
+                      <Link className="nav-link" to="/mover">
+                        Jobs
+                      </Link>
+                    </li>
+                    <li className={getNavLinkClass("/mover/calendar")}>
+                      <Link className="nav-link" to="/mover/calendar">
+                        Calendar
+                      </Link>
+                    </li>
+                    <li className={getNavLinkClass("/account")}>
+                      <Link className="nav-link" to="/account">
+                        Account
+                      </Link>
+                    </li>
+                    <li className={style.logoutBtn}>
+                      <Button className={style.button} onClick={logOut}>
+                        Log Out
+                      </Button>
                     </li>
                   </React.Fragment>
-                </ul>
-              )}
+                )}
+              </ul>
+            ) : (
+              <ul className="navbar-nav ml-auto">
+                <React.Fragment>
+                  <li className={getNavLinkClass("/")}>
+                    <Link className={`nav-link`} to="/">
+                      Sign In
+                    </Link>
+                  </li>
+                </React.Fragment>
+              </ul>
+            )}
           </div>
         </nav>
       )}

@@ -55,22 +55,24 @@ a {
   color: #00adee;
 }
 
-
-
 .page-item.active .page-link {
   background-color: #00adee !important;
 }
 /* for border of holiday calender */
 .DayPicker-Day {
-  border: 1px solid;
+  border: 1px solid black;
+  width: 4rem;
+  height: 4rem;
+  font-weight: 200;
 }
+
 /* styling calender event */
 .rbc-event {
   border: none !important;
   box-sizing: border-box !important;
   box-shadow: none !important;
   margin: 0 !important;
-  padding: 0  !important;
+  padding: 0 !important;
   background-color: #00adee !important;
   border-radius: 5px !important;
   color: #fff !important;
@@ -115,17 +117,17 @@ a {
 :root {
   --font-family-header: "Roboto", sans-serif;
   --font-family-paragraph: "Open Sans", sans-serif;
-  --transition-one: all .3s ease-in-out;
-  --color-red:#F44336;
-  --color-blue:#00adee;
+  --transition-one: all 0.3s ease-in-out;
+  --color-red: #f44336;
+  --color-blue: #00adee;
   --hover-color-blue: #0597cc;
 }
-@media only screen and (max-width:1000px) {
+@media only screen and (max-width: 1000px) {
   html {
     font-size: 90%;
   }
 }
-@media only screen and (max-width:800px) {
+@media only screen and (max-width: 800px) {
   html {
     font-size: 80%;
   }
@@ -136,5 +138,4 @@ a {
 .DatePicker_button {
   color: red !important;
   background-color: red !important;
-
 }

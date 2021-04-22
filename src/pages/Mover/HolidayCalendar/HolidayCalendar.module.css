@@ -19,6 +19,7 @@
 }
 .calender {
   grid-area: calender;
+  /* background-color: skyblue; */
 }
 .buttons .button {
   grid-area: button;
@@ -26,8 +27,6 @@
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
-
-
   margin: 1rem 0rem;
 }
 .buttons .button:hover {

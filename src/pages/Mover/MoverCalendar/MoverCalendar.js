@@ -23,7 +23,6 @@ const MoverCalendar = () => {
         </div>
       </div>
       <div className={style.calenderContent}>
-
         <CalendarApp />
       </div>
     </div>

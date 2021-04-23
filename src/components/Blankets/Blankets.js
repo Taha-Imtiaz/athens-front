@@ -6,7 +6,7 @@ import TimeAgo from "react-timeago";
 import { connect } from "react-redux";
 import { updateDeposit } from "../../Redux/Deposit/DepositActions";
 import ActivitiesModal from "../ActivitiesModal/ActivitiesModal";
-import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
+import Confirmation from "../Confirmation/Confirmation";
 
 const Blankets = (props) => {
   let [blanketValue, setBlanketValue] = useState(props.items);
@@ -104,11 +104,11 @@ const Blankets = (props) => {
         handleClose={handleClose}
       />
       {pathname === "/deposits" && (
-        <DeleteConfirmation
+        <Confirmation
           show={props.deleteModal}
           handleClose={props.closeDeleteModal}
-          type="deposit"
-          deleteItem={props.deleteDeposit}
+          type="delete deposit"
+          action={props.deleteDeposit}
         />
       )}
     </div>

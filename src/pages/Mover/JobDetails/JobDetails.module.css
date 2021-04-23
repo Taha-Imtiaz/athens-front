@@ -110,7 +110,7 @@
 }
 .jobDescription___title, .notes___title {
   font-size: larger;
-  padding: .5rem;
+  /* padding: .5rem; */
 }
 .jobDescription___text, .notes___text{
   background: #fff;
@@ -118,9 +118,9 @@
   padding: 0.8rem 0.5rem;
 }
 .notes {
-  /* margin: 1rem 0; */
-  display: grid;
-  grid-template-rows: repeat(2, min-content);
+  margin-bottom: 1rem;
+  /* display: grid;
+  grid-template-rows: repeat(2, min-content); */
 }
 
 .link {
@@ -147,15 +147,19 @@ border: none;
   font-weight: bold;
 }
 .payBtns {
-  /* margin: 1rem 0; */
-  display: grid;
-  background-color: white;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
   border-radius: 1rem;
   padding: 1rem;
-  text-align: center;
+  background-color: white;
+  /* margin: 1rem 0; */
+  /* display: grid;  
+  text-align: center; */
   /* column-gap: 1rem; */
   /* grid-template-columns: 5fr repeat(2, 90fr) 5fr; */
-  grid-template-areas: ". payOnlineBtn payCashBtn .";
+  /* grid-template-areas: ". payOnlineBtn payCashBtn ."; */
 }
 .payOnlineBtn {
   grid-area: payOnlineBtn;  

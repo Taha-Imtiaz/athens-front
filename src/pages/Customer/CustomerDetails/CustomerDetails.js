@@ -641,15 +641,26 @@ const CustomerDetails = (props) => {
                               <div className={`${style.protectionRow}`}>
                                 <div className={style.protectionRow___colOne}>
                                   <span>
-                                    <h6>{`Protection Type: `}</h6>
-                                    {claim.claimType}
-                                  </span>
-                                  <span>
-                                    <h6>{`Total: `}</h6>${claim.price}
-                                  </span>
-                                  <span>
                                     <h6>{`Title: `}</h6>
                                     {claim.title}
+                                  </span>
+                                  <span>
+                                    <h6 className="text-muted">{`Price: `}</h6>
+                                    <Chip
+                                      className="font-weight-bold"
+                                      label={claim.price}
+                                      clickable
+                                      size="small"
+                                    />                                    
+                                  </span>
+                                  <span>
+                                    <h6 className="text-muted">{`Protection Type: `}</h6>
+                                    <Chip
+                                      className="font-weight-bold"
+                                      label={claim.claimType}
+                                      clickable
+                                      size="small"
+                                    />
                                   </span>
                                 </div>
 
@@ -752,12 +763,12 @@ const CustomerDetails = (props) => {
                       >
                         <Fade in={toggleClaim}>
                           <div className={"bg-light p-3 w-50"}>
-                            <h3>Confirmation</h3>                            
+                            <h3>Confirmation</h3>
                             <h6>
                               {claim.status === "open"
                                 ? `Do you want to close this claim ?`
                                 : `Do you want to reopen this claim ?`}
-                            </h6>                            
+                            </h6>
                             <div className={style.flexEnd}>
                               <Button
                                 className={style.button}
@@ -852,7 +863,6 @@ const CustomerDetails = (props) => {
                 lastName={customer.lastName}
                 items={blanketValue}
                 update={updateBlanket}
-                
               />
             ) : (
               <div className="text-center">

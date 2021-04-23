@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import TimeAgo from "react-timeago";
 import { Button } from "@material-ui/core";
 import style from "./Claims.module.css";
-import DeleteConfirmation from "../../components/DeleteConfirmation/DeleteConfirmation";
+import Confirmation from "../Confirmation/Confirmation";
 import { deleteClaim } from "../../Redux/Claim/claimActions";
 import { connect } from "react-redux";
 
@@ -95,11 +95,11 @@ const Claims = (props) => {
             );
           })}
       </div>
-      <DeleteConfirmation
+      <Confirmation
         show={show}
         handleClose={handleClose}
-        type="claim"
-        deleteItem={deleteClaim}
+        type="delete claim"
+        action={deleteClaim}
       />
     </div>
   )

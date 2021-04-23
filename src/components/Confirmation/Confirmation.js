@@ -1,10 +1,10 @@
 import React from "react";
-import style from "./DeleteConfirmation.module.css";
+import style from "./Confirmation.module.css";
 import { Button, Modal } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
-const DeleteConfirmation = ({ show, handleClose, type, deleteItem }) => {
+const Confirmation = ({ show, handleClose, type, action }) => {
   return (
     <div>
       <Modal
@@ -20,17 +20,15 @@ const DeleteConfirmation = ({ show, handleClose, type, deleteItem }) => {
         <Fade in={show}>
           <div className={`bg-light p-3 w-50`}>
             <h3>Confirmation</h3>
-            <h6>{`Are you sure you want to delete ${type}`}?</h6>
-            {/* <Modal.Footer> */}
+            <h6>{`Are you sure you want to ${type}`}?</h6>
             <div className={style.modalButtons}>
               <Button className={style.button} onClick={handleClose}>
                 Cancel
               </Button>
-              <Button className={style.button} onClick={() => deleteItem()}>
+              <Button className={style.button} onClick={() => action()}>
                 Confirm
               </Button>
             </div>
-            {/* </Modal.Footer> */}
           </div>
         </Fade>
       </Modal>
@@ -38,4 +36,4 @@ const DeleteConfirmation = ({ show, handleClose, type, deleteItem }) => {
   );
 };
 
-export default DeleteConfirmation;
+export default Confirmation;

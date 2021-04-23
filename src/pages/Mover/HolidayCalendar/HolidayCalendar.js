@@ -11,23 +11,6 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { showMessage } from "../../../Redux/Common/commonActions";
 
-// function renderDay(day) {
-//   const date = day.getDate();
-
-//   return (
-//     <div className={style.cellStyle}>
-//       <div className={style.dateStyle}>{date}</div>
-//       <div className={style.birthdayStyle}>
-//         <input
-//           type="checkbox"
-//           className="form-check-input"
-//           id="exampleCheck1"
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
 function RequestHolidays(props) {
   const [show, setShow] = useState(false);
   const [note, setNote] = useState("");
@@ -49,17 +32,6 @@ function RequestHolidays(props) {
     setNote("");
   };
 
-  // const handleDayClick = (e) => {
-  //   let newDates = cloneDeep(dates);
-  //   let index = newDates.findIndex((x) => x === e.toString());
-  //   if (index !== -1) {
-  //     newDates.splice(index, 1);
-  //     setDates(newDates);
-  //   } else {
-  //     setDates([...newDates, e.toString()]);
-  //   }
-  // };
-
   const handleDayClick = (day, { selected }) => {
     const selectedDates = cloneDeep(dates);
     if (selected) {
@@ -76,6 +48,7 @@ function RequestHolidays(props) {
   const addNote = () => {
     const stringDates = dates.map((x) => new Date(x).toString());
     let { holidayCalendar } = props;
+    console.log(holidayCalendar)
     if (stringDates.length > 0 && note.length > 0) {
       let obj = {
         dates: stringDates,
@@ -134,7 +107,7 @@ function RequestHolidays(props) {
                 name="note"
                 value={note}
                 className={
-                  emptyReasonError !== "" ? style.redBorder : style.blackBorder
+                  emptyReasonError !== "" ? `${style.redBorder}` : `${style.blackBorder}`
                 }
                 onChange={handleAddNote}
               ></TextareaAutosize>
@@ -161,7 +134,6 @@ function RequestHolidays(props) {
 var actions = {
   holidayCalendar,
   showMessage,
-
 };
 
 export default connect(null, actions)(RequestHolidays);

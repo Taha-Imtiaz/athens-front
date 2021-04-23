@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 import { Switch } from "@material-ui/core";
 import { getUser, updateUser } from "../../../Redux/User/userActions";
 import style from "./UpdateUser.module.css";
-import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
-
+import Confirmation from "../../../components/Confirmation/Confirmation";
 
 const UpdateUser = (props) => {
   let {
@@ -21,17 +20,29 @@ const UpdateUser = (props) => {
     email: "",
     phone: "",
     address: "",
-    activeStatus: false
+    activeStatus: false,
   });
+  let [showConfirmationModal, setShowConfirmationModal] = useState(false);
   let [disabledFields, setDisabledFields] = useState(true);
 
-  useEffect(() => {
+  //open confirmation modal
+  const openConfirmationModal = (i) => {
+    setShowConfirmationModal({
+      ...showConfirmationModal,
+      modalIndex: i,
+      showConfirmationModal: true,
+    });
+  };
 
+  //close confirmation modal
+  const closeConfirmationModal = () => {
+    setShowConfirmationModal(false);
+  };
+
+  useEffect(() => {
     getUser(userId, (res) => {
       setUserState(res.data.data);
-
-
-    })
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -69,16 +80,18 @@ const UpdateUser = (props) => {
     } else {
       setUserState({ ...userState, [name]: value });
     }
-
   };
-  
 
   //handler for switch
   const handleChange = () => {
-
-    setUserState({ ...userState, activeStatus: !userState.activeStatus })
-
+    let userData = { ...userState, activeStatus: !userState.activeStatus };
+    updateUser(userData, userId, "admin", () => {
+      setShowConfirmationModal(false);
+      setDisabledFields(true);
+      setUserState({ ...userState, activeStatus: !userState.activeStatus });
+    });
   };
+
   const updateUserData = () => {
     let userData = {
       name: userState.name,
@@ -87,7 +100,7 @@ const UpdateUser = (props) => {
       address: userState.address,
       activeStatus: userState.activeStatus,
     };
-    updateUser(userData, userId, 'admin', () => setDisabledFields(true));
+    updateUser(userData, userId, "admin", () => setDisabledFields(true));
   };
   return (
     <div className={style.userContainer}>
@@ -162,13 +175,14 @@ const UpdateUser = (props) => {
                   control={
                     <Switch
                       checked={userState.activeStatus}
-                      onChange={handleChange}
+                      // onChange={handleChange}
+                      onChange={openConfirmationModal}
                       color="primary"
                       name="activeStatus"
                       inputProps={{ "aria-label": "primary checkbox" }}
                     />
                   }
-                  label={userState.activeStatus ? 'Active' : 'In Active'}
+                  label={userState.activeStatus ? "Active" : "In Active"}
                 />
               </div>
               <div className={`${style.styleFormFields} ${style.updateBtn}`}>
@@ -180,22 +194,32 @@ const UpdateUser = (props) => {
                     Edit
                   </Button>
                 ) : (
-                    <Button className={style.button} onClick={updateUserData}>
-                      Update
-                    </Button>
-                  )}
+                  <Button className={style.button} onClick={updateUserData}>
+                    Update
+                  </Button>
+                )}
               </div>
             </form>
           </div>
         )}
       </div>
+      {/* Modal for Confirmation job */}
+
+      <Confirmation
+        show={showConfirmationModal}
+        handleClose={closeConfirmationModal}
+        type={
+          userState.activeStatus ? "deactivate this user" : "activate this user"
+        }
+        action={handleChange}
+      />
     </div>
   );
 };
 
 var actions = {
   updateUser,
-  getUser
+  getUser,
 };
 
 export default connect(null, actions)(UpdateUser);

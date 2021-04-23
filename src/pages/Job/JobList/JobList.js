@@ -10,7 +10,7 @@ import Popover from "@material-ui/core/Popover";
 import { Button, Chip, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
-import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+import Confirmation from "../../../components/Confirmation/Confirmation";
 
 //use material-ui default styles of popover
 const styles = (theme) => ({
@@ -681,11 +681,11 @@ const JobsList = (props) => {
     )}
       {/* Modal for delete job */}
 
-      <DeleteConfirmation
+      <Confirmation
         show={showDeleteModal}
         handleClose={closeDeleteModal}
-        type="job"
-        deleteItem={removeJob}
+        type="delete job"
+        action={removeJob}
       />
     </div>
   );

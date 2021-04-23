@@ -12,7 +12,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 
 import Button from "@material-ui/core/Button";
 import { Chip, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import DeleteConfirmation from "../../../components/DeleteConfirmation/DeleteConfirmation";
+import Confirmation from "../../../components/Confirmation/Confirmation";
 
 const CustomerList = (props) => {
   //defining variables
@@ -275,21 +275,7 @@ const CustomerList = (props) => {
         </div>
         {docs && docs.length > 0 ? (
           <div>
-            <div className={` ${style.jumbotron}`}>
-              {/* <div className={style.listheader}>
-                <div>Name</div>
-                <div>Phone</div>
-
-                <div>Email</div>
-
-                <div>Jobs</div>
-                <div>Claims</div>
-
-                {props.user && props.user.role === "admin" && (
-                  <div>Actions</div>
-                )}
-              </div> */}
-            </div>
+            <div className={` ${style.jumbotron}`}></div>
             <div>
               <div>
                 {docs.map((doc, i) => {
@@ -305,56 +291,69 @@ const CustomerList = (props) => {
                             <div
                               className={`${style.name} ${style.item} ${style.flex}`}
                             >
-                              <div className={`text-muted ${style.heading}`}>{`Name:`}</div>
-                              <div className={`text-capitalize ${style.headingSub}`}>{doc.firstName} {doc.lastName}</div>
+                              <div
+                                className={`text-muted ${style.heading}`}
+                              >{`Name:`}</div>
+                              <div
+                                className={`text-capitalize ${style.headingSub}`}
+                              >
+                                {doc.firstName} {doc.lastName}
+                              </div>
                             </div>
 
                             <div
                               className={`${style.phone} ${style.item} ${style.flex}`}
                             >
-                              <div className={`text-muted ${style.heading}`}>{`Phone:`}</div>
-                              <div className={`${style.headingSub}`}>{doc.phone}</div>
-
-
+                              <div
+                                className={`text-muted ${style.heading}`}
+                              >{`Phone:`}</div>
+                              <div className={`${style.headingSub}`}>
+                                {doc.phone}
+                              </div>
                             </div>
                             <div
                               className={`${style.email} ${style.item} ${style.flex}`}
                             >
-                              <div className={`text-muted ${style.heading}`}>{`E-mail:`}</div>
-                              <div className={`${style.headingSub}`}>{doc.email}</div>
-
+                              <div
+                                className={`text-muted ${style.heading}`}
+                              >{`E-mail:`}</div>
+                              <div className={`${style.headingSub}`}>
+                                {doc.email}
+                              </div>
                             </div>
                             <div
                               className={`${style.jobs} ${style.item} ${style.flex}`}
                             >
-                              <div className={`text-muted ${style.heading}`}>{`Jobs:`}</div>
+                              <div
+                                className={`text-muted ${style.heading}`}
+                              >{`Jobs:`}</div>
                               <div className={`${style.headingSub}`}>
-                                <Chip
-                                  label={doc.jobs.length}
-                                />
-
+                                <Chip label={doc.jobs.length} />
                               </div>
-
                             </div>
                             <div
                               className={`${style.activeClaims} ${style.item} ${style.flex}`}
                             >
-                              <div className={`text-muted ${style.heading}`}>{`Claims:`}</div>
+                              <div
+                                className={`text-muted ${style.heading}`}
+                              >{`Claims:`}</div>
                               <div className={style.headingSub}>
                                 <Chip
-                                  label={doc.claim.length > 0 ? (
-                                    <div>
-                                      {
-                                        doc.claim.filter(
-                                          (claim) => claim.status === "open"
-                                        ).length
-                                      }
-                                    </div>
-                                  ) : (
-                                    0
-                                  )}
-                                /></div>
-
+                                  label={
+                                    doc.claim.length > 0 ? (
+                                      <div>
+                                        {
+                                          doc.claim.filter(
+                                            (claim) => claim.status === "open"
+                                          ).length
+                                        }
+                                      </div>
+                                    ) : (
+                                      0
+                                    )
+                                  }
+                                />
+                              </div>
                             </div>
                           </div>
                         </Link>
@@ -386,17 +385,18 @@ const CustomerList = (props) => {
               </div>
             </div>
           </div>
-        ) : (docs && docs.length === 0 ? <div className="text-center">
-          <img src="/images/no-data-found.png" alt="No data found" />
-        </div> : null
-        )}
+        ) : docs && docs.length === 0 ? (
+          <div className="text-center">
+            <img src="/images/no-data-found.png" alt="No data found" />
+          </div>
+        ) : null}
       </div>
 
-      <DeleteConfirmation
+      <Confirmation
         show={show}
         handleClose={handleClose}
-        type="customer"
-        deleteItem={removeCustomer}
+        type="delete customer"
+        action={removeCustomer}
       />
     </div>
   );

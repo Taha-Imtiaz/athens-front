@@ -2,11 +2,21 @@ import React, { useEffect } from "react";
 import style from "./JobDetails.module.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getMoverJobDetail, updateJob } from "../../../Redux/Mover/moverActions";
+import {
+  getMoverJobDetail,
+  updateJob,
+} from "../../../Redux/Mover/moverActions";
 import { connect } from "react-redux";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
-import {  faEnvelope,  faMapMarker, faMapMarkerAlt, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faMapMarker,
+  faMapMarkerAlt,
+  faMobile,
+  faUser,
+  faUserShield,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MoverJobDetails = (props) => {
@@ -23,7 +33,7 @@ const MoverJobDetails = (props) => {
 
   const paidInCash = () => {
     let { history, updateJob } = props;
-    updateJob(job._id, { status: "Paid Cash" }, () => history.push("/mover"))
+    updateJob(job._id, { status: "Paid Cash" }, () => history.push("/mover"));
   };
   let { job } = props;
   return (
@@ -36,16 +46,14 @@ const MoverJobDetails = (props) => {
                 <div className="card-body">
                   <h5 className="card-title font-weight-bold">Customer</h5>
                   <h6 className="card-subtitle mb-2 text-capitalize">
-                    <FontAwesomeIcon icon={faUser} />{" "}
-                    {job.customer.firstName} {job.customer.lastName}
+                    <FontAwesomeIcon icon={faUser} /> {job.customer.firstName}{" "}
+                    {job.customer.lastName}
                   </h6>
                   <div className="card-text mb-2">
-                    <FontAwesomeIcon icon={faMobile} />{" "}
-                    {job.customer.phone}
+                    <FontAwesomeIcon icon={faMobile} /> {job.customer.phone}
                   </div>
                   <div className="card-text">
-                    <FontAwesomeIcon icon={faEnvelope} />{" "}
-                    {job.customer.email}
+                    <FontAwesomeIcon icon={faEnvelope} /> {job.customer.email}
                   </div>
                 </div>
               </div>
@@ -55,7 +63,9 @@ const MoverJobDetails = (props) => {
                   <h5 className="card-title font-weight-bold">Assignees</h5>
                   {job.assignee.map((assignee, i) => (
                     <div className={style.assigneehead} key={i}>
-                      <li><FontAwesomeIcon icon={faUserShield} />{" "}{assignee.name}</li>
+                      <li>
+                        <FontAwesomeIcon icon={faUserShield} /> {assignee.name}
+                      </li>
                     </div>
                   ))}
                 </div>
@@ -70,7 +80,7 @@ const MoverJobDetails = (props) => {
                         onClick={paidInCash}
                       >
                         Pay in Cash
-                    </Button>
+                      </Button>
                     </div>
                     <div className={style.payCashBtn}>
                       <Link
@@ -83,7 +93,7 @@ const MoverJobDetails = (props) => {
                         {" "}
                         <Button className={style.buttons} type="button">
                           Pay Online
-                      </Button>
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -111,7 +121,10 @@ const MoverJobDetails = (props) => {
                         size="small"
                         label={job.jobId}
                         clickable
-                        color="primary"
+                        style={{
+                          color: "white",
+                          backgroundColor: "var(--color-blue)",
+                        }}
                       />
                     </div>
                     <div>
@@ -120,7 +133,10 @@ const MoverJobDetails = (props) => {
                         size="small"
                         label={job.status}
                         clickable
-                        color="primary"
+                        style={{
+                          color: "white",
+                          backgroundColor: "var(--color-blue)",
+                        }}
                       />
                     </div>
                   </div>
@@ -129,7 +145,9 @@ const MoverJobDetails = (props) => {
 
               <div className={style.service}>
                 <div>
-                  <div><h5>Job Type:</h5></div>
+                  <div>
+                    <h5>Job Type:</h5>
+                  </div>
                   <Chip
                     clickable
                     size="small"
@@ -139,7 +157,9 @@ const MoverJobDetails = (props) => {
                   />
                 </div>
                 <div>
-                  <div><h5>Services:</h5></div>
+                  <div>
+                    <h5>Services:</h5>
+                  </div>
                   {job.services.map((service, i) => (
                     <Chip
                       key={i}
@@ -162,16 +182,6 @@ const MoverJobDetails = (props) => {
                 </div>
               </div>
 
-              {job.note.length !== 0 && (
-                <div className={style.notes}>
-                  <div className={style.notes___title}>
-                    <h5>Notes:</h5>
-                  </div>
-                  {job.note.map((x, i) => (
-                    <div className={style.notes___text} key={i}>{x.text}</div>
-                  ))}
-                </div>
-              )}
 
               {job.locations && (
                 <div className={style.locations}>
@@ -181,12 +191,7 @@ const MoverJobDetails = (props) => {
                         <FontAwesomeIcon icon={faMapMarker} />{" "}
                         <span className={style.locationType}>{`Pickup`} </span>{" "}
                         <div className={style.location}>{list.value}</div>
-                      </div>
-                    ) : (
-                      <div key={i}>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                        <span className={style.locationType}>{`Dropoff`}</span>
-                        <div className={style.location}>{list.value}</div>
+                        {list.propertyType ? (
                         <div className="text-muted">
                           {`Property Type: `}
                           <Chip
@@ -195,40 +200,49 @@ const MoverJobDetails = (props) => {
                             variant="outlined"
                             size="small"
                             label={list.propertyType}
-                          /></div>
+                          />
+                        </div>
+                      ) : null}
                       </div>
-                    )
+                    ) : list.type === "dropoff" ? (
+                      <div key={i}>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                        <span className={style.locationType}>{`Dropoff`}</span>
+                        <div className={style.location}>{list.value}</div>
+                        {list.propertyType ? (
+                        <div className="text-muted">
+                          {`Property Type: `}
+                          <Chip
+                            clickable
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            label={list.propertyType}
+                          />
+                        </div>
+                      ) : null}
+                      </div>
+                    ) : <div key={i} className={style.location}>
+                    <div className="font-weight-bold ">{`Location: `}</div>{" "}
+                    {list.value}
+                  </div>
                   )}
                 </div>
               )}
 
-              {/* {job.status === "booked" || job.status === "completed" ? (
-                <div className={style.payBtns}>
-                  <div className={style.payOnlineBtn}>
-                    <Button
-                      className={style.buttons}
-                      type="button"
-                      onClick={paidInCash}
-                    >
-                      Pay in Cash
-                    </Button>
+              {job.note.length !== 0 && (
+                <div className={style.notes}>
+                  <div className={style.notes___title}>
+                    <h5>Notes:</h5>
                   </div>
-                  <div className={style.payCashBtn}>
-                    <Link
-                      className={style.link}
-                      to={{
-                        pathname: "/mover/payment",
-                        jobId: job._id,
-                      }}
-                    >
-                      {" "}
-                      <Button className={style.buttons} type="button">
-                        Pay Online
-                      </Button>
-                    </Link>
-                  </div>
+                  {job.note.map((x, i) => (
+                    <div className={style.notes___text} key={i}>
+                      {x.text}
+                    </div>
+                  ))}
                 </div>
-              ) : null} */}
+              )}
+
             </div>
           </div>
         </>
@@ -239,10 +253,10 @@ const MoverJobDetails = (props) => {
 
 var actions = {
   getMoverJobDetail,
-  updateJob
+  updateJob,
 };
 var mapStateToProps = (state) => ({
-  job: state.moverJobs.job
+  job: state.moverJobs.job,
 });
 
 export default connect(mapStateToProps, actions)(MoverJobDetails);

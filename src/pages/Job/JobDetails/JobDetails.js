@@ -10,7 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faMapMarker, faMapMarkerAlt, faMobile, faUser, faUserShield } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faMapMarker,
+  faMapMarkerAlt,
+  faMobile,
+  faUser,
+  faUserShield,
+} from "@fortawesome/free-solid-svg-icons";
 import ActivitiesModal from "../../../components/ActivitiesModal/ActivitiesModal";
 import JobConfirmationModal from "../../../components/JobConfirmationModal/JobConfirmationModal";
 import { Fragment } from "react";
@@ -46,8 +53,8 @@ const JobDetails = (props) => {
   };
   // close jobConfirmation modal
   const closeJobConfirmationModal = () => {
-    setShowBooking(false)
-  }
+    setShowBooking(false);
+  };
   // let truckArr = job.trucks.map((x,i)=>{
   // })
   return (
@@ -64,17 +71,15 @@ const JobDetails = (props) => {
                     className={style.link}
                     to={`/customer/detail/${job.customer._id}`}
                   >
-                    <FontAwesomeIcon icon={faUser} />{" "}
-                    {job.customer.firstName} {job.customer.lastName}
+                    <FontAwesomeIcon icon={faUser} /> {job.customer.firstName}{" "}
+                    {job.customer.lastName}
                   </Link>
                 </h6>
                 <div className="card-text mb-2">
-                  <FontAwesomeIcon icon={faMobile} />{" "}
-                  {job.customer.phone}
+                  <FontAwesomeIcon icon={faMobile} /> {job.customer.phone}
                 </div>
                 <div className={`${style.customreCardEmail} card-text mb-2`}>
-                  <FontAwesomeIcon icon={faEnvelope} />{" "}
-                  {job.customer.email}
+                  <FontAwesomeIcon icon={faEnvelope} /> {job.customer.email}
                 </div>
               </div>
             </div>
@@ -87,13 +92,14 @@ const JobDetails = (props) => {
                     {job.assignee.length > 0 ? (
                       job.assignee.map((assignee, i) => (
                         <div key={i} className={style.assigneehead}>
-
-                          <li><FontAwesomeIcon icon={faUserShield} />{" "}{assignee.name}</li>
+                          <li>
+                            <FontAwesomeIcon icon={faUserShield} />{" "}
+                            {assignee.name}
+                          </li>
                         </div>
                       ))
                     ) : (
-                      <div>
-                        {`Not Assigned`}</div>
+                      <div>{`Not Assigned`}</div>
                     )}
                   </div>
                 </div>
@@ -113,24 +119,22 @@ const JobDetails = (props) => {
               <Link to={`/job/update/${jobId}`}>
                 <Button className={`${style.button}`} type="button">
                   Edit
-                  </Button>
+                </Button>
               </Link>
-
 
               {job.status !== "booked" ? (
                 <div className={style.jobBookBtn}>
                   <Button
                     className={style.button}
                     onClick={() => setShowBooking(true)}
-                    type="button">
+                    type="button"
+                  >
                     Book
                   </Button>
                 </div>
               ) : null}
             </div>
-
           </div>{" "}
-
           {/* jobDetails section */}
           <div className={` card ${style.jobDetail}`}>
             <div className={style.jobHeader}>
@@ -152,7 +156,10 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.jobId}
                       clickable
-                      style={{ color: "white", backgroundColor: "var(--color-blue)" }}
+                      style={{
+                        color: "white",
+                        backgroundColor: "var(--color-blue)",
+                      }}
                     />
                   </div>
                   <div>
@@ -161,7 +168,10 @@ const JobDetails = (props) => {
                       size="small"
                       label={job.status}
                       clickable
-                      style={{ color: "white", backgroundColor: "var(--color-blue)" }}
+                      style={{
+                        color: "white",
+                        backgroundColor: "var(--color-blue)",
+                      }}
                     />
                   </div>
                 </div>
@@ -170,16 +180,21 @@ const JobDetails = (props) => {
 
             <div className={style.service}>
               <div>
-                <div><h5>Job Type:</h5></div>
+                <div>
+                  <h5>Job Type:</h5>
+                </div>
                 <Chip
                   clickable
                   size="small"
                   color="primary"
                   variant="outlined"
                   label={job.jobType}
-                /></div>
+                />
+              </div>
               <div>
-                <div><h5>Services:</h5></div>
+                <div>
+                  <h5>Services:</h5>
+                </div>
                 {job.services.map((service, i) => (
                   <Chip
                     key={i}
@@ -189,9 +204,8 @@ const JobDetails = (props) => {
                     label={service.name}
                     clickable
                   />
-                ))}</div>
-
-
+                ))}
+              </div>
             </div>
 
             <div className={style.numbers}>
@@ -215,39 +229,40 @@ const JobDetails = (props) => {
                   label={`$${job.price}`}
                 />
               </div>
-
             </div>
             {/* Trucks */}
             <div>
-              {job.trucks.length > 0 ? <Fragment><h5>Truck Details:</h5>
-                {job.trucks.map((x, i) =>
-                  <div className={style.truckSection} key={i}>
-                    <div>
-
-                      {`Type: `}
-                      <Chip
-                        className={style.truckSectionType}
-                        clickable
-                        color="primary"
-                        variant="outlined"
-                        size="small"
-                        label={x.type}
-                      />
+              {job.trucks.length > 0 ? (
+                <Fragment>
+                  <h5>Truck Details:</h5>
+                  {job.trucks.map((x, i) => (
+                    <div className={style.truckSection} key={i}>
+                      <div>
+                        {`Type: `}
+                        <Chip
+                          className={style.truckSectionType}
+                          clickable
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          label={x.type}
+                        />
+                      </div>
+                      <div>
+                        {`No. Of Trucks: `}
+                        <Chip
+                          className={style.truckSectionNum}
+                          clickable
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          label={x.number}
+                        />
+                      </div>
                     </div>
-                    <div>
-                      {`No. Of Trucks: `}
-                      <Chip
-                        className={style.truckSectionNum}
-                        clickable
-                        color="primary"
-                        variant="outlined"
-                        size="small"
-                        label={x.number}
-                      />
-                    </div>
-                  </div>
-                )}
-              </Fragment> : null}
+                  ))}
+                </Fragment>
+              ) : null}
             </div>
             <div className={style.jobDescription}>
               <div className={style.jobDescription___title}>
@@ -259,17 +274,23 @@ const JobDetails = (props) => {
             </div>
 
             {job.locations && (
-              <div className={job.locations.length > 0 ? `card ${style.locations}` : `${style.locations}`}>
+              <div
+                className={
+                  job.locations.length > 0
+                    ? `card ${style.locations}`
+                    : `${style.locations}`
+                }
+              >
                 {job.locations.map((list, i) =>
                   list.type === "pickup" ? (
                     <div className={style.pickup} key={i}>
                       <FontAwesomeIcon icon={faMapMarker} />{" "}
                       <span className={style.locationType}>{`Pickup: `} </span>{" "}
                       <div className={style.location}>
-                        {list.value} {list.default ? '(Load Only / IA)' : null}
+                        {list.value} {list.default ? "(Load Only / IA)" : null}
                       </div>
-                      {list.propertyType ?
-                        (<div className="text-muted">
+                      {list.propertyType ? (
+                        <div className="text-muted">
                           {`Property Type: `}
                           <Chip
                             clickable
@@ -277,16 +298,19 @@ const JobDetails = (props) => {
                             variant="outlined"
                             size="small"
                             label={list.propertyType}
-                          /></div>) : null
-                      }
+                          />
+                        </div>
+                      ) : null}
                     </div>
                   ) : list.type === "dropoff" ? (
                     <div className={style.dropoff} key={i}>
                       <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
                       <span className={style.locationType}>{`Dropoff: `}</span>
-                      <div className={style.location}>{list.value} {list.default ? '(Unload Only)' : null}</div>
-                      {list.propertyType ?
-                        (<div className="text-muted">
+                      <div className={style.location}>
+                        {list.value} {list.default ? "(Unload Only)" : null}
+                      </div>
+                      {list.propertyType ? (
+                        <div className="text-muted">
                           {`Property Type: `}
                           <Chip
                             clickable
@@ -294,17 +318,17 @@ const JobDetails = (props) => {
                             variant="outlined"
                             size="small"
                             label={list.propertyType}
-                          /></div>) : null
-                      }
-
-
+                          />
+                        </div>
+                      ) : null}
                     </div>
-                  ) : <div key={i} className={style.locations}>
-
-                    <div className="font-weight-bold ">{`Location: `}</div> {list.value}
-                  </div>
+                  ) : (
+                    <div key={i} className={style.locations}>
+                      <div className="font-weight-bold ">{`Location: `}</div>{" "}
+                      {list.value}
+                    </div>
+                  )
                 )}
-
               </div>
             )}
             {job.note.length !== 0 && (
@@ -313,19 +337,24 @@ const JobDetails = (props) => {
                   <h5>Notes:</h5>
                 </div>
                 {job.note.map((x, i) => (
-                  <div key={i} className={style.notes___text}>{x.text}</div>
+                  <div key={i} className={style.notes___text}>
+                    {x.text}
+                  </div>
                 ))}
               </div>
             )}
-
           </div>
           <ActivitiesModal
             show={show}
             activities={job.activities}
             handleClose={handleClose}
           />
-
-          <JobConfirmationModal job={job} show={showBooking} handleCloseAndRefresh={handleCloseAndRefresh} closeJobConfirmationModal={closeJobConfirmationModal} />
+          <JobConfirmationModal
+            job={job}
+            show={showBooking}
+            handleCloseAndRefresh={handleCloseAndRefresh}
+            closeJobConfirmationModal={closeJobConfirmationModal}
+          />
         </div>
       ) : null}
     </div>

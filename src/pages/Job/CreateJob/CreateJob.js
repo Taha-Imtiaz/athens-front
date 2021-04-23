@@ -493,6 +493,8 @@ class CreateJob extends Component {
               <div>
                 <Autocomplete
                   multiple
+                  disableCloseOnSelect
+                  size="small"
                   noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   onChange={(event, newValue) => {
@@ -589,18 +591,6 @@ class CreateJob extends Component {
               </div>
               {/* truck size and number */}
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
-
-              {/* {this.state.locations.length === 0 && (
-                <div className={style.addLocation}>
-                  <div className={style.addLocationBtn}>
-                    <Button onClick={this.addLocation}
-                      className={style.button}>
-                      Add Location
-                    </Button>
-                  </div>
-                </div>
-              )} */}
-
               {this.state.locations.length > 0 ? (
                 <div>
                   <AddLocation

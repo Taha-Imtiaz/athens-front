@@ -226,8 +226,6 @@ const CalendarApp = (props) => {
               <Chip
                 label={count.job}
                 clickable
-                // color="primary"
-                // variant="outlined"
                 size="medium"
               />
             </h6>
@@ -236,8 +234,6 @@ const CalendarApp = (props) => {
               <Chip
                 label={count.movers}
                 clickable
-                // color="primary"
-                // variant="outlined"
                 size="medium"
               />
             </h6>
@@ -274,8 +270,10 @@ const CalendarApp = (props) => {
                               <Chip
                                 label={job.jobId}
                                 clickable
-                                color="primary"
-                                variant="outlined"
+                                style={{
+                                  color: "white",
+                                  backgroundColor: "var(--color-blue)",
+                                }}
                                 size="small"
                               />
                             )}

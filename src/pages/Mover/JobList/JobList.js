@@ -376,10 +376,7 @@ const MoversJobList = (props) => {
                         className={`${style.assignee} ${style.flex}  ${style.item}`}
                       ><div className={`text-muted ${style.heading}`}>{`Assignee: `}</div>
                         <span className={`text-capitalize ${style.headingSub} ${style.styleSpan}`}>
-                          {/* <FontAwesomeIcon
-                            icon={faUser}
-                            className={style.icon}
-                          />{" "} */}
+                          
                           {list.assignee.length > 0
                             ? list.assignee[0].name
                             : "No Assignees"}

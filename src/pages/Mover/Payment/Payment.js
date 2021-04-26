@@ -73,7 +73,7 @@ const Payment = (props) => {
         <div className={style.tophead}>
           <h3>Credit Card Information</h3>
 
-          <div>
+          <div className={style.logos}>
             <span className={style.logo}>
               <i className="fa fa-cc-paypal"></i>
             </span>

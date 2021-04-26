@@ -269,15 +269,17 @@ const DailySchedule = (props) => {
         let assigneesId = jobToUpdate[0].assignee.map((x) => x._id);
 
         let index = movers.findIndex((x) => x.mover._id === moverId);
-        console.log(index, movers, movers[index])
+        console.log(index, movers, movers[index]);
         let moverAssignedDate = movers[index].mover.jobs.filter((job) => {
-          console.log(job)
+          console.log(job);
           return (
-            job.dates.some((date) => date.date === new Date(today).toDateString()) && job.status === "booked"
+            job.dates.some(
+              (date) => date.date === new Date(today).toDateString()
+            ) && job.status === "booked"
           );
         });
         let moverJobs = moverAssignedDate.length > 0 ? true : false;
-        console.log(moverJobs)
+        console.log(moverJobs);
         if (moverJobs) {
           let mover = movers.find((x) => x.mover._id === moverId);
           setMover(mover);
@@ -562,7 +564,14 @@ const DailySchedule = (props) => {
                                   className={`text-muted ${style.heading}`}
                                 >{`Job ID:`}</div>
                                 <div className={style.content}>
-                                  {list.jobId}
+                                  <Chip
+                                    className={style.content}
+                                    label={list.jobId}
+                                    clickable
+                                    size="small"
+                                    color="primary"
+                                    variant="outlined"
+                                  />
                                 </div>
                               </div>
 
@@ -585,7 +594,7 @@ const DailySchedule = (props) => {
                                   size="small"
                                   color="primary"
                                   variant="outlined"
-                                ></Chip>
+                                />
                               </div>
                               <div className={style.jobPrice}>
                                 <div
@@ -599,7 +608,7 @@ const DailySchedule = (props) => {
                                     size="small"
                                     color="primary"
                                     variant="outlined"
-                                  ></Chip>
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -630,21 +639,20 @@ const DailySchedule = (props) => {
                                       {list.customer.lastName}
                                     </div>
                                   </div>
-
-                                  <div>
-                                    <div
-                                      className={`text-muted ${style.heading}`}
-                                    >{`E-Mail:`}</div>
-                                    <div className={style.contentMail}>
-                                      {list.customer.email}
-                                    </div>
-                                  </div>
                                   <div>
                                     <div
                                       className={`text-muted ${style.heading}`}
                                     >{`Phone:`}</div>
                                     <div className={style.content}>
                                       {list.customer.phone}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div
+                                      className={`text-muted ${style.heading}`}
+                                    >{`E-Mail:`}</div>
+                                    <div className={style.contentMail}>
+                                      {list.customer.email}
                                     </div>
                                   </div>
                                 </div>
@@ -690,14 +698,12 @@ const DailySchedule = (props) => {
       >
         <Fade in={modalShow}>
           <div className={"bg-light p-3 w-50"}>
-            <h3>Confirmation</h3><hr/>
+            <h3>Confirmation</h3>
+            <hr />
             {mover && (
-            <h5>
-             <span className={style.styleText}> 
-                {mover.mover.name}{" "}
-                </span>
-                  has been assigned to these jobs:
-                {" "}
+              <h5>
+                <span className={style.styleText}>{mover.mover.name} </span>
+                has been assigned to these jobs:{" "}
               </h5>
             )}
 
@@ -713,13 +719,16 @@ const DailySchedule = (props) => {
                     &#42;{job.title}
                   </a>
                   <Chip
-                    label={job.dates[0].time ? formatAMPM(job.dates[0].time) : "N/A"}
+                    label={
+                      job.dates[0].time ? formatAMPM(job.dates[0].time) : "N/A"
+                    }
                     clickable
                     color="primary"
                     variant="outlined"
                   ></Chip>
                 </div>
-              ))}<hr/>
+              ))}
+            <hr />
             <div className={style.modalBtns}>
               <Button
                 className={style.button}
@@ -739,7 +748,6 @@ const DailySchedule = (props) => {
           </div>
         </Fade>
       </Modal>
-     
     </div>
   );
 };

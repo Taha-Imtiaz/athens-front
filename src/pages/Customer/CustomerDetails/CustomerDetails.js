@@ -497,16 +497,18 @@ const CustomerDetails = (props) => {
                                             ? "(Load Only / IA)"
                                             : null}
                                         </div>
-                                        <div className="text-muted">
-                                          {`Property Type: `}
-                                          <Chip
-                                            clickable
-                                            color="primary"
-                                            variant="outlined"
-                                            size="small"
-                                            label={list.propertyType}
-                                          />
-                                        </div>
+                                        {list.propertyType ? (
+                                          <div className="text-muted">
+                                            {`Property Type: `}
+                                            <Chip
+                                              clickable
+                                              color="primary"
+                                              variant="outlined"
+                                              size="small"
+                                              label={list.propertyType}
+                                            />
+                                          </div>
+                                        ) : null}
                                       </div>
                                     ) : list.type === "dropoff" ? (
                                       <div key={i}>
@@ -520,16 +522,18 @@ const CustomerDetails = (props) => {
                                             ? "(Unload Only)"
                                             : null}
                                         </div>
-                                        <div className="text-muted">
-                                          {`Property Type: `}
-                                          <Chip
-                                            clickable
-                                            color="primary"
-                                            variant="outlined"
-                                            size="small"
-                                            label={list.propertyType}
-                                          />
-                                        </div>
+                                        {list.propertyType ? (
+                                          <div className="text-muted">
+                                            {`Property Type: `}
+                                            <Chip
+                                              clickable
+                                              color="primary"
+                                              variant="outlined"
+                                              size="small"
+                                              label={list.propertyType}
+                                            />
+                                          </div>
+                                        ) : null}
                                       </div>
                                     ) : (
                                       <div key={i} className={style.location}>
@@ -641,23 +645,24 @@ const CustomerDetails = (props) => {
                               <div className={`${style.protectionRow}`}>
                                 <div className={style.protectionRow___colOne}>
                                   <span>
-                                    <h6>{`Title: `}</h6>
+                                    <h6 className="text-muted">{`Title: `}</h6>
                                     {claim.title}
+                                  </span>
+
+                                  <span>
+                                    <h6 className="text-muted">{`Protection Type: `}</h6>
+                                    <Chip
+                                      className="font-weight-bold"
+                                      label={claim.claimType}
+                                      clickable
+                                      size="small"
+                                    />
                                   </span>
                                   <span>
                                     <h6 className="text-muted">{`Price: `}</h6>
                                     <Chip
                                       className="font-weight-bold"
                                       label={claim.price}
-                                      clickable
-                                      size="small"
-                                    />                                    
-                                  </span>
-                                  <span>
-                                    <h6 className="text-muted">{`Protection Type: `}</h6>
-                                    <Chip
-                                      className="font-weight-bold"
-                                      label={claim.claimType}
                                       clickable
                                       size="small"
                                     />
@@ -794,7 +799,7 @@ const CustomerDetails = (props) => {
                             </div>
                           </div>
                         </Fade>
-                      </Modal>                     
+                      </Modal>
                     </div>
                   );
                 })

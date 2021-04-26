@@ -10,6 +10,8 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { cloneDeep } from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const localizer = momentLocalizer(moment);
 
@@ -219,107 +221,123 @@ const CalendarApp = (props) => {
         <div className={style.sideContent}>
           <div className={style.sideContentHeader}>
             <h5 className={`${style.flex} `}>{state.date.toDateString()}</h5>{" "}
-          <hr />
-          <div className={style.jobInfo}>
-            <h6>
-              {`Total Jobs: `}
-              <Chip
-                label={count.job}
-                clickable
-                size="medium"
-              />
-            </h6>
-            <h6>
-              {`Total Movers: `}
-              <Chip
-                label={count.movers}
-                clickable
-                size="medium"
-              />
-            </h6>
-          </div>
+            <hr />
+            <div className={style.jobInfo}>
+              <h6>
+                {`Total Jobs: `}
+                <Chip label={count.job} clickable size="medium" />
+              </h6>
+              <h6>
+                {`Total Movers: `}
+                <Chip label={count.movers} clickable size="medium" />
+              </h6>
+            </div>
           </div>
           <div className={style.sideContentDetails}>
             {state.currentDayJobs.length ? (
-            <div>
-              {state.currentDayJobs.map((job, i) => (
-                <div key={i}>
-                  <div id="accordion" key={i}>
-                    <div className={`card ${style.card}`}>
-                      <div
-                        className={`card-header ${style.cardHeader}`}
-                        id="headingOne"
-                      >
+              <div>
+                {state.currentDayJobs.map((job, i) => (
+                  <div key={i}>
+                    <div id="accordion" key={i}>
+                      <div className={`card ${style.card}`}>
                         <div
-                          className="collapsed"
-                          aria-expanded="false"
-                          data-toggle="collapse"
-                          data-target={`#collapse${i}`}
-                          aria-controls="collapse"
+                          className={`card-header ${style.cardHeader}`}
+                          id="headingOne"
                         >
-                          <div>
-                            <Link
-                              className={style.link}
-                              to={`/job/detail/${job._id}`}
-                            >
-                              {job.title}
-                            </Link>
-                          </div>
-                          <div className={style.flexEnd}>
-                            {job.jobId && (
-                              <Chip
-                                label={job.jobId}
-                                clickable
-                                style={{
-                                  color: "white",
-                                  backgroundColor: "var(--color-blue)",
-                                }}
-                                size="small"
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        id={`collapse${i}`}
-                        className={"collapse"}
-                        aria-labelledby="headingOne"
-                        data-parent="#accordion"
-                      >
-                        <div className={`card-body ${style.cardBody}`}>
-                          <div className="card-text">
-                            <div className={style.heading}>
-                              {`Customer Email: `}
-                            </div>
-                            <div className={style.customerMail}>
-                              <Link to={`/customer/detail/${job.customer._id}`}>
-                                {job.customer.email}
+                          <div
+                            className="collapsed"
+                            aria-expanded="false"
+                            data-toggle="collapse"
+                            data-target={`#collapse${i}`}
+                            aria-controls="collapse"
+                          >
+                            <div>
+                              <Link
+                                className={style.link}
+                                to={`/job/detail/${job._id}`}
+                              >
+                                {job.title}
                               </Link>
                             </div>
-                          </div>
-                          <div className={`card-text ${style.jobDescription}`}>
-                            <div className={style.heading}>
-                              {`Job Description: `}
+                            <div className={style.flexEnd}>
+                              {job.jobId && (
+                                <Chip
+                                  label={job.jobId}
+                                  clickable
+                                  size="small"
+                                  style={{
+                                    background: "var(--color-blue)",
+                                    color: "white",
+                                  }}
+                                />
+                              )}
+                              {user && user.role === "admin" ? (
+                                <span>
+                                  <Link to={`/job/update/${job._id}`}>
+                                    <Chip
+                                      label={`Edit`}
+                                      icon={
+                                        <FontAwesomeIcon
+                                          style={{ color: "white" }}
+                                          icon={faPencilAlt}
+                                        />
+                                      }
+                                      clickable
+                                      size="small"
+                                      style={{
+                                        background: "var(--color-blue)",
+                                        color: "white",
+                                      }}
+                                    />
+                                  </Link>
+                                </span>
+                              ) : null}
                             </div>
-                            <div className={style.jobText}>
-                              {parse(job.description)}
+                          </div>
+                        </div>
+
+                        <div
+                          id={`collapse${i}`}
+                          className={"collapse"}
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion"
+                        >
+                          <div className={`card-body ${style.cardBody}`}>
+                            <div className="card-text">
+                              <div className={style.heading}>
+                                {`Customer Email: `}
+                              </div>
+                              <div className={style.customerMail}>
+                                <Link
+                                  to={`/customer/detail/${job.customer._id}`}
+                                >
+                                  {job.customer.email}
+                                </Link>
+                              </div>
+                            </div>
+                            <div
+                              className={`card-text ${style.jobDescription}`}
+                            >
+                              <div className={style.heading}>
+                                {`Job Description: `}
+                              </div>
+                              <div className={style.jobText}>
+                                {parse(job.description)}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : state.currentDayJobs.length === 0 ? (
-            <div>
-              <img src="/images/no-data-found.png" alt="" width="100%" />
-            </div>
-          ) : null}
+                ))}
+              </div>
+            ) : state.currentDayJobs.length === 0 ? (
+              <div>
+                <img src="/images/no-data-found.png" alt="" width="100%" />
+              </div>
+            ) : null}
           </div>
-          
         </div>
       </div>
     </div>

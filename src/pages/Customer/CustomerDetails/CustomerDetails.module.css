@@ -70,7 +70,7 @@
   display: grid;
   grid-template-columns: 70fr repeat(2, 15fr);
   grid-template-areas: "jobLink . jobService";
-  align-items: center; 
+  align-items: flex-start; 
 }
 .jobLink {
   grid-area: jobLink;
@@ -239,8 +239,8 @@ text-transform: capitalize;
 .protectionRow___colTwo{
 grid-column: 2/-1;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 .protectionRow___buttons{

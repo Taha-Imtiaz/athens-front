@@ -158,8 +158,8 @@ const ClaimDetails = (props) => {
                       </div>
                     </div>
                   ) : (
-                    <div>Not Added</div>
-                  )}
+                      <div>Not Added</div>
+                    )}
                 </div>
               </div>
               <div className={`${style.claimButton}`}>
@@ -182,13 +182,13 @@ const ClaimDetails = (props) => {
                       Close Claim
                     </Button>
                   ) : (
-                    <Button
-                      className={style.button}
-                      onClick={() => setToggleClaim(true)}
-                    >
-                      Re-Open Claim
+                      <Button
+                        className={style.button}
+                        onClick={() => setToggleClaim(true)}
+                      >
+                        Re-Open Claim
                     </Button>
-                  )}
+                    )}
                 </div>
               </div>
             </div>
@@ -201,7 +201,7 @@ const ClaimDetails = (props) => {
                 <div>
                   <h6 className="text-muted">{`Protection Type: `}</h6>
                   <Chip
-                  className="font-weight-bold"
+                    className="font-weight-bold"
                     label={claims.claimType}
                     clickable
                     size="small"
@@ -210,8 +210,8 @@ const ClaimDetails = (props) => {
                 <div>
                   <h6 className="text-muted">{`Total: `}</h6>
                   <Chip
-                  className="font-weight-bold"
-                    label={`$${claims.price}`}
+                    className="font-weight-bold"
+                    label={claims.price ? `$${claims.price}` : 'Not Added'}
                     clickable
                     size="small"
                   />
@@ -248,10 +248,10 @@ const ClaimDetails = (props) => {
                         Save
                       </Button>
                     ) : (
-                      <Button className={style.button} onClick={editInput}>
-                        Edit
+                        <Button className={style.button} onClick={editInput}>
+                          Edit
                       </Button>
-                    )}
+                      )}
                   </div>
                 </div>
               </div>
@@ -314,10 +314,10 @@ const ClaimDetails = (props) => {
                       Confirm
                     </Button>
                   ) : (
-                    <Button className={style.button} onClick={reopenClaim}>
-                      Confirm
+                      <Button className={style.button} onClick={reopenClaim}>
+                        Confirm
                     </Button>
-                  )}
+                    )}
                 </div>
               </div>
             </Fade>

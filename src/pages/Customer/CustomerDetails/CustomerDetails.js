@@ -662,7 +662,7 @@ const CustomerDetails = (props) => {
                                     <h6 className="text-muted">{`Price: `}</h6>
                                     <Chip
                                       className="font-weight-bold"
-                                      label={claim.price}
+                                      label={claim.price ? `$${claim.price}` : 'Not Added'}
                                       clickable
                                       size="small"
                                     />

@@ -24,7 +24,7 @@ const initialState = {
 
 class CreateUser extends Component {
   typeOptions = [
-    { name: "Manager", id: 1 },
+    { name: "Office", id: 1 },
     { name: "Mover", id: 2 },
   ];
 
@@ -36,11 +36,11 @@ class CreateUser extends Component {
 
   roleOptions = [
     {
-      name: "Manager",
+      name: "Office",
       id: 1,
       options: [
         { type: "Manager" },
-        { type: "New Manager" }
+        { type: "Assistant Manager" }
       ]
     },
     {
@@ -281,7 +281,7 @@ class CreateUser extends Component {
 
               <FormControl variant="outlined" margin="dense" fullWidth>
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Role *
+                  Role*
               </InputLabel>
                 <Select
                   required
@@ -295,7 +295,9 @@ class CreateUser extends Component {
                   {this.roleOptions.map((x, i) => <MenuItem value={x.name}>{x.name}</MenuItem>)}
                 </Select>
               </FormControl>
-              <FormControl variant="outlined" margin="dense" fullWidth>
+              {this.state.type && this.state.type !== "" ?
+              <div>
+                <FormControl variant="outlined" margin="dense" fullWidth>
                 <InputLabel id="demo-simple-select-outlined-label">
                   Role Type*
               </InputLabel>
@@ -311,6 +313,9 @@ class CreateUser extends Component {
                   {this.state.attributeOptions.map((y, i) => <MenuItem value={y.type}>{y.type}</MenuItem>)}
                 </Select>
               </FormControl>
+              </div>
+              :null}
+              
 
               <div className={style.createBtn}>
                 <Button className={style.button} onClick={this.mySubmitHandler}>

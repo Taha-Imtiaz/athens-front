@@ -13,7 +13,7 @@ export const getAllJobs = (jobObj) => {
         payload: response.data.data,
       });
     } catch (error) {
-      
+
     }
   };
 };
@@ -29,7 +29,7 @@ export const getJob = (jobId) => {
         payload: response.data.data,
       });
     } catch (error) {
-      
+
     }
   };
 };
@@ -47,7 +47,7 @@ export const createJob = (newJobObj, callback) => {
         dispatch(showMessage(newJob.data.message));
       }
     } catch (error) {
-      
+
     }
   };
 };
@@ -79,7 +79,7 @@ export const getAllJobsOnDate = async (date) => {
 
     return currentDayJobs;
   } catch (error) {
-    
+
   }
 };
 
@@ -107,7 +107,7 @@ export const filterJobsByDate = (date) => {
         payload: response.data.data,
       });
     } catch (error) {
-      
+
     }
   };
 };
@@ -127,7 +127,7 @@ export const confirmJob = (obj) => {
         });
       }
     } catch (error) {
-      
+
     }
   };
 };
@@ -153,7 +153,7 @@ export const deleteJob = (id, currentPage) => {
         });
       }
     } catch (error) {
-      
+
     }
   };
 };
@@ -166,6 +166,36 @@ export const getCurrentDayJob = async (jobId) => {
     });
     return getJob;
   } catch (error) {
-    
+
+  }
+};
+
+
+export const printJob = async (jobIds) => {
+  const promiseArray = jobIds.map(id => Axios.get(`job/print/${id}`, {
+    config: { handlerEnabled: true },
+    responseType: 'blob'
+  }));
+
+  try {
+    // let response = await Axios.get(`job/print/${jobId}`, {
+    //   config: { handlerEnabled: true },
+    //   responseType: 'blob'
+    // });
+    // console.log(response.data)
+    let responses = await Axios.all(promiseArray)
+    responses.map(response => {
+      
+      console.log(response.data, 'hello')
+      const file = new Blob([response.data], {
+        type: "application/pdf"
+      });
+      //Build a URL from the file
+      const fileURL = URL.createObjectURL(file);
+      //Open the URL on new Window
+      window.open(fileURL);
+    });
+  } catch (error) {
+
   }
 };

@@ -7,7 +7,7 @@ import {
   getalljobsfiveday,
 } from "../../../Redux/Schedule/scheduleAction";
 import { connect } from "react-redux";
-import { updateJob } from "../../../Redux/Job/jobActions";
+import { updateJob, printJob } from "../../../Redux/Job/jobActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
 import { jsPDF } from "jspdf";
@@ -60,69 +60,68 @@ const DailySchedule = (props) => {
   const generatePDF = (e, job) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    let dates = job.dates.map((x) => x.date).join(" | ");
+    printJob([job._id]);
+    // let dates = job.dates.map((x) => x.date).join(" | ");
 
-    let services = job.services.map((e) => e.name).join(" | ");
+    // let services = job.services.map((e) => e.name).join(" | ");
 
-    const doc = new jsPDF("p", "pt");
-    const date = new Date();
-    const columns = [
-      { title: "Name", dataKey: "name" },
-      { title: "Email", dataKey: "email" },
-      { title: "Phone", dataKey: "phone" },
-    ];
-    const items = [
-      {
-        name: job.customer.firstName + job.customer.lastName,
-        email: job.customer.email,
-        phone: job.customer.phone,
-      },
-    ];
+    // const doc = new jsPDF("p", "pt");
+    // const date = new Date();
+    // const columns = [
+    //   { title: "Name", dataKey: "name" },
+    //   { title: "Email", dataKey: "email" },
+    //   { title: "Phone", dataKey: "phone" },
+    // ];
+    // const items = [
+    //   {
+    //     name: job.customer.firstName + job.customer.lastName,
+    //     email: job.customer.email,
+    //     phone: job.customer.phone,
+    //   },
+    // ];
 
-    let imgA = document.createElement("img");
-    imgA.src = "/images/movers-logo.jpg";
-    doc.addImage(imgA, "JPEG", 45, 10, 90, 90);
+    // let imgA = document.createElement("img");
+    // imgA.src = "/images/movers-logo.jpg";
+    // doc.addImage(imgA, "JPEG", 45, 10, 90, 90);
 
-    doc.setFont("times").setFontSize(22).text(420, 40, "JOB DETAILS");
-    doc.setFont("times").setFontSize(10).text(400, 70, "Print Date:");
-    doc.setFont("times").setFontSize(10).text(490, 70, date.toDateString());
-    doc.setFont("times").setFontSize(10).text(400, 85, "Job Id:");
-    doc.setFont("times").setFontSize(10).text(490, 85, `${job.jobId}`);
-    doc.setFont("times").setFontSize(10).text(400, 100, "Movers Required:");
-    doc
-      .setFont("times")
-      .setFontSize(10)
-      .text(490, 100, `${job.assigneeRequired}`);
-    doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
-    doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
+    // doc.setFont("times").setFontSize(22).text(420, 40, "JOB DETAILS");
+    // doc.setFont("times").setFontSize(10).text(400, 70, "Print Date:");
+    // doc.setFont("times").setFontSize(10).text(490, 70, date.toDateString());
+    // doc.setFont("times").setFontSize(10).text(400, 85, "Job Id:");
+    // doc.setFont("times").setFontSize(10).text(490, 85, `${job.jobId}`);
+    // doc.setFont("times").setFontSize(10).text(400, 100, "Movers Required:");
+    // doc
+    //   .setFont("times")
+    //   .setFontSize(10)
+    //   .text(490, 100, `${job.assigneeRequired}`);
+    // doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
+    // doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
 
-    doc.setFont("times").setFontSize(15).text(50, 200, job.title);
+    // doc.setFont("times").setFontSize(15).text(50, 200, job.title);
 
-    doc.setFont("times").setFontSize(11).text(50, 235, dates);
+    // doc.setFont("times").setFontSize(11).text(50, 235, dates);
 
-    doc.setFont("times").setFontSize(11).text(50, 260, services);
+    // doc.setFont("times").setFontSize(11).text(50, 260, services);
 
-    doc
-      .setFont("times")
-      .setFontSize(11)
-      .text(
-        50,
-        285,
-        job.dates[0].time ? formatAMPM(job.dates[0].time) : "No Time Added"
-      );
+    // doc
+    //   .setFont("times")
+    //   .setFontSize(11)
+    //   .text(
+    //     50,
+    //     285,
+    //     job.dates[0].time ? formatAMPM(job.dates[0].time) : "No Time Added"
+    //   );
 
-    doc.autoTable(columns, items, { margin: { top: 310 } });
+    // doc.autoTable(columns, items, { margin: { top: 310 } });
 
-    doc
-      .setFont("times")
-      .setFontSize(11)
-      .text(50, 375, htmlToText(job.description));
+    // doc
+    //   .setFont("times")
+    //   .setFontSize(11)
+    //   .text(50, 375, htmlToText(job.description));
 
-    // doc.save(`${job.title}.pdf`);
 
-    doc.autoPrint();
-    //This is a key for printing
-    doc.output("dataurlnewwindow");
+    // doc.autoPrint();
+    // doc.output("dataurlnewwindow");
   };
 
   const formatAMPM = (startTime) => {
@@ -218,9 +217,11 @@ const DailySchedule = (props) => {
   const classes = useStyles();
 
   const printAllJobs = (e) => {
-    for (var job of props.jobs) {
-      generatePDF(e, job);
-    }
+    // for (var job of props.jobs) {
+    //   generatePDF(e, job);
+    // }
+    let jobIds = props.jobs.map(x => x._id)
+    printJob(jobIds);
   };
 
   const Navigate = (e) => {
@@ -419,8 +420,8 @@ const DailySchedule = (props) => {
                         0
                       )
                     ) : (
-                      <span>0</span>
-                    )}
+                        <span>0</span>
+                      )}
                   </h6>
                 </div>
                 <div>
@@ -516,8 +517,8 @@ const DailySchedule = (props) => {
                                   ))}
                                 </div>
                               ) : (
-                                <div>N/A</div>
-                              )}
+                                  <div>N/A</div>
+                                )}
                             </div>
                           </div>
 

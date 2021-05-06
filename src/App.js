@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {  Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import PrivateRoute from "./utils/private-routes";
@@ -76,9 +76,9 @@ function App(props) {
 
   const location = useLocation();
   let { pathname } = location;
-  let appRoles = ["mover", "admin"]
+  let appRoles = ["mover", "admin", "manager"]
   let moverRoles = ["mover"]
-  let adminRoles = ["admin"]
+  let adminRoles = ["admin", "manager"]
 
   return (
     <div className={pathname !== "/" ? "app" : "app-without-nav"}>

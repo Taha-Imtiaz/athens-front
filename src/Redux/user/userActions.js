@@ -18,7 +18,7 @@ export const login = (data, callback) => {
         dispatch(showMessage(response.data.message));
       }
     } catch (error) {
-      
+
     }
   };
 };
@@ -54,7 +54,7 @@ export const verifyCode = (data, callback) => {
         });
         callback();
       } else {
-        dispatch(showMessage(verifyCode.data.message));
+        dispatch(showMessage(response.data.message));
       }
     } catch (err) {
       dispatch(showMessage(err.message));
@@ -105,7 +105,7 @@ export const getUsers = (data) => {
         payload: response.data.data,
       });
     } catch (error) {
-      
+
     }
   };
 };
@@ -141,7 +141,7 @@ export const updateUser = (data, userId, type, callback) => {
           });
           dispatch(showMessage(response.data.message));
 
-        } 
+        }
         //(type === admin for other pages)
         else {
           dispatch(showMessage('User updated successfully'));

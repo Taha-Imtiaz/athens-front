@@ -192,11 +192,11 @@ class CreateJob extends Component {
       assigneeRequiredError = "Required count should not be empty";
     }
 
-    let locations = this.state.locations.map((x) => x.value !== "");
-    locations = locations.filter(Boolean);
-    if (locations.length === 0) {
-      locationfromError = "Location must not be empty";
-    }
+    // let locations = this.state.locations.map((x) => x.value !== "");
+    // locations = locations.filter(Boolean);
+    // if (locations.length === 0) {
+    //   locationfromError = "Location must not be empty";
+    // }
     // if (!this.state.price) {
     //   priceError = "Price should not be empty";
     // }
@@ -591,6 +591,7 @@ class CreateJob extends Component {
               </div>
               {/* truck size and number */}
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
+              {/* Add Location */}              
               {this.state.locations.length > 0 ? (
                 <div>
                   <AddLocation

@@ -549,11 +549,19 @@ const CustomerDetails = (props) => {
                                   <div>
                                     <h5>Notes:</h5>
                                   </div>
-                                  <div className={style.notes___text}>
+                                  
                                     {job.note.map((x, i) => (
-                                      <div key={i}>{x.text}</div>
+                                      <div className={style.notes___text}>
+                                        <div key={i}>{x.text}</div>
+                                        <div className={`text-muted ${style.notes___timestamp}`}>
+                                          <FontAwesomeIcon
+                                            icon={faCalendarTimes}
+                                          />
+                                          <TimeAgo date={x.createdAt} />
+                                        </div>
+                                      </div>
                                     ))}
-                                  </div>
+                                  
                                 </div>
                               )}
                             </div>
@@ -662,7 +670,11 @@ const CustomerDetails = (props) => {
                                     <h6 className="text-muted">{`Price: `}</h6>
                                     <Chip
                                       className="font-weight-bold"
-                                      label={claim.price ? `$${claim.price}` : 'Not Added'}
+                                      label={
+                                        claim.price
+                                          ? `$${claim.price}`
+                                          : "Not Added"
+                                      }
                                       clickable
                                       size="small"
                                     />

@@ -4,14 +4,16 @@ import { Button, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { getUsers } from "../../../Redux/User/userActions";
+import { getUsers, deleteUser } from "../../../Redux/User/userActions";
 import Pagination from "../../../components/Pagination/Pagination";
 import SearchBar from "../../../components/SearchBar/SearchBar";
+import Confirmation from "../../../components/Confirmation/Confirmation";
 
 const UserList = (props) => {
-
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterType, setFilterType] = useState('');
+  const [filterType, setFilterType] = useState("");
+  const [show, setShow] = useState(false);
+  const [userToDelete, setUserToDelete] = useState("")
 
   const { users, getUsers } = props;
   let totalCount = 0;
@@ -26,7 +28,7 @@ const UserList = (props) => {
       filter: {
         type: "",
       },
-      page: 1
+      page: 1,
     };
     getUsers(usersObj);
   }, [getUsers]);
@@ -50,12 +52,29 @@ const UserList = (props) => {
       filter: {
         type: value,
       },
-      page: 1
+      page: 1,
     };
-    setFilterType(value)
+    setFilterType(value);
     getUsers(sortUserObj);
     setCurrentPage(1);
   };
+    //show delete modal
+    const handleShow = (i, jobId) => {
+      //set the customerid of the of customer you want to delete
+      setUserToDelete(jobId);
+      //show the delete modal
+      setShow(true);
+    };
+    // remove user
+  const removeUser = () =>{
+    let { deleteUser} = props;
+    deleteUser(userToDelete, currentPage)
+    setShow(false)
+  }
+    //close the delete modal
+    const handleClose = () => {
+      setShow(false);
+    };
 
   return (
     <div>
@@ -85,7 +104,6 @@ const UserList = (props) => {
                   className="dropdown-menu"
                   aria-labelledby="dropdownMenuLink"
                 >
-                
                   <RadioGroup
                     aria-label="Filter"
                     name="Filter"
@@ -111,7 +129,6 @@ const UserList = (props) => {
                       className="dropdown-item"
                     />
                   </RadioGroup>
-
                 </div>
               </div>
 
@@ -137,27 +154,51 @@ const UserList = (props) => {
                   return (
                     <div className={style.listContainer} key={i}>
                       <div className={`${style.listContent} `}>
-                      <Link to ={ `/user/update/${usersDoc._id}`}
-                         key={i}
-                         className={style.styleLink}
+                        <Link
+                          to={`/user/update/${usersDoc._id}`}
+                          key={i}
+                          className={style.styleLink}
+                        >
+                          <div className={style.userList}>
 
-                      >
-                        <div className={style.userList}>
-                        
-                          <div className={`${style.item} ${style.flex}`}>
-                            <div className={`text-muted ${style.listTitle}`}>Name:</div>
-                            <div className={style.listDetail}>{usersDoc.name}</div>
+                            <div className={`${style.item} ${style.flex}`}>
+                              <div className={`text-muted ${style.listTitle}`}>
+                                Name:
+                              </div>
+                              <div className={style.listDetail}>
+                                {usersDoc.name}
+                              </div>
+                            </div>
+                            <div className={`${style.item} ${style.flex}`}>
+                              <div className={`text-muted ${style.listTitle}`}>
+                                Attribute:
+                              </div>
+                              <div className={style.listDetail}>
+                                {usersDoc.attribute}
+                              </div>
+                            </div>
+                            <div className={`${style.item} ${style.flex}`}>
+                              <div className={`text-muted ${style.listTitle}`}>
+                                Address:
+                              </div>
+                              <div className={style.listDetail}>
+                                {usersDoc.address}
+                              </div>
+                            </div>
+                            
+                             
                           </div>
-                          <div className={`${style.item} ${style.flex}`}>
-                          <div className={`text-muted ${style.listTitle}`}>Attribute:</div>
-                            <div className={style.listDetail}>{usersDoc.attribute}</div>
-                          </div>
-                          <div className={`${style.item} ${style.flex}`}>
-                          <div className={`text-muted ${style.listTitle}`}>Address:</div>
-                            <div className={style.listDetail}>{usersDoc.address}</div>
-                          </div>
-                        </div>
                         </Link>
+                        {/* {props.user && props.user.role === "admin" && ( )} */}
+                              <div className={`${style.deleteBtn}`}>
+                                <Button
+                                  className={style.deleteButton}
+                                  onClick={() => handleShow(i, usersDoc._id)}
+                                >
+                                  Delete
+                                </Button>
+                              </div>
+                            
                       </div>
                     </div>
                   );
@@ -165,7 +206,7 @@ const UserList = (props) => {
               </div>
 
               <div className={style.stylePagination}>
-                <div className={style.pagination} >
+                <div className={style.pagination}>
                   <Pagination
                     itemCount={totalCount}
                     pageSize={10}
@@ -174,21 +215,29 @@ const UserList = (props) => {
                   />
                 </div>
               </div>
+              <Confirmation
+        show={show}
+        handleClose={handleClose}
+        type="delete user"
+        action={removeUser}
+      />
             </div>
           ) : (
-              <div className="text-center">
-                <img src="/images/no-data-found.png" alt="" />
-              </div>
-            )}
+            <div className="text-center">
+              <img src="/images/no-data-found.png" alt="" />
+            </div>
+          )}
         </div>
+        
       )}
     </div>
   );
 };
 var mapStateToProps = (state) => ({
-  users: state.users.userList
+  users: state.users.userList,
 });
 var actions = {
-  getUsers
+  getUsers,
+  deleteUser,
 };
 export default connect(mapStateToProps, actions)(UserList);

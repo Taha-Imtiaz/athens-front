@@ -255,7 +255,7 @@ class UpdateJob extends Component {
     console.log("new note: "+newNote,"note: "+ note);
     if (newNote) {
       let notes = [...this.state.note];
-      notes.push({ uid: uuidv4(), text: newNote });
+      notes.unshift({ uid: uuidv4(), text: newNote });
       this.setState({
         show: false,
         note: notes,
@@ -617,7 +617,7 @@ class UpdateJob extends Component {
 
             {this.state.locations && (
               <div>
-                {/* {this.state.locations.length === 0 && (
+                {this.state.locations.length === 0 && (
                   <div className={style.addLocation}>
                     <div className={style.addLocationBtn}>
                       <Button onClick={this.addLocation} className={style.button}>
@@ -625,7 +625,7 @@ class UpdateJob extends Component {
                   </Button>
                     </div>
                   </div>
-                )} */}
+                )}
                 {this.state.locations.length > 0 ? (
                   <div>
                     <AddLocation

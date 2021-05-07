@@ -1,4 +1,4 @@
-import { GET_USERS, LOGGEDIN_USER } from "./userConstants";
+import { GET_USERS, LOGGEDIN_USER, DELETE_USER } from "./userConstants";
 import Axios from "axios";
 import { showMessage } from "../Common/commonActions";
 
@@ -97,7 +97,7 @@ export const resetPassword = (data, callback) => {
 export const getUsers = (data) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.post("user/all", data, {
+      let response = await Axios.post("user/all", data, {
         config: { handlerEnabled: true }
       });
       dispatch({
@@ -168,3 +168,32 @@ export const createUser = (data, callback) => {
     }
   };
 };
+
+export const deleteUser = (id, currentPage) => {
+
+  return async (dispatch) => {
+    try {
+      let body = {
+        page: currentPage,
+        id
+      }
+      let response = await Axios.delete(`user`, {
+        params: body,
+        config: {
+          handlerEnabled: true
+        }
+      })
+      if (response.data.status === 200) {
+        dispatch({
+          type: DELETE_USER,
+          payload: response.data.data
+
+        })
+      }
+      dispatch(showMessage(response.data.message))
+    }
+    catch (err) {
+      dispatch(showMessage(err.message));
+    }
+  }
+}

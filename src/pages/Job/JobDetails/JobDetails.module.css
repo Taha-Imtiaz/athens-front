@@ -155,10 +155,29 @@ grid-template-columns: 17fr 23fr 60fr;
   font-size: larger;
   /* padding: .5rem; */
 }
-.jobDescription___text, .notes___text{
+.jobDescription___text{
   background: #fff;
   border-radius: 1rem;
   padding: 0.8rem 0.5rem;
+}
+.notes___text{
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.8rem 0.5rem;
+  display: grid;
+  margin: .2rem 0;
+  /* grid-template-rows:repeat(2, 1fr) ; */
+  grid-template-areas: 
+  "text"
+  "time";
+}
+.notes___timeStamp{
+grid-area: time;
+display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  gap: .5rem;
 }
 .link {
   text-decoration: none;

@@ -10,7 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TimeAgo from "react-timeago";
+
 import {
+  faCalendarTimes,
   faEnvelope,
   faMapMarker,
   faMapMarkerAlt,
@@ -57,6 +60,23 @@ const JobDetails = (props) => {
   };
   // let truckArr = job.trucks.map((x,i)=>{
   // })
+
+  // const updateClaimData = () => {
+  //   if (update.length > 0) {
+  //     let ob = {
+  //       timestamp: new Date(),
+  //       value: update,
+  //     };
+  //     let newData = cloneDeep(claims);
+  //     newData.updates.unshift(ob);
+  //     updateClaim(newData, (res) => {
+  //       claims.updates = res.data.data.updates;
+  //       setShow(false);
+  //       setUpdate("");
+  //     });
+  //   }
+  // };
+
   return (
     <div className={style.jobEditContainer}>
       {job ? (
@@ -284,7 +304,8 @@ const JobDetails = (props) => {
                 {job.locations.map((list, i) =>
                   list.type === "pickup" ? (
                     <div className={style.pickup} key={i}>
-                      <FontAwesomeIcon icon={faMapMarker} />{" "}
+                      <span className="font-weight-bold">{i+1}.{" "}</span>
+                      {/* <FontAwesomeIcon icon={faMapMarker} />{" "}                       */}
                       <span className={style.locationType}>{`Pickup: `} </span>{" "}
                       <div className={style.location}>
                         {list.value} {list.default ? "(Load Only / IA)" : null}
@@ -304,7 +325,8 @@ const JobDetails = (props) => {
                     </div>
                   ) : list.type === "dropoff" ? (
                     <div className={style.dropoff} key={i}>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                      <span className="font-weight-bold">{i+1}.{" "}</span>
+                      {/* <FontAwesomeIcon icon={faMapMarkerAlt} />{" "} */}
                       <span className={style.locationType}>{`Dropoff: `}</span>
                       <div className={style.location}>
                         {list.value} {list.default ? "(Unload Only)" : null}
@@ -324,6 +346,7 @@ const JobDetails = (props) => {
                     </div>
                   ) : (
                     <div key={i} className={style.locations}>
+                      <span className="font-weight-bold">{i+1}.{" "}</span>
                       <div className="font-weight-bold ">{`Location: `}</div>{" "}
                       {list.value}
                     </div>
@@ -338,7 +361,11 @@ const JobDetails = (props) => {
                 </div>
                 {job.note.map((x, i) => (
                   <div key={i} className={style.notes___text}>
-                    {x.text}
+                    <div>{x.text}</div>
+                    <div className={`text-muted ${style.notes___timeStamp}`}>
+                      <FontAwesomeIcon icon={faCalendarTimes} />
+                      <TimeAgo date={x.createdAt} />
+                    </div>
                   </div>
                 ))}
               </div>

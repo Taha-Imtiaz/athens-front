@@ -23,6 +23,7 @@
     "html-to-draftjs": "^1.5.0",
     "html-to-text": "^6.0.0",
     "jquery": "^3.5.1",
+    "js-file-download": "^0.4.12",
     "jspdf": "^2.1.1",
     "jspdf-autotable": "^3.5.13",
     "lodash": "^4.17.20",

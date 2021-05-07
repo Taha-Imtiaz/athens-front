@@ -1,6 +1,7 @@
 import { GET_JOBS, GET_JOB, DELETE_JOB } from "./jobConstants";
 import Axios from "axios";
 import { showMessage } from "../../Redux/Common/commonActions";
+const FileDownload = require('js-file-download');
 
 export const getAllJobs = (jobObj) => {
   return async (dispatch) => {
@@ -185,15 +186,16 @@ export const printJob = async (jobIds) => {
     // console.log(response.data)
     let responses = await Axios.all(promiseArray)
     responses.map(response => {
-      
+
       console.log(response.data, 'hello')
-      const file = new Blob([response.data], {
-        type: "application/pdf"
-      });
-      //Build a URL from the file
-      const fileURL = URL.createObjectURL(file);
-      //Open the URL on new Window
-      window.open(fileURL);
+      // const file = new Blob([response.data], {
+      //   type: "application/pdf"
+      // });
+      // //Build a URL from the file
+      // const fileURL = URL.createObjectURL(file);
+      // //Open the URL on new Window
+      // window.open(fileURL);
+      FileDownload(response.data, 'report.pdf');
     });
   } catch (error) {
 

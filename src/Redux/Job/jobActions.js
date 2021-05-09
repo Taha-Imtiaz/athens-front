@@ -175,7 +175,7 @@ export const getCurrentDayJob = async (jobId) => {
 export const printJob = async (jobIds) => {
   const promiseArray = jobIds.map(id => Axios.get(`job/print/${id}`, {
     config: { handlerEnabled: true },
-    responseType: 'arraybuffer'
+    responseType: 'blob'
   }));
 
   try {

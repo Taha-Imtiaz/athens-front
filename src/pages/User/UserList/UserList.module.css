@@ -69,8 +69,8 @@
   /* background-color: aqua; */
   display: grid;
   /* margin: 2rem 0; */
-  grid-template-columns: 100fr;
-  padding: .5rem 0;
+  grid-template-columns: 85fr 15fr;
+  padding: .2rem 0;
   margin: .5rem 0;
   /* border: 1px solid rgba(0, 0, 0, 0.125); */
   background: rgba(0, 0, 0, 0.03);
@@ -125,4 +125,14 @@
 .listDetail{
   font-weight: bold;
   text-transform: capitalize;
+}
+.deleteButton:hover {
+  /*ahmed*/
+  background-color: var(--color-red) !important;
+  color: white;
+}
+.deleteBtn{
+display: flex;
+justify-content: center;
+align-items: center;
 }

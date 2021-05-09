@@ -252,17 +252,17 @@ class UpdateJob extends Component {
   //add note when add note button of modal is pressed
   AddNote = () => {
     let { newNote, note } = this.state;
-    console.log("new note: "+newNote,"note: "+ note);
+    console.log("new note: " + newNote, "note: " + note);
     if (newNote) {
       let notes = [...this.state.note];
-      notes.push({ uid: uuidv4(), text: newNote });
+      notes.unshift({ uid: uuidv4(), text: newNote });
       this.setState({
         show: false,
         note: notes,
         newNote: "",
       });
     }
-    else{
+    else {
       alert("Please Enter Note")
     }
   };
@@ -563,8 +563,8 @@ class UpdateJob extends Component {
                     {this.state.jobType !== "Fixed" ? (
                       <MenuItem value={"Fixed"}>Fixed</MenuItem>
                     ) : (
-                      <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
-                    )}
+                        <MenuItem value={"Hourly based"}>Hourly based</MenuItem>
+                      )}
                   </Select>
                 </FormControl>
               </div>
@@ -615,9 +615,9 @@ class UpdateJob extends Component {
 
             {/* <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} /> */}
 
-            {this.state.locations && (
+            {/* {this.state.locations && (
               <div>
-                {/* {this.state.locations.length === 0 && (
+                {this.state.locations.length === 0 && (
                   <div className={style.addLocation}>
                     <div className={style.addLocationBtn}>
                       <Button onClick={this.addLocation} className={style.button}>
@@ -625,7 +625,7 @@ class UpdateJob extends Component {
                   </Button>
                     </div>
                   </div>
-                )} */}
+                )}
                 {this.state.locations.length > 0 ? (
                   <div>
                     <AddLocation
@@ -636,7 +636,12 @@ class UpdateJob extends Component {
                   </div>
                 ) : null}
               </div>
-            )}
+            )} */}
+            {this.state.locations && <AddLocation
+              locationArr={this.state.locations}
+              addLocation={this.addLocation}
+              handleLocationChange={this.handleLocationChange}
+            />}
           </form>
 
           <div>

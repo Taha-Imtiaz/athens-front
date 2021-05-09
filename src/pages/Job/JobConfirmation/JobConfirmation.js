@@ -346,9 +346,6 @@ function JobConfirmation(props) {
             {/* {data.locations && data.locations.length > 0 &&
             } */}
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
-
-
-
           </div>
         );
       case 3:

@@ -255,7 +255,7 @@ class CreateJob extends Component {
         trucks,
         jobType,
       } = this.state;
-
+      console.log(dates)
       let stringDates = dates.map((x) =>
         x.date !== ("" || null)
           ? { date: x.date.toDateString(), time: x.time }
@@ -478,7 +478,7 @@ class CreateJob extends Component {
                 }
               >
                 <Editor
-                  onChange={() => {}}
+                  onChange={() => { }}
                   editorState={this.state.editorState}
                   toolbarClassName="toolbarClassName"
                   className={style.styleFormFields}
@@ -486,7 +486,7 @@ class CreateJob extends Component {
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
                   placeholder="Job Description"
-                  // error={this.state.descriptionError ? true : false}
+                // error={this.state.descriptionError ? true : false}
                 />
               </div>
 
@@ -591,7 +591,7 @@ class CreateJob extends Component {
               </div>
               {/* truck size and number */}
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
-              {/* Add Location */}              
+              {/* Add Location */}
               {this.state.locations.length > 0 ? (
                 <div>
                   <AddLocation
@@ -599,7 +599,7 @@ class CreateJob extends Component {
                     addLocation={this.addLocation}
                     handleLocationChange={this.handleLocationChange}
 
-                    // error={this.state.locationfromError ? true : false}
+                  // error={this.state.locationfromError ? true : false}
                   />
                 </div>
               ) : null}

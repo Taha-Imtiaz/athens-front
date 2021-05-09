@@ -117,11 +117,32 @@ text-transform: capitalize;
   /* margin: 1rem; */
   padding: .5rem;
 }
-.jobDetail , .notes___text {
+.jobDetail{
   white-space: initial;
   background: #fff;
   padding: .5rem;
   border-radius: .5rem;
+}
+.notes___text {
+  white-space: initial;
+  background: #fff;
+  padding: .5rem;
+  margin: .2rem 0;
+  border-radius: .5rem;
+  display: grid;
+  /* grid-template-rows: 90fr 10fr; */
+  grid-template-areas:
+  "text"
+  "time";
+}
+.notes___timestamp{
+  grid-area: time;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  gap: .5rem;
+
 }
 .locations {
   display: grid;

@@ -55,3 +55,19 @@
     /* background-color: ; */
     width: min-content;
 }
+
+.addLocationBtn {
+  /* grid-area: addLocationBtn; */
+  /* background-color: #00adee; */
+}
+.addLocationBtn .button {
+  background: #00adee;
+  text-transform: none;
+  color: #fff;
+  width: 100%;
+  font-family: var(--font-family-paragraph);
+
+}
+.addLocationBtn .button:hover {
+  background-color: var(--hover-color-blue);
+}

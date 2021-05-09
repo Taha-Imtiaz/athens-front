@@ -121,7 +121,7 @@
 .waiting {
   grid-area: waiting;
 }
-.description >h6, .waiting >h6 , .protectionRow >div>h6 {
+.description >h6, .waiting >h6, .updateHead >h6 , .protectionRow >div>h6 {
   font-size: 1.1rem;
   font-weight: bold
 }
@@ -142,7 +142,6 @@
 }
 .updateHead {
   grid-area: updateHead;
-  font-weight: bold;
   /* padding: 0 .5rem; */
 }
 .updateContent {

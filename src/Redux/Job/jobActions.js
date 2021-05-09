@@ -175,7 +175,7 @@ export const getCurrentDayJob = async (jobId) => {
 export const printJob = async (jobIds) => {
   const promiseArray = jobIds.map(id => Axios.get(`job/print/${id}`, {
     config: { handlerEnabled: true },
-    responseType: 'blob'
+    responseType: 'arraybuffer'
   }));
 
   try {
@@ -185,18 +185,26 @@ export const printJob = async (jobIds) => {
     // });
     // console.log(response.data)
     let responses = await Axios.all(promiseArray)
-    responses.map(response => {
+    for (let i = 0; i < responses.length; i++) {
+      // setTimeout(() => {
+        let response = responses[i];
 
-      console.log(response.data, 'hello')
-      // const file = new Blob([response.data], {
-      //   type: "application/pdf"
-      // });
-      // //Build a URL from the file
-      // const fileURL = URL.createObjectURL(file);
-      // //Open the URL on new Window
-      // window.open(fileURL);
-      FileDownload(response.data, 'report.pdf');
-    });
+        console.log(response.data, 'hello')
+        //Open the URL on new Window
+        const file = new Blob([response.data], {
+          type: "application/pdf"
+        });
+        //Build a URL from the file
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL, '_blank');
+        // response = null;
+        // file = null;
+        // fileURL = null;
+      // }, 100)
+    }
+    // responses.map(response => {
+
+    // });
   } catch (error) {
 
   }

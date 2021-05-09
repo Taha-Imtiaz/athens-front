@@ -9,6 +9,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Button
 } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import React, { useState } from "react";
@@ -222,34 +223,44 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
           </div>
         ) : null}
         {i !== 0 ?
-        <div className="d-flex justify-content-end">
-          <div className={`${style.TrashIcon} ${style.alignRight}`}>
-            <FontAwesomeIcon
-              icon={faTrash}
-              onClick={() => removeLocation(i)}
-            ></FontAwesomeIcon>
+          <div className="d-flex justify-content-end">
+            <div className={`${style.TrashIcon} ${style.alignRight}`}>
+              <FontAwesomeIcon
+                icon={faTrash}
+                onClick={() => removeLocation(i)}
+              ></FontAwesomeIcon>
+            </div>
           </div>
-        </div>
-        : null}
-        
+          : null}
+
       </div>
     );
   };
 
   return (
     <div>
-      {locationArr.map((location, i) => showLocation(i))}
-      {locationArr.length > 0 && (
-        <div className="d-flex justify-content-end">
-          <div
-            onClick={addLocation}
-            className={`${style.plusIcon} ${style.alignRight}`}
-          >
-            <FontAwesomeIcon icon={faPlusCircle} />
+      {
+        locationArr.length === 0 ? <div className={style.addLocation}>
+          <div className={style.addLocationBtn}>
+            <Button onClick={addLocation} className={style.button}>
+              Add Location
+                  </Button>
           </div>
-        </div>
-      )}{" "}
-      <hr />
+        </div> :
+          <div> {locationArr.map((location, i) => showLocation(i))}
+            {locationArr.length > 0 && (
+              <div className="d-flex justify-content-end">
+                <div
+                  onClick={addLocation}
+                  className={`${style.plusIcon} ${style.alignRight}`}
+                >
+                  <FontAwesomeIcon icon={faPlusCircle} />
+                </div>
+              </div>
+            )}{" "}
+            <hr />
+          </div>
+      }
     </div>
   );
 };

@@ -128,7 +128,6 @@ class UpdateCustomer extends Component {
   };
   // validate if the form fields are empty or not
   validate = () => {
-    // let {username,password,emailError,passwordError} = this.state
     let emailError = "";
     let firstNameError = "";
     let lastNameError = "";

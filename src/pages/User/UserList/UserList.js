@@ -189,7 +189,7 @@ const UserList = (props) => {
 
                           </div>
                         </Link>
-                        {usersDoc.role != "admin" && <div className={`${style.deleteBtn}`}>
+                        {usersDoc.role !== "admin" && <div className={`${style.deleteBtn}`}>
                           <Button
                             className={style.deleteButton}
                             onClick={() => handleShow(i, usersDoc._id)}

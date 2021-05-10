@@ -4,7 +4,6 @@
   background-color: white !important;
   border: 1px solid lightgrey;
   box-shadow: 0px 1px lightgrey;
-  /* width: 100%; */
   height: 10vh;
 }
 
@@ -12,7 +11,6 @@
   margin-left: 50px !important;
 }
 .logoIcon {
-  /* width: 50%; */
   height:9vh;
 }
 .fixedNavBar {
@@ -30,6 +28,5 @@
   text-transform: none;
 }
 .logoutBtn .button:hover {
-  /* background-color: #00ADEE; Ahmed */
   background-color: var(--hover-color-blue);
 }

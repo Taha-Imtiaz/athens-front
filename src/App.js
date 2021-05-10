@@ -153,10 +153,6 @@ function App(props) {
             <PrivateRoute path="/mover/availability" component={Availability} roles={moverRoles} />
             <PrivateRoute path="/mover/holidaycalendar" component={RequestHolidays} roles={moverRoles} />
 
-            {/* <PrivateRoute path="/:id" component={()=><h4>not found </h4>} roles={appRoles}/>   */}
-            {/* <Redirect exact to="/"/> */}
-            {/* <Route component={DefaultRoute}/> */}
-
           </ErrorBoundary>
         </Switch>
       </div>

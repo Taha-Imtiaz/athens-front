@@ -19,7 +19,6 @@
   row-gap: 0.2rem;
 }
 .scheduleContainer {
-  /* background-color: aqua; */
   display: grid;
   grid-template-columns: 30fr 40fr 30fr;
   grid-template-areas: ". schedule .";
@@ -56,5 +55,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: aqua; */
 }

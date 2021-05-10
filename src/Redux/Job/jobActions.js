@@ -1,7 +1,6 @@
 import { GET_JOBS, GET_JOB, DELETE_JOB } from "./jobConstants";
 import Axios from "axios";
 import { showMessage } from "../../Redux/Common/commonActions";
-const FileDownload = require('js-file-download');
 
 export const getAllJobs = (jobObj) => {
   return async (dispatch) => {
@@ -183,7 +182,6 @@ export const printJob = async (jobIds) => {
     //   config: { handlerEnabled: true },
     //   responseType: 'blob'
     // });
-    // console.log(response.data)
     let responses = await Axios.all(promiseArray)
     for (let i = 0; i < responses.length; i++) {
       // setTimeout(() => {

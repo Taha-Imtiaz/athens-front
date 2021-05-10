@@ -28,7 +28,7 @@ const JobConfirmationModal = ({
           <div className={`bg-white p-3 w-75`}>
             <h3>Booking Confirmation</h3>
 
-            <div>
+            <div className={style.jobConfirmContentContainer}>
               <JobConfirmation data={job} close={handleCloseAndRefresh} />
             </div>
           </div>

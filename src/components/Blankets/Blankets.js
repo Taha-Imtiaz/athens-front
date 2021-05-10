@@ -11,7 +11,6 @@ import Confirmation from "../Confirmation/Confirmation";
 const Blankets = (props) => {
   let [blanketValue, setBlanketValue] = useState(props.items);
   const [show, setShow] = useState(false);
-  // const [depositValue, setDepositValue] = useState("");
 
   let { user } = props;
 

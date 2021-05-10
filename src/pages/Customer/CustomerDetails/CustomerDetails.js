@@ -865,8 +865,6 @@ const CustomerDetails = (props) => {
       <Modal
         open={show}
         onClose={handleClose}
-        // scrollable
-        // centered
         className={style.modal}
         closeAfterTransition
         BackdropComponent={Backdrop}

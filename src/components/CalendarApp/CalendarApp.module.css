@@ -30,12 +30,10 @@
 .sideContentHeader{
   grid-area: heading;
   position: fixed;
-  /* z-index: 1000; */
 }
 .sideContentDetails{
 grid-area: content;
 overflow-y: scroll;
-/* background-color: maroon; */
 }
 .sideContent ::-webkit-scrollbar {
   width: 5px;

@@ -236,7 +236,6 @@ class UpdateJob extends Component {
 
     this.setState({ [name]: value });
     if (value === "") {
-      // this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
     }
@@ -341,8 +340,6 @@ class UpdateJob extends Component {
       startTime,
       propertyType,
       price,
-      // truck,
-      // truckSize,
       trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
       assigneesId,
     };
@@ -472,7 +469,6 @@ class UpdateJob extends Component {
     return (
       <div className={`${style.formStyle}`}>
         <div className={`${style.form}`}>
-          {/* <ToastContainer position="bottom-right"/> */}
           <h3 className={style.head}>Job Details Edit</h3>
 
           <form>
@@ -513,6 +509,7 @@ class UpdateJob extends Component {
               {this.state.customerId && (
                 <Autocomplete
                   multiple
+                  disableCloseOnSelect
                   noOptionsText={`Add '${this.state.newService}' to Services`}
                   value={this.state.services}
                   size="small"
@@ -612,31 +609,7 @@ class UpdateJob extends Component {
             {this.state.trucks.length > 0 && (
               <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} />
             )}
-
-            {/* <Truck trucks={this.state.trucks} setTrucks={this.setTrucks} /> */}
-
-            {/* {this.state.locations && (
-              <div>
-                {this.state.locations.length === 0 && (
-                  <div className={style.addLocation}>
-                    <div className={style.addLocationBtn}>
-                      <Button onClick={this.addLocation} className={style.button}>
-                        Add Location
-                  </Button>
-                    </div>
-                  </div>
-                )}
-                {this.state.locations.length > 0 ? (
-                  <div>
-                    <AddLocation
-                      locationArr={this.state.locations}
-                      addLocation={this.addLocation}
-                      handleLocationChange={this.handleLocationChange}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            )} */}
+           
             {this.state.locations && <AddLocation
               locationArr={this.state.locations}
               addLocation={this.addLocation}
@@ -645,7 +618,7 @@ class UpdateJob extends Component {
           </form>
 
           <div>
-            {note && note.length > 0 && <h3>Notes</h3>}
+            {note && note.length > 0 && <h5>Notes</h5>}
             {note &&
               note.map((note) => (
                 <div className={style.notesStyle}>
@@ -682,9 +655,7 @@ class UpdateJob extends Component {
           </div>
           <Modal
             open={show}
-            onClose={this.handleClose}
-            // scrollable
-            // centered
+            onClose={this.handleClose}           
             className={style.modal}
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -717,36 +688,7 @@ class UpdateJob extends Component {
                 </div>
               </div>
             </Fade>
-          </Modal>
-          {/* <Modal
-            show={show}
-            onHide={this.handleClose}
-            animation={false}
-            centered
-            dialogClassName={style.modal}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Add Note</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <TextareaAutosize className={style.styleTextArea}
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={this.state.newNote}
-                onChange={this.handleAddNote}
-              ></TextareaAutosize>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button className={style.modalButtons} onClick={this.handleClose}>
-                Close
-              </Button>
-              <Button className={style.modalButtons} onClick={this.AddNote}>
-                Add Note
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
+          </Modal>         
         </div>
       </div>
     );

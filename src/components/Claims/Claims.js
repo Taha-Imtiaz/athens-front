@@ -57,8 +57,6 @@ const Claims = (props) => {
                       <div className={`text-capitalize ${style.text}`}>
                       <Chip
                          className={`${style.headingSub} ${style.styleSpan}`}
-                        //  color="red"
-                        //  variant="outlined"
                          size="small"
                          label={x.job && x.job.jobId}
                          />

@@ -11,13 +11,7 @@ const VirtualizedAutocomplete = (props) => {
       defaultHeight: 100,
     })
   );
-  // const [virtualizedState, setVirtualizedState] = useState({
-  //   selection: "",
-  //   data: props.options,
-  // });
-  // const onSelect = (item) =>
-  //   setVirtualizedState((prevState) => ({ ...prevState, selection: item }));
-
+ 
   const renderItem = (item) => {
     return (
       <div>
@@ -90,7 +84,6 @@ const VirtualizedAutocomplete = (props) => {
         <Autocomplete        
           value={props.value}
           size="small"
-          // onSelect={onSelect}
           renderMenu={renderMenu}
           onChange={(event, newValue) => {
             props.setSelectedCustomerJobs(newValue); // Get the customer and get job

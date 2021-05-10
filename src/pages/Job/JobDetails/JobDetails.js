@@ -15,8 +15,6 @@ import TimeAgo from "react-timeago";
 import {
   faCalendarTimes,
   faEnvelope,
-  faMapMarker,
-  faMapMarkerAlt,
   faMobile,
   faUser,
   faUserShield,
@@ -58,24 +56,6 @@ const JobDetails = (props) => {
   const closeJobConfirmationModal = () => {
     setShowBooking(false);
   };
-  // let truckArr = job.trucks.map((x,i)=>{
-  // })
-
-  // const updateClaimData = () => {
-  //   if (update.length > 0) {
-  //     let ob = {
-  //       timestamp: new Date(),
-  //       value: update,
-  //     };
-  //     let newData = cloneDeep(claims);
-  //     newData.updates.unshift(ob);
-  //     updateClaim(newData, (res) => {
-  //       claims.updates = res.data.data.updates;
-  //       setShow(false);
-  //       setUpdate("");
-  //     });
-  //   }
-  // };
 
   return (
     <div className={style.jobEditContainer}>
@@ -305,7 +285,6 @@ const JobDetails = (props) => {
                   list.type === "pickup" ? (
                     <div className={style.pickup} key={i}>
                       <span className="font-weight-bold">{i + 1}.{" "}</span>
-                      {/* <FontAwesomeIcon icon={faMapMarker} />{" "}                       */}
                       <span className={style.locationType}>{`Pickup: `} </span>{" "}
                       <div className={style.location}>
                         {list.value} {list.default ? "(Load Only / IA)" : null}
@@ -326,7 +305,6 @@ const JobDetails = (props) => {
                   ) : list.type === "dropoff" ? (
                     <div className={style.dropoff} key={i}>
                       <span className="font-weight-bold">{i + 1}.{" "}</span>
-                      {/* <FontAwesomeIcon icon={faMapMarkerAlt} />{" "} */}
                       <span className={style.locationType}>{`Dropoff: `}</span>
                       <div className={style.location}>
                         {list.value} {list.default ? "(Unload Only)" : null}

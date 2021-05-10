@@ -5,7 +5,6 @@
 }
 .rowContent {
   grid-area: rowContent;
-  /* background-color: aqua; */
   display: grid;
   margin-top: 0.5rem;
   grid-template-columns: 25fr 50fr repeat(2, 12.5fr);
@@ -24,13 +23,10 @@
   text-transform: none;
   color: #fff;
   font-family: var(--font-family-paragraph);
-  transition: .3s ease-in-out;  /*AHMED*/
-  /* text-decoration: none; */
+  transition: .3s ease-in-out;
 }
 
 .btnStyle .btn:hover {
-  /*background-color: #00adee; */
-  /*ahmed*/
   background-color: var(--hover-color-blue);
 }
 .jumbotron {
@@ -54,8 +50,6 @@
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas: ". listContent .";
   font-family: var(--font-family-paragraph);
-
-  /* background-color: #00adee; */
 }
 .listContent {
   grid-area: listContent;
@@ -64,12 +58,11 @@
   padding: .5rem .5rem;
   grid-template-columns: 90fr 10fr;
   grid-template-areas: "styleLink actions";
-  /* border: 1px solid rgba(0, 0, 0, 0.125); */
   background: rgba(0, 0, 0, 0.03);
   font-size: 0.88rem;
   border-radius: .3rem;
   align-items: center;
-  transition: var(--transition-one);   /*AHMED 8-MAR*/
+  transition: var(--transition-one);
 }
 .listContent:hover {
   background-color: #cac7c7 !important;
@@ -96,35 +89,28 @@
 
 .name {
   grid-area: name;
-  /* padding: 0 0.5rem; */
 }
 .phone {
   grid-area: phone;
-  /* padding: 0 0.5rem; */
 }
 .email {
   grid-area: email;
-  /* padding: 0 0.5rem; */
 }
 .jobs {
   grid-area: jobs;
-  /* padding: 0 0.5rem; */
 }
 .activeClaims {
   grid-area: activeClaims;
-  /* padding: 0 0.5rem; */
 }
 .actions {
   grid-area: actions;
 }
 
 .deleteButton:hover {
-  /*ahmed*/
   background-color: var(--color-red) !important;
   color: white;
 }
 .listContent:hover .item {
-  /* color: #fff; */
   color: #000;
 }
 

@@ -34,7 +34,6 @@
 }
 .alternateContactBtn {
   display: grid;
-  /* background-color: aqua; */
   grid-template-columns: 78.7fr 21.3fr;
   grid-template-areas: ". alternateContact";
 }

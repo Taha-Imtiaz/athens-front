@@ -266,7 +266,6 @@ function JobConfirmation(props) {
           <form>
             {data && data.customer && (
               <div>
-                {/* <label htmlFor="exampleInputEmail1">First Name</label> */}
                 <TextField
                   variant="outlined"
                   className={style.styleFormFields}
@@ -279,8 +278,6 @@ function JobConfirmation(props) {
                   value={data.customer.firstName}
                   onChange={handleFormInput}
                 />
-
-                {/* <label htmlFor="exampleInputEmail1">Last Name</label> */}
                 <TextField
                   variant="outlined"
                   className={style.styleFormFields}
@@ -294,7 +291,6 @@ function JobConfirmation(props) {
                   onChange={handleFormInput}
                 />
 
-                {/* <label htmlFor="exampleInputEmail1">Phone Number</label> */}
                 <TextField
                   variant="outlined"
                   className={style.styleFormFields}
@@ -308,7 +304,6 @@ function JobConfirmation(props) {
                   onChange={handleFormInput}
                 />
 
-                {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
                 <TextField
                   variant="outlined"
                   className={style.styleFormFields}
@@ -328,23 +323,6 @@ function JobConfirmation(props) {
       case 2:
         return (
           <div>
-            {/* {data.locations && data.locations.length === 0 && (
-              <div className={`${style.locationBtn} ${style.flex}`}>
-                <Button
-                  className={`${style.button}`}
-                  onClick={(e) => addLocation(e)}
-                >
-                  <FontAwesomeIcon
-                    icon={faMapMarker}
-                    className={style.locationIcon}
-                  />
-                  Add Location
-                </Button>
-              </div>
-            )} */}
-
-            {/* {data.locations && data.locations.length > 0 &&
-            } */}
               <AddLocation locationArr={data.locations} addLocation={addLocation} handleLocationChange={handleLocationChange} />
           </div>
         );

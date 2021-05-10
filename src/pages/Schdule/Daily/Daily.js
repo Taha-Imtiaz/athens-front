@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 import { updateJob, printJob } from "../../../Redux/Job/jobActions";
 import { cloneDeep } from "lodash";
 import { showMessage } from "../../../Redux/Common/commonActions";
-import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
 import Chip from "@material-ui/core/Chip";
@@ -25,7 +24,6 @@ import DatePicker from "react-horizontal-datepicker";
 import parse from "html-react-parser";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { htmlToText } from "html-to-text";
 import Badge from "@material-ui/core/Badge";
 
 const DailySchedule = (props) => {
@@ -61,67 +59,6 @@ const DailySchedule = (props) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
     printJob([job._id]);
-    // let dates = job.dates.map((x) => x.date).join(" | ");
-
-    // let services = job.services.map((e) => e.name).join(" | ");
-
-    // const doc = new jsPDF("p", "pt");
-    // const date = new Date();
-    // const columns = [
-    //   { title: "Name", dataKey: "name" },
-    //   { title: "Email", dataKey: "email" },
-    //   { title: "Phone", dataKey: "phone" },
-    // ];
-    // const items = [
-    //   {
-    //     name: job.customer.firstName + job.customer.lastName,
-    //     email: job.customer.email,
-    //     phone: job.customer.phone,
-    //   },
-    // ];
-
-    // let imgA = document.createElement("img");
-    // imgA.src = "/images/movers-logo.jpg";
-    // doc.addImage(imgA, "JPEG", 45, 10, 90, 90);
-
-    // doc.setFont("times").setFontSize(22).text(420, 40, "JOB DETAILS");
-    // doc.setFont("times").setFontSize(10).text(400, 70, "Print Date:");
-    // doc.setFont("times").setFontSize(10).text(490, 70, date.toDateString());
-    // doc.setFont("times").setFontSize(10).text(400, 85, "Job Id:");
-    // doc.setFont("times").setFontSize(10).text(490, 85, `${job.jobId}`);
-    // doc.setFont("times").setFontSize(10).text(400, 100, "Movers Required:");
-    // doc
-    //   .setFont("times")
-    //   .setFontSize(10)
-    //   .text(490, 100, `${job.assigneeRequired}`);
-    // doc.setFont("times").setFontSize(10).text(400, 115, "Job Type:");
-    // doc.setFont("times").setFontSize(10).text(490, 115, job.jobType);
-
-    // doc.setFont("times").setFontSize(15).text(50, 200, job.title);
-
-    // doc.setFont("times").setFontSize(11).text(50, 235, dates);
-
-    // doc.setFont("times").setFontSize(11).text(50, 260, services);
-
-    // doc
-    //   .setFont("times")
-    //   .setFontSize(11)
-    //   .text(
-    //     50,
-    //     285,
-    //     job.dates[0].time ? formatAMPM(job.dates[0].time) : "No Time Added"
-    //   );
-
-    // doc.autoTable(columns, items, { margin: { top: 310 } });
-
-    // doc
-    //   .setFont("times")
-    //   .setFontSize(11)
-    //   .text(50, 375, htmlToText(job.description));
-
-
-    // doc.autoPrint();
-    // doc.output("dataurlnewwindow");
   };
 
   const formatAMPM = (startTime) => {
@@ -219,9 +156,6 @@ const DailySchedule = (props) => {
   const classes = useStyles();
 
   const printAllJobs = (e) => {
-    // for (var job of props.jobs) {
-    //   generatePDF(e, job);
-    // }
     let jobIds = props.jobs.map(x => x._id)
     printJob(jobIds);
   };
@@ -304,10 +238,6 @@ const DailySchedule = (props) => {
     }
   };
 
-  // const getDateTime = (job) => {
-  //   let obj = job.dates.find(x => x.date == new Date(today).toDateString())
-  //   return formatAMPM(obj.time)
-  //  };
   const moverListItem = (mover) => {
     return (
       <div key={mover._id.toString()}>
@@ -690,8 +620,6 @@ const DailySchedule = (props) => {
       <Modal
         open={modalShow}
         onClose={(e) => Navigate(e)}
-        // scrollable
-        // centered
         className={style.modal}
         closeAfterTransition
         BackdropComponent={Backdrop}

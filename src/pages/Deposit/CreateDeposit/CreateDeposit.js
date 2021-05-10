@@ -184,14 +184,6 @@ class CreateDeposit extends Component {
                 
               />
              ) : null }
-              {/* <VirtualizedAutocomplete
-                textField="Choose a job"
-                value={this.state.selectedJob}
-                options={this.state.jobs}
-                setSelectedCustomerJobs={this.setSelectedCustomerJobs}
-                
-              /> */}
-
               <TextField
                 variant="outlined"
                 type="number"

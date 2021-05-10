@@ -48,15 +48,3 @@
   margin: 2rem;
   padding: 2rem;
 }
-/* @media only screen and (max-width:1500px) {
-  .depositForm {
-    display: grid;
-  
-    grid-template-rows: minmax(60vh,min-content) 30vh;
-    grid-template-columns: 20fr 60fr 20fr;
-    background-color: #e9ecef;
-    grid-template-areas:
-      ". form ."
-      ". . .";
-  }
-} */

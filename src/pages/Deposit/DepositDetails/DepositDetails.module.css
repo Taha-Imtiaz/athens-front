@@ -9,8 +9,6 @@
     margin-top: 1rem;
     grid-area: claimDetails;
     display: grid;
-    /* grid-template-rows: 1fr; */
-    /* grid-template-columns: 25fr minmax(75fr, min-content); */
     grid-template-columns: 25fr 75fr;
     column-gap: 2rem;
     grid-template-areas: "cards claimDetail";
@@ -69,15 +67,11 @@
 }
 .claimDetail {
   grid-area: claimDetail;
-  /* background-color: rgb(20, 33, 71); */
-  /* background-color: red; */
   border:none;
   display: grid;
   grid-template-rows: repeat(4, minmax(7vh, min-content));
   grid-template-columns: 100fr;
   grid-template-areas:
-    /* "protectionRow"
-    "description" */
     "pricing"
     "updates";
   row-gap: 1rem;

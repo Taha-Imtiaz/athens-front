@@ -1,6 +1,5 @@
 .calendarContainer {
   display: grid;
   grid-template-columns: 100fr;
-  /* background-color: aqua; */
   grid-template-rows: minmax(min-content,90vh);
 }

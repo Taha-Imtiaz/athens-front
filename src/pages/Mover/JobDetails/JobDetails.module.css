@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-rows: minmax(90vh, min-content);
-  /* background-color: #00adee; */
   background-color: #e9ecef;
   grid-template-areas: ". containerContent .";
 }
@@ -19,7 +18,6 @@
 .cards {
   grid-area: cards;
   display: grid;
-  /* background-color: aqua; */
   grid-template-rows: minmax(25vh, min-content) minmax(15vh, min-content) min-content;
   grid-template-areas:
     "customerCard"
@@ -38,11 +36,11 @@
   border-radius: 1rem;
   border: none;
 }
-.assigneehead{
+.assigneehead {
   text-decoration: none;
   text-transform: capitalize;
 }
-.assigneehead > li{
+.assigneehead > li {
   list-style: none;
 }
 
@@ -56,16 +54,13 @@
   grid-area: jobDetail;
   background-color: #e9ecef;
   display: grid;
-  grid-template-rows: 
+  grid-template-rows:
     minmax(10vh, min-content)
-    minmax(6vh, min-content) 
-    minmax(5vh, min-content) 
+    minmax(6vh, min-content)
+    minmax(5vh, min-content)
     minmax(11vh, min-content)
     min-content;
   border: none;
-  /* border-radius: 0.4rem; */
-  /* padding: 0 1rem; */
-  /* background-color: #00adee; */
   gap: 1rem;
 }
 .jobHeader {
@@ -76,51 +71,47 @@
   font-family: var(--font-family-paragraph);
   padding: 1rem 1rem;
   text-transform: capitalize;
-  /* margin-bottom: 1rem; */
 }
-.jobHeader > h5{
+.jobHeader > h5 {
   font-weight: 400;
   text-transform: capitalize;
 }
-.jobHeader___childs{
+.jobHeader___childs {
   display: grid;
   grid-template-columns: 70fr 30fr;
 }
 .jobDates {
   display: flex;
-  /* grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
-  grid-template-rows: minmax(6vh, min-content); */
 }
-.job___IdStatus{
-  display:flex;
+.job___IdStatus {
+  display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  }
+}
 .service {
-  /* padding: .5rem;  */
   display: grid;
   grid-template-columns: 25fr 75fr;
 }
-.service >*{
+.service > * {
   font-weight: 500;
 }
-.jobDescription {
-  /* display: grid; */
-  /* grid-template-rows: minmax(5vh, min-content); */
-}
-.jobDescription___title, .notes___title {
+.jobDescription___title,
+.notes___title {
   font-size: larger;
-  /* padding: .5rem; */
 }
-.jobDescription___text, .notes___text{
+.jobDescription___text {
   background: #fff;
   border-radius: 1rem;
   padding: 0.8rem 0.5rem;
 }
+.notes___text {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.8rem 0.5rem;
+  margin: .2rem 0;
+}
 .notes {
   margin-bottom: 1rem;
-  /* display: grid;
-  grid-template-rows: repeat(2, min-content); */
 }
 
 .link {
@@ -128,22 +119,18 @@
 }
 
 .locations {
-  /* display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
-  grid-template-columns: repeat(3, 1fr);
-  /* background-color: aquamarine; */
-  row-gap: 1rem; 
+  row-gap: 1rem;
   background: transparent;
   display: flex;
   flex-direction: column;
-border: none;
-  padding: .5rem;
+  border: none;
+  padding: 0.5rem;
 }
 .location {
   display: grid;
   grid-template-columns: 1fr;
 }
-.locationType{
+.locationType {
   font-weight: bold;
 }
 .payBtns {
@@ -154,15 +141,9 @@ border: none;
   border-radius: 1rem;
   padding: 1rem;
   background-color: white;
-  /* margin: 1rem 0; */
-  /* display: grid;  
-  text-align: center; */
-  /* column-gap: 1rem; */
-  /* grid-template-columns: 5fr repeat(2, 90fr) 5fr; */
-  /* grid-template-areas: ". payOnlineBtn payCashBtn ."; */
 }
 .payOnlineBtn {
-  grid-area: payOnlineBtn;  
+  grid-area: payOnlineBtn;
 }
 .payCashBtn {
   grid-area: payCashBtn;

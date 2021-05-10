@@ -1,6 +1,5 @@
 .createJob {
   display: grid;
-  /* grid-template-rows: minmax(83vh,min-content) 7vh; */
   grid-template-columns: 20fr 60fr 20fr;
   grid-template-areas: ". form .";
   background-color: #e9ecef;
@@ -38,28 +37,18 @@
   justify-content: center ;
   align-items: center;
 }
-
 .plusIcon{
-  /* max-width: 25px; */
-  /* color: white; */
-  /* background-color: var(--color-blue); */
-  /* border-radius: 50%; */
   border: none;
   margin-bottom: .5rem;
-  /* display: flex;*/
   justify-content: flex-end; 
-  /* padding: .5rem; */
 }
-/* .plusIcon:hover{
-  background-color: var(--hover-color-blue);
-} */
+
 .modal {
   max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .modal ::-webkit-scrollbar {
   width: 10px;
 }
@@ -89,7 +78,6 @@
 
 .btnsubmit button {
   width: 100%;
-  /* margin: 0rem 3rem; */
   background-color: #00adee;
 }
 .styleDate {
@@ -115,10 +103,6 @@
   column-gap: 0.5rem;
 }
 .movers {
-  /* border: 1px solid gray; */
-  /* display: grid;
-  grid-template-columns: repeat(2, .45fr) .1fr;
-  column-gap: 0.5rem; */
   flex-wrap: wrap;
   align-items: center;
 }
@@ -127,20 +111,8 @@
 }
 .moversChild > div {
   display: flex;  flex-grow: 1;
-  
-  /* align-items: center; */
   gap: .5rem;
 }
-/* .addLocation {
-  display: grid;
-  grid-template-columns: 87fr 13fr;
-  grid-template-areas: ". addLocationBtn";
-justify-content: flex-end;
-}
-.addLocationBtn {
-  grid-area: addLocationBtn;
-  
-} */
 .addLocationBtn .button {
   background: #00adee;
   text-transform: none;
@@ -153,7 +125,6 @@ justify-content: flex-end;
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;
-  /* width: 40% !important; */
 }
 .resetBtns {
   display: grid;
@@ -176,28 +147,3 @@ justify-content: flex-end;
 .resetBtns .button:hover {
   background-color: var(--hover-color-blue);
 }
-/* @media only screen and (max-width:1500px) {
-  .addLocation {
-    display: grid;
-    grid-template-columns: 84fr 16fr;
-    grid-template-areas: ". addLocationBtn";
-  
-  }
-}
-@media only screen and (max-width:1200px) {
-  .addLocation {
-    display: grid;
-    grid-template-columns: 82.5fr 17.5fr;
-    grid-template-areas: ". addLocationBtn";
-    
-  
-  }
-}
-  @media only screen and (max-width:1090px) {
-    .addLocation {
-      display: grid;
-      grid-template-columns: 80.8fr 19.2fr;
-      grid-template-areas: ". addLocationBtn";
-    
-    }
-} */

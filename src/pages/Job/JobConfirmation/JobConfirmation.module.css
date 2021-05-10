@@ -1,6 +1,5 @@
 .confirmJobModal {
   display: grid;
-
   grid-template-rows: 10vh minmax(35vh, min-content);
   grid-template-columns: 5fr 90fr 5fr;
   grid-template-areas:

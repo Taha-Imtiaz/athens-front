@@ -68,7 +68,6 @@ const DateAndTime = (props) => {
                                         inputVariant="outlined"
                                         required
                                         fullWidth
-                                        // margin="normal"
                                         size="small"
                                         id="date-picker-dialog"
                                         format="MM/dd/yyyy"
@@ -80,14 +79,11 @@ const DateAndTime = (props) => {
                                         }}
                                     />
                                     <KeyboardTimePicker
-                                        // margin="normal"
                                         required
                                         fullWidth
                                         inputVariant="outlined"
                                         id="time-picker"
                                         size="small"
-                                        // className={style.styleFormFields}
-                                        // label="Time picker"
                                         value={dates[i].time}
                                         onChange={(e) => handleTimeSelect(e, i)}
                                         KeyboardButtonProps={{

@@ -4,7 +4,6 @@
   grid-template-rows: minmax(90vh, min-content);
   grid-template-areas: ". containerContent .";
   background-color: #e9ecef;
-  /* background-color: #121212; */
 }
 .containerContent {
   grid-area: containerContent;
@@ -95,12 +94,9 @@
   grid-template-rows:
     minmax(10vh, min-content) 
     minmax(6vh, min-content) 
-    /* minmax(5vh, min-content) */
     minmax(11vh, min-content)
     min-content;
   border: none;
-  /* margin-bottom: 1rem ; */
-  /* padding: 0.5rem 1rem; */
   gap: 1rem;
 }
 .jobHeader {
@@ -123,9 +119,6 @@
 }
 .jobDates { 
   display: flex;
-  /* grid-template-columns: repeat(auto-fit, minmax(20vh, min-content));
-  grid-template-rows: minmax(6vh, min-content); */
-
 }
 .job___IdStatus{
 display:flex;
@@ -149,11 +142,10 @@ padding: .5rem;
 grid-template-columns: 17fr 23fr 60fr;
 }
  .notes{
-   margin-bottom: 1rem; /*this margin is just for demo */
+   margin-bottom: 1rem;
 }
 .jobDescription___title, .notes___title {
   font-size: larger;
-  /* padding: .5rem; */
 }
 .jobDescription___text{
   background: #fff;
@@ -166,7 +158,6 @@ grid-template-columns: 17fr 23fr 60fr;
   padding: 0.8rem 0.5rem;
   display: grid;
   margin: .2rem 0;
-  /* grid-template-rows:repeat(2, 1fr) ; */
   grid-template-areas: 
   "text"
   "time";
@@ -195,7 +186,6 @@ display: flex;
 .location {
   display: grid;
   grid-template-columns: 1fr;
-  /* font-size: .8rem; */
 }
 .locationType{
   font-weight: bold
@@ -206,15 +196,3 @@ display: flex;
 .pickup{
   padding: .5rem;
 }
-/* .truckSection{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: "type number .";
-  padding: .5rem;
-}
-.truckSectionType{
-  grid-area : type;
-}
-.truckSectionNum{
-  grid-area: number;
-} */

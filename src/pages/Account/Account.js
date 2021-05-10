@@ -270,8 +270,6 @@ const Account = (props) => {
       <Modal
         open={showModal}
         onClose={() => setShowModal(false)}
-        // scrollable
-        // centered
         className={style.modal}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -324,61 +322,6 @@ const Account = (props) => {
           </div>
         </Fade>
       </Modal>
-
-      {/* <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-        scrollable
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Reset Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            size="small"
-            type="password"
-            id="password"
-            label="Enter Password"
-            name="password"
-            value={editAccount.password}
-            onChange={handleFormInput}
-            error={editAccount.passwordError ? true : false}
-            className={style.styleFormFields}
-          />
-          <TextField
-            variant="outlined"
-            required
-            fullWidth
-            size="small"
-            type="password"
-            id="confirmPassword"
-            label="Confirm Password"
-            name="confirmPassword"
-            value={editAccount.confirmPassword}
-            onChange={handleFormInput}
-            error={editAccount.confirmPasswordError ? true : false}
-            className={style.styleFormFields}
-          />
-          Are you sure you want to delete this Blanket Deposit?
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={`${style.flexEnd}`}>
-            <Button className={style.button} onClick={handleModalInput}>
-              Confirm
-            </Button>
-            <Button
-              className={style.button}
-              onClick={() => setShowModal(false)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 };

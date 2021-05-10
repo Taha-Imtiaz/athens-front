@@ -241,8 +241,7 @@ class CreateClaim extends Component {
                   <Modal
                     open={this.state.customerClaims}
                     onClose={this.handleClose}
-                    // scrollable
-                    // centered
+                   
                     className={style.modal}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
@@ -280,45 +279,7 @@ class CreateClaim extends Component {
                       </div>
                       </div>
                     </Fade>
-                  </Modal>
-                  {/* <Modal
-                    dialogClassName={`${style.modal}`}
-                    show={this.state.customerClaims}
-                    onHide={this.handleClose}
-                    centered
-                    scrollable
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title>{`${customerName} Claims`}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className={style.claimHeader}>
-                        <div>Protection Type</div>
-                        <div>Status</div>
-                        <div>Last Update</div>
-                      </div>
-
-                      {showClaimsDetails.map((claim, i) => (
-                        <div className={style.claimContent} key={i}>
-                          <div> {claim.claimType}</div>
-                          <div>{claim.status}</div>
-                          <div>
-                            <TimeAgo date={claim.updatedAt} />
-                          </div>
-                        </div>
-                      ))}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <div className={style.modalBtn}>
-                        <Button
-                          className={style.modalButton}
-                          onClick={this.handleClose}
-                        >
-                          Close
-                        </Button>
-                      </div>
-                    </Modal.Footer>
-                  </Modal> */}
+                  </Modal>                 
                 </div>
               )}
 

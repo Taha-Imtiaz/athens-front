@@ -11,8 +11,6 @@ import { Chip } from "@material-ui/core";
 import parse from "html-react-parser";
 import {
   faEnvelope,
-  faMapMarker,
-  faMapMarkerAlt,
   faMobile,
   faUser,
   faUserShield,
@@ -182,50 +180,52 @@ const MoverJobDetails = (props) => {
                 </div>
               </div>
 
-
               {job.locations && (
                 <div className={style.locations}>
                   {job.locations.map((list, i) =>
                     list.type === "pickup" ? (
                       <div key={i}>
-                        <FontAwesomeIcon icon={faMapMarker} />{" "}
+                        <span className="font-weight-bold">{i + 1}. </span>
                         <span className={style.locationType}>{`Pickup`} </span>{" "}
                         <div className={style.location}>{list.value}</div>
                         {list.propertyType ? (
-                        <div className="text-muted">
-                          {`Property Type: `}
-                          <Chip
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                            label={list.propertyType}
-                          />
-                        </div>
-                      ) : null}
+                          <div className="text-muted">
+                            {`Property Type: `}
+                            <Chip
+                              clickable
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                              label={list.propertyType}
+                            />
+                          </div>
+                        ) : null}
                       </div>
                     ) : list.type === "dropoff" ? (
                       <div key={i}>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
+                      <span className="font-weight-bold">{i + 1}.{" "}</span>
+
                         <span className={style.locationType}>{`Dropoff`}</span>
                         <div className={style.location}>{list.value}</div>
                         {list.propertyType ? (
-                        <div className="text-muted">
-                          {`Property Type: `}
-                          <Chip
-                            clickable
-                            color="primary"
-                            variant="outlined"
-                            size="small"
-                            label={list.propertyType}
-                          />
-                        </div>
-                      ) : null}
+                          <div className="text-muted">
+                            {`Property Type: `}
+                            <Chip
+                              clickable
+                              color="primary"
+                              variant="outlined"
+                              size="small"
+                              label={list.propertyType}
+                            />
+                          </div>
+                        ) : null}
                       </div>
-                    ) : <div key={i} className={style.location}>
-                    <div className="font-weight-bold ">{`Location: `}</div>{" "}
-                    {list.value}
-                  </div>
+                    ) : (
+                      <div key={i} className={style.location}>
+                        <div className="font-weight-bold ">{`Location: `}</div>{" "}
+                        {list.value}
+                      </div>
+                    )
                   )}
                 </div>
               )}
@@ -242,7 +242,6 @@ const MoverJobDetails = (props) => {
                   ))}
                 </div>
               )}
-
             </div>
           </div>
         </>

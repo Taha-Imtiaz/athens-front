@@ -282,8 +282,7 @@ const ClaimDetails = (props) => {
           <Modal
             open={toggleClaim}
             onClose={() => setToggleClaim(false)}
-            // scrollable
-            // centered
+            
             className={style.modal}
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -326,8 +325,7 @@ const ClaimDetails = (props) => {
           <Modal
             open={show}
             onClose={handleClose}
-            // scrollable
-            // centered
+            
             className={style.modal}
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -357,73 +355,7 @@ const ClaimDetails = (props) => {
                 </div>
               </div>
             </Fade>
-          </Modal>
-
-
-          {/* <Modal.Header closeButton>
-            <Modal.Title>Confirmation</Modal.Title>
-          </Modal.Header> */}
-          {/* <Modal.Body>
-              {claims.status === "open"
-                ? `Do you want to close this claim ?`
-                : `Do you want to reopen this claim ?`}
-            </Modal.Body>
-            <Modal.Footer>
-              <div className={style.flexEnd}>
-                <Button
-                  className={style.button}
-                  onClick={() => setToggleClaim(false)}
-                >
-                  Close
-                </Button>
-                {claims.status === "open" ? (
-                  <Button
-                    className={style.button}
-                    onClick={() => handleCloseJob()}
-                  >
-                    Confirm
-                  </Button>
-                ) : (
-                  <Button className={style.button} onClick={reopenClaim}>
-                    Confirm
-                  </Button>
-                )}
-              </div>
-            </Modal.Footer>
-          </Modal> */}
-
-          {/* <Modal
-            show={show}
-            onHide={handleClose}
-            dialogClassName={style.modal}
-            scrollable
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Add Update</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <TextareaAutosize
-                id=""
-                cols="65"
-                rows="5"
-                name="Note"
-                value={update}
-                onChange={handleAddUpdate}
-                className={style.styleTextArea}
-              ></TextareaAutosize>
-            </Modal.Body>
-            <Modal.Footer>
-              <div className={style.flexEnd}>
-                <Button className={style.button} onClick={handleClose}>
-                  Close
-                </Button>
-                <Button className={style.button} onClick={updateClaimData}>
-                  Add
-                </Button>
-              </div>
-            </Modal.Footer>
-          </Modal> */}
+          </Modal>         
         </div>
       )}
     </div>

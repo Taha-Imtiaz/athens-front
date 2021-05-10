@@ -468,10 +468,6 @@ const JobsList = (props) => {
                           ${style.flex} 
                           ${style.item}`}
                         >
-                          {/* <FontAwesomeIcon
-                            icon={faCalendarAlt}
-                            className={style.icon}
-                          />{" "} */}
                           <div className={`text-muted ${style.heading}`}>{`Date:`}</div>
                           <span className={`${style.headingSub} ${style.styleSpan}`}>
                             {/* show 1st item of date array on jobList */}
@@ -523,11 +519,7 @@ const JobsList = (props) => {
                           className={`${style.assignee} ${style.flex}  ${style.item}`}
                         ><div className={`text-muted ${style.heading}`}>{`Assignee: `}</div>
                           <span className={`${style.headingSub} ${style.styleSpan}`}>
-                            {/* <FontAwesomeIcon
-                              icon={faUser}
-                              className={style.icon}
-                            /> */}
-                            
+                                                    
                             {job.assignee.length > 0
                               ? job.assignee[0].name
                               : "N/A"}
@@ -639,8 +631,7 @@ const JobsList = (props) => {
                         ><div className={`text-muted ${style.heading}`}>{`Status: `}</div>
                          <Chip
                          className={`${style.headingSub} ${style.styleSpan}`}
-                        //  color="red"
-                        //  variant="outlined"
+                        
                          size="small"
                          label={job.status}
                          />

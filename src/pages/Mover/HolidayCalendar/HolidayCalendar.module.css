@@ -19,7 +19,6 @@
 }
 .calender {
   grid-area: calender;
-  /* background-color: skyblue; */
 }
 .buttons .button {
   grid-area: button;

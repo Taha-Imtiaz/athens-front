@@ -78,7 +78,6 @@ function RequestHolidays(props) {
         <DayPicker
           selectedDays={dates}
           canChangeMonth={true}
-          // renderDay={renderDay}
           onDayClick={handleDayClick}
           className={`${style.calenderContent} ${style.flex}`}
           fromMonth={new Date()}
@@ -87,8 +86,7 @@ function RequestHolidays(props) {
       <Modal
         open={show}
         onClose={handleClose}
-        // scrollable
-        // centered
+       
         className={style.modal}
         closeAfterTransition
         BackdropComponent={Backdrop}

@@ -6,7 +6,6 @@
   grid-template-areas:
     ". profile form  ."
     ". . . .";
-  /* margin-top: 1rem; */
   column-gap: 0.5rem;
   background-color: #e9ecef;
 }
@@ -23,7 +22,6 @@
 
 .profile {
   grid-area: profile;
-  /* background-color: #00adee; */
   margin: 2rem;
   width: 100%;
   display: grid;
@@ -65,7 +63,6 @@
   grid-area: accountHolderName;
   font-weight: bold;
   text-transform: capitalize;
-  /* background-color: aqua; */
 }
 .accountHolderRole {
   grid-area: accountHolderRole;
@@ -103,7 +100,6 @@
   justify-content: center;
   align-items: center;
   justify-self: center;
-  /* flex-flow: column; */
 }
 .styleFormFields {
   margin: 0.5rem 0 !important;
@@ -124,28 +120,9 @@
 .flexEnd .button:hover {
     background-color: var(--hover-color-blue);
 }
-/* @media only screen and (max-width:1500px) {
-  .accountContainer {
-    display: grid;
-    grid-template-columns: 5fr 30fr 60fr 5fr;
-    grid-template-rows: 57vh 33vh;
-  
-    grid-template-areas:
-      ". profile form  ."
-      ". . . .";
-    margin-top: 1rem;
-    column-gap: 2rem;
-    background-color: #e9ecef;
-  }
-} */
 .modal {
   max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.644); */
-/* border-radius: 10px; */
-  /* border-radius: 10px; */
-  /* padding: 1rem; */  
-  /* border: 1rem solid green; */
 }

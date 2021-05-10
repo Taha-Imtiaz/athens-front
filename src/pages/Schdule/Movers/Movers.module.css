@@ -17,19 +17,15 @@
   display: grid;
   grid-template-columns: 70fr 15fr 15fr;
   column-gap: 0.2rem;
-  /* background-color: aquamarine; */
 }
 .moverList {
   grid-area: moverList;
-  /* background-color: red; */
 }
 .listContent {
   display: grid;
-  /* background-color: red; */
   row-gap: 0.75rem;
 }
 .list{
-  /* background-color: #e9ecef; */
   border: none;
   background: rgba(0, 0, 0, 0.03);
   border-radius: .3rem;
@@ -37,7 +33,6 @@
 }
 .list:hover {
   background-color: #cac7c7 !important;
-  /* text-decoration: none; */
 }
 .dropDownMenu {
   border:none;

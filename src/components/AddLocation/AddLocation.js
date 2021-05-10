@@ -1,4 +1,5 @@
 import {
+  faMapMarkerAlt,
   faPlusCircle,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +10,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Button
+  Button,
 } from "@material-ui/core";
 import { cloneDeep } from "lodash";
 import React, { useState } from "react";
@@ -32,23 +33,6 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
       { id: 9, name: "Apartment" },
     ],
   });
-
-  // const initialState = {
-  //   multiError: "",
-  // };
-  // const validate = () => {
-  //   let multiError = "";
-  //   if (this.state.locationArr.length === 0) {
-  //     multiError = "Location must not be empty";
-  //   }
-  //   if (multiError) {
-  //     setState({
-  //       multiError,
-  //     });
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   //set the google location in the state
   const handleSetLocation = (choosenLocation, index) => {
@@ -222,7 +206,7 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
             />
           </div>
         ) : null}
-        {i !== 0 ?
+        {i !== 0 ? (
           <div className="d-flex justify-content-end">
             <div className={`${style.TrashIcon} ${style.alignRight}`}>
               <FontAwesomeIcon
@@ -231,36 +215,40 @@ const AddLocation = ({ locationArr, addLocation, handleLocationChange }) => {
               ></FontAwesomeIcon>
             </div>
           </div>
-          : null}
-
+        ) : null}
       </div>
     );
   };
 
   return (
     <div>
-      {
-        locationArr.length === 0 ? <div className={style.addLocation}>
+      {locationArr.length === 0 ? (
+        <div className={style.addLocation}>
           <div className={style.addLocationBtn}>
-            <Button onClick={addLocation} className={style.button}>
-              Add Location
-                  </Button>
+            <Button onClick={addLocation} className={style.button}>              
+              <FontAwesomeIcon icon={faMapMarkerAlt} style={{marginRight:".5rem"}} />
+              
+              {` Add Location`}
+            </Button>
           </div>
-        </div> :
-          <div> {locationArr.map((location, i) => showLocation(i))}
-            {locationArr.length > 0 && (
-              <div className="d-flex justify-content-end">
-                <div
-                  onClick={addLocation}
-                  className={`${style.plusIcon} ${style.alignRight}`}
-                >
-                  <FontAwesomeIcon icon={faPlusCircle} />
-                </div>
+        </div>
+      ) : (
+        <div>
+          {" "}
+          {locationArr.map((location, i) => showLocation(i))}
+          {locationArr.length > 0 && (
+            <div className="d-flex justify-content-end">
+              <div
+                onClick={addLocation}
+                className={`${style.plusIcon} ${style.alignRight}`}
+              >
+                <FontAwesomeIcon icon={faPlusCircle} />
               </div>
-            )}{" "}
-            <hr />
-          </div>
-      }
+            </div>
+          )}{" "}
+          <hr />
+        </div>
+      )}
     </div>
   );
 };

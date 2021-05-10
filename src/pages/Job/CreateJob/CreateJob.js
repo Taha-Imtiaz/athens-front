@@ -91,8 +91,6 @@ class CreateJob extends Component {
     propertyType: "",
     price: "",
     trucks: [{ type: "", number: "" }],
-    // truck: "",
-    // truckSize: "None",
     serviceOptions: [
       { id: 1, name: "Packing" },
       { id: 2, name: "Loading" },
@@ -156,7 +154,6 @@ class CreateJob extends Component {
 
     this.setState({ [name]: value });
     if (value === "") {
-      // this.setState({ [name + "Error"]: "Should not be empty" });
     } else {
       this.setState({ [name + "Error"]: "" });
     }
@@ -165,22 +162,17 @@ class CreateJob extends Component {
   validate = () => {
     let { selectedCustomer } = this.state;
     let customerIdError = "";
-    // let titleError = "";
     let descriptionError = "";
     let multiError = "";
     let locationfromError = "";
     let locationtoError = "";
     let assigneeRequiredError = "";
-    // let priceError="";
     let jobTypeError = "";
 
     if (selectedCustomer === "") {
       customerIdError = "Customer Id should not be empty";
     }
 
-    // if (!this.state.title) {
-    //   titleError = "Title should not be empty";
-    // }
     if (!this.state.editorState.getCurrentContent().hasText()) {
       descriptionError = "Description should not be empty";
     }
@@ -192,39 +184,26 @@ class CreateJob extends Component {
       assigneeRequiredError = "Required count should not be empty";
     }
 
-    // let locations = this.state.locations.map((x) => x.value !== "");
-    // locations = locations.filter(Boolean);
-    // if (locations.length === 0) {
-    //   locationfromError = "Location must not be empty";
-    // }
-    // if (!this.state.price) {
-    //   priceError = "Price should not be empty";
-    // }
-
     if (!this.state.jobType) {
       jobTypeError = "Job type is required.";
     }
 
     if (
       customerIdError ||
-      // titleError ||
       descriptionError ||
       multiError ||
       locationfromError ||
       locationtoError ||
       assigneeRequiredError ||
-      // priceError ||
       jobTypeError
     ) {
       this.setState({
         customerIdError,
-        // titleError,
         descriptionError,
         multiError,
         locationfromError,
         locationtoError,
         assigneeRequiredError,
-        // priceError,
         jobTypeError,
       });
       return false;
@@ -240,7 +219,6 @@ class CreateJob extends Component {
 
     if (isValid) {
       let {
-        // title,
         description,
         services,
         dates,
@@ -264,19 +242,16 @@ class CreateJob extends Component {
 
       stringDates = stringDates.filter(Boolean);
       let createJobObj = {
-        // title,
         description,
         services,
         dates: stringDates,
         startTime,
-        // locations: locations.filter((x) => x.value !== "" && x.type !== "" && x.propertyType !== ''),
         locations: locations.filter((x) => x.value !== ""),
         status,
         note,
         assigneesId,
         assigneeRequired,
         price,
-        // trucks,
         trucks: trucks.filter((x) => x.type !== "" && x.number !== ""),
         customerId,
         userId: loggedInUser._id,
@@ -486,7 +461,6 @@ class CreateJob extends Component {
                   editorClassName="editorClassName"
                   onEditorStateChange={this.onEditorStateChange}
                   placeholder="Job Description"
-                // error={this.state.descriptionError ? true : false}
                 />
               </div>
 
@@ -569,7 +543,6 @@ class CreateJob extends Component {
                     type="number"
                     variant="outlined"
                     margin="dense"
-                    // required
                     fullWidth
                     size="small"
                     id="price$"
@@ -578,13 +551,11 @@ class CreateJob extends Component {
                     name="price"
                     value={this.state.price}
                     className={style.styleFormFields}
-                    // error={this.state.priceError ? true : false}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
                       ),
                     }}
-                    // startAdornment={}
                     onChange={this.handleFormInput}
                   />
                 </div>
@@ -598,8 +569,6 @@ class CreateJob extends Component {
                     locationArr={this.state.locations}
                     addLocation={this.addLocation}
                     handleLocationChange={this.handleLocationChange}
-
-                  // error={this.state.locationfromError ? true : false}
                   />
                 </div>
               ) : null}
@@ -630,9 +599,7 @@ class CreateJob extends Component {
         </div>
         <Modal
           open={this.state.showAddCustomer}
-          onClose={() => this.setState({ showAddCustomer: false })}
-          // scrollable
-          // centered
+          onClose={() => this.setState({ showAddCustomer: false })}         
           className={style.modal}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -652,19 +619,7 @@ class CreateJob extends Component {
             </div>
           </Fade>
         </Modal>
-        {/* <Modal
-          dialogClassName={`${style.modal}`}
-          show={this.state.showAddCustomer}
-          onHide={() => this.setState({ showAddCustomer: false })}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Create Customer</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <CreateCustomer isModal={true} close={this.populateNewCustomer} />
-          </Modal.Body>
-        </Modal> */}
+       
       </div>
     );
   }

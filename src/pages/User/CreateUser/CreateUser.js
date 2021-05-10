@@ -250,35 +250,6 @@ class CreateUser extends Component {
                 onChange={this.handleFormInput}
                 className={style.styleAddress}
               />
-
-
-              {/* <Autocomplete
-                id="combo-box-demo"
-                options={this.typeOptions}
-                onChange={this.onTypeSelect}
-                getOptionLabel={(option) => option.name}
-                className={style.styleMultiSelect}
-                size="small"
-                renderInput={(params) => <TextField
-                  required {...params} label="Select Type" variant="outlined"
-                  error={this.state.typeError ? true : false}
-                />}
-              />
-              <Autocomplete
-                id="combo-box-demo"
-                options={this.attributeOptions}
-                onChange={this.onAttributeSelect}
-                getOptionLabel={(option) => option.name}
-                className={style.styleMultiSelect}
-                size="small"
-                renderInput={(params) => <TextField
-
-                  required {...params} label="Select Attribute" variant="outlined"
-                  error={this.state.attributeError ? true : false}
-                />}
-              /> */}
-
-
               <FormControl variant="outlined" margin="dense" fullWidth>
                 <InputLabel id="demo-simple-select-outlined-label">
                   Role*

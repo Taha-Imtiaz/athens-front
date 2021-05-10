@@ -75,15 +75,12 @@ justify-content: flex-end;
   display: grid;
   grid-template-columns: 33fr repeat(2, 32fr) 3fr;
   grid-template-areas: "radioButtons inputField checkBox TrashIcon";
-  /* gap: 2rem; */
 }
 .radioButtons {
   grid-area: radioButtons;
 }
 .inputField {
   grid-area: inputField;
-  /* padding: 0 1.5rem !important; */
-  /* margin-top: 0.7rem !important; */
 }
 .checkBox {
   grid-area: checkBox;
@@ -96,7 +93,6 @@ justify-content: flex-end;
   color: #00adee 
 }
 .propertyTypeRow {
-  /* background-color: rgb(229, 255, 0); */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 0.5rem;
@@ -123,8 +119,6 @@ justify-content: flex-end;
 }
 .moversChild > div {
   display: flex;  flex-grow: 1;
-  
-  /* align-items: center; */
   gap: .5rem;
 }
 .rowFlex {
@@ -134,7 +128,7 @@ justify-content: flex-end;
 .notesStyle {
   display: grid;
   grid-template-columns: 97fr 3fr;
-  row-gap: 2rem;
+  margin-bottom: 1rem;
 }
 .notesBtn {
   display: grid;
@@ -165,7 +159,6 @@ justify-content: flex-end;
   font-family: var(--font-family-paragraph);
 
   margin: 0 0.15rem;
-  /* width: 100%; */
 }
  .modal .modalButtons:hover {
   background-color: var(--hover-color-blue);
@@ -175,30 +168,3 @@ justify-content: flex-end;
   justify-content: center;
   align-items: center;
 }
-/* @media only screen and (max-width:1500px) {
-  .addLocation {
-    display: grid;
-    grid-template-columns: 84fr 16fr;
-    grid-template-areas: ". addLocationBtn";
-  justify-content: flex-end;
-  
-  }
-}
-@media only screen and (max-width:1200px) {
-  .addLocation {
-    display: grid;
-    grid-template-columns: 82.5fr 17.5fr;
-    grid-template-areas: ". addLocationBtn";
-  justify-content: flex-end;
-  
-  }
-}
-@media only screen and (max-width:1090px) {
-  .addLocation {
-    display: grid;
-    grid-template-columns: 80.8fr 19.2fr;
-    grid-template-areas: ". addLocationBtn";
-  justify-content: flex-end;
-  
-  }
-} */

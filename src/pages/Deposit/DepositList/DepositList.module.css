@@ -9,7 +9,6 @@
 .toprow {
   display: grid;
   grid-template-columns: 25fr 50fr 25fr;
-  /* background-color: aquamarine; */
   margin-top: 0.5rem;
 }
 .btn {
@@ -29,9 +28,7 @@
 .btn .button:hover {
   background-color: var(--hover-color-blue);
 }
-/* .blanketContainer {
-  padding-top: 1rem;
-} */
+
 .stylePagination {
   display: grid;
   grid-template-columns: 1fr;
